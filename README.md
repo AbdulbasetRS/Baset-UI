@@ -2,6 +2,10 @@
 
 A lightweight, responsive, Bootstrap-inspired UI starter library built with vanilla HTML, CSS, and JavaScript.
 
+view the live demo vie
+
+https://abdulbasetrs.github.io/Baset-UI/
+
 ## Preview
 Open `index.html` in a modern browser.
 
