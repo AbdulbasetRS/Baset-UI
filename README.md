@@ -1,4 +1,4 @@
-# Baset UI v1.0.0
+# Baset UI
 
 A lightweight, responsive, Bootstrap-inspired UI starter library built with vanilla HTML, CSS, and JavaScript.
 
@@ -25,7 +25,7 @@ Include the CSS and optional JavaScript in your HTML:
 - CSS variables and responsive breakpoints
 
 ## Naming convention
-All library classes use the `bu-` prefix to reduce clashes with your own styles.
+All library classes use the `bui-` prefix to reduce clashes with your own styles.
 
 ## Important
 This is a first starter release. It is not a complete Bootstrap replacement yet. Components shown in the documentation are a foundation to expand in later versions.
