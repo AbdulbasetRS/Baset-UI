@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Icons — Baset UI</title>
+  <link rel="stylesheet" href="../assets/css/baset-ui.css">
+  <link rel="stylesheet" href="../assets/css/docs.css">
+  <link rel="stylesheet" href="../assets/css/baset-icons.css">
+  <script>try{if(localStorage.getItem('bui-theme')==='dark')document.documentElement.classList.add('bui-dark')}catch(e){}</script>
+</head>
+<body>
+  <div class="bui-app">
+    <aside class="bui-sidebar">
+      <a class="bui-brand" href="../index.html"><span class="bui-brand-mark">B</span><span>Baset UI<small>Component library</small></span></a>
+      <div class="bui-sidebar-label">GET STARTED</div>
+      <a class="bui-nav" href="../index.html#overview">Overview</a>
+      <a class="bui-nav" href="../index.html#installation">Installation</a>
+      <div class="bui-sidebar-label">COMPONENTS</div>
+      <a class="bui-nav" href="../components/buttons.html">Buttons</a>
+      <a class="bui-nav" href="../components/forms.html">Form controls</a>
+      <a class="bui-nav" href="../components/cards.html">Cards</a>
+      <a class="bui-nav" href="../components/alerts.html">Alerts</a>
+      <a class="bui-nav" href="../components/badges.html">Badges</a>
+      <a class="bui-nav" href="../components/loaders.html">Loaders</a>
+      <a class="bui-nav active" href="../components/icons.html">Icons</a>
+      <a class="bui-nav" href="../components/utilities.html">Utilities</a>
+      <div class="bui-sidebar-label">CUSTOMIZE</div>
+      <a class="bui-nav" href="../customize/colors.html">Default colors</a>
+      <a class="bui-nav" href="../customize/typography.html">Typography and shape</a>
+      <a class="bui-nav" href="../customize/playground.html">Playground</a>
+      <div class="bui-sidebar-bottom"><span class="bui-status-dot"></span> Baset UI <span class="bui-version">v1.0.0</span></div>
+    </aside>
+    <main class="bui-main">
+      <header class="bui-topbar"><div class="bui-breadcrumb"><a href="../index.html">Documentation</a> <span>/</span> Components <span>/</span> Icons</div><div class="bui-top-actions"><span class="bui-pill">Vanilla CSS + JS</span><button class="bui-icon-btn" id="themeToggle" type="button" aria-label="Toggle theme">☼</button></div></header>
+      <section class="bui-section" id="icons"><div class="bui-section-heading"><div><span class="bui-eyebrow">07 / COMPONENTS</span><h2>Icons</h2><p>1512 icons in 6 styles: thin, light, regular, solid, bold and duotone. Use the class names, or copy the inline SVG. For CSS loaders and the animated success check see Loaders.</p></div><span class="bui-step-count">6 examples</span></div>
+      <div class="bui-demo-stack" style="margin-bottom:18px"><article class="bui-demo-card" id="setup"><div class="bui-demo-title">Setup <span>CSS + fonts</span></div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> index.html</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;link</span> <span class="bui-code-blue">rel</span>=<span class="bui-code-green">"stylesheet"</span> <span class="bui-code-blue">href</span>=<span class="bui-code-green">"assets/css/baset-ui.css"</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;link</span> <span class="bui-code-blue">rel</span>=<span class="bui-code-green">"stylesheet"</span> <span class="bui-code-blue">href</span>=<span class="bui-code-green">"assets/css/baset-icons.css"</span><span class="bui-code-pink">&gt;</span></code></pre></div><div class="bui-demo-code">Keep assets/fonts/ next to assets/css/ — the icon fonts are loaded from there.</div></article></div>
+      <div class="bui-demo-stack">
+<article class="bui-demo-card" id="styles"><div class="bui-demo-title">Styles <span>6 styles</span></div><div class="bui-demo-content"><div class="bui-button-row">
+  <i class="bui-icon-thin bui-icon-file bui-icon-2xl"></i>
+  <i class="bui-icon-light bui-icon-file bui-icon-2xl"></i>
+  <i class="bui-icon-regular bui-icon-file bui-icon-2xl"></i>
+  <i class="bui-icon-solid bui-icon-file bui-icon-2xl"></i>
+  <i class="bui-icon-bold bui-icon-file bui-icon-2xl"></i>
+  <i class="bui-icon-duotone bui-icon-file bui-icon-2xl"></i>
+</div></div><div class="bui-demo-code">.bui-icon-thin | -light | -regular | -solid | -bold | -duotone  +  .bui-icon-{name}</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-button-row"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;i</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-icon-thin bui-icon-file bui-icon-2xl"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/i</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;i</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-icon-light bui-icon-file bui-icon-2xl"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/i</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;i</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-icon-regular bui-icon-file bui-icon-2xl"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/i</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;i</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-icon-solid bui-icon-file bui-icon-2xl"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/i</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;i</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-icon-bold bui-icon-file bui-icon-2xl"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/i</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;i</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-icon-duotone bui-icon-file bui-icon-2xl"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/i</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
+<article class="bui-demo-card" id="sizes"><div class="bui-demo-title">Sizes <span>6 sizes</span></div><div class="bui-demo-content"><div class="bui-button-row">
+  <i class="bui-icon-solid bui-icon-house bui-icon-xs"></i>
+  <i class="bui-icon-solid bui-icon-house bui-icon-sm"></i>
+  <i class="bui-icon-solid bui-icon-house"></i>
+  <i class="bui-icon-solid bui-icon-house bui-icon-lg"></i>
+  <i class="bui-icon-solid bui-icon-house bui-icon-xl"></i>
+  <i class="bui-icon-solid bui-icon-house bui-icon-2xl"></i>
+</div></div><div class="bui-demo-code">.bui-icon-xs | -sm | (default) | -lg | -xl | -2xl</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-button-row"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;i</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-icon-solid bui-icon-house bui-icon-xs"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/i</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;i</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-icon-solid bui-icon-house bui-icon-sm"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/i</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;i</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-icon-solid bui-icon-house"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/i</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;i</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-icon-solid bui-icon-house bui-icon-lg"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/i</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;i</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-icon-solid bui-icon-house bui-icon-xl"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/i</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;i</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-icon-solid bui-icon-house bui-icon-2xl"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/i</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
+<article class="bui-demo-card" id="colors"><div class="bui-demo-title">Colors <span>inherits currentColor</span></div><div class="bui-demo-content"><div class="bui-button-row">
+  <i class="bui-icon-solid bui-icon-heart bui-icon-xl" style="color:#d84b5d"></i>
+  <i class="bui-icon-solid bui-icon-bell bui-icon-xl" style="color:#e18c45"></i>
+  <i class="bui-icon-solid bui-icon-check-circle bui-icon-xl" style="color:#1b9c70"></i>
+  <i class="bui-icon-solid bui-icon-info bui-icon-xl" style="color:#3188c7"></i>
+  <i class="bui-icon-duotone bui-icon-user bui-icon-xl" style="color:var(--bui-primary)"></i>
+</div></div><div class="bui-demo-code">color: … on the icon or on any parent</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-button-row"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;i</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-icon-solid bui-icon-heart bui-icon-xl"</span> <span class="bui-code-blue">style</span>=<span class="bui-code-green">"color:#d84b5d"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/i</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;i</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-icon-solid bui-icon-bell bui-icon-xl"</span> <span class="bui-code-blue">style</span>=<span class="bui-code-green">"color:#e18c45"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/i</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;i</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-icon-solid bui-icon-check-circle bui-icon-xl"</span> <span class="bui-code-blue">style</span>=<span class="bui-code-green">"color:#1b9c70"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/i</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;i</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-icon-solid bui-icon-info bui-icon-xl"</span> <span class="bui-code-blue">style</span>=<span class="bui-code-green">"color:#3188c7"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/i</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;i</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-icon-duotone bui-icon-user bui-icon-xl"</span> <span class="bui-code-blue">style</span>=<span class="bui-code-green">"color:var(--bui-primary)"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/i</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
+<article class="bui-demo-card" id="in-buttons"><div class="bui-demo-title">Inside buttons and text <span>1em, aligned to the text</span></div><div class="bui-demo-content"><div class="bui-button-row">
+  <button type="button" class="bui-btn bui-btn-primary"><i class="bui-icon-bold bui-icon-download-simple"></i> Download</button>
+  <button type="button" class="bui-btn bui-btn-outline"><i class="bui-icon-bold bui-icon-plus"></i> New item</button>
+  <button type="button" class="bui-btn bui-btn-danger"><i class="bui-icon-bold bui-icon-trash"></i> Delete</button>
+  <a class="bui-btn bui-btn-secondary" href="#">Continue <i class="bui-icon-bold bui-icon-arrow-right"></i></a>
+</div></div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-button-row"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-btn bui-btn-primary"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;i</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-icon-bold bui-icon-download-simple"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/i</span><span class="bui-code-pink">&gt;</span> Download<span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-btn bui-btn-outline"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;i</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-icon-bold bui-icon-plus"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/i</span><span class="bui-code-pink">&gt;</span> New item<span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-btn bui-btn-danger"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;i</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-icon-bold bui-icon-trash"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/i</span><span class="bui-code-pink">&gt;</span> Delete<span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;a</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-btn bui-btn-secondary"</span> <span class="bui-code-blue">href</span>=<span class="bui-code-green">"#"</span><span class="bui-code-pink">&gt;</span>Continue <span class="bui-code-pink">&lt;i</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-icon-bold bui-icon-arrow-right"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/i</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/a</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
+<article class="bui-demo-card" id="status"><div class="bui-demo-title">Status icons <span>success · error · warning · info</span></div><div class="bui-demo-content"><div class="bui-button-row">
+  <i class="bui-icon-solid bui-icon-check-circle bui-icon-2xl" style="color:#20ad7c"></i>
+  <i class="bui-icon-solid bui-icon-x-circle bui-icon-2xl" style="color:#d84b5d"></i>
+  <i class="bui-icon-solid bui-icon-warning bui-icon-2xl" style="color:#e1a02d"></i>
+  <i class="bui-icon-solid bui-icon-info bui-icon-2xl" style="color:#3188c7"></i>
+</div></div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-button-row"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;i</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-icon-solid bui-icon-check-circle bui-icon-2xl"</span> <span class="bui-code-blue">style</span>=<span class="bui-code-green">"color:#20ad7c"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/i</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;i</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-icon-solid bui-icon-x-circle bui-icon-2xl"</span> <span class="bui-code-blue">style</span>=<span class="bui-code-green">"color:#d84b5d"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/i</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;i</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-icon-solid bui-icon-warning bui-icon-2xl"</span> <span class="bui-code-blue">style</span>=<span class="bui-code-green">"color:#e1a02d"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/i</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;i</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-icon-solid bui-icon-info bui-icon-2xl"</span> <span class="bui-code-blue">style</span>=<span class="bui-code-green">"color:#3188c7"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/i</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
+<article class="bui-demo-card" id="svg"><div class="bui-demo-title">Inline SVG <span>no font needed</span></div><div class="bui-demo-content"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor" width="32" height="32">
+  <path d="M213.66,82.34l-56-56A8,8,0,0,0,152,24H56A16,16,0,0,0,40,40V216a16,16,0,0,0,16,16H200a16,16,0,0,0,16-16V88A8,8,0,0,0,213.66,82.34ZM152,88V44l44,44Z"/>
+</svg></div><div class="bui-demo-code">viewBox 0 0 256 256 · fill="currentColor"</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;svg</span> <span class="bui-code-blue">xmlns</span>=<span class="bui-code-green">"http://www.w3.org/2000/svg"</span> <span class="bui-code-blue">viewBox</span>=<span class="bui-code-green">"0 0 256 256"</span> <span class="bui-code-blue">fill</span>=<span class="bui-code-green">"currentColor"</span> <span class="bui-code-blue">width</span>=<span class="bui-code-green">"32"</span> <span class="bui-code-blue">height</span>=<span class="bui-code-green">"32"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;path</span> <span class="bui-code-blue">d</span>=<span class="bui-code-green">"M213.66,82.34l-56-56A8,8,0,0,0,152,24H56A16,16,0,0,0,40,40V216a16,16,0,0,0,16,16H200a16,16,0,0,0,16-16V88A8,8,0,0,0,213.66,82.34ZM152,88V44l44,44Z"</span><span class="bui-code-pink">/&gt;</span>
+<span class="bui-code-pink">&lt;/svg</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
+      </div>
+      </section>
+      <section class="bui-section" id="gallery"><div class="bui-section-heading"><div><span class="bui-eyebrow">GALLERY</span><h2>Find an icon</h2><p>Search, pick a style, then click any icon to open its details: every style, the HTML, SVG and CSS code, and a download.</p></div><span class="bui-step-count" id="iconCount"></span></div>
+        <div class="bui-gallery-toolbar">
+          <input class="bui-input" id="iconSearch" type="search" placeholder="Search icons… e.g. file, arrow, user" aria-label="Search icons" autocomplete="off">
+          <select class="bui-input" id="iconCategory" aria-label="Category"><option value="">All categories</option></select>
+          <div class="bui-gallery-weights" id="iconWeights" role="group" aria-label="Icon style"></div>
+        </div>
+        <div class="bui-gallery-meta" id="iconMeta"></div>
+        <div class="bui-gallery-grid" id="iconGrid"></div>
+        <div id="iconSentinel" style="height:1px"></div>
+        <dialog class="bui-gallery-dialog" id="iconDialog" aria-label="Icon details"></dialog>
+      </section>
+      <div class="bui-pager"><a class="bui-btn bui-btn-outline" href="loaders.html">← Loaders</a><a class="bui-btn bui-btn-primary" href="utilities.html">Utilities →</a></div>
+      <footer class="bui-footer"><span>© 2026 Baset UI. Built for makers.</span><span>Documentation · v1.0.0</span></footer>
+    </main>
+  </div>
+  <script src="../assets/js/baset-ui.js"></script>
+  <script src="../assets/icons/icons-data.js"></script>
+  <script src="../assets/js/icons-gallery.js"></script>
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Typography and shape — Baset UI</title>
+  <link rel="stylesheet" href="../assets/css/baset-ui.css">
+  <link rel="stylesheet" href="../assets/css/docs.css">
+
+  <script>try{if(localStorage.getItem('bui-theme')==='dark')document.documentElement.classList.add('bui-dark')}catch(e){}</script>
+</head>
+<body>
+  <div class="bui-app">
+    <aside class="bui-sidebar">
+      <a class="bui-brand" href="../index.html"><span class="bui-brand-mark">B</span><span>Baset UI<small>Component library</small></span></a>
+      <div class="bui-sidebar-label">GET STARTED</div>
+      <a class="bui-nav" href="../index.html#overview">Overview</a>
+      <a class="bui-nav" href="../index.html#installation">Installation</a>
+      <div class="bui-sidebar-label">COMPONENTS</div>
+      <a class="bui-nav" href="../components/buttons.html">Buttons</a>
+      <a class="bui-nav" href="../components/forms.html">Form controls</a>
+      <a class="bui-nav" href="../components/cards.html">Cards</a>
+      <a class="bui-nav" href="../components/alerts.html">Alerts</a>
+      <a class="bui-nav" href="../components/badges.html">Badges</a>
+      <a class="bui-nav" href="../components/loaders.html">Loaders</a>
+      <a class="bui-nav" href="../components/icons.html">Icons</a>
+      <a class="bui-nav" href="../components/utilities.html">Utilities</a>
+      <div class="bui-sidebar-label">CUSTOMIZE</div>
+      <a class="bui-nav" href="../customize/colors.html">Default colors</a>
+      <a class="bui-nav active" href="../customize/typography.html">Typography and shape</a>
+      <a class="bui-nav" href="../customize/playground.html">Playground</a>
+      <div class="bui-sidebar-bottom"><span class="bui-status-dot"></span> Baset UI <span class="bui-version">v1.0.0</span></div>
+    </aside>
+    <main class="bui-main">
+      <header class="bui-topbar"><div class="bui-breadcrumb"><a href="../index.html">Documentation</a> <span>/</span> Customize <span>/</span> Typography and shape</div><div class="bui-top-actions"><span class="bui-pill">Vanilla CSS + JS</span><button class="bui-icon-btn" id="themeToggle" type="button" aria-label="Toggle theme">☼</button></div></header>
+      <section class="bui-section" id="typography"><div class="bui-section-heading"><div><span class="bui-eyebrow">02 / CUSTOMIZE</span><h2>Typography and shape</h2><p>The font families, base size, corner radius and shadow, and how to change them.</p></div></div>
+      <div class="bui-token-cards">
+        <div class="bui-token-card"><code>--bui-font-body</code><div class="bui-sample" style="font-family:var(--bui-font-body)">The quick brown fox jumps over the lazy dog</div><small>DM Sans · body text, 14px base · weights 400, 500, 600, 700</small></div>
+        <div class="bui-token-card"><code>--bui-font-heading</code><div class="bui-sample" style="font-family:var(--bui-font-heading);font-weight:800;letter-spacing:-.8px">Build beautiful interfaces</div><small>Manrope · headings, numbers, brand · weights 400 to 800</small></div>
+      </div>
+      <div class="bui-token-cards">
+        <div class="bui-token-card"><code>--bui-radius</code><div class="bui-shape-box"></div><small>16px · cards and surfaces. Buttons use 9px, inputs 8px, badges 7px.</small></div>
+        <div class="bui-token-card"><code>--bui-shadow</code><div class="bui-shadow-box"></div><small>0 12px 32px rgba(39, 35, 92, .06) · soft elevation for cards</small></div>
+      </div>
+      <div class="bui-swatch-group"><h3>Defaults</h3><div class="bui-code-card"><div class="bui-code-head"><span><i></i> baset-ui.css</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">:root</span> {
+  <span class="bui-code-blue">--bui-font-body</span>: <span class="bui-code-green">'DM Sans', sans-serif</span>;
+  <span class="bui-code-blue">--bui-font-heading</span>: <span class="bui-code-green">Manrope, sans-serif</span>;
+}
+<span class="bui-code-pink">:root</span> {
+  <span class="bui-code-blue">--bui-radius</span>: <span class="bui-code-green">16px</span>;
+  <span class="bui-code-blue">--bui-shadow</span>: <span class="bui-code-green">0 12px 32px rgba(39, 35, 92, .06)</span>;
+}</code></pre></div></div>
+      <div class="bui-swatch-group"><h3>Use another font (for example Cairo for Arabic)</h3><div class="bui-code-card"><div class="bui-code-head"><span><i></i> theme.css</span><button class="bui-copy" type="button">Copy</button></div><pre><code>@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&amp;display=swap');
+
+<span class="bui-code-pink">:root</span> {
+  <span class="bui-code-blue">--bui-font-body</span>: <span class="bui-code-green">'Cairo', sans-serif</span>;
+  <span class="bui-code-blue">--bui-font-heading</span>: <span class="bui-code-green">'Cairo', sans-serif</span>;
+}</code></pre></div></div>
+      </section>
+      <div class="bui-pager"><a class="bui-btn bui-btn-outline" href="colors.html">← Default colors</a><a class="bui-btn bui-btn-primary" href="playground.html">Playground →</a></div>
+      <footer class="bui-footer"><span>© 2026 Baset UI. Built for makers.</span><span>Documentation · v1.0.0</span></footer>
+    </main>
+  </div>
+  <script src="../assets/js/baset-ui.js"></script>
+
+</body>
+</html>

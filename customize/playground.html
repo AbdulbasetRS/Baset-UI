@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Playground — Baset UI</title>
+  <link rel="stylesheet" href="../assets/css/baset-ui.css">
+  <link rel="stylesheet" href="../assets/css/docs.css">
+
+  <script>try{if(localStorage.getItem('bui-theme')==='dark')document.documentElement.classList.add('bui-dark')}catch(e){}</script>
+</head>
+<body>
+  <div class="bui-app">
+    <aside class="bui-sidebar">
+      <a class="bui-brand" href="../index.html"><span class="bui-brand-mark">B</span><span>Baset UI<small>Component library</small></span></a>
+      <div class="bui-sidebar-label">GET STARTED</div>
+      <a class="bui-nav" href="../index.html#overview">Overview</a>
+      <a class="bui-nav" href="../index.html#installation">Installation</a>
+      <div class="bui-sidebar-label">COMPONENTS</div>
+      <a class="bui-nav" href="../components/buttons.html">Buttons</a>
+      <a class="bui-nav" href="../components/forms.html">Form controls</a>
+      <a class="bui-nav" href="../components/cards.html">Cards</a>
+      <a class="bui-nav" href="../components/alerts.html">Alerts</a>
+      <a class="bui-nav" href="../components/badges.html">Badges</a>
+      <a class="bui-nav" href="../components/loaders.html">Loaders</a>
+      <a class="bui-nav" href="../components/icons.html">Icons</a>
+      <a class="bui-nav" href="../components/utilities.html">Utilities</a>
+      <div class="bui-sidebar-label">CUSTOMIZE</div>
+      <a class="bui-nav" href="../customize/colors.html">Default colors</a>
+      <a class="bui-nav" href="../customize/typography.html">Typography and shape</a>
+      <a class="bui-nav active" href="../customize/playground.html">Playground</a>
+      <div class="bui-sidebar-bottom"><span class="bui-status-dot"></span> Baset UI <span class="bui-version">v1.0.0</span></div>
+    </aside>
+    <main class="bui-main">
+      <header class="bui-topbar"><div class="bui-breadcrumb"><a href="../index.html">Documentation</a> <span>/</span> Customize <span>/</span> Playground</div><div class="bui-top-actions"><span class="bui-pill">Vanilla CSS + JS</span><button class="bui-icon-btn" id="themeToggle" type="button" aria-label="Toggle theme">☼</button></div></header>
+      <section class="bui-section" id="playground"><div class="bui-section-heading"><div><span class="bui-eyebrow">03 / CUSTOMIZE</span><h2>Playground</h2><p>Pick a primary color and a corner radius: this whole page updates live, and you get the CSS to copy.</p></div></div>
+      <div class="bui-playground">
+        <div class="bui-playground-controls">
+          <div class="bui-field">Primary color
+            <div class="bui-color-input"><input type="color" id="pgColor" aria-label="Primary color"><input class="bui-input" id="pgHex" maxlength="7" spellcheck="false" aria-label="Primary color hex"></div>
+          </div>
+          <div class="bui-field">Corner radius
+            <div class="bui-range-line"><input type="range" id="pgRadius" min="4" max="28" step="1"><output id="pgRadiusOut">16px</output></div>
+          </div>
+          <button type="button" class="bui-btn bui-btn-outline" id="pgReset">Reset</button>
+        </div>
+        <div class="bui-playground-preview">
+          <div>
+            <div class="bui-button-row"><button type="button" class="bui-btn bui-btn-primary">Primary</button><button type="button" class="bui-btn bui-btn-outline-primary">Outline</button><button type="button" class="bui-btn bui-btn-soft-primary">Soft</button><button type="button" class="bui-btn bui-btn-link">Link</button></div>
+            <label class="bui-field">Email address<input class="bui-input" type="email" placeholder="you@example.com"></label>
+            <div class="bui-badge-row"><span class="bui-badge bui-badge-primary">Primary</span><span class="bui-badge bui-badge-success">Success</span><span class="bui-badge bui-badge-warning">Pending</span></div>
+          </div>
+          <article class="bui-stat-card"><div class="bui-stat-top"><span class="bui-stat-icon bui-stat-icon-purple">↗</span><span class="bui-stat-change">+12.8%</span></div><span class="bui-stat-label">Total revenue</span><strong>$24,580</strong><div class="bui-progress"><span style="background:var(--bui-primary);width:72%"></span></div></article>
+        </div>
+        <div class="bui-code-card"><div class="bui-code-head"><span><i></i> theme.css</span><button class="bui-copy" type="button">Copy</button></div><pre><code id="pgCode"></code></pre></div>
+      </div>
+      </section>
+      <div class="bui-pager"><a class="bui-btn bui-btn-outline" href="typography.html">← Typography and shape</a><span></span></div>
+      <footer class="bui-footer"><span>© 2026 Baset UI. Built for makers.</span><span>Documentation · v1.0.0</span></footer>
+    </main>
+  </div>
+  <script src="../assets/js/baset-ui.js"></script>
+  <script src="../assets/js/customize.js"></script>
+</body>
+</html>

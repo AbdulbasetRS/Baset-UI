@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Form controls — Baset UI</title>
+  <link rel="stylesheet" href="../assets/css/baset-ui.css">
+  <link rel="stylesheet" href="../assets/css/docs.css">
+
+  <script>try{if(localStorage.getItem('bui-theme')==='dark')document.documentElement.classList.add('bui-dark')}catch(e){}</script>
+</head>
+<body>
+  <div class="bui-app">
+    <aside class="bui-sidebar">
+      <a class="bui-brand" href="../index.html"><span class="bui-brand-mark">B</span><span>Baset UI<small>Component library</small></span></a>
+      <div class="bui-sidebar-label">GET STARTED</div>
+      <a class="bui-nav" href="../index.html#overview">Overview</a>
+      <a class="bui-nav" href="../index.html#installation">Installation</a>
+      <div class="bui-sidebar-label">COMPONENTS</div>
+      <a class="bui-nav" href="../components/buttons.html">Buttons</a>
+      <a class="bui-nav active" href="../components/forms.html">Form controls</a>
+      <a class="bui-nav" href="../components/cards.html">Cards</a>
+      <a class="bui-nav" href="../components/alerts.html">Alerts</a>
+      <a class="bui-nav" href="../components/badges.html">Badges</a>
+      <a class="bui-nav" href="../components/loaders.html">Loaders</a>
+      <a class="bui-nav" href="../components/icons.html">Icons</a>
+      <a class="bui-nav" href="../components/utilities.html">Utilities</a>
+      <div class="bui-sidebar-label">CUSTOMIZE</div>
+      <a class="bui-nav" href="../customize/colors.html">Default colors</a>
+      <a class="bui-nav" href="../customize/typography.html">Typography and shape</a>
+      <a class="bui-nav" href="../customize/playground.html">Playground</a>
+      <div class="bui-sidebar-bottom"><span class="bui-status-dot"></span> Baset UI <span class="bui-version">v1.0.0</span></div>
+    </aside>
+    <main class="bui-main">
+      <header class="bui-topbar"><div class="bui-breadcrumb"><a href="../index.html">Documentation</a> <span>/</span> Components <span>/</span> Form controls</div><div class="bui-top-actions"><span class="bui-pill">Vanilla CSS + JS</span><button class="bui-icon-btn" id="themeToggle" type="button" aria-label="Toggle theme">☼</button></div></header>
+      <section class="bui-section" id="forms"><div class="bui-section-heading"><div><span class="bui-eyebrow">02 / COMPONENTS</span><h2>Form controls</h2><p>Clear labels, comfortable spacing, and accessible focus states.</p></div><span class="bui-step-count">5 examples</span></div>
+      <div class="bui-demo-stack">
+<article class="bui-demo-card" id="text-input"><div class="bui-demo-title">Text input <span>.bui-field · .bui-input</span></div><div class="bui-demo-content"><label class="bui-field">Full name
+  <input class="bui-input" placeholder="e.g. Abdulbaset Sayed">
+</label></div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-field"</span><span class="bui-code-pink">&gt;</span>Full name
+  <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-input"</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">"e.g. Abdulbaset Sayed"</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
+<article class="bui-demo-card" id="email-input"><div class="bui-demo-title">Email input <span>type="email"</span></div><div class="bui-demo-content"><label class="bui-field">Email address
+  <input class="bui-input" type="email" placeholder="you@example.com">
+</label></div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-field"</span><span class="bui-code-pink">&gt;</span>Email address
+  <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-input"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"email"</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">"you@example.com"</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
+<article class="bui-demo-card" id="select"><div class="bui-demo-title">Select <span>.bui-input on &lt;select&gt;</span></div><div class="bui-demo-content"><label class="bui-field">Department
+  <select class="bui-input">
+    <option>Select department</option>
+    <option>Engineering</option>
+    <option>Design</option>
+    <option>Marketing</option>
+  </select>
+</label></div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-field"</span><span class="bui-code-pink">&gt;</span>Department
+  <span class="bui-code-pink">&lt;select</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-input"</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;option</span><span class="bui-code-pink">&gt;</span>Select department<span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;option</span><span class="bui-code-pink">&gt;</span>Engineering<span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;option</span><span class="bui-code-pink">&gt;</span>Design<span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;option</span><span class="bui-code-pink">&gt;</span>Marketing<span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;/select</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
+<article class="bui-demo-card" id="checkbox"><div class="bui-demo-title">Checkbox <span>.bui-checkline</span></div><div class="bui-demo-content"><label class="bui-checkline">
+  <input type="checkbox" checked>
+  <span>Send me product updates</span>
+</label></div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-checkline"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"checkbox"</span> <span class="bui-code-blue">checked</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;span</span><span class="bui-code-pink">&gt;</span>Send me product updates<span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
+<article class="bui-demo-card" id="form-layout"><div class="bui-demo-title">Form layout <span>.bui-form-grid · 2 columns</span></div><div class="bui-demo-content"><div class="bui-form-grid">
+  <label class="bui-field">Full name
+    <input class="bui-input" placeholder="e.g. Abdulbaset Sayed">
+  </label>
+  <label class="bui-field">Email address
+    <input class="bui-input" type="email" placeholder="you@example.com">
+  </label>
+  <label class="bui-field">Department
+    <select class="bui-input">
+      <option>Select department</option>
+      <option>Engineering</option>
+      <option>Design</option>
+      <option>Marketing</option>
+    </select>
+  </label>
+  <div class="bui-field">
+    <span>Status</span>
+    <label class="bui-checkline">
+      <input type="checkbox" checked>
+      <span>Send me product updates</span>
+    </label>
+  </div>
+</div></div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-form-grid"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-field"</span><span class="bui-code-pink">&gt;</span>Full name
+    <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-input"</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">"e.g. Abdulbaset Sayed"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-field"</span><span class="bui-code-pink">&gt;</span>Email address
+    <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-input"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"email"</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">"you@example.com"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-field"</span><span class="bui-code-pink">&gt;</span>Department
+    <span class="bui-code-pink">&lt;select</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-input"</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;option</span><span class="bui-code-pink">&gt;</span>Select department<span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;option</span><span class="bui-code-pink">&gt;</span>Engineering<span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;option</span><span class="bui-code-pink">&gt;</span>Design<span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;option</span><span class="bui-code-pink">&gt;</span>Marketing<span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;/select</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-field"</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;span</span><span class="bui-code-pink">&gt;</span>Status<span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-checkline"</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"checkbox"</span> <span class="bui-code-blue">checked</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;span</span><span class="bui-code-pink">&gt;</span>Send me product updates<span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
+      </div>
+      </section>
+      <div class="bui-pager"><a class="bui-btn bui-btn-outline" href="buttons.html">← Buttons</a><a class="bui-btn bui-btn-primary" href="cards.html">Cards →</a></div>
+      <footer class="bui-footer"><span>© 2026 Baset UI. Built for makers.</span><span>Documentation · v1.0.0</span></footer>
+    </main>
+  </div>
+  <script src="../assets/js/baset-ui.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Badges — Baset UI</title>
+  <link rel="stylesheet" href="../assets/css/baset-ui.css">
+  <link rel="stylesheet" href="../assets/css/docs.css">
+
+  <script>try{if(localStorage.getItem('bui-theme')==='dark')document.documentElement.classList.add('bui-dark')}catch(e){}</script>
+</head>
+<body>
+  <div class="bui-app">
+    <aside class="bui-sidebar">
+      <a class="bui-brand" href="../index.html"><span class="bui-brand-mark">B</span><span>Baset UI<small>Component library</small></span></a>
+      <div class="bui-sidebar-label">GET STARTED</div>
+      <a class="bui-nav" href="../index.html#overview">Overview</a>
+      <a class="bui-nav" href="../index.html#installation">Installation</a>
+      <div class="bui-sidebar-label">COMPONENTS</div>
+      <a class="bui-nav" href="../components/buttons.html">Buttons</a>
+      <a class="bui-nav" href="../components/forms.html">Form controls</a>
+      <a class="bui-nav" href="../components/cards.html">Cards</a>
+      <a class="bui-nav" href="../components/alerts.html">Alerts</a>
+      <a class="bui-nav active" href="../components/badges.html">Badges</a>
+      <a class="bui-nav" href="../components/loaders.html">Loaders</a>
+      <a class="bui-nav" href="../components/icons.html">Icons</a>
+      <a class="bui-nav" href="../components/utilities.html">Utilities</a>
+      <div class="bui-sidebar-label">CUSTOMIZE</div>
+      <a class="bui-nav" href="../customize/colors.html">Default colors</a>
+      <a class="bui-nav" href="../customize/typography.html">Typography and shape</a>
+      <a class="bui-nav" href="../customize/playground.html">Playground</a>
+      <div class="bui-sidebar-bottom"><span class="bui-status-dot"></span> Baset UI <span class="bui-version">v1.0.0</span></div>
+    </aside>
+    <main class="bui-main">
+      <header class="bui-topbar"><div class="bui-breadcrumb"><a href="../index.html">Documentation</a> <span>/</span> Components <span>/</span> Badges</div><div class="bui-top-actions"><span class="bui-pill">Vanilla CSS + JS</span><button class="bui-icon-btn" id="themeToggle" type="button" aria-label="Toggle theme">☼</button></div></header>
+      <section class="bui-section" id="badges"><div class="bui-section-heading"><div><span class="bui-eyebrow">05 / COMPONENTS</span><h2>Badges</h2><p>Compact labels for status, categories, and counts.</p></div><span class="bui-step-count">1 example</span></div>
+      <div class="bui-demo-stack">
+<article class="bui-demo-card" id="variants"><div class="bui-demo-title">Variants <span>6 styles</span></div><div class="bui-demo-content"><div class="bui-badge-row">
+  <span class="bui-badge bui-badge-primary">Primary</span>
+  <span class="bui-badge bui-badge-success">Success</span>
+  <span class="bui-badge bui-badge-warning">Pending</span>
+  <span class="bui-badge bui-badge-danger">Failed</span>
+  <span class="bui-badge bui-badge-neutral">Archived</span>
+  <span class="bui-badge bui-badge-info">New</span>
+</div></div><div class="bui-demo-code">.bui-badge .bui-badge-primary | -success | -warning | -danger | -neutral | -info</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-badge-row"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-badge bui-badge-primary"</span><span class="bui-code-pink">&gt;</span>Primary<span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-badge bui-badge-success"</span><span class="bui-code-pink">&gt;</span>Success<span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-badge bui-badge-warning"</span><span class="bui-code-pink">&gt;</span>Pending<span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-badge bui-badge-danger"</span><span class="bui-code-pink">&gt;</span>Failed<span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-badge bui-badge-neutral"</span><span class="bui-code-pink">&gt;</span>Archived<span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-badge bui-badge-info"</span><span class="bui-code-pink">&gt;</span>New<span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
+      </div>
+      </section>
+      <div class="bui-pager"><a class="bui-btn bui-btn-outline" href="alerts.html">← Alerts</a><a class="bui-btn bui-btn-primary" href="loaders.html">Loaders →</a></div>
+      <footer class="bui-footer"><span>© 2026 Baset UI. Built for makers.</span><span>Documentation · v1.0.0</span></footer>
+    </main>
+  </div>
+  <script src="../assets/js/baset-ui.js"></script>
+
+</body>
+</html>

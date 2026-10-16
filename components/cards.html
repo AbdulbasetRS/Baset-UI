@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Cards — Baset UI</title>
+  <link rel="stylesheet" href="../assets/css/baset-ui.css">
+  <link rel="stylesheet" href="../assets/css/docs.css">
+
+  <script>try{if(localStorage.getItem('bui-theme')==='dark')document.documentElement.classList.add('bui-dark')}catch(e){}</script>
+</head>
+<body>
+  <div class="bui-app">
+    <aside class="bui-sidebar">
+      <a class="bui-brand" href="../index.html"><span class="bui-brand-mark">B</span><span>Baset UI<small>Component library</small></span></a>
+      <div class="bui-sidebar-label">GET STARTED</div>
+      <a class="bui-nav" href="../index.html#overview">Overview</a>
+      <a class="bui-nav" href="../index.html#installation">Installation</a>
+      <div class="bui-sidebar-label">COMPONENTS</div>
+      <a class="bui-nav" href="../components/buttons.html">Buttons</a>
+      <a class="bui-nav" href="../components/forms.html">Form controls</a>
+      <a class="bui-nav active" href="../components/cards.html">Cards</a>
+      <a class="bui-nav" href="../components/alerts.html">Alerts</a>
+      <a class="bui-nav" href="../components/badges.html">Badges</a>
+      <a class="bui-nav" href="../components/loaders.html">Loaders</a>
+      <a class="bui-nav" href="../components/icons.html">Icons</a>
+      <a class="bui-nav" href="../components/utilities.html">Utilities</a>
+      <div class="bui-sidebar-label">CUSTOMIZE</div>
+      <a class="bui-nav" href="../customize/colors.html">Default colors</a>
+      <a class="bui-nav" href="../customize/typography.html">Typography and shape</a>
+      <a class="bui-nav" href="../customize/playground.html">Playground</a>
+      <div class="bui-sidebar-bottom"><span class="bui-status-dot"></span> Baset UI <span class="bui-version">v1.0.0</span></div>
+    </aside>
+    <main class="bui-main">
+      <header class="bui-topbar"><div class="bui-breadcrumb"><a href="../index.html">Documentation</a> <span>/</span> Components <span>/</span> Cards</div><div class="bui-top-actions"><span class="bui-pill">Vanilla CSS + JS</span><button class="bui-icon-btn" id="themeToggle" type="button" aria-label="Toggle theme">☼</button></div></header>
+      <section class="bui-section" id="cards"><div class="bui-section-heading"><div><span class="bui-eyebrow">03 / COMPONENTS</span><h2>Cards</h2><p>Flexible surfaces for dashboards, content, and summaries.</p></div><span class="bui-step-count">4 examples</span></div>
+      <div class="bui-demo-stack">
+<article class="bui-demo-card" id="stat-sparkline"><div class="bui-demo-title">Stat card — sparkline <span>.bui-stat-card</span></div><div class="bui-demo-content bui-demo-narrow"><article class="bui-stat-card">
+  <div class="bui-stat-top">
+    <span class="bui-stat-icon bui-stat-icon-purple">↗</span>
+    <span class="bui-stat-change">+12.8%</span>
+  </div>
+  <span class="bui-stat-label">Total revenue</span>
+  <strong>$24,580</strong>
+  <div class="bui-sparkline"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+</article></div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;article</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-stat-card"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-stat-top"</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-stat-icon bui-stat-icon-purple"</span><span class="bui-code-pink">&gt;</span>↗<span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-stat-change"</span><span class="bui-code-pink">&gt;</span>+12.8%<span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-stat-label"</span><span class="bui-code-pink">&gt;</span>Total revenue<span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;strong</span><span class="bui-code-pink">&gt;</span>$24,580<span class="bui-code-pink">&lt;/strong</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-sparkline"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;i</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/i</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;i</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/i</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;i</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/i</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;i</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/i</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;i</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/i</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;i</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/i</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;i</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/i</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;i</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/i</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;i</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/i</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;i</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/i</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;i</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/i</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;i</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/i</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/article</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
+<article class="bui-demo-card" id="stat-progress"><div class="bui-demo-title">Stat card — progress <span>.bui-progress</span></div><div class="bui-demo-content bui-demo-narrow"><article class="bui-stat-card">
+  <div class="bui-stat-top">
+    <span class="bui-stat-icon bui-stat-icon-blue">◉</span>
+    <span class="bui-stat-change">+8.2%</span>
+  </div>
+  <span class="bui-stat-label">Active users</span>
+  <strong>8,249</strong>
+  <div class="bui-progress"><span style="width:72%"></span></div>
+  <small class="bui-muted">72% of monthly target</small>
+</article></div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;article</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-stat-card"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-stat-top"</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-stat-icon bui-stat-icon-blue"</span><span class="bui-code-pink">&gt;</span>◉<span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-stat-change"</span><span class="bui-code-pink">&gt;</span>+8.2%<span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-stat-label"</span><span class="bui-code-pink">&gt;</span>Active users<span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;strong</span><span class="bui-code-pink">&gt;</span>8,249<span class="bui-code-pink">&lt;/strong</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-progress"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">style</span>=<span class="bui-code-green">"width:72%"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;small</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-muted"</span><span class="bui-code-pink">&gt;</span>72% of monthly target<span class="bui-code-pink">&lt;/small</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/article</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
+<article class="bui-demo-card" id="stat-tasks"><div class="bui-demo-title">Stat card — task lines <span>.bui-task-lines</span></div><div class="bui-demo-content bui-demo-narrow"><article class="bui-stat-card">
+  <div class="bui-stat-top">
+    <span class="bui-stat-icon bui-stat-icon-orange">⌁</span>
+    <span class="bui-stat-neutral">This week</span>
+  </div>
+  <span class="bui-stat-label">Open tasks</span>
+  <strong>36</strong>
+  <div class="bui-task-lines"><i></i><i></i><i></i></div>
+</article></div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;article</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-stat-card"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-stat-top"</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-stat-icon bui-stat-icon-orange"</span><span class="bui-code-pink">&gt;</span>⌁<span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-stat-neutral"</span><span class="bui-code-pink">&gt;</span>This week<span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-stat-label"</span><span class="bui-code-pink">&gt;</span>Open tasks<span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;strong</span><span class="bui-code-pink">&gt;</span>36<span class="bui-code-pink">&lt;/strong</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-task-lines"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;i</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/i</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;i</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/i</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;i</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/i</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/article</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
+<article class="bui-demo-card" id="cards-grid"><div class="bui-demo-title">Cards grid <span>.bui-cards-grid · 3 columns</span></div><div class="bui-demo-content"><div class="bui-cards-grid">
+  <article class="bui-stat-card">
+    <div class="bui-stat-top">
+      <span class="bui-stat-icon bui-stat-icon-purple">↗</span>
+      <span class="bui-stat-change">+12.8%</span>
+    </div>
+    <span class="bui-stat-label">Total revenue</span>
+    <strong>$24,580</strong>
+    <div class="bui-sparkline"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+  </article>
+  <article class="bui-stat-card">
+    <div class="bui-stat-top">
+      <span class="bui-stat-icon bui-stat-icon-blue">◉</span>
+      <span class="bui-stat-change">+8.2%</span>
+    </div>
+    <span class="bui-stat-label">Active users</span>
+    <strong>8,249</strong>
+    <div class="bui-progress"><span style="width:72%"></span></div>
+    <small class="bui-muted">72% of monthly target</small>
+  </article>
+  <article class="bui-stat-card">
+    <div class="bui-stat-top">
+      <span class="bui-stat-icon bui-stat-icon-orange">⌁</span>
+      <span class="bui-stat-neutral">This week</span>
+    </div>
+    <span class="bui-stat-label">Open tasks</span>
+    <strong>36</strong>
+    <div class="bui-task-lines"><i></i><i></i><i></i></div>
+  </article>
+</div></div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-cards-grid"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;article</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-stat-card"</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-stat-top"</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-stat-icon bui-stat-icon-purple"</span><span class="bui-code-pink">&gt;</span>↗<span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-stat-change"</span><span class="bui-code-pink">&gt;</span>+12.8%<span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-stat-label"</span><span class="bui-code-pink">&gt;</span>Total revenue<span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;strong</span><span class="bui-code-pink">&gt;</span>$24,580<span class="bui-code-pink">&lt;/strong</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-sparkline"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;i</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/i</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;i</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/i</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;i</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/i</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;i</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/i</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;i</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/i</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;i</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/i</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;i</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/i</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;i</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/i</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;i</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/i</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;i</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/i</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;i</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/i</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;i</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/i</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;/article</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;article</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-stat-card"</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-stat-top"</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-stat-icon bui-stat-icon-blue"</span><span class="bui-code-pink">&gt;</span>◉<span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-stat-change"</span><span class="bui-code-pink">&gt;</span>+8.2%<span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-stat-label"</span><span class="bui-code-pink">&gt;</span>Active users<span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;strong</span><span class="bui-code-pink">&gt;</span>8,249<span class="bui-code-pink">&lt;/strong</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-progress"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">style</span>=<span class="bui-code-green">"width:72%"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;small</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-muted"</span><span class="bui-code-pink">&gt;</span>72% of monthly target<span class="bui-code-pink">&lt;/small</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;/article</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;article</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-stat-card"</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-stat-top"</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-stat-icon bui-stat-icon-orange"</span><span class="bui-code-pink">&gt;</span>⌁<span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-stat-neutral"</span><span class="bui-code-pink">&gt;</span>This week<span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-stat-label"</span><span class="bui-code-pink">&gt;</span>Open tasks<span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;strong</span><span class="bui-code-pink">&gt;</span>36<span class="bui-code-pink">&lt;/strong</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-task-lines"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;i</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/i</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;i</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/i</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;i</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/i</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;/article</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
+      </div>
+      </section>
+      <div class="bui-pager"><a class="bui-btn bui-btn-outline" href="forms.html">← Form controls</a><a class="bui-btn bui-btn-primary" href="alerts.html">Alerts →</a></div>
+      <footer class="bui-footer"><span>© 2026 Baset UI. Built for makers.</span><span>Documentation · v1.0.0</span></footer>
+    </main>
+  </div>
+  <script src="../assets/js/baset-ui.js"></script>
+
+</body>
+</html>
