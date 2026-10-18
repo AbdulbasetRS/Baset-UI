@@ -247,6 +247,8 @@ h1 em { font-style: normal; color: var(--bui-primary); }
 @media (max-width: 1100px) { .bui-tp { grid-template-columns: 1fr; } .bui-tp-panel { position: static; max-height: none; } }
 
 /* ---------- Direction (RTL / LTR) ---------- */
+.bui-dir-btn { width: auto; min-width: 35px; padding: 0 9px; font-size: 11px; font-weight: 800; letter-spacing: .5px; color: var(--bui-ink); }
+.bui-dir-btn:focus-visible { outline: 2px solid var(--bui-primary); outline-offset: 2px; }
 [dir="rtl"] .bui-flip { display: inline-block; transform: scaleX(-1); }
 .bui-dir-switch { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin: 0 0 18px; }
 .bui-dir-switch .bui-btn[aria-pressed="true"] { background: var(--bui-primary); border-color: var(--bui-primary); color: #fff; }

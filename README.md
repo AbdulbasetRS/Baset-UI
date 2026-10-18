@@ -329,7 +329,7 @@ With `baset-ui.js`, any element with `id="themeToggle"` becomes a toggle button.
 | Feature | How to use |
 | --- | --- |
 | Theme toggle | Element with `id="themeToggle"` |
-| Direction toggle | Any element with `data-bui-dir="rtl"` or `data-bui-dir="ltr"`; sets `dir` on `<html>` and saves it in `localStorage` (`bui-dir`) |
+| Direction toggle | Element with `id="dirToggle"` (switches RTL/LTR; its label shows the direction you switch to). Or any element with `data-bui-dir="rtl"` or `data-bui-dir="ltr"`; sets `dir` on `<html>` and saves it in `localStorage` (`bui-dir`) |
 | Dismissible alerts | `<button class="bui-dismiss">` inside `.bui-alert` (works for alerts added later too) |
 | Copy code | `<button class="bui-copy">` inside a `.bui-code-card`; copies the `<code>` text, or the `data-copy` attribute if present |
 | Icons gallery | `assets/js/icons-gallery.js` + `assets/icons/icons-data.js` on `components/icons.html` only |

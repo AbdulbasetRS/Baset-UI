@@ -19,7 +19,9 @@
 
   /* ---------- Direction (RTL / LTR, persisted) ---------- */
   const DIR_KEY = 'bui-dir';
+  const dirToggle = document.getElementById('dirToggle');
   const syncDirButtons = () => {
+    if (dirToggle) dirToggle.textContent = root.dir === 'rtl' ? 'LTR' : 'RTL'; // label = direction you switch to
     document.querySelectorAll('[data-bui-dir]').forEach((btn) => {
       btn.setAttribute('aria-pressed', String(btn.dataset.buiDir === root.dir));
     });
@@ -34,6 +36,7 @@
   syncDirButtons();
 
   document.addEventListener('click', (event) => {
+    if (event.target.closest('#dirToggle')) { setDir(root.dir === 'rtl' ? 'ltr' : 'rtl'); return; }
     const btn = event.target.closest('[data-bui-dir]');
     if (btn) setDir(btn.dataset.buiDir);
   });
