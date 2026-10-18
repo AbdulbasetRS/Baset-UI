@@ -8,7 +8,7 @@ It is both a **library** you can drop into any project and a **personal referenc
 
 Explore the full Baset UI documentation website, including interactive component examples, code snippets, customization tools, and the searchable icon gallery.
 
-**[Open Baset UI Live Preview](https://abdulbasetrs.github.io/Baset-UI/)**
+**<a href="https://abdulbasetrs.github.io/Baset-UI/" target="_blank" rel="noopener noreferrer">Open Baset UI Live Preview ↗</a>**
 
 - Version: `1.0.0`
 - Class prefix: `bui-` (e.g. `.bui-btn`)
@@ -96,21 +96,13 @@ Use Baset UI directly from GitHub Pages without downloading or copying the libra
 
 ```html
 <!-- Baset UI Styles -->
-<link
-    rel="stylesheet"
-    href="https://abdulbasetrs.github.io/Baset-UI/assets/css/baset-ui.css"
->
+<link rel="stylesheet" href="https://abdulbasetrs.github.io/Baset-UI/assets/css/baset-ui.css">
 
 <!-- Baset Icons (Optional) -->
-<link
-    rel="stylesheet"
-    href="https://abdulbasetrs.github.io/Baset-UI/assets/css/baset-icons.css"
->
+<link rel="stylesheet" href="https://abdulbasetrs.github.io/Baset-UI/assets/css/baset-icons.css">
 
 <!-- Baset UI JavaScript (Optional) -->
-<script
-    src="https://abdulbasetrs.github.io/Baset-UI/assets/js/baset-ui.js"
-></script>
+<script src="https://abdulbasetrs.github.io/Baset-UI/assets/js/baset-ui.js"></script>
 ```
 
 ### Notes
