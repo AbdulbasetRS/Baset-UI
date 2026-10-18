@@ -4,6 +4,12 @@ A lightweight, responsive, Bootstrap-inspired UI library built with **vanilla HT
 
 It is both a **library** you can drop into any project and a **personal reference**: every component has its own documentation page with all of its examples, the exact code, and a **Copy** button.
 
+## Live Preview
+
+Explore the full Baset UI documentation website, including interactive component examples, code snippets, customization tools, and the searchable icon gallery.
+
+**[Open Baset UI Live Preview](https://abdulbasetrs.github.io/Baset-UI/)**
+
 - Version: `1.0.0`
 - Class prefix: `bui-` (e.g. `.bui-btn`)
 - CSS variables prefix: `--bui-` (e.g. `--bui-primary`)
@@ -81,6 +87,39 @@ Notes:
 
 - **`baset-ui.css` is the only stylesheet you need.** `docs.css` styles the documentation pages only (sidebar, hero, demo and code cards) — do not ship it in your projects.
 - `baset-ui.js` is optional. Without it everything still looks right; you only lose the interactions listed in [JavaScript behaviors](#javascript-behaviors).
+
+## CDN
+
+Use Baset UI directly from GitHub Pages without downloading or copying the library files into your project.
+
+### Include CSS and JavaScript
+
+```html
+<!-- Baset UI Styles -->
+<link
+    rel="stylesheet"
+    href="https://abdulbasetrs.github.io/Baset-UI/assets/css/baset-ui.css"
+>
+
+<!-- Baset Icons (Optional) -->
+<link
+    rel="stylesheet"
+    href="https://abdulbasetrs.github.io/Baset-UI/assets/css/baset-icons.css"
+>
+
+<!-- Baset UI JavaScript (Optional) -->
+<script
+    src="https://abdulbasetrs.github.io/Baset-UI/assets/js/baset-ui.js"
+></script>
+```
+
+### Notes
+
+- `baset-ui.css` contains the library styles and components.
+- `baset-ui.js` is optional and enables supported interactive behaviors.
+- No build step or external JavaScript dependencies are required.
+- An internet connection is required to load the files.
+- Documentation styles (`docs.css`) are not needed in your project.
 
 ## Project structure
 
