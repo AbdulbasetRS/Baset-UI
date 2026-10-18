@@ -131,7 +131,8 @@ baset-ui/
 │   ├── colors.html             # Default colors (light + dark values, copy var())
 │   ├── typography.html         # Fonts, font size, radius, shadow
 │   ├── theme.html              # How the tokens work, theme colors, scales, radius, spacing, dark mode
-│   └── token-playground.html   # Live token editor that generates CSS
+│   ├── token-playground.html   # Live token editor that generates CSS
+│   └── direction.html          # RTL / LTR guide with live examples
 ├── assets/
 │   ├── css/
 │   │   ├── baset-ui.css        # THE LIBRARY: tokens, base, components, dark theme
@@ -307,6 +308,7 @@ If you change a color on an element instead of `:root`, re-declare the derived t
 - `customize/typography.html` — fonts, font size, radius and shadow.
 - `customize/theme.html` — how the tokens are built, the six tokens of each theme color, color scales, radius/spacing, dark mode, and how to override them.
 - `customize/token-playground.html` — edit theme colors, radius, spacer and font size, preview in light or dark, and copy the generated CSS. It only changes the preview, not the files.
+- `customize/direction.html` — switch the page between RTL and LTR, live examples in both directions, `dir` usage and direction-safe CSS (logical properties).
 
 ## Dark mode
 
@@ -327,6 +329,7 @@ With `baset-ui.js`, any element with `id="themeToggle"` becomes a toggle button.
 | Feature | How to use |
 | --- | --- |
 | Theme toggle | Element with `id="themeToggle"` |
+| Direction toggle | Any element with `data-bui-dir="rtl"` or `data-bui-dir="ltr"`; sets `dir` on `<html>` and saves it in `localStorage` (`bui-dir`) |
 | Dismissible alerts | `<button class="bui-dismiss">` inside `.bui-alert` (works for alerts added later too) |
 | Copy code | `<button class="bui-copy">` inside a `.bui-code-card`; copies the `<code>` text, or the `data-copy` attribute if present |
 | Icons gallery | `assets/js/icons-gallery.js` + `assets/icons/icons-data.js` on `components/icons.html` only |

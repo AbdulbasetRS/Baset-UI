@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="../assets/css/baset-ui.css">
   <link rel="stylesheet" href="../assets/css/docs.css">
 
-  <script>try{if(localStorage.getItem('bui-theme')==='dark')document.documentElement.classList.add('bui-dark')}catch(e){}</script>
+  <script>try{if(localStorage.getItem('bui-theme')==='dark')document.documentElement.classList.add('bui-dark');var d=localStorage.getItem('bui-dir');if(d==='rtl'||d==='ltr')document.documentElement.dir=d}catch(e){}</script>
 </head>
 <body>
   <div class="bui-app">
@@ -30,6 +30,7 @@
       <a class="bui-nav active" href="../customize/typography.html">Typography and shape</a>
       <a class="bui-nav" href="../customize/theme.html">Theme</a>
       <a class="bui-nav" href="../customize/token-playground.html">Token playground</a>
+      <a class="bui-nav" href="../customize/direction.html">Direction (RTL / LTR)</a>
       <div class="bui-sidebar-bottom"><span class="bui-status-dot"></span> Baset UI <span class="bui-version">v1.0.0</span></div>
     </aside>
     <main class="bui-main">
@@ -61,7 +62,7 @@
   <span class="bui-code-blue">--bui-font-heading</span>: <span class="bui-code-green">'Cairo', sans-serif</span>;
 }</code></pre></div></div>
       </section>
-      <div class="bui-pager"><a class="bui-btn bui-btn-outline" href="colors.html">← Default colors</a><a class="bui-btn bui-btn-primary" href="theme.html">Theme →</a></div>
+      <div class="bui-pager"><a class="bui-btn bui-btn-outline" href="colors.html"><span class="bui-flip">←</span> Default colors</a><a class="bui-btn bui-btn-primary" href="theme.html">Theme <span class="bui-flip">→</span></a></div>
       <footer class="bui-footer"><span>© 2026 Baset UI. Built for makers.</span><span>Documentation · v1.0.0</span></footer>
     </main>
   </div>

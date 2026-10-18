@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Direction (RTL / LTR) — Baset UI</title>
+  <link rel="stylesheet" href="../assets/css/baset-ui.css">
+  <link rel="stylesheet" href="../assets/css/docs.css">
+
+  <script>try{if(localStorage.getItem('bui-theme')==='dark')document.documentElement.classList.add('bui-dark');var d=localStorage.getItem('bui-dir');if(d==='rtl'||d==='ltr')document.documentElement.dir=d}catch(e){}</script>
+</head>
+<body>
+  <div class="bui-app">
+    <aside class="bui-sidebar">
+      <a class="bui-brand" href="../index.html"><span class="bui-brand-mark">B</span><span>Baset UI<small>Component library</small></span></a>
+      <div class="bui-sidebar-label">GET STARTED</div>
+      <a class="bui-nav" href="../index.html#overview">Overview</a>
+      <a class="bui-nav" href="../index.html#installation">Installation</a>
+      <div class="bui-sidebar-label">COMPONENTS</div>
+      <a class="bui-nav" href="../components/buttons.html">Buttons</a>
+      <a class="bui-nav" href="../components/forms.html">Form controls</a>
+      <a class="bui-nav" href="../components/cards.html">Cards</a>
+      <a class="bui-nav" href="../components/alerts.html">Alerts</a>
+      <a class="bui-nav" href="../components/badges.html">Badges</a>
+      <a class="bui-nav" href="../components/loaders.html">Loaders</a>
+      <a class="bui-nav" href="../components/icons.html">Icons</a>
+      <a class="bui-nav" href="../components/utilities.html">Utilities</a>
+      <div class="bui-sidebar-label">CUSTOMIZE</div>
+      <a class="bui-nav" href="../customize/colors.html">Default colors</a>
+      <a class="bui-nav" href="../customize/typography.html">Typography and shape</a>
+      <a class="bui-nav" href="../customize/theme.html">Theme</a>
+      <a class="bui-nav" href="../customize/token-playground.html">Token playground</a>
+      <a class="bui-nav active" href="../customize/direction.html">Direction (RTL / LTR)</a>
+      <div class="bui-sidebar-bottom"><span class="bui-status-dot"></span> Baset UI <span class="bui-version">v1.0.0</span></div>
+    </aside>
+    <main class="bui-main">
+      <header class="bui-topbar"><div class="bui-breadcrumb"><a href="../index.html">Documentation</a> <span>/</span> Customize <span>/</span> Direction (RTL / LTR)</div><div class="bui-top-actions"><span class="bui-pill">Vanilla CSS + JS</span><button class="bui-icon-btn" id="themeToggle" type="button" aria-label="Toggle theme">☼</button></div></header>
+      <section class="bui-section" id="direction"><div class="bui-section-heading"><div><span class="bui-eyebrow">05 / CUSTOMIZE</span><h2>Direction (RTL / LTR)</h2><p>Baset UI follows the nearest <code>dir</code> attribute. Switch the whole documentation between right-to-left and left-to-right, and see how components mirror.</p></div></div>
+      <div class="bui-dir-switch" role="group" aria-label="Page direction">
+        <button class="bui-btn bui-btn-outline" type="button" data-bui-dir="ltr" aria-pressed="true">LTR · Left to right</button>
+        <button class="bui-btn bui-btn-outline" type="button" data-bui-dir="rtl" aria-pressed="false">RTL · Right to left</button>
+      </div>
+      <p class="bui-doc-note">The buttons above change <code>dir</code> on the whole page (sidebar included) and remember the choice in <code>localStorage</code> (<code>bui-dir</code>). The two panels below are always shown in a fixed direction, so you can compare them side by side.</p>
+      <div class="bui-dir-demo">
+        <div class="bui-dir-pane" dir="ltr"><small dir="ltr">dir="ltr"</small>
+          <div class="bui-alert bui-alert-info"><span>i</span><div><strong>Changes are saved automatically.</strong></div><button class="bui-dismiss" type="button" aria-label="Dismiss">×</button></div>
+          <div class="bui-dir-row"><button class="bui-btn bui-btn-primary" type="button">Save</button><button class="bui-btn bui-btn-outline" type="button">Cancel</button></div>
+          <div class="bui-btn-group" role="group"><button class="bui-btn bui-btn-outline" type="button">1</button><button class="bui-btn bui-btn-outline" type="button">2</button><button class="bui-btn bui-btn-outline" type="button">3</button></div>
+          <label class="bui-field">Full name<input class="bui-input" type="text" placeholder="Type your name"></label></div>
+        <div class="bui-dir-pane" dir="rtl"><small dir="ltr">dir="rtl"</small>
+          <div class="bui-alert bui-alert-info"><span>i</span><div><strong>يتم حفظ التغييرات تلقائيًا.</strong></div><button class="bui-dismiss" type="button" aria-label="Dismiss">×</button></div>
+          <div class="bui-dir-row"><button class="bui-btn bui-btn-primary" type="button">حفظ</button><button class="bui-btn bui-btn-outline" type="button">إلغاء</button></div>
+          <div class="bui-btn-group" role="group"><button class="bui-btn bui-btn-outline" type="button">1</button><button class="bui-btn bui-btn-outline" type="button">2</button><button class="bui-btn bui-btn-outline" type="button">3</button></div>
+          <label class="bui-field">الاسم الكامل<input class="bui-input" type="text" placeholder="اكتب اسمك"></label></div>
+      </div>
+      <div class="bui-swatch-group"><h3>Set the direction of the page</h3><div class="bui-code-card"><div class="bui-code-head"><span><i></i> index.html</span><button class="bui-copy" type="button">Copy</button></div><pre><code>&lt;<span class="bui-code-pink">html</span> <span class="bui-code-blue">lang</span>=<span class="bui-code-green">"ar"</span> <span class="bui-code-blue">dir</span>=<span class="bui-code-green">"rtl"</span>&gt;
+  &lt;<span class="bui-code-pink">body</span>&gt;
+    &lt;!-- everything inside follows right-to-left --&gt;
+  &lt;/<span class="bui-code-pink">body</span>&gt;
+&lt;/<span class="bui-code-pink">html</span>&gt;</code></pre></div></div>
+      <div class="bui-swatch-group"><h3>Set it for one component or one value</h3><p class="bui-doc-note">Prefer <code>dir</code> on the smallest element that needs it. Keep code, URLs and CSS variable names in <code>dir="ltr"</code> inside Arabic text instead of forcing the whole component to LTR.</p><div class="bui-code-card"><div class="bui-code-head"><span><i></i> index.html</span><button class="bui-copy" type="button">Copy</button></div><pre><code>&lt;<span class="bui-code-pink">div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-card"</span> <span class="bui-code-blue">dir</span>=<span class="bui-code-green">"rtl"</span>&gt;
+  &lt;<span class="bui-code-pink">p</span>&gt;مرحبا بكم&lt;/<span class="bui-code-pink">p</span>&gt;
+  &lt;<span class="bui-code-pink">code</span> <span class="bui-code-blue">dir</span>=<span class="bui-code-green">"ltr"</span>&gt;--bui-primary&lt;/<span class="bui-code-pink">code</span>&gt;
+&lt;/<span class="bui-code-pink">div</span>&gt;</code></pre></div></div>
+      <div class="bui-swatch-group"><h3>Direction toggle (optional JS)</h3><p class="bui-doc-note"><code>assets/js/baset-ui.js</code> handles any element with <code>data-bui-dir="ltr"</code> or <code>data-bui-dir="rtl"</code>. It sets <code>dir</code> on <code>&lt;html&gt;</code> and saves it as <code>bui-dir</code>. Without the script, set <code>dir</code> by hand and everything still works.</p><div class="bui-code-card"><div class="bui-code-head"><span><i></i> baset-ui.js</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-muted">/* Any element with data-bui-dir sets the direction of the page. */</span>
+&lt;<span class="bui-code-pink">button</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-btn bui-btn-outline"</span> <span class="bui-code-blue">data-bui-dir</span>=<span class="bui-code-green">"ltr"</span>&gt;LTR&lt;/<span class="bui-code-pink">button</span>&gt;
+&lt;<span class="bui-code-pink">button</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-btn bui-btn-outline"</span> <span class="bui-code-blue">data-bui-dir</span>=<span class="bui-code-green">"rtl"</span>&gt;RTL&lt;/<span class="bui-code-pink">button</span>&gt;
+
+<span class="bui-code-muted">/* The choice is saved in localStorage under "bui-dir". To apply it before paint, add to &lt;head&gt;: */</span>
+&lt;<span class="bui-code-pink">script</span>&gt;try{var d=localStorage.getItem(<span class="bui-code-green">'bui-dir'</span>);if(d===<span class="bui-code-green">'rtl'</span>||d===<span class="bui-code-green">'ltr'</span>)document.documentElement.dir=d}catch(e){}&lt;/<span class="bui-code-pink">script</span>&gt;</code></pre></div></div>
+      <div class="bui-swatch-group"><h3>Write direction-safe CSS</h3><p class="bui-doc-note">Baset UI uses logical properties, so spacing, borders and alignment flip with <code>dir</code>. Do the same in your own styles.</p><div class="bui-code-card"><div class="bui-code-head"><span><i></i> your-styles.css</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">.my-card</span> {
+  <span class="bui-code-blue">margin-inline-start</span>: <span class="bui-code-green">12px</span>;      <span class="bui-code-muted">/* not margin-left */</span>
+  <span class="bui-code-blue">padding-inline</span>: <span class="bui-code-green">16px</span>;           <span class="bui-code-muted">/* not padding-left/right */</span>
+  <span class="bui-code-blue">border-inline-start</span>: <span class="bui-code-green">3px solid var(--bui-primary)</span>;
+  <span class="bui-code-blue">text-align</span>: <span class="bui-code-green">start</span>;             <span class="bui-code-muted">/* not left */</span>
+  <span class="bui-code-blue">inset-inline-end</span>: <span class="bui-code-green">0</span>;             <span class="bui-code-muted">/* not right: 0 */</span>
+}
+<span class="bui-code-muted">/* Direction arrows: mirror them only in RTL */</span>
+<span class="bui-code-pink">[dir="rtl"] .my-arrow</span> { <span class="bui-code-blue">transform</span>: <span class="bui-code-green">scaleX(-1)</span>; }</code></pre></div>
+        <table class="bui-dir-table" style="margin-top:16px"><thead><tr><th>Instead of</th><th>Use</th></tr></thead><tbody>
+          <tr><td><code>margin-left / margin-right</code></td><td><code>margin-inline-start / margin-inline-end</code></td></tr>
+          <tr><td><code>padding-left / padding-right</code></td><td><code>padding-inline-start / padding-inline-end</code></td></tr>
+          <tr><td><code>left / right</code></td><td><code>inset-inline-start / inset-inline-end</code></td></tr>
+          <tr><td><code>border-left / border-right</code></td><td><code>border-inline-start / border-inline-end</code></td></tr>
+          <tr><td><code>text-align: left / right</code></td><td><code>text-align: start / end</code></td></tr>
+          <tr><td><code>float: left / right</code></td><td><code>float: inline-start / inline-end</code></td></tr>
+          <tr><td><code>border-top-left-radius</code></td><td><code>border-start-start-radius</code></td></tr>
+        </tbody></table></div>
+      </section>
+      <div class="bui-pager"><a class="bui-btn bui-btn-outline" href="token-playground.html"><span class="bui-flip">←</span> Token playground</a><span></span></div>
+      <footer class="bui-footer"><span>© 2026 Baset UI. Built for makers.</span><span>Documentation · v1.0.0</span></footer>
+    </main>
+  </div>
+  <script src="../assets/js/baset-ui.js"></script>
+</body>
+</html>

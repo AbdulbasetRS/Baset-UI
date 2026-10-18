@@ -17,6 +17,27 @@
     syncIcon();
   });
 
+  /* ---------- Direction (RTL / LTR, persisted) ---------- */
+  const DIR_KEY = 'bui-dir';
+  const syncDirButtons = () => {
+    document.querySelectorAll('[data-bui-dir]').forEach((btn) => {
+      btn.setAttribute('aria-pressed', String(btn.dataset.buiDir === root.dir));
+    });
+  };
+  const setDir = (dir) => {
+    root.dir = dir === 'rtl' ? 'rtl' : 'ltr';
+    try { localStorage.setItem(DIR_KEY, root.dir); } catch { /* storage blocked */ }
+    syncDirButtons();
+  };
+
+  try { const saved = localStorage.getItem(DIR_KEY); if (saved === 'rtl' || saved === 'ltr') root.dir = saved; } catch { /* storage blocked */ }
+  syncDirButtons();
+
+  document.addEventListener('click', (event) => {
+    const btn = event.target.closest('[data-bui-dir]');
+    if (btn) setDir(btn.dataset.buiDir);
+  });
+
   /* ---------- Clipboard helper (with fallback) ---------- */
   async function copyText(text) {
     try {
