@@ -126,6 +126,7 @@ baset-ui/
 │   ├── badges.html
 │   ├── loaders.html            # Spinners, dots, bars, skeleton, progress, success icon
 │   ├── icons.html              # Icon guide + searchable gallery with details dialog
+│   ├── toasts.html             # Toasts & notifications
 │   └── utilities.html
 ├── customize/                  # Theme documentation
 │   ├── colors.html             # Default colors (light + dark values, copy var())
@@ -165,6 +166,7 @@ baset-ui/
 | Badges | `components/badges.html` | Six status variants |
 | Loaders | `components/loaders.html` | Spinner (sizes, styles, colors, label), dots, bars, pulse/ripple, skeleton, indeterminate progress, loading buttons, overlay, animated success icon |
 | Icons | `components/icons.html` | Styles, sizes, colors, in buttons, spinner, inline SVG, searchable gallery |
+| Toasts & notifications | `components/toasts.html` | Success, info, warning, danger, toast stack |
 | Utilities | `components/utilities.html` | Feature grid |
 
 Every example on these pages shows the live preview, the class list, and a code block with a **Copy** button (it copies exactly the code shown).
@@ -198,6 +200,44 @@ Modifiers: sizes `.bui-btn-sm` / `.bui-btn-lg`, `.bui-btn-pill`, `.bui-btn-block
 **Loaders and success icon** — see [Loaders and success icon](#loaders-and-success-icon).
 
 **Icons** — see [Icons](#icons).
+
+**Toasts & notifications** — see [Toasts & notifications](#toasts-and-notifications).
+
+## Toasts and notifications
+
+Short messages (**toasts**) and richer **notifications** (media, one-line title, two-line text, time, close button, actions). Use static markup, a `data-` attribute, or the JavaScript API. Full examples: `components/toasts.html`.
+
+| Class | Purpose |
+| --- | --- |
+| `.bui-toast` + `-success` / `-info` / `-warning` / `-danger` / `-primary` | Toast and its color (none = neutral) |
+| `.bui-toast-soft` · `.bui-toast-solid` | Variants |
+| `.bui-toast-icon` · `.bui-toast-body` · `.bui-toast-close` · `.bui-toast-progress` | Parts |
+| `.bui-notification` (`-unread`) | Notification |
+| `.bui-notification-media` (`-round`, `-success` …) | Image, logo or icon |
+| `.bui-notification-head` · `-title` (1 line) · `-time` · `-text` (2 lines) · `-actions` · `-close` | Parts |
+| `.bui-notification-list` | Notifications in a list |
+| `.bui-toast-container[data-position]` | Created by the JS API, one per position |
+
+```html
+<!-- declarative -->
+<button class="bui-btn bui-btn-primary" data-bui-toast='{"type":"success","title":"Saved","message":"Done"}'>Save</button>
+<button class="bui-btn bui-btn-outline" data-bui-notify='{"title":"New comment","message":"Maya replied.","logo":"M"}'>Notify</button>
+```
+
+```js
+BUI.toast({ type: 'success', title: 'Saved', message: 'Your changes were saved.', position: 'top-end', duration: 5000 });
+BUI.toast.danger('Upload failed', { duration: 0 });      // shorthands: primary success info warning danger
+BUI.notify({ title: 'New comment', message: 'Maya replied.', image: 'avatar.jpg', time: Date.now(), unread: true });
+const t = BUI.toast({ message: 'Uploading…', duration: 0 }); t.close();   // also t.pause(), t.resume()
+BUI.clear('top-end');   // one position, or BUI.clear() for all
+BUI.config({ position: 'bottom-center', max: 3 });        // defaults; second argument 'toast' | 'notify'
+```
+
+Sound: every toast and notification plays a sound. Put your audio files in `assets/sounds/` (mp3, ogg or wav); the default file is `notification.mp3`. Change the sounds in one place, the `BUI.sounds` list in `baset-ui.js` (or at runtime, e.g. `BUI.sounds.success = 'success.mp3'`; a file name inside `assets/sounds/`, or a path / URL containing `/`). Turn it off with `BUI.config({ sound: false })` (second argument `'toast'` or `'notify'` for one kind), per call with `sound: false | 'file.mp3'` and `soundVolume` (0-1), or mute for the user with `BUI.mute(true)` (saved as `bui-sound`). The library ships no audio files, and browsers play sound only after the first user interaction.
+
+Options: `sound`, `soundVolume`, `type`, `variant` (`soft` / `solid`), `title`, `message`, `icon`, `image`, `logo`, `round`, `time` (Date, timestamp, string or `false`), `unread`, `actions` (`[{ label, variant, onClick, keep }]`), `position` (`top|bottom` + `start|center|end`), `duration` (ms, `0` = sticky), `progress`, `pauseOnHover`, `closable`, `max`, `onClick`, `onClose(reason)`. Texts are inserted as plain text. Positions use logical `start` / `end`, so they follow RTL. Defaults: toast 5000 ms with progress bar, notification 8000 ms.
+
+
 
 ## Loaders and success icon
 
