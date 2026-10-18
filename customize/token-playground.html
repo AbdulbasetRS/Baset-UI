@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Token playground — Baset UI</title>
+  <link rel="stylesheet" href="../assets/css/baset-ui.css">
+  <link rel="stylesheet" href="../assets/css/docs.css">
+
+  <script>try{if(localStorage.getItem('bui-theme')==='dark')document.documentElement.classList.add('bui-dark')}catch(e){}</script>
+</head>
+<body>
+  <div class="bui-app">
+    <aside class="bui-sidebar">
+      <a class="bui-brand" href="../index.html"><span class="bui-brand-mark">B</span><span>Baset UI<small>Component library</small></span></a>
+      <div class="bui-sidebar-label">GET STARTED</div>
+      <a class="bui-nav" href="../index.html#overview">Overview</a>
+      <a class="bui-nav" href="../index.html#installation">Installation</a>
+      <div class="bui-sidebar-label">COMPONENTS</div>
+      <a class="bui-nav" href="../components/buttons.html">Buttons</a>
+      <a class="bui-nav" href="../components/forms.html">Form controls</a>
+      <a class="bui-nav" href="../components/cards.html">Cards</a>
+      <a class="bui-nav" href="../components/alerts.html">Alerts</a>
+      <a class="bui-nav" href="../components/badges.html">Badges</a>
+      <a class="bui-nav" href="../components/loaders.html">Loaders</a>
+      <a class="bui-nav" href="../components/icons.html">Icons</a>
+      <a class="bui-nav" href="../components/utilities.html">Utilities</a>
+      <div class="bui-sidebar-label">CUSTOMIZE</div>
+      <a class="bui-nav" href="../customize/colors.html">Default colors</a>
+      <a class="bui-nav" href="../customize/typography.html">Typography and shape</a>
+      <a class="bui-nav" href="../customize/theme.html">Theme</a>
+      <a class="bui-nav active" href="../customize/token-playground.html">Token playground</a>
+      <div class="bui-sidebar-bottom"><span class="bui-status-dot"></span> Baset UI <span class="bui-version">v1.0.0</span></div>
+    </aside>
+    <main class="bui-main">
+      <header class="bui-topbar"><div class="bui-breadcrumb"><a href="../index.html">Documentation</a> <span>/</span> Customize <span>/</span> Token playground</div><div class="bui-top-actions"><span class="bui-pill">Vanilla CSS + JS</span><button class="bui-icon-btn" id="themeToggle" type="button" aria-label="Toggle theme">☼</button></div></header>
+      <section class="bui-section" id="token-playground"><div class="bui-section-heading"><div><span class="bui-eyebrow">04 / CUSTOMIZE</span><h2>Token playground</h2><p>Change theme colors, radius, spacing and font size and see every component update, then copy the generated CSS.</p></div></div>
+      <div class="bui-tp">
+        <aside class="bui-tp-panel">
+          <div class="bui-tp-group"><h3>Preview mode</h3><div class="bui-gallery-tabs" id="tpMode"><button type="button" class="bui-gallery-tab active" data-mode="light">Light</button><button type="button" class="bui-gallery-tab" data-mode="dark">Dark</button></div></div>
+          <div class="bui-tp-group"><h3>Theme colors</h3><div id="tpColors"></div></div>
+          <div class="bui-tp-group"><h3>Shape</h3><div class="bui-tp-slider"><div><span>Controls radius</span><code>--bui-radius-3: <span id="tpRadius3Out"></span></code></div><input type="range" id="tpRadius3" min="0" max="1.5" step="0.0625"></div><div class="bui-tp-slider"><div><span>Cards radius</span><code>--bui-radius-5: <span id="tpRadius5Out"></span></code></div><input type="range" id="tpRadius5" min="0" max="2" step="0.0625"></div></div>
+          <div class="bui-tp-group"><h3>Spacing and type</h3><div class="bui-tp-slider"><div><span>Spacer</span><code>--bui-spacer: <span id="tpSpacerOut"></span></code></div><input type="range" id="tpSpacer" min="0.75" max="1.5" step="0.0625"></div><div class="bui-tp-slider"><div><span>Font size</span><code>--bui-font-size: <span id="tpFontOut"></span></code></div><input type="range" id="tpFont" min="0.75" max="1.125" step="0.03125"></div></div>
+          <button type="button" class="bui-btn bui-btn-outline" id="tpReset">Reset all</button>
+        </aside>
+        <div class="bui-tp-main">
+          <div class="bui-tp-preview" id="tpPreview">
+<div class="bui-button-row">
+  <button type="button" class="bui-btn bui-btn-primary">Primary</button>
+  <button type="button" class="bui-btn bui-btn-secondary">Secondary</button>
+  <button type="button" class="bui-btn bui-btn-success">Success</button>
+  <button type="button" class="bui-btn bui-btn-danger">Danger</button>
+  <button type="button" class="bui-btn bui-btn-warning">Warning</button>
+  <button type="button" class="bui-btn bui-btn-info">Info</button>
+</div>
+<div class="bui-button-row">
+  <button type="button" class="bui-btn bui-btn-outline-primary">Outline</button>
+  <button type="button" class="bui-btn bui-btn-soft-primary">Soft</button>
+  <button type="button" class="bui-btn bui-btn-link">Link</button>
+  <span class="bui-badge bui-badge-primary">Primary</span><span class="bui-badge bui-badge-success">Success</span><span class="bui-badge bui-badge-warning">Pending</span><span class="bui-badge bui-badge-danger">Failed</span><span class="bui-badge bui-badge-info">New</span><span class="bui-badge bui-badge-neutral">Archived</span>
+</div>
+<div class="bui-alert-stack">
+  <div class="bui-alert bui-alert-success"><span>✓</span><div><strong>Changes saved</strong><p>Your project settings have been updated.</p></div></div>
+  <div class="bui-alert bui-alert-info"><span>i</span><div><strong>New version available</strong><p>Version 1.1 includes improvements.</p></div></div>
+  <div class="bui-alert bui-alert-warning"><span>!</span><div><strong>Storage almost full</strong><p>You are using 90% of your storage.</p></div></div>
+  <div class="bui-alert bui-alert-danger"><span>×</span><div><strong>Payment failed</strong><p>Check your card details and try again.</p></div></div>
+</div>
+<div class="bui-form-grid">
+  <label class="bui-field">Full name<input class="bui-input" placeholder="e.g. Abdulbaset Sayed"></label>
+  <label class="bui-field">Department<select class="bui-input"><option>Engineering</option><option>Design</option></select></label>
+</div>
+<div class="bui-cards-grid" style="grid-template-columns:repeat(auto-fit,minmax(190px,1fr))">
+  <article class="bui-stat-card"><div class="bui-stat-top"><span class="bui-stat-icon bui-stat-icon-purple">↗</span><span class="bui-stat-change">+12.8%</span></div><span class="bui-stat-label">Total revenue</span><strong>$24,580</strong><div class="bui-sparkline"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></article>
+  <article class="bui-stat-card"><div class="bui-stat-top"><span class="bui-stat-icon bui-stat-icon-blue">◉</span><span class="bui-stat-change">+8.2%</span></div><span class="bui-stat-label">Active users</span><strong>8,249</strong><div class="bui-progress"><span style="width:72%"></span></div></article>
+</div>
+          </div>
+          <div class="bui-code-card"><div class="bui-code-head"><span><i></i> theme.css</span><button class="bui-copy" type="button">Copy</button></div><pre><code id="tpCode"></code></pre></div>
+        </div>
+      </div>
+      </section>
+      <div class="bui-pager"><a class="bui-btn bui-btn-outline" href="theme.html">← Theme</a><span></span></div>
+      <footer class="bui-footer"><span>© 2026 Baset UI. Built for makers.</span><span>Documentation · v1.0.0</span></footer>
+    </main>
+  </div>
+  <script src="../assets/js/baset-ui.js"></script>
+  <script src="../assets/js/token-playground.js"></script>
+</body>
+</html>

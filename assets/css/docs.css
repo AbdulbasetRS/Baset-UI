@@ -210,3 +210,38 @@ h1 em { font-style: normal; color: var(--bui-primary); }
 @media (max-width: 760px) {
   .bui-playground-controls, .bui-playground-preview { grid-template-columns: 1fr; }
 }
+
+/* ---------- Theme page + token playground ---------- */
+.bui-theme-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 14px; }
+.bui-theme-card { background: var(--bui-surface); border: 1px solid var(--bui-line); border-radius: 14px; padding: 16px 18px 8px; }
+.bui-theme-card h4 { display: flex; align-items: center; gap: 10px; margin: 0 0 8px; font-family: var(--bui-font-heading); font-size: 14px; }
+.bui-theme-card h4 i { width: 14px; height: 14px; border-radius: 50%; background: var(--bui-primary-base); }
+.bui-token-row { display: grid; grid-template-columns: 48px 1fr; gap: 12px; align-items: center; padding: 9px 0; border-top: 1px solid var(--bui-line); }
+.bui-token-chip { display: grid; grid-template-columns: 1fr 1fr; width: 48px; height: 30px; border-radius: 8px; overflow: hidden; border: 1px solid var(--bui-line); }
+.bui-token-row code { font: 11px ui-monospace, monospace; color: var(--bui-primary-text); }
+.bui-token-row small { display: block; margin-top: 2px; color: var(--bui-muted); font: 10px ui-monospace, monospace; word-break: break-word; }
+.bui-scale { display: grid; gap: 10px; overflow-x: auto; padding-bottom: 6px; }
+.bui-scale-row { display: grid; grid-template-columns: 64px repeat(9, minmax(54px, 1fr)); gap: 6px; align-items: end; min-width: 640px; }
+.bui-scale-row > b { font-size: 12px; font-family: var(--bui-font-heading); align-self: center; }
+.bui-scale-row span { display: grid; gap: 4px; font: 10px ui-monospace, monospace; color: var(--bui-muted); text-align: center; }
+.bui-scale-row span i { display: block; height: 44px; border-radius: 8px; border: 1px solid #00000010; }
+.bui-radius-row { display: flex; flex-wrap: wrap; gap: 14px; }
+.bui-radius-row div { display: grid; gap: 8px; justify-items: center; font: 10px ui-monospace, monospace; color: var(--bui-muted); }
+.bui-radius-row i { display: block; width: 64px; height: 64px; background: var(--bui-primary-bg-subtle); border: 1px solid var(--bui-primary-border); }
+.bui-doc-note { margin: 0 0 14px; font-size: 12px; line-height: 1.8; color: var(--bui-muted); max-width: 760px; }
+.bui-doc-note code { font: 11px ui-monospace, monospace; color: var(--bui-primary-text); background: var(--bui-primary-soft); padding: 2px 5px; border-radius: 5px; }
+
+.bui-tp { display: grid; grid-template-columns: 330px minmax(0, 1fr); gap: 20px; align-items: start; }
+.bui-tp-panel { position: sticky; top: 14px; display: grid; gap: 18px; padding: 18px; background: var(--bui-surface); border: 1px solid var(--bui-line); border-radius: var(--bui-radius); max-height: calc(100vh - 28px); overflow: auto; }
+.bui-tp-group h3 { margin: 0 0 10px; font-size: 10px; font-weight: 800; letter-spacing: 1.4px; text-transform: uppercase; color: #a1a4b5; }
+.bui-tp-row { display: grid; grid-template-columns: 74px 1fr 38px; gap: 8px; align-items: center; margin-bottom: 8px; font-size: 12px; font-weight: 600; }
+.bui-tp-row select { padding: 8px 9px; font-size: 11px; }
+.bui-tp-row input[type="color"] { width: 38px; height: 34px; padding: 2px; border: 1px solid var(--bui-input-border); border-radius: 8px; background: var(--bui-surface); cursor: pointer; }
+.bui-tp-slider { display: grid; gap: 6px; margin-bottom: 12px; font-size: 11px; font-weight: 700; color: var(--bui-muted); }
+.bui-tp-slider > div { display: flex; justify-content: space-between; }
+.bui-tp-slider code { font: 10px ui-monospace, monospace; color: var(--bui-primary-text); }
+.bui-tp-slider input { accent-color: var(--bui-primary); width: 100%; }
+.bui-tp-main { display: grid; gap: 16px; min-width: 0; }
+.bui-tp-preview { display: grid; gap: calc(var(--bui-spacer) * 1.25); padding: calc(var(--bui-spacer) * 1.5); background: var(--bui-bg); color: var(--bui-ink); border: 1px solid var(--bui-line); border-radius: var(--bui-radius); font-size: var(--bui-font-size); }
+.bui-tp-preview .bui-gallery-tab { display: none; }
+@media (max-width: 1100px) { .bui-tp { grid-template-columns: 1fr; } .bui-tp-panel { position: static; max-height: none; } }

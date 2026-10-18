@@ -129,8 +129,9 @@ baset-ui/
 │   └── utilities.html
 ├── customize/                  # Theme documentation
 │   ├── colors.html             # Default colors (light + dark values, copy var())
-│   ├── typography.html         # Fonts, radius, shadow
-│   └── playground.html         # Live primary-color / radius playground
+│   ├── typography.html         # Fonts, font size, radius, shadow
+│   ├── theme.html              # How the tokens work, theme colors, scales, radius, spacing, dark mode
+│   └── token-playground.html   # Live token editor that generates CSS
 ├── assets/
 │   ├── css/
 │   │   ├── baset-ui.css        # THE LIBRARY: tokens, base, components, dark theme
@@ -144,7 +145,7 @@ baset-ui/
 │   └── js/
 │       ├── baset-ui.js         # Optional interactions
 │       ├── icons-gallery.js    # Icons page only (search + details dialog)
-│       └── customize.js        # Playground page only
+│       └── token-playground.js     # Token playground page only
 ├── README.md
 ├── LICENSE
 └── .gitattributes
@@ -159,7 +160,7 @@ baset-ui/
 | Buttons | `components/buttons.html` | Solid / outline / soft / link in 7 colors, neutral, anchors, sizes, icons, icon-only, pill, full width, group, disabled |
 | Form controls | `components/forms.html` | Text input, email input, select, checkbox, form layout |
 | Cards | `components/cards.html` | Stat cards (sparkline, progress, task lines), cards grid |
-| Alerts | `components/alerts.html` | Success, info, warning, alert stack |
+| Alerts | `components/alerts.html` | Success, info, warning, danger, alert stack |
 | Badges | `components/badges.html` | Six status variants |
 | Loaders | `components/loaders.html` | Spinner (sizes, styles, colors, label), dots, bars, pulse/ripple, skeleton, indeterminate progress, loading buttons, overlay, animated success icon |
 | Icons | `components/icons.html` | Styles, sizes, colors, in buttons, spinner, inline SVG, searchable gallery |
@@ -185,7 +186,7 @@ Modifiers: sizes `.bui-btn-sm` / `.bui-btn-lg`, `.bui-btn-pill`, `.bui-btn-block
 
 **Cards** — `.bui-stat-card` with `.bui-stat-top`, `.bui-stat-icon` (`-purple`, `-blue`, `-orange`), `.bui-stat-change`, `.bui-stat-neutral`, `.bui-stat-label`, `.bui-sparkline`, `.bui-progress`, `.bui-task-lines`. Layout: `.bui-cards-grid`.
 
-**Alerts** — `.bui-alert` + `.bui-alert-success` / `-info` / `-warning`; `.bui-dismiss` for the close button; `.bui-alert-stack` to stack several.
+**Alerts** — `.bui-alert` + `.bui-alert-success` / `-info` / `-warning` / `-danger`; `.bui-dismiss` for the close button; `.bui-alert-stack` to stack several.
 
 **Badges** — `.bui-badge` + `.bui-badge-primary` / `-success` / `-warning` / `-danger` / `-neutral` / `-info`; group with `.bui-badge-row`.
 
@@ -260,30 +261,52 @@ Add `bui-success-icon-solid` for a filled circle, and `-sm` / `-lg` for sizes. I
 
 ## Theming (CSS variables)
 
-All design tokens live in `:root` at the top of `baset-ui.css`. Override them after the library to re-theme everything:
+Everything is driven by CSS variables declared on `:root` in `baset-ui.css`, in three layers:
+
+1. **Color scales** — `--bui-violet-100` … `--bui-violet-900` (also `slate`, `green`, `red`, `amber`, `blue`; 500 is the base).
+2. **Theme color tokens** — six theme colors (`primary`, `secondary`, `success`, `danger`, `warning`, `info`), each with the same six tokens:
+
+   | Token | Used for |
+   | --- | --- |
+   | `--bui-primary-base` | The pure color |
+   | `--bui-primary-bg` | Solid backgrounds (solid buttons) |
+   | `--bui-primary-bg-subtle` | Tinted backgrounds (alerts, badges, soft buttons) |
+   | `--bui-primary-fg` | Text and icons on normal surfaces |
+   | `--bui-primary-border` | Borders of tinted components |
+   | `--bui-primary-contrast` | Text on the solid background |
+
+   The `-bg-subtle`, `-fg` and `-border` tokens use `light-dark()`, e.g. `light-dark(var(--bui-violet-100), var(--bui-violet-900))`, so dark mode needs no second set of values.
+3. **Neutrals, shape, spacing and type** — `--bui-ink`, `--bui-muted`, `--bui-bg`, `--bui-surface`, `--bui-soft`, `--bui-line`, `--bui-input-border`, `--bui-inverse`, `--bui-inverse-on`, `--bui-radius-1` … `--bui-radius-6` (`--bui-radius` = `--bui-radius-5`), `--bui-shadow`, `--bui-spacer`, `--bui-font-size`, `--bui-font-body`, `--bui-font-heading`.
+
+Short aliases such as `--bui-primary`, `--bui-primary-soft`, `--bui-primary-text`, `--bui-success`, `--bui-success-text` still exist and follow the theme color tokens.
+
+**Change the theme** by overriding tokens on `:root`, after `baset-ui.css`:
 
 ```css
 :root {
-  --bui-primary: #0d9488;
-  --bui-primary-dark: #0f766e;
+  /* use another color scale */
+  --bui-primary-base: var(--bui-green-500);
+  --bui-primary-bg-subtle: light-dark(var(--bui-green-100), var(--bui-green-900));
+  --bui-primary-fg: light-dark(var(--bui-green-600), var(--bui-green-400));
+  --bui-primary-border: light-dark(var(--bui-green-300), var(--bui-green-600));
+
+  /* shape and spacing */
+  --bui-radius-3: .75rem;   /* buttons, inputs */
+  --bui-radius-5: 1.25rem;  /* cards */
+  --bui-spacer: 1.125rem;
 }
 ```
 
-| Variable | Purpose |
-| --- | --- |
-| `--bui-primary`, `--bui-primary-dark` | Brand color and its hover/dark shade |
-| `--bui-primary-soft`, `--bui-primary-text` | Soft brand background and matching text |
-| `--bui-ink`, `--bui-muted` | Main and secondary text |
-| `--bui-bg`, `--bui-surface`, `--bui-soft` | Page, card and subtle backgrounds |
-| `--bui-line`, `--bui-input-border` | Borders and dividers |
-| `--bui-success`, `--bui-danger`, `--bui-warning`, `--bui-info`, `--bui-secondary` | Status / semantic colors (each has a matching `-text` variant where needed) |
-| `--bui-inverse`, `--bui-inverse-on` | Inverse button colors (flip in dark mode) |
-| `--bui-radius`, `--bui-shadow` | Card radius and shadow |
-| `--bui-font-body`, `--bui-font-heading` | Font families |
+If you change a color on an element instead of `:root`, re-declare the derived tokens too (custom properties are resolved where they are declared). The **Token playground** generates the right CSS for you.
+
+`light-dark()` needs a current browser (Chrome, Edge, Firefox, Safari from 2024).
 
 ### Customize pages
 
-Open `customize/colors.html` for every default color token (light and dark value, with a *Copy var()* button), `customize/typography.html` for fonts, radius and shadow, and `customize/playground.html` to pick a primary color and radius and get the CSS to paste. The playground only changes your browser view of the docs; copy the generated CSS into your own stylesheet (loaded after `baset-ui.css`).
+- `customize/colors.html` — every default color (light and dark value, *Copy var()* button).
+- `customize/typography.html` — fonts, font size, radius and shadow.
+- `customize/theme.html` — how the tokens are built, the six tokens of each theme color, color scales, radius/spacing, dark mode, and how to override them.
+- `customize/token-playground.html` — edit theme colors, radius, spacer and font size, preview in light or dark, and copy the generated CSS. It only changes the preview, not the files.
 
 ## Dark mode
 
@@ -307,7 +330,7 @@ With `baset-ui.js`, any element with `id="themeToggle"` becomes a toggle button.
 | Dismissible alerts | `<button class="bui-dismiss">` inside `.bui-alert` (works for alerts added later too) |
 | Copy code | `<button class="bui-copy">` inside a `.bui-code-card`; copies the `<code>` text, or the `data-copy` attribute if present |
 | Icons gallery | `assets/js/icons-gallery.js` + `assets/icons/icons-data.js` on `components/icons.html` only |
-| Playground | `assets/js/customize.js` on `customize/playground.html` only |
+| Token playground | `assets/js/token-playground.js` on `customize/token-playground.html` only |
 | Scroll-spy | Sidebar links like `<a class="bui-nav" href="#section">` highlight as you scroll |
 
 ## Using it with Laravel
