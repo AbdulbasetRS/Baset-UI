@@ -252,6 +252,235 @@
   });
   setInterval(() => document.querySelectorAll('.bui-notification-time[data-ts]').forEach((t) => { t.textContent = ago(+t.dataset.ts); }), 30000);
 
+  /* ---------- Modal: <dialog class="bui-modal"> ---------- */
+  const MODAL_SYMBOLS = { success: '✓', info: 'i', warning: '!', danger: '!' };
+  let modalSeq = 0;
+  const getModal = (t) => (typeof t === 'string' ? document.getElementById(t.replace(/^#/, '')) : t);
+  const syncLock = () => root.classList.toggle('bui-modal-open', !!document.querySelector('dialog.bui-modal[open]'));
+  const isModal = (n) => n instanceof HTMLDialogElement && n.classList.contains('bui-modal');
+
+  function openModal(target) {
+    const d = getModal(target);
+    if (!d || d.open) return d;
+    d.classList.remove('bui-modal-closing');
+    d.showModal();
+    syncLock();
+    d.dispatchEvent(new CustomEvent('bui:modal-open', { bubbles: true }));
+    return d;
+  }
+  function closeModal(target, value = '') {
+    const d = getModal(target);
+    if (!d || !d.open || d.classList.contains('bui-modal-closing')) return d;
+    let finished = false;
+    const finish = () => { if (finished) return; finished = true; d.classList.remove('bui-modal-closing'); d.returnValue = String(value); d.close(); };
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) { finish(); return d; }
+    d.classList.add('bui-modal-closing');
+    d.addEventListener('animationend', (e) => { if (e.target === d) finish(); });
+    setTimeout(finish, 320);
+    return d;
+  }
+  const bump = (d) => { d.classList.remove('bui-modal-bump'); void d.offsetWidth; d.classList.add('bui-modal-bump'); setTimeout(() => d.classList.remove('bui-modal-bump'), 300); };
+
+  /* Build and show a modal from options. Resolves with the value of the clicked action, or null when dismissed. */
+  function showModal(o = {}) {
+    const d = document.createElement('dialog');
+    const id = `bui-modal-auto-${++modalSeq}`;
+    d.className = ['bui-modal', o.size && `bui-modal-${o.size}`, o.position && `bui-modal-${o.position}`, o.icon && 'bui-modal-center'].filter(Boolean).join(' ');
+    if (o.static) d.dataset.buiStatic = '';
+    if (o.title) d.setAttribute('aria-labelledby', `${id}-title`);
+    if (o.message) d.setAttribute('aria-describedby', `${id}-text`);
+    const closable = o.closable ?? !o.icon;
+    let result = null, input = null, content = null;
+
+    if (!o.icon && (o.title || closable)) {
+      const head = add(d, 'div', 'bui-modal-header');
+      const h = add(head, 'h3', 'bui-modal-title', o.title || ''); h.id = `${id}-title`;
+      if (closable) { const x = add(head, 'button', 'bui-modal-close', '×'); x.type = 'button'; x.setAttribute('aria-label', 'Close'); x.dataset.buiModalClose = ''; }
+    }
+    const body = add(d, 'div', 'bui-modal-body');
+    if (o.icon) {
+      const ic = add(body, 'span', `bui-modal-icon bui-modal-icon-${o.type || o.icon}`); ic.setAttribute('aria-hidden', 'true');
+      glyph(ic, MODAL_SYMBOLS[o.icon] || o.icon);
+      if (o.title) { const h = add(body, 'h3', 'bui-modal-title', o.title); h.id = `${id}-title`; }
+    }
+    if (o.message) { const p = add(body, 'p', null, o.message); p.id = `${id}-text`; }
+    if (o.body instanceof Node) body.append(o.body);
+    if (o.input) {
+      const label = add(body, 'label', 'bui-field', o.input.label || '');
+      input = add(label, o.input.rows ? 'textarea' : 'input', 'bui-input');
+      Object.assign(input, { type: o.input.type || 'text', placeholder: o.input.placeholder || '', value: o.input.value || '', autofocus: true });
+      if (o.input.required) input.required = true;
+    }
+    const foot = add(d, 'div', 'bui-modal-footer' + (o.icon ? '' : o.footer ? ` bui-modal-footer-${o.footer}` : ''));
+    const buttons = [];
+    const setBusy = (btn, on) => {
+      buttons.forEach((b) => { b.disabled = on; });
+      btn.setAttribute('aria-busy', String(on));
+      btn.querySelector('.bui-spinner')?.remove();
+      if (on) btn.prepend(Object.assign(document.createElement('span'), { className: 'bui-spinner bui-spinner-sm' }));
+    };
+    (o.actions || []).forEach((a) => {
+      const b = add(foot, 'button', `bui-btn bui-btn-${a.variant || 'outline'}`, a.label); b.type = 'button';
+      if (a.autofocus) b.autofocus = true;
+      b.addEventListener('click', async () => {
+        if (a.input && input && !input.reportValidity()) return;
+        if (a.onClick) {
+          setBusy(b, true);
+          try { if ((await a.onClick(d)) === false) { setBusy(b, false); return; } } catch (err) { console.error(err); setBusy(b, false); return; }
+          setBusy(b, false);
+        }
+        result = a.input && input ? input.value : (a.value ?? null);
+        closeModal(d, 'action');
+      });
+      buttons.push(b);
+      if (a.input) content = b;
+    });
+    if (input && content) input.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); content.click(); } });
+    if (!buttons.length) foot.remove();
+
+    const promise = new Promise((resolve) => {
+      d.addEventListener('close', () => { resolve(result); d.remove(); o.onClose?.(result); }, { once: true });
+    });
+    document.body.appendChild(d);
+    openModal(d);
+    promise.dialog = d;
+    return promise;
+  }
+
+  const confirmModal = ({ type = 'warning', confirmText = 'Confirm', cancelText = 'Cancel', onConfirm, ...o } = {}) => showModal({
+    icon: type, ...o,
+    actions: [{ label: cancelText, value: false }, { label: confirmText, value: true, variant: type === 'danger' ? 'danger' : 'primary', onClick: onConfirm, autofocus: true }],
+  }).then((v) => v === true);
+  const alertModal = ({ type = 'info', okText = 'OK', ...o } = {}) => showModal({ icon: type, ...o, actions: [{ label: okText, value: true, variant: 'primary', autofocus: true }] }).then(() => undefined);
+  const promptModal = ({ label, placeholder, value, inputType, required, rows, confirmText = 'OK', cancelText = 'Cancel', onConfirm, ...o } = {}) => showModal({
+    ...o, input: { label, placeholder, value, type: inputType, required, rows },
+    actions: [{ label: cancelText, value: null }, { label: confirmText, variant: 'primary', input: true, onClick: onConfirm }],
+  });
+
+  BUI.modal = { open: openModal, close: closeModal, show: showModal, confirm: confirmModal, alert: alertModal, prompt: promptModal };
+
+  document.addEventListener('click', (event) => {
+    const opener = event.target.closest('[data-bui-modal-open]');
+    if (opener) { openModal(opener.dataset.buiModalOpen); return; }
+    const closer = event.target.closest('[data-bui-modal-close]');
+    if (closer) { closeModal(closer.closest('dialog.bui-modal'), closer.dataset.buiModalClose || closer.value || 'close'); return; }
+    const d = event.target;
+    if (isModal(d) && d.open) { // a click on the backdrop targets the dialog element itself
+      const r = d.getBoundingClientRect();
+      const inside = event.clientX >= r.left && event.clientX <= r.right && event.clientY >= r.top && event.clientY <= r.bottom;
+      if (!inside) { if (d.hasAttribute('data-bui-static')) bump(d); else closeModal(d, 'backdrop'); }
+    }
+  });
+  document.addEventListener('cancel', (event) => { // Esc key
+    if (!isModal(event.target)) return;
+    event.preventDefault();
+    if (event.target.hasAttribute('data-bui-static')) bump(event.target); else closeModal(event.target, 'cancel');
+  }, true);
+  document.addEventListener('submit', (event) => { // <form method="dialog"> inside a modal
+    const form = event.target, d = form.closest?.('dialog.bui-modal');
+    if (d && form.getAttribute('method') === 'dialog') { event.preventDefault(); closeModal(d, event.submitter?.value ?? ''); }
+  });
+  document.addEventListener('close', (event) => { // native close event does not bubble, so listen while capturing
+    if (!isModal(event.target)) return;
+    syncLock();
+    event.target.dispatchEvent(new CustomEvent('bui:modal-close', { bubbles: true, detail: { returnValue: event.target.returnValue } }));
+  }, true);
+
+  /* ---------- Floating labels: "i" message toggle + validation ---------- */
+  const FLOAT_STATES = ['error', 'success', 'warning', 'notice', 'loading'];
+  const ERROR_KEYS = { valueMissing: 'required', typeMismatch: 'type', badInput: 'type', patternMismatch: 'pattern', tooShort: 'minlength', tooLong: 'maxlength', rangeUnderflow: 'min', rangeOverflow: 'max', stepMismatch: 'step' };
+  let floatSeq = 0;
+  const floatOf = (t) => (typeof t === 'string' ? document.querySelector(t) : t)?.closest?.('.bui-float') ?? null;
+  const floatInput = (f) => f.querySelector('.bui-float-input');
+  const setOpen = (f, on) => { f.classList.toggle('bui-float-open', on); f.querySelector(':scope > .bui-float-info')?.setAttribute('aria-expanded', String(on)); };
+
+  /* state: 'error' | 'success' | 'warning' | 'info' | 'loading' | null (clear). A message adds the "i" button. */
+  function setFloatState(target, state, message, opts = {}) {
+    const f = floatOf(target);
+    if (!f) return null;
+    const input = floatInput(f);
+    FLOAT_STATES.forEach((s) => f.classList.remove(`bui-float-${s}`));
+    input.removeAttribute('aria-invalid');
+    let msg = f.querySelector(':scope > .bui-float-message'), btn = f.querySelector(':scope > .bui-float-info');
+    if (state) f.classList.add(`bui-float-${state === 'info' ? 'notice' : state}`);
+    if (state === 'error') input.setAttribute('aria-invalid', 'true');
+    if (state && state !== 'loading' && message) {
+      if (!msg) { msg = add(f, 'div', 'bui-float-message'); msg.dataset.buiAuto = ''; msg.setAttribute('role', 'status'); msg.id = `${input.id || `bui-float-${++floatSeq}`}-msg`; }
+      if (!btn) { btn = add(f, 'button', 'bui-float-info', 'i'); btn.type = 'button'; btn.dataset.buiAuto = ''; btn.setAttribute('aria-label', 'Show message'); btn.setAttribute('aria-expanded', 'false'); }
+      msg.textContent = message;
+      btn.setAttribute('aria-controls', msg.id);
+      input.setAttribute('aria-describedby', msg.id);
+      if (opts.open) setOpen(f, true);
+    } else if (!state || (msg && msg.dataset.buiAuto !== undefined)) {
+      f.querySelectorAll(':scope > [data-bui-auto]').forEach((n) => n.remove());
+      input.removeAttribute('aria-describedby');
+      f.classList.remove('bui-float-open');
+    }
+    return f;
+  }
+
+  /* Validate one field with the browser's constraint validation. Messages come from data attributes:
+     data-error, data-error-required | -type | -pattern | -minlength | -maxlength | -min | -max | -step, data-error-match, data-success */
+  function validateFloat(target) {
+    const f = floatOf(target), input = f && floatInput(f);
+    if (!input || input.disabled || input.readOnly) return true;
+    const d = input.dataset;
+    if (d.match) { const other = document.querySelector(d.match); input.setCustomValidity(other && input.value !== other.value ? (d.errorMatch || 'Values do not match') : ''); }
+    const v = input.validity;
+    if (!v.valid) {
+      const bad = Object.keys(ERROR_KEYS).find((k) => v[k]);
+      const text = v.customError || !bad ? input.validationMessage : (d[`error${ERROR_KEYS[bad][0].toUpperCase()}${ERROR_KEYS[bad].slice(1)}`] ?? d.error ?? input.validationMessage);
+      setFloatState(f, 'error', text);
+      return false;
+    }
+    if (input.value !== '') setFloatState(f, 'success', d.success); else setFloatState(f, null);
+    return true;
+  }
+  function validateFloatForm(form) {
+    let first = null;
+    form.querySelectorAll('.bui-float').forEach((f) => { floatInput(f).dataset.touched = ''; if (!validateFloat(f) && !first) first = f; });
+    if (first) { floatInput(first).focus(); setOpen(first, true); }
+    return !first;
+  }
+
+  BUI.float = {
+    setState: setFloatState,
+    clear: (t) => setFloatState(t, null),
+    open: (t, on = true) => { const f = floatOf(t); if (f) setOpen(f, on); },
+    validate: (t) => { const el = typeof t === 'string' ? document.querySelector(t) : t; return el?.matches?.('form') ? validateFloatForm(el) : validateFloat(el); },
+    reset: (form) => form.querySelectorAll('.bui-float').forEach((f) => { delete floatInput(f).dataset.touched; setFloatState(f, null); }),
+  };
+
+  document.querySelectorAll('[data-bui-validate]').forEach((form) => { form.noValidate = true; }); // no native bubbles, we show our own
+  document.addEventListener('click', (event) => {
+    const btn = event.target.closest('.bui-float-info'), inside = event.target.closest('.bui-float');
+    document.querySelectorAll('.bui-float-open').forEach((f) => { if (f !== inside) setOpen(f, false); });
+    if (btn) { const f = btn.closest('.bui-float'); setOpen(f, !f.classList.contains('bui-float-open')); }
+  });
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') document.querySelectorAll('.bui-float-open').forEach((f) => setOpen(f, false));
+  });
+  document.addEventListener('focusout', (event) => {
+    const input = event.target;
+    if (input.classList?.contains('bui-float-input') && input.closest('[data-bui-validate]')) { input.dataset.touched = ''; validateFloat(input); }
+  });
+  document.addEventListener('input', (event) => {
+    const input = event.target;
+    if (!input.classList?.contains('bui-float-input') || !input.closest('[data-bui-validate]')) return;
+    if ('touched' in input.dataset) validateFloat(input);
+    if (input.id) document.querySelectorAll(`[data-match="#${input.id}"]`).forEach((o) => { if ('touched' in o.dataset) validateFloat(o); });
+  });
+  document.addEventListener('submit', (event) => {
+    const form = event.target;
+    if (!form.matches?.('[data-bui-validate]')) return;
+    form.noValidate = true;
+    if (!validateFloatForm(form)) {
+      event.preventDefault();
+      form.dispatchEvent(new CustomEvent('bui:invalid', { bubbles: true, detail: { field: form.querySelector('.bui-float-error .bui-float-input') } }));
+    } else if (!form.dispatchEvent(new CustomEvent('bui:valid', { bubbles: true, cancelable: true }))) event.preventDefault();
+  });
+  document.addEventListener('reset', (event) => { if (event.target.matches?.('[data-bui-validate]')) setTimeout(() => BUI.float.reset(event.target)); });
+
   /* ---------- Scroll-spy for in-page sidebar links (#section) ---------- */
   const spyLinks = [...document.querySelectorAll('.bui-nav[href^="#"]')];
   if (spyLinks.length && 'IntersectionObserver' in window) {

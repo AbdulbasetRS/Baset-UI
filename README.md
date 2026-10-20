@@ -127,6 +127,7 @@ baset-ui/
 │   ├── loaders.html            # Spinners, dots, bars, skeleton, progress, success icon
 │   ├── icons.html              # Icon guide + searchable gallery with details dialog
 │   ├── toasts.html             # Toasts & notifications
+│   ├── modal.html              # Modal: dialogs, confirmations, drawers, JS API
 │   └── utilities.html
 ├── customize/                  # Theme documentation
 │   ├── colors.html             # Default colors (light + dark values, copy var())
@@ -160,13 +161,14 @@ baset-ui/
 | Component | Page | Examples |
 | --- | --- | --- |
 | Buttons | `components/buttons.html` | Solid / outline / soft / link in 7 colors, neutral, anchors, sizes, icons, icon-only, pill, full width, group, disabled |
-| Form controls | `components/forms.html` | Text input, email input, select, checkbox, form layout |
+| Form controls | `components/forms.html` | Text input, email input, select, checkbox, form layout, floating labels (basic, sizes, select, textarea), validation states (error, success, warning, notice, loading) with the i message button, live validation forms, JS API |
 | Cards | `components/cards.html` | Stat cards (sparkline, progress, task lines), cards grid |
 | Alerts | `components/alerts.html` | Success, info, warning, danger, alert stack |
 | Badges | `components/badges.html` | Six status variants |
 | Loaders | `components/loaders.html` | Spinner (sizes, styles, colors, label), dots, bars, pulse/ripple, skeleton, indeterminate progress, loading buttons, overlay, animated success icon |
 | Icons | `components/icons.html` | Styles, sizes, colors, in buttons, spinner, inline SVG, searchable gallery |
 | Toasts & notifications | `components/toasts.html` | Success, info, warning, danger, toast stack |
+| Modal | `components/modal.html` | Basic, sizes, positions, drawers, confirmations, forms, media, nested, RTL, JS API (confirm, alert, prompt, show) |
 | Utilities | `components/utilities.html` | Feature grid |
 
 Every example on these pages shows the live preview, the class list, and a code block with a **Copy** button (it copies exactly the code shown).
@@ -185,7 +187,7 @@ Every example on these pages shows the live preview, the class list, and a code 
 
 Modifiers: sizes `.bui-btn-sm` / `.bui-btn-lg`, `.bui-btn-pill`, `.bui-btn-block` (full width), `.bui-btn-icon` (square, icon-only; add `aria-label`). Group buttons with `.bui-btn-group`. Use the native `disabled` attribute for the disabled state; every style also works on `<a class="bui-btn …">`. Color tokens: `--bui-success`, `--bui-danger`, `--bui-warning`, `--bui-info`, `--bui-secondary`, `--bui-inverse`. Row helper: `.bui-button-row`.
 
-**Forms** — `.bui-field` (label wrapper), `.bui-input` (input / select), `.bui-checkline` (checkbox or radio line), `.bui-form-grid` (two-column layout, one column on mobile).
+**Forms** — `.bui-field` (label wrapper), `.bui-input` (input / select), `.bui-checkline` (checkbox or radio line), `.bui-form-grid` (two-column layout, one column on mobile). Floating labels and validation: see [Floating labels and validation](#floating-labels-and-validation).
 
 **Cards** — `.bui-stat-card` with `.bui-stat-top`, `.bui-stat-icon` (`-purple`, `-blue`, `-orange`), `.bui-stat-change`, `.bui-stat-neutral`, `.bui-stat-label`, `.bui-sparkline`, `.bui-progress`, `.bui-task-lines`. Layout: `.bui-cards-grid`.
 
@@ -300,6 +302,76 @@ Add `bui-success-icon-solid` for a filled circle, and `-sm` / `-lg` for sizes. I
 
 **Inline SVG** (no font needed): every icon is also available as SVG (`viewBox="0 0 256 256"`, `fill="currentColor"`) from the dialog's SVG tab.
 
+## Floating labels and validation
+
+Inputs whose label floats up on focus or when the field has a value, with validation states and an **i** button at the end of the field: clicking it opens the message. Full examples: `components/forms.html`.
+
+```html
+<div class="bui-float bui-float-error">
+  <input class="bui-float-input" id="email" type="email" placeholder=" " value="abdulbaset@">
+  <label class="bui-float-label" for="email">Email address</label>
+  <button type="button" class="bui-float-info" aria-label="Show message" aria-expanded="false" aria-controls="email-msg">i</button>
+  <div class="bui-float-message" id="email-msg" role="status">Enter a valid email address.</div>
+</div>
+```
+
+| Class | Purpose |
+| --- | --- |
+| `.bui-float` (`-sm` / `-lg`, `-select`, `-textarea`, `-top`) | Wrapper, sizes, select arrow, textarea, message above the field |
+| `.bui-float-input` · `.bui-float-label` | The control (needs `placeholder=" "`) and its label (after the control) |
+| `.bui-float-error` · `-success` · `-warning` · `-notice` · `-loading` | State of the field |
+| `.bui-float-info` · `.bui-float-message` · `.bui-float-open` | The i button, its message, and the open state |
+| `.bui-float-hint` | Helper text that is always visible |
+
+**Live validation:** add `data-bui-validate novalidate` to a `<form>`. Fields use normal HTML rules (`required`, `type`, `pattern`, `minlength`, `min`, `max`). They validate on blur, then on every key; on submit the first invalid field gets focus and its message opens. Messages come from data attributes: `data-error` (any rule), `data-error-required` / `-type` / `-pattern` / `-minlength` / `-maxlength` / `-min` / `-max` / `-step`, `data-success`, and `data-match="#id"` with `data-error-match` (confirm password).
+
+```js
+BUI.float.setState('#username', 'loading');
+BUI.float.setState('#username', 'error', 'This username is taken.', { open: true });   // error | success | warning | info | loading
+BUI.float.clear('#username');   BUI.float.open('#username', false);
+BUI.float.validate(form);       BUI.float.reset(form);                                  // true | false, clear all states
+form.addEventListener('bui:valid', (e) => { e.preventDefault(); /* send with fetch() */ });   // also bui:invalid
+```
+
+## Modal
+
+Dialogs built on the native `<dialog>` element: backdrop, focus trap, **Esc** key, inert page and focus return come from the browser. Use plain HTML, or the JavaScript API with Promises. Full examples: `components/modal.html`.
+
+| Class / attribute | Purpose |
+| --- | --- |
+| `.bui-modal` (on a `<dialog>`) + `-sm` / `-lg` / `-xl` / `-fullscreen` | Modal and its size |
+| `.bui-modal-top` / `-bottom` / `-start` / `-end` | Position: top, bottom sheet, side drawers (follow RTL) |
+| `.bui-modal-header` · `-title` · `-close` · `-body` · `-footer` | Parts (footer: `-footer-start` / `-center` / `-between` / `-stretch`) |
+| `.bui-modal-center` + `.bui-modal-icon-success` / `-danger` / `-warning` / `-info` | Centered confirmation layout with a status icon |
+| `.bui-modal-scroll` · `.bui-modal-divided` · `.bui-modal-media` | Scrollable body, divider lines, top image |
+| `data-bui-modal-open="#id"` · `data-bui-modal-close="value"` · `data-bui-static` | Open, close (value becomes `returnValue`), ignore Esc and backdrop |
+
+```html
+<button class="bui-btn bui-btn-primary" data-bui-modal-open="#m-confirm">Delete</button>
+<dialog class="bui-modal bui-modal-sm bui-modal-center" id="m-confirm" aria-labelledby="m-confirm-title">
+  <div class="bui-modal-body">
+    <span class="bui-modal-icon bui-modal-icon-danger" aria-hidden="true">!</span>
+    <h3 class="bui-modal-title" id="m-confirm-title">Delete this project?</h3>
+    <p>This action cannot be undone.</p>
+  </div>
+  <div class="bui-modal-footer">
+    <button class="bui-btn bui-btn-outline" data-bui-modal-close>Cancel</button>
+    <button class="bui-btn bui-btn-danger" data-bui-modal-close="delete">Delete</button>
+  </div>
+</dialog>
+```
+
+```js
+BUI.modal.open('m-confirm');  BUI.modal.close('m-confirm', 'value');
+const ok = await BUI.modal.confirm({ type: 'danger', title: 'Delete this file?', message: 'You cannot undo this.', confirmText: 'Delete' });   // true | false
+await BUI.modal.alert({ type: 'success', title: 'Saved', message: 'Your changes are live.' });
+const name = await BUI.modal.prompt({ title: 'Rename', label: 'File name', value: 'report.pdf', required: true });                          // string | null
+const choice = await BUI.modal.show({ icon: 'warning', title: 'Save first?', actions: [{ label: 'Discard', value: 'discard' }, { label: 'Save', value: 'save', variant: 'primary' }] });
+// onConfirm / action onClick may return a Promise: the button shows a spinner, and returning false keeps the modal open
+```
+
+`show()` options: `title`, `message`, `body` (DOM node), `icon` / `type`, `size`, `position`, `static`, `closable`, `footer`, `input`, `actions` (`[{ label, value, variant, autofocus, onClick, input }]`), `onClose`. It returns a Promise with the action value, or `null` when dismissed. Events on the dialog: `bui:modal-open`, `bui:modal-close` (`detail.returnValue`), plus the native `close` and `cancel`. Texts are inserted as plain text.
+
 ## Theming (CSS variables)
 
 Everything is driven by CSS variables declared on `:root` in `baset-ui.css`, in three layers:
@@ -374,6 +446,8 @@ With `baset-ui.js`, any element with `id="themeToggle"` becomes a toggle button.
 | Copy code | `<button class="bui-copy">` inside a `.bui-code-card`; copies the `<code>` text, or the `data-copy` attribute if present |
 | Icons gallery | `assets/js/icons-gallery.js` + `assets/icons/icons-data.js` on `components/icons.html` only |
 | Token playground | `assets/js/token-playground.js` on `customize/token-playground.html` only |
+| Floating labels | The i button toggles its message; `<form data-bui-validate>` and `BUI.float.setState/clear/open/validate/reset()` |
+| Modal | `BUI.modal.open/close/show/confirm/alert/prompt()` or `data-bui-modal-open` / `data-bui-modal-close` attributes |
 | Scroll-spy | Sidebar links like `<a class="bui-nav" href="#section">` highlight as you scroll |
 
 ## Using it with Laravel

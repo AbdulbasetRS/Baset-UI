@@ -261,3 +261,6 @@ h1 em { font-style: normal; color: var(--bui-primary); }
 .bui-dir-table th { font-size: 10px; letter-spacing: 1.2px; text-transform: uppercase; color: #a1a4b5; }
 .bui-dir-table code { font: 11px ui-monospace, monospace; color: var(--bui-primary-text); direction: ltr; unicode-bidi: isolate; }
 @media (max-width: 760px) { .bui-dir-demo { grid-template-columns: 1fr; } }
+
+/* ---------- Floating label demos: room for the open "i" message ---------- */
+.bui-demo-card:has(.bui-float) .bui-demo-content { padding-bottom: 76px; }

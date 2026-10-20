@@ -25,6 +25,7 @@
       <a class="bui-nav" href="../components/loaders.html">Loaders</a>
       <a class="bui-nav" href="../components/icons.html">Icons</a>
       <a class="bui-nav" href="../components/toasts.html">Toasts &amp; notifications</a>
+      <a class="bui-nav" href="../components/modal.html">Modal</a>
       <a class="bui-nav" href="../components/utilities.html">Utilities</a>
       <div class="bui-sidebar-label">CUSTOMIZE</div>
       <a class="bui-nav" href="../customize/colors.html">Default colors</a>
@@ -36,7 +37,7 @@
     </aside>
     <main class="bui-main">
       <header class="bui-topbar"><div class="bui-breadcrumb"><a href="../index.html">Documentation</a> <span>/</span> Components <span>/</span> Form controls</div><div class="bui-top-actions"><span class="bui-pill">Vanilla CSS + JS</span><button class="bui-icon-btn bui-dir-btn" id="dirToggle" type="button" aria-label="Toggle direction (RTL / LTR)" title="Toggle direction (RTL / LTR)">RTL</button><button class="bui-icon-btn" id="themeToggle" type="button" aria-label="Toggle theme">☼</button></div></header>
-      <section class="bui-section" id="forms"><div class="bui-section-heading"><div><span class="bui-eyebrow">02 / COMPONENTS</span><h2>Form controls</h2><p>Clear labels, comfortable spacing, and accessible focus states.</p></div><span class="bui-step-count">5 examples</span></div>
+      <section class="bui-section" id="forms"><div class="bui-section-heading"><div><span class="bui-eyebrow">02 / COMPONENTS</span><h2>Form controls</h2><p>Clear labels, comfortable spacing, accessible focus states, and floating labels with validation states.</p></div><span class="bui-step-count">27 examples</span></div>
       <div class="bui-demo-stack">
 <article class="bui-demo-card" id="text-input"><div class="bui-demo-title">Text input <span>.bui-field · .bui-input</span></div><div class="bui-demo-content"><label class="bui-field">Full name
   <input class="bui-input" placeholder="e.g. Abdulbaset Sayed">
@@ -116,12 +117,786 @@
   <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
 <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
       </div>
+<h3 style="margin:34px 0 14px;font-family:var(--bui-font-heading);font-size:18px;letter-spacing:-.4px">Floating label</h3><p class="bui-doc-note">Wrap an input and its label in <code>.bui-float</code>. The label sits inside the field and floats up on focus or when the field has a value. Always add <code>placeholder=" "</code> (one space): the CSS uses <code>:placeholder-shown</code> to know if the field is empty. Pure CSS, no JavaScript.</p><div class="bui-demo-stack">
+<article class="bui-demo-card" id="float-basic"><div class="bui-demo-title">Basic floating labels <span>.bui-float · .bui-float-input · .bui-float-label</span></div><div class="bui-demo-content"><div class="bui-form-grid" style="gap:18px 20px">
+<div class="bui-float">
+  <input class="bui-float-input" id="fl-name" type="text" placeholder=" " autocomplete="name">
+  <label class="bui-float-label" for="fl-name">Full name</label>
+</div>
+<div class="bui-float">
+  <input class="bui-float-input" id="fl-email" type="email" placeholder=" ">
+  <label class="bui-float-label" for="fl-email">Email address</label>
+</div>
+<div class="bui-float">
+  <input class="bui-float-input" id="fl-pass" type="password" placeholder=" ">
+  <label class="bui-float-label" for="fl-pass">Password</label>
+</div>
+<div class="bui-float">
+  <input class="bui-float-input" id="fl-phone" type="tel" placeholder=" ">
+  <label class="bui-float-label" for="fl-phone">Phone number</label>
+</div>
+</div></div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-form-grid"</span> <span class="bui-code-blue">style</span>=<span class="bui-code-green">"gap:18px 20px"</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"fl-name"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"text"</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span> <span class="bui-code-blue">autocomplete</span>=<span class="bui-code-green">"name"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"fl-name"</span><span class="bui-code-pink">&gt;</span>Full name<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"fl-email"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"email"</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"fl-email"</span><span class="bui-code-pink">&gt;</span>Email address<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"fl-pass"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"password"</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"fl-pass"</span><span class="bui-code-pink">&gt;</span>Password<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"fl-phone"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"tel"</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"fl-phone"</span><span class="bui-code-pink">&gt;</span>Phone number<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
+<article class="bui-demo-card" id="float-types"><div class="bui-demo-title">Select, textarea and dates <span>.bui-float-select · .bui-float-textarea</span></div><div class="bui-demo-content"><div class="bui-form-grid" style="gap:18px 20px">
+<div class="bui-float bui-float-select">
+  <select class="bui-float-input" id="fl-dept"><option value=""></option><option>Engineering</option><option>Design</option><option>Marketing</option></select>
+  <label class="bui-float-label" for="fl-dept">Department</label>
+</div>
+<div class="bui-float">
+  <input class="bui-float-input" id="fl-date" type="date" placeholder=" ">
+  <label class="bui-float-label" for="fl-date">Birth date</label>
+</div>
+<div class="bui-float">
+  <input class="bui-float-input" id="fl-time" type="time" placeholder=" ">
+  <label class="bui-float-label" for="fl-time">Meeting time</label>
+</div>
+<div class="bui-float bui-float-textarea">
+  <textarea class="bui-float-input" id="fl-msg" placeholder=" " rows="4"></textarea>
+  <label class="bui-float-label" for="fl-msg">Your message</label>
+</div>
+</div></div><div class="bui-demo-code">Selects, dates and times always show the label floated. Selects need the .bui-float-select wrapper class for the arrow.</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-form-grid"</span> <span class="bui-code-blue">style</span>=<span class="bui-code-green">"gap:18px 20px"</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float bui-float-select"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;select</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"fl-dept"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;option</span> <span class="bui-code-blue">value</span>=<span class="bui-code-green">""</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;option</span><span class="bui-code-pink">&gt;</span>Engineering<span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;option</span><span class="bui-code-pink">&gt;</span>Design<span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;option</span><span class="bui-code-pink">&gt;</span>Marketing<span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/select</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"fl-dept"</span><span class="bui-code-pink">&gt;</span>Department<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"fl-date"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"date"</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"fl-date"</span><span class="bui-code-pink">&gt;</span>Birth date<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"fl-time"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"time"</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"fl-time"</span><span class="bui-code-pink">&gt;</span>Meeting time<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float bui-float-textarea"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;textarea</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"fl-msg"</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span> <span class="bui-code-blue">rows</span>=<span class="bui-code-green">"4"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/textarea</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"fl-msg"</span><span class="bui-code-pink">&gt;</span>Your message<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
+<article class="bui-demo-card" id="float-sizes"><div class="bui-demo-title">Sizes <span>.bui-float-sm | (default) | .bui-float-lg</span></div><div class="bui-demo-content"><div style="display:grid;gap:18px;max-width:420px">
+<div class="bui-float bui-float-sm">
+  <input class="bui-float-input" id="fl-sm" type="text" placeholder=" ">
+  <label class="bui-float-label" for="fl-sm">Small field</label>
+</div>
+<div class="bui-float">
+  <input class="bui-float-input" id="fl-md" type="text" placeholder=" ">
+  <label class="bui-float-label" for="fl-md">Default field</label>
+</div>
+<div class="bui-float bui-float-lg">
+  <input class="bui-float-input" id="fl-lg" type="text" placeholder=" ">
+  <label class="bui-float-label" for="fl-lg">Large field</label>
+</div>
+</div></div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">style</span>=<span class="bui-code-green">"display:grid;gap:18px;max-width:420px"</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float bui-float-sm"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"fl-sm"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"text"</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"fl-sm"</span><span class="bui-code-pink">&gt;</span>Small field<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"fl-md"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"text"</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"fl-md"</span><span class="bui-code-pink">&gt;</span>Default field<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float bui-float-lg"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"fl-lg"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"text"</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"fl-lg"</span><span class="bui-code-pink">&gt;</span>Large field<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
+<article class="bui-demo-card" id="float-values"><div class="bui-demo-title">With a value, disabled and read-only <span>value · disabled · readonly</span></div><div class="bui-demo-content"><div class="bui-form-grid" style="gap:18px 20px">
+<div class="bui-float">
+  <input class="bui-float-input" id="fl-val" type="text" placeholder=" " value="Abdulbaset Sayed">
+  <label class="bui-float-label" for="fl-val">Full name</label>
+</div>
+<div class="bui-float">
+  <input class="bui-float-input" id="fl-ph" type="email" placeholder="you@example.com">
+  <label class="bui-float-label" for="fl-ph">Email (placeholder shows on focus)</label>
+</div>
+<div class="bui-float">
+  <input class="bui-float-input" id="fl-dis" type="text" placeholder=" " value="Cannot edit" disabled>
+  <label class="bui-float-label" for="fl-dis">Disabled</label>
+</div>
+<div class="bui-float">
+  <input class="bui-float-input" id="fl-ro" type="text" placeholder=" " value="Copy only" readonly>
+  <label class="bui-float-label" for="fl-ro">Read-only</label>
+</div>
+</div></div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-form-grid"</span> <span class="bui-code-blue">style</span>=<span class="bui-code-green">"gap:18px 20px"</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"fl-val"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"text"</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span> <span class="bui-code-blue">value</span>=<span class="bui-code-green">"Abdulbaset Sayed"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"fl-val"</span><span class="bui-code-pink">&gt;</span>Full name<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"fl-ph"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"email"</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">"you@example.com"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"fl-ph"</span><span class="bui-code-pink">&gt;</span>Email (placeholder shows on focus)<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"fl-dis"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"text"</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span> <span class="bui-code-blue">value</span>=<span class="bui-code-green">"Cannot edit"</span> <span class="bui-code-blue">disabled</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"fl-dis"</span><span class="bui-code-pink">&gt;</span>Disabled<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"fl-ro"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"text"</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span> <span class="bui-code-blue">value</span>=<span class="bui-code-green">"Copy only"</span> <span class="bui-code-blue">readonly</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"fl-ro"</span><span class="bui-code-pink">&gt;</span>Read-only<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
+</div>
+<h3 style="margin:34px 0 14px;font-family:var(--bui-font-heading);font-size:18px;letter-spacing:-.4px">Validation states</h3><p class="bui-doc-note">Add a state class to <code>.bui-float</code>: <code>-error</code>, <code>-success</code>, <code>-warning</code>, <code>-notice</code> (blue) or <code>-loading</code>. Put a <b>message</b> in the field and an <b>i</b> button at its end: clicking the <b>i</b> opens the message under the field (click again, click outside or press <b>Esc</b> to close). The button works with <code>baset-ui.js</code>.</p><div class="bui-demo-stack">
+<article class="bui-demo-card" id="float-error"><div class="bui-demo-title">Error <span>.bui-float-error</span></div><div class="bui-demo-content"><div style="display:grid;gap:18px;max-width:420px">
+<div class="bui-float bui-float-error">
+  <input class="bui-float-input" id="fl-e1" type="email" placeholder=" " value="abdulbaset@">
+  <label class="bui-float-label" for="fl-e1">Email address</label>
+  <button type="button" class="bui-float-info" aria-label="Show message" aria-expanded="false" aria-controls="fl-e1-msg">i</button>
+  <div class="bui-float-message" id="fl-e1-msg" role="status">Enter a valid email address, like you@example.com.</div>
+</div>
+<div class="bui-float bui-float-error">
+  <input class="bui-float-input" id="fl-e2" type="password" placeholder=" " value="123">
+  <label class="bui-float-label" for="fl-e2">Password</label>
+  <button type="button" class="bui-float-info" aria-label="Show message" aria-expanded="false" aria-controls="fl-e2-msg">i</button>
+  <div class="bui-float-message" id="fl-e2-msg" role="status">Your password must have at least 8 characters.</div>
+</div>
+</div></div><div class="bui-demo-code">Click the i at the end of each field.</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">style</span>=<span class="bui-code-green">"display:grid;gap:18px;max-width:420px"</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float bui-float-error"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"fl-e1"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"email"</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span> <span class="bui-code-blue">value</span>=<span class="bui-code-green">"abdulbaset@"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"fl-e1"</span><span class="bui-code-pink">&gt;</span>Email address<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-info"</span> <span class="bui-code-blue">aria-label</span>=<span class="bui-code-green">"Show message"</span> <span class="bui-code-blue">aria-expanded</span>=<span class="bui-code-green">"false"</span> <span class="bui-code-blue">aria-controls</span>=<span class="bui-code-green">"fl-e1-msg"</span><span class="bui-code-pink">&gt;</span>i<span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-message"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"fl-e1-msg"</span> <span class="bui-code-blue">role</span>=<span class="bui-code-green">"status"</span><span class="bui-code-pink">&gt;</span>Enter a valid email address, like you@example.com.<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float bui-float-error"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"fl-e2"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"password"</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span> <span class="bui-code-blue">value</span>=<span class="bui-code-green">"123"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"fl-e2"</span><span class="bui-code-pink">&gt;</span>Password<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-info"</span> <span class="bui-code-blue">aria-label</span>=<span class="bui-code-green">"Show message"</span> <span class="bui-code-blue">aria-expanded</span>=<span class="bui-code-green">"false"</span> <span class="bui-code-blue">aria-controls</span>=<span class="bui-code-green">"fl-e2-msg"</span><span class="bui-code-pink">&gt;</span>i<span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-message"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"fl-e2-msg"</span> <span class="bui-code-blue">role</span>=<span class="bui-code-green">"status"</span><span class="bui-code-pink">&gt;</span>Your password must have at least 8 characters.<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
+<article class="bui-demo-card" id="float-success"><div class="bui-demo-title">Success <span>.bui-float-success</span></div><div class="bui-demo-content"><div style="display:grid;gap:18px;max-width:420px">
+<div class="bui-float bui-float-success">
+  <input class="bui-float-input" id="fl-s1" type="text" placeholder=" " value="baset_ui">
+  <label class="bui-float-label" for="fl-s1">Username</label>
+  <button type="button" class="bui-float-info" aria-label="Show message" aria-expanded="false" aria-controls="fl-s1-msg">i</button>
+  <div class="bui-float-message" id="fl-s1-msg" role="status">This username is available.</div>
+</div>
+<div class="bui-float bui-float-success">
+  <input class="bui-float-input" id="fl-s2" type="email" placeholder=" " value="hello@baset.dev">
+  <label class="bui-float-label" for="fl-s2">Email address</label>
+  <button type="button" class="bui-float-info" aria-label="Show message" aria-expanded="false" aria-controls="fl-s2-msg">i</button>
+  <div class="bui-float-message" id="fl-s2-msg" role="status">Your email is verified.</div>
+</div>
+</div></div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">style</span>=<span class="bui-code-green">"display:grid;gap:18px;max-width:420px"</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float bui-float-success"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"fl-s1"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"text"</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span> <span class="bui-code-blue">value</span>=<span class="bui-code-green">"baset_ui"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"fl-s1"</span><span class="bui-code-pink">&gt;</span>Username<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-info"</span> <span class="bui-code-blue">aria-label</span>=<span class="bui-code-green">"Show message"</span> <span class="bui-code-blue">aria-expanded</span>=<span class="bui-code-green">"false"</span> <span class="bui-code-blue">aria-controls</span>=<span class="bui-code-green">"fl-s1-msg"</span><span class="bui-code-pink">&gt;</span>i<span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-message"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"fl-s1-msg"</span> <span class="bui-code-blue">role</span>=<span class="bui-code-green">"status"</span><span class="bui-code-pink">&gt;</span>This username is available.<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float bui-float-success"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"fl-s2"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"email"</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span> <span class="bui-code-blue">value</span>=<span class="bui-code-green">"hello@baset.dev"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"fl-s2"</span><span class="bui-code-pink">&gt;</span>Email address<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-info"</span> <span class="bui-code-blue">aria-label</span>=<span class="bui-code-green">"Show message"</span> <span class="bui-code-blue">aria-expanded</span>=<span class="bui-code-green">"false"</span> <span class="bui-code-blue">aria-controls</span>=<span class="bui-code-green">"fl-s2-msg"</span><span class="bui-code-pink">&gt;</span>i<span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-message"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"fl-s2-msg"</span> <span class="bui-code-blue">role</span>=<span class="bui-code-green">"status"</span><span class="bui-code-pink">&gt;</span>Your email is verified.<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
+<article class="bui-demo-card" id="float-warning"><div class="bui-demo-title">Warning <span>.bui-float-warning</span></div><div class="bui-demo-content"><div style="display:grid;gap:18px;max-width:420px">
+<div class="bui-float bui-float-warning">
+  <input class="bui-float-input" id="fl-w1" type="password" placeholder=" " value="password1">
+  <label class="bui-float-label" for="fl-w1">Password</label>
+  <button type="button" class="bui-float-info" aria-label="Show message" aria-expanded="false" aria-controls="fl-w1-msg">i</button>
+  <div class="bui-float-message" id="fl-w1-msg" role="status">Weak password. Add numbers and symbols to make it stronger.</div>
+</div>
+<div class="bui-float bui-float-warning">
+  <input class="bui-float-input" id="fl-w2" type="tel" placeholder=" " value="0100 000 0000">
+  <label class="bui-float-label" for="fl-w2">Phone number</label>
+  <button type="button" class="bui-float-info" aria-label="Show message" aria-expanded="false" aria-controls="fl-w2-msg">i</button>
+  <div class="bui-float-message" id="fl-w2-msg" role="status">We could not check this number. You can still continue.</div>
+</div>
+</div></div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">style</span>=<span class="bui-code-green">"display:grid;gap:18px;max-width:420px"</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float bui-float-warning"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"fl-w1"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"password"</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span> <span class="bui-code-blue">value</span>=<span class="bui-code-green">"password1"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"fl-w1"</span><span class="bui-code-pink">&gt;</span>Password<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-info"</span> <span class="bui-code-blue">aria-label</span>=<span class="bui-code-green">"Show message"</span> <span class="bui-code-blue">aria-expanded</span>=<span class="bui-code-green">"false"</span> <span class="bui-code-blue">aria-controls</span>=<span class="bui-code-green">"fl-w1-msg"</span><span class="bui-code-pink">&gt;</span>i<span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-message"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"fl-w1-msg"</span> <span class="bui-code-blue">role</span>=<span class="bui-code-green">"status"</span><span class="bui-code-pink">&gt;</span>Weak password. Add numbers and symbols to make it stronger.<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float bui-float-warning"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"fl-w2"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"tel"</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span> <span class="bui-code-blue">value</span>=<span class="bui-code-green">"0100 000 0000"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"fl-w2"</span><span class="bui-code-pink">&gt;</span>Phone number<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-info"</span> <span class="bui-code-blue">aria-label</span>=<span class="bui-code-green">"Show message"</span> <span class="bui-code-blue">aria-expanded</span>=<span class="bui-code-green">"false"</span> <span class="bui-code-blue">aria-controls</span>=<span class="bui-code-green">"fl-w2-msg"</span><span class="bui-code-pink">&gt;</span>i<span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-message"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"fl-w2-msg"</span> <span class="bui-code-blue">role</span>=<span class="bui-code-green">"status"</span><span class="bui-code-pink">&gt;</span>We could not check this number. You can still continue.<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
+<article class="bui-demo-card" id="float-notice"><div class="bui-demo-title">Info (notice) <span>.bui-float-notice</span></div><div class="bui-demo-content"><div style="display:grid;gap:18px;max-width:420px">
+<div class="bui-float bui-float-notice">
+  <input class="bui-float-input" id="fl-n1" type="text" placeholder=" ">
+  <label class="bui-float-label" for="fl-n1">Username</label>
+  <button type="button" class="bui-float-info" aria-label="Show message" aria-expanded="false" aria-controls="fl-n1-msg">i</button>
+  <div class="bui-float-message" id="fl-n1-msg" role="status">Use 3 to 20 letters, numbers or underscores. You can change it later.</div>
+</div>
+<div class="bui-float bui-float-notice">
+  <input class="bui-float-input" id="fl-n2" type="text" placeholder=" ">
+  <label class="bui-float-label" for="fl-n2">Tax ID</label>
+  <button type="button" class="bui-float-info" aria-label="Show message" aria-expanded="false" aria-controls="fl-n2-msg">i</button>
+  <div class="bui-float-message" id="fl-n2-msg" role="status">Optional. Add it if you need a tax invoice.</div>
+</div>
+</div></div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">style</span>=<span class="bui-code-green">"display:grid;gap:18px;max-width:420px"</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float bui-float-notice"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"fl-n1"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"text"</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"fl-n1"</span><span class="bui-code-pink">&gt;</span>Username<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-info"</span> <span class="bui-code-blue">aria-label</span>=<span class="bui-code-green">"Show message"</span> <span class="bui-code-blue">aria-expanded</span>=<span class="bui-code-green">"false"</span> <span class="bui-code-blue">aria-controls</span>=<span class="bui-code-green">"fl-n1-msg"</span><span class="bui-code-pink">&gt;</span>i<span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-message"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"fl-n1-msg"</span> <span class="bui-code-blue">role</span>=<span class="bui-code-green">"status"</span><span class="bui-code-pink">&gt;</span>Use 3 to 20 letters, numbers or underscores. You can change it later.<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float bui-float-notice"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"fl-n2"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"text"</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"fl-n2"</span><span class="bui-code-pink">&gt;</span>Tax ID<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-info"</span> <span class="bui-code-blue">aria-label</span>=<span class="bui-code-green">"Show message"</span> <span class="bui-code-blue">aria-expanded</span>=<span class="bui-code-green">"false"</span> <span class="bui-code-blue">aria-controls</span>=<span class="bui-code-green">"fl-n2-msg"</span><span class="bui-code-pink">&gt;</span>i<span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-message"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"fl-n2-msg"</span> <span class="bui-code-blue">role</span>=<span class="bui-code-green">"status"</span><span class="bui-code-pink">&gt;</span>Optional. Add it if you need a tax invoice.<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
+<article class="bui-demo-card" id="float-all"><div class="bui-demo-title">All states side by side <span>error · success · warning · notice · loading</span></div><div class="bui-demo-content"><div class="bui-form-grid" style="gap:18px 20px">
+<div class="bui-float bui-float-error">
+  <input class="bui-float-input" id="fl-a1" type="text" placeholder=" " value="Wrong value">
+  <label class="bui-float-label" for="fl-a1">Error</label>
+  <button type="button" class="bui-float-info" aria-label="Show message" aria-expanded="false" aria-controls="fl-a1-msg">i</button>
+  <div class="bui-float-message" id="fl-a1-msg" role="status">This field has an error.</div>
+</div>
+<div class="bui-float bui-float-success">
+  <input class="bui-float-input" id="fl-a2" type="text" placeholder=" " value="Correct value">
+  <label class="bui-float-label" for="fl-a2">Success</label>
+  <button type="button" class="bui-float-info" aria-label="Show message" aria-expanded="false" aria-controls="fl-a2-msg">i</button>
+  <div class="bui-float-message" id="fl-a2-msg" role="status">This field is valid.</div>
+</div>
+<div class="bui-float bui-float-warning">
+  <input class="bui-float-input" id="fl-a3" type="text" placeholder=" " value="Maybe wrong">
+  <label class="bui-float-label" for="fl-a3">Warning</label>
+  <button type="button" class="bui-float-info" aria-label="Show message" aria-expanded="false" aria-controls="fl-a3-msg">i</button>
+  <div class="bui-float-message" id="fl-a3-msg" role="status">Check this value again.</div>
+</div>
+<div class="bui-float bui-float-notice">
+  <input class="bui-float-input" id="fl-a4" type="text" placeholder=" " value="Some value">
+  <label class="bui-float-label" for="fl-a4">Notice</label>
+  <button type="button" class="bui-float-info" aria-label="Show message" aria-expanded="false" aria-controls="fl-a4-msg">i</button>
+  <div class="bui-float-message" id="fl-a4-msg" role="status">Extra information for the user.</div>
+</div>
+<div class="bui-float bui-float-loading">
+  <input class="bui-float-input" id="fl-a5" type="text" placeholder=" " value="Checking...">
+  <label class="bui-float-label" for="fl-a5">Loading</label>
+</div>
+<div class="bui-float">
+  <input class="bui-float-input" id="fl-a6" type="text" placeholder=" " value="No state">
+  <label class="bui-float-label" for="fl-a6">Default</label>
+  <button type="button" class="bui-float-info" aria-label="Show message" aria-expanded="false" aria-controls="fl-a6-msg">i</button>
+  <div class="bui-float-message" id="fl-a6-msg" role="status">A neutral message also works.</div>
+</div>
+</div></div><div class="bui-demo-code">.bui-float-loading shows a spinner in place of the i while you check a value (for example with a server request).</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-form-grid"</span> <span class="bui-code-blue">style</span>=<span class="bui-code-green">"gap:18px 20px"</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float bui-float-error"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"fl-a1"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"text"</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span> <span class="bui-code-blue">value</span>=<span class="bui-code-green">"Wrong value"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"fl-a1"</span><span class="bui-code-pink">&gt;</span>Error<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-info"</span> <span class="bui-code-blue">aria-label</span>=<span class="bui-code-green">"Show message"</span> <span class="bui-code-blue">aria-expanded</span>=<span class="bui-code-green">"false"</span> <span class="bui-code-blue">aria-controls</span>=<span class="bui-code-green">"fl-a1-msg"</span><span class="bui-code-pink">&gt;</span>i<span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-message"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"fl-a1-msg"</span> <span class="bui-code-blue">role</span>=<span class="bui-code-green">"status"</span><span class="bui-code-pink">&gt;</span>This field has an error.<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float bui-float-success"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"fl-a2"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"text"</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span> <span class="bui-code-blue">value</span>=<span class="bui-code-green">"Correct value"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"fl-a2"</span><span class="bui-code-pink">&gt;</span>Success<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-info"</span> <span class="bui-code-blue">aria-label</span>=<span class="bui-code-green">"Show message"</span> <span class="bui-code-blue">aria-expanded</span>=<span class="bui-code-green">"false"</span> <span class="bui-code-blue">aria-controls</span>=<span class="bui-code-green">"fl-a2-msg"</span><span class="bui-code-pink">&gt;</span>i<span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-message"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"fl-a2-msg"</span> <span class="bui-code-blue">role</span>=<span class="bui-code-green">"status"</span><span class="bui-code-pink">&gt;</span>This field is valid.<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float bui-float-warning"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"fl-a3"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"text"</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span> <span class="bui-code-blue">value</span>=<span class="bui-code-green">"Maybe wrong"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"fl-a3"</span><span class="bui-code-pink">&gt;</span>Warning<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-info"</span> <span class="bui-code-blue">aria-label</span>=<span class="bui-code-green">"Show message"</span> <span class="bui-code-blue">aria-expanded</span>=<span class="bui-code-green">"false"</span> <span class="bui-code-blue">aria-controls</span>=<span class="bui-code-green">"fl-a3-msg"</span><span class="bui-code-pink">&gt;</span>i<span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-message"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"fl-a3-msg"</span> <span class="bui-code-blue">role</span>=<span class="bui-code-green">"status"</span><span class="bui-code-pink">&gt;</span>Check this value again.<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float bui-float-notice"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"fl-a4"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"text"</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span> <span class="bui-code-blue">value</span>=<span class="bui-code-green">"Some value"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"fl-a4"</span><span class="bui-code-pink">&gt;</span>Notice<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-info"</span> <span class="bui-code-blue">aria-label</span>=<span class="bui-code-green">"Show message"</span> <span class="bui-code-blue">aria-expanded</span>=<span class="bui-code-green">"false"</span> <span class="bui-code-blue">aria-controls</span>=<span class="bui-code-green">"fl-a4-msg"</span><span class="bui-code-pink">&gt;</span>i<span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-message"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"fl-a4-msg"</span> <span class="bui-code-blue">role</span>=<span class="bui-code-green">"status"</span><span class="bui-code-pink">&gt;</span>Extra information for the user.<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float bui-float-loading"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"fl-a5"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"text"</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span> <span class="bui-code-blue">value</span>=<span class="bui-code-green">"Checking..."</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"fl-a5"</span><span class="bui-code-pink">&gt;</span>Loading<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"fl-a6"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"text"</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span> <span class="bui-code-blue">value</span>=<span class="bui-code-green">"No state"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"fl-a6"</span><span class="bui-code-pink">&gt;</span>Default<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-info"</span> <span class="bui-code-blue">aria-label</span>=<span class="bui-code-green">"Show message"</span> <span class="bui-code-blue">aria-expanded</span>=<span class="bui-code-green">"false"</span> <span class="bui-code-blue">aria-controls</span>=<span class="bui-code-green">"fl-a6-msg"</span><span class="bui-code-pink">&gt;</span>i<span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-message"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"fl-a6-msg"</span> <span class="bui-code-blue">role</span>=<span class="bui-code-green">"status"</span><span class="bui-code-pink">&gt;</span>A neutral message also works.<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
+<article class="bui-demo-card" id="float-open"><div class="bui-demo-title">Message open by default <span>.bui-float-open</span></div><div class="bui-demo-content"><div class="bui-form-grid" style="gap:76px 20px">
+<div class="bui-float bui-float-error bui-float-open">
+  <input class="bui-float-input" id="fl-o1" type="email" placeholder=" " value="abdulbaset@">
+  <label class="bui-float-label" for="fl-o1">Email address</label>
+  <button type="button" class="bui-float-info" aria-label="Show message" aria-expanded="true" aria-controls="fl-o1-msg">i</button>
+  <div class="bui-float-message" id="fl-o1-msg" role="status">Enter a valid email address.</div>
+</div>
+<div class="bui-float bui-float-success bui-float-open">
+  <input class="bui-float-input" id="fl-o2" type="text" placeholder=" " value="baset_ui">
+  <label class="bui-float-label" for="fl-o2">Username</label>
+  <button type="button" class="bui-float-info" aria-label="Show message" aria-expanded="true" aria-controls="fl-o2-msg">i</button>
+  <div class="bui-float-message" id="fl-o2-msg" role="status">This username is available.</div>
+</div>
+</div></div><div class="bui-demo-code">Add .bui-float-open (and aria-expanded="true" on the button) to show the message on load.</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-form-grid"</span> <span class="bui-code-blue">style</span>=<span class="bui-code-green">"gap:76px 20px"</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float bui-float-error bui-float-open"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"fl-o1"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"email"</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span> <span class="bui-code-blue">value</span>=<span class="bui-code-green">"abdulbaset@"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"fl-o1"</span><span class="bui-code-pink">&gt;</span>Email address<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-info"</span> <span class="bui-code-blue">aria-label</span>=<span class="bui-code-green">"Show message"</span> <span class="bui-code-blue">aria-expanded</span>=<span class="bui-code-green">"true"</span> <span class="bui-code-blue">aria-controls</span>=<span class="bui-code-green">"fl-o1-msg"</span><span class="bui-code-pink">&gt;</span>i<span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-message"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"fl-o1-msg"</span> <span class="bui-code-blue">role</span>=<span class="bui-code-green">"status"</span><span class="bui-code-pink">&gt;</span>Enter a valid email address.<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float bui-float-success bui-float-open"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"fl-o2"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"text"</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span> <span class="bui-code-blue">value</span>=<span class="bui-code-green">"baset_ui"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"fl-o2"</span><span class="bui-code-pink">&gt;</span>Username<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-info"</span> <span class="bui-code-blue">aria-label</span>=<span class="bui-code-green">"Show message"</span> <span class="bui-code-blue">aria-expanded</span>=<span class="bui-code-green">"true"</span> <span class="bui-code-blue">aria-controls</span>=<span class="bui-code-green">"fl-o2-msg"</span><span class="bui-code-pink">&gt;</span>i<span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-message"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"fl-o2-msg"</span> <span class="bui-code-blue">role</span>=<span class="bui-code-green">"status"</span><span class="bui-code-pink">&gt;</span>This username is available.<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
+<article class="bui-demo-card" id="float-top"><div class="bui-demo-title">Message above the field <span>.bui-float-top</span></div><div class="bui-demo-content"><div style="display:grid;gap:18px;max-width:420px">
+<div class="bui-float bui-float-error bui-float-open bui-float-top">
+  <input class="bui-float-input" id="fl-t1" type="text" placeholder=" " value="4242 4242">
+  <label class="bui-float-label" for="fl-t1">Card number</label>
+  <button type="button" class="bui-float-info" aria-label="Show message" aria-expanded="true" aria-controls="fl-t1-msg">i</button>
+  <div class="bui-float-message" id="fl-t1-msg" role="status">Card numbers have 16 digits.</div>
+</div>
+</div></div><div class="bui-demo-code">Use .bui-float-top near the bottom of a page or a modal, where there is no room below.</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">style</span>=<span class="bui-code-green">"display:grid;gap:18px;max-width:420px"</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float bui-float-error bui-float-open bui-float-top"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"fl-t1"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"text"</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span> <span class="bui-code-blue">value</span>=<span class="bui-code-green">"4242 4242"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"fl-t1"</span><span class="bui-code-pink">&gt;</span>Card number<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-info"</span> <span class="bui-code-blue">aria-label</span>=<span class="bui-code-green">"Show message"</span> <span class="bui-code-blue">aria-expanded</span>=<span class="bui-code-green">"true"</span> <span class="bui-code-blue">aria-controls</span>=<span class="bui-code-green">"fl-t1-msg"</span><span class="bui-code-pink">&gt;</span>i<span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-message"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"fl-t1-msg"</span> <span class="bui-code-blue">role</span>=<span class="bui-code-green">"status"</span><span class="bui-code-pink">&gt;</span>Card numbers have 16 digits.<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
+<article class="bui-demo-card" id="float-hint"><div class="bui-demo-title">Always-visible helper text <span>.bui-float-hint</span></div><div class="bui-demo-content"><div class="bui-form-grid" style="gap:18px 20px">
+<div class="bui-float">
+  <input class="bui-float-input" id="fl-h1" type="text" placeholder=" ">
+  <label class="bui-float-label" for="fl-h1">Display name</label>
+  <div class="bui-float-hint">Shown on your public profile.</div>
+</div>
+<div class="bui-float bui-float-error">
+  <input class="bui-float-input" id="fl-h2" type="email" placeholder=" " value="abdulbaset@">
+  <label class="bui-float-label" for="fl-h2">Email address</label>
+  <div class="bui-float-hint">Enter a valid email address.</div>
+</div>
+<div class="bui-float bui-float-success">
+  <input class="bui-float-input" id="fl-h3" type="text" placeholder=" " value="baset_ui">
+  <label class="bui-float-label" for="fl-h3">Username</label>
+  <div class="bui-float-hint">Available.</div>
+</div>
+<div class="bui-float bui-float-warning">
+  <input class="bui-float-input" id="fl-h4" type="password" placeholder=" " value="password1">
+  <label class="bui-float-label" for="fl-h4">Password</label>
+  <div class="bui-float-hint">Weak password.</div>
+</div>
+</div></div><div class="bui-demo-code">When the message must always be seen, use .bui-float-hint under the field instead of the i button. It takes the color of the state.</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-form-grid"</span> <span class="bui-code-blue">style</span>=<span class="bui-code-green">"gap:18px 20px"</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"fl-h1"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"text"</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"fl-h1"</span><span class="bui-code-pink">&gt;</span>Display name<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-hint"</span><span class="bui-code-pink">&gt;</span>Shown on your public profile.<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float bui-float-error"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"fl-h2"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"email"</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span> <span class="bui-code-blue">value</span>=<span class="bui-code-green">"abdulbaset@"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"fl-h2"</span><span class="bui-code-pink">&gt;</span>Email address<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-hint"</span><span class="bui-code-pink">&gt;</span>Enter a valid email address.<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float bui-float-success"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"fl-h3"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"text"</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span> <span class="bui-code-blue">value</span>=<span class="bui-code-green">"baset_ui"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"fl-h3"</span><span class="bui-code-pink">&gt;</span>Username<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-hint"</span><span class="bui-code-pink">&gt;</span>Available.<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float bui-float-warning"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"fl-h4"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"password"</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span> <span class="bui-code-blue">value</span>=<span class="bui-code-green">"password1"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"fl-h4"</span><span class="bui-code-pink">&gt;</span>Password<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-hint"</span><span class="bui-code-pink">&gt;</span>Weak password.<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
+<article class="bui-demo-card" id="float-border"><div class="bui-demo-title">State without a message <span>border and label only</span></div><div class="bui-demo-content"><div class="bui-form-grid" style="gap:18px 20px">
+<div class="bui-float bui-float-error">
+  <input class="bui-float-input" id="fl-b1" type="text" placeholder=" " value="x">
+  <label class="bui-float-label" for="fl-b1">Error</label>
+</div>
+<div class="bui-float bui-float-success">
+  <input class="bui-float-input" id="fl-b2" type="text" placeholder=" " value="x">
+  <label class="bui-float-label" for="fl-b2">Success</label>
+</div>
+<div class="bui-float bui-float-warning">
+  <input class="bui-float-input" id="fl-b3" type="text" placeholder=" " value="x">
+  <label class="bui-float-label" for="fl-b3">Warning</label>
+</div>
+<div class="bui-float bui-float-notice">
+  <input class="bui-float-input" id="fl-b4" type="text" placeholder=" " value="x">
+  <label class="bui-float-label" for="fl-b4">Notice</label>
+</div>
+</div></div><div class="bui-demo-code">With no message, no i button is added.</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-form-grid"</span> <span class="bui-code-blue">style</span>=<span class="bui-code-green">"gap:18px 20px"</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float bui-float-error"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"fl-b1"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"text"</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span> <span class="bui-code-blue">value</span>=<span class="bui-code-green">"x"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"fl-b1"</span><span class="bui-code-pink">&gt;</span>Error<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float bui-float-success"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"fl-b2"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"text"</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span> <span class="bui-code-blue">value</span>=<span class="bui-code-green">"x"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"fl-b2"</span><span class="bui-code-pink">&gt;</span>Success<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float bui-float-warning"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"fl-b3"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"text"</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span> <span class="bui-code-blue">value</span>=<span class="bui-code-green">"x"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"fl-b3"</span><span class="bui-code-pink">&gt;</span>Warning<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float bui-float-notice"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"fl-b4"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"text"</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span> <span class="bui-code-blue">value</span>=<span class="bui-code-green">"x"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"fl-b4"</span><span class="bui-code-pink">&gt;</span>Notice<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
+<article class="bui-demo-card" id="float-select-area"><div class="bui-demo-title">Select and textarea with states <span>the i fits every control</span></div><div class="bui-demo-content"><div class="bui-form-grid" style="gap:18px 20px">
+<div class="bui-float bui-float-error bui-float-select">
+  <select class="bui-float-input" id="fl-sa1"><option value=""></option><option>Engineering</option><option>Design</option><option>Marketing</option></select>
+  <label class="bui-float-label" for="fl-sa1">Department</label>
+  <button type="button" class="bui-float-info" aria-label="Show message" aria-expanded="false" aria-controls="fl-sa1-msg">i</button>
+  <div class="bui-float-message" id="fl-sa1-msg" role="status">Choose a department to continue.</div>
+</div>
+<div class="bui-float bui-float-success bui-float-select">
+  <select class="bui-float-input" id="fl-sa2"><option>Engineering</option><option>Design</option></select>
+  <label class="bui-float-label" for="fl-sa2">Department</label>
+  <button type="button" class="bui-float-info" aria-label="Show message" aria-expanded="false" aria-controls="fl-sa2-msg">i</button>
+  <div class="bui-float-message" id="fl-sa2-msg" role="status">Great choice.</div>
+</div>
+<div class="bui-float bui-float-error bui-float-textarea">
+  <textarea class="bui-float-input" id="fl-sa3" placeholder=" " rows="4"></textarea>
+  <label class="bui-float-label" for="fl-sa3">Your message</label>
+  <button type="button" class="bui-float-info" aria-label="Show message" aria-expanded="false" aria-controls="fl-sa3-msg">i</button>
+  <div class="bui-float-message" id="fl-sa3-msg" role="status">Write at least 20 characters.</div>
+</div>
+<div class="bui-float bui-float-success bui-float-textarea">
+  <textarea class="bui-float-input" id="fl-sa4" placeholder=" " rows="4"></textarea>
+  <label class="bui-float-label" for="fl-sa4">Your message</label>
+  <button type="button" class="bui-float-info" aria-label="Show message" aria-expanded="false" aria-controls="fl-sa4-msg">i</button>
+  <div class="bui-float-message" id="fl-sa4-msg" role="status">Thanks, this is clear.</div>
+</div>
+</div></div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-form-grid"</span> <span class="bui-code-blue">style</span>=<span class="bui-code-green">"gap:18px 20px"</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float bui-float-error bui-float-select"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;select</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"fl-sa1"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;option</span> <span class="bui-code-blue">value</span>=<span class="bui-code-green">""</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;option</span><span class="bui-code-pink">&gt;</span>Engineering<span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;option</span><span class="bui-code-pink">&gt;</span>Design<span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;option</span><span class="bui-code-pink">&gt;</span>Marketing<span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/select</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"fl-sa1"</span><span class="bui-code-pink">&gt;</span>Department<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-info"</span> <span class="bui-code-blue">aria-label</span>=<span class="bui-code-green">"Show message"</span> <span class="bui-code-blue">aria-expanded</span>=<span class="bui-code-green">"false"</span> <span class="bui-code-blue">aria-controls</span>=<span class="bui-code-green">"fl-sa1-msg"</span><span class="bui-code-pink">&gt;</span>i<span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-message"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"fl-sa1-msg"</span> <span class="bui-code-blue">role</span>=<span class="bui-code-green">"status"</span><span class="bui-code-pink">&gt;</span>Choose a department to continue.<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float bui-float-success bui-float-select"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;select</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"fl-sa2"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;option</span><span class="bui-code-pink">&gt;</span>Engineering<span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;option</span><span class="bui-code-pink">&gt;</span>Design<span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/select</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"fl-sa2"</span><span class="bui-code-pink">&gt;</span>Department<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-info"</span> <span class="bui-code-blue">aria-label</span>=<span class="bui-code-green">"Show message"</span> <span class="bui-code-blue">aria-expanded</span>=<span class="bui-code-green">"false"</span> <span class="bui-code-blue">aria-controls</span>=<span class="bui-code-green">"fl-sa2-msg"</span><span class="bui-code-pink">&gt;</span>i<span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-message"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"fl-sa2-msg"</span> <span class="bui-code-blue">role</span>=<span class="bui-code-green">"status"</span><span class="bui-code-pink">&gt;</span>Great choice.<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float bui-float-error bui-float-textarea"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;textarea</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"fl-sa3"</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span> <span class="bui-code-blue">rows</span>=<span class="bui-code-green">"4"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/textarea</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"fl-sa3"</span><span class="bui-code-pink">&gt;</span>Your message<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-info"</span> <span class="bui-code-blue">aria-label</span>=<span class="bui-code-green">"Show message"</span> <span class="bui-code-blue">aria-expanded</span>=<span class="bui-code-green">"false"</span> <span class="bui-code-blue">aria-controls</span>=<span class="bui-code-green">"fl-sa3-msg"</span><span class="bui-code-pink">&gt;</span>i<span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-message"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"fl-sa3-msg"</span> <span class="bui-code-blue">role</span>=<span class="bui-code-green">"status"</span><span class="bui-code-pink">&gt;</span>Write at least 20 characters.<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float bui-float-success bui-float-textarea"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;textarea</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"fl-sa4"</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span> <span class="bui-code-blue">rows</span>=<span class="bui-code-green">"4"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/textarea</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"fl-sa4"</span><span class="bui-code-pink">&gt;</span>Your message<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-info"</span> <span class="bui-code-blue">aria-label</span>=<span class="bui-code-green">"Show message"</span> <span class="bui-code-blue">aria-expanded</span>=<span class="bui-code-green">"false"</span> <span class="bui-code-blue">aria-controls</span>=<span class="bui-code-green">"fl-sa4-msg"</span><span class="bui-code-pink">&gt;</span>i<span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-message"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"fl-sa4-msg"</span> <span class="bui-code-blue">role</span>=<span class="bui-code-green">"status"</span><span class="bui-code-pink">&gt;</span>Thanks, this is clear.<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
+<article class="bui-demo-card" id="float-rtl"><div class="bui-demo-title">RTL (Arabic) <span>dir="rtl"</span></div><div class="bui-demo-content"><div dir="rtl">
+<div class="bui-form-grid" style="gap:18px 20px">
+<div class="bui-float bui-float-error">
+  <input class="bui-float-input" id="fl-r1" type="email" placeholder=" " value="abdulbaset@">
+  <label class="bui-float-label" for="fl-r1">البريد الإلكتروني</label>
+  <button type="button" class="bui-float-info" aria-label="Show message" aria-expanded="false" aria-controls="fl-r1-msg">i</button>
+  <div class="bui-float-message" id="fl-r1-msg" role="status">اكتب بريدًا إلكترونيًا صحيحًا مثل name@example.com</div>
+</div>
+<div class="bui-float bui-float-success">
+  <input class="bui-float-input" id="fl-r2" type="text" placeholder=" " value="baset_ui">
+  <label class="bui-float-label" for="fl-r2">اسم المستخدم</label>
+  <button type="button" class="bui-float-info" aria-label="Show message" aria-expanded="false" aria-controls="fl-r2-msg">i</button>
+  <div class="bui-float-message" id="fl-r2-msg" role="status">اسم المستخدم متاح.</div>
+</div>
+<div class="bui-float bui-float-warning">
+  <input class="bui-float-input" id="fl-r3" type="password" placeholder=" " value="password1">
+  <label class="bui-float-label" for="fl-r3">كلمة المرور</label>
+  <button type="button" class="bui-float-info" aria-label="Show message" aria-expanded="false" aria-controls="fl-r3-msg">i</button>
+  <div class="bui-float-message" id="fl-r3-msg" role="status">كلمة المرور ضعيفة، أضف أرقامًا ورموزًا.</div>
+</div>
+<div class="bui-float bui-float-notice bui-float-select">
+  <select class="bui-float-input" id="fl-r4"><option value=""></option><option>الدعم الفني</option><option>المبيعات</option></select>
+  <label class="bui-float-label" for="fl-r4">القسم</label>
+  <button type="button" class="bui-float-info" aria-label="Show message" aria-expanded="false" aria-controls="fl-r4-msg">i</button>
+  <div class="bui-float-message" id="fl-r4-msg" role="status">اختر القسم المناسب لطلبك.</div>
+</div>
+</div>
+</div></div><div class="bui-demo-code">The label, the i and the message follow the page direction. Switch RTL / LTR in the top bar.</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">dir</span>=<span class="bui-code-green">"rtl"</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-form-grid"</span> <span class="bui-code-blue">style</span>=<span class="bui-code-green">"gap:18px 20px"</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float bui-float-error"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"fl-r1"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"email"</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span> <span class="bui-code-blue">value</span>=<span class="bui-code-green">"abdulbaset@"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"fl-r1"</span><span class="bui-code-pink">&gt;</span>البريد الإلكتروني<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-info"</span> <span class="bui-code-blue">aria-label</span>=<span class="bui-code-green">"Show message"</span> <span class="bui-code-blue">aria-expanded</span>=<span class="bui-code-green">"false"</span> <span class="bui-code-blue">aria-controls</span>=<span class="bui-code-green">"fl-r1-msg"</span><span class="bui-code-pink">&gt;</span>i<span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-message"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"fl-r1-msg"</span> <span class="bui-code-blue">role</span>=<span class="bui-code-green">"status"</span><span class="bui-code-pink">&gt;</span>اكتب بريدًا إلكترونيًا صحيحًا مثل name@example.com<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float bui-float-success"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"fl-r2"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"text"</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span> <span class="bui-code-blue">value</span>=<span class="bui-code-green">"baset_ui"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"fl-r2"</span><span class="bui-code-pink">&gt;</span>اسم المستخدم<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-info"</span> <span class="bui-code-blue">aria-label</span>=<span class="bui-code-green">"Show message"</span> <span class="bui-code-blue">aria-expanded</span>=<span class="bui-code-green">"false"</span> <span class="bui-code-blue">aria-controls</span>=<span class="bui-code-green">"fl-r2-msg"</span><span class="bui-code-pink">&gt;</span>i<span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-message"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"fl-r2-msg"</span> <span class="bui-code-blue">role</span>=<span class="bui-code-green">"status"</span><span class="bui-code-pink">&gt;</span>اسم المستخدم متاح.<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float bui-float-warning"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"fl-r3"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"password"</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span> <span class="bui-code-blue">value</span>=<span class="bui-code-green">"password1"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"fl-r3"</span><span class="bui-code-pink">&gt;</span>كلمة المرور<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-info"</span> <span class="bui-code-blue">aria-label</span>=<span class="bui-code-green">"Show message"</span> <span class="bui-code-blue">aria-expanded</span>=<span class="bui-code-green">"false"</span> <span class="bui-code-blue">aria-controls</span>=<span class="bui-code-green">"fl-r3-msg"</span><span class="bui-code-pink">&gt;</span>i<span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-message"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"fl-r3-msg"</span> <span class="bui-code-blue">role</span>=<span class="bui-code-green">"status"</span><span class="bui-code-pink">&gt;</span>كلمة المرور ضعيفة، أضف أرقامًا ورموزًا.<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float bui-float-notice bui-float-select"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;select</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"fl-r4"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;option</span> <span class="bui-code-blue">value</span>=<span class="bui-code-green">""</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;option</span><span class="bui-code-pink">&gt;</span>الدعم الفني<span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;option</span><span class="bui-code-pink">&gt;</span>المبيعات<span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/select</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"fl-r4"</span><span class="bui-code-pink">&gt;</span>القسم<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-info"</span> <span class="bui-code-blue">aria-label</span>=<span class="bui-code-green">"Show message"</span> <span class="bui-code-blue">aria-expanded</span>=<span class="bui-code-green">"false"</span> <span class="bui-code-blue">aria-controls</span>=<span class="bui-code-green">"fl-r4-msg"</span><span class="bui-code-pink">&gt;</span>i<span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-message"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"fl-r4-msg"</span> <span class="bui-code-blue">role</span>=<span class="bui-code-green">"status"</span><span class="bui-code-pink">&gt;</span>اختر القسم المناسب لطلبك.<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
+</div>
+<h3 style="margin:34px 0 14px;font-family:var(--bui-font-heading);font-size:18px;letter-spacing:-.4px">Live validation</h3><p class="bui-doc-note">Add <code>data-bui-validate</code> and <code>novalidate</code> to a <code>&lt;form&gt;</code>. The fields use normal HTML rules (<code>required</code>, <code>type</code>, <code>pattern</code>, <code>minlength</code>, <code>min</code>, <code>max</code>). Each field validates when the user leaves it, then on every key. The state class and the i message are set for you, from <code>data-error-*</code> and <code>data-success</code>. On submit, the first invalid field gets focus and its message opens. Try submitting the empty forms.</p><div class="bui-demo-stack">
+<article class="bui-demo-card" id="float-signup"><div class="bui-demo-title">Sign-up form <span>required · type · pattern · match · min / max</span></div><div class="bui-demo-content"><form data-bui-validate novalidate style="display:grid;gap:18px;max-width:420px">
+  <div class="bui-float">
+    <input class="bui-float-input" id="su-name" type="text" placeholder=" " required minlength="3" autocomplete="name"
+      data-error-required="Please enter your name." data-error-minlength="Use at least 3 characters." data-success="Nice to meet you.">
+    <label class="bui-float-label" for="su-name">Full name</label>
+  </div>
+  <div class="bui-float">
+    <input class="bui-float-input" id="su-email" type="email" placeholder=" " required autocomplete="email"
+      data-error-required="Email is required." data-error-type="Enter a valid email, like you@example.com." data-success="This email looks good.">
+    <label class="bui-float-label" for="su-email">Email address</label>
+  </div>
+  <div class="bui-float">
+    <input class="bui-float-input" id="su-pass" type="password" placeholder=" " required pattern="(?=.*[0-9]).{8,}" autocomplete="new-password"
+      data-error-required="Choose a password." data-error-pattern="Use 8 or more characters with at least one number." data-success="Strong enough.">
+    <label class="bui-float-label" for="su-pass">Password</label>
+  </div>
+  <div class="bui-float">
+    <input class="bui-float-input" id="su-confirm" type="password" placeholder=" " required data-match="#su-pass" autocomplete="new-password"
+      data-error-required="Repeat your password." data-error-match="The passwords do not match." data-success="The passwords match.">
+    <label class="bui-float-label" for="su-confirm">Confirm password</label>
+  </div>
+  <div class="bui-float">
+    <input class="bui-float-input" id="su-age" type="number" placeholder=" " required min="18" max="99"
+      data-error-required="Enter your age." data-error-min="You must be 18 or older." data-error-max="Enter an age up to 99.">
+    <label class="bui-float-label" for="su-age">Age</label>
+  </div>
+  <div class="bui-float bui-float-select">
+    <select class="bui-float-input" id="su-dept" required data-error-required="Choose a department." data-success="Department selected.">
+      <option value=""></option><option>Engineering</option><option>Design</option><option>Marketing</option>
+    </select>
+    <label class="bui-float-label" for="su-dept">Department</label>
+  </div>
+  <div class="bui-button-row">
+    <button type="submit" class="bui-btn bui-btn-primary">Create account</button>
+    <button type="reset" class="bui-btn bui-btn-outline">Reset</button>
+  </div>
+</form></div><div class="bui-demo-code">data-match="#id" compares a field with another one (confirm password). Reset clears every state.</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;form</span> <span class="bui-code-blue">data-bui-validate</span> <span class="bui-code-blue">novalidate</span> <span class="bui-code-blue">style</span>=<span class="bui-code-green">"display:grid;gap:18px;max-width:420px"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float"</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"su-name"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"text"</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span> <span class="bui-code-blue">required</span> <span class="bui-code-blue">minlength</span>=<span class="bui-code-green">"3"</span> <span class="bui-code-blue">autocomplete</span>=<span class="bui-code-green">"name"</span>
+      <span class="bui-code-blue">data-error-required</span>=<span class="bui-code-green">"Please enter your name."</span> <span class="bui-code-blue">data-error-minlength</span>=<span class="bui-code-green">"Use at least 3 characters."</span> <span class="bui-code-blue">data-success</span>=<span class="bui-code-green">"Nice to meet you."</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"su-name"</span><span class="bui-code-pink">&gt;</span>Full name<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float"</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"su-email"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"email"</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span> <span class="bui-code-blue">required</span> <span class="bui-code-blue">autocomplete</span>=<span class="bui-code-green">"email"</span>
+      <span class="bui-code-blue">data-error-required</span>=<span class="bui-code-green">"Email is required."</span> <span class="bui-code-blue">data-error-type</span>=<span class="bui-code-green">"Enter a valid email, like you@example.com."</span> <span class="bui-code-blue">data-success</span>=<span class="bui-code-green">"This email looks good."</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"su-email"</span><span class="bui-code-pink">&gt;</span>Email address<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float"</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"su-pass"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"password"</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span> <span class="bui-code-blue">required</span> <span class="bui-code-blue">pattern</span>=<span class="bui-code-green">"(?=.*[0-9]).{8,}"</span> <span class="bui-code-blue">autocomplete</span>=<span class="bui-code-green">"new-password"</span>
+      <span class="bui-code-blue">data-error-required</span>=<span class="bui-code-green">"Choose a password."</span> <span class="bui-code-blue">data-error-pattern</span>=<span class="bui-code-green">"Use 8 or more characters with at least one number."</span> <span class="bui-code-blue">data-success</span>=<span class="bui-code-green">"Strong enough."</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"su-pass"</span><span class="bui-code-pink">&gt;</span>Password<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float"</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"su-confirm"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"password"</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span> <span class="bui-code-blue">required</span> <span class="bui-code-blue">data-match</span>=<span class="bui-code-green">"#su-pass"</span> <span class="bui-code-blue">autocomplete</span>=<span class="bui-code-green">"new-password"</span>
+      <span class="bui-code-blue">data-error-required</span>=<span class="bui-code-green">"Repeat your password."</span> <span class="bui-code-blue">data-error-match</span>=<span class="bui-code-green">"The passwords do not match."</span> <span class="bui-code-blue">data-success</span>=<span class="bui-code-green">"The passwords match."</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"su-confirm"</span><span class="bui-code-pink">&gt;</span>Confirm password<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float"</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"su-age"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"number"</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span> <span class="bui-code-blue">required</span> <span class="bui-code-blue">min</span>=<span class="bui-code-green">"18"</span> <span class="bui-code-blue">max</span>=<span class="bui-code-green">"99"</span>
+      <span class="bui-code-blue">data-error-required</span>=<span class="bui-code-green">"Enter your age."</span> <span class="bui-code-blue">data-error-min</span>=<span class="bui-code-green">"You must be 18 or older."</span> <span class="bui-code-blue">data-error-max</span>=<span class="bui-code-green">"Enter an age up to 99."</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"su-age"</span><span class="bui-code-pink">&gt;</span>Age<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float bui-float-select"</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;select</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"su-dept"</span> <span class="bui-code-blue">required</span> <span class="bui-code-blue">data-error-required</span>=<span class="bui-code-green">"Choose a department."</span> <span class="bui-code-blue">data-success</span>=<span class="bui-code-green">"Department selected."</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;option</span> <span class="bui-code-blue">value</span>=<span class="bui-code-green">""</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;option</span><span class="bui-code-pink">&gt;</span>Engineering<span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;option</span><span class="bui-code-pink">&gt;</span>Design<span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;option</span><span class="bui-code-pink">&gt;</span>Marketing<span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;/select</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"su-dept"</span><span class="bui-code-pink">&gt;</span>Department<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-button-row"</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"submit"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-btn bui-btn-primary"</span><span class="bui-code-pink">&gt;</span>Create account<span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"reset"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-btn bui-btn-outline"</span><span class="bui-code-pink">&gt;</span>Reset<span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/form</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
+<article class="bui-demo-card" id="float-contact"><div class="bui-demo-title">Contact form <span>select · textarea · one generic message</span></div><div class="bui-demo-content"><form data-bui-validate novalidate style="display:grid;gap:18px;max-width:420px">
+  <div class="bui-float">
+    <input class="bui-float-input" id="ct-email" type="email" placeholder=" " required
+      data-error="Enter a valid email so we can reply." data-success="We will reply to this address.">
+    <label class="bui-float-label" for="ct-email">Your email</label>
+  </div>
+  <div class="bui-float bui-float-select">
+    <select class="bui-float-input" id="ct-topic" required data-error="Choose a topic.">
+      <option value=""></option><option>Support</option><option>Sales</option><option>Feedback</option>
+    </select>
+    <label class="bui-float-label" for="ct-topic">Topic</label>
+  </div>
+  <div class="bui-float bui-float-textarea">
+    <textarea class="bui-float-input" id="ct-msg" rows="4" placeholder=" " required minlength="20" maxlength="300"
+      data-error-required="Write your message." data-error-minlength="Write at least 20 characters." data-error-maxlength="Keep it under 300 characters." data-success="Thanks, this is clear."></textarea>
+    <label class="bui-float-label" for="ct-msg">Message</label>
+  </div>
+  <button type="submit" class="bui-btn bui-btn-primary">Send message</button>
+</form></div><div class="bui-demo-code">data-error is used for every rule of a field. Use data-error-required, data-error-type ... to give each rule its own message.</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;form</span> <span class="bui-code-blue">data-bui-validate</span> <span class="bui-code-blue">novalidate</span> <span class="bui-code-blue">style</span>=<span class="bui-code-green">"display:grid;gap:18px;max-width:420px"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float"</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"ct-email"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"email"</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span> <span class="bui-code-blue">required</span>
+      <span class="bui-code-blue">data-error</span>=<span class="bui-code-green">"Enter a valid email so we can reply."</span> <span class="bui-code-blue">data-success</span>=<span class="bui-code-green">"We will reply to this address."</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"ct-email"</span><span class="bui-code-pink">&gt;</span>Your email<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float bui-float-select"</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;select</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"ct-topic"</span> <span class="bui-code-blue">required</span> <span class="bui-code-blue">data-error</span>=<span class="bui-code-green">"Choose a topic."</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;option</span> <span class="bui-code-blue">value</span>=<span class="bui-code-green">""</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;option</span><span class="bui-code-pink">&gt;</span>Support<span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;option</span><span class="bui-code-pink">&gt;</span>Sales<span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;option</span><span class="bui-code-pink">&gt;</span>Feedback<span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;/select</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"ct-topic"</span><span class="bui-code-pink">&gt;</span>Topic<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float bui-float-textarea"</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;textarea</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"ct-msg"</span> <span class="bui-code-blue">rows</span>=<span class="bui-code-green">"4"</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span> <span class="bui-code-blue">required</span> <span class="bui-code-blue">minlength</span>=<span class="bui-code-green">"20"</span> <span class="bui-code-blue">maxlength</span>=<span class="bui-code-green">"300"</span>
+      <span class="bui-code-blue">data-error-required</span>=<span class="bui-code-green">"Write your message."</span> <span class="bui-code-blue">data-error-minlength</span>=<span class="bui-code-green">"Write at least 20 characters."</span> <span class="bui-code-blue">data-error-maxlength</span>=<span class="bui-code-green">"Keep it under 300 characters."</span> <span class="bui-code-blue">data-success</span>=<span class="bui-code-green">"Thanks, this is clear."</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/textarea</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"ct-msg"</span><span class="bui-code-pink">&gt;</span>Message<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"submit"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-btn bui-btn-primary"</span><span class="bui-code-pink">&gt;</span>Send message<span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/form</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
+<article class="bui-demo-card" id="float-payment"><div class="bui-demo-title">Payment form <span>pattern with custom messages</span></div><div class="bui-demo-content"><form data-bui-validate novalidate style="display:grid;gap:18px;max-width:420px">
+  <div class="bui-float">
+    <input class="bui-float-input" id="py-card" type="text" inputmode="numeric" placeholder=" " required pattern="[0-9]{4} [0-9]{4} [0-9]{4} [0-9]{4}"
+      data-error-required="Enter your card number." data-error-pattern="Use 16 digits in groups of 4, like 4242 4242 4242 4242." data-success="Card number accepted.">
+    <label class="bui-float-label" for="py-card">Card number</label>
+  </div>
+  <div class="bui-form-grid" style="gap:18px">
+    <div class="bui-float">
+      <input class="bui-float-input" id="py-exp" type="text" placeholder=" " required pattern="(0[1-9]|1[0-2])/[0-9]{2}"
+        data-error-required="Required." data-error-pattern="Use MM/YY, for example 08/28.">
+      <label class="bui-float-label" for="py-exp">Expiry (MM/YY)</label>
+    </div>
+    <div class="bui-float">
+      <input class="bui-float-input" id="py-cvc" type="password" inputmode="numeric" placeholder=" " required pattern="[0-9]{3,4}"
+        data-error-required="Required." data-error-pattern="3 or 4 digits.">
+      <label class="bui-float-label" for="py-cvc">CVC</label>
+    </div>
+  </div>
+  <button type="submit" class="bui-btn bui-btn-success">Pay now</button>
+</form></div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;form</span> <span class="bui-code-blue">data-bui-validate</span> <span class="bui-code-blue">novalidate</span> <span class="bui-code-blue">style</span>=<span class="bui-code-green">"display:grid;gap:18px;max-width:420px"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float"</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"py-card"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"text"</span> <span class="bui-code-blue">inputmode</span>=<span class="bui-code-green">"numeric"</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span> <span class="bui-code-blue">required</span> <span class="bui-code-blue">pattern</span>=<span class="bui-code-green">"[0-9]{4} [0-9]{4} [0-9]{4} [0-9]{4}"</span>
+      <span class="bui-code-blue">data-error-required</span>=<span class="bui-code-green">"Enter your card number."</span> <span class="bui-code-blue">data-error-pattern</span>=<span class="bui-code-green">"Use 16 digits in groups of 4, like 4242 4242 4242 4242."</span> <span class="bui-code-blue">data-success</span>=<span class="bui-code-green">"Card number accepted."</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"py-card"</span><span class="bui-code-pink">&gt;</span>Card number<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-form-grid"</span> <span class="bui-code-blue">style</span>=<span class="bui-code-green">"gap:18px"</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float"</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"py-exp"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"text"</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span> <span class="bui-code-blue">required</span> <span class="bui-code-blue">pattern</span>=<span class="bui-code-green">"(0[1-9]|1[0-2])/[0-9]{2}"</span>
+        <span class="bui-code-blue">data-error-required</span>=<span class="bui-code-green">"Required."</span> <span class="bui-code-blue">data-error-pattern</span>=<span class="bui-code-green">"Use MM/YY, for example 08/28."</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"py-exp"</span><span class="bui-code-pink">&gt;</span>Expiry (MM/YY)<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float"</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"py-cvc"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"password"</span> <span class="bui-code-blue">inputmode</span>=<span class="bui-code-green">"numeric"</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span> <span class="bui-code-blue">required</span> <span class="bui-code-blue">pattern</span>=<span class="bui-code-green">"[0-9]{3,4}"</span>
+        <span class="bui-code-blue">data-error-required</span>=<span class="bui-code-green">"Required."</span> <span class="bui-code-blue">data-error-pattern</span>=<span class="bui-code-green">"3 or 4 digits."</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"py-cvc"</span><span class="bui-code-pink">&gt;</span>CVC<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"submit"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-btn bui-btn-success"</span><span class="bui-code-pink">&gt;</span>Pay now<span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/form</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
+<article class="bui-demo-card" id="float-rtl-form"><div class="bui-demo-title">RTL form with Arabic messages <span>dir="rtl" + data-error-*</span></div><div class="bui-demo-content"><form data-bui-validate novalidate dir="rtl" style="display:grid;gap:18px;max-width:420px">
+  <div class="bui-float">
+    <input class="bui-float-input" id="ar-email" type="email" placeholder=" " required
+      data-error-required="البريد الإلكتروني مطلوب." data-error-type="اكتب بريدًا إلكترونيًا صحيحًا مثل name@example.com" data-success="البريد الإلكتروني صحيح.">
+    <label class="bui-float-label" for="ar-email">البريد الإلكتروني</label>
+  </div>
+  <div class="bui-float">
+    <input class="bui-float-input" id="ar-pass" type="password" placeholder=" " required minlength="8"
+      data-error-required="اكتب كلمة المرور." data-error-minlength="كلمة المرور يجب ألا تقل عن 8 أحرف." data-success="كلمة مرور مناسبة.">
+    <label class="bui-float-label" for="ar-pass">كلمة المرور</label>
+  </div>
+  <button type="submit" class="bui-btn bui-btn-primary">تسجيل الدخول</button>
+</form></div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;form</span> <span class="bui-code-blue">data-bui-validate</span> <span class="bui-code-blue">novalidate</span> <span class="bui-code-blue">dir</span>=<span class="bui-code-green">"rtl"</span> <span class="bui-code-blue">style</span>=<span class="bui-code-green">"display:grid;gap:18px;max-width:420px"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float"</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"ar-email"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"email"</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span> <span class="bui-code-blue">required</span>
+      <span class="bui-code-blue">data-error-required</span>=<span class="bui-code-green">"البريد الإلكتروني مطلوب."</span> <span class="bui-code-blue">data-error-type</span>=<span class="bui-code-green">"اكتب بريدًا إلكترونيًا صحيحًا مثل name@example.com"</span> <span class="bui-code-blue">data-success</span>=<span class="bui-code-green">"البريد الإلكتروني صحيح."</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"ar-email"</span><span class="bui-code-pink">&gt;</span>البريد الإلكتروني<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float"</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"ar-pass"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"password"</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span> <span class="bui-code-blue">required</span> <span class="bui-code-blue">minlength</span>=<span class="bui-code-green">"8"</span>
+      <span class="bui-code-blue">data-error-required</span>=<span class="bui-code-green">"اكتب كلمة المرور."</span> <span class="bui-code-blue">data-error-minlength</span>=<span class="bui-code-green">"كلمة المرور يجب ألا تقل عن 8 أحرف."</span> <span class="bui-code-blue">data-success</span>=<span class="bui-code-green">"كلمة مرور مناسبة."</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"ar-pass"</span><span class="bui-code-pink">&gt;</span>كلمة المرور<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"submit"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-btn bui-btn-primary"</span><span class="bui-code-pink">&gt;</span>تسجيل الدخول<span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/form</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
+</div>
+<h3 style="margin:34px 0 14px;font-family:var(--bui-font-heading);font-size:18px;letter-spacing:-.4px">JavaScript API</h3><p class="bui-doc-note">Set a state from your own code, for example after a server check. <code>BUI.float.setState(field, state, message, { open })</code> takes the input (or its selector) and does everything: state class, message, i button and <code>aria-*</code>. The "Run" button executes the code shown in the card.</p><div class="bui-demo-stack">
+<article class="bui-demo-card" id="float-api-async"><div class="bui-demo-title">Check a username on the server <span>loading → error | success</span></div><div class="bui-demo-content"><div class="bui-float">
+  <input class="bui-float-input" id="api-user" type="text" placeholder=" " value="admin">
+  <label class="bui-float-label" for="api-user">Username (try admin)</label>
+</div><div class="bui-button-row" style="margin-top:14px"><button type="button" class="bui-btn bui-btn-primary bui-btn-sm" data-run>▶ Run this code</button></div></div><div class="bui-demo-code">Edit the value, then run it again. The message of a state is created for you when the field has none.</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> JavaScript</span><button class="bui-copy" type="button">Copy</button></div><pre><code>const input = document.getElementById('api-user');
+BUI.float.setState(input, 'loading');                       <span class="bui-code-muted">// spinner instead of the i</span>
+await new Promise((resolve) =&gt; setTimeout(resolve, 1200));  <span class="bui-code-muted">// your fetch() call</span>
+const taken = ['admin', 'baset'].includes(input.value.trim().toLowerCase());
+if (taken) BUI.float.setState(input, 'error', 'This username is already taken.', { open: true });
+else BUI.float.setState(input, 'success', 'This username is available.');</code></pre></div></article>
+<article class="bui-demo-card" id="float-api-states"><div class="bui-demo-title">All states from code <span>setState · open · clear</span></div><div class="bui-demo-content"><div class="bui-float">
+  <input class="bui-float-input" id="api-demo" type="text" placeholder=" " value="Hello">
+  <label class="bui-float-label" for="api-demo">Any value</label>
+</div><div class="bui-button-row" style="margin-top:14px"><button type="button" class="bui-btn bui-btn-primary bui-btn-sm" data-run>▶ Run this code</button></div></div><div class="bui-demo-code">BUI.float.open(field, false) closes a message, BUI.float.clear(field) removes the state and the i button it created.</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> JavaScript</span><button class="bui-copy" type="button">Copy</button></div><pre><code>const input = document.getElementById('api-demo');
+const steps = [
+  ['error', 'The value is not valid.'],
+  ['warning', 'This value is unusual.'],
+  ['notice', 'Remember to save your changes.'],
+  ['success', 'Saved.'],
+];
+for (const [state, message] of steps) {
+  BUI.float.setState(input, state, message, { open: true });
+  await new Promise((resolve) =&gt; setTimeout(resolve, 1400));
+}
+BUI.float.clear(input);                                      <span class="bui-code-muted">// back to the neutral field</span></code></pre></div></article>
+<article class="bui-demo-card" id="float-api-events"><div class="bui-demo-title">Validate a form and listen to the result <span>BUI.float.validate() · bui:valid · bui:invalid</span></div><div class="bui-demo-content"><form id="api-form" data-bui-validate novalidate style="max-width:420px;display:grid;gap:18px">
+<div class="bui-float">
+  <input class="bui-float-input" id="api-mail" type="email" placeholder=" " required data-error-required="Email is required." data-error-type="Enter a valid email.">
+  <label class="bui-float-label" for="api-mail">Email address</label>
+</div>
+<div class="bui-button-row"><button type="submit" class="bui-btn bui-btn-primary bui-btn-sm">Submit</button></div>
+</form><div class="bui-button-row" style="margin-top:14px"><button type="button" class="bui-btn bui-btn-primary bui-btn-sm" data-run>▶ Run this code</button></div></div><div class="bui-demo-code">Leave the email empty, run the code and see the warning. Type a valid email, run it again.</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> JavaScript</span><button class="bui-copy" type="button">Copy</button></div><pre><code>const form = document.getElementById('api-form');
+
+form.addEventListener('bui:valid', (event) =&gt; {
+  event.preventDefault();                       <span class="bui-code-muted">// stop the normal submit, then send with fetch()</span>
+  BUI.toast.success('Valid: sending the form');
+}, { once: true });
+form.addEventListener('bui:invalid', (event) =&gt; {
+  BUI.toast.warning('Fix the highlighted field');   <span class="bui-code-muted">// event.detail.field is the first invalid input</span>
+}, { once: true });
+
+form.requestSubmit();                           <span class="bui-code-muted">// validates and fires one of the events</span>
+<span class="bui-code-muted">// BUI.float.validate(form) returns true or false without submitting; BUI.float.reset(form) clears every state</span></code></pre></div></article>
+</div>
+<h3 style="margin:34px 0 14px;font-family:var(--bui-font-heading);font-size:18px;letter-spacing:-.4px">Floating label reference</h3><div style="overflow-x:auto"><table class="bui-dir-table"><thead><tr><th>Name</th><th>Purpose</th></tr></thead><tbody><tr><td><code>.bui-float</code></td><td>Wrapper. Add <code>-sm</code> / <code>-lg</code>, <code>-select</code>, <code>-textarea</code>, <code>-top</code> (message above)</td></tr><tr><td><code>.bui-float-input</code> · <code>.bui-float-label</code></td><td>The control and its label (the label comes after the control). The control needs <code>placeholder=" "</code></td></tr><tr><td><code>.bui-float-error</code> · <code>-success</code> · <code>-warning</code> · <code>-notice</code> · <code>-loading</code></td><td>State of the field</td></tr><tr><td><code>.bui-float-info</code> + <code>.bui-float-message</code></td><td>The i button and its message. Needs <code>aria-controls</code> and <code>aria-expanded</code> on the button</td></tr><tr><td><code>.bui-float-open</code></td><td>The message is visible</td></tr><tr><td><code>.bui-float-hint</code></td><td>Helper text that is always visible</td></tr></tbody></table></div>
+<h3 style="margin:34px 0 14px;font-family:var(--bui-font-heading);font-size:18px;letter-spacing:-.4px">Validation attributes</h3><div style="overflow-x:auto"><table class="bui-dir-table"><thead><tr><th>Attribute</th><th>Where</th><th>Purpose</th></tr></thead><tbody><tr><td><code>data-bui-validate</code> <code>novalidate</code></td><td><code>&lt;form&gt;</code></td><td>Turns on live validation for its floating fields</td></tr><tr><td><code>data-error</code></td><td>input</td><td>Message for any failed rule</td></tr><tr><td><code>data-error-required</code> · <code>-type</code> · <code>-pattern</code> · <code>-minlength</code> · <code>-maxlength</code> · <code>-min</code> · <code>-max</code> · <code>-step</code></td><td>input</td><td>Message for one rule. Without any, the browser message is used</td></tr><tr><td><code>data-success</code></td><td>input</td><td>Message when the value is valid (adds the i button). Without it, only the green state shows</td></tr><tr><td><code>data-match="#id"</code> · <code>data-error-match</code></td><td>input</td><td>The value must equal another field, for example confirm password</td></tr></tbody></table></div>
+<h3 style="margin:34px 0 14px;font-family:var(--bui-font-heading);font-size:18px;letter-spacing:-.4px">JavaScript</h3><div style="overflow-x:auto"><table class="bui-dir-table"><thead><tr><th>Call / event</th><th>Purpose</th></tr></thead><tbody><tr><td><code>BUI.float.setState(field, state, message, { open })</code></td><td>state: error · success · warning · info · loading · null. A message adds the i button</td></tr><tr><td><code>BUI.float.clear(field)</code> · <code>BUI.float.open(field, on)</code></td><td>Remove the state, show or hide the message</td></tr><tr><td><code>BUI.float.validate(fieldOrForm)</code> · <code>BUI.float.reset(form)</code></td><td>Validate now (returns true or false), clear all states</td></tr><tr><td><code>bui:valid</code> (cancelable) · <code>bui:invalid</code></td><td>Fired on the form at submit. <code>preventDefault()</code> on <code>bui:valid</code> stops the normal submit</td></tr></tbody></table></div>
       </section>
       <div class="bui-pager"><a class="bui-btn bui-btn-outline" href="buttons.html"><span class="bui-flip">←</span> Buttons</a><a class="bui-btn bui-btn-primary" href="cards.html">Cards <span class="bui-flip">→</span></a></div>
       <footer class="bui-footer"><span>© 2026 Baset UI. Built for makers.</span><span>Documentation · v1.0.0</span></footer>
     </main>
   </div>
   <script src="../assets/js/baset-ui.js"></script>
+  <script>
+    /* Docs only: the demo forms do not send anything, and the "Run" buttons execute the code shown in their card. */
+    document.addEventListener('bui:valid', function (e) { e.preventDefault(); BUI.toast.success('The form is valid. Nothing is sent in this demo.'); });
+    document.addEventListener('click', function (e) {
+      var b = e.target.closest('[data-run]'); if (!b) return;
+      var code = b.closest('.bui-demo-card').querySelector('code').textContent;
+      var AsyncFn = Object.getPrototypeOf(async function () {}).constructor;
+      new AsyncFn(code)().catch(function (err) { console.error(err); });
+    });
+  </script>
 
 </body>
 </html>
