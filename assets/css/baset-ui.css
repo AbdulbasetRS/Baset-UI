@@ -523,6 +523,7 @@ h1, h2 { font-family: var(--bui-font-heading); letter-spacing: -1.5px; }
 .bui-float-notice { --c: var(--bui-info-base); --ring: var(--bui-info-base); --t: var(--bui-info-fg); --ft: var(--bui-info-fg); --s: var(--bui-info-bg-subtle); --b: var(--bui-info-border); }
 
 .bui-float-input { display: block; width: 100%; height: var(--fl-h); padding-block: calc(var(--fl-h) * .4) calc(var(--fl-h) * .1); padding-inline: 14px; background: var(--bui-surface); color: var(--bui-ink); border: 1px solid var(--c); border-radius: var(--bui-radius-3); font: inherit; font-size: 13px; outline: none; transition: border-color .15s, box-shadow .15s; }
+.bui-float-input { direction: inherit; text-align: start; }   /* tel / email / url inputs are left-to-right by default in some browsers */
 .bui-float-input::placeholder { color: transparent; }
 .bui-float-input:focus::placeholder { color: var(--bui-muted); opacity: .7; }
 .bui-float-input:hover:not(:disabled, :focus) { border-color: color-mix(in srgb, var(--c) 70%, var(--bui-ink)); }
@@ -560,3 +561,70 @@ h1, h2 { font-family: var(--bui-font-heading); letter-spacing: -1.5px; }
 .bui-float-loading::after { content: ""; position: absolute; inset-inline-end: 14px; inset-block-start: calc(var(--fl-h) / 2 - 8px); width: 16px; height: 16px; border-radius: 50%; border: 2px solid color-mix(in srgb, var(--ring) 22%, transparent); border-top-color: var(--ring); animation: bui-spin .8s linear infinite; }
 .bui-float-loading > .bui-float-info { display: none; }
 @keyframes bui-float-pop { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
+
+/* Password toggle (show / hide) */
+.bui-float-toggle { --bui-eye: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z'/%3E%3Ccircle cx='12' cy='12' r='3'/%3E%3C/svg%3E"); position: absolute; inset-inline-end: 10px; inset-block-start: calc(var(--fl-h) / 2); transform: translateY(-50%); width: 28px; height: 28px; display: grid; place-items: center; padding: 0; border: 0; border-radius: var(--bui-radius-2); background: transparent; color: var(--bui-muted); cursor: pointer; transition: background .15s, color .15s; }
+.bui-float-toggle::before { content: ""; width: 18px; height: 18px; background: currentColor; -webkit-mask: var(--bui-eye) center / contain no-repeat; mask: var(--bui-eye) center / contain no-repeat; }
+.bui-float-toggle[aria-pressed="true"] { --bui-eye: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z'/%3E%3Ccircle cx='12' cy='12' r='3'/%3E%3Cpath d='M3 3l18 18'/%3E%3C/svg%3E"); color: var(--ft); }
+.bui-float-toggle:hover { background: var(--bui-soft); color: var(--bui-ink); }
+.bui-float:has(> .bui-float-toggle) > .bui-float-input { padding-inline-end: 44px; }
+.bui-float:has(> .bui-float-toggle) > .bui-float-label { inset-inline-end: 46px; }
+.bui-float:has(> .bui-float-toggle):has(> .bui-float-info) > .bui-float-input { padding-inline-end: 74px; }
+.bui-float:has(> .bui-float-toggle):has(> .bui-float-info) > .bui-float-label { inset-inline-end: 76px; }
+.bui-float:has(> .bui-float-toggle) > .bui-float-info { inset-inline-end: 10px; }
+.bui-float:has(> .bui-float-toggle):has(> .bui-float-info) > .bui-float-toggle { inset-inline-end: 38px; }
+
+/* Password strength meter and requirements list */
+.bui-float-meter { --mb: var(--bui-line); --mc: var(--bui-muted); display: flex; align-items: center; gap: 6px; margin: 8px 2px 0; }
+.bui-float-meter > i { flex: 1; height: 4px; border-radius: 4px; background: var(--bui-line); transition: background .2s; }
+.bui-float-meter > span { min-width: 54px; text-align: end; color: var(--mc); font-size: 10px; font-weight: 700; }
+.bui-float-meter[data-level="1"] { --mb: var(--bui-danger-base); --mc: var(--bui-danger-fg); }
+.bui-float-meter[data-level="2"] { --mb: var(--bui-warning-base); --mc: var(--bui-warning-fg); }
+.bui-float-meter[data-level="3"] { --mb: var(--bui-info-base); --mc: var(--bui-info-fg); }
+.bui-float-meter[data-level="4"] { --mb: var(--bui-success-base); --mc: var(--bui-success-fg); }
+.bui-float-meter[data-level="1"] > i:nth-child(-n+1), .bui-float-meter[data-level="2"] > i:nth-child(-n+2), .bui-float-meter[data-level="3"] > i:nth-child(-n+3), .bui-float-meter[data-level="4"] > i:nth-child(-n+4) { background: var(--mb); }
+.bui-float-rules { display: grid; gap: 5px; margin: 8px 2px 0; padding: 0; list-style: none; color: var(--bui-muted); font-size: 11px; }
+.bui-float-rules > li { display: flex; align-items: center; gap: 8px; transition: color .15s; }
+.bui-float-rules > li::before { content: ""; flex: none; width: 14px; height: 14px; display: grid; place-items: center; border: 1.5px solid var(--bui-input-border); border-radius: 50%; color: #fff; font-size: 9px; font-weight: 800; line-height: 1; transition: background .15s, border-color .15s; }
+.bui-float-rules > li.bui-float-rule-ok { color: var(--bui-success-fg); }
+.bui-float-rules > li.bui-float-rule-ok::before { content: "✓"; background: var(--bui-success-base); border-color: var(--bui-success-base); }
+
+/* Prefix and suffix: +20, @, https://, $, %, .com */
+.bui-float-affix { display: flex; align-items: stretch; background: var(--bui-surface); border: 1px solid var(--c); border-radius: var(--bui-radius-3); transition: border-color .15s, box-shadow .15s; }
+.bui-float-affix:hover:not(:focus-within) { border-color: color-mix(in srgb, var(--c) 70%, var(--bui-ink)); }
+.bui-float-affix:focus-within { border-color: var(--ring); box-shadow: 0 0 0 3px color-mix(in srgb, var(--ring) 16%, transparent); }
+.bui-float-affix:has(> .bui-float-input:disabled) { opacity: .6; background: var(--bui-soft); }
+.bui-float-affix > .bui-float-input, .bui-float-affix > .bui-float-input:focus, .bui-float-affix > .bui-float-input:hover:not(:disabled, :focus) { flex: 1; min-width: 0; height: calc(var(--fl-h) - 2px); padding-inline: 0 14px; background: transparent; border: 0; border-radius: 0; box-shadow: none; }
+.bui-float-affix:not(:has(> .bui-float-prefix)) > .bui-float-input, .bui-float-affix:not(:has(> .bui-float-prefix)) > .bui-float-input:focus { padding-inline-start: 14px; }
+.bui-float-affix .bui-float-label { inset-block-start: calc(var(--fl-h) * .13); transform: none; font-size: 10px; font-weight: 700; letter-spacing: .2px; }
+.bui-float-prefix, .bui-float-suffix { flex: none; display: flex; align-items: center; height: calc(var(--fl-h) - 2px); padding-block: calc(var(--fl-h) * .4) calc(var(--fl-h) * .1); color: var(--bui-muted); font: inherit; font-size: 13px; white-space: nowrap; user-select: none; }
+.bui-float-prefix, .bui-float-suffix { direction: ltr; }   /* keeps +20, @, $ and .com readable on RTL pages */
+.bui-float-prefix { padding-inline: 14px 4px; }
+.bui-float-suffix { padding-inline: 4px 14px; }
+.bui-float-affix:has(> .bui-float-suffix):has(> .bui-float-info) > .bui-float-input { padding-inline-end: 14px; }
+.bui-float-affix:has(> .bui-float-suffix) > .bui-float-info ~ .bui-float-suffix, .bui-float-affix:has(> .bui-float-info) > .bui-float-suffix { padding-inline-end: 44px; }
+select.bui-float-prefix { appearance: none; padding-inline: 14px 22px; border: 0; border-radius: 0; outline: none; background: transparent url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%238b8fa6' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat right 8px center; color: var(--bui-ink); cursor: pointer; }
+[dir="rtl"] select.bui-float-prefix { background-position: left 8px center; }
+
+/* =========================================================
+   16. Select menu
+   A custom listbox for native <select> elements (select.bui-input, select.bui-float-input, select.bui-float-prefix).
+   The <select> stays the source of truth; baset-ui.js builds this menu when it opens and places it automatically
+   (below or above, depending on the space). Opt out with data-bui-native.
+   ========================================================= */
+.bui-select-menu { position: fixed; inset: auto; z-index: 1200; box-sizing: border-box; min-width: 140px; max-width: calc(100vw - 16px); max-height: 18rem; margin: 0; padding: 6px; overflow: auto; overscroll-behavior: contain; scrollbar-width: thin; background: var(--bui-surface); color: var(--bui-ink); border: 1px solid var(--bui-line); border-radius: var(--bui-radius-4); box-shadow: 0 18px 44px rgb(0 0 0 / .18), 0 2px 8px rgb(0 0 0 / .06); font: 500 13px/1.4 var(--bui-font-body); animation: bui-select-in .14s ease both; }
+.bui-select-menu[data-placement="top"] { --bui-select-shift: 6px; }
+.bui-select-option { position: relative; display: flex; align-items: center; gap: 10px; padding: 9px 12px; border-radius: var(--bui-radius-3); cursor: pointer; user-select: none; transition: background .1s, color .1s; }
+.bui-select-option-active { background: var(--bui-soft); }
+.bui-select-option[aria-selected="true"] { padding-inline-end: 36px; color: var(--bui-primary-fg); font-weight: 700; }
+.bui-select-option[aria-selected="true"]::after { content: ""; position: absolute; inset-inline-end: 15px; inset-block-start: 50%; width: 5px; height: 10px; border: solid currentColor; border-width: 0 2px 2px 0; transform: translateY(-62%) rotate(45deg); }
+.bui-select-option[aria-selected="true"].bui-select-option-active { background: var(--bui-primary-bg-subtle); }
+.bui-select-option[aria-disabled="true"] { opacity: .45; cursor: not-allowed; }
+.bui-select-option-empty { color: var(--bui-muted); }
+.bui-select-group { margin-block-start: 4px; padding-block-start: 2px; border-block-start: 1px solid var(--bui-line); }
+.bui-select-menu > .bui-select-group:first-child { margin-block-start: 0; padding-block-start: 0; border-block-start: 0; }
+.bui-select-group-label { padding: 10px 12px 4px; color: var(--bui-muted); font: 800 10px var(--bui-font-heading); letter-spacing: 1px; text-transform: uppercase; }
+.bui-float-select::after { transition: transform .15s; }
+.bui-float-select:has(> select[aria-expanded="true"])::after { transform: translateY(-25%) rotate(225deg); }
+@keyframes bui-select-in { from { opacity: 0; transform: translateY(var(--bui-select-shift, -6px)) scale(.98); } }
+@media (prefers-reduced-motion: reduce) { .bui-select-menu { animation: none; } }

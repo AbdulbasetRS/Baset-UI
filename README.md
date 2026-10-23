@@ -161,7 +161,7 @@ baset-ui/
 | Component | Page | Examples |
 | --- | --- | --- |
 | Buttons | `components/buttons.html` | Solid / outline / soft / link in 7 colors, neutral, anchors, sizes, icons, icon-only, pill, full width, group, disabled |
-| Form controls | `components/forms.html` | Text input, email input, select, checkbox, form layout, floating labels (basic, sizes, select, textarea), validation states (error, success, warning, notice, loading) with the i message button, live validation forms, JS API |
+| Form controls | `components/forms.html` | Text input, email input, select, checkbox, form layout, floating labels (basic, sizes, select, textarea), validation states with the i message button, password fields (show / hide, strength meter, requirements, Caps Lock), prefix / suffix inputs (+20, @, https://, $, %), custom select menu (automatic placement, groups, keyboard, modal), live validation forms, JS API |
 | Cards | `components/cards.html` | Stat cards (sparkline, progress, task lines), cards grid |
 | Alerts | `components/alerts.html` | Success, info, warning, danger, alert stack |
 | Badges | `components/badges.html` | Six status variants |
@@ -322,16 +322,42 @@ Inputs whose label floats up on focus or when the field has a value, with valida
 | `.bui-float-error` · `-success` · `-warning` · `-notice` · `-loading` | State of the field |
 | `.bui-float-info` · `.bui-float-message` · `.bui-float-open` | The i button, its message, and the open state |
 | `.bui-float-hint` | Helper text that is always visible |
+| `.bui-float-toggle` | Show / hide button for password fields (`data-label-show` / `data-label-hide` for other languages) |
+| `.bui-float-meter` · `.bui-float-rules` | Password strength meter and requirements checklist |
+| `.bui-float-affix` + `.bui-float-prefix` / `-suffix` | Prefix and suffix: `+20`, `@`, `https://`, `$`, `%`, `.com` (a `<select>` can be the prefix) |
 
 **Live validation:** add `data-bui-validate novalidate` to a `<form>`. Fields use normal HTML rules (`required`, `type`, `pattern`, `minlength`, `min`, `max`). They validate on blur, then on every key; on submit the first invalid field gets focus and its message opens. Messages come from data attributes: `data-error` (any rule), `data-error-required` / `-type` / `-pattern` / `-minlength` / `-maxlength` / `-min` / `-max` / `-step`, `data-success`, and `data-match="#id"` with `data-error-match` (confirm password).
+
+**Password fields:** add `<button type="button" class="bui-float-toggle" aria-label="Show password" aria-pressed="false"></button>` after the label. `data-bui-strength` on the input adds a 4-level meter (`data-strength-1` … `-4` for custom labels). `<ul data-bui-rules="#password"><li data-rule="min:8">…` is a live requirements list (`min:N`, `upper`, `lower`, `digit`, `symbol`, `regex:PATTERN`). `data-bui-caps="Caps Lock is on"` opens a warning while Caps Lock is on.
+
+**Prefix and suffix:** `<div class="bui-float bui-float-affix"><span class="bui-float-prefix">+20</span><input class="bui-float-input" placeholder=" "><label>…</label></div>`. The label stays floated. `data-bui-filter="digits|alnum|username|letters"` removes characters while typing, and `data-bui-case="lower|upper"` changes the case.
 
 ```js
 BUI.float.setState('#username', 'loading');
 BUI.float.setState('#username', 'error', 'This username is taken.', { open: true });   // error | success | warning | info | loading
 BUI.float.clear('#username');   BUI.float.open('#username', false);
+BUI.float.reveal('#password', true);   // show or hide a password
 BUI.float.validate(form);       BUI.float.reset(form);                                  // true | false, clear all states
 form.addEventListener('bui:valid', (e) => { e.preventDefault(); /* send with fetch() */ });   // also bui:invalid
 ```
+
+## Select menu
+
+Every single-choice `<select>` with `.bui-float-input`, `.bui-input` or `.bui-float-prefix` opens a custom menu instead of the browser one, with no change to your markup. The native `<select>` stays in the page and stays the source of truth (value, `change` event, `required`, `disabled`, label, form submit); the menu is built from its `<option>` / `<optgroup>` items each time it opens, so options changed with JavaScript are always current. Full examples: `components/forms.html`.
+
+- **Automatic placement:** the menu opens below the field when the whole list fits there, otherwise on the side with more room (and scrolls if even that is too small). It stays inside the window and lines up with the start of the field (the end in RTL). No direction is ever set by the developer.
+- **Top layer:** it uses the Popover API when available, so `overflow: hidden` containers never clip it, and it is placed inside the field or the open `<dialog>` so it keeps the theme, direction and tokens and stays clickable inside a modal.
+- **Keyboard:** Enter / Space / arrows open it; arrows, Home, End, Page Up / Down move (disabled options are skipped); Enter / Space choose; typing jumps to a matching option; Esc / Tab close it (Esc does not close a modal).
+- **Opt out:** `data-bui-native` keeps the browser menu for one select. `multiple` and `size` selects are never changed.
+
+```js
+select.add(new Option('Legal', 'legal'));   // options can change at any time, even while the menu is open
+select.value = 'design';                    // the field and the menu stay in sync
+BUI.select.open(select);   BUI.select.close();   BUI.select.isOpen(select);
+select.addEventListener('bui:select-open', fn);  select.addEventListener('bui:select-close', fn);   // a choice also fires input and change
+```
+
+Styling: `.bui-select-menu`, `.bui-select-option` (`-active`, `-empty`), `.bui-select-group`, `.bui-select-group-label`; the longest list before scrolling is the `max-height` of `.bui-select-menu` (18rem). CSS anchor positioning is not used because it is not available in every supported browser.
 
 ## Modal
 
@@ -446,6 +472,7 @@ With `baset-ui.js`, any element with `id="themeToggle"` becomes a toggle button.
 | Copy code | `<button class="bui-copy">` inside a `.bui-code-card`; copies the `<code>` text, or the `data-copy` attribute if present |
 | Icons gallery | `assets/js/icons-gallery.js` + `assets/icons/icons-data.js` on `components/icons.html` only |
 | Token playground | `assets/js/token-playground.js` on `customize/token-playground.html` only |
+| Select menu | Custom listbox for `select.bui-input`, `select.bui-float-input`, `select.bui-float-prefix`; `BUI.select.open/close/isOpen()`; `data-bui-native` to opt out |
 | Floating labels | The i button toggles its message; `<form data-bui-validate>` and `BUI.float.setState/clear/open/validate/reset()` |
 | Modal | `BUI.modal.open/close/show/confirm/alert/prompt()` or `data-bui-modal-open` / `data-bui-modal-close` attributes |
 | Scroll-spy | Sidebar links like `<a class="bui-nav" href="#section">` highlight as you scroll |

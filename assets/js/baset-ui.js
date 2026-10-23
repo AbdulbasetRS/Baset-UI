@@ -481,6 +481,239 @@
   });
   document.addEventListener('reset', (event) => { if (event.target.matches?.('[data-bui-validate]')) setTimeout(() => BUI.float.reset(event.target)); });
 
+  /* ---------- Floating labels: password toggle, strength meter, rules list, input filters, Caps Lock ---------- */
+  const FILTERS = { digits: /[^0-9]/g, alnum: /[^A-Za-z0-9]/g, username: /[^A-Za-z0-9_.]/g, letters: /[^\p{L}\s'-]/gu };
+  const STRENGTH = ['', 'Weak', 'Fair', 'Good', 'Strong'];
+  const RULES = { upper: (v) => /[A-Z]/.test(v), lower: (v) => /[a-z]/.test(v), digit: (v) => /\d/.test(v), symbol: (v) => /[^A-Za-z0-9]/.test(v) };
+
+  function revealFloat(target, on) { // show or hide a password; on = true | false, or toggle when omitted
+    const f = floatOf(target), input = f && floatInput(f);
+    if (!input) return;
+    const show = on ?? input.type === 'password', a = input.selectionStart, b = input.selectionEnd;
+    input.type = show ? 'text' : 'password';
+    try { input.setSelectionRange(a, b); } catch { /* not supported for this type */ }
+    const btn = f.querySelector(':scope > .bui-float-toggle');
+    if (btn) { btn.setAttribute('aria-pressed', String(show)); btn.setAttribute('aria-label', show ? (btn.dataset.labelHide || 'Hide password') : (btn.dataset.labelShow || 'Show password')); }
+  }
+  const passwordScore = (v) => {
+    if (!v) return 0;
+    const s = (v.length >= 8) + (v.length >= 12) + (/[a-z]/.test(v) && /[A-Z]/.test(v)) + /\d/.test(v) + /[^A-Za-z0-9]/.test(v);
+    return s <= 1 ? 1 : s === 2 ? 2 : s === 3 ? 3 : 4;
+  };
+  function updateStrength(input) { // <input data-bui-strength>: fills a .bui-float-meter (created when missing)
+    if (!('buiStrength' in input.dataset)) return;
+    const f = floatOf(input);
+    let meter = f.querySelector(':scope > .bui-float-meter');
+    if (!meter) { meter = add(f, 'div', 'bui-float-meter'); meter.setAttribute('aria-live', 'polite'); for (let i = 0; i < 4; i++) add(meter, 'i'); add(meter, 'span'); }
+    const level = passwordScore(input.value);
+    meter.dataset.level = level;
+    meter.lastElementChild.textContent = level ? (input.dataset[`strength-${level}`] ?? STRENGTH[level]) : '';
+  }
+  function updateRules(input) { // <ul data-bui-rules="#password"><li data-rule="min:8">...
+    if (!input.id) return;
+    document.querySelectorAll(`[data-bui-rules="#${input.id}"] [data-rule]`).forEach((li) => {
+      const text = li.dataset.rule, i = text.indexOf(':'), name = i < 0 ? text : text.slice(0, i), arg = i < 0 ? '' : text.slice(i + 1);
+      const ok = name === 'min' ? input.value.length >= +arg : name === 'regex' ? new RegExp(arg).test(input.value) : RULES[name]?.(input.value);
+      li.classList.toggle('bui-float-rule-ok', !!ok);
+    });
+  }
+  BUI.float.reveal = revealFloat;
+  const resetFloat = BUI.float.reset;
+  BUI.float.reset = (form) => {
+    resetFloat(form);
+    form.querySelectorAll('.bui-float-toggle').forEach((t) => revealFloat(t, false));
+    form.querySelectorAll('.bui-float-meter').forEach((m) => { m.dataset.level = 0; m.lastElementChild.textContent = ''; });
+    document.querySelectorAll('[data-bui-rules] .bui-float-rule-ok').forEach((li) => li.classList.remove('bui-float-rule-ok'));
+  };
+
+  document.addEventListener('click', (event) => {
+    const t = event.target.closest('.bui-float-toggle');
+    if (t) { revealFloat(t); floatInput(t.closest('.bui-float')).focus(); }
+  });
+  document.addEventListener('input', (event) => { // capture phase: filter first, then validate
+    const input = event.target;
+    if (!input.classList?.contains('bui-float-input')) return;
+    const d = input.dataset, filter = FILTERS[d.buiFilter];
+    if (filter) { const v = input.value.replace(filter, ''); if (v !== input.value) { const pos = (input.selectionStart ?? v.length) - (input.value.length - v.length); input.value = v; try { input.setSelectionRange(pos, pos); } catch { /* ignore */ } } }
+    if (d.buiCase) input.value = d.buiCase === 'upper' ? input.value.toUpperCase() : input.value.toLowerCase();
+    updateStrength(input);
+    updateRules(input);
+  }, true);
+  const capsLock = (event) => { // <input data-bui-caps="Caps Lock is on">
+    const input = event.target;
+    if (!input.matches?.('.bui-float-input[data-bui-caps]') || !event.getModifierState) return;
+    const f = floatOf(input), on = event.getModifierState('CapsLock');
+    if (on && !f.classList.contains('bui-float-error')) { input.dataset.capsWarn = ''; setFloatState(f, 'warning', input.dataset.buiCaps || 'Caps Lock is on', { open: true }); }
+    else if (!on && 'capsWarn' in input.dataset) { delete input.dataset.capsWarn; if (input.closest('[data-bui-validate]') && 'touched' in input.dataset) validateFloat(input); else setFloatState(f, null); }
+  };
+  document.querySelectorAll('.bui-float-input[data-bui-strength]').forEach(updateStrength);   // values already in the markup
+  document.querySelectorAll('[data-bui-rules]').forEach((ul) => { const i = document.querySelector(ul.dataset.buiRules); if (i) updateRules(i); });
+  document.addEventListener('keydown', capsLock);
+  document.addEventListener('keyup', capsLock);
+
+  /* ---------- Select menu: a custom listbox for native <select> elements ----------
+     The <select> stays the source of truth (value, change event, form, required, disabled, label).
+     The menu is built from its <option> / <optgroup> items every time it opens, and it is placed below or above
+     the field by measuring the free space in the viewport. No direction is set by the developer. */
+  const SELECT_QUERY = 'select.bui-float-input, select.bui-input, select.bui-float-prefix, select[data-bui-select]';
+  const canPopover = typeof HTMLElement.prototype.showPopover === 'function';
+  let openSel = null; // { select, menu, items, active, buffer, timer, observer }
+  let selectSeq = 0;
+  const isEnhanced = (n) => n instanceof HTMLSelectElement && n.matches(SELECT_QUERY) && !n.multiple && !(n.size > 1) && !n.hasAttribute('data-bui-native');
+
+  function buildSelectMenu(state) {
+    const { select, menu } = state;
+    menu.textContent = '';
+    state.items = [];
+    const addOption = (o, parent) => {
+      if (o.hidden || (o.disabled && o.value === '' && !o.textContent.trim())) return; // a hidden placeholder option
+      const text = (o.label || o.textContent).trim();
+      const el = add(parent, 'div', 'bui-select-option' + (text ? '' : ' bui-select-option-empty'), text || '—');
+      el.id = `${menu.id}-o${o.index}`;
+      el.setAttribute('role', 'option');
+      el.setAttribute('aria-selected', String(o.selected));
+      const disabled = o.disabled || !!o.parentElement?.disabled;
+      if (disabled) el.setAttribute('aria-disabled', 'true');
+      state.items.push({ el, option: o, disabled });
+    };
+    [...select.children].forEach((c, gi) => {
+      if (c.tagName === 'OPTION') addOption(c, menu);
+      else if (c.tagName === 'OPTGROUP' && !c.hidden) {
+        const g = add(menu, 'div', 'bui-select-group'), label = add(g, 'div', 'bui-select-group-label', c.label);
+        label.id = `${menu.id}-g${gi}`; g.setAttribute('role', 'group'); g.setAttribute('aria-labelledby', label.id);
+        [...c.children].forEach((o) => { if (o.tagName === 'OPTION') addOption(o, g); });
+      }
+    });
+  }
+  function setSelectActive(state, index, scroll = true) {
+    state.items[state.active]?.el.classList.remove('bui-select-option-active');
+    state.active = index;
+    const item = state.items[index];
+    if (!item) { state.select.removeAttribute('aria-activedescendant'); return; }
+    item.el.classList.add('bui-select-option-active');
+    state.select.setAttribute('aria-activedescendant', item.el.id);
+    if (scroll) item.el.scrollIntoView({ block: 'nearest' });
+  }
+  const firstEnabled = (state, from = 0, step = 1) => { for (let i = from; i >= 0 && i < state.items.length; i += step) if (!state.items[i].disabled) return i; return -1; };
+  const startIndex = (state) => { const i = state.items.findIndex((it) => it.option.selected && !it.disabled); return i >= 0 ? i : firstEnabled(state); };
+
+  /* Below the field when the menu fits there; otherwise on the side with more room (it scrolls when needed). */
+  function placeSelectMenu(state) {
+    const { select, menu } = state;
+    const r = select.getBoundingClientRect(), vw = document.documentElement.clientWidth, vh = window.innerHeight;
+    if (r.bottom < 0 || r.top > vh) { closeSelectMenu(); return; }
+    const gap = 6, edge = 8;
+    menu.style.maxHeight = ''; menu.style.minWidth = `${Math.max(r.width, 140)}px`;
+    const natural = menu.offsetHeight, below = vh - r.bottom - gap - edge, above = r.top - gap - edge;
+    const place = natural <= below || below >= above ? 'bottom' : 'top';
+    const room = Math.max(place === 'bottom' ? below : above, 96);
+    if (natural > room) menu.style.maxHeight = `${room}px`;
+    const h = Math.min(natural, room), w = menu.offsetWidth;
+    let left = getComputedStyle(menu).direction === 'rtl' ? r.right - w : r.left;
+    left = Math.min(Math.max(left, edge), Math.max(edge, vw - w - edge));
+    menu.style.left = `${left}px`;
+    menu.style.top = `${place === 'bottom' ? r.bottom + gap : r.top - gap - h}px`;
+    menu.dataset.placement = place;
+  }
+  let placeFrame = 0;
+  const schedulePlace = () => { if (openSel && !placeFrame) placeFrame = requestAnimationFrame(() => { placeFrame = 0; if (openSel) placeSelectMenu(openSel); }); };
+
+  function closeSelectMenu() {
+    if (!openSel) return;
+    const { select, menu, observer, timer } = openSel;
+    openSel = null;
+    observer.disconnect(); clearTimeout(timer);
+    if (canPopover) { try { menu.hidePopover(); } catch { /* already hidden */ } }
+    menu.remove();
+    select.setAttribute('aria-expanded', 'false');
+    select.removeAttribute('aria-controls'); select.removeAttribute('aria-activedescendant');
+    select.dispatchEvent(new CustomEvent('bui:select-close', { bubbles: true }));
+  }
+  function chooseSelectItem(state, index) {
+    const item = state.items[index];
+    if (!item || item.disabled) return;
+    const { select } = state, changed = !item.option.selected;
+    closeSelectMenu();
+    if (changed) {
+      select.selectedIndex = item.option.index;
+      select.dispatchEvent(new Event('input', { bubbles: true }));
+      select.dispatchEvent(new Event('change', { bubbles: true }));
+    }
+    select.focus();
+  }
+  function openSelectMenu(target) {
+    const select = typeof target === 'string' ? document.querySelector(target) : target;
+    if (!isEnhanced(select) || select.disabled || openSel?.select === select) return;
+    closeSelectMenu();
+    const menu = document.createElement('div');
+    menu.className = 'bui-select-menu'; menu.id = `bui-select-menu-${++selectSeq}`;
+    menu.setAttribute('role', 'listbox');
+    const name = select.labels?.[0]?.firstChild?.textContent?.trim() || select.labels?.[0]?.textContent.trim() || select.getAttribute('aria-label');
+    if (name) menu.setAttribute('aria-label', name);
+    const state = openSel = { select, menu, items: [], active: -1, buffer: '', timer: 0, observer: null };
+    buildSelectMenu(state);
+    // Inside the field (or a modal) so it inherits the theme, direction and tokens, and stays clickable in a modal
+    const host = select.closest('dialog[open], .bui-float') || document.body;
+    if (canPopover) menu.setAttribute('popover', 'manual');
+    host.appendChild(menu);
+    if (canPopover) menu.showPopover();
+    select.setAttribute('aria-haspopup', 'listbox'); select.setAttribute('aria-expanded', 'true'); select.setAttribute('aria-controls', menu.id);
+    setSelectActive(state, startIndex(state));
+    placeSelectMenu(state);
+    menu.addEventListener('mousedown', (e) => e.preventDefault()); // keep the focus on the select
+    menu.addEventListener('mousemove', (e) => { const i = state.items.findIndex((it) => it.el === e.target.closest('.bui-select-option')); if (i >= 0 && !state.items[i].disabled && i !== state.active) setSelectActive(state, i, false); });
+    menu.addEventListener('click', (e) => { const i = state.items.findIndex((it) => it.el === e.target.closest('.bui-select-option')); if (i >= 0) chooseSelectItem(state, i); });
+    state.observer = new MutationObserver(() => { const cur = state.items[state.active]?.option; buildSelectMenu(state); setSelectActive(state, Math.max(0, state.items.findIndex((it) => it.option === cur)), false); placeSelectMenu(state); });
+    state.observer.observe(select, { childList: true, subtree: true, characterData: true, attributes: true, attributeFilter: ['disabled', 'hidden', 'label', 'selected', 'value'] }); // not aria-*: we set those ourselves
+    select.focus({ preventScroll: true });
+    select.dispatchEvent(new CustomEvent('bui:select-open', { bubbles: true }));
+  }
+
+  document.addEventListener('mousedown', (event) => {
+    const select = event.target.closest?.('select');
+    if (select && isEnhanced(select)) {
+      if (event.button !== 0 || select.disabled) return;
+      event.preventDefault(); // no native popup
+      select.focus();
+      if (openSel?.select === select) closeSelectMenu(); else openSelectMenu(select);
+    } else if (openSel && !openSel.menu.contains(event.target)) closeSelectMenu();
+  }, true);
+  document.addEventListener('keydown', (event) => {
+    const select = event.target;
+    if (!isEnhanced(select) || event.isComposing) return;
+    const state = openSel?.select === select ? openSel : null, key = event.key;
+    if (!state) {
+      if (key === 'Enter' || key === ' ' || ((key === 'ArrowDown' || key === 'ArrowUp') && !event.ctrlKey && !event.metaKey && !event.shiftKey)) { event.preventDefault(); openSelectMenu(select); }
+      return;
+    }
+    const go = (i) => { if (i >= 0) setSelectActive(state, i); };
+    if (key === 'Escape') { event.preventDefault(); event.stopPropagation(); closeSelectMenu(); }
+    else if (key === 'Tab') closeSelectMenu();
+    else if (key === 'ArrowDown') { event.preventDefault(); go(firstEnabled(state, state.active + 1)); }
+    else if (key === 'ArrowUp') { event.preventDefault(); go(firstEnabled(state, state.active - 1, -1)); }
+    else if (key === 'Home') { event.preventDefault(); go(firstEnabled(state)); }
+    else if (key === 'End') { event.preventDefault(); go(firstEnabled(state, state.items.length - 1, -1)); }
+    else if (key === 'PageDown') { event.preventDefault(); go(firstEnabled(state, Math.min(state.active + 8, state.items.length - 1), -1)); }
+    else if (key === 'PageUp') { event.preventDefault(); go(firstEnabled(state, Math.max(state.active - 8, 0))); }
+    else if (key === 'Enter' || (key === ' ' && !state.buffer)) { event.preventDefault(); chooseSelectItem(state, state.active); }
+    else if (key.length === 1 && !event.ctrlKey && !event.metaKey && !event.altKey) { // type to search
+      event.preventDefault();
+      state.buffer += key.toLowerCase(); clearTimeout(state.timer); state.timer = setTimeout(() => { state.buffer = ''; }, 600);
+      const n = state.items.length, from = state.buffer.length === 1 ? state.active + 1 : Math.max(state.active, 0);
+      for (let k = 0; k < n; k++) { const i = (from + k) % n; if (!state.items[i].disabled && state.items[i].el.textContent.trim().toLowerCase().startsWith(state.buffer)) { go(i); break; } }
+    }
+  });
+  document.addEventListener('focusout', (event) => { if (openSel && event.target === openSel.select) closeSelectMenu(); });
+  document.addEventListener('change', (event) => { // a chosen value validates a floating select right away
+    const s = event.target;
+    if (s instanceof HTMLSelectElement && s.classList.contains('bui-float-input') && s.closest('[data-bui-validate]')) { s.dataset.touched = ''; validateFloat(s); }
+  });
+  window.addEventListener('resize', schedulePlace);
+  window.addEventListener('scroll', (event) => { if (openSel && !openSel.menu.contains(event.target)) schedulePlace(); }, true);
+  window.visualViewport?.addEventListener('resize', schedulePlace);
+
+  BUI.select = { open: openSelectMenu, close: closeSelectMenu, isOpen: (t) => { const s = typeof t === 'string' ? document.querySelector(t) : t; return !!openSel && (!s || openSel.select === s); } };
+
   /* ---------- Scroll-spy for in-page sidebar links (#section) ---------- */
   const spyLinks = [...document.querySelectorAll('.bui-nav[href^="#"]')];
   if (spyLinks.length && 'IntersectionObserver' in window) {

@@ -37,7 +37,7 @@
     </aside>
     <main class="bui-main">
       <header class="bui-topbar"><div class="bui-breadcrumb"><a href="../index.html">Documentation</a> <span>/</span> Components <span>/</span> Form controls</div><div class="bui-top-actions"><span class="bui-pill">Vanilla CSS + JS</span><button class="bui-icon-btn bui-dir-btn" id="dirToggle" type="button" aria-label="Toggle direction (RTL / LTR)" title="Toggle direction (RTL / LTR)">RTL</button><button class="bui-icon-btn" id="themeToggle" type="button" aria-label="Toggle theme">☼</button></div></header>
-      <section class="bui-section" id="forms"><div class="bui-section-heading"><div><span class="bui-eyebrow">02 / COMPONENTS</span><h2>Form controls</h2><p>Clear labels, comfortable spacing, accessible focus states, and floating labels with validation states.</p></div><span class="bui-step-count">27 examples</span></div>
+      <section class="bui-section" id="forms"><div class="bui-section-heading"><div><span class="bui-eyebrow">02 / COMPONENTS</span><h2>Form controls</h2><p>Clear labels, comfortable spacing, accessible focus states, and floating labels with validation states.</p></div><span class="bui-step-count">56 examples</span></div>
       <div class="bui-demo-stack">
 <article class="bui-demo-card" id="text-input"><div class="bui-demo-title">Text input <span>.bui-field · .bui-input</span></div><div class="bui-demo-content"><label class="bui-field">Full name
   <input class="bui-input" placeholder="e.g. Abdulbaset Sayed">
@@ -250,6 +250,386 @@
   <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"fl-ro"</span><span class="bui-code-pink">&gt;</span>Read-only<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
 <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
 <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
+</div>
+<h3 style="margin:34px 0 14px;font-family:var(--bui-font-heading);font-size:18px;letter-spacing:-.4px">Select menu</h3><p class="bui-doc-note">Every <code>&lt;select&gt;</code> that uses <code>.bui-float-input</code>, <code>.bui-input</code> or <code>.bui-float-prefix</code> opens a <b>custom menu</b> instead of the browser one, with no extra markup. The native <code>&lt;select&gt;</code> stays in the page and stays the source of truth: its value, <code>change</code> event, <code>required</code>, <code>disabled</code>, label and form submit work as before. The menu is built from its <code>&lt;option&gt;</code> items each time it opens, so options added or changed with JavaScript are always up to date. It opens <b>below or above the field automatically</b>, depending on the free space in the window, and it needs <code>baset-ui.js</code>.</p><div class="bui-demo-stack">
+<article class="bui-demo-card" id="sel-basic"><div class="bui-demo-title">Floating select and plain select <span>no extra classes or attributes</span></div><div class="bui-demo-content"><div class="bui-form-grid">
+<div class="bui-float bui-float-select">
+  <select class="bui-float-input" id="sel-1">
+    <option value=""></option>
+    <option>Engineering</option>
+    <option>Design</option>
+    <option>Marketing</option>
+  </select>
+  <label class="bui-float-label" for="sel-1">Department</label>
+</div>
+<label class="bui-field">Department
+  <select class="bui-input">
+    <option>Select department</option>
+    <option>Engineering</option>
+    <option>Design</option>
+    <option>Marketing</option>
+  </select>
+</label>
+</div></div><div class="bui-demo-code">Click a field, or focus it and press Enter, Space or an arrow key. Type a letter to jump to an option. Esc, Tab or a click outside closes the menu.</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-form-grid"</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float bui-float-select"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;select</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"sel-1"</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;option</span> <span class="bui-code-blue">value</span>=<span class="bui-code-green">""</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;option</span><span class="bui-code-pink">&gt;</span>Engineering<span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;option</span><span class="bui-code-pink">&gt;</span>Design<span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;option</span><span class="bui-code-pink">&gt;</span>Marketing<span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;/select</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"sel-1"</span><span class="bui-code-pink">&gt;</span>Department<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-field"</span><span class="bui-code-pink">&gt;</span>Department
+  <span class="bui-code-pink">&lt;select</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-input"</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;option</span><span class="bui-code-pink">&gt;</span>Select department<span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;option</span><span class="bui-code-pink">&gt;</span>Engineering<span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;option</span><span class="bui-code-pink">&gt;</span>Design<span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;option</span><span class="bui-code-pink">&gt;</span>Marketing<span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;/select</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
+<article class="bui-demo-card" id="sel-groups"><div class="bui-demo-title">Groups, selected and disabled options <span><optgroup> · selected · disabled</span></div><div class="bui-demo-content"><div class="bui-form-grid" style="gap:18px 20px">
+<div class="bui-float bui-float-select">
+  <select class="bui-float-input" id="sel-country">
+    <option value=""></option>
+    <optgroup label="Africa">
+      <option selected>Egypt</option><option>Morocco</option><option>Kenya</option>
+    </optgroup>
+    <optgroup label="Asia">
+      <option>Saudi Arabia</option><option>Japan</option><option>India</option>
+    </optgroup>
+    <optgroup label="Europe">
+      <option>France</option><option>Germany</option><option disabled>Spain (unavailable)</option>
+    </optgroup>
+  </select>
+  <label class="bui-float-label" for="sel-country">Country</label>
+</div>
+<div class="bui-float bui-float-select">
+  <select class="bui-float-input" id="sel-off" disabled>
+    <option value=""></option>
+    <option>Engineering</option>
+    <option>Design</option>
+    <option>Marketing</option>
+  </select>
+  <label class="bui-float-label" for="sel-off">Disabled select</label>
+</div>
+</div></div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-form-grid"</span> <span class="bui-code-blue">style</span>=<span class="bui-code-green">"gap:18px 20px"</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float bui-float-select"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;select</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"sel-country"</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;option</span> <span class="bui-code-blue">value</span>=<span class="bui-code-green">""</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;optgroup</span> <span class="bui-code-blue">label</span>=<span class="bui-code-green">"Africa"</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;option</span> <span class="bui-code-blue">selected</span><span class="bui-code-pink">&gt;</span>Egypt<span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;option</span><span class="bui-code-pink">&gt;</span>Morocco<span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;option</span><span class="bui-code-pink">&gt;</span>Kenya<span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;/optgroup</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;optgroup</span> <span class="bui-code-blue">label</span>=<span class="bui-code-green">"Asia"</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;option</span><span class="bui-code-pink">&gt;</span>Saudi Arabia<span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;option</span><span class="bui-code-pink">&gt;</span>Japan<span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;option</span><span class="bui-code-pink">&gt;</span>India<span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;/optgroup</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;optgroup</span> <span class="bui-code-blue">label</span>=<span class="bui-code-green">"Europe"</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;option</span><span class="bui-code-pink">&gt;</span>France<span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;option</span><span class="bui-code-pink">&gt;</span>Germany<span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;option</span> <span class="bui-code-blue">disabled</span><span class="bui-code-pink">&gt;</span>Spain (unavailable)<span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;/optgroup</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;/select</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"sel-country"</span><span class="bui-code-pink">&gt;</span>Country<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float bui-float-select"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;select</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"sel-off"</span> <span class="bui-code-blue">disabled</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;option</span> <span class="bui-code-blue">value</span>=<span class="bui-code-green">""</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;option</span><span class="bui-code-pink">&gt;</span>Engineering<span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;option</span><span class="bui-code-pink">&gt;</span>Design<span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;option</span><span class="bui-code-pink">&gt;</span>Marketing<span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;/select</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"sel-off"</span><span class="bui-code-pink">&gt;</span>Disabled select<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
+<article class="bui-demo-card" id="sel-long"><div class="bui-demo-title">Long list <span>scrolls and supports type-to-search</span></div><div class="bui-demo-content"><div style="display:grid;gap:18px;max-width:420px">
+<div class="bui-float bui-float-select">
+  <select class="bui-float-input" id="sel-tz">
+    <option value=""></option>
+    <option>UTC-11:00</option>
+    <option>UTC-10:00</option>
+    <option>UTC-09:00</option>
+    <option>UTC-08:00</option>
+    <option>UTC-07:00</option>
+    <option>UTC-06:00</option>
+    <option>UTC-05:00</option>
+    <option>UTC-04:00</option>
+    <option>UTC-03:00</option>
+    <option>UTC-02:00</option>
+    <option>UTC-01:00</option>
+    <option>UTC+00:00</option>
+    <option>UTC+01:00</option>
+    <option selected>UTC+02:00</option>
+    <option>UTC+03:00</option>
+    <option>UTC+04:00</option>
+    <option>UTC+05:00</option>
+    <option>UTC+06:00</option>
+    <option>UTC+07:00</option>
+    <option>UTC+08:00</option>
+    <option>UTC+09:00</option>
+    <option>UTC+10:00</option>
+    <option>UTC+11:00</option>
+    <option>UTC+12:00</option>
+  </select>
+  <label class="bui-float-label" for="sel-tz">Time zone</label>
+</div>
+</div></div><div class="bui-demo-code">The list is limited to 18rem (--bui-select-max-height can be changed in CSS) and also to the space available in the window. Type "UTC+0" to jump.</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">style</span>=<span class="bui-code-green">"display:grid;gap:18px;max-width:420px"</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float bui-float-select"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;select</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"sel-tz"</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;option</span> <span class="bui-code-blue">value</span>=<span class="bui-code-green">""</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;option</span><span class="bui-code-pink">&gt;</span>UTC-11:00<span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;option</span><span class="bui-code-pink">&gt;</span>UTC-10:00<span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;option</span><span class="bui-code-pink">&gt;</span>UTC-09:00<span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;option</span><span class="bui-code-pink">&gt;</span>UTC-08:00<span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;option</span><span class="bui-code-pink">&gt;</span>UTC-07:00<span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;option</span><span class="bui-code-pink">&gt;</span>UTC-06:00<span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;option</span><span class="bui-code-pink">&gt;</span>UTC-05:00<span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;option</span><span class="bui-code-pink">&gt;</span>UTC-04:00<span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;option</span><span class="bui-code-pink">&gt;</span>UTC-03:00<span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;option</span><span class="bui-code-pink">&gt;</span>UTC-02:00<span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;option</span><span class="bui-code-pink">&gt;</span>UTC-01:00<span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;option</span><span class="bui-code-pink">&gt;</span>UTC+00:00<span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;option</span><span class="bui-code-pink">&gt;</span>UTC+01:00<span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;option</span> <span class="bui-code-blue">selected</span><span class="bui-code-pink">&gt;</span>UTC+02:00<span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;option</span><span class="bui-code-pink">&gt;</span>UTC+03:00<span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;option</span><span class="bui-code-pink">&gt;</span>UTC+04:00<span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;option</span><span class="bui-code-pink">&gt;</span>UTC+05:00<span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;option</span><span class="bui-code-pink">&gt;</span>UTC+06:00<span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;option</span><span class="bui-code-pink">&gt;</span>UTC+07:00<span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;option</span><span class="bui-code-pink">&gt;</span>UTC+08:00<span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;option</span><span class="bui-code-pink">&gt;</span>UTC+09:00<span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;option</span><span class="bui-code-pink">&gt;</span>UTC+10:00<span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;option</span><span class="bui-code-pink">&gt;</span>UTC+11:00<span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;option</span><span class="bui-code-pink">&gt;</span>UTC+12:00<span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;/select</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"sel-tz"</span><span class="bui-code-pink">&gt;</span>Time zone<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
+<article class="bui-demo-card" id="sel-states"><div class="bui-demo-title">With validation states and the i button <span>works with every floating state</span></div><div class="bui-demo-content"><div class="bui-form-grid" style="gap:18px 20px">
+<div class="bui-float bui-float-select bui-float-error">
+  <select class="bui-float-input" id="sel-e">
+    <option value=""></option>
+    <option>Engineering</option>
+    <option>Design</option>
+    <option>Marketing</option>
+  </select>
+  <label class="bui-float-label" for="sel-e">Department</label>
+  <button type="button" class="bui-float-info" aria-label="Show message" aria-expanded="false" aria-controls="sel-e-msg">i</button>
+  <div class="bui-float-message" id="sel-e-msg" role="status">Choose a department to continue.</div>
+</div>
+<div class="bui-float bui-float-select bui-float-success">
+  <select class="bui-float-input" id="sel-ok">
+    <option value=""></option>
+    <option>Engineering</option>
+    <option selected>Design</option>
+    <option>Marketing</option>
+  </select>
+  <label class="bui-float-label" for="sel-ok">Department</label>
+  <button type="button" class="bui-float-info" aria-label="Show message" aria-expanded="false" aria-controls="sel-ok-msg">i</button>
+  <div class="bui-float-message" id="sel-ok-msg" role="status">Great choice.</div>
+</div>
+</div></div><div class="bui-demo-code">The arrow turns while the menu is open.</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-form-grid"</span> <span class="bui-code-blue">style</span>=<span class="bui-code-green">"gap:18px 20px"</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float bui-float-select bui-float-error"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;select</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"sel-e"</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;option</span> <span class="bui-code-blue">value</span>=<span class="bui-code-green">""</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;option</span><span class="bui-code-pink">&gt;</span>Engineering<span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;option</span><span class="bui-code-pink">&gt;</span>Design<span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;option</span><span class="bui-code-pink">&gt;</span>Marketing<span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;/select</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"sel-e"</span><span class="bui-code-pink">&gt;</span>Department<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-info"</span> <span class="bui-code-blue">aria-label</span>=<span class="bui-code-green">"Show message"</span> <span class="bui-code-blue">aria-expanded</span>=<span class="bui-code-green">"false"</span> <span class="bui-code-blue">aria-controls</span>=<span class="bui-code-green">"sel-e-msg"</span><span class="bui-code-pink">&gt;</span>i<span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-message"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"sel-e-msg"</span> <span class="bui-code-blue">role</span>=<span class="bui-code-green">"status"</span><span class="bui-code-pink">&gt;</span>Choose a department to continue.<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float bui-float-select bui-float-success"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;select</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"sel-ok"</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;option</span> <span class="bui-code-blue">value</span>=<span class="bui-code-green">""</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;option</span><span class="bui-code-pink">&gt;</span>Engineering<span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;option</span> <span class="bui-code-blue">selected</span><span class="bui-code-pink">&gt;</span>Design<span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;option</span><span class="bui-code-pink">&gt;</span>Marketing<span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;/select</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"sel-ok"</span><span class="bui-code-pink">&gt;</span>Department<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-info"</span> <span class="bui-code-blue">aria-label</span>=<span class="bui-code-green">"Show message"</span> <span class="bui-code-blue">aria-expanded</span>=<span class="bui-code-green">"false"</span> <span class="bui-code-blue">aria-controls</span>=<span class="bui-code-green">"sel-ok-msg"</span><span class="bui-code-pink">&gt;</span>i<span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-message"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"sel-ok-msg"</span> <span class="bui-code-blue">role</span>=<span class="bui-code-green">"status"</span><span class="bui-code-pink">&gt;</span>Great choice.<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
+<article class="bui-demo-card" id="sel-placement"><div class="bui-demo-title">Automatic placement <span>below or above, by the free space</span></div><div class="bui-demo-content"><div class="bui-button-row"><button type="button" class="bui-btn bui-btn-primary bui-btn-sm" data-lab="top">Field at the top of the window</button><button type="button" class="bui-btn bui-btn-primary bui-btn-sm" data-lab="center">In the middle</button><button type="button" class="bui-btn bui-btn-primary bui-btn-sm" data-lab="bottom">At the bottom</button><button type="button" class="bui-btn bui-btn-ghost bui-btn-sm" data-lab-close>Hide</button></div>
+<div class="bui-lab-box" id="sel-lab-box" hidden>
+  <div class="bui-float bui-float-select">
+    <select class="bui-float-input" id="sel-lab">
+      <option value=""></option>
+      <option>Engineering</option><option>Design</option><option>Marketing</option><option>Product</option>
+      <option>Sales</option><option>Support</option><option>Finance</option><option>Legal</option>
+    </select>
+    <label class="bui-float-label" for="sel-lab">Department</label>
+  </div>
+</div></div><div class="bui-demo-code">The buttons move the field to a fixed spot in the window and open it. At the top there is room below, so the menu opens below. At the bottom there is not, so it opens above. If neither side fits the whole list, the larger side is used and the list scrolls. Nothing in the markup sets a direction.</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-lab-box"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"sel-lab-box"</span> <span class="bui-code-blue">hidden</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float bui-float-select"</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;select</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"sel-lab"</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;option</span> <span class="bui-code-blue">value</span>=<span class="bui-code-green">""</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;option</span><span class="bui-code-pink">&gt;</span>Engineering<span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;option</span><span class="bui-code-pink">&gt;</span>Design<span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;option</span><span class="bui-code-pink">&gt;</span>Marketing<span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;option</span><span class="bui-code-pink">&gt;</span>Product<span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;option</span><span class="bui-code-pink">&gt;</span>Sales<span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;option</span><span class="bui-code-pink">&gt;</span>Support<span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;option</span><span class="bui-code-pink">&gt;</span>Finance<span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;option</span><span class="bui-code-pink">&gt;</span>Legal<span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;/select</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"sel-lab"</span><span class="bui-code-pink">&gt;</span>Department<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
+<article class="bui-demo-card" id="sel-modal"><div class="bui-demo-title">Inside a modal <span>not clipped and still clickable</span></div><div class="bui-demo-content"><button type="button" class="bui-btn bui-btn-outline" data-bui-modal-open="#m-sel">Open a modal with selects</button>
+<dialog class="bui-modal bui-modal-sm" id="m-sel" aria-labelledby="m-sel-title">
+  <div class="bui-modal-header"><h3 class="bui-modal-title" id="m-sel-title">New task</h3><button type="button" class="bui-modal-close" aria-label="Close" data-bui-modal-close>×</button></div>
+  <div class="bui-modal-body" style="display:grid;gap:18px">
+    <div class="bui-float bui-float-select">
+      <select class="bui-float-input" id="sel-m1">
+        <option value=""></option><option>Engineering</option><option>Design</option><option>Marketing</option>
+      </select>
+      <label class="bui-float-label" for="sel-m1">Team</label>
+    </div>
+    <div class="bui-float bui-float-select">
+      <select class="bui-float-input" id="sel-m2">
+        <option value=""></option><option>Low</option><option>Normal</option><option>High</option><option>Urgent</option>
+      </select>
+      <label class="bui-float-label" for="sel-m2">Priority</label>
+    </div>
+  </div>
+  <div class="bui-modal-footer">
+    <button type="button" class="bui-btn bui-btn-outline" data-bui-modal-close>Cancel</button>
+    <button type="button" class="bui-btn bui-btn-primary" data-bui-modal-close>Create</button>
+  </div>
+</dialog></div><div class="bui-demo-code">The menu is shown in the top layer (Popover API when the browser has it) and is placed inside the modal, so the modal body never clips it, and Esc closes the menu first and the modal second.</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-btn bui-btn-outline"</span> <span class="bui-code-blue">data-bui-modal-open</span>=<span class="bui-code-green">"#m-sel"</span><span class="bui-code-pink">&gt;</span>Open a modal with selects<span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;dialog</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-modal bui-modal-sm"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"m-sel"</span> <span class="bui-code-blue">aria-labelledby</span>=<span class="bui-code-green">"m-sel-title"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-modal-header"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;h3</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-modal-title"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"m-sel-title"</span><span class="bui-code-pink">&gt;</span>New task<span class="bui-code-pink">&lt;/h3</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-modal-close"</span> <span class="bui-code-blue">aria-label</span>=<span class="bui-code-green">"Close"</span> <span class="bui-code-blue">data-bui-modal-close</span><span class="bui-code-pink">&gt;</span>×<span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-modal-body"</span> <span class="bui-code-blue">style</span>=<span class="bui-code-green">"display:grid;gap:18px"</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float bui-float-select"</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;select</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"sel-m1"</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;option</span> <span class="bui-code-blue">value</span>=<span class="bui-code-green">""</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;option</span><span class="bui-code-pink">&gt;</span>Engineering<span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;option</span><span class="bui-code-pink">&gt;</span>Design<span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;option</span><span class="bui-code-pink">&gt;</span>Marketing<span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;/select</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"sel-m1"</span><span class="bui-code-pink">&gt;</span>Team<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float bui-float-select"</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;select</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"sel-m2"</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;option</span> <span class="bui-code-blue">value</span>=<span class="bui-code-green">""</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;option</span><span class="bui-code-pink">&gt;</span>Low<span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;option</span><span class="bui-code-pink">&gt;</span>Normal<span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;option</span><span class="bui-code-pink">&gt;</span>High<span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;option</span><span class="bui-code-pink">&gt;</span>Urgent<span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;/select</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"sel-m2"</span><span class="bui-code-pink">&gt;</span>Priority<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-modal-footer"</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-btn bui-btn-outline"</span> <span class="bui-code-blue">data-bui-modal-close</span><span class="bui-code-pink">&gt;</span>Cancel<span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-btn bui-btn-primary"</span> <span class="bui-code-blue">data-bui-modal-close</span><span class="bui-code-pink">&gt;</span>Create<span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/dialog</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
+<article class="bui-demo-card" id="sel-form"><div class="bui-demo-title">Required select in a form <span>required · validation on change</span></div><div class="bui-demo-content"><form data-bui-validate novalidate style="display:grid;gap:18px;max-width:420px">
+  <div class="bui-float bui-float-select">
+    <select class="bui-float-input" id="sel-req" required data-error-required="Choose a department." data-success="Department selected.">
+      <option value=""></option><option>Engineering</option><option>Design</option><option>Marketing</option>
+    </select>
+    <label class="bui-float-label" for="sel-req">Department</label>
+  </div>
+  <div class="bui-button-row">
+    <button type="submit" class="bui-btn bui-btn-primary">Continue</button>
+    <button type="reset" class="bui-btn bui-btn-outline">Reset</button>
+  </div>
+</form></div><div class="bui-demo-code">Open the menu and close it without choosing: the field shows the error. Choose a value: it turns valid at once.</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;form</span> <span class="bui-code-blue">data-bui-validate</span> <span class="bui-code-blue">novalidate</span> <span class="bui-code-blue">style</span>=<span class="bui-code-green">"display:grid;gap:18px;max-width:420px"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float bui-float-select"</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;select</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"sel-req"</span> <span class="bui-code-blue">required</span> <span class="bui-code-blue">data-error-required</span>=<span class="bui-code-green">"Choose a department."</span> <span class="bui-code-blue">data-success</span>=<span class="bui-code-green">"Department selected."</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;option</span> <span class="bui-code-blue">value</span>=<span class="bui-code-green">""</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;option</span><span class="bui-code-pink">&gt;</span>Engineering<span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;option</span><span class="bui-code-pink">&gt;</span>Design<span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;option</span><span class="bui-code-pink">&gt;</span>Marketing<span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;/select</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"sel-req"</span><span class="bui-code-pink">&gt;</span>Department<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-button-row"</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"submit"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-btn bui-btn-primary"</span><span class="bui-code-pink">&gt;</span>Continue<span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"reset"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-btn bui-btn-outline"</span><span class="bui-code-pink">&gt;</span>Reset<span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/form</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
+<article class="bui-demo-card" id="sel-rtl"><div class="bui-demo-title">RTL (Arabic) <span>the menu follows the direction</span></div><div class="bui-demo-content"><div dir="rtl">
+<div class="bui-float bui-float-select">
+  <select class="bui-float-input" id="sel-ar">
+    <option value=""></option>
+    <option>الهندسة</option>
+    <option selected>التصميم</option>
+    <option>التسويق</option>
+    <option disabled>المبيعات (غير متاح)</option>
+  </select>
+  <label class="bui-float-label" for="sel-ar">القسم</label>
+</div>
+</div></div><div class="bui-demo-code">Switch RTL / LTR in the top bar. The menu lines up with the end of the field and the check mark moves to the other side.</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">dir</span>=<span class="bui-code-green">"rtl"</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float bui-float-select"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;select</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"sel-ar"</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;option</span> <span class="bui-code-blue">value</span>=<span class="bui-code-green">""</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;option</span><span class="bui-code-pink">&gt;</span>الهندسة<span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;option</span> <span class="bui-code-blue">selected</span><span class="bui-code-pink">&gt;</span>التصميم<span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;option</span><span class="bui-code-pink">&gt;</span>التسويق<span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;option</span> <span class="bui-code-blue">disabled</span><span class="bui-code-pink">&gt;</span>المبيعات (غير متاح)<span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;/select</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"sel-ar"</span><span class="bui-code-pink">&gt;</span>القسم<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
+<article class="bui-demo-card" id="sel-native"><div class="bui-demo-title">Keep the browser menu <span>data-bui-native</span></div><div class="bui-demo-content"><div class="bui-form-grid" style="gap:18px 20px">
+<div class="bui-float bui-float-select">
+  <select class="bui-float-input" id="sel-n1">
+    <option value=""></option>
+    <option>Engineering</option>
+    <option>Design</option>
+    <option>Marketing</option>
+  </select>
+  <label class="bui-float-label" for="sel-n1">Custom menu</label>
+</div>
+<div class="bui-float bui-float-select">
+  <select class="bui-float-input" id="sel-n2" data-bui-native>
+    <option value=""></option>
+    <option>Engineering</option>
+    <option>Design</option>
+    <option>Marketing</option>
+  </select>
+  <label class="bui-float-label" for="sel-n2">Native menu</label>
+</div>
+</div></div><div class="bui-demo-code">Add data-bui-native to a select that should keep the browser menu (for example on a phone). A select with multiple or size is never changed.</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-form-grid"</span> <span class="bui-code-blue">style</span>=<span class="bui-code-green">"gap:18px 20px"</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float bui-float-select"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;select</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"sel-n1"</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;option</span> <span class="bui-code-blue">value</span>=<span class="bui-code-green">""</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;option</span><span class="bui-code-pink">&gt;</span>Engineering<span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;option</span><span class="bui-code-pink">&gt;</span>Design<span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;option</span><span class="bui-code-pink">&gt;</span>Marketing<span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;/select</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"sel-n1"</span><span class="bui-code-pink">&gt;</span>Custom menu<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float bui-float-select"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;select</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"sel-n2"</span> <span class="bui-code-blue">data-bui-native</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;option</span> <span class="bui-code-blue">value</span>=<span class="bui-code-green">""</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;option</span><span class="bui-code-pink">&gt;</span>Engineering<span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;option</span><span class="bui-code-pink">&gt;</span>Design<span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;option</span><span class="bui-code-pink">&gt;</span>Marketing<span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;/select</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"sel-n2"</span><span class="bui-code-pink">&gt;</span>Native menu<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
+<article class="bui-demo-card" id="sel-api"><div class="bui-demo-title">Options and values from code <span>select.add() · select.value · BUI.select.open()</span></div><div class="bui-demo-content"><div class="bui-float bui-float-select">
+  <select class="bui-float-input" id="sel-rt">
+    <option value="engineering">Engineering</option>
+    <option value="design">Design</option>
+    <option value="marketing">Marketing</option>
+  </select>
+  <label class="bui-float-label" for="sel-rt">Department</label>
+</div><div class="bui-button-row" style="margin-top:14px"><button type="button" class="bui-btn bui-btn-primary bui-btn-sm" data-run>▶ Run this code</button></div></div><div class="bui-demo-code">Run it twice to add more options. The menu is rebuilt from the select every time it opens, and it follows changes made while it is open.</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> JavaScript</span><button class="bui-copy" type="button">Copy</button></div><pre><code>const select = document.getElementById('sel-rt');
+select.add(new Option('Support', 'support'));      <span class="bui-code-muted">// add an option</span>
+select.options[1].disabled = true;                <span class="bui-code-muted">// disable one</span>
+select.value = 'design';                          <span class="bui-code-muted">// set the value: the field shows it at once</span>
+BUI.select.open(select);                          <span class="bui-code-muted">// open the menu from code</span>
+setTimeout(() =&gt; select.add(new Option('Legal', 'legal')), 900);   <span class="bui-code-muted">// an option added while the menu is open appears at once</span></code></pre></div></article>
+<article class="bui-demo-card" id="sel-events"><div class="bui-demo-title">Events <span>change · bui:select-open · bui:select-close</span></div><div class="bui-demo-content"><div class="bui-float bui-float-select">
+  <select class="bui-float-input" id="sel-ev">
+    <option value=""></option>
+    <option>Engineering</option>
+    <option>Design</option>
+    <option>Marketing</option>
+  </select>
+  <label class="bui-float-label" for="sel-ev">Department</label>
+</div><div class="bui-button-row" style="margin-top:14px"><button type="button" class="bui-btn bui-btn-primary bui-btn-sm" data-run>▶ Run this code</button></div></div><div class="bui-demo-code">A choice fires input and change on the select, like the native menu does. Closing without a choice fires only bui:select-close.</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> JavaScript</span><button class="bui-copy" type="button">Copy</button></div><pre><code>const select = document.getElementById('sel-ev');
+select.addEventListener('bui:select-open', () =&gt; BUI.toast.info('Menu opened'), { once: true });
+select.addEventListener('bui:select-close', () =&gt; BUI.toast.warning('Menu closed'), { once: true });
+select.addEventListener('change', () =&gt; BUI.toast.success('Selected: ' + select.value), { once: true });
+BUI.select.open(select);</code></pre></div></article>
+</div>
+<h3 style="margin:34px 0 14px;font-family:var(--bui-font-heading);font-size:18px;letter-spacing:-.4px">Select menu reference</h3><div style="overflow-x:auto"><table class="bui-dir-table"><thead><tr><th>Name</th><th>Purpose</th></tr></thead><tbody><tr><td><code>select.bui-float-input</code> · <code>select.bui-input</code> · <code>select.bui-float-prefix</code> · <code>select[data-bui-select]</code></td><td>Selects that get the menu. Single-choice only (not <code>multiple</code> or <code>size</code>)</td></tr><tr><td><code>data-bui-native</code></td><td>On a select: keep the browser menu</td></tr><tr><td><code>.bui-select-menu</code> · <code>.bui-select-option</code> (<code>-active</code>, <code>-empty</code>) · <code>.bui-select-group</code> · <code>.bui-select-group-label</code></td><td>The menu parts, built by JavaScript. Style them in your CSS if needed. <code>aria-selected="true"</code> and <code>aria-disabled="true"</code> mark the states</td></tr><tr><td><code>--bui-select-max-height</code> ·  <code>max-height</code> on <code>.bui-select-menu</code></td><td>Longest list before it scrolls (default 18rem)</td></tr><tr><td><code>BUI.select.open(select)</code> · <code>BUI.select.close()</code> · <code>BUI.select.isOpen(select)</code></td><td>Open or close the menu from code. A selector string works too</td></tr><tr><td><code>bui:select-open</code> · <code>bui:select-close</code></td><td>Events on the select (they bubble)</td></tr></tbody></table></div>
+<h3 style="margin:34px 0 14px;font-family:var(--bui-font-heading);font-size:18px;letter-spacing:-.4px">Keyboard</h3><div style="overflow-x:auto"><table class="bui-dir-table"><thead><tr><th>Key</th><th>Action</th></tr></thead><tbody><tr><td>Enter · Space · ↓ · ↑</td><td>Open the menu from the closed select</td></tr><tr><td>↓ · ↑ · Home · End · Page Up · Page Down</td><td>Move the highlight (disabled options are skipped)</td></tr><tr><td>Enter · Space</td><td>Choose the highlighted option</td></tr><tr><td>A letter or number</td><td>Jump to the next option that starts with what you type</td></tr><tr><td>Esc · Tab</td><td>Close the menu (Esc keeps the value and does not close a modal)</td></tr></tbody></table></div>
+<div class="bui-demo-stack">
+<article class="bui-demo-card" id="sel-how"><div class="bui-demo-title">How the position is chosen <span>no direction option</span></div><div class="bui-demo-content"><p class="bui-doc-note" style="margin:0">The menu is measured when it opens and on resize and scroll. It opens <b>below</b> when the whole list fits there, otherwise on the side with <b>more room</b>, and the list scrolls if even that side is too small. It stays inside the window horizontally and lines up with the start of the field (the end in RTL). It uses the Popover API for the top layer when available. CSS anchor positioning is not used, because it is not available in every browser this library supports.</p></div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> Markup</span><button class="bui-copy" type="button">Copy</button></div><pre><code>/* No markup to write: a normal &lt;select&gt; gets the same behavior. */
+&lt;select class="bui-float-input" id="fl-dept"&gt; ... &lt;/select&gt;</code></pre></div></article>
 </div>
 <h3 style="margin:34px 0 14px;font-family:var(--bui-font-heading);font-size:18px;letter-spacing:-.4px">Validation states</h3><p class="bui-doc-note">Add a state class to <code>.bui-float</code>: <code>-error</code>, <code>-success</code>, <code>-warning</code>, <code>-notice</code> (blue) or <code>-loading</code>. Put a <b>message</b> in the field and an <b>i</b> button at its end: clicking the <b>i</b> opens the message under the field (click again, click outside or press <b>Esc</b> to close). The button works with <code>baset-ui.js</code>.</p><div class="bui-demo-stack">
 <article class="bui-demo-card" id="float-error"><div class="bui-demo-title">Error <span>.bui-float-error</span></div><div class="bui-demo-content"><div style="display:grid;gap:18px;max-width:420px">
@@ -658,6 +1038,542 @@
 <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
 <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
 </div>
+<h3 style="margin:34px 0 14px;font-family:var(--bui-font-heading);font-size:18px;letter-spacing:-.4px">Password fields</h3><p class="bui-doc-note">Add a <b>show / hide</b> button with <code>.bui-float-toggle</code> (an eye drawn in CSS, no icon font needed). It switches the input between <code>password</code> and <code>text</code>, keeps the caret, and updates <code>aria-pressed</code> and <code>aria-label</code>. It sits next to the <b>i</b> button, and it needs <code>baset-ui.js</code>.</p><div class="bui-demo-stack">
+<article class="bui-demo-card" id="pw-basic"><div class="bui-demo-title">Show / hide password <span>.bui-float-toggle</span></div><div class="bui-demo-content"><div class="bui-form-grid" style="gap:18px 20px">
+<div class="bui-float">
+  <input class="bui-float-input" id="pw-1" type="password" placeholder=" " value="Baset-UI-2026" autocomplete="new-password">
+  <label class="bui-float-label" for="pw-1">Password</label>
+  <button type="button" class="bui-float-toggle" aria-label="Show password" aria-pressed="false"></button>
+</div>
+<div class="bui-float">
+  <input class="bui-float-input" id="pw-2" type="password" placeholder=" " autocomplete="new-password">
+  <label class="bui-float-label" for="pw-2">Confirm password</label>
+  <button type="button" class="bui-float-toggle" aria-label="Show password" aria-pressed="false"></button>
+</div>
+</div></div><div class="bui-demo-code">Change the button texts for screen readers with data-label-show and data-label-hide on the button (for another language).</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-form-grid"</span> <span class="bui-code-blue">style</span>=<span class="bui-code-green">"gap:18px 20px"</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"pw-1"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"password"</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span> <span class="bui-code-blue">value</span>=<span class="bui-code-green">"Baset-UI-2026"</span> <span class="bui-code-blue">autocomplete</span>=<span class="bui-code-green">"new-password"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"pw-1"</span><span class="bui-code-pink">&gt;</span>Password<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-toggle"</span> <span class="bui-code-blue">aria-label</span>=<span class="bui-code-green">"Show password"</span> <span class="bui-code-blue">aria-pressed</span>=<span class="bui-code-green">"false"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"pw-2"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"password"</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span> <span class="bui-code-blue">autocomplete</span>=<span class="bui-code-green">"new-password"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"pw-2"</span><span class="bui-code-pink">&gt;</span>Confirm password<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-toggle"</span> <span class="bui-code-blue">aria-label</span>=<span class="bui-code-green">"Show password"</span> <span class="bui-code-blue">aria-pressed</span>=<span class="bui-code-green">"false"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
+<article class="bui-demo-card" id="pw-states"><div class="bui-demo-title">Toggle with states and the i button <span>both buttons side by side</span></div><div class="bui-demo-content"><div class="bui-form-grid" style="gap:18px 20px">
+<div class="bui-float bui-float-error">
+  <input class="bui-float-input" id="pw-e" type="password" placeholder=" " value="abc123">
+  <label class="bui-float-label" for="pw-e">Password</label>
+  <button type="button" class="bui-float-toggle" aria-label="Show password" aria-pressed="false"></button>
+  <button type="button" class="bui-float-info" aria-label="Show message" aria-expanded="false" aria-controls="pw-e-msg">i</button>
+  <div class="bui-float-message" id="pw-e-msg" role="status">Use 8 or more characters with at least one number.</div>
+</div>
+<div class="bui-float bui-float-warning">
+  <input class="bui-float-input" id="pw-w" type="password" placeholder=" " value="password1">
+  <label class="bui-float-label" for="pw-w">Password</label>
+  <button type="button" class="bui-float-toggle" aria-label="Show password" aria-pressed="false"></button>
+  <button type="button" class="bui-float-info" aria-label="Show message" aria-expanded="false" aria-controls="pw-w-msg">i</button>
+  <div class="bui-float-message" id="pw-w-msg" role="status">Weak password. Add symbols and capital letters.</div>
+</div>
+<div class="bui-float bui-float-success">
+  <input class="bui-float-input" id="pw-s" type="password" placeholder=" " value="Xk9#mPq2vL">
+  <label class="bui-float-label" for="pw-s">Password</label>
+  <button type="button" class="bui-float-toggle" aria-label="Show password" aria-pressed="false"></button>
+  <button type="button" class="bui-float-info" aria-label="Show message" aria-expanded="false" aria-controls="pw-s-msg">i</button>
+  <div class="bui-float-message" id="pw-s-msg" role="status">Strong password. Well done.</div>
+</div>
+<div class="bui-float bui-float-notice">
+  <input class="bui-float-input" id="pw-n" type="password" placeholder=" ">
+  <label class="bui-float-label" for="pw-n">Password</label>
+  <button type="button" class="bui-float-toggle" aria-label="Show password" aria-pressed="false"></button>
+  <button type="button" class="bui-float-info" aria-label="Show message" aria-expanded="false" aria-controls="pw-n-msg">i</button>
+  <div class="bui-float-message" id="pw-n-msg" role="status">Do not reuse a password from another site.</div>
+</div>
+</div></div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-form-grid"</span> <span class="bui-code-blue">style</span>=<span class="bui-code-green">"gap:18px 20px"</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float bui-float-error"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"pw-e"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"password"</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span> <span class="bui-code-blue">value</span>=<span class="bui-code-green">"abc123"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"pw-e"</span><span class="bui-code-pink">&gt;</span>Password<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-toggle"</span> <span class="bui-code-blue">aria-label</span>=<span class="bui-code-green">"Show password"</span> <span class="bui-code-blue">aria-pressed</span>=<span class="bui-code-green">"false"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-info"</span> <span class="bui-code-blue">aria-label</span>=<span class="bui-code-green">"Show message"</span> <span class="bui-code-blue">aria-expanded</span>=<span class="bui-code-green">"false"</span> <span class="bui-code-blue">aria-controls</span>=<span class="bui-code-green">"pw-e-msg"</span><span class="bui-code-pink">&gt;</span>i<span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-message"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"pw-e-msg"</span> <span class="bui-code-blue">role</span>=<span class="bui-code-green">"status"</span><span class="bui-code-pink">&gt;</span>Use 8 or more characters with at least one number.<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float bui-float-warning"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"pw-w"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"password"</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span> <span class="bui-code-blue">value</span>=<span class="bui-code-green">"password1"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"pw-w"</span><span class="bui-code-pink">&gt;</span>Password<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-toggle"</span> <span class="bui-code-blue">aria-label</span>=<span class="bui-code-green">"Show password"</span> <span class="bui-code-blue">aria-pressed</span>=<span class="bui-code-green">"false"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-info"</span> <span class="bui-code-blue">aria-label</span>=<span class="bui-code-green">"Show message"</span> <span class="bui-code-blue">aria-expanded</span>=<span class="bui-code-green">"false"</span> <span class="bui-code-blue">aria-controls</span>=<span class="bui-code-green">"pw-w-msg"</span><span class="bui-code-pink">&gt;</span>i<span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-message"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"pw-w-msg"</span> <span class="bui-code-blue">role</span>=<span class="bui-code-green">"status"</span><span class="bui-code-pink">&gt;</span>Weak password. Add symbols and capital letters.<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float bui-float-success"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"pw-s"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"password"</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span> <span class="bui-code-blue">value</span>=<span class="bui-code-green">"Xk9#mPq2vL"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"pw-s"</span><span class="bui-code-pink">&gt;</span>Password<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-toggle"</span> <span class="bui-code-blue">aria-label</span>=<span class="bui-code-green">"Show password"</span> <span class="bui-code-blue">aria-pressed</span>=<span class="bui-code-green">"false"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-info"</span> <span class="bui-code-blue">aria-label</span>=<span class="bui-code-green">"Show message"</span> <span class="bui-code-blue">aria-expanded</span>=<span class="bui-code-green">"false"</span> <span class="bui-code-blue">aria-controls</span>=<span class="bui-code-green">"pw-s-msg"</span><span class="bui-code-pink">&gt;</span>i<span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-message"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"pw-s-msg"</span> <span class="bui-code-blue">role</span>=<span class="bui-code-green">"status"</span><span class="bui-code-pink">&gt;</span>Strong password. Well done.<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float bui-float-notice"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"pw-n"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"password"</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"pw-n"</span><span class="bui-code-pink">&gt;</span>Password<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-toggle"</span> <span class="bui-code-blue">aria-label</span>=<span class="bui-code-green">"Show password"</span> <span class="bui-code-blue">aria-pressed</span>=<span class="bui-code-green">"false"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-info"</span> <span class="bui-code-blue">aria-label</span>=<span class="bui-code-green">"Show message"</span> <span class="bui-code-blue">aria-expanded</span>=<span class="bui-code-green">"false"</span> <span class="bui-code-blue">aria-controls</span>=<span class="bui-code-green">"pw-n-msg"</span><span class="bui-code-pink">&gt;</span>i<span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-message"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"pw-n-msg"</span> <span class="bui-code-blue">role</span>=<span class="bui-code-green">"status"</span><span class="bui-code-pink">&gt;</span>Do not reuse a password from another site.<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
+<article class="bui-demo-card" id="pw-validation"><div class="bui-demo-title">Password with validation <span>toggle + pattern + match</span></div><div class="bui-demo-content"><form data-bui-validate novalidate style="display:grid;gap:18px;max-width:420px">
+  <div class="bui-float">
+    <input class="bui-float-input" id="pwf-pass" type="password" placeholder=" " required pattern="(?=.*[0-9])(?=.*[A-Z]).{8,}" autocomplete="new-password"
+      data-error-required="Choose a password." data-error-pattern="Use 8+ characters with a capital letter and a number." data-success="Good password.">
+    <label class="bui-float-label" for="pwf-pass">New password</label>
+    <button type="button" class="bui-float-toggle" aria-label="Show password" aria-pressed="false"></button>
+  </div>
+  <div class="bui-float">
+    <input class="bui-float-input" id="pwf-confirm" type="password" placeholder=" " required data-match="#pwf-pass" autocomplete="new-password"
+      data-error-required="Repeat your password." data-error-match="The passwords do not match." data-success="The passwords match.">
+    <label class="bui-float-label" for="pwf-confirm">Confirm password</label>
+    <button type="button" class="bui-float-toggle" aria-label="Show password" aria-pressed="false"></button>
+  </div>
+  <div class="bui-button-row">
+    <button type="submit" class="bui-btn bui-btn-primary">Save password</button>
+    <button type="reset" class="bui-btn bui-btn-outline">Reset</button>
+  </div>
+</form></div><div class="bui-demo-code">Try "abcdefgh", then "Abcdefg1", then a different confirmation. Reset hides the passwords again.</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;form</span> <span class="bui-code-blue">data-bui-validate</span> <span class="bui-code-blue">novalidate</span> <span class="bui-code-blue">style</span>=<span class="bui-code-green">"display:grid;gap:18px;max-width:420px"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float"</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"pwf-pass"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"password"</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span> <span class="bui-code-blue">required</span> <span class="bui-code-blue">pattern</span>=<span class="bui-code-green">"(?=.*[0-9])(?=.*[A-Z]).{8,}"</span> <span class="bui-code-blue">autocomplete</span>=<span class="bui-code-green">"new-password"</span>
+      <span class="bui-code-blue">data-error-required</span>=<span class="bui-code-green">"Choose a password."</span> <span class="bui-code-blue">data-error-pattern</span>=<span class="bui-code-green">"Use 8+ characters with a capital letter and a number."</span> <span class="bui-code-blue">data-success</span>=<span class="bui-code-green">"Good password."</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"pwf-pass"</span><span class="bui-code-pink">&gt;</span>New password<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-toggle"</span> <span class="bui-code-blue">aria-label</span>=<span class="bui-code-green">"Show password"</span> <span class="bui-code-blue">aria-pressed</span>=<span class="bui-code-green">"false"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float"</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"pwf-confirm"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"password"</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span> <span class="bui-code-blue">required</span> <span class="bui-code-blue">data-match</span>=<span class="bui-code-green">"#pwf-pass"</span> <span class="bui-code-blue">autocomplete</span>=<span class="bui-code-green">"new-password"</span>
+      <span class="bui-code-blue">data-error-required</span>=<span class="bui-code-green">"Repeat your password."</span> <span class="bui-code-blue">data-error-match</span>=<span class="bui-code-green">"The passwords do not match."</span> <span class="bui-code-blue">data-success</span>=<span class="bui-code-green">"The passwords match."</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"pwf-confirm"</span><span class="bui-code-pink">&gt;</span>Confirm password<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-toggle"</span> <span class="bui-code-blue">aria-label</span>=<span class="bui-code-green">"Show password"</span> <span class="bui-code-blue">aria-pressed</span>=<span class="bui-code-green">"false"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-button-row"</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"submit"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-btn bui-btn-primary"</span><span class="bui-code-pink">&gt;</span>Save password<span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"reset"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-btn bui-btn-outline"</span><span class="bui-code-pink">&gt;</span>Reset<span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/form</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
+<article class="bui-demo-card" id="pw-strength"><div class="bui-demo-title">Strength meter <span>data-bui-strength</span></div><div class="bui-demo-content"><div style="display:grid;gap:18px;max-width:420px">
+<div class="bui-float">
+  <input class="bui-float-input" id="pw-m1" type="password" placeholder=" " value="Abc12345" data-bui-strength autocomplete="new-password">
+  <label class="bui-float-label" for="pw-m1">Password (type to see the meter)</label>
+  <button type="button" class="bui-float-toggle" aria-label="Show password" aria-pressed="false"></button>
+</div>
+<div class="bui-float">
+  <input class="bui-float-input" id="pw-m2" type="password" placeholder=" " data-bui-strength data-strength-1="Too easy" data-strength-2="Not yet" data-strength-3="Almost" data-strength-4="Great" autocomplete="new-password">
+  <label class="bui-float-label" for="pw-m2">Custom labels</label>
+  <button type="button" class="bui-float-toggle" aria-label="Show password" aria-pressed="false"></button>
+</div>
+</div></div><div class="bui-demo-code">The meter has 4 levels from length, mixed case, numbers and symbols. It is created for you. The default labels are Weak, Fair, Good and Strong.</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">style</span>=<span class="bui-code-green">"display:grid;gap:18px;max-width:420px"</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"pw-m1"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"password"</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span> <span class="bui-code-blue">value</span>=<span class="bui-code-green">"Abc12345"</span> <span class="bui-code-blue">data-bui-strength</span> <span class="bui-code-blue">autocomplete</span>=<span class="bui-code-green">"new-password"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"pw-m1"</span><span class="bui-code-pink">&gt;</span>Password (type to see the meter)<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-toggle"</span> <span class="bui-code-blue">aria-label</span>=<span class="bui-code-green">"Show password"</span> <span class="bui-code-blue">aria-pressed</span>=<span class="bui-code-green">"false"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"pw-m2"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"password"</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span> <span class="bui-code-blue">data-bui-strength</span> <span class="bui-code-blue">data-strength-1</span>=<span class="bui-code-green">"Too easy"</span> <span class="bui-code-blue">data-strength-2</span>=<span class="bui-code-green">"Not yet"</span> <span class="bui-code-blue">data-strength-3</span>=<span class="bui-code-green">"Almost"</span> <span class="bui-code-blue">data-strength-4</span>=<span class="bui-code-green">"Great"</span> <span class="bui-code-blue">autocomplete</span>=<span class="bui-code-green">"new-password"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"pw-m2"</span><span class="bui-code-pink">&gt;</span>Custom labels<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-toggle"</span> <span class="bui-code-blue">aria-label</span>=<span class="bui-code-green">"Show password"</span> <span class="bui-code-blue">aria-pressed</span>=<span class="bui-code-green">"false"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
+<article class="bui-demo-card" id="pw-rules"><div class="bui-demo-title">Requirements checklist <span>data-bui-rules · data-rule</span></div><div class="bui-demo-content"><div>
+<div class="bui-float">
+  <input class="bui-float-input" id="pw-r" type="password" placeholder=" " value="Baset1" autocomplete="new-password">
+  <label class="bui-float-label" for="pw-r">Create a password</label>
+  <button type="button" class="bui-float-toggle" aria-label="Show password" aria-pressed="false"></button>
+</div>
+  <ul class="bui-float-rules" data-bui-rules="#pw-r">
+    <li data-rule="min:8">At least 8 characters</li>
+    <li data-rule="upper">One uppercase letter</li>
+    <li data-rule="lower">One lowercase letter</li>
+    <li data-rule="digit">One number</li>
+    <li data-rule="symbol">One symbol, like ! @ # $</li>
+  </ul>
+</div></div><div class="bui-demo-code">Rules: min:N · upper · lower · digit · symbol · regex:PATTERN. Each item turns green while the password meets it.</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"pw-r"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"password"</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span> <span class="bui-code-blue">value</span>=<span class="bui-code-green">"Baset1"</span> <span class="bui-code-blue">autocomplete</span>=<span class="bui-code-green">"new-password"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"pw-r"</span><span class="bui-code-pink">&gt;</span>Create a password<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-toggle"</span> <span class="bui-code-blue">aria-label</span>=<span class="bui-code-green">"Show password"</span> <span class="bui-code-blue">aria-pressed</span>=<span class="bui-code-green">"false"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;ul</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-rules"</span> <span class="bui-code-blue">data-bui-rules</span>=<span class="bui-code-green">"#pw-r"</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;li</span> <span class="bui-code-blue">data-rule</span>=<span class="bui-code-green">"min:8"</span><span class="bui-code-pink">&gt;</span>At least 8 characters<span class="bui-code-pink">&lt;/li</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;li</span> <span class="bui-code-blue">data-rule</span>=<span class="bui-code-green">"upper"</span><span class="bui-code-pink">&gt;</span>One uppercase letter<span class="bui-code-pink">&lt;/li</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;li</span> <span class="bui-code-blue">data-rule</span>=<span class="bui-code-green">"lower"</span><span class="bui-code-pink">&gt;</span>One lowercase letter<span class="bui-code-pink">&lt;/li</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;li</span> <span class="bui-code-blue">data-rule</span>=<span class="bui-code-green">"digit"</span><span class="bui-code-pink">&gt;</span>One number<span class="bui-code-pink">&lt;/li</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;li</span> <span class="bui-code-blue">data-rule</span>=<span class="bui-code-green">"symbol"</span><span class="bui-code-pink">&gt;</span>One symbol, like ! @ # $<span class="bui-code-pink">&lt;/li</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;/ul</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
+<article class="bui-demo-card" id="pw-caps"><div class="bui-demo-title">Caps Lock warning <span>data-bui-caps</span></div><div class="bui-demo-content"><div style="display:grid;gap:18px;max-width:420px">
+<div class="bui-float">
+  <input class="bui-float-input" id="pw-c" type="password" placeholder=" " data-bui-caps="Caps Lock is on" autocomplete="current-password">
+  <label class="bui-float-label" for="pw-c">Password</label>
+  <button type="button" class="bui-float-toggle" aria-label="Show password" aria-pressed="false"></button>
+</div>
+</div></div><div class="bui-demo-code">Turn Caps Lock on while the field has focus: a warning message opens by itself, and it goes away when you turn it off.</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">style</span>=<span class="bui-code-green">"display:grid;gap:18px;max-width:420px"</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"pw-c"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"password"</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span> <span class="bui-code-blue">data-bui-caps</span>=<span class="bui-code-green">"Caps Lock is on"</span> <span class="bui-code-blue">autocomplete</span>=<span class="bui-code-green">"current-password"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"pw-c"</span><span class="bui-code-pink">&gt;</span>Password<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-toggle"</span> <span class="bui-code-blue">aria-label</span>=<span class="bui-code-green">"Show password"</span> <span class="bui-code-blue">aria-pressed</span>=<span class="bui-code-green">"false"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
+<article class="bui-demo-card" id="pw-all"><div class="bui-demo-title">Everything together <span>toggle + meter + caps + validation</span></div><div class="bui-demo-content"><form data-bui-validate novalidate style="display:grid;gap:18px;max-width:420px">
+  <div class="bui-float">
+    <input class="bui-float-input" id="pws-pass" type="password" placeholder=" " required minlength="8" data-bui-strength data-bui-caps="Caps Lock is on" autocomplete="new-password"
+      data-error-required="Choose a password." data-error-minlength="Use at least 8 characters." data-success="Saved in a secure way.">
+    <label class="bui-float-label" for="pws-pass">New password</label>
+    <button type="button" class="bui-float-toggle" aria-label="Show password" aria-pressed="false"></button>
+  </div>
+  <button type="submit" class="bui-btn bui-btn-success">Create password</button>
+</form></div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;form</span> <span class="bui-code-blue">data-bui-validate</span> <span class="bui-code-blue">novalidate</span> <span class="bui-code-blue">style</span>=<span class="bui-code-green">"display:grid;gap:18px;max-width:420px"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float"</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"pws-pass"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"password"</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span> <span class="bui-code-blue">required</span> <span class="bui-code-blue">minlength</span>=<span class="bui-code-green">"8"</span> <span class="bui-code-blue">data-bui-strength</span> <span class="bui-code-blue">data-bui-caps</span>=<span class="bui-code-green">"Caps Lock is on"</span> <span class="bui-code-blue">autocomplete</span>=<span class="bui-code-green">"new-password"</span>
+      <span class="bui-code-blue">data-error-required</span>=<span class="bui-code-green">"Choose a password."</span> <span class="bui-code-blue">data-error-minlength</span>=<span class="bui-code-green">"Use at least 8 characters."</span> <span class="bui-code-blue">data-success</span>=<span class="bui-code-green">"Saved in a secure way."</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"pws-pass"</span><span class="bui-code-pink">&gt;</span>New password<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-toggle"</span> <span class="bui-code-blue">aria-label</span>=<span class="bui-code-green">"Show password"</span> <span class="bui-code-blue">aria-pressed</span>=<span class="bui-code-green">"false"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"submit"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-btn bui-btn-success"</span><span class="bui-code-pink">&gt;</span>Create password<span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/form</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
+<article class="bui-demo-card" id="pw-api"><div class="bui-demo-title">Show or hide from code <span>BUI.float.reveal()</span></div><div class="bui-demo-content"><div class="bui-float">
+  <input class="bui-float-input" id="pw-x" type="password" placeholder=" " value="MySecret#2026">
+  <label class="bui-float-label" for="pw-x">Password</label>
+  <button type="button" class="bui-float-toggle" aria-label="Show password" aria-pressed="false"></button>
+</div><div class="bui-button-row" style="margin-top:14px"><button type="button" class="bui-btn bui-btn-primary bui-btn-sm" data-run>▶ Run this code</button></div></div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> JavaScript</span><button class="bui-copy" type="button">Copy</button></div><pre><code>const input = document.getElementById('pw-x');
+BUI.float.reveal(input, true);                   <span class="bui-code-muted">// show the password</span>
+await new Promise((resolve) =&gt; setTimeout(resolve, 2000));
+BUI.float.reveal(input, false);                  <span class="bui-code-muted">// hide it again (without an argument it toggles)</span></code></pre></div></article>
+<article class="bui-demo-card" id="pw-rtl"><div class="bui-demo-title">RTL (Arabic) <span>labels and meter texts in your language</span></div><div class="bui-demo-content"><form data-bui-validate novalidate dir="rtl" style="display:grid;gap:18px;max-width:420px">
+<div class="bui-float">
+  <input class="bui-float-input" id="pw-ar" type="password" placeholder=" " required minlength="8" data-bui-strength data-strength-1="ضعيفة" data-strength-2="مقبولة" data-strength-3="جيدة" data-strength-4="قوية" data-error-required="اكتب كلمة المرور." data-error-minlength="يجب ألا تقل عن 8 أحرف." data-success="كلمة مرور مناسبة.">
+  <label class="bui-float-label" for="pw-ar">كلمة المرور</label>
+  <button type="button" class="bui-float-toggle" aria-label="إظهار كلمة المرور" data-label-show="إظهار كلمة المرور" data-label-hide="إخفاء كلمة المرور" aria-pressed="false"></button>
+</div>
+<button type="submit" class="bui-btn bui-btn-primary">حفظ</button>
+</form></div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;form</span> <span class="bui-code-blue">data-bui-validate</span> <span class="bui-code-blue">novalidate</span> <span class="bui-code-blue">dir</span>=<span class="bui-code-green">"rtl"</span> <span class="bui-code-blue">style</span>=<span class="bui-code-green">"display:grid;gap:18px;max-width:420px"</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"pw-ar"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"password"</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span> <span class="bui-code-blue">required</span> <span class="bui-code-blue">minlength</span>=<span class="bui-code-green">"8"</span> <span class="bui-code-blue">data-bui-strength</span> <span class="bui-code-blue">data-strength-1</span>=<span class="bui-code-green">"ضعيفة"</span> <span class="bui-code-blue">data-strength-2</span>=<span class="bui-code-green">"مقبولة"</span> <span class="bui-code-blue">data-strength-3</span>=<span class="bui-code-green">"جيدة"</span> <span class="bui-code-blue">data-strength-4</span>=<span class="bui-code-green">"قوية"</span> <span class="bui-code-blue">data-error-required</span>=<span class="bui-code-green">"اكتب كلمة المرور."</span> <span class="bui-code-blue">data-error-minlength</span>=<span class="bui-code-green">"يجب ألا تقل عن 8 أحرف."</span> <span class="bui-code-blue">data-success</span>=<span class="bui-code-green">"كلمة مرور مناسبة."</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"pw-ar"</span><span class="bui-code-pink">&gt;</span>كلمة المرور<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-toggle"</span> <span class="bui-code-blue">aria-label</span>=<span class="bui-code-green">"إظهار كلمة المرور"</span> <span class="bui-code-blue">data-label-show</span>=<span class="bui-code-green">"إظهار كلمة المرور"</span> <span class="bui-code-blue">data-label-hide</span>=<span class="bui-code-green">"إخفاء كلمة المرور"</span> <span class="bui-code-blue">aria-pressed</span>=<span class="bui-code-green">"false"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"submit"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-btn bui-btn-primary"</span><span class="bui-code-pink">&gt;</span>حفظ<span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/form</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
+</div>
+<h3 style="margin:34px 0 14px;font-family:var(--bui-font-heading);font-size:18px;letter-spacing:-.4px">Prefix and suffix</h3><p class="bui-doc-note">Fields that start with <b>+20</b>, <b>@</b>, <b>https://</b> or <b>$</b>, or end with <b>%</b>, <b>USD</b> or <b>.com</b>. Add <code>.bui-float-affix</code> to the field and put a <code>.bui-float-prefix</code> / <code>.bui-float-suffix</code> next to the input. The label stays floated so it never overlaps the prefix. Use <code>data-bui-filter</code> to remove characters while typing (<code>digits</code> · <code>alnum</code> · <code>username</code> · <code>letters</code>) and <code>data-bui-case="lower|upper"</code>.</p><div class="bui-demo-stack">
+<article class="bui-demo-card" id="af-basic"><div class="bui-demo-title">Prefix and suffix <span>+20 · @ · https:// · $ USD · % · @company.com</span></div><div class="bui-demo-content"><div class="bui-form-grid" style="gap:18px 20px">
+<div class="bui-float bui-float-affix">
+  <span class="bui-float-prefix">+20</span>
+  <input class="bui-float-input" id="af-phone" type="tel" placeholder=" " inputmode="numeric" data-bui-filter="digits" maxlength="10">
+  <label class="bui-float-label" for="af-phone">Mobile number</label>
+</div>
+<div class="bui-float bui-float-affix">
+  <span class="bui-float-prefix">@</span>
+  <input class="bui-float-input" id="af-user" type="text" placeholder=" " data-bui-filter="username" data-bui-case="lower" maxlength="20">
+  <label class="bui-float-label" for="af-user">Username</label>
+</div>
+<div class="bui-float bui-float-affix">
+  <span class="bui-float-prefix">https://</span>
+  <input class="bui-float-input" id="af-site" type="text" placeholder=" " data-bui-case="lower">
+  <span class="bui-float-suffix">.com</span>
+  <label class="bui-float-label" for="af-site">Website</label>
+</div>
+<div class="bui-float bui-float-affix">
+  <span class="bui-float-prefix">$</span>
+  <input class="bui-float-input" id="af-price" type="number" placeholder=" " min="0" step="0.01">
+  <span class="bui-float-suffix">USD</span>
+  <label class="bui-float-label" for="af-price">Price</label>
+</div>
+<div class="bui-float bui-float-affix">
+  <input class="bui-float-input" id="af-pct" type="number" placeholder=" " min="0" max="100">
+  <span class="bui-float-suffix">%</span>
+  <label class="bui-float-label" for="af-pct">Discount</label>
+</div>
+<div class="bui-float bui-float-affix">
+  <input class="bui-float-input" id="af-mail" type="text" placeholder=" " data-bui-filter="username">
+  <span class="bui-float-suffix">@company.com</span>
+  <label class="bui-float-label" for="af-mail">Work email</label>
+</div>
+</div></div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-form-grid"</span> <span class="bui-code-blue">style</span>=<span class="bui-code-green">"gap:18px 20px"</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float bui-float-affix"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-prefix"</span><span class="bui-code-pink">&gt;</span>+20<span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"af-phone"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"tel"</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span> <span class="bui-code-blue">inputmode</span>=<span class="bui-code-green">"numeric"</span> <span class="bui-code-blue">data-bui-filter</span>=<span class="bui-code-green">"digits"</span> <span class="bui-code-blue">maxlength</span>=<span class="bui-code-green">"10"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"af-phone"</span><span class="bui-code-pink">&gt;</span>Mobile number<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float bui-float-affix"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-prefix"</span><span class="bui-code-pink">&gt;</span>@<span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"af-user"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"text"</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span> <span class="bui-code-blue">data-bui-filter</span>=<span class="bui-code-green">"username"</span> <span class="bui-code-blue">data-bui-case</span>=<span class="bui-code-green">"lower"</span> <span class="bui-code-blue">maxlength</span>=<span class="bui-code-green">"20"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"af-user"</span><span class="bui-code-pink">&gt;</span>Username<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float bui-float-affix"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-prefix"</span><span class="bui-code-pink">&gt;</span>https://<span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"af-site"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"text"</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span> <span class="bui-code-blue">data-bui-case</span>=<span class="bui-code-green">"lower"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-suffix"</span><span class="bui-code-pink">&gt;</span>.com<span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"af-site"</span><span class="bui-code-pink">&gt;</span>Website<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float bui-float-affix"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-prefix"</span><span class="bui-code-pink">&gt;</span>$<span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"af-price"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"number"</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span> <span class="bui-code-blue">min</span>=<span class="bui-code-green">"0"</span> <span class="bui-code-blue">step</span>=<span class="bui-code-green">"0.01"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-suffix"</span><span class="bui-code-pink">&gt;</span>USD<span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"af-price"</span><span class="bui-code-pink">&gt;</span>Price<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float bui-float-affix"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"af-pct"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"number"</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span> <span class="bui-code-blue">min</span>=<span class="bui-code-green">"0"</span> <span class="bui-code-blue">max</span>=<span class="bui-code-green">"100"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-suffix"</span><span class="bui-code-pink">&gt;</span>%<span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"af-pct"</span><span class="bui-code-pink">&gt;</span>Discount<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float bui-float-affix"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"af-mail"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"text"</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span> <span class="bui-code-blue">data-bui-filter</span>=<span class="bui-code-green">"username"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-suffix"</span><span class="bui-code-pink">&gt;</span>@company.com<span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"af-mail"</span><span class="bui-code-pink">&gt;</span>Work email<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
+<article class="bui-demo-card" id="af-sizes"><div class="bui-demo-title">Sizes <span>.bui-float-sm | (default) | .bui-float-lg</span></div><div class="bui-demo-content"><div style="display:grid;gap:18px;max-width:420px">
+<div class="bui-float bui-float-affix bui-float-sm">
+  <span class="bui-float-prefix">@</span>
+  <input class="bui-float-input" id="af-s1" type="text" placeholder=" ">
+  <label class="bui-float-label" for="af-s1">Username</label>
+</div>
+<div class="bui-float bui-float-affix">
+  <span class="bui-float-prefix">@</span>
+  <input class="bui-float-input" id="af-s2" type="text" placeholder=" ">
+  <label class="bui-float-label" for="af-s2">Username</label>
+</div>
+<div class="bui-float bui-float-affix bui-float-lg">
+  <span class="bui-float-prefix">@</span>
+  <input class="bui-float-input" id="af-s3" type="text" placeholder=" ">
+  <label class="bui-float-label" for="af-s3">Username</label>
+</div>
+</div></div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">style</span>=<span class="bui-code-green">"display:grid;gap:18px;max-width:420px"</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float bui-float-affix bui-float-sm"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-prefix"</span><span class="bui-code-pink">&gt;</span>@<span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"af-s1"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"text"</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"af-s1"</span><span class="bui-code-pink">&gt;</span>Username<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float bui-float-affix"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-prefix"</span><span class="bui-code-pink">&gt;</span>@<span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"af-s2"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"text"</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"af-s2"</span><span class="bui-code-pink">&gt;</span>Username<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float bui-float-affix bui-float-lg"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-prefix"</span><span class="bui-code-pink">&gt;</span>@<span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"af-s3"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"text"</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"af-s3"</span><span class="bui-code-pink">&gt;</span>Username<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
+<article class="bui-demo-card" id="af-states"><div class="bui-demo-title">With states and the i button <span>error · success · warning · notice</span></div><div class="bui-demo-content"><div class="bui-form-grid" style="gap:18px 20px">
+<div class="bui-float bui-float-affix bui-float-error">
+  <span class="bui-float-prefix">+20</span>
+  <input class="bui-float-input" id="af-e" type="tel" placeholder=" " value="1234">
+  <label class="bui-float-label" for="af-e">Mobile number</label>
+  <button type="button" class="bui-float-info" aria-label="Show message" aria-expanded="false" aria-controls="af-e-msg">i</button>
+  <div class="bui-float-message" id="af-e-msg" role="status">Use 10 digits starting with 10, 11, 12 or 15.</div>
+</div>
+<div class="bui-float bui-float-affix bui-float-success">
+  <span class="bui-float-prefix">+20</span>
+  <input class="bui-float-input" id="af-ok" type="tel" placeholder=" " value="1001234567">
+  <label class="bui-float-label" for="af-ok">Mobile number</label>
+  <button type="button" class="bui-float-info" aria-label="Show message" aria-expanded="false" aria-controls="af-ok-msg">i</button>
+  <div class="bui-float-message" id="af-ok-msg" role="status">Valid Egyptian mobile number.</div>
+</div>
+<div class="bui-float bui-float-affix bui-float-warning">
+  <span class="bui-float-prefix">@</span>
+  <input class="bui-float-input" id="af-w" type="text" placeholder=" " value="baset">
+  <label class="bui-float-label" for="af-w">Username</label>
+  <button type="button" class="bui-float-info" aria-label="Show message" aria-expanded="false" aria-controls="af-w-msg">i</button>
+  <div class="bui-float-message" id="af-w-msg" role="status">This name is similar to an existing one.</div>
+</div>
+<div class="bui-float bui-float-affix bui-float-notice">
+  <span class="bui-float-prefix">$</span>
+  <input class="bui-float-input" id="af-i" type="number" placeholder=" " value="25">
+  <span class="bui-float-suffix">USD</span>
+  <label class="bui-float-label" for="af-i">Price</label>
+  <button type="button" class="bui-float-info" aria-label="Show message" aria-expanded="false" aria-controls="af-i-msg">i</button>
+  <div class="bui-float-message" id="af-i-msg" role="status">Prices are in US dollars, without taxes.</div>
+</div>
+</div></div><div class="bui-demo-code">A suffix and the i button fit together: the i stays at the very end.</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-form-grid"</span> <span class="bui-code-blue">style</span>=<span class="bui-code-green">"gap:18px 20px"</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float bui-float-affix bui-float-error"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-prefix"</span><span class="bui-code-pink">&gt;</span>+20<span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"af-e"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"tel"</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span> <span class="bui-code-blue">value</span>=<span class="bui-code-green">"1234"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"af-e"</span><span class="bui-code-pink">&gt;</span>Mobile number<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-info"</span> <span class="bui-code-blue">aria-label</span>=<span class="bui-code-green">"Show message"</span> <span class="bui-code-blue">aria-expanded</span>=<span class="bui-code-green">"false"</span> <span class="bui-code-blue">aria-controls</span>=<span class="bui-code-green">"af-e-msg"</span><span class="bui-code-pink">&gt;</span>i<span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-message"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"af-e-msg"</span> <span class="bui-code-blue">role</span>=<span class="bui-code-green">"status"</span><span class="bui-code-pink">&gt;</span>Use 10 digits starting with 10, 11, 12 or 15.<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float bui-float-affix bui-float-success"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-prefix"</span><span class="bui-code-pink">&gt;</span>+20<span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"af-ok"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"tel"</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span> <span class="bui-code-blue">value</span>=<span class="bui-code-green">"1001234567"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"af-ok"</span><span class="bui-code-pink">&gt;</span>Mobile number<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-info"</span> <span class="bui-code-blue">aria-label</span>=<span class="bui-code-green">"Show message"</span> <span class="bui-code-blue">aria-expanded</span>=<span class="bui-code-green">"false"</span> <span class="bui-code-blue">aria-controls</span>=<span class="bui-code-green">"af-ok-msg"</span><span class="bui-code-pink">&gt;</span>i<span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-message"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"af-ok-msg"</span> <span class="bui-code-blue">role</span>=<span class="bui-code-green">"status"</span><span class="bui-code-pink">&gt;</span>Valid Egyptian mobile number.<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float bui-float-affix bui-float-warning"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-prefix"</span><span class="bui-code-pink">&gt;</span>@<span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"af-w"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"text"</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span> <span class="bui-code-blue">value</span>=<span class="bui-code-green">"baset"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"af-w"</span><span class="bui-code-pink">&gt;</span>Username<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-info"</span> <span class="bui-code-blue">aria-label</span>=<span class="bui-code-green">"Show message"</span> <span class="bui-code-blue">aria-expanded</span>=<span class="bui-code-green">"false"</span> <span class="bui-code-blue">aria-controls</span>=<span class="bui-code-green">"af-w-msg"</span><span class="bui-code-pink">&gt;</span>i<span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-message"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"af-w-msg"</span> <span class="bui-code-blue">role</span>=<span class="bui-code-green">"status"</span><span class="bui-code-pink">&gt;</span>This name is similar to an existing one.<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float bui-float-affix bui-float-notice"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-prefix"</span><span class="bui-code-pink">&gt;</span>$<span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"af-i"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"number"</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span> <span class="bui-code-blue">value</span>=<span class="bui-code-green">"25"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-suffix"</span><span class="bui-code-pink">&gt;</span>USD<span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"af-i"</span><span class="bui-code-pink">&gt;</span>Price<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-info"</span> <span class="bui-code-blue">aria-label</span>=<span class="bui-code-green">"Show message"</span> <span class="bui-code-blue">aria-expanded</span>=<span class="bui-code-green">"false"</span> <span class="bui-code-blue">aria-controls</span>=<span class="bui-code-green">"af-i-msg"</span><span class="bui-code-pink">&gt;</span>i<span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-message"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"af-i-msg"</span> <span class="bui-code-blue">role</span>=<span class="bui-code-green">"status"</span><span class="bui-code-pink">&gt;</span>Prices are in US dollars, without taxes.<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
+<article class="bui-demo-card" id="af-select"><div class="bui-demo-title">Country code select <span>select as a prefix</span></div><div class="bui-demo-content"><div class="bui-form-grid" style="gap:18px 20px">
+<div class="bui-float bui-float-affix">
+  <select class="bui-float-prefix" aria-label="Country code"><option>+20</option><option>+966</option><option>+971</option><option>+962</option></select>
+  <input class="bui-float-input" id="af-cc" type="tel" placeholder=" " inputmode="numeric" data-bui-filter="digits">
+  <label class="bui-float-label" for="af-cc">Mobile number</label>
+</div>
+<div class="bui-float bui-float-affix bui-float-error">
+  <select class="bui-float-prefix" aria-label="Country code"><option>+20</option><option>+966</option><option>+971</option><option>+962</option></select>
+  <input class="bui-float-input" id="af-cc2" type="tel" placeholder=" " value="0100" data-bui-filter="digits">
+  <label class="bui-float-label" for="af-cc2">Mobile number</label>
+  <button type="button" class="bui-float-info" aria-label="Show message" aria-expanded="false" aria-controls="af-cc2-msg">i</button>
+  <div class="bui-float-message" id="af-cc2-msg" role="status">Enter your number without the leading 0.</div>
+</div>
+</div></div><div class="bui-demo-code">Give the select an aria-label, for example "Country code".</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-form-grid"</span> <span class="bui-code-blue">style</span>=<span class="bui-code-green">"gap:18px 20px"</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float bui-float-affix"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;select</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-prefix"</span> <span class="bui-code-blue">aria-label</span>=<span class="bui-code-green">"Country code"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;option</span><span class="bui-code-pink">&gt;</span>+20<span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;option</span><span class="bui-code-pink">&gt;</span>+966<span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;option</span><span class="bui-code-pink">&gt;</span>+971<span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;option</span><span class="bui-code-pink">&gt;</span>+962<span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/select</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"af-cc"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"tel"</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span> <span class="bui-code-blue">inputmode</span>=<span class="bui-code-green">"numeric"</span> <span class="bui-code-blue">data-bui-filter</span>=<span class="bui-code-green">"digits"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"af-cc"</span><span class="bui-code-pink">&gt;</span>Mobile number<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float bui-float-affix bui-float-error"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;select</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-prefix"</span> <span class="bui-code-blue">aria-label</span>=<span class="bui-code-green">"Country code"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;option</span><span class="bui-code-pink">&gt;</span>+20<span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;option</span><span class="bui-code-pink">&gt;</span>+966<span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;option</span><span class="bui-code-pink">&gt;</span>+971<span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;option</span><span class="bui-code-pink">&gt;</span>+962<span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/select</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"af-cc2"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"tel"</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span> <span class="bui-code-blue">value</span>=<span class="bui-code-green">"0100"</span> <span class="bui-code-blue">data-bui-filter</span>=<span class="bui-code-green">"digits"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"af-cc2"</span><span class="bui-code-pink">&gt;</span>Mobile number<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-info"</span> <span class="bui-code-blue">aria-label</span>=<span class="bui-code-green">"Show message"</span> <span class="bui-code-blue">aria-expanded</span>=<span class="bui-code-green">"false"</span> <span class="bui-code-blue">aria-controls</span>=<span class="bui-code-green">"af-cc2-msg"</span><span class="bui-code-pink">&gt;</span>i<span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-message"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"af-cc2-msg"</span> <span class="bui-code-blue">role</span>=<span class="bui-code-green">"status"</span><span class="bui-code-pink">&gt;</span>Enter your number without the leading 0.<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
+<article class="bui-demo-card" id="af-form"><div class="bui-demo-title">Profile form <span>filters + pattern + messages</span></div><div class="bui-demo-content"><form data-bui-validate novalidate style="display:grid;gap:18px;max-width:420px">
+  <div class="bui-float bui-float-affix">
+    <span class="bui-float-prefix">+20</span>
+    <input class="bui-float-input" id="pf-phone" type="tel" inputmode="numeric" placeholder=" " required maxlength="10" pattern="1[0125][0-9]{8}" data-bui-filter="digits" autocomplete="tel-national"
+      data-error-required="Enter your mobile number." data-error-pattern="Use 10 digits starting with 10, 11, 12 or 15, without the leading 0." data-success="Valid Egyptian mobile number.">
+    <label class="bui-float-label" for="pf-phone">Mobile number</label>
+  </div>
+  <div class="bui-float bui-float-affix">
+    <span class="bui-float-prefix">@</span>
+    <input class="bui-float-input" id="pf-user" type="text" placeholder=" " required minlength="3" maxlength="20" pattern="[a-z][a-z0-9_.]*" data-bui-filter="username" data-bui-case="lower" autocomplete="username"
+      data-error-required="Choose a username." data-error-minlength="Use at least 3 characters." data-error-pattern="Start with a letter. Use letters, numbers, _ or . only." data-success="Looks good.">
+    <label class="bui-float-label" for="pf-user">Username</label>
+  </div>
+  <div class="bui-float bui-float-affix">
+    <span class="bui-float-prefix">https://</span>
+    <input class="bui-float-input" id="pf-site" type="text" placeholder=" " pattern="[a-z0-9-]+(\.[a-z0-9-]+)+" data-bui-case="lower" autocomplete="url"
+      data-error-pattern="Enter a domain like baset.dev, without https://." data-success="Website saved.">
+    <label class="bui-float-label" for="pf-site">Website (optional)</label>
+  </div>
+  <div class="bui-button-row">
+    <button type="submit" class="bui-btn bui-btn-primary">Save profile</button>
+    <button type="reset" class="bui-btn bui-btn-outline">Reset</button>
+  </div>
+</form></div><div class="bui-demo-code">Letters typed in the phone field are removed, the username becomes lowercase, and the website is optional (an empty field is never an error).</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;form</span> <span class="bui-code-blue">data-bui-validate</span> <span class="bui-code-blue">novalidate</span> <span class="bui-code-blue">style</span>=<span class="bui-code-green">"display:grid;gap:18px;max-width:420px"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float bui-float-affix"</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-prefix"</span><span class="bui-code-pink">&gt;</span>+20<span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"pf-phone"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"tel"</span> <span class="bui-code-blue">inputmode</span>=<span class="bui-code-green">"numeric"</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span> <span class="bui-code-blue">required</span> <span class="bui-code-blue">maxlength</span>=<span class="bui-code-green">"10"</span> <span class="bui-code-blue">pattern</span>=<span class="bui-code-green">"1[0125][0-9]{8}"</span> <span class="bui-code-blue">data-bui-filter</span>=<span class="bui-code-green">"digits"</span> <span class="bui-code-blue">autocomplete</span>=<span class="bui-code-green">"tel-national"</span>
+      <span class="bui-code-blue">data-error-required</span>=<span class="bui-code-green">"Enter your mobile number."</span> <span class="bui-code-blue">data-error-pattern</span>=<span class="bui-code-green">"Use 10 digits starting with 10, 11, 12 or 15, without the leading 0."</span> <span class="bui-code-blue">data-success</span>=<span class="bui-code-green">"Valid Egyptian mobile number."</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"pf-phone"</span><span class="bui-code-pink">&gt;</span>Mobile number<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float bui-float-affix"</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-prefix"</span><span class="bui-code-pink">&gt;</span>@<span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"pf-user"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"text"</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span> <span class="bui-code-blue">required</span> <span class="bui-code-blue">minlength</span>=<span class="bui-code-green">"3"</span> <span class="bui-code-blue">maxlength</span>=<span class="bui-code-green">"20"</span> <span class="bui-code-blue">pattern</span>=<span class="bui-code-green">"[a-z][a-z0-9_.]*"</span> <span class="bui-code-blue">data-bui-filter</span>=<span class="bui-code-green">"username"</span> <span class="bui-code-blue">data-bui-case</span>=<span class="bui-code-green">"lower"</span> <span class="bui-code-blue">autocomplete</span>=<span class="bui-code-green">"username"</span>
+      <span class="bui-code-blue">data-error-required</span>=<span class="bui-code-green">"Choose a username."</span> <span class="bui-code-blue">data-error-minlength</span>=<span class="bui-code-green">"Use at least 3 characters."</span> <span class="bui-code-blue">data-error-pattern</span>=<span class="bui-code-green">"Start with a letter. Use letters, numbers, _ or . only."</span> <span class="bui-code-blue">data-success</span>=<span class="bui-code-green">"Looks good."</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"pf-user"</span><span class="bui-code-pink">&gt;</span>Username<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float bui-float-affix"</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-prefix"</span><span class="bui-code-pink">&gt;</span>https://<span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"pf-site"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"text"</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span> <span class="bui-code-blue">pattern</span>=<span class="bui-code-green">"[a-z0-9-]+(\.[a-z0-9-]+)+"</span> <span class="bui-code-blue">data-bui-case</span>=<span class="bui-code-green">"lower"</span> <span class="bui-code-blue">autocomplete</span>=<span class="bui-code-green">"url"</span>
+      <span class="bui-code-blue">data-error-pattern</span>=<span class="bui-code-green">"Enter a domain like baset.dev, without https://."</span> <span class="bui-code-blue">data-success</span>=<span class="bui-code-green">"Website saved."</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"pf-site"</span><span class="bui-code-pink">&gt;</span>Website (optional)<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-button-row"</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"submit"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-btn bui-btn-primary"</span><span class="bui-code-pink">&gt;</span>Save profile<span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"reset"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-btn bui-btn-outline"</span><span class="bui-code-pink">&gt;</span>Reset<span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/form</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
+<article class="bui-demo-card" id="af-money"><div class="bui-demo-title">Amount, percent and promo code <span>suffix only · prefix and suffix · uppercase</span></div><div class="bui-demo-content"><form data-bui-validate novalidate style="display:grid;gap:18px;max-width:420px">
+  <div class="bui-float bui-float-affix">
+    <span class="bui-float-prefix">$</span>
+    <input class="bui-float-input" id="mf-amount" type="number" placeholder=" " required min="1" max="5000" step="0.01"
+      data-error-required="Enter an amount." data-error-min="The minimum is $1." data-error-max="The maximum is $5,000." data-success="Amount accepted.">
+    <label class="bui-float-label" for="mf-amount">Amount</label>
+    <span class="bui-float-suffix">USD</span>
+  </div>
+  <div class="bui-float bui-float-affix">
+    <input class="bui-float-input" id="mf-tip" type="number" placeholder=" " min="0" max="100" data-error-min="Use 0 or more." data-error-max="The tip cannot be more than 100%.">
+    <label class="bui-float-label" for="mf-tip">Tip</label>
+    <span class="bui-float-suffix">%</span>
+  </div>
+  <div class="bui-float bui-float-affix">
+    <span class="bui-float-prefix">#</span>
+    <input class="bui-float-input" id="mf-code" type="text" placeholder=" " maxlength="6" pattern="[A-Z0-9]{6}" data-bui-filter="alnum" data-bui-case="upper"
+      data-error-pattern="The promo code has 6 letters or numbers." data-success="Promo code applied.">
+    <label class="bui-float-label" for="mf-code">Promo code (optional)</label>
+  </div>
+  <button type="submit" class="bui-btn bui-btn-success">Continue to payment</button>
+</form></div><div class="bui-demo-code">A field with only a suffix works too: the input gets its own start padding.</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;form</span> <span class="bui-code-blue">data-bui-validate</span> <span class="bui-code-blue">novalidate</span> <span class="bui-code-blue">style</span>=<span class="bui-code-green">"display:grid;gap:18px;max-width:420px"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float bui-float-affix"</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-prefix"</span><span class="bui-code-pink">&gt;</span>$<span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"mf-amount"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"number"</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span> <span class="bui-code-blue">required</span> <span class="bui-code-blue">min</span>=<span class="bui-code-green">"1"</span> <span class="bui-code-blue">max</span>=<span class="bui-code-green">"5000"</span> <span class="bui-code-blue">step</span>=<span class="bui-code-green">"0.01"</span>
+      <span class="bui-code-blue">data-error-required</span>=<span class="bui-code-green">"Enter an amount."</span> <span class="bui-code-blue">data-error-min</span>=<span class="bui-code-green">"The minimum is $1."</span> <span class="bui-code-blue">data-error-max</span>=<span class="bui-code-green">"The maximum is $5,000."</span> <span class="bui-code-blue">data-success</span>=<span class="bui-code-green">"Amount accepted."</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"mf-amount"</span><span class="bui-code-pink">&gt;</span>Amount<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-suffix"</span><span class="bui-code-pink">&gt;</span>USD<span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float bui-float-affix"</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"mf-tip"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"number"</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span> <span class="bui-code-blue">min</span>=<span class="bui-code-green">"0"</span> <span class="bui-code-blue">max</span>=<span class="bui-code-green">"100"</span> <span class="bui-code-blue">data-error-min</span>=<span class="bui-code-green">"Use 0 or more."</span> <span class="bui-code-blue">data-error-max</span>=<span class="bui-code-green">"The tip cannot be more than 100%."</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"mf-tip"</span><span class="bui-code-pink">&gt;</span>Tip<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-suffix"</span><span class="bui-code-pink">&gt;</span>%<span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float bui-float-affix"</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-prefix"</span><span class="bui-code-pink">&gt;</span>#<span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"mf-code"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"text"</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span> <span class="bui-code-blue">maxlength</span>=<span class="bui-code-green">"6"</span> <span class="bui-code-blue">pattern</span>=<span class="bui-code-green">"[A-Z0-9]{6}"</span> <span class="bui-code-blue">data-bui-filter</span>=<span class="bui-code-green">"alnum"</span> <span class="bui-code-blue">data-bui-case</span>=<span class="bui-code-green">"upper"</span>
+      <span class="bui-code-blue">data-error-pattern</span>=<span class="bui-code-green">"The promo code has 6 letters or numbers."</span> <span class="bui-code-blue">data-success</span>=<span class="bui-code-green">"Promo code applied."</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"mf-code"</span><span class="bui-code-pink">&gt;</span>Promo code (optional)<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"submit"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-btn bui-btn-success"</span><span class="bui-code-pink">&gt;</span>Continue to payment<span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/form</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
+<article class="bui-demo-card" id="af-api"><div class="bui-demo-title">Check a username on the server <span>@ prefix + setState</span></div><div class="bui-demo-content"><div class="bui-float bui-float-affix">
+  <span class="bui-float-prefix">@</span>
+  <input class="bui-float-input" id="af-api-user" type="text" placeholder=" " value="admin" data-bui-filter="username" data-bui-case="lower">
+  <label class="bui-float-label" for="af-api-user">Username (try admin)</label>
+</div><div class="bui-button-row" style="margin-top:14px"><button type="button" class="bui-btn bui-btn-primary bui-btn-sm" data-run>▶ Run this code</button></div></div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> JavaScript</span><button class="bui-copy" type="button">Copy</button></div><pre><code>const input = document.getElementById('af-api-user');
+BUI.float.setState(input, 'loading');
+await new Promise((resolve) =&gt; setTimeout(resolve, 1000));        <span class="bui-code-muted">// your fetch() call</span>
+const name = '@' + input.value;
+const taken = ['admin', 'baset'].includes(input.value);
+if (taken) BUI.float.setState(input, 'error', name + ' is already taken.', { open: true });
+else BUI.float.setState(input, 'success', name + ' is available.');</code></pre></div></article>
+<article class="bui-demo-card" id="af-rtl"><div class="bui-demo-title">RTL (Arabic) <span>the prefix follows the direction</span></div><div class="bui-demo-content"><form data-bui-validate novalidate dir="rtl" style="display:grid;gap:18px;max-width:420px">
+<div class="bui-float bui-float-affix">
+  <span class="bui-float-prefix">+20</span>
+  <input class="bui-float-input" id="ar-phone" type="tel" placeholder=" " inputmode="numeric" required maxlength="10" pattern="1[0125][0-9]{8}" data-bui-filter="digits" data-error-required="اكتب رقم الهاتف." data-error-pattern="اكتب 10 أرقام تبدأ بـ 10 أو 11 أو 12 أو 15 بدون الصفر." data-success="رقم صحيح.">
+  <label class="bui-float-label" for="ar-phone">رقم الهاتف المحمول</label>
+</div>
+<div class="bui-float bui-float-affix">
+  <span class="bui-float-prefix">@</span>
+  <input class="bui-float-input" id="ar-user" type="text" placeholder=" " required minlength="3" data-bui-filter="username" data-bui-case="lower" data-error-required="اختر اسم مستخدم." data-error-minlength="3 أحرف على الأقل." data-success="اسم المستخدم متاح.">
+  <label class="bui-float-label" for="ar-user">اسم المستخدم</label>
+</div>
+<button type="submit" class="bui-btn bui-btn-primary">حفظ</button>
+</form></div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;form</span> <span class="bui-code-blue">data-bui-validate</span> <span class="bui-code-blue">novalidate</span> <span class="bui-code-blue">dir</span>=<span class="bui-code-green">"rtl"</span> <span class="bui-code-blue">style</span>=<span class="bui-code-green">"display:grid;gap:18px;max-width:420px"</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float bui-float-affix"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-prefix"</span><span class="bui-code-pink">&gt;</span>+20<span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"ar-phone"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"tel"</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span> <span class="bui-code-blue">inputmode</span>=<span class="bui-code-green">"numeric"</span> <span class="bui-code-blue">required</span> <span class="bui-code-blue">maxlength</span>=<span class="bui-code-green">"10"</span> <span class="bui-code-blue">pattern</span>=<span class="bui-code-green">"1[0125][0-9]{8}"</span> <span class="bui-code-blue">data-bui-filter</span>=<span class="bui-code-green">"digits"</span> <span class="bui-code-blue">data-error-required</span>=<span class="bui-code-green">"اكتب رقم الهاتف."</span> <span class="bui-code-blue">data-error-pattern</span>=<span class="bui-code-green">"اكتب 10 أرقام تبدأ بـ 10 أو 11 أو 12 أو 15 بدون الصفر."</span> <span class="bui-code-blue">data-success</span>=<span class="bui-code-green">"رقم صحيح."</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"ar-phone"</span><span class="bui-code-pink">&gt;</span>رقم الهاتف المحمول<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float bui-float-affix"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-prefix"</span><span class="bui-code-pink">&gt;</span>@<span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"ar-user"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"text"</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span> <span class="bui-code-blue">required</span> <span class="bui-code-blue">minlength</span>=<span class="bui-code-green">"3"</span> <span class="bui-code-blue">data-bui-filter</span>=<span class="bui-code-green">"username"</span> <span class="bui-code-blue">data-bui-case</span>=<span class="bui-code-green">"lower"</span> <span class="bui-code-blue">data-error-required</span>=<span class="bui-code-green">"اختر اسم مستخدم."</span> <span class="bui-code-blue">data-error-minlength</span>=<span class="bui-code-green">"3 أحرف على الأقل."</span> <span class="bui-code-blue">data-success</span>=<span class="bui-code-green">"اسم المستخدم متاح."</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"ar-user"</span><span class="bui-code-pink">&gt;</span>اسم المستخدم<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"submit"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-btn bui-btn-primary"</span><span class="bui-code-pink">&gt;</span>حفظ<span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/form</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
+</div>
 <h3 style="margin:34px 0 14px;font-family:var(--bui-font-heading);font-size:18px;letter-spacing:-.4px">Live validation</h3><p class="bui-doc-note">Add <code>data-bui-validate</code> and <code>novalidate</code> to a <code>&lt;form&gt;</code>. The fields use normal HTML rules (<code>required</code>, <code>type</code>, <code>pattern</code>, <code>minlength</code>, <code>min</code>, <code>max</code>). Each field validates when the user leaves it, then on every key. The state class and the i message are set for you, from <code>data-error-*</code> and <code>data-success</code>. On submit, the first invalid field gets focus and its message opens. Try submitting the empty forms.</p><div class="bui-demo-stack">
 <article class="bui-demo-card" id="float-signup"><div class="bui-demo-title">Sign-up form <span>required · type · pattern · match · min / max</span></div><div class="bui-demo-content"><form data-bui-validate novalidate style="display:grid;gap:18px;max-width:420px">
   <div class="bui-float">
@@ -878,9 +1794,9 @@ form.addEventListener('bui:invalid', (event) =&gt; {
 form.requestSubmit();                           <span class="bui-code-muted">// validates and fires one of the events</span>
 <span class="bui-code-muted">// BUI.float.validate(form) returns true or false without submitting; BUI.float.reset(form) clears every state</span></code></pre></div></article>
 </div>
-<h3 style="margin:34px 0 14px;font-family:var(--bui-font-heading);font-size:18px;letter-spacing:-.4px">Floating label reference</h3><div style="overflow-x:auto"><table class="bui-dir-table"><thead><tr><th>Name</th><th>Purpose</th></tr></thead><tbody><tr><td><code>.bui-float</code></td><td>Wrapper. Add <code>-sm</code> / <code>-lg</code>, <code>-select</code>, <code>-textarea</code>, <code>-top</code> (message above)</td></tr><tr><td><code>.bui-float-input</code> · <code>.bui-float-label</code></td><td>The control and its label (the label comes after the control). The control needs <code>placeholder=" "</code></td></tr><tr><td><code>.bui-float-error</code> · <code>-success</code> · <code>-warning</code> · <code>-notice</code> · <code>-loading</code></td><td>State of the field</td></tr><tr><td><code>.bui-float-info</code> + <code>.bui-float-message</code></td><td>The i button and its message. Needs <code>aria-controls</code> and <code>aria-expanded</code> on the button</td></tr><tr><td><code>.bui-float-open</code></td><td>The message is visible</td></tr><tr><td><code>.bui-float-hint</code></td><td>Helper text that is always visible</td></tr></tbody></table></div>
-<h3 style="margin:34px 0 14px;font-family:var(--bui-font-heading);font-size:18px;letter-spacing:-.4px">Validation attributes</h3><div style="overflow-x:auto"><table class="bui-dir-table"><thead><tr><th>Attribute</th><th>Where</th><th>Purpose</th></tr></thead><tbody><tr><td><code>data-bui-validate</code> <code>novalidate</code></td><td><code>&lt;form&gt;</code></td><td>Turns on live validation for its floating fields</td></tr><tr><td><code>data-error</code></td><td>input</td><td>Message for any failed rule</td></tr><tr><td><code>data-error-required</code> · <code>-type</code> · <code>-pattern</code> · <code>-minlength</code> · <code>-maxlength</code> · <code>-min</code> · <code>-max</code> · <code>-step</code></td><td>input</td><td>Message for one rule. Without any, the browser message is used</td></tr><tr><td><code>data-success</code></td><td>input</td><td>Message when the value is valid (adds the i button). Without it, only the green state shows</td></tr><tr><td><code>data-match="#id"</code> · <code>data-error-match</code></td><td>input</td><td>The value must equal another field, for example confirm password</td></tr></tbody></table></div>
-<h3 style="margin:34px 0 14px;font-family:var(--bui-font-heading);font-size:18px;letter-spacing:-.4px">JavaScript</h3><div style="overflow-x:auto"><table class="bui-dir-table"><thead><tr><th>Call / event</th><th>Purpose</th></tr></thead><tbody><tr><td><code>BUI.float.setState(field, state, message, { open })</code></td><td>state: error · success · warning · info · loading · null. A message adds the i button</td></tr><tr><td><code>BUI.float.clear(field)</code> · <code>BUI.float.open(field, on)</code></td><td>Remove the state, show or hide the message</td></tr><tr><td><code>BUI.float.validate(fieldOrForm)</code> · <code>BUI.float.reset(form)</code></td><td>Validate now (returns true or false), clear all states</td></tr><tr><td><code>bui:valid</code> (cancelable) · <code>bui:invalid</code></td><td>Fired on the form at submit. <code>preventDefault()</code> on <code>bui:valid</code> stops the normal submit</td></tr></tbody></table></div>
+<h3 style="margin:34px 0 14px;font-family:var(--bui-font-heading);font-size:18px;letter-spacing:-.4px">Floating label reference</h3><div style="overflow-x:auto"><table class="bui-dir-table"><thead><tr><th>Name</th><th>Purpose</th></tr></thead><tbody><tr><td><code>.bui-float</code></td><td>Wrapper. Add <code>-sm</code> / <code>-lg</code>, <code>-select</code>, <code>-textarea</code>, <code>-top</code> (message above)</td></tr><tr><td><code>.bui-float-input</code> · <code>.bui-float-label</code></td><td>The control and its label (the label comes after the control). The control needs <code>placeholder=" "</code></td></tr><tr><td><code>.bui-float-error</code> · <code>-success</code> · <code>-warning</code> · <code>-notice</code> · <code>-loading</code></td><td>State of the field</td></tr><tr><td><code>.bui-float-info</code> + <code>.bui-float-message</code></td><td>The i button and its message. Needs <code>aria-controls</code> and <code>aria-expanded</code> on the button</td></tr><tr><td><code>.bui-float-open</code></td><td>The message is visible</td></tr><tr><td><code>.bui-float-hint</code></td><td>Helper text that is always visible</td></tr><tr><td><code>.bui-float-toggle</code></td><td>Show / hide button for password fields (an eye drawn in CSS). Texts: <code>data-label-show</code> · <code>data-label-hide</code></td></tr><tr><td><code>.bui-float-meter</code></td><td>Strength meter (4 levels). Created for you by <code>data-bui-strength</code></td></tr><tr><td><code>.bui-float-rules</code></td><td>Requirements checklist. Items with <code>.bui-float-rule-ok</code> are green</td></tr><tr><td><code>.bui-float-affix</code> + <code>.bui-float-prefix</code> · <code>-suffix</code></td><td>Prefix and suffix (+20, @, https://, $, %, .com). A <code>&lt;select&gt;</code> can be the prefix</td></tr></tbody></table></div>
+<h3 style="margin:34px 0 14px;font-family:var(--bui-font-heading);font-size:18px;letter-spacing:-.4px">Validation attributes</h3><div style="overflow-x:auto"><table class="bui-dir-table"><thead><tr><th>Attribute</th><th>Where</th><th>Purpose</th></tr></thead><tbody><tr><td><code>data-bui-validate</code> <code>novalidate</code></td><td><code>&lt;form&gt;</code></td><td>Turns on live validation for its floating fields</td></tr><tr><td><code>data-error</code></td><td>input</td><td>Message for any failed rule</td></tr><tr><td><code>data-error-required</code> · <code>-type</code> · <code>-pattern</code> · <code>-minlength</code> · <code>-maxlength</code> · <code>-min</code> · <code>-max</code> · <code>-step</code></td><td>input</td><td>Message for one rule. Without any, the browser message is used</td></tr><tr><td><code>data-success</code></td><td>input</td><td>Message when the value is valid (adds the i button). Without it, only the green state shows</td></tr><tr><td><code>data-match="#id"</code> · <code>data-error-match</code></td><td>input</td><td>The value must equal another field, for example confirm password</td></tr><tr><td><code>data-bui-strength</code> · <code>data-strength-1</code> … <code>-4</code></td><td>input</td><td>Strength meter with optional custom labels</td></tr><tr><td><code>data-bui-rules="#id"</code> + <code>data-rule</code></td><td>&lt;ul&gt;</td><td>Requirements list. Rules: <code>min:N</code> · <code>upper</code> · <code>lower</code> · <code>digit</code> · <code>symbol</code> · <code>regex:PATTERN</code></td></tr><tr><td><code>data-bui-filter</code> · <code>data-bui-case</code></td><td>input</td><td>Remove characters while typing: <code>digits</code> · <code>alnum</code> · <code>username</code> · <code>letters</code>. Case: <code>lower</code> · <code>upper</code></td></tr><tr><td><code>data-bui-caps="message"</code></td><td>password input</td><td>Opens a warning while Caps Lock is on</td></tr></tbody></table></div>
+<h3 style="margin:34px 0 14px;font-family:var(--bui-font-heading);font-size:18px;letter-spacing:-.4px">JavaScript</h3><div style="overflow-x:auto"><table class="bui-dir-table"><thead><tr><th>Call / event</th><th>Purpose</th></tr></thead><tbody><tr><td><code>BUI.float.setState(field, state, message, { open })</code></td><td>state: error · success · warning · info · loading · null. A message adds the i button</td></tr><tr><td><code>BUI.float.clear(field)</code> · <code>BUI.float.open(field, on)</code></td><td>Remove the state, show or hide the message</td></tr><tr><td><code>BUI.float.validate(fieldOrForm)</code> · <code>BUI.float.reset(form)</code></td><td>Validate now (returns true or false), clear all states, hide passwords and meters</td></tr><tr><td><code>BUI.float.reveal(field, on)</code></td><td>Show (true) or hide (false) a password; toggles when <code>on</code> is omitted</td></tr><tr><td><code>bui:valid</code> (cancelable) · <code>bui:invalid</code></td><td>Fired on the form at submit. <code>preventDefault()</code> on <code>bui:valid</code> stops the normal submit</td></tr></tbody></table></div>
       </section>
       <div class="bui-pager"><a class="bui-btn bui-btn-outline" href="buttons.html"><span class="bui-flip">←</span> Buttons</a><a class="bui-btn bui-btn-primary" href="cards.html">Cards <span class="bui-flip">→</span></a></div>
       <footer class="bui-footer"><span>© 2026 Baset UI. Built for makers.</span><span>Documentation · v1.0.0</span></footer>
@@ -891,6 +1807,14 @@ form.requestSubmit();                           <span class="bui-code-muted">// 
     /* Docs only: the demo forms do not send anything, and the "Run" buttons execute the code shown in their card. */
     document.addEventListener('bui:valid', function (e) { e.preventDefault(); BUI.toast.success('The form is valid. Nothing is sent in this demo.'); });
     document.addEventListener('click', function (e) {
+      var lab = e.target.closest('[data-lab], [data-lab-close]');
+      if (lab) {
+        var box = document.getElementById('sel-lab-box'); BUI.select.close();
+        if (lab.hasAttribute('data-lab-close')) { box.hidden = true; return; }
+        box.dataset.pos = lab.dataset.lab; box.hidden = false;
+        requestAnimationFrame(function () { BUI.select.open('#sel-lab'); });
+        return;
+      }
       var b = e.target.closest('[data-run]'); if (!b) return;
       var code = b.closest('.bui-demo-card').querySelector('code').textContent;
       var AsyncFn = Object.getPrototypeOf(async function () {}).constructor;

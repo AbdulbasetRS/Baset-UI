@@ -264,3 +264,10 @@ h1 em { font-style: normal; color: var(--bui-primary); }
 
 /* ---------- Floating label demos: room for the open "i" message ---------- */
 .bui-demo-card:has(.bui-float) .bui-demo-content { padding-bottom: 76px; }
+
+/* ---------- Select menu demo: a field moved to a fixed spot of the window ---------- */
+.bui-lab-box { position: fixed; z-index: 60; inset-inline-end: 24px; width: min(320px, calc(100vw - 32px)); padding: 14px; background: var(--bui-surface); border: 1px solid var(--bui-line); border-radius: var(--bui-radius-4); box-shadow: var(--bui-shadow); }
+.bui-lab-box[hidden] { display: none; }
+.bui-lab-box[data-pos="top"] { inset-block-start: 24px; }
+.bui-lab-box[data-pos="center"] { inset-block-start: 50%; transform: translateY(-50%); }
+.bui-lab-box[data-pos="bottom"] { inset-block-end: 24px; }
