@@ -551,78 +551,216 @@
   document.addEventListener('keydown', capsLock);
   document.addEventListener('keyup', capsLock);
 
+  /* ---------- Floating menus: shared placement (select menu, dropdown menu) ---------- */
+  const canPopover = typeof HTMLElement.prototype.showPopover === 'function';
+  /* Below the anchor when the whole menu fits there; otherwise on the side with more room (the menu then scrolls).
+     st keeps the side chosen at open, so the menu does not jump while it loads more items. */
+  function placeFloat(anchor, el, st, { desired, align = 'start', minWidth } = {}) {
+    const r = anchor.getBoundingClientRect(), vw = document.documentElement.clientWidth, vh = window.innerHeight;
+    if (r.bottom < 0 || r.top > vh) return false; // the anchor scrolled out of the window
+    const gap = 6, edge = 8;
+    el.style.maxHeight = '';
+    if (minWidth !== null) el.style.minWidth = `${minWidth ?? r.width}px`;
+    const natural = el.offsetHeight, want = desired ?? natural, below = vh - r.bottom - gap - edge, above = r.top - gap - edge;
+    let place = st.place;
+    if (!place || (place === 'bottom' ? below < 96 && above > below : above < 96 && below > above)) place = want <= below || below >= above ? 'bottom' : 'top';
+    st.place = place;
+    const room = Math.max(place === 'bottom' ? below : above, 96);
+    if (natural > room) el.style.maxHeight = `${room}px`;
+    const h = Math.min(natural, room), w = el.offsetWidth, rtl = getComputedStyle(el).direction === 'rtl';
+    let left = (align === 'end') !== rtl ? r.right - w : r.left;
+    left = Math.min(Math.max(left, edge), Math.max(edge, vw - w - edge));
+    el.style.left = `${left}px`;
+    el.style.top = `${place === 'bottom' ? r.bottom + gap : r.top - gap - h}px`;
+    el.dataset.placement = place;
+    return true;
+  }
+
   /* ---------- Select menu: a custom listbox for native <select> elements ----------
      The <select> stays the source of truth (value, change event, form, required, disabled, label).
-     The menu is built from its <option> / <optgroup> items every time it opens, and it is placed below or above
-     the field by measuring the free space in the viewport. No direction is set by the developer. */
+     Static options are read from <option> / <optgroup> each time the menu opens. Optional: a search box
+     (data-bui-search), avatars and descriptions (data-image / data-description), and options loaded from an
+     API page by page with infinite scroll (data-bui-url or BUI.select.remote()). */
   const SELECT_QUERY = 'select.bui-float-input, select.bui-input, select.bui-float-prefix, select[data-bui-select]';
-  const canPopover = typeof HTMLElement.prototype.showPopover === 'function';
-  let openSel = null; // { select, menu, items, active, buffer, timer, observer }
+  let openSel = null; // the open select menu
+  let openDd = null;  // the open dropdown menu
   let selectSeq = 0;
+  const remoteConfigs = new WeakMap();
   const isEnhanced = (n) => n instanceof HTMLSelectElement && n.matches(SELECT_QUERY) && !n.multiple && !(n.size > 1) && !n.hasAttribute('data-bui-native');
+  const norm = (s) => String(s ?? '').normalize('NFD').replace(/\p{M}/gu, '').toLowerCase();
+  const getPath = (obj, path) => (path ? String(path).split('.').reduce((o, k) => o?.[k], obj) : undefined);
+  const wantsRich = (s) => s.hasAttribute('data-bui-rich');
+  const say = (select, key, fallback) => select.dataset[key] ?? fallback;
 
-  function buildSelectMenu(state) {
-    const { select, menu } = state;
-    menu.textContent = '';
-    state.items = [];
-    const addOption = (o, parent) => {
-      if (o.hidden || (o.disabled && o.value === '' && !o.textContent.trim())) return; // a hidden placeholder option
-      const text = (o.label || o.textContent).trim();
-      const el = add(parent, 'div', 'bui-select-option' + (text ? '' : ' bui-select-option-empty'), text || '—');
-      el.id = `${menu.id}-o${o.index}`;
-      el.setAttribute('role', 'option');
-      el.setAttribute('aria-selected', String(o.selected));
-      const disabled = o.disabled || !!o.parentElement?.disabled;
-      if (disabled) el.setAttribute('aria-disabled', 'true');
-      state.items.push({ el, option: o, disabled });
+  function avatarEl(item, cls = 'bui-select-avatar') {
+    const a = document.createElement('span');
+    a.className = cls; a.setAttribute('aria-hidden', 'true');
+    const fallback = () => {
+      a.textContent = String(item.label || '?').trim().split(/\s+/).slice(0, 2).map((w) => [...w][0]).join('').toUpperCase();
+      let h = 0; for (const c of String(item.label)) h = (h * 31 + c.charCodeAt(0)) % 360;
+      a.style.setProperty('--bui-avatar-hue', h);
     };
-    [...select.children].forEach((c, gi) => {
-      if (c.tagName === 'OPTION') addOption(c, menu);
+    if (item.image) { const img = document.createElement('img'); img.alt = ''; img.src = item.image; img.onerror = () => { img.remove(); fallback(); }; a.append(img); } else fallback();
+    return a;
+  }
+  function setHighlighted(el, text, query) { // wraps the first match of the search in <mark>
+    el.textContent = '';
+    const t = norm(query).split(/\s+/).filter(Boolean)[0], n = norm(text), i = t && n.length === text.length ? n.indexOf(t) : -1;
+    if (i < 0) { el.textContent = text; return; }
+    el.append(text.slice(0, i)); add(el, 'mark', 'bui-select-mark', text.slice(i, i + t.length)); el.append(text.slice(i + t.length));
+  }
+  function renderItem(state, item) {
+    const { select, menu } = state;
+    const el = document.createElement('div');
+    el.className = 'bui-select-option' + (item.label ? '' : ' bui-select-option-empty');
+    el.id = `${menu.id}-o${++state.uid}`;
+    el.setAttribute('role', 'option');
+    el.setAttribute('aria-selected', String(!!item.selected));
+    if (item.disabled) el.setAttribute('aria-disabled', 'true');
+    if (item.value !== '' && (wantsRich(select) || item.image)) el.append(avatarEl(item));
+    const text = add(el, 'span', 'bui-select-text');
+    item.labelEl = add(text, 'span', 'bui-select-label');
+    setHighlighted(item.labelEl, item.label || '—', state.query);
+    if (item.description) { item.descEl = add(text, 'span', 'bui-select-desc'); setHighlighted(item.descEl, String(item.description), state.query); }
+    item.el = el;
+    return el;
+  }
+  function buildStatic(state) { // items from the <option> elements
+    const { select, list } = state;
+    list.textContent = ''; state.items = [];
+    const addOption = (o, parent, group) => {
+      if (o.hidden || (o.disabled && o.value === '' && !o.textContent.trim())) return; // a hidden placeholder option
+      const item = { option: o, value: o.value, label: (o.label || o.textContent).trim(), description: o.dataset.description, image: o.dataset.image, search: o.dataset.search, selected: o.selected, disabled: o.disabled || !!o.parentElement?.disabled, group };
+      parent.append(renderItem(state, item));
+      state.items.push(item);
+    };
+    [...select.children].forEach((c) => {
+      if (c.tagName === 'OPTION') addOption(c, list, null);
       else if (c.tagName === 'OPTGROUP' && !c.hidden) {
-        const g = add(menu, 'div', 'bui-select-group'), label = add(g, 'div', 'bui-select-group-label', c.label);
-        label.id = `${menu.id}-g${gi}`; g.setAttribute('role', 'group'); g.setAttribute('aria-labelledby', label.id);
-        [...c.children].forEach((o) => { if (o.tagName === 'OPTION') addOption(o, g); });
+        const g = add(list, 'div', 'bui-select-group'), label = add(g, 'div', 'bui-select-group-label', c.label);
+        label.id = `${state.menu.id}-g${++state.uid}`; g.setAttribute('role', 'group'); g.setAttribute('aria-labelledby', label.id);
+        [...c.children].forEach((o) => { if (o.tagName === 'OPTION') addOption(o, g, g); });
       }
     });
   }
+  const navigable = (it) => !it.disabled && !it.hidden;
+  const firstNav = (state, from = 0, step = 1) => { for (let i = from; i >= 0 && i < state.items.length; i += step) if (navigable(state.items[i])) return i; return -1; };
   function setSelectActive(state, index, scroll = true) {
     state.items[state.active]?.el.classList.remove('bui-select-option-active');
     state.active = index;
-    const item = state.items[index];
-    if (!item) { state.select.removeAttribute('aria-activedescendant'); return; }
+    const item = state.items[index], holder = state.search || state.select;
+    if (!item) { holder.removeAttribute('aria-activedescendant'); return; }
     item.el.classList.add('bui-select-option-active');
-    state.select.setAttribute('aria-activedescendant', item.el.id);
+    holder.setAttribute('aria-activedescendant', item.el.id);
     if (scroll) item.el.scrollIntoView({ block: 'nearest' });
   }
-  const firstEnabled = (state, from = 0, step = 1) => { for (let i = from; i >= 0 && i < state.items.length; i += step) if (!state.items[i].disabled) return i; return -1; };
-  const startIndex = (state) => { const i = state.items.findIndex((it) => it.option.selected && !it.disabled); return i >= 0 ? i : firstEnabled(state); };
+  const startIndex = (state) => { const i = state.items.findIndex((it) => it.selected && navigable(it)); return i >= 0 ? i : firstNav(state); };
 
-  /* Below the field when the menu fits there; otherwise on the side with more room (it scrolls when needed). */
+  function setStatus(state, kind, text) { // loading | more | empty | error, or null to remove it
+    if (!kind) { state.status?.remove(); state.status = null; return; }
+    const el = state.status ||= document.createElement('div');
+    el.className = `bui-select-status bui-select-status-${kind}`; el.setAttribute('role', 'status'); el.textContent = '';
+    if (kind === 'loading' || kind === 'more') add(el, 'span', 'bui-spinner bui-spinner-sm');
+    add(el, 'span', null, text);
+    if (kind === 'error') { const b = add(el, 'button', 'bui-select-retry', say(state.select, 'buiRetry', 'Retry')); b.type = 'button'; b.addEventListener('click', () => loadRemote(state)); }
+    state.list.append(el);
+  }
+  function filterStatic(state) { // the search box hides the options that do not match
+    const tokens = norm(state.query).split(/\s+/).filter(Boolean);
+    state.items.forEach((it) => {
+      const hay = norm(`${it.label} ${it.description ?? ''} ${it.search ?? ''}`);
+      it.hidden = !tokens.every((t) => hay.includes(t));
+      it.el.hidden = it.hidden;
+      setHighlighted(it.labelEl, it.label || '—', state.query);
+      if (it.descEl) setHighlighted(it.descEl, String(it.description), state.query);
+    });
+    state.list.querySelectorAll('.bui-select-group').forEach((g) => { g.hidden = ![...g.querySelectorAll('.bui-select-option')].some((o) => !o.hidden); });
+    setStatus(state, state.items.some((it) => !it.hidden) ? null : 'empty', say(state.select, 'buiEmpty', 'No results'));
+    setSelectActive(state, startIndex(state));
+  }
+
+  /* ---- options from an API ---- */
+  function urlLoader(select) {
+    const d = select.dataset, per = +d.buiPerPage || 10;
+    const K = { value: d.buiValueKey || 'id', label: d.buiLabelKey || 'name', desc: d.buiDescriptionKey, image: d.buiImageKey, disabled: d.buiDisabledKey };
+    const P = { search: d.buiParamSearch || 'search', page: d.buiParamPage || 'page', per: d.buiParamPerPage || 'per_page' };
+    let all = null, base = new URL(d.buiUrl, location.href);
+    const map = (raw) => ({ value: getPath(raw, K.value), label: String(getPath(raw, K.label) ?? ''), description: K.desc ? getPath(raw, K.desc) : undefined, image: K.image && getPath(raw, K.image) ? new URL(getPath(raw, K.image), base).href : null, disabled: K.disabled ? !!getPath(raw, K.disabled) : false });
+    return {
+      perPage: per,
+      async load({ search, page, signal }) {
+        if (!all) {
+          const url = new URL(d.buiUrl, location.href); base = url;
+          url.searchParams.set(P.search, search); url.searchParams.set(P.page, page); url.searchParams.set(P.per, per);
+          const res = await fetch(url, { signal, headers: { Accept: 'application/json' }, credentials: 'same-origin' });
+          if (!res.ok) throw new Error(`HTTP ${res.status}`);
+          const json = await res.json();
+          if (Array.isArray(json)) all = json; // a plain file: search and pages are done here, in the browser
+          else {
+            const list = getPath(json, d.buiResultsPath) ?? json.data ?? json.items ?? json.results ?? [];
+            const more = d.buiMorePath ? !!getPath(json, d.buiMorePath) : (json.meta?.last_page != null ? json.meta.current_page < json.meta.last_page : list.length >= per);
+            return { items: list.map(map), hasMore: more };
+          }
+        }
+        const keys = (d.buiSearchKeys || [K.label, K.desc].filter(Boolean).join(',')).split(',').map((k) => k.trim());
+        const tokens = norm(search).split(/\s+/).filter(Boolean);
+        const found = tokens.length ? all.filter((row) => tokens.every((t) => keys.some((k) => norm(getPath(row, k)).includes(t)))) : all;
+        return { items: found.slice((page - 1) * per, page * per).map(map), hasMore: page * per < found.length };
+      },
+    };
+  }
+  function remoteOf(select) {
+    if (remoteConfigs.has(select)) return remoteConfigs.get(select);
+    if (!select.dataset.buiUrl) return null;
+    const cfg = { debounce: +select.dataset.buiDebounce || 300, minChars: +select.dataset.buiMinChars || 0, ...urlLoader(select) };
+    remoteConfigs.set(select, cfg);
+    return cfg;
+  }
+  async function loadRemote(state, { reset = false } = {}) {
+    const cfg = state.remote;
+    if (reset) {
+      state.ctrl?.abort(); state.reqId++; state.page = 0; state.hasMore = true; state.loading = false;
+      state.items = state.items.filter((it) => it.keep); state.list.textContent = ''; state.items.forEach((it) => state.list.append(it.el)); state.status = null;
+      if (state.query.length < cfg.minChars) { setStatus(state, 'empty', say(state.select, 'buiMin', `Type at least ${cfg.minChars} characters`)); state.hasMore = false; return; }
+    }
+    if (state.loading || !state.hasMore) return;
+    state.loading = true;
+    const id = ++state.reqId, ctrl = state.ctrl = new AbortController();
+    setStatus(state, state.page ? 'more' : 'loading', say(state.select, state.page ? 'buiMore' : 'buiLoading', state.page ? 'Loading more…' : 'Loading…'));
+    placeSelectMenu(state);
+    try {
+      const res = await cfg.load({ search: state.query, page: state.page + 1, perPage: cfg.perPage, signal: ctrl.signal });
+      if (id !== state.reqId || openSel !== state) return;
+      state.page++; state.hasMore = !!res.hasMore;
+      const cur = state.select.value, first = !state.items.some((it) => !it.keep);
+      setStatus(state, null);
+      res.items.forEach((raw) => { const item = { ...raw, value: String(raw.value), selected: String(raw.value) === cur }; state.list.append(renderItem(state, item)); state.items.push(item); });
+      if (!state.items.some((it) => !it.keep)) setStatus(state, 'empty', say(state.select, 'buiEmpty', 'No results'));
+      else if (state.hasMore) setStatus(state, 'more', say(state.select, 'buiMore', 'Loading more…'));
+      if (first) setSelectActive(state, startIndex(state), false);
+    } catch (e) {
+      if (e?.name === 'AbortError' || id !== state.reqId) return;
+      setStatus(state, 'error', say(state.select, 'buiError', 'Could not load the list.'));
+    } finally {
+      if (id === state.reqId) {
+        state.loading = false;
+        if (openSel === state) { placeSelectMenu(state); if (state.hasMore && state.list.scrollHeight <= state.list.clientHeight + 4 && !state.status?.matches('.bui-select-status-error')) loadRemote(state); }
+      }
+    }
+  }
+
   function placeSelectMenu(state) {
-    const { select, menu } = state;
-    const r = select.getBoundingClientRect(), vw = document.documentElement.clientWidth, vh = window.innerHeight;
-    if (r.bottom < 0 || r.top > vh) { closeSelectMenu(); return; }
-    const gap = 6, edge = 8;
-    menu.style.maxHeight = ''; menu.style.minWidth = `${Math.max(r.width, 140)}px`;
-    const natural = menu.offsetHeight, below = vh - r.bottom - gap - edge, above = r.top - gap - edge;
-    const place = natural <= below || below >= above ? 'bottom' : 'top';
-    const room = Math.max(place === 'bottom' ? below : above, 96);
-    if (natural > room) menu.style.maxHeight = `${room}px`;
-    const h = Math.min(natural, room), w = menu.offsetWidth;
-    let left = getComputedStyle(menu).direction === 'rtl' ? r.right - w : r.left;
-    left = Math.min(Math.max(left, edge), Math.max(edge, vw - w - edge));
-    menu.style.left = `${left}px`;
-    menu.style.top = `${place === 'bottom' ? r.bottom + gap : r.top - gap - h}px`;
-    menu.dataset.placement = place;
+    const cap = parseFloat(getComputedStyle(state.menu).maxHeight) || 288;
+    if (!placeFloat(state.select, state.menu, state, { desired: state.search || state.remote ? cap : undefined, minWidth: Math.max(state.select.getBoundingClientRect().width, 140) })) closeSelectMenu();
   }
   let placeFrame = 0;
-  const schedulePlace = () => { if (openSel && !placeFrame) placeFrame = requestAnimationFrame(() => { placeFrame = 0; if (openSel) placeSelectMenu(openSel); }); };
+  const schedulePlace = () => { if ((openSel || openDd) && !placeFrame) placeFrame = requestAnimationFrame(() => { placeFrame = 0; if (openSel) placeSelectMenu(openSel); if (openDd) placeDropdown(); }); };
 
   function closeSelectMenu() {
     if (!openSel) return;
-    const { select, menu, observer, timer } = openSel;
+    const { select, menu, observer, timer, ctrl, debounce } = openSel;
     openSel = null;
-    observer.disconnect(); clearTimeout(timer);
+    observer?.disconnect(); clearTimeout(timer); clearTimeout(debounce); ctrl?.abort();
     if (canPopover) { try { menu.hidePopover(); } catch { /* already hidden */ } }
     menu.remove();
     select.setAttribute('aria-expanded', 'false');
@@ -631,43 +769,121 @@
   }
   function chooseSelectItem(state, index) {
     const item = state.items[index];
-    if (!item || item.disabled) return;
-    const { select } = state, changed = !item.option.selected;
-    closeSelectMenu();
-    if (changed) {
-      select.selectedIndex = item.option.index;
-      select.dispatchEvent(new Event('input', { bubbles: true }));
-      select.dispatchEvent(new Event('change', { bubbles: true }));
+    if (!item || !navigable(item)) return;
+    const { select } = state;
+    let changed;
+    if (item.option) { changed = !item.option.selected; closeSelectMenu(); if (changed) select.selectedIndex = item.option.index; }
+    else { // an item from the API becomes a real <option>, so the form and select.value work
+      changed = select.value !== item.value; closeSelectMenu();
+      let opt = [...select.options].find((o) => o.value === item.value);
+      if (!opt) { opt = new Option(item.label, item.value); select.add(opt); }
+      opt.textContent = item.label;
+      ['image', 'description'].forEach((k) => { if (item[k]) opt.dataset[k] = item[k]; else delete opt.dataset[k]; });
+      [...select.options].forEach((o) => { if (o !== opt && o.dataset.buiRemote !== undefined) o.remove(); });
+      opt.dataset.buiRemote = '';
+      select.selectedIndex = opt.index;
     }
+    if (changed) { select.dispatchEvent(new Event('input', { bubbles: true })); select.dispatchEvent(new Event('change', { bubbles: true })); }
+    paintSelectValue(select);
     select.focus();
   }
   function openSelectMenu(target) {
     const select = typeof target === 'string' ? document.querySelector(target) : target;
     if (!isEnhanced(select) || select.disabled || openSel?.select === select) return;
     closeSelectMenu();
+    const remote = remoteOf(select);
+    const searchable = remote ? select.dataset.buiSearch !== 'false' : select.hasAttribute('data-bui-search') && select.dataset.buiSearch !== 'false';
     const menu = document.createElement('div');
     menu.className = 'bui-select-menu'; menu.id = `bui-select-menu-${++selectSeq}`;
-    menu.setAttribute('role', 'listbox');
+    const state = openSel = { select, menu, list: null, search: null, items: [], active: -1, buffer: '', timer: 0, observer: null, query: '', uid: 0, remote, page: 0, hasMore: true, loading: false, reqId: 0, ctrl: null, status: null, debounce: 0, place: null };
+    if (searchable) {
+      const box = add(menu, 'div', 'bui-select-search');
+      const input = state.search = add(box, 'input', 'bui-select-search-input');
+      Object.assign(input, { type: 'text', autocomplete: 'off', spellcheck: false, placeholder: say(select, 'buiSearchPlaceholder', 'Search…') });
+      input.setAttribute('role', 'combobox'); input.setAttribute('aria-expanded', 'true'); input.setAttribute('aria-autocomplete', 'list'); input.setAttribute('aria-label', input.placeholder);
+    }
+    const list = state.list = add(menu, 'div', 'bui-select-list'); list.id = `${menu.id}-list`; list.setAttribute('role', 'listbox');
     const name = select.labels?.[0]?.firstChild?.textContent?.trim() || select.labels?.[0]?.textContent.trim() || select.getAttribute('aria-label');
-    if (name) menu.setAttribute('aria-label', name);
-    const state = openSel = { select, menu, items: [], active: -1, buffer: '', timer: 0, observer: null };
-    buildSelectMenu(state);
-    // Inside the field (or a modal) so it inherits the theme, direction and tokens, and stays clickable in a modal
-    const host = select.closest('dialog[open], .bui-float') || document.body;
+    if (name) list.setAttribute('aria-label', name);
+    if (state.search) state.search.setAttribute('aria-controls', list.id);
+    if (remote) { // keep an empty-value option (clear) at the top
+      const empty = [...select.options].find((o) => o.value === '' && !o.disabled && !o.hidden);
+      if (empty) { const item = { option: empty, value: '', label: (empty.label || empty.textContent).trim(), selected: empty.selected, keep: true }; list.append(renderItem(state, item)); state.items.push(item); }
+    } else buildStatic(state);
+    const host = select.closest('dialog[open], .bui-float') || document.body; // inherits theme and direction; clickable in a modal
     if (canPopover) menu.setAttribute('popover', 'manual');
     host.appendChild(menu);
     if (canPopover) menu.showPopover();
-    select.setAttribute('aria-haspopup', 'listbox'); select.setAttribute('aria-expanded', 'true'); select.setAttribute('aria-controls', menu.id);
+    select.setAttribute('aria-haspopup', 'listbox'); select.setAttribute('aria-expanded', 'true'); select.setAttribute('aria-controls', list.id);
     setSelectActive(state, startIndex(state));
     placeSelectMenu(state);
-    menu.addEventListener('mousedown', (e) => e.preventDefault()); // keep the focus on the select
-    menu.addEventListener('mousemove', (e) => { const i = state.items.findIndex((it) => it.el === e.target.closest('.bui-select-option')); if (i >= 0 && !state.items[i].disabled && i !== state.active) setSelectActive(state, i, false); });
+    menu.addEventListener('mousedown', (e) => { if (e.target !== state.search) e.preventDefault(); }); // keep the focus
+    menu.addEventListener('mousemove', (e) => { const i = state.items.findIndex((it) => it.el === e.target.closest('.bui-select-option')); if (i >= 0 && navigable(state.items[i]) && i !== state.active) setSelectActive(state, i, false); });
     menu.addEventListener('click', (e) => { const i = state.items.findIndex((it) => it.el === e.target.closest('.bui-select-option')); if (i >= 0) chooseSelectItem(state, i); });
-    state.observer = new MutationObserver(() => { const cur = state.items[state.active]?.option; buildSelectMenu(state); setSelectActive(state, Math.max(0, state.items.findIndex((it) => it.option === cur)), false); placeSelectMenu(state); });
-    state.observer.observe(select, { childList: true, subtree: true, characterData: true, attributes: true, attributeFilter: ['disabled', 'hidden', 'label', 'selected', 'value'] }); // not aria-*: we set those ourselves
-    select.focus({ preventScroll: true });
+    if (state.search) {
+      state.search.addEventListener('input', () => {
+        state.query = state.search.value.trim();
+        if (remote) { clearTimeout(state.debounce); state.debounce = setTimeout(() => loadRemote(state, { reset: true }), remote.debounce); } else filterStatic(state);
+        placeSelectMenu(state);
+      });
+      state.search.addEventListener('keydown', (e) => selectKey(state, e));
+    }
+    if (remote) { list.addEventListener('scroll', () => { if (list.scrollTop + list.clientHeight >= list.scrollHeight - 48) loadRemote(state); }); loadRemote(state, { reset: true }); }
+    else {
+      state.observer = new MutationObserver(() => { const cur = state.items[state.active]?.option; buildStatic(state); if (state.query) filterStatic(state); setSelectActive(state, Math.max(0, state.items.findIndex((it) => it.option === cur)), false); placeSelectMenu(state); });
+      state.observer.observe(select, { childList: true, subtree: true, characterData: true, attributes: true, attributeFilter: ['disabled', 'hidden', 'label', 'selected', 'value'] }); // not aria-*: we set those ourselves
+    }
+    (state.search || select).focus({ preventScroll: true });
     select.dispatchEvent(new CustomEvent('bui:select-open', { bubbles: true }));
   }
+  function selectKey(state, event) { // keyboard for an open menu; focus is on the select or on the search box
+    const key = event.key, typing = !!state.search, go = (i) => { if (i >= 0) setSelectActive(state, i); };
+    if (key === 'Escape') { event.preventDefault(); event.stopPropagation(); const s = state.select; closeSelectMenu(); s.focus(); }
+    else if (key === 'Tab') closeSelectMenu();
+    else if (key === 'ArrowDown') { event.preventDefault(); go(firstNav(state, state.active + 1)); }
+    else if (key === 'ArrowUp') { event.preventDefault(); go(firstNav(state, state.active - 1, -1)); }
+    else if (key === 'PageDown') { event.preventDefault(); go(firstNav(state, Math.min(state.active + 8, state.items.length - 1), -1)); }
+    else if (key === 'PageUp') { event.preventDefault(); go(firstNav(state, Math.max(state.active - 8, 0))); }
+    else if (key === 'Enter') { event.preventDefault(); chooseSelectItem(state, state.active); }
+    else if (!typing && key === 'Home') { event.preventDefault(); go(firstNav(state)); }
+    else if (!typing && key === 'End') { event.preventDefault(); go(firstNav(state, state.items.length - 1, -1)); }
+    else if (!typing && key === ' ' && !state.buffer) { event.preventDefault(); chooseSelectItem(state, state.active); }
+    else if (!typing && key.length === 1 && !event.ctrlKey && !event.metaKey && !event.altKey) { // type to jump
+      event.preventDefault();
+      state.buffer += key.toLowerCase(); clearTimeout(state.timer); state.timer = setTimeout(() => { state.buffer = ''; }, 600);
+      const n = state.items.length, from = state.buffer.length === 1 ? state.active + 1 : Math.max(state.active, 0);
+      for (let k = 0; k < n; k++) { const i = (from + k) % n; if (navigable(state.items[i]) && norm(state.items[i].label).startsWith(state.buffer)) { go(i); break; } }
+    }
+  }
+
+  /* ---- the selected option shown with its avatar and description (data-bui-rich / remote selects) ---- */
+  function paintSelectValue(select) {
+    const f = select.closest('.bui-float');
+    if (!f || !(wantsRich(select) || remoteOf(select))) return;
+    select.classList.add('bui-select-rich');
+    let v = f.querySelector(':scope > .bui-select-value');
+    if (!v) { v = document.createElement('span'); v.className = 'bui-select-value'; v.setAttribute('aria-hidden', 'true'); select.after(v); }
+    v.textContent = '';
+    const o = select.selectedOptions[0];
+    if (!o || o.value === '') return;
+    const item = { label: (o.label || o.textContent).trim(), description: o.dataset.description, image: o.dataset.image };
+    if (wantsRich(select) || item.image) v.append(avatarEl(item));
+    const t = add(v, 'span', 'bui-select-text'); add(t, 'span', 'bui-select-label', item.label);
+    if (item.description) add(t, 'span', 'bui-select-desc', item.description);
+  }
+  function initRichSelect(select) {
+    if (!isEnhanced(select) || select._buiRich || !(wantsRich(select) || remoteOf(select))) return;
+    select._buiRich = true;
+    ['value', 'selectedIndex'].forEach((prop) => { // select.value = '3' from code repaints the field
+      const d = Object.getOwnPropertyDescriptor(HTMLSelectElement.prototype, prop);
+      Object.defineProperty(select, prop, { configurable: true, get() { return d.get.call(this); }, set(v) { d.set.call(this, v); paintSelectValue(this); } });
+    });
+    paintSelectValue(select);
+  }
+  const initRichSelects = (root = document) => root.querySelectorAll?.('select[data-bui-rich], select[data-bui-url]').forEach(initRichSelect);
+  initRichSelects();
+  new MutationObserver((records) => records.forEach((r) => r.addedNodes.forEach((n) => { if (n.nodeType === 1) { if (n.matches('select')) initRichSelect(n); initRichSelects(n); } }))).observe(document.body, { childList: true, subtree: true });
+  document.addEventListener('reset', (e) => { setTimeout(() => e.target.querySelectorAll?.('select.bui-select-rich').forEach(paintSelectValue)); });
 
   document.addEventListener('mousedown', (event) => {
     const select = event.target.closest?.('select');
@@ -681,38 +897,106 @@
   document.addEventListener('keydown', (event) => {
     const select = event.target;
     if (!isEnhanced(select) || event.isComposing) return;
-    const state = openSel?.select === select ? openSel : null, key = event.key;
-    if (!state) {
-      if (key === 'Enter' || key === ' ' || ((key === 'ArrowDown' || key === 'ArrowUp') && !event.ctrlKey && !event.metaKey && !event.shiftKey)) { event.preventDefault(); openSelectMenu(select); }
-      return;
-    }
-    const go = (i) => { if (i >= 0) setSelectActive(state, i); };
-    if (key === 'Escape') { event.preventDefault(); event.stopPropagation(); closeSelectMenu(); }
-    else if (key === 'Tab') closeSelectMenu();
-    else if (key === 'ArrowDown') { event.preventDefault(); go(firstEnabled(state, state.active + 1)); }
-    else if (key === 'ArrowUp') { event.preventDefault(); go(firstEnabled(state, state.active - 1, -1)); }
-    else if (key === 'Home') { event.preventDefault(); go(firstEnabled(state)); }
-    else if (key === 'End') { event.preventDefault(); go(firstEnabled(state, state.items.length - 1, -1)); }
-    else if (key === 'PageDown') { event.preventDefault(); go(firstEnabled(state, Math.min(state.active + 8, state.items.length - 1), -1)); }
-    else if (key === 'PageUp') { event.preventDefault(); go(firstEnabled(state, Math.max(state.active - 8, 0))); }
-    else if (key === 'Enter' || (key === ' ' && !state.buffer)) { event.preventDefault(); chooseSelectItem(state, state.active); }
-    else if (key.length === 1 && !event.ctrlKey && !event.metaKey && !event.altKey) { // type to search
-      event.preventDefault();
-      state.buffer += key.toLowerCase(); clearTimeout(state.timer); state.timer = setTimeout(() => { state.buffer = ''; }, 600);
-      const n = state.items.length, from = state.buffer.length === 1 ? state.active + 1 : Math.max(state.active, 0);
-      for (let k = 0; k < n; k++) { const i = (from + k) % n; if (!state.items[i].disabled && state.items[i].el.textContent.trim().toLowerCase().startsWith(state.buffer)) { go(i); break; } }
-    }
+    if (openSel?.select === select) { selectKey(openSel, event); return; }
+    const key = event.key;
+    if (key === 'Enter' || key === ' ' || ((key === 'ArrowDown' || key === 'ArrowUp') && !event.ctrlKey && !event.metaKey && !event.shiftKey)) { event.preventDefault(); openSelectMenu(select); }
   });
-  document.addEventListener('focusout', (event) => { if (openSel && event.target === openSel.select) closeSelectMenu(); });
+  document.addEventListener('focusout', (event) => {
+    if (!openSel) return;
+    const t = event.target, rel = event.relatedTarget;
+    if ((t === openSel.select || t === openSel.search) && !(rel && (openSel.menu.contains(rel) || rel === openSel.select))) closeSelectMenu();
+  });
   document.addEventListener('change', (event) => { // a chosen value validates a floating select right away
     const s = event.target;
+    if (s instanceof HTMLSelectElement) paintSelectValue(s);
     if (s instanceof HTMLSelectElement && s.classList.contains('bui-float-input') && s.closest('[data-bui-validate]')) { s.dataset.touched = ''; validateFloat(s); }
   });
   window.addEventListener('resize', schedulePlace);
-  window.addEventListener('scroll', (event) => { if (openSel && !openSel.menu.contains(event.target)) schedulePlace(); }, true);
+  window.addEventListener('scroll', (event) => { if ((openSel && !openSel.menu.contains(event.target)) || openDd) schedulePlace(); }, true);
   window.visualViewport?.addEventListener('resize', schedulePlace);
 
-  BUI.select = { open: openSelectMenu, close: closeSelectMenu, isOpen: (t) => { const s = typeof t === 'string' ? document.querySelector(t) : t; return !!openSel && (!s || openSel.select === s); } };
+  BUI.select = {
+    open: openSelectMenu, close: closeSelectMenu,
+    isOpen: (t) => { const s = typeof t === 'string' ? document.querySelector(t) : t; return !!openSel && (!s || openSel.select === s); },
+    refresh: (t) => { const s = typeof t === 'string' ? document.querySelector(t) : t; if (s) { initRichSelect(s); paintSelectValue(s); } },
+    /* load options from your own code: BUI.select.remote(select, { load({ search, page, signal }) { return { items: [{ value, label, description, image }], hasMore } } }) */
+    remote: (t, cfg) => { const s = typeof t === 'string' ? document.querySelector(t) : t; remoteConfigs.set(s, { debounce: 300, perPage: 10, minChars: 0, ...cfg }); initRichSelect(s); return s; },
+  };
+
+  /* ---------- Dropdown menu: <div class="bui-dropdown"> toggle + .bui-dropdown-menu ---------- */
+  const DD_ITEMS = '.bui-dropdown-item:not([aria-disabled="true"]):not(:disabled)';
+  const ddWrap = (n) => n?.closest?.('.bui-dropdown');
+  const ddOf = (t) => { const toggle = typeof t === 'string' ? document.querySelector(t) : t, wrap = ddWrap(toggle); return { toggle, wrap, menu: wrap?.querySelector(':scope > .bui-dropdown-menu') }; };
+  function placeDropdown() {
+    if (!openDd) return;
+    if (!placeFloat(openDd.toggle, openDd.menu, openDd, { align: openDd.wrap.dataset.buiAlign || 'start', minWidth: null })) closeDropdown();
+  }
+  function openDropdown(target, focus = 'menu') {
+    const { toggle, wrap, menu } = ddOf(target);
+    if (!menu || toggle.disabled || openDd?.menu === menu) return;
+    closeDropdown(); closeSelectMenu();
+    openDd = { toggle, wrap, menu, place: null, buffer: '', timer: 0 };
+    menu.classList.add('bui-dropdown-menu-open');
+    if (canPopover) { menu.setAttribute('popover', 'manual'); menu.showPopover(); }
+    toggle.setAttribute('aria-expanded', 'true'); wrap.classList.add('bui-dropdown-open');
+    placeDropdown();
+    const items = [...menu.querySelectorAll(DD_ITEMS)];
+    if (focus === 'first' && items.length) items[0].focus(); else if (focus === 'last' && items.length) items[items.length - 1].focus(); else { menu.tabIndex = -1; menu.focus({ preventScroll: true }); }
+    wrap.dispatchEvent(new CustomEvent('bui:dropdown-open', { bubbles: true }));
+  }
+  function closeDropdown(refocus = false) {
+    if (!openDd) return;
+    const { toggle, wrap, menu, timer } = openDd;
+    openDd = null; clearTimeout(timer);
+    if (canPopover) { try { menu.hidePopover(); } catch { /* already hidden */ } menu.removeAttribute('popover'); }
+    menu.classList.remove('bui-dropdown-menu-open');
+    ['left', 'top', 'maxHeight', 'minWidth'].forEach((p) => menu.style.removeProperty(p.replace(/[A-Z]/g, (c) => `-${c.toLowerCase()}`)));
+    delete menu.dataset.placement;
+    toggle.setAttribute('aria-expanded', 'false'); wrap.classList.remove('bui-dropdown-open');
+    if (refocus) toggle.focus();
+    wrap.dispatchEvent(new CustomEvent('bui:dropdown-close', { bubbles: true }));
+  }
+  document.addEventListener('click', (event) => {
+    const toggle = event.target.closest('[data-bui-dropdown-toggle]');
+    if (toggle) { // event.detail is 0 for a keyboard click: then focus the first item
+      if (openDd?.wrap === ddWrap(toggle)) closeDropdown(); else openDropdown(toggle, event.detail === 0 ? 'first' : 'menu');
+      return;
+    }
+    const item = event.target.closest('.bui-dropdown-item');
+    if (!item || !openDd?.menu.contains(item) || item.matches('[aria-disabled="true"], :disabled')) return;
+    const role = item.getAttribute('role');
+    if (role === 'menuitemcheckbox') item.setAttribute('aria-checked', String(item.getAttribute('aria-checked') !== 'true'));
+    if (role === 'menuitemradio') { (item.closest('[role="group"]') || openDd.menu).querySelectorAll('[role="menuitemradio"]').forEach((r) => r.setAttribute('aria-checked', String(r === item))); }
+    const { wrap } = openDd;
+    wrap.dispatchEvent(new CustomEvent('bui:dropdown-select', { bubbles: true, detail: { item } }));
+    if (role !== 'menuitemcheckbox' && role !== 'menuitemradio' && !item.closest('[data-bui-keep-open]')) closeDropdown(true);
+  });
+  document.addEventListener('mousedown', (event) => { if (openDd && !openDd.wrap.contains(event.target)) closeDropdown(); }, true);
+  document.addEventListener('keydown', (event) => {
+    const t = event.target, key = event.key;
+    const toggle = t.closest?.('[data-bui-dropdown-toggle]');
+    if (toggle && !openDd && (key === 'ArrowDown' || key === 'ArrowUp')) { event.preventDefault(); openDropdown(toggle, key === 'ArrowUp' ? 'last' : 'first'); return; }
+    if (!openDd || !openDd.wrap.contains(t)) return;
+    if (key === 'Escape') { event.preventDefault(); event.stopPropagation(); closeDropdown(true); return; }
+    if (key === 'Tab') { closeDropdown(); return; }
+    const items = [...openDd.menu.querySelectorAll(DD_ITEMS)], i = items.indexOf(document.activeElement), go = (n) => items[n]?.focus();
+    if (!items.length) return;
+    if (key === 'ArrowDown') { event.preventDefault(); go(i + 1 < items.length ? i + 1 : 0); }
+    else if (key === 'ArrowUp') { event.preventDefault(); go(i > 0 ? i - 1 : items.length - 1); }
+    else if (key === 'Home') { event.preventDefault(); go(0); }
+    else if (key === 'End') { event.preventDefault(); go(items.length - 1); }
+    else if (key === ' ' && document.activeElement.matches('a, [role^="menuitem"]') && !document.activeElement.matches('button')) { event.preventDefault(); document.activeElement.click(); }
+    else if (key.length === 1 && !event.ctrlKey && !event.metaKey && !event.altKey) { // type to jump
+      openDd.buffer += key.toLowerCase(); clearTimeout(openDd.timer); const st = openDd; st.timer = setTimeout(() => { st.buffer = ''; }, 600);
+      const from = openDd.buffer.length === 1 ? i + 1 : Math.max(i, 0);
+      for (let k = 0; k < items.length; k++) { const n = (from + k) % items.length; if (norm(items[n].textContent.trim()).startsWith(openDd.buffer)) { go(n); break; } }
+    }
+  });
+  BUI.dropdown = {
+    open: (t) => openDropdown(t, 'menu'), close: () => closeDropdown(),
+    toggle: (t) => { const { menu } = ddOf(t); if (openDd?.menu === menu) closeDropdown(); else openDropdown(t, 'menu'); },
+    isOpen: (t) => { const { menu } = t ? ddOf(t) : {}; return !!openDd && (!t || openDd.menu === menu); },
+  };
 
   /* ---------- Scroll-spy for in-page sidebar links (#section) ---------- */
   const spyLinks = [...document.querySelectorAll('.bui-nav[href^="#"]')];

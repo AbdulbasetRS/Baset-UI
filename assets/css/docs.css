@@ -271,3 +271,9 @@ h1 em { font-style: normal; color: var(--bui-primary); }
 .bui-lab-box[data-pos="top"] { inset-block-start: 24px; }
 .bui-lab-box[data-pos="center"] { inset-block-start: 50%; transform: translateY(-50%); }
 .bui-lab-box[data-pos="bottom"] { inset-block-end: 24px; }
+
+/* ---------- Select and dropdown demos: request log, rows with a menu ---------- */
+.bui-net-log { margin: 0; padding: 12px 14px; min-height: 42px; background: var(--bui-soft); border: 1px solid var(--bui-line); border-radius: var(--bui-radius-3); color: var(--bui-muted); font: 11px/1.7 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; white-space: pre-wrap; word-break: break-all; }
+.bui-dd-list { display: grid; max-width: 420px; border: 1px solid var(--bui-line); border-radius: var(--bui-radius-4); }
+.bui-dd-row { display: grid; grid-template-columns: 1fr auto auto; align-items: center; gap: 14px; padding: 8px 12px; border-block-end: 1px solid var(--bui-line); font-size: 13px; font-weight: 600; }
+.bui-dd-row:last-child { border-block-end: 0; }
