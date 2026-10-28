@@ -24,6 +24,7 @@ Explore the full Baset UI documentation website, including interactive component
 3. [Project structure](#project-structure)
 4. [Components](#components)
 5. [Class reference](#class-reference)
+   - [Grid and layout](#grid-and-layout)
 6. [Loaders and success icon](#loaders-and-success-icon)
 7. [Icons](#icons)
 8. [Theming (CSS variables)](#theming-css-variables)
@@ -118,6 +119,8 @@ Use Baset UI directly from GitHub Pages without downloading or copying the libra
 ```
 baset-ui/
 ├── index.html                  # Docs home: overview, installation, component index
+├── layout/                     # Layout documentation
+│   └── grid.html               # Grid system: containers, 12-column grid, CSS grid, stack, cluster
 ├── components/                 # One documentation page per component
 │   ├── buttons.html
 │   ├── forms.html
@@ -160,6 +163,7 @@ baset-ui/
 
 | Component | Page | Examples |
 | --- | --- | --- |
+| Grid system (Layout) | `layout/grid.html` | Basic and equal columns, auto width, responsive tiers, columns per row, wrapping, offsets, order, vertical / horizontal / self alignment, gutters, nesting, containers, CSS grid (spans, auto-fit), stack, cluster, dashboard and form layouts, RTL, breakpoint and class reference |
 | Buttons | `components/buttons.html` | Solid / outline / soft / link in 7 colors, neutral, anchors, sizes, icons, icon-only, pill, full width, group, disabled |
 | Form controls | `components/forms.html` | Text input, email input, select, checkbox, form layout, floating labels (basic, sizes, select, textarea), validation states with the i message button, password fields (show / hide, strength meter, requirements, Caps Lock), prefix / suffix inputs (+20, @, https://, $, %), custom select menu (automatic placement, groups, keyboard, modal), live validation forms, JS API |
 | Cards | `components/cards.html` | Stat cards (sparkline, progress, task lines), cards grid |
@@ -174,6 +178,8 @@ baset-ui/
 Every example on these pages shows the live preview, the class list, and a code block with a **Copy** button (it copies exactly the code shown).
 
 ## Class reference
+
+**Grid and layout** — see [Grid and layout](#grid-and-layout).
 
 **Buttons** — `.bui-btn` + one style. Seven colors — `primary`, `secondary`, `success`, `danger`, `warning`, `info`, `inverse` — in four families:
 
@@ -204,6 +210,35 @@ Modifiers: sizes `.bui-btn-sm` / `.bui-btn-lg`, `.bui-btn-pill`, `.bui-btn-block
 **Icons** — see [Icons](#icons).
 
 **Toasts & notifications** — see [Toasts & notifications](#toasts-and-notifications).
+
+## Grid and layout
+
+A mobile-first, 12-column flexbox grid. It is CSS only (no JavaScript), uses logical properties so it mirrors in RTL, and follows the dark/light tokens (it has no colors of its own). Full examples: `layout/grid.html`.
+
+```html
+<div class="bui-container">
+  <div class="bui-row bui-gutter-3">
+    <div class="bui-col-12 bui-col-md-8">Main</div>
+    <div class="bui-col-12 bui-col-md-4">Sidebar</div>
+  </div>
+</div>
+```
+
+| Class | Purpose |
+| --- | --- |
+| `.bui-container`, `-sm` `-md` `-lg` `-xl`, `-fluid` | Centered wrapper with a max-width per breakpoint (`--bui-container-padding` sets the side padding) |
+| `.bui-row` | Flex row that wraps; columns are its direct children |
+| `.bui-col`, `.bui-col-auto`, `.bui-col-{1-12}` | Equal width, content width, or n of 12 columns |
+| `.bui-col-{sm\|md\|lg\|xl}-*` | The same, from that breakpoint up (576 / 768 / 992 / 1200px) |
+| `.bui-row-cols-{1-6}` (+ tier) | Set the number of columns per row from the row |
+| `.bui-offset-{0-11}` (+ tier) | Leave empty columns before a column (`margin-inline-start`) |
+| `.bui-order-{0-5}`, `-first`, `-last` (+ tier) | Visual order |
+| `.bui-gutter-{0-5}`, `.bui-gutter-x-*`, `.bui-gutter-y-*` | Gap between columns; sets `--bui-gutter-x` / `--bui-gutter-y` |
+| `.bui-items-{start\|center\|end\|baseline\|stretch}`, `.bui-justify-{start\|center\|end\|between\|around\|evenly}`, `.bui-self-{start\|center\|end\|stretch}` | Alignment on the row or on one column |
+| `.bui-grid`, `.bui-grid-cols-{1-6}` (+ tier), `.bui-grid-span-{1-6}` (+ tier), `.bui-grid-auto` | CSS grid with equal tracks, spans and auto-fit (`--bui-grid-min`) |
+| `.bui-stack`, `.bui-cluster` | Vertical flow and wrapping inline group, spaced by the gutter classes |
+
+Breakpoints follow the viewport width (min-width), not the container width.
 
 ## Toasts and notifications
 
@@ -506,7 +541,7 @@ Current versions of Chrome, Edge, Firefox and Safari.
 
 ## Status and roadmap
 
-This is the first starter release and is intentionally small; it is not a complete Bootstrap replacement. Components are added one at a time. The **Utilities** page currently documents the feature grid only — spacing, flex, grid and display helpers are planned.
+This is the first starter release and is intentionally small; it is not a complete Bootstrap replacement. Components are added one at a time. The **Layout → Grid system** page documents the grid. The **Utilities** page currently documents the feature grid only — spacing, display and text helpers are planned.
 
 ## Third-party licenses
 

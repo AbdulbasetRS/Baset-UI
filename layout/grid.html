@@ -1,0 +1,770 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Grid system — Baset UI</title>
+  <link rel="stylesheet" href="../assets/css/baset-ui.css">
+  <link rel="stylesheet" href="../assets/css/docs.css">
+
+  <script>try{if(localStorage.getItem('bui-theme')==='dark')document.documentElement.classList.add('bui-dark');var d=localStorage.getItem('bui-dir');if(d==='rtl'||d==='ltr')document.documentElement.dir=d}catch(e){}</script>
+</head>
+<body>
+  <div class="bui-app">
+    <aside class="bui-sidebar">
+      <a class="bui-brand" href="../index.html"><span class="bui-brand-mark">B</span><span>Baset UI<small>Component library</small></span></a>
+      <div class="bui-sidebar-label">GET STARTED</div>
+      <a class="bui-nav" href="../index.html#overview">Overview</a>
+      <a class="bui-nav" href="../index.html#installation">Installation</a>
+      <div class="bui-sidebar-label">LAYOUT</div>
+      <a class="bui-nav active" href="../layout/grid.html">Grid system</a>
+      <div class="bui-sidebar-label">COMPONENTS</div>
+      <a class="bui-nav" href="../components/buttons.html">Buttons</a>
+      <a class="bui-nav" href="../components/forms.html">Form controls</a>
+      <a class="bui-nav" href="../components/select.html">Select &amp; dropdown</a>
+      <a class="bui-nav" href="../components/cards.html">Cards</a>
+      <a class="bui-nav" href="../components/alerts.html">Alerts</a>
+      <a class="bui-nav" href="../components/badges.html">Badges</a>
+      <a class="bui-nav" href="../components/loaders.html">Loaders</a>
+      <a class="bui-nav" href="../components/icons.html">Icons</a>
+      <a class="bui-nav" href="../components/toasts.html">Toasts &amp; notifications</a>
+      <a class="bui-nav" href="../components/modal.html">Modal</a>
+      <a class="bui-nav" href="../components/utilities.html">Utilities</a>
+      <div class="bui-sidebar-label">CUSTOMIZE</div>
+      <a class="bui-nav" href="../customize/colors.html">Default colors</a>
+      <a class="bui-nav" href="../customize/typography.html">Typography and shape</a>
+      <a class="bui-nav" href="../customize/theme.html">Theme</a>
+      <a class="bui-nav" href="../customize/token-playground.html">Token playground</a>
+      <a class="bui-nav" href="../customize/direction.html">Direction (RTL / LTR)</a>
+      <div class="bui-sidebar-bottom"><span class="bui-status-dot"></span> Baset UI <span class="bui-version">v1.0.0</span></div>
+    </aside>
+    <main class="bui-main">
+      <header class="bui-topbar"><div class="bui-breadcrumb"><a href="../index.html">Documentation</a> <span>/</span> Layout <span>/</span> Grid system</div><div class="bui-top-actions"><span class="bui-pill">Vanilla CSS + JS</span><button class="bui-icon-btn bui-dir-btn" id="dirToggle" type="button" aria-label="Toggle direction (RTL / LTR)" title="Toggle direction (RTL / LTR)">RTL</button><button class="bui-icon-btn" id="themeToggle" type="button" aria-label="Toggle theme">☼</button></div></header>
+      <section class="bui-section" id="grid"><div class="bui-section-heading"><div><span class="bui-eyebrow">01 / LAYOUT</span><h2>Grid system</h2><p>A 12-column, mobile-first flexbox grid with containers, responsive breakpoints, offsets, ordering, alignment and gutters — plus a CSS grid helper, stack and cluster. It mirrors automatically in RTL.</p></div><span class="bui-step-count">26 examples</span></div>
+      <div class="bui-demo-stack">
+<article class="bui-demo-card" id="basic"><div class="bui-demo-title">Basic 12-column grid <span>.bui-row · .bui-col-{1-12}</span></div><div class="bui-demo-content bui-gd"><p class="bui-gd-note">Every row has 12 columns. Put <code>.bui-col-*</code> children inside a <code>.bui-row</code>; the numbers in a row add up to 12 (or less).</p>
+<div class="bui-row">
+  <div class="bui-col-1">1</div>
+  <div class="bui-col-1">1</div>
+  <div class="bui-col-1">1</div>
+  <div class="bui-col-1">1</div>
+  <div class="bui-col-1">1</div>
+  <div class="bui-col-1">1</div>
+  <div class="bui-col-1">1</div>
+  <div class="bui-col-1">1</div>
+  <div class="bui-col-1">1</div>
+  <div class="bui-col-1">1</div>
+  <div class="bui-col-1">1</div>
+  <div class="bui-col-1">1</div>
+</div>
+<div class="bui-row">
+  <div class="bui-col-8">8</div>
+  <div class="bui-col-4">4</div>
+</div>
+<div class="bui-row">
+  <div class="bui-col-6">6</div>
+  <div class="bui-col-6">6</div>
+</div>
+</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-row"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-1"</span><span class="bui-code-pink">&gt;</span>1<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-1"</span><span class="bui-code-pink">&gt;</span>1<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-1"</span><span class="bui-code-pink">&gt;</span>1<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-1"</span><span class="bui-code-pink">&gt;</span>1<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-1"</span><span class="bui-code-pink">&gt;</span>1<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-1"</span><span class="bui-code-pink">&gt;</span>1<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-1"</span><span class="bui-code-pink">&gt;</span>1<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-1"</span><span class="bui-code-pink">&gt;</span>1<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-1"</span><span class="bui-code-pink">&gt;</span>1<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-1"</span><span class="bui-code-pink">&gt;</span>1<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-1"</span><span class="bui-code-pink">&gt;</span>1<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-1"</span><span class="bui-code-pink">&gt;</span>1<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-row"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-8"</span><span class="bui-code-pink">&gt;</span>8<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-4"</span><span class="bui-code-pink">&gt;</span>4<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-row"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-6"</span><span class="bui-code-pink">&gt;</span>6<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-6"</span><span class="bui-code-pink">&gt;</span>6<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
+<article class="bui-demo-card" id="equal"><div class="bui-demo-title">Equal-width columns <span>.bui-col</span></div><div class="bui-demo-content bui-gd"><p class="bui-gd-note">Without a number, <code>.bui-col</code> shares the free space equally, however many columns there are.</p>
+<div class="bui-row">
+  <div class="bui-col">1 of 2</div>
+  <div class="bui-col">2 of 2</div>
+</div>
+<div class="bui-row">
+  <div class="bui-col">1 of 3</div>
+  <div class="bui-col">2 of 3</div>
+  <div class="bui-col">3 of 3</div>
+</div>
+</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-row"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col"</span><span class="bui-code-pink">&gt;</span>1 of 2<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col"</span><span class="bui-code-pink">&gt;</span>2 of 2<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-row"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col"</span><span class="bui-code-pink">&gt;</span>1 of 3<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col"</span><span class="bui-code-pink">&gt;</span>2 of 3<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col"</span><span class="bui-code-pink">&gt;</span>3 of 3<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
+<article class="bui-demo-card" id="one-width"><div class="bui-demo-title">Set one column width <span>.bui-col + .bui-col-{n}</span></div><div class="bui-demo-content bui-gd"><p class="bui-gd-note">Give one column a number and the remaining <code>.bui-col</code> columns split what is left.</p>
+<div class="bui-row">
+  <div class="bui-col">auto</div>
+  <div class="bui-col-6">col-6</div>
+  <div class="bui-col">auto</div>
+</div>
+<div class="bui-row">
+  <div class="bui-col">auto</div>
+  <div class="bui-col-3">col-3</div>
+</div>
+</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-row"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col"</span><span class="bui-code-pink">&gt;</span>auto<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-6"</span><span class="bui-code-pink">&gt;</span>col-6<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col"</span><span class="bui-code-pink">&gt;</span>auto<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-row"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col"</span><span class="bui-code-pink">&gt;</span>auto<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-3"</span><span class="bui-code-pink">&gt;</span>col-3<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
+<article class="bui-demo-card" id="auto-width"><div class="bui-demo-title">Width from content <span>.bui-col-auto</span></div><div class="bui-demo-content bui-gd"><p class="bui-gd-note"><code>.bui-col-auto</code> sizes the column to its content; combine with <code>.bui-col</code> to fill the rest.</p>
+<div class="bui-row">
+  <div class="bui-col-auto">Fits its content</div>
+  <div class="bui-col">Takes the rest</div>
+  <div class="bui-col-auto">Content</div>
+</div>
+<div class="bui-row bui-justify-center">
+  <div class="bui-col-auto">Centered</div>
+  <div class="bui-col-auto">auto columns</div>
+</div>
+</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-row"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-auto"</span><span class="bui-code-pink">&gt;</span>Fits its content<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col"</span><span class="bui-code-pink">&gt;</span>Takes the rest<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-auto"</span><span class="bui-code-pink">&gt;</span>Content<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-row bui-justify-center"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-auto"</span><span class="bui-code-pink">&gt;</span>Centered<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-auto"</span><span class="bui-code-pink">&gt;</span>auto columns<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
+<article class="bui-demo-card" id="sizes"><div class="bui-demo-title">Common column combinations <span>.bui-col-{n}</span></div><div class="bui-demo-content bui-gd"><p class="bui-gd-note">Ready-made splits: halves, thirds, quarters, sidebars and centered content.</p>
+<div class="bui-row">
+  <div class="bui-col-4">4</div>
+  <div class="bui-col-4">4</div>
+  <div class="bui-col-4">4</div>
+</div>
+<div class="bui-row">
+  <div class="bui-col-3">3</div>
+  <div class="bui-col-3">3</div>
+  <div class="bui-col-3">3</div>
+  <div class="bui-col-3">3</div>
+</div>
+<div class="bui-row">
+  <div class="bui-col-3">3 — sidebar</div>
+  <div class="bui-col-9">9 — content</div>
+</div>
+<div class="bui-row">
+  <div class="bui-col-2">2</div>
+  <div class="bui-col-8">8 — main</div>
+  <div class="bui-col-2">2</div>
+</div>
+</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-row"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-4"</span><span class="bui-code-pink">&gt;</span>4<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-4"</span><span class="bui-code-pink">&gt;</span>4<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-4"</span><span class="bui-code-pink">&gt;</span>4<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-row"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-3"</span><span class="bui-code-pink">&gt;</span>3<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-3"</span><span class="bui-code-pink">&gt;</span>3<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-3"</span><span class="bui-code-pink">&gt;</span>3<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-3"</span><span class="bui-code-pink">&gt;</span>3<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-row"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-3"</span><span class="bui-code-pink">&gt;</span>3 — sidebar<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-9"</span><span class="bui-code-pink">&gt;</span>9 — content<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-row"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-2"</span><span class="bui-code-pink">&gt;</span>2<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-8"</span><span class="bui-code-pink">&gt;</span>8 — main<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-2"</span><span class="bui-code-pink">&gt;</span>2<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
+<article class="bui-demo-card" id="responsive"><div class="bui-demo-title">Responsive columns <span>.bui-col-{sm|md|lg|xl}-{n}</span></div><div class="bui-demo-content bui-gd"><p class="bui-gd-note">Columns are mobile first: a class applies from its breakpoint upward. Below <code>md</code> (768px) these stack; from <code>md</code> they become halves; from <code>lg</code> (992px) thirds. Resize the browser window to see it — the breakpoints follow the viewport width.</p>
+<div class="bui-row">
+  <div class="bui-col-12 bui-col-md-6 bui-col-lg-4">A</div>
+  <div class="bui-col-12 bui-col-md-6 bui-col-lg-4">B</div>
+  <div class="bui-col-12 bui-col-md-12 bui-col-lg-4">C</div>
+</div>
+</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-row"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-12 bui-col-md-6 bui-col-lg-4"</span><span class="bui-code-pink">&gt;</span>A<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-12 bui-col-md-6 bui-col-lg-4"</span><span class="bui-code-pink">&gt;</span>B<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-12 bui-col-md-12 bui-col-lg-4"</span><span class="bui-code-pink">&gt;</span>C<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
+<article class="bui-demo-card" id="responsive-mix"><div class="bui-demo-title">Mix breakpoints <span>.bui-col-6 .bui-col-md-4</span></div><div class="bui-demo-content bui-gd"><p class="bui-gd-note">Combine tiers freely. Here the columns are halves on phones, then thirds from <code>md</code>, and a fourth column appears at <code>xl</code> via <code>bui-col-xl-3</code>.</p>
+<div class="bui-row">
+  <div class="bui-col-6 bui-col-md-4 bui-col-xl-3">1</div>
+  <div class="bui-col-6 bui-col-md-4 bui-col-xl-3">2</div>
+  <div class="bui-col-6 bui-col-md-4 bui-col-xl-3">3</div>
+  <div class="bui-col-6 bui-col-md-12 bui-col-xl-3">4</div>
+</div>
+</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-row"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-6 bui-col-md-4 bui-col-xl-3"</span><span class="bui-code-pink">&gt;</span>1<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-6 bui-col-md-4 bui-col-xl-3"</span><span class="bui-code-pink">&gt;</span>2<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-6 bui-col-md-4 bui-col-xl-3"</span><span class="bui-code-pink">&gt;</span>3<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-6 bui-col-md-12 bui-col-xl-3"</span><span class="bui-code-pink">&gt;</span>4<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
+<article class="bui-demo-card" id="row-cols"><div class="bui-demo-title">Columns per row <span>.bui-row-cols-{n} · .bui-row-cols-{tier}-{n}</span></div><div class="bui-demo-content bui-gd"><p class="bui-gd-note">Set the number of columns once on the row instead of on every child — ideal for card lists. 1 column on phones, 2 from <code>sm</code>, 4 from <code>lg</code>.</p>
+<div class="bui-row bui-row-cols-1 bui-row-cols-sm-2 bui-row-cols-lg-4">
+  <div class="bui-col">Item 1</div>
+  <div class="bui-col">Item 2</div>
+  <div class="bui-col">Item 3</div>
+  <div class="bui-col">Item 4</div>
+  <div class="bui-col">Item 5</div>
+  <div class="bui-col">Item 6</div>
+  <div class="bui-col">Item 7</div>
+  <div class="bui-col">Item 8</div>
+</div>
+</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-row bui-row-cols-1 bui-row-cols-sm-2 bui-row-cols-lg-4"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col"</span><span class="bui-code-pink">&gt;</span>Item 1<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col"</span><span class="bui-code-pink">&gt;</span>Item 2<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col"</span><span class="bui-code-pink">&gt;</span>Item 3<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col"</span><span class="bui-code-pink">&gt;</span>Item 4<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col"</span><span class="bui-code-pink">&gt;</span>Item 5<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col"</span><span class="bui-code-pink">&gt;</span>Item 6<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col"</span><span class="bui-code-pink">&gt;</span>Item 7<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col"</span><span class="bui-code-pink">&gt;</span>Item 8<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
+<article class="bui-demo-card" id="wrapping"><div class="bui-demo-title">Wrapping <span>.bui-row</span></div><div class="bui-demo-content bui-gd"><p class="bui-gd-note">If the columns in one row add up to more than 12, the extra columns wrap onto a new line as a unit.</p>
+<div class="bui-row">
+  <div class="bui-col-9">col-9</div>
+  <div class="bui-col-4">col-4 — wraps to a new line</div>
+  <div class="bui-col-6">col-6</div>
+  <div class="bui-col-2">col-2</div>
+</div>
+</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-row"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-9"</span><span class="bui-code-pink">&gt;</span>col-9<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-4"</span><span class="bui-code-pink">&gt;</span>col-4 — wraps to a new line<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-6"</span><span class="bui-code-pink">&gt;</span>col-6<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-2"</span><span class="bui-code-pink">&gt;</span>col-2<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
+<article class="bui-demo-card" id="offset"><div class="bui-demo-title">Offsets <span>.bui-offset-{n} · .bui-offset-{tier}-{n}</span></div><div class="bui-demo-content bui-gd"><p class="bui-gd-note">Push a column away from the start side. Offsets use <code>margin-inline-start</code>, so they flip automatically in RTL.</p>
+<div class="bui-row">
+  <div class="bui-col-4">col-4</div>
+  <div class="bui-col-4 bui-offset-4">col-4 offset-4</div>
+</div>
+<div class="bui-row">
+  <div class="bui-col-3 bui-offset-3">col-3 offset-3</div>
+  <div class="bui-col-3 bui-offset-3">col-3 offset-3</div>
+</div>
+<div class="bui-row">
+  <div class="bui-col-12 bui-col-md-6 bui-offset-md-3">Centered from md: col-md-6 offset-md-3</div>
+</div>
+</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-row"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-4"</span><span class="bui-code-pink">&gt;</span>col-4<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-4 bui-offset-4"</span><span class="bui-code-pink">&gt;</span>col-4 offset-4<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-row"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-3 bui-offset-3"</span><span class="bui-code-pink">&gt;</span>col-3 offset-3<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-3 bui-offset-3"</span><span class="bui-code-pink">&gt;</span>col-3 offset-3<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-row"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-12 bui-col-md-6 bui-offset-md-3"</span><span class="bui-code-pink">&gt;</span>Centered from md: col-md-6 offset-md-3<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
+<article class="bui-demo-card" id="order"><div class="bui-demo-title">Reordering <span>.bui-order-{0-5} · .bui-order-first · .bui-order-last</span></div><div class="bui-demo-content bui-gd"><p class="bui-gd-note">Change the visual order without touching the HTML. Keep the DOM order meaningful for screen readers and keyboard users.</p>
+<div class="bui-row">
+  <div class="bui-col bui-order-3">DOM 1 · order-3</div>
+  <div class="bui-col bui-order-1">DOM 2 · order-1</div>
+  <div class="bui-col bui-order-2">DOM 3 · order-2</div>
+</div>
+<div class="bui-row">
+  <div class="bui-col bui-order-last">order-last</div>
+  <div class="bui-col">no order</div>
+  <div class="bui-col bui-order-first">order-first</div>
+</div>
+<div class="bui-row">
+  <div class="bui-col-12 bui-col-md-4">First on phones</div>
+  <div class="bui-col-12 bui-col-md-4 bui-order-first bui-order-md-last">Moves first on phones, last from md</div>
+  <div class="bui-col-12 bui-col-md-4">Third</div>
+</div>
+</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-row"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col bui-order-3"</span><span class="bui-code-pink">&gt;</span>DOM 1 · order-3<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col bui-order-1"</span><span class="bui-code-pink">&gt;</span>DOM 2 · order-1<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col bui-order-2"</span><span class="bui-code-pink">&gt;</span>DOM 3 · order-2<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-row"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col bui-order-last"</span><span class="bui-code-pink">&gt;</span>order-last<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col"</span><span class="bui-code-pink">&gt;</span>no order<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col bui-order-first"</span><span class="bui-code-pink">&gt;</span>order-first<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-row"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-12 bui-col-md-4"</span><span class="bui-code-pink">&gt;</span>First on phones<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-12 bui-col-md-4 bui-order-first bui-order-md-last"</span><span class="bui-code-pink">&gt;</span>Moves first on phones, last from md<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-12 bui-col-md-4"</span><span class="bui-code-pink">&gt;</span>Third<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
+<article class="bui-demo-card" id="vertical"><div class="bui-demo-title">Vertical alignment <span>.bui-items-{start|center|end|baseline|stretch}</span></div><div class="bui-demo-content bui-gd"><p class="bui-gd-note">Put an alignment class on the row to align all its columns on the cross axis. The row needs some height to show the difference.</p>
+<div class="bui-row bui-items-start" style="min-height: 110px">
+  <div class="bui-col">items-start</div>
+  <div class="bui-col bui-gd-tall">Taller column</div>
+  <div class="bui-col">Short</div>
+</div>
+<div class="bui-row bui-items-center" style="min-height: 110px">
+  <div class="bui-col">items-center</div>
+  <div class="bui-col bui-gd-tall">Taller column</div>
+  <div class="bui-col">Short</div>
+</div>
+<div class="bui-row bui-items-end" style="min-height: 110px">
+  <div class="bui-col">items-end</div>
+  <div class="bui-col bui-gd-tall">Taller column</div>
+  <div class="bui-col">Short</div>
+</div>
+</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-row bui-items-start"</span> <span class="bui-code-blue">style</span>=<span class="bui-code-green">"min-height: 110px"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col"</span><span class="bui-code-pink">&gt;</span>items-start<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col bui-gd-tall"</span><span class="bui-code-pink">&gt;</span>Taller column<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col"</span><span class="bui-code-pink">&gt;</span>Short<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-row bui-items-center"</span> <span class="bui-code-blue">style</span>=<span class="bui-code-green">"min-height: 110px"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col"</span><span class="bui-code-pink">&gt;</span>items-center<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col bui-gd-tall"</span><span class="bui-code-pink">&gt;</span>Taller column<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col"</span><span class="bui-code-pink">&gt;</span>Short<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-row bui-items-end"</span> <span class="bui-code-blue">style</span>=<span class="bui-code-green">"min-height: 110px"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col"</span><span class="bui-code-pink">&gt;</span>items-end<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col bui-gd-tall"</span><span class="bui-code-pink">&gt;</span>Taller column<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col"</span><span class="bui-code-pink">&gt;</span>Short<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
+<article class="bui-demo-card" id="self"><div class="bui-demo-title">Align one column <span>.bui-self-{start|center|end|stretch}</span></div><div class="bui-demo-content bui-gd"><p class="bui-gd-note">Override the row alignment for a single column.</p>
+<div class="bui-row" style="min-height: 120px">
+  <div class="bui-col bui-self-start">self-start</div>
+  <div class="bui-col bui-self-center">self-center</div>
+  <div class="bui-col bui-self-end">self-end</div>
+  <div class="bui-col bui-self-stretch">self-stretch</div>
+</div>
+</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-row"</span> <span class="bui-code-blue">style</span>=<span class="bui-code-green">"min-height: 120px"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col bui-self-start"</span><span class="bui-code-pink">&gt;</span>self-start<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col bui-self-center"</span><span class="bui-code-pink">&gt;</span>self-center<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col bui-self-end"</span><span class="bui-code-pink">&gt;</span>self-end<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col bui-self-stretch"</span><span class="bui-code-pink">&gt;</span>self-stretch<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
+<article class="bui-demo-card" id="horizontal"><div class="bui-demo-title">Horizontal alignment <span>.bui-justify-{start|center|end|between|around|evenly}</span></div><div class="bui-demo-content bui-gd"><p class="bui-gd-note">Distribute columns that do not fill the whole row. <code>start</code> and <code>end</code> follow the writing direction.</p>
+<div class="bui-row bui-justify-start">
+  <div class="bui-col-4">justify-start</div>
+  <div class="bui-col-4">col-4</div>
+</div>
+<div class="bui-row bui-justify-center">
+  <div class="bui-col-4">justify-center</div>
+  <div class="bui-col-4">col-4</div>
+</div>
+<div class="bui-row bui-justify-end">
+  <div class="bui-col-4">justify-end</div>
+  <div class="bui-col-4">col-4</div>
+</div>
+<div class="bui-row bui-justify-between">
+  <div class="bui-col-3">justify-between</div>
+  <div class="bui-col-3">col-3</div>
+  <div class="bui-col-3">col-3</div>
+</div>
+<div class="bui-row bui-justify-around">
+  <div class="bui-col-3">justify-around</div>
+  <div class="bui-col-3">col-3</div>
+  <div class="bui-col-3">col-3</div>
+</div>
+<div class="bui-row bui-justify-evenly">
+  <div class="bui-col-3">justify-evenly</div>
+  <div class="bui-col-3">col-3</div>
+  <div class="bui-col-3">col-3</div>
+</div>
+</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-row bui-justify-start"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-4"</span><span class="bui-code-pink">&gt;</span>justify-start<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-4"</span><span class="bui-code-pink">&gt;</span>col-4<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-row bui-justify-center"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-4"</span><span class="bui-code-pink">&gt;</span>justify-center<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-4"</span><span class="bui-code-pink">&gt;</span>col-4<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-row bui-justify-end"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-4"</span><span class="bui-code-pink">&gt;</span>justify-end<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-4"</span><span class="bui-code-pink">&gt;</span>col-4<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-row bui-justify-between"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-3"</span><span class="bui-code-pink">&gt;</span>justify-between<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-3"</span><span class="bui-code-pink">&gt;</span>col-3<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-3"</span><span class="bui-code-pink">&gt;</span>col-3<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-row bui-justify-around"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-3"</span><span class="bui-code-pink">&gt;</span>justify-around<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-3"</span><span class="bui-code-pink">&gt;</span>col-3<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-3"</span><span class="bui-code-pink">&gt;</span>col-3<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-row bui-justify-evenly"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-3"</span><span class="bui-code-pink">&gt;</span>justify-evenly<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-3"</span><span class="bui-code-pink">&gt;</span>col-3<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-3"</span><span class="bui-code-pink">&gt;</span>col-3<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
+<article class="bui-demo-card" id="gutters"><div class="bui-demo-title">Gutters <span>.bui-gutter-{0-5}</span></div><div class="bui-demo-content bui-gd"><p class="bui-gd-note">The default gap between columns is <code>var(--bui-spacer)</code> (1rem). Change it with <code>.bui-gutter-0</code> (none) to <code>.bui-gutter-5</code> (3 × spacer) on the row; the same classes work on <code>.bui-grid</code>, <code>.bui-stack</code> and <code>.bui-cluster</code>.</p>
+<div class="bui-row bui-gutter-0">
+  <div class="bui-col">gutter-0</div>
+  <div class="bui-col">col</div>
+  <div class="bui-col">col</div>
+</div>
+<div class="bui-row bui-gutter-1">
+  <div class="bui-col">gutter-1</div>
+  <div class="bui-col">col</div>
+  <div class="bui-col">col</div>
+</div>
+<div class="bui-row bui-gutter-2">
+  <div class="bui-col">gutter-2</div>
+  <div class="bui-col">col</div>
+  <div class="bui-col">col</div>
+</div>
+<div class="bui-row bui-gutter-3">
+  <div class="bui-col">gutter-3</div>
+  <div class="bui-col">col</div>
+  <div class="bui-col">col</div>
+</div>
+<div class="bui-row bui-gutter-4">
+  <div class="bui-col">gutter-4</div>
+  <div class="bui-col">col</div>
+  <div class="bui-col">col</div>
+</div>
+<div class="bui-row bui-gutter-5">
+  <div class="bui-col">gutter-5</div>
+  <div class="bui-col">col</div>
+  <div class="bui-col">col</div>
+</div>
+</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-row bui-gutter-0"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col"</span><span class="bui-code-pink">&gt;</span>gutter-0<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col"</span><span class="bui-code-pink">&gt;</span>col<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col"</span><span class="bui-code-pink">&gt;</span>col<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-row bui-gutter-1"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col"</span><span class="bui-code-pink">&gt;</span>gutter-1<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col"</span><span class="bui-code-pink">&gt;</span>col<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col"</span><span class="bui-code-pink">&gt;</span>col<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-row bui-gutter-2"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col"</span><span class="bui-code-pink">&gt;</span>gutter-2<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col"</span><span class="bui-code-pink">&gt;</span>col<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col"</span><span class="bui-code-pink">&gt;</span>col<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-row bui-gutter-3"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col"</span><span class="bui-code-pink">&gt;</span>gutter-3<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col"</span><span class="bui-code-pink">&gt;</span>col<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col"</span><span class="bui-code-pink">&gt;</span>col<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-row bui-gutter-4"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col"</span><span class="bui-code-pink">&gt;</span>gutter-4<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col"</span><span class="bui-code-pink">&gt;</span>col<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col"</span><span class="bui-code-pink">&gt;</span>col<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-row bui-gutter-5"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col"</span><span class="bui-code-pink">&gt;</span>gutter-5<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col"</span><span class="bui-code-pink">&gt;</span>col<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col"</span><span class="bui-code-pink">&gt;</span>col<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
+<article class="bui-demo-card" id="gutters-xy"><div class="bui-demo-title">Horizontal and vertical gutters <span>.bui-gutter-x-{0-5} · .bui-gutter-y-{0-5}</span></div><div class="bui-demo-content bui-gd"><p class="bui-gd-note">Set the horizontal and vertical gaps independently — useful for wrapping rows.</p>
+<div class="bui-row bui-gutter-x-1 bui-gutter-y-4">
+  <div class="bui-col-6">1</div>
+  <div class="bui-col-6">2</div>
+  <div class="bui-col-6">3</div>
+  <div class="bui-col-6">4</div>
+</div>
+<div class="bui-row bui-gutter-x-5 bui-gutter-y-1">
+  <div class="bui-col-6">1</div>
+  <div class="bui-col-6">2</div>
+  <div class="bui-col-6">3</div>
+  <div class="bui-col-6">4</div>
+</div>
+</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-row bui-gutter-x-1 bui-gutter-y-4"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-6"</span><span class="bui-code-pink">&gt;</span>1<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-6"</span><span class="bui-code-pink">&gt;</span>2<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-6"</span><span class="bui-code-pink">&gt;</span>3<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-6"</span><span class="bui-code-pink">&gt;</span>4<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-row bui-gutter-x-5 bui-gutter-y-1"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-6"</span><span class="bui-code-pink">&gt;</span>1<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-6"</span><span class="bui-code-pink">&gt;</span>2<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-6"</span><span class="bui-code-pink">&gt;</span>3<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-6"</span><span class="bui-code-pink">&gt;</span>4<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
+<article class="bui-demo-card" id="nesting"><div class="bui-demo-title">Nesting <span>.bui-row inside .bui-col-*</span></div><div class="bui-demo-content bui-gd"><p class="bui-gd-note">Put a new <code>.bui-row</code> inside a column. The nested row has its own 12 columns that fill the parent column.</p>
+<div class="bui-row">
+  <div class="bui-col-12 bui-col-md-8">
+    Level 1 — col-md-8
+    <div class="bui-row bui-gutter-2" style="margin-top: .75rem">
+      <div class="bui-col-6">Level 2 · 6</div>
+      <div class="bui-col-6">Level 2 · 6</div>
+    </div>
+  </div>
+  <div class="bui-col-12 bui-col-md-4">Level 1 — col-md-4</div>
+</div>
+</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-row"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-12 bui-col-md-8"</span><span class="bui-code-pink">&gt;</span>
+    Level 1 — col-md-8
+    <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-row bui-gutter-2"</span> <span class="bui-code-blue">style</span>=<span class="bui-code-green">"margin-top: .75rem"</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-6"</span><span class="bui-code-pink">&gt;</span>Level 2 · 6<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-6"</span><span class="bui-code-pink">&gt;</span>Level 2 · 6<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-12 bui-col-md-4"</span><span class="bui-code-pink">&gt;</span>Level 1 — col-md-4<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
+<article class="bui-demo-card" id="container"><div class="bui-demo-title">Containers <span>.bui-container · .bui-container-{sm|md|lg|xl} · .bui-container-fluid</span></div><div class="bui-demo-content bui-gd"><p class="bui-gd-note">A container centers your content and sets a maximum width per breakpoint (see the table below). <code>.bui-container-fluid</code> is always 100% wide; <code>.bui-container-md</code> is 100% wide until the <code>md</code> breakpoint. Horizontal padding comes from <code>--bui-container-padding</code>. The dashed frame is only for this demo.</p>
+<div class="bui-gd-frame">
+<div class="bui-container">
+  .bui-container
+</div>
+</div>
+<div class="bui-gd-frame">
+<div class="bui-container-md">
+  .bui-container-md
+</div>
+</div>
+<div class="bui-gd-frame">
+<div class="bui-container-fluid">
+  .bui-container-fluid
+</div>
+</div>
+</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-container"</span><span class="bui-code-pink">&gt;</span>
+  .bui-container
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-container-md"</span><span class="bui-code-pink">&gt;</span>
+  .bui-container-md
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-container-fluid"</span><span class="bui-code-pink">&gt;</span>
+  .bui-container-fluid
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
+<article class="bui-demo-card" id="css-grid"><div class="bui-demo-title">CSS grid <span>.bui-grid · .bui-grid-cols-{1-6}</span></div><div class="bui-demo-content bui-gd"><p class="bui-gd-note"><code>.bui-grid</code> uses CSS grid for equal tracks. Choose the number of columns per breakpoint with <code>.bui-grid-cols-{tier}-{n}</code> — here 1 column on phones, 2 from <code>sm</code>, 3 from <code>md</code>, 6 from <code>xl</code>.</p>
+<div class="bui-grid bui-grid-cols-1 bui-grid-cols-sm-2 bui-grid-cols-md-3 bui-grid-cols-xl-6">
+  <div>1</div>
+  <div>2</div>
+  <div>3</div>
+  <div>4</div>
+  <div>5</div>
+  <div>6</div>
+</div>
+</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-grid bui-grid-cols-1 bui-grid-cols-sm-2 bui-grid-cols-md-3 bui-grid-cols-xl-6"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span><span class="bui-code-pink">&gt;</span>1<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span><span class="bui-code-pink">&gt;</span>2<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span><span class="bui-code-pink">&gt;</span>3<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span><span class="bui-code-pink">&gt;</span>4<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span><span class="bui-code-pink">&gt;</span>5<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span><span class="bui-code-pink">&gt;</span>6<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
+<article class="bui-demo-card" id="grid-span"><div class="bui-demo-title">Grid spans <span>.bui-grid-span-{1-6}</span></div><div class="bui-demo-content bui-gd"><p class="bui-gd-note">Let an item cover several tracks of a <code>.bui-grid</code>.</p>
+<div class="bui-grid bui-grid-cols-4">
+  <div class="bui-grid-span-2">span 2</div>
+  <div>1</div>
+  <div>1</div>
+  <div>1</div>
+  <div class="bui-grid-span-3">span 3</div>
+  <div class="bui-grid-span-4">span 4</div>
+</div>
+</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-grid bui-grid-cols-4"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-grid-span-2"</span><span class="bui-code-pink">&gt;</span>span 2<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span><span class="bui-code-pink">&gt;</span>1<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span><span class="bui-code-pink">&gt;</span>1<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span><span class="bui-code-pink">&gt;</span>1<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-grid-span-3"</span><span class="bui-code-pink">&gt;</span>span 3<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-grid-span-4"</span><span class="bui-code-pink">&gt;</span>span 4<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
+<article class="bui-demo-card" id="grid-auto"><div class="bui-demo-title">Auto-fit grid <span>.bui-grid.bui-grid-auto</span></div><div class="bui-demo-content bui-gd"><p class="bui-gd-note">Columns are created automatically to fit the width, each at least <code>--bui-grid-min</code> (12rem by default). No breakpoints needed.</p>
+<div class="bui-grid bui-grid-auto" style="--bui-grid-min: 9rem">
+  <div>1</div>
+  <div>2</div>
+  <div>3</div>
+  <div>4</div>
+  <div>5</div>
+  <div>6</div>
+  <div>7</div>
+</div>
+</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-grid bui-grid-auto"</span> <span class="bui-code-blue">style</span>=<span class="bui-code-green">"--bui-grid-min: 9rem"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span><span class="bui-code-pink">&gt;</span>1<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span><span class="bui-code-pink">&gt;</span>2<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span><span class="bui-code-pink">&gt;</span>3<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span><span class="bui-code-pink">&gt;</span>4<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span><span class="bui-code-pink">&gt;</span>5<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span><span class="bui-code-pink">&gt;</span>6<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span><span class="bui-code-pink">&gt;</span>7<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
+<article class="bui-demo-card" id="stack"><div class="bui-demo-title">Stack <span>.bui-stack</span></div><div class="bui-demo-content bui-gd"><p class="bui-gd-note">A vertical flow with consistent spacing between children, controlled by the gutter classes.</p>
+<div class="bui-stack bui-gutter-2">
+  <div>First</div>
+  <div>Second</div>
+  <div>Third</div>
+</div>
+</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-stack bui-gutter-2"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span><span class="bui-code-pink">&gt;</span>First<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span><span class="bui-code-pink">&gt;</span>Second<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span><span class="bui-code-pink">&gt;</span>Third<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
+<article class="bui-demo-card" id="cluster"><div class="bui-demo-title">Cluster <span>.bui-cluster</span></div><div class="bui-demo-content bui-gd"><p class="bui-gd-note">A wrapping group of inline items (tags, buttons, filters) with even gaps. It follows the writing direction.</p>
+<div class="bui-cluster bui-gutter-2">
+  <span class="bui-badge bui-badge-primary">Design</span>
+  <span class="bui-badge bui-badge-success">Frontend</span>
+  <span class="bui-badge bui-badge-warning">Docs</span>
+  <span class="bui-badge bui-badge-info">Accessibility</span>
+  <span class="bui-badge bui-badge-neutral">RTL</span>
+</div>
+</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-cluster bui-gutter-2"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-badge bui-badge-primary"</span><span class="bui-code-pink">&gt;</span>Design<span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-badge bui-badge-success"</span><span class="bui-code-pink">&gt;</span>Frontend<span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-badge bui-badge-warning"</span><span class="bui-code-pink">&gt;</span>Docs<span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-badge bui-badge-info"</span><span class="bui-code-pink">&gt;</span>Accessibility<span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-badge bui-badge-neutral"</span><span class="bui-code-pink">&gt;</span>RTL<span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
+<article class="bui-demo-card" id="layout-dashboard"><div class="bui-demo-title">Real layout: dashboard <span>.bui-row-cols-* + .bui-col-lg-*</span></div><div class="bui-demo-content"><p class="bui-gd-note">Stat cards in a responsive row (1 → 2 → 4 columns) above a main area with a sidebar that stacks on smaller screens.</p>
+<div class="bui-row bui-row-cols-1 bui-row-cols-sm-2 bui-row-cols-lg-4">
+  <div class="bui-col">
+    <div class="bui-stat-card">
+      <span class="bui-stat-label">Revenue</span>
+      <strong>$24.8k</strong>
+    </div>
+  </div>
+  <div class="bui-col">
+    <div class="bui-stat-card">
+      <span class="bui-stat-label">Orders</span>
+      <strong>1,284</strong>
+    </div>
+  </div>
+  <div class="bui-col">
+    <div class="bui-stat-card">
+      <span class="bui-stat-label">Customers</span>
+      <strong>932</strong>
+    </div>
+  </div>
+  <div class="bui-col">
+    <div class="bui-stat-card">
+      <span class="bui-stat-label">Refunds</span>
+      <strong>18</strong>
+    </div>
+  </div>
+</div>
+<div class="bui-row" style="margin-top: 1rem">
+  <div class="bui-col-12 bui-col-lg-8">
+    <div class="bui-stat-card">
+      <span class="bui-stat-label">Main content</span>
+      <strong>col-lg-8</strong>
+    </div>
+  </div>
+  <div class="bui-col-12 bui-col-lg-4">
+    <div class="bui-stat-card">
+      <span class="bui-stat-label">Sidebar</span>
+      <strong>col-lg-4</strong>
+    </div>
+  </div>
+</div>
+</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-row bui-row-cols-1 bui-row-cols-sm-2 bui-row-cols-lg-4"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col"</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-stat-card"</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-stat-label"</span><span class="bui-code-pink">&gt;</span>Revenue<span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;strong</span><span class="bui-code-pink">&gt;</span>$24.8k<span class="bui-code-pink">&lt;/strong</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col"</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-stat-card"</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-stat-label"</span><span class="bui-code-pink">&gt;</span>Orders<span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;strong</span><span class="bui-code-pink">&gt;</span>1,284<span class="bui-code-pink">&lt;/strong</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col"</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-stat-card"</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-stat-label"</span><span class="bui-code-pink">&gt;</span>Customers<span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;strong</span><span class="bui-code-pink">&gt;</span>932<span class="bui-code-pink">&lt;/strong</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col"</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-stat-card"</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-stat-label"</span><span class="bui-code-pink">&gt;</span>Refunds<span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;strong</span><span class="bui-code-pink">&gt;</span>18<span class="bui-code-pink">&lt;/strong</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-row"</span> <span class="bui-code-blue">style</span>=<span class="bui-code-green">"margin-top: 1rem"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-12 bui-col-lg-8"</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-stat-card"</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-stat-label"</span><span class="bui-code-pink">&gt;</span>Main content<span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;strong</span><span class="bui-code-pink">&gt;</span>col-lg-8<span class="bui-code-pink">&lt;/strong</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-12 bui-col-lg-4"</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-stat-card"</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-stat-label"</span><span class="bui-code-pink">&gt;</span>Sidebar<span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;strong</span><span class="bui-code-pink">&gt;</span>col-lg-4<span class="bui-code-pink">&lt;/strong</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
+<article class="bui-demo-card" id="layout-form"><div class="bui-demo-title">Real layout: form <span>.bui-row + .bui-col-md-6</span></div><div class="bui-demo-content"><p class="bui-gd-note">Two fields side by side from <code>md</code>, full width on phones — using the floating-label inputs.</p>
+<div class="bui-row">
+  <div class="bui-col-12 bui-col-md-6">
+    <div class="bui-float">
+      <input class="bui-float-input" id="gf-first" type="text" placeholder=" ">
+      <label class="bui-float-label" for="gf-first">First name</label>
+    </div>
+  </div>
+  <div class="bui-col-12 bui-col-md-6">
+    <div class="bui-float">
+      <input class="bui-float-input" id="gf-last" type="text" placeholder=" ">
+      <label class="bui-float-label" for="gf-last">Last name</label>
+    </div>
+  </div>
+  <div class="bui-col-12">
+    <div class="bui-float">
+      <input class="bui-float-input" id="gf-email" type="email" placeholder=" ">
+      <label class="bui-float-label" for="gf-email">Email address</label>
+    </div>
+  </div>
+  <div class="bui-col-12 bui-col-sm-auto bui-offset-sm-0">
+    <button type="button" class="bui-btn bui-btn-primary">Save changes</button>
+  </div>
+</div>
+</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-row"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-12 bui-col-md-6"</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float"</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"gf-first"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"text"</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"gf-first"</span><span class="bui-code-pink">&gt;</span>First name<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-12 bui-col-md-6"</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float"</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"gf-last"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"text"</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"gf-last"</span><span class="bui-code-pink">&gt;</span>Last name<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-12"</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float"</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"gf-email"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"email"</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"gf-email"</span><span class="bui-code-pink">&gt;</span>Email address<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-12 bui-col-sm-auto bui-offset-sm-0"</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-btn bui-btn-primary"</span><span class="bui-code-pink">&gt;</span>Save changes<span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
+<article class="bui-demo-card" id="rtl"><div class="bui-demo-title">Right-to-left (RTL) <span>dir="rtl"</span></div><div class="bui-demo-content bui-gd"><p class="bui-gd-note">The grid needs no extra classes for RTL. Set <code>dir="rtl"</code> on the page or on any wrapper and columns, offsets, <code>justify-start/end</code> and clusters mirror automatically. Use the RTL button in the top bar to flip the whole page.</p>
+<div dir="rtl">
+  <div class="bui-row">
+    <div class="bui-col-3">1 — starts on the right</div>
+    <div class="bui-col-3 bui-offset-3">2 — offset 3</div>
+    <div class="bui-col-3">3</div>
+  </div>
+  <div class="bui-row bui-justify-end" style="margin-top: 1rem">
+    <div class="bui-col-4">justify-end → left side</div>
+  </div>
+</div>
+</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">dir</span>=<span class="bui-code-green">"rtl"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-row"</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-3"</span><span class="bui-code-pink">&gt;</span>1 — starts on the right<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-3 bui-offset-3"</span><span class="bui-code-pink">&gt;</span>2 — offset 3<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-3"</span><span class="bui-code-pink">&gt;</span>3<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-row bui-justify-end"</span> <span class="bui-code-blue">style</span>=<span class="bui-code-green">"margin-top: 1rem"</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-4"</span><span class="bui-code-pink">&gt;</span>justify-end → left side<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
+<article class="bui-demo-card" id="breakpoints"><div class="bui-demo-title">Breakpoints &amp; container widths <span>min-width, mobile first</span></div><div class="bui-demo-content"><p class="bui-gd-note">Classes with a tier prefix apply from that width and up. Classes without a prefix apply at every width.</p><div class="bui-gd-table-wrap"><table class="bui-dir-table bui-gd-table"><thead><tr><th>Tier</th><th>Prefix</th><th>Applies from</th><th>Container max-width</th></tr></thead><tbody><tr><td>Extra small</td><td><code>(none)</code></td><td>0</td><td>100%</td></tr><tr><td>Small</td><td><code>sm</code></td><td>576px</td><td>540px</td></tr><tr><td>Medium</td><td><code>md</code></td><td>768px</td><td>720px</td></tr><tr><td>Large</td><td><code>lg</code></td><td>992px</td><td>960px</td></tr><tr><td>Extra large</td><td><code>xl</code></td><td>1200px</td><td>1140px</td></tr></tbody></table></div></div></article>
+<article class="bui-demo-card" id="reference"><div class="bui-demo-title">Class reference <span>Layout</span></div><div class="bui-demo-content"><div class="bui-gd-table-wrap"><table class="bui-dir-table bui-gd-table"><thead><tr><th>Class</th><th>What it does</th></tr></thead><tbody><tr><td><code>.bui-container</code> · <code>-sm</code> <code>-md</code> <code>-lg</code> <code>-xl</code> · <code>-fluid</code></td><td>Centered, padded wrapper with a max-width per breakpoint</td></tr><tr><td><code>.bui-row</code></td><td>Flex row that wraps; holds the columns and the gutter variables</td></tr><tr><td><code>.bui-col</code> · <code>.bui-col-auto</code></td><td>Equal-width column · width from content (each also as <code>-sm/-md/-lg/-xl</code>)</td></tr><tr><td><code>.bui-col-{1-12}</code> · <code>.bui-col-{tier}-{1-12}</code></td><td>Column spanning n of 12</td></tr><tr><td><code>.bui-row-cols-{1-6}</code> · <code>.bui-row-cols-{tier}-{1-6}</code></td><td>Set the number of columns per row from the row</td></tr><tr><td><code>.bui-offset-{0-11}</code> · <code>.bui-offset-{tier}-{0-11}</code></td><td>Leave n columns empty before the column (logical margin)</td></tr><tr><td><code>.bui-order-{0-5}</code> · <code>-first</code> · <code>-last</code> (+ tier)</td><td>Visual order</td></tr><tr><td><code>.bui-gutter-{0-5}</code> · <code>.bui-gutter-x-{0-5}</code> · <code>.bui-gutter-y-{0-5}</code></td><td>Gap between columns (0, .25, .5, 1, 1.5, 3 × <code>--bui-spacer</code>)</td></tr><tr><td><code>.bui-items-{start|center|end|baseline|stretch}</code></td><td>Cross-axis alignment on the row</td></tr><tr><td><code>.bui-justify-{start|center|end|between|around|evenly}</code></td><td>Main-axis alignment on the row</td></tr><tr><td><code>.bui-self-{start|center|end|stretch}</code></td><td>Align a single column</td></tr><tr><td><code>.bui-grid</code> · <code>.bui-grid-cols-{1-6}</code> (+ tier) · <code>.bui-grid-span-{1-6}</code> (+ tier) · <code>.bui-grid-auto</code></td><td>CSS grid with equal tracks, spans and auto-fit</td></tr><tr><td><code>.bui-stack</code> · <code>.bui-cluster</code></td><td>Vertical flow · wrapping inline group</td></tr><tr><td><code>--bui-gutter-x</code> · <code>--bui-gutter-y</code> · <code>--bui-container-padding</code> · <code>--bui-grid-min</code></td><td>Custom properties you can set on any element to tune the layout</td></tr></tbody></table></div></div></article>
+      </div>
+      </section>
+      <div class="bui-pager"><span></span><a class="bui-btn bui-btn-primary" href="../components/buttons.html">Buttons <span class="bui-flip">→</span></a></div>
+      <footer class="bui-footer"><span>© 2026 Baset UI. Built for makers.</span><span>Documentation · v1.0.0</span></footer>
+    </main>
+  </div>
+  <script src="../assets/js/baset-ui.js"></script>
+
+</body>
+</html>
