@@ -1037,6 +1037,7 @@
   document.querySelectorAll('[data-bui-upload]').forEach(uInit);
   BUI.upload={clear(input){if(!input)return;const w=input.closest('[data-bui-upload]'),s=w&&uInit(w);input.value='';if(s)s.files=[];uRender(input,[],true);input.setCustomValidity('');uFeedback(input,'');},validate(input){return uValidate(input,true);},setStatus(input,status,message=''){const w=input?.closest('[data-bui-upload]');if(!w)return;w.classList.toggle('is-uploading',status==='uploading');uFeedback(input,message,status==='success'?'success':status==='uploading'?'uploading':'error');w.querySelectorAll('[data-upload-file-status]').forEach(n=>{n.textContent=status==='uploading'?'Uploading…':status==='success'?'Uploaded':status==='error'?'Upload failed':'';n.className='bui-upload-file-status'+(status==='success'?' is-success':status==='error'?' is-error':'');});const s=uploadInstances.get(w);if(s)s.status=status;}};
   document.addEventListener('click',e=>{const trigger=e.target.closest('[data-bui-upload-trigger]');if(!trigger)return;const input=document.querySelector(trigger.getAttribute('data-bui-upload-trigger'));if(input&&!input.disabled)input.click();});
+  document.addEventListener('submit',e=>{const inputs=[...e.target.querySelectorAll('[data-bui-upload] input[type=file]')];for(const input of inputs){if(!uValidate(input,true)){e.preventDefault();input.focus();break;}}},true);
   document.addEventListener('reset',e=>setTimeout(()=>e.target.querySelectorAll('[data-bui-upload] input[type=file]').forEach(input=>BUI.upload.clear(input)),0));
 
 })();
