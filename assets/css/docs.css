@@ -294,3 +294,7 @@ h1 em { font-style: normal; color: var(--bui-primary); }
 .bui-gd-note code, .bui-gd-table code { font: 11px ui-monospace, monospace; color: var(--bui-primary-text); direction: ltr; unicode-bidi: isolate; }
 .bui-gd-table-wrap { overflow-x: auto; }
 .bui-gd > .bui-row + .bui-row, .bui-gd > .bui-gd-frame + .bui-gd-frame, .bui-gd > .bui-grid + .bui-grid { margin-top: 12px; }
+
+/* ---------- Date and time picker demos: popup color classes named in data-bui-popup-class ---------- */
+.bui-dt-green { --bui-dt-accent: var(--bui-green-500); --bui-dt-accent-soft: var(--bui-success-bg-subtle); --bui-dt-accent-text: var(--bui-success-fg); --bui-dt-radius: var(--bui-radius-6); --bui-dt-cell-radius: 50%; }
+.bui-dt-ink { --bui-dt-bg: #20213a; --bui-dt-fg: #eff0ff; --bui-dt-muted: #a5a8c0; --bui-dt-border: #41425a; --bui-dt-hover: #2f3049; --bui-dt-accent: #f2a33a; --bui-dt-accent-fg: #3a2706; --bui-dt-accent-soft: #3a3150; --bui-dt-accent-text: #f5b969; color-scheme: dark; }

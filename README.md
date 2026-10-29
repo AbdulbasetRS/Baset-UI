@@ -25,17 +25,18 @@ Explore the full Baset UI documentation website, including interactive component
 4. [Components](#components)
 5. [Class reference](#class-reference)
    - [Grid and layout](#grid-and-layout)
-6. [Loaders and success icon](#loaders-and-success-icon)
-7. [Icons](#icons)
-8. [Theming (CSS variables)](#theming-css-variables)
-9. [Dark mode](#dark-mode)
-10. [JavaScript behaviors](#javascript-behaviors)
-11. [Using it with Laravel](#using-it-with-laravel)
-12. [Adding a new component](#adding-a-new-component)
-13. [Naming convention](#naming-convention)
-14. [Browser support](#browser-support)
-15. [Status and roadmap](#status-and-roadmap)
-16. [Third-party licenses](#third-party-licenses)
+6. [Date and time pickers](#date-and-time-pickers)
+7. [Loaders and success icon](#loaders-and-success-icon)
+8. [Icons](#icons)
+9. [Theming (CSS variables)](#theming-css-variables)
+10. [Dark mode](#dark-mode)
+11. [JavaScript behaviors](#javascript-behaviors)
+12. [Using it with Laravel](#using-it-with-laravel)
+13. [Adding a new component](#adding-a-new-component)
+14. [Naming convention](#naming-convention)
+15. [Browser support](#browser-support)
+16. [Status and roadmap](#status-and-roadmap)
+17. [Third-party licenses](#third-party-licenses)
 
 ---
 
@@ -124,6 +125,7 @@ baset-ui/
 ├── components/                 # One documentation page per component
 │   ├── buttons.html
 │   ├── forms.html
+│   ├── datetime.html           # Date & time pickers: date, time, datetime-local, month, week
 │   ├── cards.html
 │   ├── alerts.html
 │   ├── badges.html
@@ -150,6 +152,7 @@ baset-ui/
 │   │   └── LICENSE-phosphor.txt
 │   └── js/
 │       ├── baset-ui.js         # Optional interactions
+│       ├── baset-datetime.js   # Optional date & time pickers (needs section 18 of baset-ui.css)
 │       ├── icons-gallery.js    # Icons page only (search + details dialog)
 │       └── token-playground.js     # Token playground page only
 ├── README.md
@@ -166,6 +169,7 @@ baset-ui/
 | Grid system (Layout) | `layout/grid.html` | Basic and equal columns, auto width, responsive tiers, columns per row, wrapping, offsets, order, vertical / horizontal / self alignment, gutters, nesting, containers, CSS grid (spans, auto-fit), stack, cluster, dashboard and form layouts, RTL, breakpoint and class reference |
 | Buttons | `components/buttons.html` | Solid / outline / soft / link in 7 colors, neutral, anchors, sizes, icons, icon-only, pill, full width, group, disabled |
 | Form controls | `components/forms.html` | Text input, email input, select, checkbox, form layout, floating labels (basic, sizes, select, textarea), validation states with the i message button, password fields (show / hide, strength meter, requirements, Caps Lock), prefix / suffix inputs (+20, @, https://, $, %), custom select menu (automatic placement, groups, keyboard, modal), live validation forms, JS API |
+| Date & time pickers | `components/datetime.html` | The five native types (date, time, datetime-local, month, week) with floating and plain fields, min / max / step, required / disabled / readonly, sizes, popup or bottom sheet, locale / first day / 12-24 h, RTL, dark, custom colors, validation and submit, modal, JS API |
 | Cards | `components/cards.html` | Stat cards (sparkline, progress, task lines), cards grid |
 | Alerts | `components/alerts.html` | Success, info, warning, danger, alert stack |
 | Badges | `components/badges.html` | Six status variants |
@@ -394,6 +398,30 @@ select.addEventListener('bui:select-open', fn);  select.addEventListener('bui:se
 
 Styling: `.bui-select-menu`, `.bui-select-option` (`-active`, `-empty`), `.bui-select-group`, `.bui-select-group-label`; the longest list before scrolling is the `max-height` of `.bui-select-menu` (18rem). CSS anchor positioning is not used because it is not available in every supported browser.
 
+## Date and time pickers
+
+Add `data-bui-datetime` to a native `<input>` of type `date`, `time`, `datetime-local`, `month` or `week` and load `assets/js/baset-datetime.js` (the styles are section 18 of `baset-ui.css`; `baset-ui.js` is not required):
+
+```html
+<div class="bui-float">
+  <input class="bui-float-input" type="date" id="when" name="when" data-bui-datetime placeholder=" " min="2026-10-10" required>
+  <label class="bui-float-label" for="when">Date</label>
+</div>
+<script src="assets/js/baset-datetime.js" defer></script>
+```
+
+The native input stays the source of truth: `id`, `name`, `value`, `min`, `max`, `step`, `required`, `disabled`, `readonly`, validation and form submit are the browser's own, and typing still works. The picker (a calendar, month / year grids and time lists) writes the value in the native format and fires `input` and `change`. Disallowed days, months, hours and minutes are dimmed; `step` is respected. A plain input outside `.bui-float` gets a `<span class="bui-dt">` wrapper for the button. Inputs added later are found automatically.
+
+- **Attributes:** `data-bui-locale`, `data-bui-first-day` (0–6), `data-bui-hour12`, `data-bui-week-numbers`, `data-bui-size="sm|lg"`, `data-bui-mode="popover|sheet"`, `data-bui-popup-class`.
+- **Layout:** the popup opens below the field, above it when there is more room, never outside the window; up to 560 px wide it is a bottom sheet.
+- **Theme, direction, language:** follows `bui-dark` and `dir="rtl"` / `lang`; button words exist in English and Arabic, add more with `BUI.datetime.locales.fr = { … }`.
+- **Customize:** `--bui-dt-cell`, `-bg`, `-fg`, `-muted`, `-border`, `-hover`, `-accent`, `-accent-fg`, `-accent-soft`, `-accent-text`, `-radius`, `-cell-radius`, `-shadow`, `-font`, `-font-size` on `:root` or on a class named in `data-bui-popup-class`.
+- **Accessibility:** `role="dialog"`, a labelled calendar grid, full keyboard support (arrows, Home / End, PageUp / PageDown, Esc, Tab kept inside), focus returns to the field.
+- **JS:** `BUI.datetime.init(root)`, `.open(input)`, `.close()`, `.isOpen(input?)`; events `bui:datetime-open` / `bui:datetime-close`. Setting `input.value` from code fires no events: dispatch `input` and `change` yourself.
+- Where the browser has no native month / week input it shows a text box; the picker still works and checks the typed text against `min` / `max` itself.
+
+Full examples: `components/datetime.html`.
+
 ## Modal
 
 Dialogs built on the native `<dialog>` element: backdrop, focus trap, **Esc** key, inert page and focus return come from the browser. Use plain HTML, or the JavaScript API with Promises. Full examples: `components/modal.html`.
@@ -508,6 +536,7 @@ With `baset-ui.js`, any element with `id="themeToggle"` becomes a toggle button.
 | Icons gallery | `assets/js/icons-gallery.js` + `assets/icons/icons-data.js` on `components/icons.html` only |
 | Token playground | `assets/js/token-playground.js` on `customize/token-playground.html` only |
 | Select menu | Custom listbox for `select.bui-input`, `select.bui-float-input`, `select.bui-float-prefix`; `BUI.select.open/close/isOpen()`; `data-bui-native` to opt out |
+| Date & time pickers | `assets/js/baset-datetime.js` (separate file): `data-bui-datetime` on `input[type=date|time|datetime-local|month|week]`; `BUI.datetime.init/open/close/isOpen()`, `BUI.datetime.locales` |
 | Floating labels | The i button toggles its message; `<form data-bui-validate>` and `BUI.float.setState/clear/open/validate/reset()` |
 | Modal | `BUI.modal.open/close/show/confirm/alert/prompt()` or `data-bui-modal-open` / `data-bui-modal-close` attributes |
 | Scroll-spy | Sidebar links like `<a class="bui-nav" href="#section">` highlight as you scroll |
