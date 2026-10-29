@@ -7,6 +7,7 @@
  * writes the value (in the native format) and fires `input` and `change`. Needs baset-ui.css (section 18).
  *
  * Attributes (all optional)
+ *   data-bui-click-open="false"   open only from the button (default: a click anywhere on the field opens it)
  *   data-bui-datetime            enable; on a text input give the type: data-bui-datetime="week"
  *   data-bui-locale="ar-EG"      names and digits (default: nearest lang attribute)
  *   data-bui-first-day="6"       first weekday, 0 = Sunday … 6 = Saturday (default: from the locale; week = Monday)
@@ -547,11 +548,12 @@
     pop.style.top = `${side === 'bottom' ? r.bottom + gap : r.top - gap - h}px`;
     pop.dataset.placement = side;
   }
+  const onDocKey = (e) => { if (e.key === 'Escape' && openSt && !openSt.pop.contains(e.target)) { e.preventDefault(); e.stopPropagation(); close(true); } }; // focus is on the field
   const schedule = () => { if (openSt && !frame) frame = requestAnimationFrame(() => { frame = 0; if (openSt) place(openSt); }); };
   const onScroll = (e) => { if (openSt && !openSt.pop.contains(e.target)) schedule(); };
   const onPointer = (e) => {
     const st = openSt; if (!st) return;
-    if (st.pop.contains(e.target) || st.trigger.contains(e.target) || e.target === st.pop) return;
+    if (st.pop.contains(e.target) || st.trigger.contains(e.target) || e.target === st.pop || e.target === st.input) return; // a click on the field keeps it open
     close(false); // the click itself moves the focus
   };
 
@@ -600,7 +602,7 @@
     place(st);
     if (st.time) renderTime(st); // again, now that the popup has a size: scroll the lists to the chosen values
     (st.cal ? st.cal.querySelector('[tabindex="0"]') : st.time.querySelector('.bui-dt-opt[tabindex="0"]'))?.focus({ preventScroll: true });
-    document.addEventListener('pointerdown', onPointer, true);
+    document.addEventListener('pointerdown', onPointer, true); document.addEventListener('keydown', onDocKey, true);
     window.addEventListener('resize', schedule); window.addEventListener('scroll', onScroll, true);
     window.visualViewport?.addEventListener('resize', schedule);
     input.dispatchEvent(new CustomEvent('bui:datetime-open', { bubbles: true }));
@@ -609,7 +611,7 @@
   function close(refocus = true) {
     const st = openSt; if (!st) return;
     openSt = null;
-    document.removeEventListener('pointerdown', onPointer, true);
+    document.removeEventListener('pointerdown', onPointer, true); document.removeEventListener('keydown', onDocKey, true);
     window.removeEventListener('resize', schedule); window.removeEventListener('scroll', onScroll, true);
     window.visualViewport?.removeEventListener('resize', schedule);
     if (canPopover) { try { st.pop.hidePopover(); } catch { /* already hidden */ } }
@@ -661,6 +663,7 @@
     if (input.type === 'text' && !input.placeholder.trim()) input.placeholder = HINT[type];
     nameTrigger(st); syncTrigger(st); checkText(st);
     trigger.addEventListener('click', () => { if (openSt === st) close(true); else open(input); });
+    input.addEventListener('click', () => { if (input.dataset.buiClickOpen !== 'false' && openSt !== st) open(input); }); // anywhere on the field
     input.addEventListener('keydown', (e) => { if (e.key === 'F4' || (e.altKey && e.key === 'ArrowDown')) { e.preventDefault(); open(input); } });
     input.addEventListener('input', () => checkText(st));
     input.addEventListener('change', () => checkText(st));

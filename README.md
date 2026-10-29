@@ -412,7 +412,7 @@ Add `data-bui-datetime` to a native `<input>` of type `date`, `time`, `datetime-
 
 The native input stays the source of truth: `id`, `name`, `value`, `min`, `max`, `step`, `required`, `disabled`, `readonly`, validation and form submit are the browser's own, and typing still works. The picker (a calendar, month / year grids and time lists) writes the value in the native format and fires `input` and `change`. Disallowed days, months, hours and minutes are dimmed; `step` is respected. A plain input outside `.bui-float` gets a `<span class="bui-dt">` wrapper for the button. Inputs added later are found automatically.
 
-- **Attributes:** `data-bui-locale`, `data-bui-first-day` (0–6), `data-bui-hour12`, `data-bui-week-numbers`, `data-bui-size="sm|lg"`, `data-bui-mode="popover|sheet"`, `data-bui-popup-class`.
+- **Attributes:** `data-bui-locale`, `data-bui-first-day` (0–6), `data-bui-hour12`, `data-bui-week-numbers`, `data-bui-size="sm|lg"`, `data-bui-mode="popover|sheet"`, `data-bui-popup-class`, `data-bui-click-open="false"` (a click anywhere on the field opens the picker by default; this limits it to the button).
 - **Layout:** the popup opens below the field, above it when there is more room, never outside the window; up to 560 px wide it is a bottom sheet.
 - **Theme, direction, language:** follows `bui-dark` and `dir="rtl"` / `lang`; button words exist in English and Arabic, add more with `BUI.datetime.locales.fr = { … }`.
 - **Customize:** `--bui-dt-cell`, `-bg`, `-fg`, `-muted`, `-border`, `-hover`, `-accent`, `-accent-fg`, `-accent-soft`, `-accent-text`, `-radius`, `-cell-radius`, `-shadow`, `-font`, `-font-size` on `:root` or on a class named in `data-bui-popup-class`.
