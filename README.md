@@ -166,6 +166,7 @@ baset-ui/
 | Grid system (Layout) | `layout/grid.html` | Basic and equal columns, auto width, responsive tiers, columns per row, wrapping, offsets, order, vertical / horizontal / self alignment, gutters, nesting, containers, CSS grid (spans, auto-fit), stack, cluster, dashboard and form layouts, RTL, breakpoint and class reference |
 | Buttons | `components/buttons.html` | Solid / outline / soft / link in 7 colors, neutral, anchors, sizes, icons, icon-only, pill, full width, group, disabled |
 | Form controls | `components/forms.html` | Text input, email input, select, checkbox, form layout, floating labels (basic, sizes, select, textarea), validation states with the i message button, password fields (show / hide, strength meter, requirements, Caps Lock), prefix / suffix inputs (+20, @, https://, $, %), custom select menu (automatic placement, groups, keyboard, modal), live validation forms, JS API |
+| File upload | `components/upload.html` | Native file input, drag-and-drop, image previews, removable file list, accept filtering, file size/count validation, Arabic errors, RTL/LTR, themes and upload status API |
 | Cards | `components/cards.html` | Stat cards (sparkline, progress, task lines), cards grid |
 | Alerts | `components/alerts.html` | Success, info, warning, danger, alert stack |
 | Badges | `components/badges.html` | Six status variants |
@@ -176,6 +177,27 @@ baset-ui/
 | Utilities | `components/utilities.html` | Feature grid |
 
 Every example on these pages shows the live preview, the class list, and a code block with a **Copy** button (it copies exactly the code shown).
+
+## File upload
+
+Wrap a native file input in `.bui-upload[data-bui-upload]`. Keep the original `id`, `name`, `accept`, `multiple`, `required`, `disabled`, `capture`, and `form` attributes on the input.
+
+```html
+<div class="bui-upload" data-bui-upload data-max-files="4" data-max-size="5242880">
+  <input class="bui-upload-input" id="attachments" name="attachments[]"
+    type="file" accept="image/png,image/jpeg,application/pdf" multiple>
+  <label class="bui-upload-dropzone" for="attachments" tabindex="0">
+    <span class="bui-upload-title">Drop files here, or <span>browse</span></span>
+    <span class="bui-upload-subtitle">Up to 4 files · 5 MB each</span>
+  </label>
+  <div class="bui-upload-feedback" aria-live="polite"></div>
+  <div class="bui-upload-files"></div>
+  <div class="bui-upload-footer"><span class="bui-upload-count"></span>
+    <button type="button" data-bui-upload-clear>Clear all</button></div>
+</div>
+```
+
+Optional wrapper attributes: `data-max-files`, `data-min-files`, `data-max-size`, `data-min-size` (bytes), and `data-error-language="ar"`. Use `.bui-upload-sm` or `.bui-upload-lg` for sizing. Browser validation improves the experience but server-side validation is still required. Selecting a file is not uploading it. Call `BUI.upload.setStatus(input, 'uploading'|'success'|'error', message)` from your actual upload request lifecycle; use `BUI.upload.validate(input)` and `BUI.upload.clear(input)` when needed.
 
 ## Class reference
 
