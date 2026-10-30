@@ -26,17 +26,18 @@ Explore the full Baset UI documentation website, including interactive component
 5. [Class reference](#class-reference)
    - [Grid and layout](#grid-and-layout)
 6. [Date and time pickers](#date-and-time-pickers)
-7. [Loaders and success icon](#loaders-and-success-icon)
-8. [Icons](#icons)
-9. [Theming (CSS variables)](#theming-css-variables)
-10. [Dark mode](#dark-mode)
-11. [JavaScript behaviors](#javascript-behaviors)
-12. [Using it with Laravel](#using-it-with-laravel)
-13. [Adding a new component](#adding-a-new-component)
-14. [Naming convention](#naming-convention)
-15. [Browser support](#browser-support)
-16. [Status and roadmap](#status-and-roadmap)
-17. [Third-party licenses](#third-party-licenses)
+7. [File upload](#file-upload)
+8. [Loaders and success icon](#loaders-and-success-icon)
+9. [Icons](#icons)
+10. [Theming (CSS variables)](#theming-css-variables)
+11. [Dark mode](#dark-mode)
+12. [JavaScript behaviors](#javascript-behaviors)
+13. [Using it with Laravel](#using-it-with-laravel)
+14. [Adding a new component](#adding-a-new-component)
+15. [Naming convention](#naming-convention)
+16. [Browser support](#browser-support)
+17. [Status and roadmap](#status-and-roadmap)
+18. [Third-party licenses](#third-party-licenses)
 
 ---
 
@@ -126,6 +127,7 @@ baset-ui/
 │   ├── buttons.html
 │   ├── forms.html
 │   ├── datetime.html           # Date & time pickers: date, time, datetime-local, month, week
+│   ├── upload.html             # File upload: dropzone, previews, checks, uploads
 │   ├── cards.html
 │   ├── alerts.html
 │   ├── badges.html
@@ -153,6 +155,7 @@ baset-ui/
 │   └── js/
 │       ├── baset-ui.js         # Optional interactions
 │       ├── baset-datetime.js   # Optional date & time pickers (needs section 18 of baset-ui.css)
+│       ├── baset-upload.js     # Optional file upload (needs section 19 of baset-ui.css)
 │       ├── icons-gallery.js    # Icons page only (search + details dialog)
 │       └── token-playground.js     # Token playground page only
 ├── README.md
@@ -170,6 +173,7 @@ baset-ui/
 | Buttons | `components/buttons.html` | Solid / outline / soft / link in 7 colors, neutral, anchors, sizes, icons, icon-only, pill, full width, group, disabled |
 | Form controls | `components/forms.html` | Text input, email input, select, checkbox, form layout, floating labels (basic, sizes, select, textarea), validation states with the i message button, password fields (show / hide, strength meter, requirements, Caps Lock), prefix / suffix inputs (+20, @, https://, $, %), custom select menu (automatic placement, groups, keyboard, modal), live validation forms, JS API |
 | Date & time pickers | `components/datetime.html` | The five native types (date, time, datetime-local, month, week) with floating and plain fields, min / max / step, required / disabled / readonly, sizes, popup or bottom sheet, locale / first day / 12-24 h, RTL, dark, custom colors, validation and submit, modal, JS API |
+| File upload | `components/upload.html` | Drop zone for `input[type=file]` with drag and drop, image grid and file list, checks (type, size, count), disabled and error states, and server uploads with progress, cancel and retry |
 | Cards | `components/cards.html` | Stat cards (sparkline, progress, task lines), cards grid |
 | Alerts | `components/alerts.html` | Success, info, warning, danger, alert stack |
 | Badges | `components/badges.html` | Six status variants |
@@ -422,6 +426,26 @@ The native input stays the source of truth: `id`, `name`, `value`, `min`, `max`,
 
 Full examples: `components/datetime.html`.
 
+## File upload
+
+Add `data-bui-upload` to a native `<input type="file">` and load `assets/js/baset-upload.js` (the styles are section 19 of `baset-ui.css`; no other script is needed). The script wraps the input in a drop zone, lists the chosen files and checks them. The native input stays in the page and keeps only the files that passed the checks (kept in sync with `DataTransfer`), so a normal form submit sends exactly the listed files and a removed file is not sent.
+
+```html
+<label class="bui-upload-caption" for="photos">Photos (up to 2 MB, 6 files)</label>
+<input type="file" id="photos" name="photos" multiple accept="image/png,image/jpeg,image/webp"
+       data-bui-upload data-bui-layout="grid" data-bui-max-size="2MB" data-bui-max-files="6">
+<script src="assets/js/baset-upload.js" defer></script>
+```
+
+- **Native attributes** are kept: `id`, `name`, `accept`, `multiple`, `required`, `disabled`, `capture`, `form`. Always set `accept`: without it every type is allowed. `accept` is also applied to dropped files.
+- **Rules:** `data-bui-max-size` / `-min-size` (`500KB`, `5MB`), `data-bui-max-files` / `-min-files`, `required`. Messages are in English or Arabic (from `lang` or `data-bui-locale`); add a language with `BUI.upload.locales.fr = { … }`.
+- **Look:** `data-bui-variant="dropzone|compact|button|avatar"` (avatar = one round profile photo, or square with `data-bui-shape="square"`), `data-bui-layout="list|grid"`, `data-bui-size="sm|lg"`, `data-bui-title`, `data-bui-hint`, `data-bui-no-preview`. Colors, radius, sizes and spacing come from `--bui-up-*` variables; it follows `bui-dark` and `dir="rtl"`.
+- **Choosing is not uploading:** without `data-bui-url` (or `BUI.upload.configure`) files are only selected. With a URL each file is sent as its own `multipart/form-data` POST with real progress, Cancel and Retry; `data-bui-auto` starts as soon as files are chosen. Rows say "Uploaded" only after the server answered.
+- **JS:** `BUI.upload.init(root)`, `.configure(input, { url, method, field, data, headers, withCredentials, uploader })`, `.files(input)`, `.add(input, files)`, `.remove(input, file)`, `.clear(input)`, `.upload(input)`, `.retry(input, file)`, `.validate(input)`. Events on the input: `input`, `change`, `bui:upload-add|reject|remove|start|progress|success|error|complete`.
+- **Browsers without `new DataTransfer()`** cannot edit `input.files`: files are still selected, checked and previewed, but rejected or removed files cannot be kept out of the form.
+
+Full examples: `components/upload.html`.
+
 ## Modal
 
 Dialogs built on the native `<dialog>` element: backdrop, focus trap, **Esc** key, inert page and focus return come from the browser. Use plain HTML, or the JavaScript API with Promises. Full examples: `components/modal.html`.
@@ -537,6 +561,7 @@ With `baset-ui.js`, any element with `id="themeToggle"` becomes a toggle button.
 | Token playground | `assets/js/token-playground.js` on `customize/token-playground.html` only |
 | Select menu | Custom listbox for `select.bui-input`, `select.bui-float-input`, `select.bui-float-prefix`; `BUI.select.open/close/isOpen()`; `data-bui-native` to opt out |
 | Date & time pickers | `assets/js/baset-datetime.js` (separate file): `data-bui-datetime` on `input[type=date|time|datetime-local|month|week]`; `BUI.datetime.init/open/close/isOpen()`, `BUI.datetime.locales` |
+| File upload | `assets/js/baset-upload.js` (separate file): `data-bui-upload` on `input[type=file]`; `BUI.upload.init/configure/files/add/remove/clear/upload/retry/validate()`; events `bui:upload-*` |
 | Floating labels | The i button toggles its message; `<form data-bui-validate>` and `BUI.float.setState/clear/open/validate/reset()` |
 | Modal | `BUI.modal.open/close/show/confirm/alert/prompt()` or `data-bui-modal-open` / `data-bui-modal-close` attributes |
 | Scroll-spy | Sidebar links like `<a class="bui-nav" href="#section">` highlight as you scroll |

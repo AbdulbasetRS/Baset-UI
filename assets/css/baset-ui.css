@@ -1152,3 +1152,129 @@ select.bui-float-prefix { appearance: none; padding-inline: 14px 22px; border: 0
 @keyframes bui-dt-in { from { opacity: 0; transform: translateY(var(--bui-dt-shift, -6px)) scale(.98); } }
 @keyframes bui-dt-sheet { from { opacity: 0; transform: translateY(24px); } }
 @media (prefers-reduced-motion: reduce) { .bui-dt-pop { animation: none !important; } }
+
+/* =========================================================
+   19. File upload
+   Add data-bui-upload to <input type="file"> and load assets/js/baset-upload.js. The script wraps the native input in
+   .bui-upload > .bui-upload-zone (the label you click or drop on), then adds the message, the file list and the toolbar.
+   The native input keeps its files (only the ones that passed the checks), so normal form submit works.
+   Look: data-bui-variant="dropzone | compact | button" · data-bui-layout="list | grid" · data-bui-size="sm | lg"
+   State on the wrapper: data-state="idle | selected | uploading | done | error" · .is-dragover · .is-invalid · .is-disabled · .has-files
+   Customize with the --bui-up-* variables, on :root or on a class (also named in the wrapper with your own markup).
+   ========================================================= */
+.bui-upload { --bui-up-bg: var(--bui-soft); --bui-up-fg: var(--bui-ink); --bui-up-muted: var(--bui-muted); --bui-up-border: var(--bui-input-border); --bui-up-accent: var(--bui-primary); --bui-up-accent-fg: var(--bui-primary-contrast); --bui-up-accent-soft: var(--bui-primary-bg-subtle); --bui-up-accent-text: var(--bui-primary-fg); --bui-up-danger: var(--bui-danger-base); --bui-up-danger-soft: var(--bui-danger-bg-subtle); --bui-up-danger-text: var(--bui-danger-fg); --bui-up-danger-border: var(--bui-danger-border); --bui-up-success: var(--bui-success-base); --bui-up-success-soft: var(--bui-success-bg-subtle); --bui-up-success-text: var(--bui-success-fg);
+  --bui-up-item-bg: var(--bui-surface); --bui-up-item-border: var(--bui-line); --bui-up-radius: var(--bui-radius-4); --bui-up-item-radius: var(--bui-radius-3); --bui-up-pad: 28px; --bui-up-min-h: 150px; --bui-up-icon-size: 46px; --bui-up-thumb: 44px; --bui-up-grid-col: 132px; --bui-up-gap: 10px; --bui-up-font-size: 13px; --bui-up-title-size: 14px; --bui-up-shadow: var(--bui-shadow);
+  position: relative; display: grid; gap: var(--bui-up-gap); color: var(--bui-up-fg); font: 500 var(--bui-up-font-size)/1.45 var(--bui-font-body); min-width: 0; }
+.bui-upload *, .bui-upload *::before, .bui-upload *::after { box-sizing: border-box; }
+.bui-upload [hidden] { display: none; }
+.bui-upload[data-size="sm"] { --bui-up-pad: 16px; --bui-up-min-h: 104px; --bui-up-icon-size: 36px; --bui-up-thumb: 36px; --bui-up-grid-col: 104px; --bui-up-font-size: 12px; --bui-up-title-size: 13px; }
+.bui-upload[data-size="lg"] { --bui-up-pad: 40px; --bui-up-min-h: 220px; --bui-up-icon-size: 58px; --bui-up-thumb: 52px; --bui-up-grid-col: 168px; --bui-up-font-size: 14px; --bui-up-title-size: 17px; }
+
+/* The native input is hidden but stays focusable, so the keyboard (Tab, Enter, Space) and form validation still work */
+.bui-upload-input { position: absolute; inset: 0; width: 1px; height: 1px; margin: 0; opacity: 0; overflow: hidden; pointer-events: none; clip-path: inset(50%); }
+
+/* Drop zone */
+.bui-upload-zone { position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; min-height: var(--bui-up-min-h); padding: var(--bui-up-pad); text-align: center; background: var(--bui-up-bg); border: 2px dashed var(--bui-up-border); border-radius: var(--bui-up-radius); cursor: pointer; user-select: none; transition: border-color .15s, background .15s, box-shadow .15s, transform .15s; }
+.bui-upload-zone:hover { border-color: var(--bui-up-accent); background: color-mix(in srgb, var(--bui-up-accent-soft) 55%, var(--bui-up-bg)); }
+.bui-upload-zone:has(.bui-upload-input:focus-visible) { border-color: var(--bui-up-accent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--bui-up-accent) 22%, transparent); outline: 2px solid var(--bui-up-accent); outline-offset: 2px; }
+.bui-upload-zone:active { transform: scale(.998); }
+.bui-upload-icon { --bui-up-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 15.5V4m0 0L7.5 8.5M12 4l4.5 4.5M4 15v3a2 2 0 002 2h12a2 2 0 002-2v-3'/%3E%3C/svg%3E"); flex: none; display: grid; place-items: center; width: var(--bui-up-icon-size); height: var(--bui-up-icon-size); border-radius: 50%; background: var(--bui-up-accent-soft); color: var(--bui-up-accent-text); transition: transform .2s, background .15s, color .15s; }
+.bui-upload-icon::before { content: ""; width: 52%; height: 52%; background: currentColor; -webkit-mask: var(--bui-up-icon) center / contain no-repeat; mask: var(--bui-up-icon) center / contain no-repeat; }
+.bui-upload-zone:hover .bui-upload-icon { transform: translateY(-2px); }
+.bui-upload-text { display: grid; gap: 3px; min-width: 0; max-width: 100%; }
+.bui-upload-title { font-weight: 700; font-size: var(--bui-up-title-size); font-family: var(--bui-font-heading); letter-spacing: -.2px; }
+.bui-upload-hint { color: var(--bui-up-muted); font-size: .92em; overflow-wrap: anywhere; }
+
+/* Zone states */
+.bui-upload.is-dragover .bui-upload-zone { border-style: solid; border-color: var(--bui-up-accent); background: var(--bui-up-accent-soft); box-shadow: 0 0 0 4px color-mix(in srgb, var(--bui-up-accent) 18%, transparent); transform: scale(1.01); }
+.bui-upload.is-dragover .bui-upload-icon { background: var(--bui-up-accent); color: var(--bui-up-accent-fg); transform: translateY(-4px); }
+.bui-upload.is-invalid .bui-upload-zone { border-color: var(--bui-up-danger); background: color-mix(in srgb, var(--bui-up-danger-soft) 45%, var(--bui-up-bg)); }
+.bui-upload.is-invalid .bui-upload-icon { background: var(--bui-up-danger-soft); color: var(--bui-up-danger-text); }
+.bui-upload[data-state="done"] .bui-upload-zone { border-color: var(--bui-up-success); }
+.bui-upload.is-disabled .bui-upload-zone { opacity: .55; cursor: not-allowed; pointer-events: none; background: var(--bui-up-bg); border-color: var(--bui-up-border); }
+
+/* Variants */
+.bui-upload[data-variant="compact"] .bui-upload-zone { flex-direction: row; justify-content: flex-start; gap: 12px; min-height: 0; padding: 12px 16px; text-align: start; border-width: 1.5px; }
+.bui-upload[data-variant="compact"] { --bui-up-icon-size: 36px; }
+/* Avatar: one profile photo in a round (default) or square frame. Add data-bui-shape="square" for the square one; set --bui-up-avatar for the size. */
+.bui-upload[data-variant="avatar"] { --bui-up-avatar: 132px; justify-items: start; }
+.bui-upload[data-variant="avatar"][data-size="sm"] { --bui-up-avatar: 96px; }
+.bui-upload[data-variant="avatar"][data-size="lg"] { --bui-up-avatar: 180px; }
+.bui-upload[data-variant="avatar"] .bui-upload-zone { width: var(--bui-up-avatar); height: var(--bui-up-avatar); min-height: 0; padding: 0; gap: 0; overflow: hidden; border-radius: 50%; }
+.bui-upload[data-variant="avatar"][data-shape="square"] .bui-upload-zone { border-radius: var(--bui-up-radius); }
+.bui-upload[data-variant="avatar"] .bui-upload-icon { width: calc(var(--bui-up-avatar) * .34); height: calc(var(--bui-up-avatar) * .34); }
+.bui-upload[data-variant="avatar"] .bui-upload-icon::before { width: 56%; height: 56%; }
+/* the title and hint stay for screen readers; sighted users get the icon */
+.bui-upload[data-variant="avatar"] .bui-upload-text { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.bui-upload-avatar { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.bui-upload-avatar[hidden] { display: none; }
+/* with a picture: the icon appears over a soft veil on hover and focus only */
+.bui-upload[data-variant="avatar"].has-avatar .bui-upload-zone { border-style: solid; border-color: var(--bui-up-border); }
+.bui-upload[data-variant="avatar"].has-avatar .bui-upload-icon { position: absolute; inset: 0; width: 100%; height: 100%; border-radius: 0; background: color-mix(in srgb, #000 48%, transparent); color: #fff; opacity: 0; transition: opacity .18s; }
+.bui-upload[data-variant="avatar"].has-avatar .bui-upload-icon::before { width: 30%; height: 30%; }
+.bui-upload[data-variant="avatar"].has-avatar .bui-upload-zone:hover .bui-upload-icon,
+.bui-upload[data-variant="avatar"].has-avatar .bui-upload-zone:has(.bui-upload-input:focus-visible) .bui-upload-icon,
+.bui-upload[data-variant="avatar"].has-avatar.is-dragover .bui-upload-icon { opacity: 1; transform: none; }
+.bui-upload[data-variant="avatar"] .bui-upload-msg, .bui-upload[data-variant="avatar"] .bui-upload-toolbar { max-width: 28ch; }
+.bui-upload[data-variant="avatar"] .bui-upload-list { display: none; }
+.bui-upload[data-variant="button"] .bui-upload-zone { display: inline-flex; flex-direction: row; justify-self: start; gap: 8px; min-height: 0; padding: 10px 18px; border: 1px solid var(--bui-up-accent); border-radius: var(--bui-radius-3); background: var(--bui-up-accent); color: var(--bui-up-accent-fg); box-shadow: none; }
+.bui-upload[data-variant="button"] .bui-upload-zone:hover { background: color-mix(in srgb, var(--bui-up-accent) 88%, #000); transform: translateY(-1px); }
+.bui-upload[data-variant="button"] .bui-upload-icon { width: 18px; height: 18px; background: transparent; color: inherit; }
+.bui-upload[data-variant="button"] .bui-upload-icon::before { width: 100%; height: 100%; }
+.bui-upload[data-variant="button"] .bui-upload-title { font: 700 12px var(--bui-font-body); letter-spacing: 0; }
+.bui-upload[data-variant="button"] .bui-upload-hint { display: none; }
+.bui-upload[data-variant="button"].is-dragover .bui-upload-zone { background: var(--bui-up-accent); transform: scale(1.03); }
+.bui-upload[data-variant="button"].is-invalid .bui-upload-zone { background: var(--bui-up-danger); border-color: var(--bui-up-danger); }
+
+/* Message and toolbar */
+.bui-upload-msg { font-size: .95em; font-weight: 600; color: var(--bui-up-muted); }
+.bui-upload-msg.is-error { color: var(--bui-up-danger-text); }
+.bui-upload-msg.is-success { color: var(--bui-up-success-text); }
+.bui-upload-toolbar { display: flex; flex-wrap: wrap; gap: 8px; }
+
+/* Files: rows or grid */
+.bui-upload-list { display: grid; gap: 8px; margin: 0; padding: 0; list-style: none; }
+.bui-upload-item { --k: var(--bui-secondary-base); --kf: var(--bui-secondary-fg); position: relative; display: grid; grid-template-columns: var(--bui-up-thumb) minmax(0, 1fr) auto; align-items: center; gap: 12px; min-width: 0; padding: 10px 12px; background: var(--bui-up-item-bg); border: 1px solid var(--bui-up-item-border); border-radius: var(--bui-up-item-radius); transition: border-color .15s, background .15s; animation: bui-up-in .18s ease both; }
+.bui-upload-item[data-kind="image"] { --k: var(--bui-info-base); --kf: var(--bui-info-fg); }
+.bui-upload-item[data-kind="pdf"] { --k: var(--bui-danger-base); --kf: var(--bui-danger-fg); }
+.bui-upload-item[data-kind="doc"] { --k: var(--bui-primary-base); --kf: var(--bui-primary-fg); }
+.bui-upload-item[data-kind="sheet"] { --k: var(--bui-success-base); --kf: var(--bui-success-fg); }
+.bui-upload-item[data-kind="slide"] { --k: var(--bui-warning-base); --kf: var(--bui-warning-fg); }
+.bui-upload-item[data-kind="archive"] { --k: var(--bui-amber-600); --kf: var(--bui-warning-fg); }
+.bui-upload-item[data-kind="audio"] { --k: var(--bui-violet-400); --kf: var(--bui-primary-fg); }
+.bui-upload-item[data-kind="video"] { --k: var(--bui-red-400); --kf: var(--bui-danger-fg); }
+.bui-upload-thumb { position: relative; display: grid; place-items: center; width: var(--bui-up-thumb); height: var(--bui-up-thumb); overflow: hidden; border-radius: var(--bui-radius-2); background: color-mix(in srgb, var(--k) 16%, transparent); color: var(--kf); }
+.bui-upload-thumb img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.bui-upload-ext { font: 800 calc(var(--bui-up-thumb) * .26)/1 var(--bui-font-heading); letter-spacing: .3px; }
+.bui-upload-body { display: grid; gap: 2px; min-width: 0; }
+/* The name is split in two parts (cut base + fixed extension): keep their visual order "name.ext" in RTL pages too, and align to the end there. */
+.bui-upload-name { display: flex; min-width: 0; font-weight: 700; direction: ltr; unicode-bidi: isolate; }
+.bui-upload:dir(rtl) .bui-upload-name { justify-content: flex-end; }
+.bui-upload-base { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.bui-upload-dotext { flex: none; white-space: nowrap; }
+.bui-upload-meta { color: var(--bui-up-muted); font-size: .92em; overflow-wrap: anywhere; }
+.bui-upload-meta.is-error { color: var(--bui-up-danger-text); }
+.bui-upload-meta.is-success { color: var(--bui-up-success-text); }
+.bui-upload-bar { display: block; height: 5px; margin-block-start: 5px; overflow: hidden; border-radius: 5px; background: var(--bui-line); }
+.bui-upload-bar > span { display: block; height: 100%; border-radius: inherit; background: var(--bui-up-accent); transition: width .15s linear; }
+.bui-upload-actions-item { display: flex; align-items: center; gap: 2px; }
+.bui-upload-icon-btn { --bui-up-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.2' stroke-linecap='round'%3E%3Cpath d='M6 6l12 12M18 6L6 18'/%3E%3C/svg%3E"); display: grid; place-items: center; width: 30px; height: 30px; padding: 0; border: 0; border-radius: 50%; background: transparent; color: var(--bui-up-muted); cursor: pointer; transition: background .15s, color .15s; }
+.bui-upload-icon-btn::before { content: ""; width: 14px; height: 14px; background: currentColor; -webkit-mask: var(--bui-up-glyph) center / contain no-repeat; mask: var(--bui-up-glyph) center / contain no-repeat; }
+.bui-upload-retry { --bui-up-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 12a8 8 0 11-2.6-5.9M20 4v5h-5'/%3E%3C/svg%3E"); color: var(--bui-up-accent-text); }
+.bui-upload-icon-btn:hover { background: var(--bui-soft); color: var(--bui-up-fg); }
+.bui-upload-remove:hover { background: var(--bui-up-danger-soft); color: var(--bui-up-danger-text); }
+.bui-upload-icon-btn:focus-visible { outline: 2px solid var(--bui-up-accent); outline-offset: 1px; }
+.bui-upload-item.is-rejected, .bui-upload-item.is-error { background: var(--bui-up-danger-soft); border-color: var(--bui-up-danger-border); }
+.bui-upload-item.is-done .bui-upload-thumb::after { content: "✓"; position: absolute; inset-inline-end: 2px; inset-block-end: 2px; display: grid; place-items: center; width: 15px; height: 15px; border-radius: 50%; background: var(--bui-up-success); color: #fff; font: 800 10px/1 var(--bui-font-body); }
+
+.bui-upload[data-layout="grid"] .bui-upload-list { grid-template-columns: repeat(auto-fill, minmax(var(--bui-up-grid-col), 1fr)); gap: 12px; }
+.bui-upload[data-layout="grid"] .bui-upload-item { display: flex; flex-direction: column; align-items: stretch; gap: 8px; padding: 8px; }
+.bui-upload[data-layout="grid"] .bui-upload-thumb { width: 100%; height: auto; aspect-ratio: 1; border-radius: var(--bui-radius-2); }
+.bui-upload[data-layout="grid"] .bui-upload-ext { font-size: 20px; }
+.bui-upload[data-layout="grid"] .bui-upload-body { padding-inline: 2px; }
+.bui-upload[data-layout="grid"] .bui-upload-actions-item { position: absolute; inset-block-start: 12px; inset-inline-end: 12px; gap: 4px; }
+.bui-upload[data-layout="grid"] .bui-upload-icon-btn { width: 28px; height: 28px; background: color-mix(in srgb, var(--bui-surface) 88%, transparent); box-shadow: 0 1px 4px rgb(0 0 0 / .18); backdrop-filter: blur(4px); }
+.bui-upload[data-layout="grid"] .bui-upload-item.is-done .bui-upload-thumb::after { width: 20px; height: 20px; font-size: 12px; inset-inline-end: 6px; inset-block-end: 6px; }
+@keyframes bui-up-in { from { opacity: 0; transform: translateY(4px); } }
+@media (prefers-reduced-motion: reduce) { .bui-upload-item { animation: none; } .bui-upload-bar > span { transition: none; } }
+.bui-upload-caption { display: block; margin-block-end: 8px; color: var(--bui-muted); font-size: 12px; font-weight: 700; }
