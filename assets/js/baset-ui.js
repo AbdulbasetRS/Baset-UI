@@ -553,29 +553,68 @@
 
   /* ---------- Floating menus: shared placement (select menu, dropdown menu) ---------- */
   const canPopover = typeof HTMLElement.prototype.showPopover === 'function';
+  /* The menu is placed from the anchor's rectangle and stays glued to it while the page scrolls:
+       1. Measure once. The menu's size is read when it opens and when its content changes ({ measure: true }),
+          never while scrolling, so scrolling cannot resize it, make it jump or force a layout of the menu.
+       2. Let the browser scroll it. When no scrolling container sits between the anchor and the page, the menu is
+          positioned in document coordinates (position: absolute in the top layer), so page scrolling moves it
+          natively, in the same frame as the anchor. Inside a scrolling container, a modal, or a fixed / sticky bar it
+          stays fixed and is updated synchronously from the scroll event of the element that carries the anchor.
+       3. Only the owner moves it. Scroll events of other elements (the menu's own list included) are ignored, and the
+          menu closes when the anchor is scrolled out of the window or out of its scrolling container. */
+  function anchorContext(anchor) {
+    const movers = [];   // ancestors that can scroll the anchor
+    let pinned = false;  // fixed or sticky: the anchor does not follow the page
+    for (let n = anchor; n && n !== document.body && n !== document.documentElement; n = n.parentElement) {
+      const cs = getComputedStyle(n);
+      if (cs.position === 'fixed' || cs.position === 'sticky') pinned = true;
+      if (n !== anchor && (cs.overflowX !== 'visible' || cs.overflowY !== 'visible') && (n.scrollHeight > n.clientHeight + 1 || n.scrollWidth > n.clientWidth + 1)) movers.push(n);
+    }
+    const root = getComputedStyle(document.documentElement), body = getComputedStyle(document.body);
+    const bodyScrolls = root.overflowY !== 'visible' && /auto|scroll|overlay/.test(body.overflowY) && document.body.scrollHeight > document.body.clientHeight + 1;
+    return { movers, abs: canPopover && !movers.length && !pinned && !bodyScrolls };
+  }
+  function anchorHidden(r, movers, vh) {
+    if (r.bottom < 0 || r.top > vh) return true;
+    return movers.some((n) => { const p = n.getBoundingClientRect(); return r.bottom <= p.top || r.top >= p.bottom || r.right <= p.left || r.left >= p.right; });
+  }
   /* Below the anchor when the whole menu fits there; otherwise on the side with more room (the menu then scrolls).
-     st keeps the side chosen at open, so the menu does not jump while it loads more items. */
-  function placeFloat(anchor, el, st, { desired, align = 'start', minWidth } = {}) {
+     st keeps what was measured and the side chosen, so the menu does not jump while it loads more items.
+     Returns false when the anchor is out of view: the caller closes the menu. */
+  function placeFloat(anchor, el, st, { desired, align = 'start', minWidth, measure = false, minRoom = 96, eager = false } = {}) {
     const r = anchor.getBoundingClientRect(), vw = document.documentElement.clientWidth, vh = window.innerHeight;
-    if (r.bottom < 0 || r.top > vh) return false; // the anchor scrolled out of the window
+    if (!st.ctx) { st.ctx = anchorContext(anchor); el.style.position = st.ctx.abs ? 'absolute' : ''; measure = true; }
+    if (anchorHidden(r, st.ctx.movers, vh)) return false;
     const gap = 6, edge = 8;
-    el.style.maxHeight = '';
-    if (minWidth !== null) el.style.minWidth = `${minWidth ?? r.width}px`;
-    const natural = el.offsetHeight, want = desired ?? natural, below = vh - r.bottom - gap - edge, above = r.top - gap - edge;
+    if (measure || !st.size) { // the only layout reads of the menu
+      el.style.left = '0px'; el.style.top = '0px'; el.style.maxHeight = '';
+      if (minWidth !== null) el.style.minWidth = `${minWidth ?? r.width}px`;
+      st.size = { w: el.offsetWidth, h: el.offsetHeight };
+      st.rtl = getComputedStyle(el).direction === 'rtl';
+      st.desired = desired; st.fit = undefined;
+    }
+    const natural = st.size.h, want = st.desired ?? natural;
+    const below = vh - r.bottom - gap - edge, above = r.top - gap - edge;
+    const tight = (room) => (eager ? want > room : room < minRoom);
     let place = st.place;
-    if (!place || (place === 'bottom' ? below < 96 && above > below : above < 96 && below > above)) place = want <= below || below >= above ? 'bottom' : 'top';
-    st.place = place;
-    const room = Math.max(place === 'bottom' ? below : above, 96);
-    if (natural > room) el.style.maxHeight = `${room}px`;
-    const h = Math.min(natural, room), w = el.offsetWidth, rtl = getComputedStyle(el).direction === 'rtl';
-    let left = (align === 'end') !== rtl ? r.right - w : r.left;
+    if (!place || (place === 'bottom' ? tight(below) && above > below : tight(above) && below > above)) place = want <= below || below >= above ? 'bottom' : 'top';
+    if (place !== st.place || st.fit === undefined) { // the height is decided when the side is chosen, not on every scroll
+      st.place = place;
+      const room = Math.max(place === 'bottom' ? below : above, minRoom);
+      st.fit = natural > room ? room : 0;
+      el.style.maxHeight = st.fit ? `${st.fit}px` : '';
+      el.dataset.placement = place;
+    }
+    const h = st.fit || natural, w = st.size.w;
+    let left = (align === 'end') !== st.rtl ? r.right - w : r.left;
     left = Math.min(Math.max(left, edge), Math.max(edge, vw - w - edge));
-    el.style.left = `${left}px`;
-    el.style.top = `${place === 'bottom' ? r.bottom + gap : r.top - gap - h}px`;
-    el.dataset.placement = place;
+    const top = place === 'bottom' ? r.bottom + gap : r.top - gap - h;
+    const sx = st.ctx.abs ? window.scrollX : 0, sy = st.ctx.abs ? window.scrollY : 0;
+    const L = `${left + sx}px`, T = `${top + sy}px`;
+    if (el.style.left !== L) el.style.left = L;
+    if (el.style.top !== T) el.style.top = T;
     return true;
   }
-
   /* ---------- Select menu: a custom listbox for native <select> elements ----------
      The <select> stays the source of truth (value, change event, form, required, disabled, label).
      Static options are read from <option> / <optgroup> each time the menu opens. Optional: a search box
@@ -749,12 +788,15 @@
     }
   }
 
-  function placeSelectMenu(state) {
-    const cap = parseFloat(getComputedStyle(state.menu).maxHeight) || 288;
-    if (!placeFloat(state.select, state.menu, state, { desired: state.search || state.remote ? cap : undefined, minWidth: Math.max(state.select.getBoundingClientRect().width, 140) })) closeSelectMenu();
+  function placeSelectMenu(state, measure = true) { // measure = false while scrolling: position only
+    const opts = { measure };
+    if (measure) {
+      state.menu.style.maxHeight = '';
+      opts.desired = state.search || state.remote ? (parseFloat(getComputedStyle(state.menu).maxHeight) || 288) : undefined;
+      opts.minWidth = Math.max(state.select.getBoundingClientRect().width, 140);
+    }
+    if (!placeFloat(state.select, state.menu, state, opts)) closeSelectMenu();
   }
-  let placeFrame = 0;
-  const schedulePlace = () => { if ((openSel || openDd) && !placeFrame) placeFrame = requestAnimationFrame(() => { placeFrame = 0; if (openSel) placeSelectMenu(openSel); if (openDd) placeDropdown(); }); };
 
   function closeSelectMenu() {
     if (!openSel) return;
@@ -911,9 +953,17 @@
     if (s instanceof HTMLSelectElement) paintSelectValue(s);
     if (s instanceof HTMLSelectElement && s.classList.contains('bui-float-input') && s.closest('[data-bui-validate]')) { s.dataset.touched = ''; validateFloat(s); }
   });
-  window.addEventListener('resize', schedulePlace);
-  window.addEventListener('scroll', (event) => { if ((openSel && !openSel.menu.contains(event.target)) || openDd) schedulePlace(); }, true);
-  window.visualViewport?.addEventListener('resize', schedulePlace);
+  /* Follow the anchor. Scroll events from the page, or from an element that carries the anchor, update the position
+     at once (same frame, no new measuring). Scrolling of anything else, the menu's own list included, is ignored. */
+  function followAnchors(event) {
+    const t = event && event.target, carries = (a) => !t || t === document || (t.contains && t.contains(a));
+    const moved = (st) => { if (st.ctx && st.ctx.abs && t && t !== document) st.ctx = null; }; // an inner scroller appeared: switch to fixed
+    if (openSel && carries(openSel.select)) { moved(openSel); placeSelectMenu(openSel, !t); }
+    if (openDd && carries(openDd.toggle)) { moved(openDd); placeDropdown(!t); }
+  }
+  window.addEventListener('resize', () => followAnchors());
+  window.addEventListener('scroll', followAnchors, { capture: true, passive: true });
+  window.visualViewport?.addEventListener('resize', () => followAnchors());
 
   BUI.select = {
     open: openSelectMenu, close: closeSelectMenu,
@@ -927,9 +977,9 @@
   const DD_ITEMS = '.bui-dropdown-item:not([aria-disabled="true"]):not(:disabled)';
   const ddWrap = (n) => n?.closest?.('.bui-dropdown');
   const ddOf = (t) => { const toggle = typeof t === 'string' ? document.querySelector(t) : t, wrap = ddWrap(toggle); return { toggle, wrap, menu: wrap?.querySelector(':scope > .bui-dropdown-menu') }; };
-  function placeDropdown() {
+  function placeDropdown(measure = true) {
     if (!openDd) return;
-    if (!placeFloat(openDd.toggle, openDd.menu, openDd, { align: openDd.wrap.dataset.buiAlign || 'start', minWidth: null })) closeDropdown();
+    if (!placeFloat(openDd.toggle, openDd.menu, openDd, { align: openDd.wrap.dataset.buiAlign || 'start', minWidth: null, measure })) closeDropdown();
   }
   function openDropdown(target, focus = 'menu') {
     const { toggle, wrap, menu } = ddOf(target);
@@ -950,7 +1000,7 @@
     openDd = null; clearTimeout(timer);
     if (canPopover) { try { menu.hidePopover(); } catch { /* already hidden */ } menu.removeAttribute('popover'); }
     menu.classList.remove('bui-dropdown-menu-open');
-    ['left', 'top', 'maxHeight', 'minWidth'].forEach((p) => menu.style.removeProperty(p.replace(/[A-Z]/g, (c) => `-${c.toLowerCase()}`)));
+    ['left', 'top', 'maxHeight', 'minWidth', 'position'].forEach((p) => menu.style.removeProperty(p.replace(/[A-Z]/g, (c) => `-${c.toLowerCase()}`)));
     delete menu.dataset.placement;
     toggle.setAttribute('aria-expanded', 'false'); wrap.classList.remove('bui-dropdown-open');
     if (refocus) toggle.focus();

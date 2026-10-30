@@ -192,7 +192,7 @@
 
   /* ---------- Open picker state ---------- */
   const states = new WeakMap();
-  let openSt = null, uid = 0, frame = 0;
+  let openSt = null, uid = 0;
 
   const read = (st) => { const p = st.input.value ? KIND[st.type].parse(st.input.value) : null; return p; };
 
@@ -239,6 +239,7 @@
     if (live && text && live.textContent !== text) live.textContent = text;
 
     if (keep) (cal.querySelector(`[data-act="${keep}"]:not(:disabled)`) || cal.querySelector('[tabindex="0"]'))?.focus({ preventScroll: true });
+    if (openSt === st && st.size) place(st);
   }
 
   function daysGrid(st) {
@@ -380,6 +381,7 @@
       if (s) col.scrollTop = Math.max(0, s.offsetTop - col.clientHeight / 2 + s.offsetHeight / 2);
     });
     if (prevFocus) time.querySelector(`.bui-dt-opt[data-col="${prevFocus.col}"][data-v="${prevFocus.v}"]:not(:disabled)`)?.focus({ preventScroll: true });
+    if (openSt === st && st.size) place(st);
   }
 
   function setTimePart(st, col, v) {
@@ -526,31 +528,86 @@
   }
 
   /* ---------- Placement: below the field, above it when there is no room, always inside the window ---------- */
-  function place(st) {
-    const { pop, wrap } = st;
-    const sheet = st.modeAttr === 'sheet' || (st.modeAttr !== 'popover' && window.matchMedia('(max-width: 560px)').matches);
-    pop.dataset.mode = sheet ? 'sheet' : 'popover';
-    ['left', 'top', 'maxHeight'].forEach((p) => { pop.style[p] = ''; });
-    if (sheet) return;
-    const r = wrap.getBoundingClientRect(), vw = document.documentElement.clientWidth, vh = window.innerHeight;
-    if (r.bottom < 0 || r.top > vh) { close(false); return; } // the field scrolled out of the window
-    const gap = 6, edge = 8, w = pop.offsetWidth, natural = pop.offsetHeight;
+  /* The menu is placed from the anchor's rectangle and stays glued to it while the page scrolls:
+       1. Measure once. The menu's size is read when it opens and when its content changes ({ measure: true }),
+          never while scrolling, so scrolling cannot resize it, make it jump or force a layout of the menu.
+       2. Let the browser scroll it. When no scrolling container sits between the anchor and the page, the menu is
+          positioned in document coordinates (position: absolute in the top layer), so page scrolling moves it
+          natively, in the same frame as the anchor. Inside a scrolling container, a modal, or a fixed / sticky bar it
+          stays fixed and is updated synchronously from the scroll event of the element that carries the anchor.
+       3. Only the owner moves it. Scroll events of other elements (the menu's own list included) are ignored, and the
+          menu closes when the anchor is scrolled out of the window or out of its scrolling container. */
+  function anchorContext(anchor) {
+    const movers = [];   // ancestors that can scroll the anchor
+    let pinned = false;  // fixed or sticky: the anchor does not follow the page
+    for (let n = anchor; n && n !== document.body && n !== document.documentElement; n = n.parentElement) {
+      const cs = getComputedStyle(n);
+      if (cs.position === 'fixed' || cs.position === 'sticky') pinned = true;
+      if (n !== anchor && (cs.overflowX !== 'visible' || cs.overflowY !== 'visible') && (n.scrollHeight > n.clientHeight + 1 || n.scrollWidth > n.clientWidth + 1)) movers.push(n);
+    }
+    const root = getComputedStyle(document.documentElement), body = getComputedStyle(document.body);
+    const bodyScrolls = root.overflowY !== 'visible' && /auto|scroll|overlay/.test(body.overflowY) && document.body.scrollHeight > document.body.clientHeight + 1;
+    return { movers, abs: canPopover && !movers.length && !pinned && !bodyScrolls };
+  }
+  function anchorHidden(r, movers, vh) {
+    if (r.bottom < 0 || r.top > vh) return true;
+    return movers.some((n) => { const p = n.getBoundingClientRect(); return r.bottom <= p.top || r.top >= p.bottom || r.right <= p.left || r.left >= p.right; });
+  }
+  /* Below the anchor when the whole menu fits there; otherwise on the side with more room (the menu then scrolls).
+     st keeps what was measured and the side chosen, so the menu does not jump while it loads more items.
+     Returns false when the anchor is out of view: the caller closes the menu. */
+  function placeFloat(anchor, el, st, { desired, align = 'start', minWidth, measure = false, minRoom = 96, eager = false } = {}) {
+    const r = anchor.getBoundingClientRect(), vw = document.documentElement.clientWidth, vh = window.innerHeight;
+    if (!st.ctx) { st.ctx = anchorContext(anchor); el.style.position = st.ctx.abs ? 'absolute' : ''; measure = true; }
+    if (anchorHidden(r, st.ctx.movers, vh)) return false;
+    const gap = 6, edge = 8;
+    if (measure || !st.size) { // the only layout reads of the menu
+      el.style.left = '0px'; el.style.top = '0px'; el.style.maxHeight = '';
+      if (minWidth !== null) el.style.minWidth = `${minWidth ?? r.width}px`;
+      st.size = { w: el.offsetWidth, h: el.offsetHeight };
+      st.rtl = getComputedStyle(el).direction === 'rtl';
+      st.desired = desired; st.fit = undefined;
+    }
+    const natural = st.size.h, want = st.desired ?? natural;
     const below = vh - r.bottom - gap - edge, above = r.top - gap - edge;
-    let side = st.side;
-    if (!side || (side === 'bottom' ? natural > below && above > below : natural > above && below > above)) side = natural <= below || below >= above ? 'bottom' : 'top';
-    st.side = side;
-    const room = Math.max(side === 'bottom' ? below : above, 120);
-    if (natural > room) pop.style.maxHeight = `${room}px`;
-    const h = Math.min(natural, room);
-    let left = st.rtl ? r.right - w : r.left;
+    const tight = (room) => (eager ? want > room : room < minRoom);
+    let place = st.place;
+    if (!place || (place === 'bottom' ? tight(below) && above > below : tight(above) && below > above)) place = want <= below || below >= above ? 'bottom' : 'top';
+    if (place !== st.place || st.fit === undefined) { // the height is decided when the side is chosen, not on every scroll
+      st.place = place;
+      const room = Math.max(place === 'bottom' ? below : above, minRoom);
+      st.fit = natural > room ? room : 0;
+      el.style.maxHeight = st.fit ? `${st.fit}px` : '';
+      el.dataset.placement = place;
+    }
+    const h = st.fit || natural, w = st.size.w;
+    let left = (align === 'end') !== st.rtl ? r.right - w : r.left;
     left = Math.min(Math.max(left, edge), Math.max(edge, vw - w - edge));
-    pop.style.left = `${left}px`;
-    pop.style.top = `${side === 'bottom' ? r.bottom + gap : r.top - gap - h}px`;
-    pop.dataset.placement = side;
+    const top = place === 'bottom' ? r.bottom + gap : r.top - gap - h;
+    const sx = st.ctx.abs ? window.scrollX : 0, sy = st.ctx.abs ? window.scrollY : 0;
+    const L = `${left + sx}px`, T = `${top + sy}px`;
+    if (el.style.left !== L) el.style.left = L;
+    if (el.style.top !== T) el.style.top = T;
+    return true;
+  }
+  function place(st, measure = true) { // measure = false while scrolling: position only
+    const { pop, wrap } = st;
+    if (measure) {
+      st.sheet = st.modeAttr === 'sheet' || (st.modeAttr !== 'popover' && window.matchMedia('(max-width: 560px)').matches);
+      pop.dataset.mode = st.sheet ? 'sheet' : 'popover';
+      if (st.sheet) { ['left', 'top', 'maxHeight', 'position'].forEach((p) => { pop.style[p] = ''; }); st.ctx = null; return; }
+    }
+    if (st.sheet) return;
+    if (!placeFloat(wrap, pop, st, { measure, minWidth: null, minRoom: 120, eager: true })) close(false); // the field left the window
   }
   const onDocKey = (e) => { if (e.key === 'Escape' && openSt && !openSt.pop.contains(e.target)) { e.preventDefault(); e.stopPropagation(); close(true); } }; // focus is on the field
-  const schedule = () => { if (openSt && !frame) frame = requestAnimationFrame(() => { frame = 0; if (openSt) place(openSt); }); };
-  const onScroll = (e) => { if (openSt && !openSt.pop.contains(e.target)) schedule(); };
+  const onResize = () => { if (openSt) place(openSt); };
+  const onScroll = (e) => { // only the page or an element that carries the field moves the popup
+    const st = openSt, t = e.target;
+    if (!st || st.sheet || !(t === document || (t.contains && t.contains(st.wrap)))) return;
+    if (st.ctx && st.ctx.abs && t !== document) st.ctx = null;
+    place(st, false);
+  };
   const onPointer = (e) => {
     const st = openSt; if (!st) return;
     if (st.pop.contains(e.target) || st.trigger.contains(e.target) || e.target === st.pop || e.target === st.input) return; // a click on the field keeps it open
@@ -566,7 +623,7 @@
     if (!st || input.disabled || input.readOnly || openSt === st) return;
     close(false);
     const c = context(input, st.type), { T } = c;
-    Object.assign(st, { c, value: read(st), view: st.type === 'month' ? 'months' : 'days', side: null, rtl: getComputedStyle(st.wrap).direction === 'rtl', modeAttr: input.dataset.buiMode || '' });
+    Object.assign(st, { c, value: read(st), view: st.type === 'month' ? 'months' : 'days', place: null, size: null, ctx: null, fit: undefined, rtl: getComputedStyle(st.wrap).direction === 'rtl', modeAttr: input.dataset.buiMode || '' });
     const today = todayS(), v = st.value;
     let fs = v && st.type !== 'month' && st.type !== 'time' ? v.s : today;
     if (v && st.type === 'month') fs = serial(fromMIdx(v.mi).y, fromMIdx(v.mi).m, 1);
@@ -603,8 +660,8 @@
     if (st.time) renderTime(st); // again, now that the popup has a size: scroll the lists to the chosen values
     (st.cal ? st.cal.querySelector('[tabindex="0"]') : st.time.querySelector('.bui-dt-opt[tabindex="0"]'))?.focus({ preventScroll: true });
     document.addEventListener('pointerdown', onPointer, true); document.addEventListener('keydown', onDocKey, true);
-    window.addEventListener('resize', schedule); window.addEventListener('scroll', onScroll, true);
-    window.visualViewport?.addEventListener('resize', schedule);
+    window.addEventListener('resize', onResize); window.addEventListener('scroll', onScroll, { capture: true, passive: true });
+    window.visualViewport?.addEventListener('resize', onResize);
     input.dispatchEvent(new CustomEvent('bui:datetime-open', { bubbles: true }));
   }
 
@@ -612,8 +669,8 @@
     const st = openSt; if (!st) return;
     openSt = null;
     document.removeEventListener('pointerdown', onPointer, true); document.removeEventListener('keydown', onDocKey, true);
-    window.removeEventListener('resize', schedule); window.removeEventListener('scroll', onScroll, true);
-    window.visualViewport?.removeEventListener('resize', schedule);
+    window.removeEventListener('resize', onResize); window.removeEventListener('scroll', onScroll, true);
+    window.visualViewport?.removeEventListener('resize', onResize);
     if (canPopover) { try { st.pop.hidePopover(); } catch { /* already hidden */ } }
     st.pop.remove();
     st.trigger.setAttribute('aria-expanded', 'false'); st.trigger.removeAttribute('aria-controls');
