@@ -143,6 +143,7 @@ baset-ui/
 │   ├── typography.html         # Fonts, font size, radius, shadow
 │   ├── theme.html              # How the tokens work, theme colors, scales, radius, spacing, dark mode
 │   ├── token-playground.html   # Live token editor that generates CSS
+│   ├── chart-playground.html   # Live chart editor (type, animation, colors, options) that generates the code
 │   └── direction.html          # RTL / LTR guide with live examples
 ├── assets/
 │   ├── css/
@@ -160,7 +161,8 @@ baset-ui/
 │       ├── baset-upload.js     # Optional file upload (needs section 19 of baset-ui.css)
 │       ├── baset-charts.js     # Optional SVG charts (needs section 20 of baset-ui.css)
 │       ├── icons-gallery.js    # Icons page only (search + details dialog)
-│       └── token-playground.js     # Token playground page only
+│       ├── token-playground.js     # Token playground page only
+│       └── chart-playground.js     # Chart playground page only (needs baset-charts.js)
 ├── README.md
 ├── LICENSE
 └── .gitattributes
@@ -185,7 +187,7 @@ baset-ui/
 | Toasts & notifications | `components/toasts.html` | Success, info, warning, danger, toast stack |
 | Modal | `components/modal.html` | Basic, sizes, positions, drawers, confirmations, forms, media, nested, RTL, JS API (confirm, alert, prompt, show) |
 | Utilities | `components/utilities.html` | Feature grid |
-| Charts & data visualization | `components/charts.html` | Line (basic, multiple, smooth, points, area fill), bar (vertical, horizontal, grouped, stacked, rounded, negative values), area (basic, multiple, stacked), pie, doughnut (center text, custom colors, legend with values and percentages), radar, scatter, mixed bar + line, radial progress, gauge; sales and operations dashboards; options, number formats, empty and invalid data, JS API, live data, responsive, RTL, dark mode |
+| Charts & data visualization | `components/charts.html` | Line (basic, multiple, smooth, points, area fill), bar (vertical, horizontal, grouped, stacked, rounded, negative values), area (basic, multiple, stacked), pie, doughnut (center text, custom colors, legend with values and percentages), radar, scatter, mixed bar + line, radial progress, gauge; animation styles and easings; sales and operations dashboards; options, number formats, empty and invalid data, JS API, live data, responsive, RTL, dark mode |
 
 Every example on these pages shows the live preview, the class list, and a code block with a **Copy** button (it copies exactly the code shown).
 
@@ -470,9 +472,10 @@ Load `assets/js/baset-charts.js` (the styles are section 20 of `baset-ui.css`; n
 ```
 
 - **No JavaScript:** `<div data-bui-chart="bar" data-bui-labels="Mon,Tue,Wed" data-bui-data="12,19,7" data-bui-color="#6658e8"></div>`, or `data-bui-config='{ "data": …, "options": … }'` for everything.
-- **Options:** `responsive`, `width`, `height`, `animation`, `duration`, `showLegend`, `legendPosition`, `legendValues`, `showGrid`, `showGridX`, `showLabels`, `showValues`, `showTooltip`, `smooth`, `points`, `fill`, `stacked`, `horizontal`, `rounded`, `colors`, `maxPoints`, `min`, `max`, `locale`, `format` (preset, `Intl.NumberFormat` options with `prefix` / `suffix`, or a function), `axisFormat`, `formatRight`, `formatX`, `cutout`, `centerText`, `thickness`, `thresholds`, `xTitle`, `yTitle`, `emptyText`, `ariaLabel`.
+- **Options:** `responsive`, `width`, `height`, `animation`, `animationStyle`, `easing`, `duration`, `showLegend`, `legendPosition`, `legendValues`, `showGrid`, `showGridX`, `showLabels`, `showValues`, `showTooltip`, `smooth`, `points`, `fill`, `stacked`, `horizontal`, `rounded`, `colors`, `maxPoints`, `min`, `max`, `locale`, `format` (preset, `Intl.NumberFormat` options with `prefix` / `suffix`, or a function), `axisFormat`, `formatRight`, `formatX`, `cutout`, `centerText`, `thickness`, `thresholds`, `xTitle`, `yTitle`, `emptyText`, `ariaLabel`.
 - **Datasets:** `label`, `data`, `color`, `colors` (one per slice), `type` and `axis` (mixed charts), `fill`, `smooth`, `points`, `dash`, `hidden`. Scatter points are `{ x, y, r }`.
-- **JS:** `chart.update(data)`, `.setOptions(options)` (may change `type`), `.setColors(array)`, `.toggle(index)`, `.resize()`, `.destroy()`; `BUI.chart.init(root)` and `BUI.chart.get(element)`. Events on the container: `bui:chart-render`, `bui:chart-click`.
+- **JS:** `chart.update(data)`, `.setOptions(options)` (may change `type`), `.setColors(array)`, `.toggle(index)`, `.replay()`, `.resize()`, `.destroy()`; `BUI.chart.init(root)` and `BUI.chart.get(element)`. Events on the container: `bui:chart-render`, `bui:chart-click`.
+- **Animations:** `animationStyle` is `grow` (default), `rise`, `fade`, `slide`, `zoom`, `reveal` or `draw`; `easing` is `ease-out` (default), `ease-in-out`, `linear`, `back`, `bounce` or `elastic`. `chart.replay()` plays the first animation again. Updates always morph from the old values. The **Chart playground** lets you pick them and copy the code.
 - **Behavior:** a tooltip on hover, a legend that hides and shows series, smooth animation (skipped with reduced motion), redraw on container resize and when the page direction changes, no errors on empty or invalid data. Negative values are supported by bar, line, area and scatter charts; pie, doughnut and radial ignore them.
 - **Tokens:** `--bui-chart-1` … `--bui-chart-8`, `--bui-chart-text`, `--bui-chart-strong`, `--bui-chart-grid`, `--bui-chart-axis`, `--bui-chart-surface`, `--bui-chart-track`, `--bui-chart-font`, `--bui-chart-font-size`, `--bui-chart-line-width`. Layout helpers: `.bui-chart-card`, `.bui-chart-kpis` / `.bui-chart-kpi`, `.bui-chart-grid-2`.
 
@@ -565,6 +568,7 @@ If you change a color on an element instead of `:root`, re-declare the derived t
 - `customize/typography.html` — fonts, font size, radius and shadow.
 - `customize/theme.html` — how the tokens are built, the six tokens of each theme color, color scales, radius/spacing, dark mode, and how to override them.
 - `customize/token-playground.html` — edit theme colors, radius, spacer and font size, preview in light or dark, and copy the generated CSS. It only changes the preview, not the files.
+- `customize/chart-playground.html` — pick a chart type, animation style, easing, palette and options, preview in light or dark and RTL or LTR, and copy the generated chart code (full example or options only).
 - `customize/direction.html` — switch the page between RTL and LTR, live examples in both directions, `dir` usage and direction-safe CSS (logical properties).
 
 ## Dark mode
@@ -591,6 +595,7 @@ With `baset-ui.js`, any element with `id="themeToggle"` becomes a toggle button.
 | Copy code | `<button class="bui-copy">` inside a `.bui-code-card`; copies the `<code>` text, or the `data-copy` attribute if present |
 | Icons gallery | `assets/js/icons-gallery.js` + `assets/icons/icons-data.js` on `components/icons.html` only |
 | Token playground | `assets/js/token-playground.js` on `customize/token-playground.html` only |
+| Chart playground | `assets/js/chart-playground.js` (+ `baset-charts.js`) on `customize/chart-playground.html` only |
 | Select menu | Custom listbox for `select.bui-input`, `select.bui-float-input`, `select.bui-float-prefix`; `BUI.select.open/close/isOpen()`; `data-bui-native` to opt out |
 | Date & time pickers | `assets/js/baset-datetime.js` (separate file): `data-bui-datetime` on `input[type=date|time|datetime-local|month|week]`; `BUI.datetime.init/open/close/isOpen()`, `BUI.datetime.locales` |
 | File upload | `assets/js/baset-upload.js` (separate file): `data-bui-upload` on `input[type=file]`; `BUI.upload.init/configure/files/add/remove/clear/upload/retry/validate()`; events `bui:upload-*` |

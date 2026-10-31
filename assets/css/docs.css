@@ -309,3 +309,19 @@ h1 em { font-style: normal; color: var(--bui-primary); }
 .bui-chart-log { margin: 12px 0 0; padding: 10px 12px; border-radius: var(--bui-radius-3); background: var(--bui-soft); color: var(--bui-muted); font: 11px/1.6 ui-monospace, monospace; white-space: pre-wrap; overflow-wrap: anywhere; }
 .bui-chart-resize { width: 100%; min-width: 220px; max-width: 100%; padding: 14px; overflow: hidden; resize: horizontal; border: 1px dashed var(--bui-input-border); border-radius: var(--bui-radius-3); }
 .bui-demo-content .bui-chart-grid-2 + .bui-chart-grid-2 { margin-block-start: 16px; }
+
+/* ---------- Chart playground ---------- */
+.bui-tp-field { display: grid; gap: 6px; margin-bottom: 12px; }
+.bui-tp-field label, .bui-tp-label { font-size: 11px; font-weight: 700; color: var(--bui-muted); }
+.bui-tp-label { margin: 4px 0 6px; }
+.bui-tp-field select { padding: 8px 9px; font-size: 12px; }
+.bui-tp-checks { display: grid; grid-template-columns: 1fr 1fr; gap: 0 10px; margin-bottom: 6px; }
+.bui-tp-checks .bui-checkline { padding: 7px 0; font-weight: 600; }
+.bui-tp-chips { flex-wrap: wrap; margin-bottom: 12px; }
+.bui-tp-group .bui-gallery-tabs { flex-wrap: wrap; }
+.bui-tp-group [hidden] { display: none; }
+.bui-tp-swatches { display: flex; gap: 6px; margin: -4px 0 12px; }
+.bui-tp-swatches i { width: 18px; height: 18px; border-radius: 6px; border: 1px solid var(--bui-line); }
+.bui-cp-preview { display: block; padding: 18px; min-width: 0; }
+.bui-cp-preview > div { min-width: 0; }
+.bui-tp-main > .bui-gallery-tabs { margin-bottom: 0; }

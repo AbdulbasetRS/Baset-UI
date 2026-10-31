@@ -12,7 +12,8 @@
  *   <div data-bui-chart="bar" data-bui-labels="Mon,Tue,Wed" data-bui-data="12,19,7" data-bui-height="240"></div>
  *   <div data-bui-chart="line" data-bui-config='{"data":{...},"options":{...}}'></div>
  *
- * Options (all optional): responsive, width, height, animation, duration, showLegend, legendPosition ('top'|'bottom'),
+ * Options (all optional): responsive, width, height, animation, animationStyle ('grow'|'rise'|'fade'|'slide'|'zoom'|'reveal'|'draw'),
+ *   easing ('ease-out'|'ease-in-out'|'linear'|'back'|'bounce'|'elastic'), duration, showLegend, legendPosition ('top'|'bottom'),
  *   legendValues, showGrid, showGridX, showLabels, showTooltip, showValues, smooth, points, fill, stacked, horizontal,
  *   rounded, colors, maxPoints, min, max, locale, format ('number'|'compact'|'currency'|'percent'|{Intl options, prefix,
  *   suffix}|function), axisFormat, formatRight, formatX, cutout, centerText, thickness, thresholds, xTitle, yTitle,
@@ -20,7 +21,7 @@
  * Dataset: { label, data, color, colors (pie), type ('bar'|'line'|'area', mixed), axis ('left'|'right'), fill, smooth,
  *   points, dash, hidden }
  * JavaScript: BasetChart · BUI.chart.init(root) · BUI.chart.get(el) · chart.update(data) · chart.setOptions(o)
- *   chart.setColors([..]) · chart.toggle(i, visible?) · chart.resize() · chart.destroy()
+ *   chart.setColors([..]) · chart.toggle(i, visible?) · chart.replay() · chart.resize() · chart.destroy()
  * Events on the container: bui:chart-render · bui:chart-click
  */
 (() => {
@@ -34,7 +35,7 @@
   const PALETTE = Array.from({ length: 8 }, (_, i) => `var(--bui-chart-${i + 1})`);
   const HEIGHTS = { line: 300, bar: 300, area: 300, mixed: 320, scatter: 320, radar: 340, pie: 280, doughnut: 280, radial: 260, gauge: 220 };
   const DEFAULTS = {
-    responsive: true, width: null, height: null, animation: true, duration: 700,
+    responsive: true, width: null, height: null, animation: true, animationStyle: 'grow', easing: 'ease-out', duration: 700,
     showLegend: true, legendPosition: 'bottom', legendValues: null,
     showGrid: true, showGridX: false, showLabels: true, showTooltip: true, showValues: false,
     smooth: false, points: null, fill: null, stacked: false, horizontal: false, rounded: false,
@@ -67,7 +68,17 @@
   const num = (v) => { if (v === null || v === undefined || v === '' || typeof v === 'boolean') return null; const n = typeof v === 'number' ? v : parseFloat(v); return Number.isFinite(n) ? n : null; };
   const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
   const lerp = (a, b, t) => a + (b - a) * t;
-  const ease = (t) => 1 - Math.pow(1 - t, 3);
+  const ANIMATIONS = ['grow', 'rise', 'fade', 'slide', 'zoom', 'reveal', 'draw'];
+  const bounceOut = (t) => { const n = 7.5625, d = 2.75; if (t < 1 / d) return n * t * t; if (t < 2 / d) return n * (t -= 1.5 / d) * t + 0.75; if (t < 2.5 / d) return n * (t -= 2.25 / d) * t + 0.9375; return n * (t -= 2.625 / d) * t + 0.984375; };
+  const EASINGS = {
+    'ease-out': (t) => 1 - Math.pow(1 - t, 3),
+    'ease-in-out': (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2),
+    linear: (t) => t,
+    back: (t) => 1 + 2.70158 * Math.pow(t - 1, 3) + 1.70158 * Math.pow(t - 1, 2),
+    bounce: bounceOut,
+    elastic: (t) => (t === 0 || t === 1 ? t : Math.pow(2, -10 * t) * Math.sin((t * 10 - 0.75) * ((2 * Math.PI) / 3)) + 1),
+  };
+  const STAGGER = 0.8; // how much of the duration is spent starting the later items (rise)
   const f = (n) => +n.toFixed(2);
   const P = (x, y) => `${f(x)} ${f(y)}`;
   const el = (tag, cls, text) => { const n = document.createElement(tag); if (cls) n.className = cls; if (text != null) n.textContent = text; return n; };
@@ -234,6 +245,13 @@
       this._refresh(false, true);
       return this;
     }
+    /* Play the first animation again (useful to try a style, or when a chart scrolls into view) */
+    replay() {
+      if (this.destroyed) return this;
+      this._from = null; this._pFrom = null;
+      this._refresh(true, true);
+      return this;
+    }
     resize() { if (!this.destroyed) { this._lastSize = ''; this._refresh(false, false); } return this; }
     destroy() {
       if (this.destroyed) return;
@@ -337,10 +355,42 @@
     }
     _visible(i) { return !this._hidden.has(i); }
     _vals(i, p, initial) {
-      const d = this.state.ds[i].data, from = this._from && this._from[i];
-      if (p >= 1 || (initial && SINGLE.includes(this.type))) return d;
-      const b = this._base || 0;
-      return d.map((v, j) => (v === null ? null : lerp(from && from[j] != null ? from[j] : b, v, p)));
+      const d = this.state.ds[i].data, from = this._from && this._from[i], sty = this._sty;
+      if (this._t >= 1 || (initial && SINGLE.includes(this.type))) return d;
+      if (!from && (sty === 'fade' || sty === 'slide' || sty === 'zoom' || sty === 'reveal')) return d;   // these styles animate the whole drawing, not the values
+      if (!from && sty === 'draw' && this.state.ds[i].kind !== 'bar') return d;                              // lines are drawn, bars still grow
+      const b = this._base || 0, n = d.length, ease = this._ease, stagger = !from && sty === 'rise';
+      return d.map((v, j) => {
+        if (v === null) return null;
+        const pj = stagger ? ease(clamp((this._t - ((n > 1 ? j / (n - 1) : 0) * STAGGER) / (1 + STAGGER)) * (1 + STAGGER), 0, 1)) : p;
+        return lerp(from && from[j] != null ? from[j] : b, v, pj);
+      });
+    }
+    /* Animation style for this draw: updates always morph from the old values; a style that does not suit the chart type becomes "grow" */
+    _style() {
+      if (this._from) return 'grow';
+      const s = ANIMATIONS.includes(this.options.animationStyle) ? this.options.animationStyle : 'grow';
+      return s === 'draw' && !['line', 'area', 'mixed', 'bar'].includes(this.type) ? 'grow' : s;
+    }
+    /* 0..1 progress for arcs and radii; whole-drawing styles show the final shape and animate the group instead */
+    _q(p) { const s = this._sty; return !this._from && (s === 'fade' || s === 'slide' || s === 'zoom' || s === 'reveal') ? 1 : clamp(p, 0, 1); }
+    /* Whole-drawing effects: fade, slide, zoom and reveal act on one group, so they cost nothing per frame */
+    _fx(p) {
+      const w = this._wrap, s = this._sty;
+      if (!w) return;
+      const on = !this._from && this._t < 1;
+      let op = '', tf = '', clip = false;
+      if (on) {
+        if (s === 'fade') op = clamp(p, 0, 1);
+        else if (s === 'slide') { op = clamp(p, 0, 1); tf = `translateY(${f((1 - p) * Math.min(36, this._h * 0.14))}px)`; }
+        else if (s === 'zoom') { op = clamp(p, 0, 1); tf = `scale(${f(0.6 + 0.4 * p)})`; }
+        else if (s === 'reveal') {
+          const x = clamp(p, 0, 1) * this._w;
+          this._rv.setAttribute('x', this._rtl ? f(this._w - x) : 0); this._rv.setAttribute('width', f(x)); clip = true;
+        }
+      }
+      w.style.opacity = op; w.style.transform = tf;
+      if (clip) w.setAttribute('clip-path', `url(#${this._uid}-rv)`); else w.removeAttribute('clip-path');
     }
 
     /* --- legend --- */
@@ -386,14 +436,17 @@
       this._legend();
       this._layout();
       this._lastSize = `${this._body.clientWidth}x${this._body.clientHeight}`;
+      this._ease = EASINGS[this.options.easing] || EASINGS['ease-out'];
+      this._sty = this._style();
       const go = this.options.animation && animate && !reduced() && !this.state.empty && this._w > 0;
-      if (!go) { this._anim = false; this._draw(1, initial); this._done(); return; }
+      if (!go) { this._anim = false; this._t = 1; this._draw(1, initial); this._done(); return; }
       this._anim = true;
       const t0 = performance.now(), dur = Math.max(100, this.options.duration || 700);
       const step = (now) => {
         const t = clamp((now - t0) / dur, 0, 1);
         this._anim = t < 1;
-        this._draw(ease(t), initial);
+        this._t = t;
+        this._draw(this._ease(t), initial);
         if (t < 1) this._raf = requestAnimationFrame(step); else this._done();
       };
       this._raf = requestAnimationFrame(step);
@@ -418,7 +471,9 @@
       svg.setAttribute('viewBox', `0 0 ${w} ${h}`);
       this._defs = S('defs', null, svg);
       this._stat = S('g', { class: 'bui-chart-static' }, svg);
-      this._dataG = S('g', { class: 'bui-chart-data' }, svg);
+      this._wrap = S('g', { class: 'bui-chart-fx' }, svg);
+      this._dataG = S('g', { class: 'bui-chart-data' }, this._wrap);
+      this._rv = S('rect', { x: 0, y: 0, width: w, height: h }, S('clipPath', { id: `${this._uid}-rv` }, this._defs));
       this._ovG = S('g', { class: 'bui-chart-overlay' }, svg);
       this._geo = null;
       if (st.empty) return;
@@ -434,6 +489,7 @@
     _draw(p, initial) {
       if (this.state.empty || !this._geo) return;
       this._dataG.replaceChildren();
+      this._fx(p);
       const t = this.type;
       if (t === 'pie' || t === 'doughnut') this._drawPie(p, initial);
       else if (t === 'radial') this._drawRadial(p, initial);
@@ -556,6 +612,7 @@
     _drawCart(p) {
       const o = this.options, st = this.state, ds = st.ds, g = this._geo, n = g.n, rtl = this._rtl, hor = g.hor, dg = this._dataG;
       const vals = ds.map((d, i) => this._vals(i, p, false));
+      const drawing = this._sty === 'draw' && !this._from && this._t < 1, cp = clamp(p, 0, 1);
       const stacks = this._stacks(vals);
       const cats = Array.from({ length: n }, (_, j) => ({ pos: g.catAt(j), rows: [] }));
       const surf = 'var(--bui-chart-surface)';
@@ -568,7 +625,7 @@
         const flush = () => {
           if (run.length > 1) {
             const top = run.map((r) => ({ x: r.x, y: r.yt })), bot = run.map((r) => ({ x: r.x, y: r.yb })).reverse();
-            S('path', { class: 'bui-chart-area', d: pathOf(top, sm, 'M') + pathOf(bot, sm, 'L') + 'Z', style: stk ? `fill:${d.color};fill-opacity:.72` : `fill:url(#${this._uid}-g${i})` }, dg);
+            S('path', { class: 'bui-chart-area', d: pathOf(top, sm, 'M') + pathOf(bot, sm, 'L') + 'Z', style: stk ? `fill:${d.color};fill-opacity:.72` : `fill:url(#${this._uid}-g${i})`, opacity: drawing ? f(clamp((cp - 0.35) / 0.65, 0, 1)) : null }, dg);
           }
           run = [];
         };
@@ -626,8 +683,8 @@
         });
         if (run.length) runs.push(run);
         runs.forEach((r) => {
-          if (r.length > 1) S('path', { class: 'bui-chart-line', d: pathOf(r, sm, 'M'), style: `stroke:${d.color}`, 'stroke-dasharray': d.dash ? (Array.isArray(d.dash) ? d.dash.join(' ') : '6 5') : null }, dg);
-          if (showPts || r.length === 1) r.forEach((pt) => S('circle', { class: 'bui-chart-point', cx: f(pt.x), cy: f(pt.y), r: 4, style: `fill:${d.color};stroke:${surf}` }, dg));
+          if (r.length > 1) S('path', { class: 'bui-chart-line', d: pathOf(r, sm, 'M'), style: `stroke:${d.color}`, pathLength: drawing ? 1 : null, 'stroke-dashoffset': drawing ? f(1 - cp) : null, 'stroke-dasharray': drawing ? '1 2' : d.dash ? (Array.isArray(d.dash) ? d.dash.join(' ') : '6 5') : null }, dg);
+          if (showPts || r.length === 1) r.forEach((pt) => S('circle', { class: 'bui-chart-point', cx: f(pt.x), cy: f(pt.y), r: 4, style: `fill:${d.color};stroke:${surf}`, opacity: drawing ? f(clamp((cp - 0.7) / 0.3, 0, 1)) : null }, dg));
         });
       });
       cats.forEach((c) => c.rows.sort((a, b) => a.i - b.i));
@@ -658,7 +715,7 @@
     }
     _drawPie(p, initial) {
       const st = this.state, g = this._geo, d = st.ds[0], rtl = this._rtl, sgn = rtl ? -1 : 1;
-      const vals = this._vals(0, p, initial);
+      const q = this._q(p), vals = this._vals(0, p, initial);
       const total = vals.reduce((a, v, k) => a + (this._visible(k) && v ? v : 0), 0);
       const target = d.data.reduce((a, v, k) => a + (this._visible(k) && v ? v : 0), 0);
       const to = []; let acc = 0;
@@ -667,7 +724,7 @@
       const items = [];
       to.forEach((t, k) => {
         if (t[1] - t[0] <= 0 && !(from && from[k] && from[k][1] - from[k][0] > 0)) return;
-        const a = from ? [lerp(from[k][0], t[0], p), lerp(from[k][1], t[1], p)] : initial ? [t[0] * p, t[1] * p] : t;
+        const a = from ? [lerp(from[k][0], t[0], q), lerp(from[k][1], t[1], q)] : initial ? [t[0] * q, t[1] * q] : t;
         const span = clamp(a[1] - a[0], 0, 0.9999);
         if (span <= 0.0005) return;
         const a0 = -Math.PI / 2 + sgn * a[0] * Math.PI * 2, a1 = a0 + sgn * span * Math.PI * 2, mid = (a0 + a1) / 2;
@@ -698,10 +755,10 @@
     }
     _drawRadial(p, initial) {
       const st = this.state, g = this._geo, d = st.ds[0], sgn = this._rtl ? -1 : 1, [lo, hi] = this._range;
-      const vals = this._vals(0, p, initial), items = [];
+      const q = this._q(p), vals = this._vals(0, p, initial), items = [];
       g.rings.forEach((i, k) => {
         const v = d.data[i], cur = initial ? v : vals[i];
-        const fr = clamp((cur - lo) / ((hi - lo) || 1), 0, 1) * (initial ? p : 1);
+        const fr = clamp((cur - lo) / ((hi - lo) || 1), 0, 1) * (initial ? q : 1);
         const r = g.R - g.th / 2 - k * (g.th + g.gap), dd = arcLine(g.cx, g.cy, r, -Math.PI / 2, sgn, fr);
         if (dd) S('path', { class: 'bui-chart-ring', d: dd, 'stroke-width': g.th, style: `stroke:${d.colors[i]}`, 'data-i': i }, this._dataG);
         items.push({ i, label: st.labels[i], value: v, color: d.colors[i], text: this._fmtPct(v) });
@@ -748,7 +805,7 @@
     _drawGauge(p, initial) {
       const st = this.state, g = this._geo, d = st.ds[0], v = d.data[0] === null ? g.lo : d.data[0];
       const from = this._from && this._from[0] && this._from[0][0] != null ? this._from[0][0] : g.lo;
-      const cur = initial ? lerp(g.lo, v, p) : lerp(from, v, p);
+      const q = this._q(p), cur = initial ? lerp(g.lo, v, q) : lerp(from, v, q);
       const fr = clamp((cur - g.lo) / ((g.hi - g.lo) || 1), 0, 1), a = this._ang(fr);
       if (this._thr) {
         const [mx, my] = polar(g.cx, g.cy, g.R, a);
@@ -838,7 +895,7 @@
       st.ds.forEach((d, i) => {
         if (!this._visible(i)) return;
         d.data.forEach((q) => {
-          const r = (q.r != null ? clamp(q.r, 2, 40) : 5.5) * p, cx = g.gx(q.x), cy = g.gy(q.y);
+          const r = (q.r != null ? clamp(q.r, 2, 40) : 5.5) * Math.max(0, this._q(p)), cx = g.gx(q.x), cy = g.gy(q.y);
           S('circle', { class: 'bui-chart-dot', cx: f(cx), cy: f(cy), r: f(r), style: `fill:${d.color};stroke:${d.color}` }, this._dataG);
           list.push({ i, x: cx, y: cy, q, color: d.color, r });
         });
@@ -944,7 +1001,7 @@
     return list.filter((n) => !instances.has(n)).map((n) => new BasetChart(n));
   }
   BUI.Chart = BasetChart;
-  BUI.chart = { init, get: (t) => instances.get(typeof t === 'string' ? document.querySelector(t) : t) || null, defaults: DEFAULTS, palette: PALETTE, types: TYPES };
+  BUI.chart = { init, get: (t) => instances.get(typeof t === 'string' ? document.querySelector(t) : t) || null, defaults: DEFAULTS, palette: PALETTE, types: TYPES, animations: ANIMATIONS, easings: Object.keys(EASINGS), heights: HEIGHTS };
   window.BasetChart = BasetChart;
 
   const start = () => {

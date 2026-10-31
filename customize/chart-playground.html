@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Chart playground — Baset UI</title>
+  <link rel="stylesheet" href="../assets/css/baset-ui.css">
+  <link rel="stylesheet" href="../assets/css/docs.css">
+
+  <script>try{if(localStorage.getItem('bui-theme')==='dark')document.documentElement.classList.add('bui-dark');var d=localStorage.getItem('bui-dir');if(d==='rtl'||d==='ltr')document.documentElement.dir=d}catch(e){}</script>
+</head>
+<body>
+  <div class="bui-app">
+    <aside class="bui-sidebar">
+      <a class="bui-brand" href="../index.html"><span class="bui-brand-mark">B</span><span>Baset UI<small>Component library</small></span></a>
+      <div class="bui-sidebar-label">GET STARTED</div>
+      <a class="bui-nav" href="../index.html#overview">Overview</a>
+      <a class="bui-nav" href="../index.html#installation">Installation</a>
+      <div class="bui-sidebar-label">LAYOUT</div>
+      <a class="bui-nav" href="../layout/grid.html">Grid system</a>
+      <div class="bui-sidebar-label">COMPONENTS</div>
+      <a class="bui-nav" href="../components/buttons.html">Buttons</a>
+      <a class="bui-nav" href="../components/forms.html">Form controls</a>
+      <a class="bui-nav" href="../components/select.html">Select &amp; dropdown</a>
+      <a class="bui-nav" href="../components/datetime.html">Date &amp; time pickers</a>
+      <a class="bui-nav" href="../components/upload.html">File upload</a>
+      <a class="bui-nav" href="../components/cards.html">Cards</a>
+      <a class="bui-nav" href="../components/alerts.html">Alerts</a>
+      <a class="bui-nav" href="../components/badges.html">Badges</a>
+      <a class="bui-nav" href="../components/loaders.html">Loaders</a>
+      <a class="bui-nav" href="../components/icons.html">Icons</a>
+      <a class="bui-nav" href="../components/toasts.html">Toasts &amp; notifications</a>
+      <a class="bui-nav" href="../components/modal.html">Modal</a>
+      <a class="bui-nav" href="../components/utilities.html">Utilities</a>
+      <a class="bui-nav" href="../components/charts.html">Charts &amp; data visualization</a>
+      <div class="bui-sidebar-label">CUSTOMIZE</div>
+      <a class="bui-nav" href="../customize/colors.html">Default colors</a>
+      <a class="bui-nav" href="../customize/typography.html">Typography and shape</a>
+      <a class="bui-nav" href="../customize/theme.html">Theme</a>
+      <a class="bui-nav" href="../customize/token-playground.html">Token playground</a>
+      <a class="bui-nav active" href="../customize/chart-playground.html">Chart playground</a>
+      <a class="bui-nav" href="../customize/direction.html">Direction (RTL / LTR)</a>
+      <div class="bui-sidebar-bottom"><span class="bui-status-dot"></span> Baset UI <span class="bui-version">v1.0.0</span></div>
+    </aside>
+    <main class="bui-main">
+      <header class="bui-topbar"><div class="bui-breadcrumb"><a href="../index.html">Documentation</a> <span>/</span> Customize <span>/</span> Chart playground</div><div class="bui-top-actions"><span class="bui-pill">Vanilla CSS + JS</span><button class="bui-icon-btn bui-dir-btn" id="dirToggle" type="button" aria-label="Toggle direction (RTL / LTR)" title="Toggle direction (RTL / LTR)">RTL</button><button class="bui-icon-btn" id="themeToggle" type="button" aria-label="Toggle theme">☼</button></div></header>
+      <section class="bui-section" id="chart-playground"><div class="bui-section-heading"><div><span class="bui-eyebrow">05 / CUSTOMIZE</span><h2>Chart playground</h2><p>Choose a chart, an animation style, colors and options. The chart updates as you click and the code below it always matches, ready to copy.</p></div></div>
+      <div class="bui-tp">
+        <aside class="bui-tp-panel">
+          <div class="bui-tp-group"><h3>Preview</h3>
+            <div class="bui-gallery-tabs" id="cpMode" role="group" aria-label="Preview theme"><button type="button" class="bui-gallery-tab active" data-mode="light">Light</button><button type="button" class="bui-gallery-tab" data-mode="dark">Dark</button></div>
+            <div class="bui-gallery-tabs" id="cpDir" role="group" aria-label="Preview direction"><button type="button" class="bui-gallery-tab active" data-dir="ltr">LTR</button><button type="button" class="bui-gallery-tab" data-dir="rtl">RTL</button></div>
+          </div>
+          <div class="bui-tp-group"><h3>Chart</h3>
+            <div class="bui-tp-field" ><label for="cpType">Type</label><select class="bui-input" id="cpType"><option value="line">Line</option><option value="bar">Bar</option><option value="area">Area</option><option value="pie">Pie</option><option value="doughnut">Doughnut</option><option value="radar">Radar</option><option value="scatter">Scatter</option><option value="mixed">Mixed (bar + line)</option><option value="radial">Radial progress</option><option value="gauge">Gauge</option></select></div>
+            <div class="bui-tp-field" ><label for="cpData">Sample data</label><select class="bui-input" id="cpData"><option value="a"></option></select></div>
+            <div class="bui-tp-slider" id="cpPointsBox"><div><span>Number of points</span><code>points: <span id="cpPointsOut"></span></code></div><input type="range" id="cpPoints" min="3" max="12" step="1"></div>
+            <div class="bui-tp-slider" ><div><span>Height</span><code>height: <span id="cpHeightOut"></span></code></div><input type="range" id="cpHeight" min="160" max="480" step="10"></div>
+          </div>
+          <div class="bui-tp-group"><h3>Animation</h3>
+            <label class="bui-checkline"><input type="checkbox" data-opt="animation"> Animate</label>
+            <div class="bui-tp-label">Style</div>
+            <div class="bui-gallery-tabs bui-tp-chips" id="cpStyles" role="group" aria-label="Animation style"><button type="button" class="bui-gallery-tab active" data-style="grow">grow</button><button type="button" class="bui-gallery-tab" data-style="rise">rise</button><button type="button" class="bui-gallery-tab" data-style="fade">fade</button><button type="button" class="bui-gallery-tab" data-style="slide">slide</button><button type="button" class="bui-gallery-tab" data-style="zoom">zoom</button><button type="button" class="bui-gallery-tab" data-style="reveal">reveal</button><button type="button" class="bui-gallery-tab" data-style="draw">draw</button></div>
+            <div class="bui-tp-field" ><label for="cpEasing">Easing</label><select class="bui-input" id="cpEasing"><option value="ease-out">ease-out (default)</option><option value="ease-in-out">ease-in-out</option><option value="linear">linear</option><option value="back">back (overshoot)</option><option value="bounce">bounce</option><option value="elastic">elastic</option></select></div>
+            <div class="bui-tp-slider" ><div><span>Duration</span><code>duration: <span id="cpDurationOut"></span></code></div><input type="range" id="cpDuration" min="200" max="2500" step="50"></div>
+            <button type="button" class="bui-btn bui-btn-soft-primary bui-btn-sm" id="cpReplay">▶ Replay animation</button>
+          </div>
+          <div class="bui-tp-group"><h3>Colors and numbers</h3>
+            <div class="bui-tp-field" ><label for="cpPalette">Palette</label><select class="bui-input" id="cpPalette"><option value="default">Default (tokens)</option><option value="ocean">Ocean</option><option value="sunset">Sunset</option><option value="forest">Forest</option><option value="mono">Mono</option></select></div>
+            <div class="bui-tp-swatches" id="cpSwatches" aria-hidden="true"></div>
+            <div class="bui-tp-field" ><label for="cpFormat">Number format</label><select class="bui-input" id="cpFormat"><option value="number">number  1,234</option><option value="compact">compact  1.2K</option><option value="currency">currency  $1,234</option><option value="percent">percent  12.5%</option></select></div>
+          </div>
+          <div class="bui-tp-group"><h3>Elements</h3>
+            <div class="bui-tp-checks">
+              <label class="bui-checkline" data-for="line bar area pie doughnut radar scatter mixed radial"><input type="checkbox" data-opt="showLegend"> Legend</label>
+              <label class="bui-checkline" data-for="line bar area pie doughnut radar scatter mixed radial"><input type="checkbox" data-opt="showTooltip"> Tooltip</label>
+              <label class="bui-checkline" data-for="line bar area radar scatter mixed"><input type="checkbox" data-opt="showGrid"> Grid lines</label>
+              <label class="bui-checkline" data-for="line area scatter mixed"><input type="checkbox" data-opt="showGridX"> Vertical grid</label>
+              <label class="bui-checkline" data-for="line bar area pie doughnut radar scatter mixed radial gauge"><input type="checkbox" data-opt="showLabels"> Labels</label>
+              <label class="bui-checkline" data-for="bar mixed"><input type="checkbox" data-opt="showValues"> Values on bars</label>
+            </div>
+            <div class="bui-tp-field" data-for="line bar area pie doughnut radar scatter mixed radial"><label for="cpLegendPos">Legend position</label><select class="bui-input" id="cpLegendPos"><option value="bottom">bottom</option><option value="top">top</option></select></div>
+          </div>
+          <div class="bui-tp-group"><h3>Shape</h3>
+            <div class="bui-tp-checks">
+              <label class="bui-checkline" data-for="line area mixed"><input type="checkbox" data-opt="smooth"> Smooth</label>
+              <label class="bui-checkline" data-for="line area radar mixed"><input type="checkbox" data-opt="points"> Points</label>
+              <label class="bui-checkline" data-for="line"><input type="checkbox" data-opt="fill"> Area fill</label>
+              <label class="bui-checkline" data-for="bar area mixed"><input type="checkbox" data-opt="stacked"> Stacked</label>
+              <label class="bui-checkline" data-for="bar mixed"><input type="checkbox" data-opt="rounded"> Rounded</label>
+              <label class="bui-checkline" data-for="bar"><input type="checkbox" data-opt="horizontal"> Horizontal</label>
+              <label class="bui-checkline" data-for="doughnut radial"><input type="checkbox" data-opt="centerText"> Center text</label>
+              <label class="bui-checkline" data-for="gauge"><input type="checkbox" data-opt="thresholds"> Color bands</label>
+            </div>
+            <div class="bui-tp-slider" data-for="doughnut"><div><span>Doughnut hole</span><code>cutout: <span id="cpCutoutOut"></span></code></div><input type="range" id="cpCutout" min="30" max="90" step="1"></div>
+          </div>
+          <button type="button" class="bui-btn bui-btn-outline" id="cpReset">Reset all</button>
+        </aside>
+        <div class="bui-tp-main">
+          <div class="bui-tp-preview bui-cp-preview" id="cpPreview"><div id="cpChart"></div></div>
+          <div class="bui-gallery-tabs" id="cpOut" role="group" aria-label="Code to copy"><button type="button" class="bui-gallery-tab active" data-out="full">Full code</button><button type="button" class="bui-gallery-tab" data-out="options">Options only</button></div>
+          <div class="bui-code-card"><div class="bui-code-head"><span><i></i> <span id="cpFile">index.html</span></span><button class="bui-copy" type="button">Copy</button></div><pre><code id="cpCode"></code></pre></div>
+          <p class="bui-doc-note">The code contains only what differs from the defaults. Paste it where the chart should be; the script file is <code>assets/js/baset-charts.js</code> and the styles are section 20 of <code>baset-ui.css</code>.</p>
+        </div>
+      </div>
+      </section>
+      <div class="bui-pager"><a class="bui-btn bui-btn-outline" href="token-playground.html"><span class="bui-flip">←</span> Token playground</a><a class="bui-btn bui-btn-primary" href="direction.html">Direction <span class="bui-flip">→</span></a></div>
+      <footer class="bui-footer"><span>© 2026 Baset UI. Built for makers.</span><span>Documentation · v1.0.0</span></footer>
+    </main>
+  </div>
+  <script src="../assets/js/baset-ui.js"></script>
+  <script src="../assets/js/baset-charts.js"></script>
+  <script src="../assets/js/chart-playground.js"></script>
+</body>
+</html>
