@@ -44,13 +44,20 @@
     </aside>
     <main class="bui-main">
       <header class="bui-topbar"><div class="bui-breadcrumb"><a href="../index.html">Documentation</a> <span>/</span> Customize <span>/</span> Token playground</div><div class="bui-top-actions"><span class="bui-pill">Vanilla CSS + JS</span><button class="bui-icon-btn bui-dir-btn" id="dirToggle" type="button" aria-label="Toggle direction (RTL / LTR)" title="Toggle direction (RTL / LTR)">RTL</button><button class="bui-icon-btn" id="themeToggle" type="button" aria-label="Toggle theme">☼</button></div></header>
-      <section class="bui-section" id="token-playground"><div class="bui-section-heading"><div><span class="bui-eyebrow">04 / CUSTOMIZE</span><h2>Token playground</h2><p>Change theme colors, radius, spacing and font size and see every component update, then copy the generated CSS.</p></div></div>
+      <section class="bui-section" id="token-playground"><div class="bui-section-heading"><div><span class="bui-eyebrow">04 / CUSTOMIZE</span><h2>Token playground</h2><p>Control every token: theme colors, neutrals (light and dark), the six radius steps, spacer, font size, fonts, shadow and chart colors. Every component updates live, then copy the generated CSS (only what you changed).</p></div></div>
       <div class="bui-tp">
         <aside class="bui-tp-panel">
           <div class="bui-tp-group"><h3>Preview mode</h3><div class="bui-gallery-tabs" id="tpMode"><button type="button" class="bui-gallery-tab active" data-mode="light">Light</button><button type="button" class="bui-gallery-tab" data-mode="dark">Dark</button></div></div>
           <div class="bui-tp-group"><h3>Theme colors</h3><div id="tpColors"></div></div>
-          <div class="bui-tp-group"><h3>Shape</h3><div class="bui-tp-slider"><div><span>Controls radius</span><code>--bui-radius-3: <span id="tpRadius3Out"></span></code></div><input type="range" id="tpRadius3" min="0" max="1.5" step="0.0625"></div><div class="bui-tp-slider"><div><span>Cards radius</span><code>--bui-radius-5: <span id="tpRadius5Out"></span></code></div><input type="range" id="tpRadius5" min="0" max="2" step="0.0625"></div></div>
-          <div class="bui-tp-group"><h3>Spacing and type</h3><div class="bui-tp-slider"><div><span>Spacer</span><code>--bui-spacer: <span id="tpSpacerOut"></span></code></div><input type="range" id="tpSpacer" min="0.75" max="1.5" step="0.0625"></div><div class="bui-tp-slider"><div><span>Font size</span><code>--bui-font-size: <span id="tpFontOut"></span></code></div><input type="range" id="tpFont" min="0.75" max="1.125" step="0.03125"></div></div>
+          <div class="bui-tp-group"><h3>Neutrals</h3><div id="tpNeutrals"></div></div>
+          <div class="bui-tp-group"><h3>Radius</h3><div id="tpShape"></div></div>
+          <div class="bui-tp-group"><h3>Spacing and type</h3><div id="tpSpacing">
+            <label class="bui-field">Body font <code>--bui-font-body</code><input class="bui-input" id="tpFontBody" data-font="body" list="tpFontList" spellcheck="false" dir="ltr"></label>
+            <label class="bui-field" style="margin-top:10px">Heading font <code>--bui-font-heading</code><input class="bui-input" id="tpFontHeading" data-font="heading" list="tpFontList" spellcheck="false" dir="ltr"></label>
+            <datalist id="tpFontList"><option value="'DM Sans', sans-serif"><option value="Manrope, sans-serif"><option value="system-ui, sans-serif"><option value="'Segoe UI', Tahoma, sans-serif"><option value="Cairo, sans-serif"><option value="Tajawal, sans-serif"><option value="Georgia, serif"><option value="ui-monospace, monospace"></datalist>
+          </div></div>
+          <div class="bui-tp-group"><h3>Shadow</h3><div id="tpShadow"></div></div>
+          <div class="bui-tp-group"><h3>Charts</h3><div id="tpCharts"></div></div>
           <button type="button" class="bui-btn bui-btn-outline" id="tpReset">Reset all</button>
         </aside>
         <div class="bui-tp-main">
@@ -62,10 +69,12 @@
   <button type="button" class="bui-btn bui-btn-danger">Danger</button>
   <button type="button" class="bui-btn bui-btn-warning">Warning</button>
   <button type="button" class="bui-btn bui-btn-info">Info</button>
+  <button type="button" class="bui-btn bui-btn-inverse">Inverse</button>
 </div>
 <div class="bui-button-row">
   <button type="button" class="bui-btn bui-btn-outline-primary">Outline</button>
   <button type="button" class="bui-btn bui-btn-soft-primary">Soft</button>
+  <button type="button" class="bui-btn bui-btn-outline">Neutral</button>
   <button type="button" class="bui-btn bui-btn-link">Link</button>
   <span class="bui-badge bui-badge-primary">Primary</span><span class="bui-badge bui-badge-success">Success</span><span class="bui-badge bui-badge-warning">Pending</span><span class="bui-badge bui-badge-danger">Failed</span><span class="bui-badge bui-badge-info">New</span><span class="bui-badge bui-badge-neutral">Archived</span>
 </div>
@@ -76,12 +85,22 @@
   <div class="bui-alert bui-alert-danger"><span>×</span><div><strong>Payment failed</strong><p>Check your card details and try again.</p></div></div>
 </div>
 <div class="bui-form-grid">
-  <label class="bui-field">Full name<input class="bui-input" placeholder="e.g. Abdulbaset Sayed"></label>
-  <label class="bui-field">Department<select class="bui-input"><option>Engineering</option><option>Design</option></select></label>
+  <div class="bui-float"><input class="bui-float-input" id="tp-name" type="text" placeholder=" " value="Abdulbaset Sayed"><label class="bui-float-label" for="tp-name">Full name</label></div>
+  <div class="bui-float bui-float-error"><input class="bui-float-input" id="tp-mail" type="email" placeholder=" " value="abdulbaset@"><label class="bui-float-label" for="tp-mail">Email address</label></div>
+  <div class="bui-float bui-float-success"><input class="bui-float-input" id="tp-user" type="text" placeholder=" " value="baset"><label class="bui-float-label" for="tp-user">Username</label></div>
+  <label class="bui-field">Department<select class="bui-input" data-bui-native><option>Engineering</option><option>Design</option></select></label>
+</div>
+<div class="bui-notification-list">
+  <div class="bui-notification bui-notification-unread"><span class="bui-notification-media bui-notification-media-info">i</span><div class="bui-notification-content"><div class="bui-notification-head"><strong class="bui-notification-title">Report ready</strong><time class="bui-notification-time">1h ago</time></div><p class="bui-notification-text">Your weekly report is ready to download.</p></div></div>
+  <div class="bui-notification"><span class="bui-notification-media bui-notification-media-success">✓</span><div class="bui-notification-content"><div class="bui-notification-head"><strong class="bui-notification-title">Backup completed</strong><time class="bui-notification-time">Yesterday</time></div><p class="bui-notification-text">All files were backed up.</p></div></div>
 </div>
 <div class="bui-cards-grid" style="grid-template-columns:repeat(auto-fit,minmax(190px,1fr))">
   <article class="bui-stat-card"><div class="bui-stat-top"><span class="bui-stat-icon bui-stat-icon-purple">↗</span><span class="bui-stat-change">+12.8%</span></div><span class="bui-stat-label">Total revenue</span><strong>$24,580</strong><div class="bui-sparkline"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></article>
   <article class="bui-stat-card"><div class="bui-stat-top"><span class="bui-stat-icon bui-stat-icon-blue">◉</span><span class="bui-stat-change">+8.2%</span></div><span class="bui-stat-label">Active users</span><strong>8,249</strong><div class="bui-progress"><span style="width:72%"></span></div></article>
+</div>
+<div class="bui-chart-card">
+  <div class="bui-chart-card-head"><div><h4 class="bui-chart-card-title">Sessions</h4><p class="bui-chart-card-sub">Uses the chart tokens</p></div></div>
+  <div data-bui-chart="line" data-bui-config='{"data":{"labels":["Jan","Feb","Mar","Apr","May","Jun"],"datasets":[{"label":"Desktop","data":[42,48,45,56,61,68]},{"label":"Mobile","data":[30,38,49,52,63,75]},{"label":"Tablet","data":[12,14,13,18,17,21]}]},"options":{"height":220,"animation":false}}'></div>
 </div>
           </div>
           <div class="bui-code-card"><div class="bui-code-head"><span><i></i> theme.css</span><button class="bui-copy" type="button">Copy</button></div><pre><code id="tpCode"></code></pre></div>
@@ -93,6 +112,7 @@
     </main>
   </div>
   <script src="../assets/js/baset-ui.js"></script>
+  <script src="../assets/js/baset-charts.js"></script>
   <script src="../assets/js/token-playground.js"></script>
 </body>
 </html>
