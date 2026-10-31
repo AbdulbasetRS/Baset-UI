@@ -302,3 +302,10 @@ h1 em { font-style: normal; color: var(--bui-primary); }
 /* ---------- File upload demos: custom colors set on a container ---------- */
 .bui-up-green { --bui-up-accent: var(--bui-green-500); --bui-up-accent-soft: var(--bui-success-bg-subtle); --bui-up-accent-text: var(--bui-success-fg); --bui-up-radius: var(--bui-radius-6); --bui-up-bg: transparent; }
 .bui-up-amber { --bui-up-accent: var(--bui-amber-500); --bui-up-accent-fg: #3a2706; --bui-up-accent-soft: var(--bui-warning-bg-subtle); --bui-up-accent-text: var(--bui-warning-fg); --bui-up-radius: 0; --bui-up-item-radius: 0; --bui-up-min-h: 110px; }
+
+/* ---------- Charts page ---------- */
+.bui-chart-tools { display: flex; flex-wrap: wrap; gap: 8px; margin-block-end: 14px; }
+.bui-chart-tools .bui-btn[aria-pressed="true"]:not(.bui-btn-primary) { border-color: var(--bui-primary-border); background: var(--bui-primary-soft); color: var(--bui-primary-text); }
+.bui-chart-log { margin: 12px 0 0; padding: 10px 12px; border-radius: var(--bui-radius-3); background: var(--bui-soft); color: var(--bui-muted); font: 11px/1.6 ui-monospace, monospace; white-space: pre-wrap; overflow-wrap: anywhere; }
+.bui-chart-resize { width: 100%; min-width: 220px; max-width: 100%; padding: 14px; overflow: hidden; resize: horizontal; border: 1px dashed var(--bui-input-border); border-radius: var(--bui-radius-3); }
+.bui-demo-content .bui-chart-grid-2 + .bui-chart-grid-2 { margin-block-start: 16px; }

@@ -27,17 +27,18 @@ Explore the full Baset UI documentation website, including interactive component
    - [Grid and layout](#grid-and-layout)
 6. [Date and time pickers](#date-and-time-pickers)
 7. [File upload](#file-upload)
-8. [Loaders and success icon](#loaders-and-success-icon)
-9. [Icons](#icons)
-10. [Theming (CSS variables)](#theming-css-variables)
-11. [Dark mode](#dark-mode)
-12. [JavaScript behaviors](#javascript-behaviors)
-13. [Using it with Laravel](#using-it-with-laravel)
-14. [Adding a new component](#adding-a-new-component)
-15. [Naming convention](#naming-convention)
-16. [Browser support](#browser-support)
-17. [Status and roadmap](#status-and-roadmap)
-18. [Third-party licenses](#third-party-licenses)
+8. [Charts and data visualization](#charts-and-data-visualization)
+9. [Loaders and success icon](#loaders-and-success-icon)
+10. [Icons](#icons)
+11. [Theming (CSS variables)](#theming-css-variables)
+12. [Dark mode](#dark-mode)
+13. [JavaScript behaviors](#javascript-behaviors)
+14. [Using it with Laravel](#using-it-with-laravel)
+15. [Adding a new component](#adding-a-new-component)
+16. [Naming convention](#naming-convention)
+17. [Browser support](#browser-support)
+18. [Status and roadmap](#status-and-roadmap)
+19. [Third-party licenses](#third-party-licenses)
 
 ---
 
@@ -128,6 +129,7 @@ baset-ui/
 │   ├── forms.html
 │   ├── datetime.html           # Date & time pickers: date, time, datetime-local, month, week
 │   ├── upload.html             # File upload: dropzone, previews, checks, uploads
+│   ├── charts.html             # Charts: line, bar, area, pie, doughnut, radar, scatter, mixed, radial, gauge
 │   ├── cards.html
 │   ├── alerts.html
 │   ├── badges.html
@@ -156,6 +158,7 @@ baset-ui/
 │       ├── baset-ui.js         # Optional interactions
 │       ├── baset-datetime.js   # Optional date & time pickers (needs section 18 of baset-ui.css)
 │       ├── baset-upload.js     # Optional file upload (needs section 19 of baset-ui.css)
+│       ├── baset-charts.js     # Optional SVG charts (needs section 20 of baset-ui.css)
 │       ├── icons-gallery.js    # Icons page only (search + details dialog)
 │       └── token-playground.js     # Token playground page only
 ├── README.md
@@ -182,6 +185,7 @@ baset-ui/
 | Toasts & notifications | `components/toasts.html` | Success, info, warning, danger, toast stack |
 | Modal | `components/modal.html` | Basic, sizes, positions, drawers, confirmations, forms, media, nested, RTL, JS API (confirm, alert, prompt, show) |
 | Utilities | `components/utilities.html` | Feature grid |
+| Charts & data visualization | `components/charts.html` | Line (basic, multiple, smooth, points, area fill), bar (vertical, horizontal, grouped, stacked, rounded, negative values), area (basic, multiple, stacked), pie, doughnut (center text, custom colors, legend with values and percentages), radar, scatter, mixed bar + line, radial progress, gauge; sales and operations dashboards; options, number formats, empty and invalid data, JS API, live data, responsive, RTL, dark mode |
 
 Every example on these pages shows the live preview, the class list, and a code block with a **Copy** button (it copies exactly the code shown).
 
@@ -446,6 +450,34 @@ Add `data-bui-upload` to a native `<input type="file">` and load `assets/js/base
 
 Full examples: `components/upload.html`.
 
+## Charts and data visualization
+
+Load `assets/js/baset-charts.js` (the styles are section 20 of `baset-ui.css`; no other script is needed). Charts are drawn as SVG, with no dependencies and no CDN. Colors, text and grid come from `--bui-chart-*` tokens built on the Baset UI tokens, so dark mode and RTL / LTR work without extra code.
+
+```html
+<div id="sales-chart"></div>
+<script src="assets/js/baset-charts.js"></script>
+<script>
+  const chart = new BasetChart('#sales-chart', {
+    type: 'line',   // line · bar · area · pie · doughnut · radar · scatter · mixed · radial · gauge
+    data: {
+      labels: ['Jan', 'Feb', 'Mar', 'Apr'],
+      datasets: [{ label: 'Sales', data: [120, 190, 150, 250], color: '#6366f1' }]
+    },
+    options: { responsive: true, animation: true, showLegend: true, showGrid: true }
+  });
+</script>
+```
+
+- **No JavaScript:** `<div data-bui-chart="bar" data-bui-labels="Mon,Tue,Wed" data-bui-data="12,19,7" data-bui-color="#6658e8"></div>`, or `data-bui-config='{ "data": …, "options": … }'` for everything.
+- **Options:** `responsive`, `width`, `height`, `animation`, `duration`, `showLegend`, `legendPosition`, `legendValues`, `showGrid`, `showGridX`, `showLabels`, `showValues`, `showTooltip`, `smooth`, `points`, `fill`, `stacked`, `horizontal`, `rounded`, `colors`, `maxPoints`, `min`, `max`, `locale`, `format` (preset, `Intl.NumberFormat` options with `prefix` / `suffix`, or a function), `axisFormat`, `formatRight`, `formatX`, `cutout`, `centerText`, `thickness`, `thresholds`, `xTitle`, `yTitle`, `emptyText`, `ariaLabel`.
+- **Datasets:** `label`, `data`, `color`, `colors` (one per slice), `type` and `axis` (mixed charts), `fill`, `smooth`, `points`, `dash`, `hidden`. Scatter points are `{ x, y, r }`.
+- **JS:** `chart.update(data)`, `.setOptions(options)` (may change `type`), `.setColors(array)`, `.toggle(index)`, `.resize()`, `.destroy()`; `BUI.chart.init(root)` and `BUI.chart.get(element)`. Events on the container: `bui:chart-render`, `bui:chart-click`.
+- **Behavior:** a tooltip on hover, a legend that hides and shows series, smooth animation (skipped with reduced motion), redraw on container resize and when the page direction changes, no errors on empty or invalid data. Negative values are supported by bar, line, area and scatter charts; pie, doughnut and radial ignore them.
+- **Tokens:** `--bui-chart-1` … `--bui-chart-8`, `--bui-chart-text`, `--bui-chart-strong`, `--bui-chart-grid`, `--bui-chart-axis`, `--bui-chart-surface`, `--bui-chart-track`, `--bui-chart-font`, `--bui-chart-font-size`, `--bui-chart-line-width`. Layout helpers: `.bui-chart-card`, `.bui-chart-kpis` / `.bui-chart-kpi`, `.bui-chart-grid-2`.
+
+Full examples: `components/charts.html`.
+
 ## Modal
 
 Dialogs built on the native `<dialog>` element: backdrop, focus trap, **Esc** key, inert page and focus return come from the browser. Use plain HTML, or the JavaScript API with Promises. Full examples: `components/modal.html`.
@@ -562,6 +594,7 @@ With `baset-ui.js`, any element with `id="themeToggle"` becomes a toggle button.
 | Select menu | Custom listbox for `select.bui-input`, `select.bui-float-input`, `select.bui-float-prefix`; `BUI.select.open/close/isOpen()`; `data-bui-native` to opt out |
 | Date & time pickers | `assets/js/baset-datetime.js` (separate file): `data-bui-datetime` on `input[type=date|time|datetime-local|month|week]`; `BUI.datetime.init/open/close/isOpen()`, `BUI.datetime.locales` |
 | File upload | `assets/js/baset-upload.js` (separate file): `data-bui-upload` on `input[type=file]`; `BUI.upload.init/configure/files/add/remove/clear/upload/retry/validate()`; events `bui:upload-*` |
+| Charts | `assets/js/baset-charts.js` (separate file): `new BasetChart(target, { type, data, options })` or `data-bui-chart`; `update / setOptions / setColors / toggle / resize / destroy()`; `BUI.chart.init/get()`; events `bui:chart-render`, `bui:chart-click` |
 | Floating labels | The i button toggles its message; `<form data-bui-validate>` and `BUI.float.setState/clear/open/validate/reset()` |
 | Modal | `BUI.modal.open/close/show/confirm/alert/prompt()` or `data-bui-modal-open` / `data-bui-modal-close` attributes |
 | Scroll-spy | Sidebar links like `<a class="bui-nav" href="#section">` highlight as you scroll |

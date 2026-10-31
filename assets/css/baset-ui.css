@@ -1278,3 +1278,105 @@ select.bui-float-prefix { appearance: none; padding-inline: 14px 22px; border: 0
 @keyframes bui-up-in { from { opacity: 0; transform: translateY(4px); } }
 @media (prefers-reduced-motion: reduce) { .bui-upload-item { animation: none; } .bui-upload-bar > span { transition: none; } }
 .bui-upload-caption { display: block; margin-block-end: 8px; color: var(--bui-muted); font-size: 12px; font-weight: 700; }
+
+/* =========================================================
+   20. Charts and data visualization
+   Drawn by assets/js/baset-charts.js (BasetChart). Colors, text and grid come from the tokens below: override
+   any --bui-chart-* on :root or on one chart. Dark mode and RTL follow the page automatically.
+   ========================================================= */
+:root {
+  --bui-chart-1: light-dark(var(--bui-violet-500), var(--bui-violet-400));
+  --bui-chart-2: light-dark(var(--bui-green-500), var(--bui-green-400));
+  --bui-chart-3: light-dark(var(--bui-amber-500), var(--bui-amber-400));
+  --bui-chart-4: light-dark(var(--bui-blue-500), var(--bui-blue-400));
+  --bui-chart-5: light-dark(var(--bui-red-500), var(--bui-red-400));
+  --bui-chart-6: light-dark(var(--bui-slate-400), var(--bui-slate-300));
+  --bui-chart-7: light-dark(var(--bui-violet-300), var(--bui-violet-600));
+  --bui-chart-8: light-dark(var(--bui-green-700), var(--bui-green-600));
+  --bui-chart-surface: var(--bui-surface);
+  --bui-chart-text: var(--bui-muted);
+  --bui-chart-strong: var(--bui-ink);
+  --bui-chart-grid: var(--bui-line);
+  --bui-chart-axis: var(--bui-input-border);
+  --bui-chart-track: var(--bui-soft);
+  --bui-chart-font: var(--bui-font-body);
+  --bui-chart-font-size: 11px;
+  --bui-chart-line-width: 2.5px;
+}
+.bui-chart { position: relative; display: block; width: 100%; max-width: 100%; min-width: 0; color: var(--bui-chart-text); font-family: var(--bui-chart-font); }
+.bui-chart-body { position: relative; width: 100%; min-width: 0; }
+.bui-chart-svg { display: block; width: 100%; height: 100%; overflow: hidden; touch-action: pan-y; direction: ltr; } /* the script mirrors RTL itself; text-anchor stays physical */
+.bui-chart-text { fill: var(--bui-chart-text); font: 500 var(--bui-chart-font-size)/1 var(--bui-chart-font); pointer-events: none; user-select: none; }
+.bui-chart-tick-small { font-size: calc(var(--bui-chart-font-size) - 1px); opacity: .85; }
+.bui-chart-value { fill: var(--bui-chart-strong); font-weight: 700; }
+.bui-chart-title { font-weight: 700; letter-spacing: .02em; }
+.bui-chart-center-value { fill: var(--bui-chart-strong); font-family: var(--bui-font-heading); font-weight: 800; letter-spacing: -.03em; }
+.bui-chart-center-label { fill: var(--bui-chart-text); font-size: 12px; font-weight: 600; }
+.bui-chart-grid { stroke: var(--bui-chart-grid); stroke-width: 1; fill: none; shape-rendering: crispEdges; }
+.bui-chart-grid.is-zero { stroke: var(--bui-chart-axis); }
+.bui-chart-axis { stroke: var(--bui-chart-axis); stroke-width: 1; shape-rendering: crispEdges; }
+.bui-chart-line { fill: none; stroke-width: var(--bui-chart-line-width); stroke-linecap: round; stroke-linejoin: round; }
+.bui-chart-area { stroke: none; }
+.bui-chart-bar { transition: opacity .15s; }
+.bui-chart-point, .bui-chart-hdot { stroke-width: 2; }
+.bui-chart-dot { fill-opacity: .6; stroke-width: 1.5; transition: fill-opacity .15s; }
+.bui-chart-dot:hover { fill-opacity: .9; }
+.bui-chart-band { fill: var(--bui-chart-text); opacity: .1; pointer-events: none; }
+.bui-chart-guide { stroke: var(--bui-chart-axis); stroke-width: 1; stroke-dasharray: 4 4; pointer-events: none; }
+.bui-chart-hdot { stroke: var(--bui-chart-surface); pointer-events: none; }
+.bui-chart-slice { stroke: var(--bui-chart-surface); stroke-width: 2; stroke-linejoin: round; transition: transform .18s ease, opacity .18s; cursor: default; }
+.bui-chart-slice:hover { transform: translate(var(--tx, 0), var(--ty, 0)); }
+.bui-chart-track { fill: none; stroke: var(--bui-chart-track); stroke-linecap: round; }
+.bui-chart-seg { fill: none; stroke-linecap: butt; }
+.bui-chart-seg.is-first { stroke-linecap: round; }
+.bui-chart-ring { fill: none; stroke-linecap: round; cursor: default; }
+.bui-chart-hub { fill: var(--bui-chart-surface); stroke: var(--bui-chart-strong); stroke-width: 3; }
+.bui-chart-radar-area { fill-opacity: .16; stroke-width: 2.2; stroke-linejoin: round; transition: fill-opacity .15s; }
+.bui-chart-radar-area:hover { fill-opacity: .3; }
+
+.bui-chart-legend { display: flex; flex-wrap: wrap; justify-content: center; gap: 4px 6px; margin-block: 12px 0; }
+.bui-chart-legend[hidden] { display: none; }
+.bui-chart[data-type="pie"] .bui-chart-legend, .bui-chart[data-type="doughnut"] .bui-chart-legend, .bui-chart[data-type="radial"] .bui-chart-legend { margin-block-start: 14px; }
+.bui-chart-body + .bui-chart-legend { margin-block: 12px 0; }
+.bui-chart-legend:first-child { margin-block: 0 12px; }
+.bui-chart-legend-item { --c: var(--bui-chart-1); display: inline-flex; align-items: center; gap: 7px; max-width: 100%; padding: 4px 10px; border: 1px solid transparent; border-radius: 999px; background: transparent; color: var(--bui-chart-strong); font: 600 12px/1.3 var(--bui-chart-font); cursor: pointer; transition: background .15s, opacity .15s; }
+.bui-chart-legend-item:hover { background: var(--bui-soft); }
+.bui-chart-legend-item:focus-visible { outline: 2px solid var(--bui-primary); outline-offset: 1px; }
+.bui-chart-swatch { flex: none; width: 10px; height: 10px; border-radius: 3px; background: var(--c); transition: background .15s; }
+.bui-chart-legend-label { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.bui-chart-legend-value { color: var(--bui-chart-text); font-weight: 600; white-space: nowrap; }
+.bui-chart-legend-item[aria-pressed="false"] { opacity: .5; }
+.bui-chart-legend-item[aria-pressed="false"] .bui-chart-swatch { background: var(--bui-line); }
+.bui-chart-legend-item[aria-pressed="false"] .bui-chart-legend-label { text-decoration: line-through; }
+
+.bui-chart-tooltip { position: absolute; inset: 0 auto auto 0; z-index: 3; min-width: 120px; max-width: min(260px, 90%); padding: 9px 12px; border: 1px solid var(--bui-line); border-radius: var(--bui-radius-3); background: var(--bui-surface); color: var(--bui-ink); box-shadow: 0 10px 28px rgb(20 20 50 / .18); font: 500 12px/1.4 var(--bui-chart-font); pointer-events: none; }
+.bui-chart-tooltip[hidden] { display: none; }
+.bui-chart-tip-title { margin-block-end: 5px; font-weight: 700; }
+.bui-chart-tip-row { display: flex; align-items: center; gap: 8px; padding-block: 1.5px; }
+.bui-chart-tip-swatch { flex: none; width: 8px; height: 8px; border-radius: 50%; }
+.bui-chart-tip-name { flex: 1; min-width: 0; color: var(--bui-muted); overflow-wrap: anywhere; }
+.bui-chart-tip-value { font-weight: 700; white-space: nowrap; }
+
+.bui-chart-empty { position: absolute; inset: 0; display: grid; place-items: center; padding: 16px; text-align: center; }
+.bui-chart-empty[hidden] { display: none; }
+.bui-chart-empty-text { max-width: 260px; padding: 10px 14px; border: 1px dashed var(--bui-input-border); border-radius: var(--bui-radius-3); color: var(--bui-muted); font-size: 12px; font-weight: 600; }
+.bui-chart-empty-text.is-error { border-color: var(--bui-danger-border); background: var(--bui-danger-bg-subtle); color: var(--bui-danger-fg); }
+
+/* A chart inside a card, and a small row of key numbers above it */
+.bui-chart-card { padding: 18px; background: var(--bui-surface); border: 1px solid var(--bui-line); border-radius: var(--bui-radius); box-shadow: var(--bui-shadow); min-width: 0; }
+.bui-chart-card-head { display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: space-between; gap: 6px 12px; margin-block-end: 14px; }
+.bui-chart-card-title { margin: 0; color: var(--bui-ink); font: 700 15px/1.3 var(--bui-font-heading); letter-spacing: -.3px; }
+.bui-chart-card-sub { margin: 2px 0 0; color: var(--bui-muted); font-size: 12px; }
+.bui-chart-stat { display: grid; gap: 2px; text-align: end; }
+.bui-chart-stat strong { color: var(--bui-ink); font: 800 20px/1.1 var(--bui-font-heading); letter-spacing: -.5px; }
+.bui-chart-stat span { color: var(--bui-success-fg); font-size: 12px; font-weight: 700; }
+.bui-chart-stat span.is-down { color: var(--bui-danger-fg); }
+.bui-chart-grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 16px; }
+.bui-chart-kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 170px), 1fr)); gap: 12px; margin-block-end: 16px; }
+.bui-chart-kpi { padding: 14px 16px; background: var(--bui-surface); border: 1px solid var(--bui-line); border-radius: var(--bui-radius-4); }
+.bui-chart-kpi small { display: block; color: var(--bui-muted); font-size: 12px; font-weight: 600; }
+.bui-chart-kpi strong { display: block; margin-block: 4px 2px; color: var(--bui-ink); font: 800 22px/1.1 var(--bui-font-heading); letter-spacing: -.6px; }
+.bui-chart-kpi span { color: var(--bui-success-fg); font-size: 12px; font-weight: 700; }
+.bui-chart-kpi span.is-down { color: var(--bui-danger-fg); }
+
+@media (prefers-reduced-motion: reduce) { .bui-chart-slice, .bui-chart-bar, .bui-chart-legend-item, .bui-chart-dot, .bui-chart-radar-area { transition: none; } }
