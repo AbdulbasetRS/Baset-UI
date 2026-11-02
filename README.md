@@ -28,17 +28,18 @@ Explore the full Baset UI documentation website, including interactive component
 6. [Date and time pickers](#date-and-time-pickers)
 7. [File upload](#file-upload)
 8. [Charts and data visualization](#charts-and-data-visualization)
-9. [Loaders and success icon](#loaders-and-success-icon)
-10. [Icons](#icons)
-11. [Theming (CSS variables)](#theming-css-variables)
-12. [Dark mode](#dark-mode)
-13. [JavaScript behaviors](#javascript-behaviors)
-14. [Using it with Laravel](#using-it-with-laravel)
-15. [Adding a new component](#adding-a-new-component)
-16. [Naming convention](#naming-convention)
-17. [Browser support](#browser-support)
-18. [Status and roadmap](#status-and-roadmap)
-19. [Third-party licenses](#third-party-licenses)
+9. [DataTable](#datatable)
+10. [Loaders and success icon](#loaders-and-success-icon)
+11. [Icons](#icons)
+12. [Theming (CSS variables)](#theming-css-variables)
+13. [Dark mode](#dark-mode)
+14. [JavaScript behaviors](#javascript-behaviors)
+15. [Using it with Laravel](#using-it-with-laravel)
+16. [Adding a new component](#adding-a-new-component)
+17. [Naming convention](#naming-convention)
+18. [Browser support](#browser-support)
+19. [Status and roadmap](#status-and-roadmap)
+20. [Third-party licenses](#third-party-licenses)
 
 ---
 
@@ -130,6 +131,7 @@ baset-ui/
 │   ├── datetime.html           # Date & time pickers: date, time, datetime-local, month, week
 │   ├── upload.html             # File upload: dropzone, previews, checks, uploads
 │   ├── charts.html             # Charts: line, bar, area, pie, doughnut, radar, scatter, mixed, radial, gauge
+│   ├── datatable.html          # DataTable: 40 sections, 45 live examples
 │   ├── cards.html
 │   ├── alerts.html
 │   ├── badges.html
@@ -144,6 +146,7 @@ baset-ui/
 │   ├── theme.html              # How the tokens work, theme colors, scales, radius, spacing, dark mode
 │   ├── token-playground.html   # Live token editor that generates CSS
 │   ├── chart-playground.html   # Live chart editor (type, animation, colors, options) that generates the code
+│   ├── datatable-playground.html # Live DataTable editor: switch features on / off, preview, copy the generated code
 │   └── direction.html          # RTL / LTR guide with live examples
 ├── assets/
 │   ├── css/
@@ -160,9 +163,12 @@ baset-ui/
 │       ├── baset-datetime.js   # Optional date & time pickers (needs section 18 of baset-ui.css)
 │       ├── baset-upload.js     # Optional file upload (needs section 19 of baset-ui.css)
 │       ├── baset-charts.js     # Optional SVG charts (needs section 20 of baset-ui.css)
+│       ├── baset-datatable.js  # Optional DataTable (needs section 21 of baset-ui.css)
+│       ├── datatable-docs.js   # DataTable documentation page only (sample data, fake API): do not ship
 │       ├── icons-gallery.js    # Icons page only (search + details dialog)
 │       ├── token-playground.js     # Token playground page only
-│       └── chart-playground.js     # Chart playground page only (needs baset-charts.js)
+│       ├── chart-playground.js     # Chart playground page only (needs baset-charts.js)
+│       └── datatable-playground.js # DataTable playground page only (needs baset-datatable.js + datatable-docs.js)
 ├── README.md
 ├── LICENSE
 └── .gitattributes
@@ -188,6 +194,7 @@ baset-ui/
 | Modal | `components/modal.html` | Basic, sizes, positions, drawers, confirmations, forms, media, nested, RTL, JS API (confirm, alert, prompt, show) |
 | Utilities | `components/utilities.html` | Feature grid |
 | Charts & data visualization | `components/charts.html` | Line (basic, multiple, smooth, points, area fill), bar (vertical, horizontal, grouped, stacked, rounded, negative values), area (basic, multiple, stacked), pie, doughnut (center text, custom colors, legend with values and percentages), radar, scatter, mixed bar + line, radial progress, gauge; animation styles and easings; sales and operations dashboards; options, number formats, empty and invalid data, JS API, live data, responsive, RTL, dark mode |
+| DataTable | `components/datatable.html` | 40 sections (incl. a complete with-API / without-API example): HTML-table and JS init, pagination, search, multi-column sort, column visibility / reorder / resize, filters and search builder, selection, inline and modal editing, row actions, buttons, copy / CSV / Excel / PDF / JSON / print, responsive and card view, AJAX and server-side, Laravel API, state, grouping, fixed columns, virtual scrolling, i18n, RTL, dark, themes, API, events, extensions |
 
 Every example on these pages shows the live preview, the class list, and a code block with a **Copy** button (it copies exactly the code shown).
 
@@ -481,6 +488,46 @@ Load `assets/js/baset-charts.js` (the styles are section 20 of `baset-ui.css`; n
 
 Full examples: `components/charts.html`.
 
+## DataTable
+
+An optional, dependency-free data grid. Load `assets/js/baset-datatable.js` (the styles are **section 21** of `baset-ui.css`, class prefix `bui-dtbl-`; `baset-ui.js` is not required):
+
+```html
+<link rel="stylesheet" href="assets/css/baset-ui.css">
+<script src="assets/js/baset-datatable.js" defer></script>
+<div id="users"></div>
+<script>
+  window.addEventListener('DOMContentLoaded', () => {
+    const dt = new BasetDataTable('#users', {
+      data: [{ id: 1, name: 'Sara' }],
+      columns: [{ data: 'id', title: 'ID' }, { data: 'name', title: 'Name' }],
+      pageLength: 10, searching: true, ordering: true, responsive: true,
+      buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
+    });
+    dt.search('sara').order([[1, 'asc']]).draw();
+  });
+</script>
+```
+
+An existing `<table data-bui-datatable>` upgrades itself (options as `data-*` attributes).
+
+- **Data:** array of objects or arrays, an HTML table, `ajax` (load once) or `serverSide: true` (page / search / sort / filter on your API). `rowId` names the id field (default `id`).
+- **Options (most used):** `pagination`, `paginationType` (`numbers`, `full_numbers`, `simple`, `compact`, `first_last`), `pageLength`, `lengthMenu`, `pageJump`, `searching`, `searchDelay`, `searchHighlight`, `columnSearch`, `ordering`, `order`, `orderMulti`, `filters`, `filterLogic`, `searchBuilder`, `colVisibility`, `colReorder`, `colResize`, `fixedHeader`, `scrollY`, `fixedColumns`, `virtualScroll`, `rowGroup`, `select` (`single`, `multi`, `checkbox`, `cell`), `rowActions`, `rowActionsMode`, `editor`, `buttons`, `bulkActions`, `responsive`, `cardView`, `cardBreakpoint`, `stateSave`, `theme`, `variant`, `density`, `striped`, `bordered`, `language`, `export`.
+- **Columns:** `data`, `title`, `render(value, type, row, meta)`, `type`, `orderable`, `searchable`, `visible`, `hideable`, `width`, `minWidth`, `maxWidth`, `priority`, `className`, `filter`, `filterOptions`, `filterFn`, `sortFn`, `sortValue`, `nulls`, `editor`, `exportable`, `exportFormat`, `exportTitle`.
+- **Export:** Copy, CSV (UTF-8 with BOM), JSON and print need nothing. **Excel is a real `.xlsx`** (a ZIP of Office Open XML written in the browser). **PDF is a real PDF**: Latin text uses a built-in text writer (selectable text); other scripts such as Arabic are drawn with the browser's text engine and stored as page images inside the PDF (not selectable). For selectable Arabic text register `BasetDataTable.adapters.pdf = (data, options, dt) => Blob | Promise<Blob>` (for example with pdfMake and your font); `BasetDataTable.adapters.excel` can replace the workbook writer. No external library is ever loaded by default.
+- **Methods:** `search`, `order`, `page` (`page.info()`), `pageLength`, `draw`, `column(i).visible()`, `rows(selector).data() / add / update / remove / select`, `row(id)`, `clear`, `selected`, `filter`, `filterLogic`, `builder`, `addFilter`, `clearFilters`, `create`, `edit`, `delete`, `ajax.reload`, `export`, `exportData`, `cardView`, `fullscreen`, `theme`, `state`, `clearState`, `reset`, `on / one / off`, `destroy`. Setters are chainable and batch a redraw.
+- **Events** (`dt.on(name, (detail, dt) => {})`, also DOM `bui:dtbl-<name>`): `init`, `draw`, `search`, `order`, `page`, `length`, `select`, `deselect`, `rowClick`, `rowDoubleClick`, `filter`, `create`, `edit`, `delete`, `rowAction`, `beforeExport`, `afterExport`, `ajaxLoad`, `ajaxError`, `responsiveChange`, `columnVisibility`, `columnReorder`, `columnResize`, `destroy`.
+- **Editor:** no backend is built in. `editor: { mode: 'inline' | 'modal', onCreate, onUpdate, onDelete }` take promise-returning functions; throw to show a server error in the form. Validation: `required`, `min`, `max`, `minLength`, `maxLength`, `pattern`, `validate(value, row)`.
+- **Server side:** `ajax: { url, paramStyle: 'rest' | 'datatables' | 'json', method, headers, data, params, map, fetch }`. The default REST request is `?page=&per_page=&search=&sort=-name,email&filter[col]=...`; the default response is `{ "data": [...], "meta": { "total": N } }` (a Laravel controller example is in the docs).
+- **Languages:** English and Arabic built in (`language: { locale: 'ar' }` also sets RTL). Add one with `BasetDataTable.locales.fr = { ... }`; override any string in `language`.
+- **Theming:** `--bui-dtbl-bg`, `-fg`, `-muted`, `-border`, `-header-bg`, `-header-fg`, `-hover`, `-selected`, `-stripe`, `-accent`, `-accent-fg`, `-radius`, `-px`, `-py`, `-font-size`, plus the global `--bui-*` tokens. Light / dark follows `.bui-dark`; direction follows `dir`.
+- **Toolbar, selection and export extras:** `buttonIcons: true | 'only'` (built-in SVG icons; per button `icon`, `iconOnly`), `lengthInput: true` (the page-size menu ends with a number input; `lengthMax`), `selectionToggle: true` + `dt.selectionColumn(on?)` (show / hide the checkbox column from the Columns menu; it is never exported), `bulkBar: false` (selection is visual only: no "N selected" bar). `export.rows` defaults to `'auto'`: the ticked rows if any, otherwise every row matching the current search / filters on all pages (with `serverSide` the table re-requests the full result with `per_page=0`, or use `export.fetchAll`).
+- **Option columns:** `columns[].options` (strings or `{ value, label }`) feeds the editor select, the Filters panel and the search builder (equals / does not equal show a `<select>` of the options; boolean columns show Yes / No).
+- **Row actions and view modal:** `rowActions: [{ name, text, icon, iconOnly, title, className, menu: ['view', 'edit', 'delete'] }]` (`menu` makes a dropdown button), `view: { title(row), render(row, dt), wide }` for a custom "view details" modal. See the *Complete example* section of `components/datatable.html` (with and without an API).
+- **Security note:** `render()` output is inserted as HTML (like DataTables); escape user data in your renderers. Plain cells are always inserted as text.
+
+Full examples: `components/datatable.html`.
+
 ## Modal
 
 Dialogs built on the native `<dialog>` element: backdrop, focus trap, **Esc** key, inert page and focus return come from the browser. Use plain HTML, or the JavaScript API with Promises. Full examples: `components/modal.html`.
@@ -569,6 +616,7 @@ If you change a color on an element instead of `:root`, re-declare the derived t
 - `customize/theme.html` — how the tokens are built, the six tokens of each theme color, color scales, radius/spacing, dark mode, and how to override them.
 - `customize/token-playground.html` — edit theme colors, radius, spacer and font size, preview in light or dark, and copy the generated CSS. It only changes the preview, not the files.
 - `customize/chart-playground.html` — pick a chart type, animation style, easing, palette and options, preview in light or dark and RTL or LTR, and copy the generated chart code (full example or options only).
+- `customize/datatable-playground.html` — switch DataTable features on or off from a collapsible panel (data source, pagination, search, filters, columns, selection, editing, row actions, buttons, appearance, language, RTL, dark), with Minimal / Standard / Everything presets; the table is rebuilt live and the code shows only the options that differ from the defaults.
 - `customize/direction.html` — switch the page between RTL and LTR, live examples in both directions, `dir` usage and direction-safe CSS (logical properties).
 
 ## Dark mode
@@ -596,10 +644,12 @@ With `baset-ui.js`, any element with `id="themeToggle"` becomes a toggle button.
 | Icons gallery | `assets/js/icons-gallery.js` + `assets/icons/icons-data.js` on `components/icons.html` only |
 | Token playground | `assets/js/token-playground.js` on `customize/token-playground.html` only |
 | Chart playground | `assets/js/chart-playground.js` (+ `baset-charts.js`) on `customize/chart-playground.html` only |
+| DataTable playground | `assets/js/datatable-playground.js` (+ `baset-datatable.js`, `datatable-docs.js`) on `customize/datatable-playground.html` only |
 | Select menu | Custom listbox for `select.bui-input`, `select.bui-float-input`, `select.bui-float-prefix`; `BUI.select.open/close/isOpen()`; `data-bui-native` to opt out |
 | Date & time pickers | `assets/js/baset-datetime.js` (separate file): `data-bui-datetime` on `input[type=date|time|datetime-local|month|week]`; `BUI.datetime.init/open/close/isOpen()`, `BUI.datetime.locales` |
 | File upload | `assets/js/baset-upload.js` (separate file): `data-bui-upload` on `input[type=file]`; `BUI.upload.init/configure/files/add/remove/clear/upload/retry/validate()`; events `bui:upload-*` |
 | Charts | `assets/js/baset-charts.js` (separate file): `new BasetChart(target, { type, data, options })` or `data-bui-chart`; `update / setOptions / setColors / toggle / resize / destroy()`; `BUI.chart.init/get()`; events `bui:chart-render`, `bui:chart-click` |
+| DataTable | `assets/js/baset-datatable.js` (separate file): `new BasetDataTable(target, options)` or `data-bui-datatable` on a `<table>`; `search / order / page / pageLength / column / rows / row / draw / export / destroy`; `BasetDataTable.locales`, `.adapters` |
 | Floating labels | The i button toggles its message; `<form data-bui-validate>` and `BUI.float.setState/clear/open/validate/reset()` |
 | Modal | `BUI.modal.open/close/show/confirm/alert/prompt()` or `data-bui-modal-open` / `data-bui-modal-close` attributes |
 | Scroll-spy | Sidebar links like `<a class="bui-nav" href="#section">` highlight as you scroll |

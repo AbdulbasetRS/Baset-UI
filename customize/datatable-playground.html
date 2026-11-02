@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>DataTable playground — Baset UI</title>
+  <link rel="stylesheet" href="../assets/css/baset-ui.css">
+  <link rel="stylesheet" href="../assets/css/docs.css">
+
+  <script>try{if(localStorage.getItem('bui-theme')==='dark')document.documentElement.classList.add('bui-dark');var d=localStorage.getItem('bui-dir');if(d==='rtl'||d==='ltr')document.documentElement.dir=d}catch(e){}</script>
+</head>
+<body>
+  <div class="bui-app">
+    <aside class="bui-sidebar">
+      <a class="bui-brand" href="../index.html"><span class="bui-brand-mark">B</span><span>Baset UI<small>Component library</small></span></a>
+      <div class="bui-sidebar-label">GET STARTED</div>
+      <a class="bui-nav" href="../index.html#overview">Overview</a>
+      <a class="bui-nav" href="../index.html#installation">Installation</a>
+      <div class="bui-sidebar-label">LAYOUT</div>
+      <a class="bui-nav" href="../layout/grid.html">Grid system</a>
+      <div class="bui-sidebar-label">COMPONENTS</div>
+      <a class="bui-nav" href="../components/buttons.html">Buttons</a>
+      <a class="bui-nav" href="../components/forms.html">Form controls</a>
+      <a class="bui-nav" href="../components/select.html">Select &amp; dropdown</a>
+      <a class="bui-nav" href="../components/datetime.html">Date &amp; time pickers</a>
+      <a class="bui-nav" href="../components/upload.html">File upload</a>
+      <a class="bui-nav" href="../components/cards.html">Cards</a>
+      <a class="bui-nav" href="../components/alerts.html">Alerts</a>
+      <a class="bui-nav" href="../components/badges.html">Badges</a>
+      <a class="bui-nav" href="../components/loaders.html">Loaders</a>
+      <a class="bui-nav" href="../components/icons.html">Icons</a>
+      <a class="bui-nav" href="../components/toasts.html">Toasts &amp; notifications</a>
+      <a class="bui-nav" href="../components/modal.html">Modal</a>
+      <a class="bui-nav" href="../components/utilities.html">Utilities</a>
+      <a class="bui-nav" href="../components/charts.html">Charts &amp; data visualization</a>
+      <a class="bui-nav" href="../components/datatable.html">DataTable</a>
+      <div class="bui-sidebar-label">CUSTOMIZE</div>
+      <a class="bui-nav" href="../customize/colors.html">Default colors</a>
+      <a class="bui-nav" href="../customize/typography.html">Typography and shape</a>
+      <a class="bui-nav" href="../customize/theme.html">Theme</a>
+      <a class="bui-nav" href="../customize/token-playground.html">Token playground</a>
+      <a class="bui-nav" href="../customize/chart-playground.html">Chart playground</a>
+      <a class="bui-nav active" href="../customize/datatable-playground.html">DataTable playground</a>
+      <a class="bui-nav" href="../customize/direction.html">Direction (RTL / LTR)</a>
+      <div class="bui-sidebar-bottom"><span class="bui-status-dot"></span> Baset UI <span class="bui-version">v1.0.0</span></div>
+    </aside>
+    <main class="bui-main">
+      <header class="bui-topbar"><div class="bui-breadcrumb"><a href="../index.html">Documentation</a> <span>/</span> Customize <span>/</span> DataTable playground</div><div class="bui-top-actions"><span class="bui-pill">Vanilla CSS + JS</span><button class="bui-icon-btn bui-dir-btn" id="dirToggle" type="button" aria-label="Toggle direction (RTL / LTR)" title="Toggle direction (RTL / LTR)">RTL</button><button class="bui-icon-btn" id="themeToggle" type="button" aria-label="Toggle theme">☼</button></div></header>
+      <section class="bui-section" id="datatable-playground"><div class="bui-section-heading"><div><span class="bui-eyebrow">06 / CUSTOMIZE</span><h2>DataTable playground</h2><p>Turn every DataTable feature on or off from the panel and watch the table change. The code below it lists only what differs from the defaults, ready to copy. Everything runs in your browser on sample data; the server-side mode uses a small fake API.</p></div></div>
+      <div class="bui-tp bui-dp">
+        <aside class="bui-tp-panel bui-dp-panel" aria-label="DataTable options">
+          <div class="bui-dp-top" id="dpPresets">
+            <div class="bui-gallery-tabs" role="group" aria-label="Presets"><button type="button" class="bui-gallery-tab" data-preset="minimal">Minimal</button><button type="button" class="bui-gallery-tab" data-preset="standard">Standard</button><button type="button" class="bui-gallery-tab" data-preset="everything">Everything</button></div>
+            <div class="bui-dp-links"><button type="button" class="bui-dp-link" data-act="toggle">Expand all</button><button type="button" class="bui-dp-link" data-act="reset">Reset</button></div>
+          </div>
+          <div id="dpPanel" class="bui-dp-groups"></div>
+        </aside>
+        <div class="bui-tp-main">
+          <div class="bui-dp-stat"><span><b id="dpCount">0</b> options changed from the defaults</span></div>
+          <div class="bui-tp-preview bui-cp-preview bui-dp-preview" id="dpPreview"><div id="dpTable"></div></div>
+          <div class="bui-gallery-tabs" id="dpOut" role="group" aria-label="Code to copy"><button type="button" class="bui-gallery-tab active" data-out="full">Full code</button><button type="button" class="bui-gallery-tab" data-out="options">Options only</button></div>
+          <div class="bui-code-card"><div class="bui-code-head"><span><i></i> <span id="dpFile">index.html</span></span><button class="bui-copy" type="button">Copy</button></div><pre><code id="dpCode"></code></pre></div>
+          <p class="bui-doc-note">The script is <code>assets/js/baset-datatable.js</code> and the styles are section 21 of <code>baset-ui.css</code>. In server-side mode the demo hooks (<code>fetch</code>, add / edit / delete) run against fake in-page data; replace them with your API as shown in the <a href="../components/datatable.html#complete">Complete example</a>. <b>New</b> needs editing on; <b>Edit</b> and <b>Delete</b> actions appear only when editing is on.</p>
+        </div>
+      </div>
+      </section>
+      <div class="bui-pager"><a class="bui-btn bui-btn-outline" href="chart-playground.html"><span class="bui-flip">←</span> Chart playground</a><a class="bui-btn bui-btn-primary" href="direction.html">Direction <span class="bui-flip">→</span></a></div>
+      <footer class="bui-footer"><span>© 2026 Baset UI. Built for makers.</span><span>Documentation · v1.0.0</span></footer>
+    </main>
+  </div>
+  <script src="../assets/js/baset-ui.js"></script>
+  <script src="../assets/js/baset-datatable.js"></script>
+  <script src="../assets/js/datatable-docs.js"></script>
+  <script src="../assets/js/datatable-playground.js"></script>
+</body>
+</html>
