@@ -130,6 +130,7 @@ baset-ui/
 │   ├── forms.html
 │   ├── datetime.html           # Date & time pickers: date, time, datetime-local, month, week
 │   ├── upload.html             # File upload: dropzone, previews, checks, uploads
+│   ├── navigation.html         # Navbar, sidebar, footer and combined layouts
 │   ├── charts.html             # Charts: line, bar, area, pie, doughnut, radar, scatter, mixed, radial, gauge
 │   ├── datatable.html          # DataTable: 40 sections, 45 live examples
 │   ├── cards.html
@@ -147,7 +148,8 @@ baset-ui/
 │   ├── token-playground.html   # Live token editor that generates CSS
 │   ├── chart-playground.html   # Live chart editor (type, animation, colors, options) that generates the code
 │   ├── datatable-playground.html # Live DataTable editor: switch features on / off, preview, copy the generated code
-│   └── direction.html          # RTL / LTR guide with live examples
+│   ├── direction.html          # RTL / LTR guide with live examples
+│   └── layout-playground.html  # Live navbar + sidebar + footer builder that generates the HTML
 ├── assets/
 │   ├── css/
 │   │   ├── baset-ui.css        # THE LIBRARY: tokens, base, components, dark theme
@@ -168,6 +170,7 @@ baset-ui/
 │       ├── icons-gallery.js    # Icons page only (search + details dialog)
 │       ├── token-playground.js     # Token playground page only
 │       ├── chart-playground.js     # Chart playground page only (needs baset-charts.js)
+│       ├── layout-playground.js    # Layout playground page only (needs baset-ui.js)
 │       └── datatable-playground.js # DataTable playground page only (needs baset-datatable.js + datatable-docs.js)
 ├── README.md
 ├── LICENSE
@@ -192,6 +195,7 @@ baset-ui/
 | Icons | `components/icons.html` | Styles, sizes, colors, in buttons, spinner, inline SVG, searchable gallery |
 | Toasts & notifications | `components/toasts.html` | Success, info, warning, danger, toast stack |
 | Modal | `components/modal.html` | Basic, sizes, positions, drawers, confirmations, forms, media, nested, RTL, JS API (confirm, alert, prompt, show) |
+| Navbar, sidebar & footer | `components/navigation.html` | Navbar (basic, inverse / primary, centered element, app header with clock / time zone / language / theme / notifications / user, avatar-only user button, always collapsed, sticky, RTL), sidebar (basic, groups, user, Help and Log out, mini rail, RTL), footer (simple, columns, inverse, status, RTL), layouts (landing page, dashboard, push and overlay drawer sidebar, RTL dashboard) |
 | Utilities | `components/utilities.html` | Feature grid |
 | Charts & data visualization | `components/charts.html` | Line (basic, multiple, smooth, points, area fill), bar (vertical, horizontal, grouped, stacked, rounded, negative values), area (basic, multiple, stacked), pie, doughnut (center text, custom colors, legend with values and percentages), radar, scatter, mixed bar + line, radial progress, gauge; animation styles and easings; sales and operations dashboards; options, number formats, empty and invalid data, JS API, live data, responsive, RTL, dark mode |
 | DataTable | `components/datatable.html` | 40 sections (incl. a complete with-API / without-API example): HTML-table and JS init, pagination, search, multi-column sort, column visibility / reorder / resize, filters and search builder, selection, inline and modal editing, row actions, buttons, copy / CSV / Excel / PDF / JSON / print, responsive and card view, AJAX and server-side, Laravel API, state, grouping, fixed columns, virtual scrolling, i18n, RTL, dark, themes, API, events, extensions |
@@ -528,6 +532,32 @@ An existing `<table data-bui-datatable>` upgrades itself (options as `data-*` at
 
 Full examples: `components/datatable.html`.
 
+## Navbar, sidebar and footer
+
+CSS in section 22 of `baset-ui.css`; the toggles, live clock and theme button are optional (`baset-ui.js`). Full examples: `components/navigation.html`; build your own in `customize/layout-playground.html`.
+
+```html
+<nav class="bui-navbar">
+  <a class="bui-navbar-brand" href="#">Baset</a>
+  <button class="bui-navbar-toggle" type="button" data-bui-navbar-toggle aria-expanded="false" aria-controls="nav" aria-label="Toggle navigation"><span></span></button>
+  <div class="bui-navbar-collapse" id="nav">
+    <ul class="bui-navbar-nav"><li><a class="bui-navbar-link active" href="#">Home</a></li></ul>
+    <div class="bui-navbar-actions"><a class="bui-btn bui-btn-primary bui-btn-sm" href="#">Sign in</a></div>
+  </div>
+</nav>
+```
+
+| Class / attribute | Purpose |
+| --- | --- |
+| `.bui-navbar` + `-inverse` / `-primary` / `-flat` / `-sticky` / `-always` | Navbar, colors, flat, sticky, always collapsed (below 768px it collapses by itself) |
+| `.bui-navbar-center` · `-actions` · `-search` · `-select` · `-clock` · `-iconbtn` / `-dot` | Centered element, action area, search, small select, clock text, notification button and counter |
+| `.bui-navbar-user` (+ `-icon`) | Account button, same height as the icon buttons; `-icon` = avatar only |
+| `.bui-sidenav` + `-brand` / `-label` / `-link` / `-text` / `-badge` / `-group` / `-sub` / `-bottom` / `-user` / `-close` / `-mini` | Sidebar; groups use `<details>`; `-mini` is the icon rail |
+| `.bui-site-footer` + `-cols` / `-title` / `-links` / `-bottom` / `-nav` / `-social` / `-tools` / `-inverse` / `-center` | Footer |
+| `.bui-shell` + `-single` / `-drawer` (push) / `-overlay` / `-main` / `-content` / `-toggle` / `-backdrop` | App layout; below 992px the sidebar opens in the layout and the main column reflows to the remaining width (`-overlay` = floating drawer with a backdrop) |
+| `data-bui-navbar-toggle` · `data-bui-shell-toggle` · `data-bui-sidenav-collapse="#id"` | Toggles |
+| `data-bui-clock` (+ `data-bui-clock-tz="#select"` or `data-bui-tz`) · `data-bui-theme-toggle` | Live clock (ticks every second) and a theme button |
+
 ## Modal
 
 Dialogs built on the native `<dialog>` element: backdrop, focus trap, **Esc** key, inert page and focus return come from the browser. Use plain HTML, or the JavaScript API with Promises. Full examples: `components/modal.html`.
@@ -617,6 +647,7 @@ If you change a color on an element instead of `:root`, re-declare the derived t
 - `customize/token-playground.html` — edit theme colors, radius, spacer and font size, preview in light or dark, and copy the generated CSS. It only changes the preview, not the files.
 - `customize/chart-playground.html` — pick a chart type, animation style, easing, palette and options, preview in light or dark and RTL or LTR, and copy the generated chart code (full example or options only).
 - `customize/datatable-playground.html` — switch DataTable features on or off from a collapsible panel (data source, pagination, search, filters, columns, selection, editing, row actions, buttons, appearance, language, RTL, dark), with Minimal / Standard / Everything presets; the table is rebuilt live and the code shows only the options that differ from the defaults.
+- `customize/layout-playground.html` — build a navbar, sidebar and footer together or apart (colors, items, clock, time zone, language, theme, notifications, user menu, mini rail, push / overlay drawer), preview in light / dark and LTR / RTL, and copy the generated HTML (everything or one part).
 - `customize/direction.html` — switch the page between RTL and LTR, live examples in both directions, `dir` usage and direction-safe CSS (logical properties).
 
 ## Dark mode

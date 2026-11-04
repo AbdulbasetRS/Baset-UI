@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Layout playground — Baset UI</title>
+  <link rel="stylesheet" href="../assets/css/baset-ui.css">
+  <link rel="stylesheet" href="../assets/css/docs.css">
+  <link rel="stylesheet" href="../assets/css/baset-icons.css">
+  <script>try{if(localStorage.getItem('bui-theme')==='dark')document.documentElement.classList.add('bui-dark');var d=localStorage.getItem('bui-dir');if(d==='rtl'||d==='ltr')document.documentElement.dir=d}catch(e){}</script>
+</head>
+<body>
+  <div class="bui-app">
+    <aside class="bui-sidebar">
+      <a class="bui-brand" href="../index.html"><span class="bui-brand-mark">B</span><span>Baset UI<small>Component library</small></span></a>
+      <div class="bui-sidebar-label">GET STARTED</div>
+      <a class="bui-nav" href="../index.html#overview">Overview</a>
+      <a class="bui-nav" href="../index.html#installation">Installation</a>
+      <div class="bui-sidebar-label">LAYOUT</div>
+      <a class="bui-nav" href="../layout/grid.html">Grid system</a>
+      <div class="bui-sidebar-label">COMPONENTS</div>
+      <a class="bui-nav" href="../components/buttons.html">Buttons</a>
+      <a class="bui-nav" href="../components/forms.html">Form controls</a>
+      <a class="bui-nav" href="../components/select.html">Select &amp; dropdown</a>
+      <a class="bui-nav" href="../components/datetime.html">Date &amp; time pickers</a>
+      <a class="bui-nav" href="../components/upload.html">File upload</a>
+      <a class="bui-nav" href="../components/cards.html">Cards</a>
+      <a class="bui-nav" href="../components/alerts.html">Alerts</a>
+      <a class="bui-nav" href="../components/badges.html">Badges</a>
+      <a class="bui-nav" href="../components/loaders.html">Loaders</a>
+      <a class="bui-nav" href="../components/icons.html">Icons</a>
+      <a class="bui-nav" href="../components/toasts.html">Toasts &amp; notifications</a>
+      <a class="bui-nav" href="../components/modal.html">Modal</a>
+      <a class="bui-nav" href="../components/utilities.html">Utilities</a>
+      <a class="bui-nav" href="../components/charts.html">Charts &amp; data visualization</a>
+      <a class="bui-nav" href="../components/navigation.html">Navbar, sidebar &amp; footer</a>
+      <div class="bui-sidebar-label">CUSTOMIZE</div>
+      <a class="bui-nav" href="../customize/colors.html">Default colors</a>
+      <a class="bui-nav" href="../customize/typography.html">Typography and shape</a>
+      <a class="bui-nav" href="../customize/theme.html">Theme</a>
+      <a class="bui-nav" href="../customize/token-playground.html">Token playground</a>
+      <a class="bui-nav" href="../customize/chart-playground.html">Chart playground</a>
+      <a class="bui-nav" href="../customize/direction.html">Direction (RTL / LTR)</a>
+      <a class="bui-nav active" href="../customize/layout-playground.html">Layout playground</a>
+      <div class="bui-sidebar-bottom"><span class="bui-status-dot"></span> Baset UI <span class="bui-version">v1.0.0</span></div>
+    </aside>
+    <main class="bui-main">
+      <header class="bui-topbar"><div class="bui-breadcrumb"><a href="../index.html">Documentation</a> <span>/</span> Customize <span>/</span> Layout playground</div><div class="bui-top-actions"><span class="bui-pill">Vanilla CSS + JS</span><button class="bui-icon-btn bui-dir-btn" id="dirToggle" type="button" aria-label="Toggle direction (RTL / LTR)" title="Toggle direction (RTL / LTR)">RTL</button><button class="bui-icon-btn" id="themeToggle" type="button" aria-label="Toggle theme">☼</button></div></header>
+      <section class="bui-section" id="layout-playground"><div class="bui-section-heading"><div><span class="bui-eyebrow">08 / CUSTOMIZE</span><h2>Layout playground</h2><p>Build your own navbar, sidebar and footer: switch each part on or off, pick its color, items and tools, preview it live in light or dark and LTR or RTL, then copy the generated HTML (everything together, or one part).</p></div></div>
+      <div class="bui-tp">
+        <aside class="bui-tp-panel">
+          <div id="lpControls"></div>
+          <button type="button" class="bui-btn bui-btn-outline" id="lpReset">Reset all</button>
+        </aside>
+        <div class="bui-tp-main">
+          <p class="bui-doc-note" id="lpDrawerNote" hidden style="margin:0">Use the menu button in the top bar: in push mode the sidebar opens inside the layout and the navbar, content and footer reflow into the remaining width; in overlay mode it floats over the content with a backdrop.</p>
+          <div class="bui-nav-stage" id="lpPreview"></div>
+          <div class="bui-gallery-tabs" id="lpTabs"><button type="button" class="bui-gallery-tab active" data-tab="all">Everything</button><button type="button" class="bui-gallery-tab" data-tab="navbar">Navbar</button><button type="button" class="bui-gallery-tab" data-tab="sidebar">Sidebar</button><button type="button" class="bui-gallery-tab" data-tab="footer">Footer</button></div>
+          <div class="bui-code-card"><div class="bui-code-head"><span><i></i> <span id="lpFile">layout.html</span></span><button class="bui-copy" type="button">Copy</button></div><pre><code id="lpCode"></code></pre></div>
+          <p class="bui-doc-note">The clock, theme button and language list need <code>baset-ui.js</code>; icons need <code>baset-icons.css</code>. A part that is switched off is still available in its own tab.</p>
+        </div>
+      </div>
+      </section>
+      <div class="bui-pager"><a class="bui-btn bui-btn-outline" href="direction.html"><span class="bui-flip">←</span> Direction (RTL / LTR)</a><span></span></div>
+      <footer class="bui-footer"><span>© 2026 Baset UI. Built for makers.</span><span>Documentation · v1.0.0</span></footer>
+    </main>
+  </div>
+  <script src="../assets/js/baset-ui.js"></script>
+  <script src="../assets/js/layout-playground.js"></script>
+</body>
+</html>

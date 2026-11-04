@@ -1062,3 +1062,55 @@
     byId.forEach((_, id) => { const el = document.getElementById(id); if (el) observer.observe(el); });
   }
 })();
+
+/* ---------- Navbar and sidebar: toggles (optional) ---------- */
+(() => {
+  const setShell = (shell, on) => {
+    shell.classList.toggle('bui-shell-open', on);
+    shell.querySelectorAll('[data-bui-shell-toggle][aria-expanded]').forEach((b) => b.setAttribute('aria-expanded', String(on)));
+    setTimeout(() => shell.querySelector(on ? '.bui-sidenav-close' : '.bui-shell-toggle')?.focus({ preventScroll: true }), 60); // burger <-> close button
+  };
+  document.addEventListener('click', (event) => {
+    const nav = event.target.closest('[data-bui-navbar-toggle]');
+    if (nav) {
+      const bar = nav.closest('.bui-navbar'), on = !bar.classList.contains('bui-navbar-open');
+      bar.classList.toggle('bui-navbar-open', on); nav.setAttribute('aria-expanded', String(on));
+      return;
+    }
+    const shellBtn = event.target.closest('[data-bui-shell-toggle]');
+    if (shellBtn) { const shell = shellBtn.closest('.bui-shell'); if (shell) setShell(shell, !shell.classList.contains('bui-shell-open')); return; }
+    const col = event.target.closest('[data-bui-sidenav-collapse]');
+    if (col) {
+      const side = document.querySelector(col.dataset.buiSidenavCollapse) || col.closest('.bui-shell')?.querySelector('.bui-sidenav');
+      if (side) col.setAttribute('aria-pressed', String(side.classList.toggle('bui-sidenav-mini')));
+    }
+  });
+  document.addEventListener('keydown', (event) => {
+    if (event.key !== 'Escape') return;
+    document.querySelectorAll('.bui-shell-open').forEach((s) => setShell(s, false));
+    document.querySelectorAll('.bui-navbar-open').forEach((b) => { b.classList.remove('bui-navbar-open'); b.querySelector('[data-bui-navbar-toggle]')?.setAttribute('aria-expanded', 'false'); });
+  });
+})();
+
+/* ---------- Live clock and theme button (optional) ---------- */
+(() => {
+  /* <time data-bui-clock="datetime?" data-bui-tz="Africa/Cairo" | data-bui-clock-tz="#select"> ticks every second */
+  const text = (el) => {
+    const pick = el.dataset.buiClockTz ? document.querySelector(el.dataset.buiClockTz)?.value : el.dataset.buiTz;
+    const o = { hour: '2-digit', minute: '2-digit', second: '2-digit' };
+    if (el.dataset.buiClock === 'datetime') Object.assign(o, { weekday: 'short', day: 'numeric', month: 'short' });
+    const lang = document.documentElement.lang || undefined;
+    try { return new Intl.DateTimeFormat(lang, { ...o, timeZone: pick || undefined }).format(new Date()); }
+    catch { return new Intl.DateTimeFormat(lang, o).format(new Date()); }
+  };
+  const tick = () => document.querySelectorAll('[data-bui-clock]').forEach((el) => { el.textContent = text(el); });
+  tick(); setInterval(tick, 1000);
+  document.addEventListener('change', (e) => { if (e.target.matches?.('select')) tick(); });
+  document.addEventListener('click', (e) => { // <button data-bui-theme-toggle> flips the theme (same key as #themeToggle)
+    if (!e.target.closest('[data-bui-theme-toggle]')) return;
+    const top = document.getElementById('themeToggle');
+    if (top) { top.click(); return; }
+    const on = document.documentElement.classList.toggle('bui-dark');
+    try { localStorage.setItem('bui-theme', on ? 'dark' : 'light'); } catch { /* storage blocked */ }
+  });
+})();

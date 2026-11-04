@@ -362,3 +362,20 @@ h1 em { font-style: normal; color: var(--bui-primary); }
 .bui-dp-stat b { color: var(--bui-primary-text); }
 .bui-dp-preview { padding: 14px; overflow: hidden; }
 .bui-dp-preview.is-dark { background: #14151f; }
+
+/* ---------- Navbar, sidebar and footer demos ---------- */
+.bui-nav-stage { border: 1px dashed var(--bui-input-border); border-radius: var(--bui-radius-4); overflow: hidden; background: var(--bui-bg); }
+.bui-nav-stage.bui-nav-pad { padding: 14px; overflow: visible; }
+.bui-nav-stack { display: grid; gap: 12px; padding: 12px; }
+.bui-nav-scroll { height: 210px; overflow: auto; border: 1px dashed var(--bui-input-border); border-radius: var(--bui-radius-4); }
+.bui-ph { height: 10px; border-radius: 5px; background: var(--bui-line); }
+.bui-nav-stage .bui-navbar:not(.bui-shell .bui-navbar) { margin: 12px; }
+.bui-nav-stage .bui-site-footer:not(.bui-shell .bui-site-footer) { margin: 12px; }
+.bui-nav-stage .bui-shell > .bui-sidenav { height: auto; }
+.bui-nav-pad .bui-sidenav { min-height: 400px; }
+
+/* ---------- Layout playground ---------- */
+#lpPreview { min-height: 200px; }
+#lpPreview .bui-shell { min-height: 520px; }
+#lpPreview .bui-shell > .bui-sidenav { height: auto; }
+.bui-tp-group .bui-field { margin-bottom: 10px; }
