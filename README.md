@@ -29,6 +29,7 @@ Explore the full Baset UI documentation website, including interactive component
 7. [File upload](#file-upload)
 8. [Charts and data visualization](#charts-and-data-visualization)
 9. [DataTable](#datatable)
+   - [Calendar and scheduler](#calendar-and-scheduler)
 10. [Loaders and success icon](#loaders-and-success-icon)
 11. [Icons](#icons)
 12. [Theming (CSS variables)](#theming-css-variables)
@@ -133,6 +134,7 @@ baset-ui/
 │   ├── navigation.html         # Navbar, sidebar, footer and combined layouts
 │   ├── charts.html             # Charts: line, bar, area, pie, doughnut, radar, scatter, mixed, radial, gauge
 │   ├── datatable.html          # DataTable: 40 sections, 45 live examples
+│   ├── calendar.html           # Calendar & Scheduler: month / week / day, drag and drop, resize, Arabic RTL, 14 live examples
 │   ├── cards.html
 │   ├── alerts.html
 │   ├── badges.html
@@ -166,6 +168,7 @@ baset-ui/
 │       ├── baset-upload.js     # Optional file upload (needs section 19 of baset-ui.css)
 │       ├── baset-charts.js     # Optional SVG charts (needs section 20 of baset-ui.css)
 │       ├── baset-datatable.js  # Optional DataTable (needs section 21 of baset-ui.css)
+│       ├── baset-calendar.js   # Optional Calendar & Scheduler (needs section 23 of baset-ui.css)
 │       ├── datatable-docs.js   # DataTable documentation page only (sample data, fake API): do not ship
 │       ├── icons-gallery.js    # Icons page only (search + details dialog)
 │       ├── token-playground.js     # Token playground page only
@@ -199,6 +202,7 @@ baset-ui/
 | Utilities | `components/utilities.html` | Feature grid |
 | Charts & data visualization | `components/charts.html` | Line (basic, multiple, smooth, points, area fill), bar (vertical, horizontal, grouped, stacked, rounded, negative values), area (basic, multiple, stacked), pie, doughnut (center text, custom colors, legend with values and percentages), radar, scatter, mixed bar + line, radial progress, gauge; animation styles and easings; sales and operations dashboards; options, number formats, empty and invalid data, JS API, live data, responsive, RTL, dark mode |
 | DataTable | `components/datatable.html` | 40 sections (incl. a complete with-API / without-API example): HTML-table and JS init, pagination, search, multi-column sort, column visibility / reorder / resize, filters and search builder, selection, inline and modal editing, row actions, buttons, copy / CSV / Excel / PDF / JSON / print, responsive and card view, AJAX and server-side, Laravel API, state, grouping, fixed columns, virtual scrolling, i18n, RTL, dark, themes, API, events, extensions |
+| Calendar & Scheduler | `components/calendar.html` | 14 live examples, each with complete HTML + CSS + JS and a Copy button: basic, month ("+N more"), week (overlapping events), day, add / edit / delete, drag and drop, resizing, details popup, Arabic RTL, languages and first day, light / dark, colors and categories, callbacks and events, JavaScript API; plus the option, method, callback and keyboard reference |
 
 Every example on these pages shows the live preview, the class list, and a code block with a **Copy** button (it copies exactly the code shown).
 
@@ -532,6 +536,50 @@ An existing `<table data-bui-datatable>` upgrades itself (options as `data-*` at
 
 Full examples: `components/datatable.html`.
 
+## Calendar and scheduler
+
+CSS in section 23 of `baset-ui.css`; the component is the optional, dependency-free `assets/js/baset-calendar.js` (no build step). Full examples and reference: `components/calendar.html`.
+
+```html
+<div id="calendar"></div>
+<script src="assets/js/baset-calendar.js"></script>
+<script>
+  const calendar = new BasetCalendar('#calendar', {
+    view: 'month',                // 'month' | 'week' | 'day'
+    date: new Date(),
+    events: [
+      { id: 1, title: 'Meeting', description: 'Weekly sync', start: '2026-11-04T10:00:00', end: '2026-11-04T11:30:00', color: 'primary', category: 'work' },
+      { id: 2, title: 'Holiday', start: '2026-11-06', end: '2026-11-08', allDay: true, color: 'success' },   // all-day: date only, end day included
+    ],
+    editable: true, selectable: true, draggable: true, resizable: true,
+    firstDay: 0,                  // 0 = Sunday … 6 = Saturday (default: from the locale)
+    locale: 'ar', direction: 'rtl',   // Arabic + RTL (names, digits and times come from Intl)
+    onEventClick: (event, jsEvent) => {},          // return false = no built-in popup
+    onEventCreate: (event) => {},                  // return false = refuse
+    onEventUpdate: (event, oldEvent, info) => {},  // info.source: edit | drag | resize | keyboard; return false = revert
+    onEventDelete: (event) => {},                  // return false = keep
+    onDateClick: (date, jsEvent) => {},
+    onViewChange: (view, info) => {},
+  });
+
+  calendar.addEvent({ title: 'New', start: '2026-11-10T09:00:00' });
+  calendar.updateEvent(1, { title: 'Renamed' });
+  calendar.removeEvent(2);
+  calendar.getEvents(); calendar.getEventById(1);
+  calendar.setDate('2026-12-01'); calendar.setView('week'); calendar.next(); calendar.prev(); calendar.today();
+  calendar.destroy();
+</script>
+```
+
+- **Views:** month (today circle, selected day, "+N more" popover), week and day (time grid, all-day row, now line, overlapping events side by side, events that cross midnight).
+- **Events:** `{ id, title, description, start, end, allDay, color, category }`; `color` is `primary | secondary | success | danger | warning | info` or any CSS color. Times are local (no time zone). Extra properties are kept. `editable: false` on an event locks it.
+- **Editing:** the built-in dialog adds, edits and deletes (delete needs a second click; `confirmDelete: false` removes that). Click a day, click **Add event**, or drag over empty time slots to create.
+- **Drag and drop:** move between days (month) or days and times (week / day), resize by dragging the top or bottom edge, a dashed ghost shows the drop position, text is never selected, touch works (press and hold to drag; resize handles respond at once), `Esc` cancels. Keyboard: `Alt` + arrows on a focused event. Times snap to `snap` minutes (default 15).
+- **Languages and direction:** English and Arabic labels built in; add one with `BasetCalendar.locales.fr = { ... }`. `locale` also sets `direction: 'auto'` (RTL for Arabic, Hebrew, Persian, Urdu …); `direction: 'rtl' | 'ltr'` forces it. All layout uses logical CSS properties, so it mirrors fully.
+- **Other options:** `views`, `toolbar`, `addButton`, `categories`, `colors`, `monthMaxEvents`, `hourHeight`, `dayStart`, `dayEnd`, `snap`, `scrollTime`, `height`, `defaultDuration`, `defaultStartHour`, `hour12`, `nowIndicator`, `animate`, `labels`.
+- **More methods:** `setEvents`, `getRange`, `select`, `showEvent`, `openEditor`, `setOptions`, `refresh`, `on` / `off`, `BasetCalendar.instance(el)`. DOM events on the container: `bui:cal-eventclick`, `-eventcreate`, `-eventupdate`, `-eventdelete`, `-dateclick`, `-viewchange`, `-navigate`, `-change`.
+- **Tokens:** `--bui-cal-today`, `--bui-cal-select`, `--bui-cal-radius`, `--bui-cal-cell-h`, `--bui-cal-hour`, `--bui-cal-body-h`, `--bui-cal-gutter`. Declarative: `<div data-bui-calendar data-bui-view="week" data-bui-locale="ar" data-bui-events='[...]'>`.
+
 ## Navbar, sidebar and footer
 
 CSS in section 22 of `baset-ui.css`; the toggles, live clock and theme button are optional (`baset-ui.js`). Full examples: `components/navigation.html`; build your own in `customize/layout-playground.html`.
@@ -681,6 +729,7 @@ With `baset-ui.js`, any element with `id="themeToggle"` becomes a toggle button.
 | File upload | `assets/js/baset-upload.js` (separate file): `data-bui-upload` on `input[type=file]`; `BUI.upload.init/configure/files/add/remove/clear/upload/retry/validate()`; events `bui:upload-*` |
 | Charts | `assets/js/baset-charts.js` (separate file): `new BasetChart(target, { type, data, options })` or `data-bui-chart`; `update / setOptions / setColors / toggle / resize / destroy()`; `BUI.chart.init/get()`; events `bui:chart-render`, `bui:chart-click` |
 | DataTable | `assets/js/baset-datatable.js` (separate file): `new BasetDataTable(target, options)` or `data-bui-datatable` on a `<table>`; `search / order / page / pageLength / column / rows / row / draw / export / destroy`; `BasetDataTable.locales`, `.adapters` |
+| Calendar & Scheduler | `assets/js/baset-calendar.js` (separate file): `new BasetCalendar(target, options)` or `data-bui-calendar`; `addEvent / updateEvent / removeEvent / getEvents / getEventById / setEvents / setDate / setView / next / prev / today / getRange / showEvent / openEditor / setOptions / on / off / destroy()`; events `bui:cal-*` |
 | Floating labels | The i button toggles its message; `<form data-bui-validate>` and `BUI.float.setState/clear/open/validate/reset()` |
 | Modal | `BUI.modal.open/close/show/confirm/alert/prompt()` or `data-bui-modal-open` / `data-bui-modal-close` attributes |
 | Scroll-spy | Sidebar links like `<a class="bui-nav" href="#section">` highlight as you scroll |

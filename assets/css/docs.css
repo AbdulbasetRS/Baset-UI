@@ -379,3 +379,11 @@ h1 em { font-style: normal; color: var(--bui-primary); }
 #lpPreview .bui-shell { min-height: 520px; }
 #lpPreview .bui-shell > .bui-sidenav { height: auto; }
 .bui-tp-group .bui-field { margin-bottom: 10px; }
+
+/* Calendar docs (components/calendar.html): demo stage and tool rows */
+.bui-cal-docs-stage { padding: 16px; }
+.bui-cal-docs-tools { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-block-end: 12px; }
+.bui-cal-docs-tools .bui-input { inline-size: auto; min-inline-size: 150px; }
+.bui-cal-docs-stage .bui-net-log { margin-block-start: 12px; max-block-size: 190px; overflow: auto; }
+.bui-cal-docs-stage #cal-week, .bui-cal-docs-stage #cal-drag, .bui-cal-docs-stage #cal-resize, .bui-cal-docs-stage #cal-rtl { --bui-cal-body-h: 520px; }
+#cal-theme.is-green { --bui-cal-today: #1b9369; --bui-cal-select: #e0f4ed; --bui-cal-radius: 1.5rem; }

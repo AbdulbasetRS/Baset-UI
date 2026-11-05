@@ -1,0 +1,911 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Calendar &amp; Scheduler — Baset UI</title>
+  <link rel="stylesheet" href="../assets/css/baset-ui.css">
+  <link rel="stylesheet" href="../assets/css/docs.css">
+  <script>try{if(localStorage.getItem('bui-theme')==='dark')document.documentElement.classList.add('bui-dark');var d=localStorage.getItem('bui-dir');if(d==='rtl'||d==='ltr')document.documentElement.dir=d}catch(e){}</script>
+</head>
+<body>
+  <div class="bui-app">
+    <aside class="bui-sidebar">
+      <a class="bui-brand" href="../index.html"><span class="bui-brand-mark">B</span><span>Baset UI<small>Component library</small></span></a>
+      <div class="bui-sidebar-label">GET STARTED</div>
+      <a class="bui-nav" href="../index.html#overview">Overview</a>
+      <a class="bui-nav" href="../index.html#installation">Installation</a>
+      <div class="bui-sidebar-label">LAYOUT</div>
+      <a class="bui-nav" href="../layout/grid.html">Grid system</a>
+      <div class="bui-sidebar-label">COMPONENTS</div>
+      <a class="bui-nav" href="../components/buttons.html">Buttons</a>
+      <a class="bui-nav" href="../components/forms.html">Form controls</a>
+      <a class="bui-nav" href="../components/select.html">Select &amp; dropdown</a>
+      <a class="bui-nav" href="../components/datetime.html">Date &amp; time pickers</a>
+      <a class="bui-nav" href="../components/upload.html">File upload</a>
+      <a class="bui-nav" href="../components/cards.html">Cards</a>
+      <a class="bui-nav" href="../components/alerts.html">Alerts</a>
+      <a class="bui-nav" href="../components/badges.html">Badges</a>
+      <a class="bui-nav" href="../components/loaders.html">Loaders</a>
+      <a class="bui-nav" href="../components/icons.html">Icons</a>
+      <a class="bui-nav" href="../components/toasts.html">Toasts &amp; notifications</a>
+      <a class="bui-nav" href="../components/modal.html">Modal</a>
+      <a class="bui-nav" href="../components/utilities.html">Utilities</a>
+      <a class="bui-nav" href="../components/charts.html">Charts &amp; data visualization</a>
+      <a class="bui-nav" href="../components/datatable.html">DataTable</a>
+      <a class="bui-nav" href="../components/navigation.html">Navbar, sidebar &amp; footer</a>
+      <a class="bui-nav active" href="../components/calendar.html">Calendar &amp; Scheduler</a>
+      <div class="bui-sidebar-label">CUSTOMIZE</div>
+      <a class="bui-nav" href="../customize/colors.html">Default colors</a>
+      <a class="bui-nav" href="../customize/typography.html">Typography and shape</a>
+      <a class="bui-nav" href="../customize/theme.html">Theme</a>
+      <a class="bui-nav" href="../customize/token-playground.html">Token playground</a>
+      <a class="bui-nav" href="../customize/chart-playground.html">Chart playground</a>
+      <a class="bui-nav" href="../customize/datatable-playground.html">DataTable playground</a>
+      <a class="bui-nav" href="../customize/direction.html">Direction (RTL / LTR)</a>
+      <a class="bui-nav" href="../customize/layout-playground.html">Layout playground</a>
+      <div class="bui-sidebar-bottom"><span class="bui-status-dot"></span> Baset UI <span class="bui-version">v1.0.0</span></div>
+    </aside>
+    <main class="bui-main">
+      <header class="bui-topbar"><div class="bui-breadcrumb"><a href="../index.html">Documentation</a> <span>/</span> Components <span>/</span> Date &amp; time pickers</div><div class="bui-top-actions"><span class="bui-pill">Vanilla CSS + JS</span><button class="bui-icon-btn bui-dir-btn" id="dirToggle" type="button" aria-label="Toggle direction (RTL / LTR)" title="Toggle direction (RTL / LTR)">RTL</button><button class="bui-icon-btn" id="themeToggle" type="button" aria-label="Toggle theme">☼</button></div></header>
+      <section class="bui-section" id="calendar"><div class="bui-section-heading"><div><span class="bui-eyebrow">17 / COMPONENTS</span><h2>Calendar &amp; Scheduler</h2><p>A full scheduler in plain JavaScript: month, week and day views, events you can add, edit, delete, drag and resize, overlapping events side by side, categories and colors, English and Arabic with real RTL, light and dark, keyboard and touch. Every demo below is live, and every code box is complete: copy it into a page and it runs.</p></div><span class="bui-step-count">14 examples</span></div>
+<div class="bui-demo-stack">
+<h3 style="margin:34px 0 14px;font-family:var(--bui-font-heading);font-size:18px;letter-spacing:-.4px">Quick start</h3>
+<p class="bui-doc-note">The calendar is two files you already know: <code>baset-ui.css</code> (section 23) and the optional, dependency-free <code>baset-calendar.js</code>. There is no build step. All times are local wall-clock times; event dates are plain strings like <code>"2026-11-04T10:00:00"</code>, and all-day events use date-only strings (the end day is included).</p>
+<div class="bui-code-card"><div class="bui-code-head"><span><i></i> index.html</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-muted">&lt;!-- in &lt;head&gt; --&gt;</span>
+<span class="bui-code-pink">&lt;link</span> <span class="bui-code-blue">rel</span>=<span class="bui-code-green">"stylesheet"</span> <span class="bui-code-blue">href</span>=<span class="bui-code-green">"assets/css/baset-ui.css"</span><span class="bui-code-pink">&gt;</span>
+
+<span class="bui-code-muted">&lt;!-- where you want the calendar --&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"calendar"</span><span class="bui-code-pink">&gt;&lt;/div&gt;</span>
+
+<span class="bui-code-muted">&lt;!-- before &lt;/body&gt; --&gt;</span>
+<span class="bui-code-pink">&lt;script</span> <span class="bui-code-blue">src</span>=<span class="bui-code-green">"assets/js/baset-calendar.js"</span><span class="bui-code-pink">&gt;&lt;/script&gt;</span>
+<span class="bui-code-pink">&lt;script&gt;</span>
+  <span class="bui-code-pink">const</span> calendar = <span class="bui-code-pink">new</span> BasetCalendar(<span class="bui-code-green">'#calendar'</span>, {
+    view: <span class="bui-code-green">'month'</span>,
+    events: [{ title: <span class="bui-code-green">'Launch'</span>, start: <span class="bui-code-green">'2026-11-10T09:00:00'</span>, end: <span class="bui-code-green">'2026-11-10T10:30:00'</span>, color: <span class="bui-code-green">'primary'</span> }],
+    onEventUpdate: (event) =&gt; console.log(<span class="bui-code-green">'saved'</span>, event),
+  });
+<span class="bui-code-pink">&lt;/script&gt;</span>
+
+<span class="bui-code-muted">&lt;!-- or declare it, no JavaScript needed --&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">data-bui-calendar</span> <span class="bui-code-blue">data-bui-view</span>=<span class="bui-code-green">"week"</span> <span class="bui-code-blue">data-bui-locale</span>=<span class="bui-code-green">"ar"</span> <span class="bui-code-blue">data-bui-events</span>=<span class="bui-code-green">'[{"title":"Meeting","start":"2026-11-04T10:00:00"}]'</span><span class="bui-code-pink">&gt;&lt;/div&gt;</span></code></pre></div>
+<h3 style="margin:34px 0 14px;font-family:var(--bui-font-heading);font-size:18px;letter-spacing:-.4px">Examples (14)</h3>
+<article class="bui-demo-card" id="ex-cal-basic"><div class="bui-demo-title">Basic calendar <span>the smallest setup</span></div><div class="bui-demo-content bui-cal-docs-stage">
+<div id="cal-basic"></div>
+</div><div class="bui-demo-code">Load <code>baset-calendar.js</code> after the stylesheet, add an empty element and call <code>new BasetCalendar(selector, options)</code>. Click a day to select it and add an event, click an event to see its details, drag events to other days, and use the toolbar to navigate and switch views.</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML + CSS + JS</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-muted">&lt;!-- 1. the library (the stylesheet, then the script) --&gt;</span>
+<span class="bui-code-pink">&lt;link</span> <span class="bui-code-blue">rel</span>=<span class="bui-code-green">"stylesheet"</span> <span class="bui-code-blue">href</span>=<span class="bui-code-green">"assets/css/baset-ui.css"</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;script</span> <span class="bui-code-blue">src</span>=<span class="bui-code-green">"assets/js/baset-calendar.js"</span> <span class="bui-code-blue">defer</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/script</span><span class="bui-code-pink">&gt;</span>
+
+<span class="bui-code-muted">&lt;!-- 2. HTML --&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"cal-basic"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+
+<span class="bui-code-muted">&lt;!-- 3. JavaScript --&gt;</span>
+<span class="bui-code-pink">&lt;script</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">const</span> events = [
+  { id: 1, title: <span class="bui-code-green">'Team standup'</span>, start: <span class="bui-code-green">'2026-11-04T09:30:00'</span>, end: <span class="bui-code-green">'2026-11-04T10:00:00'</span>, color: <span class="bui-code-green">'primary'</span>, category: <span class="bui-code-green">'work'</span> },
+  { id: 2, title: <span class="bui-code-green">'Design review'</span>, description: <span class="bui-code-green">'Walk through the new dashboard.'</span>, start: <span class="bui-code-green">'2026-11-05T14:00:00'</span>, end: <span class="bui-code-green">'2026-11-05T15:30:00'</span>, color: <span class="bui-code-green">'info'</span>, category: <span class="bui-code-green">'work'</span> },
+  { id: 3, title: <span class="bui-code-green">'Product launch'</span>, start: <span class="bui-code-green">'2026-11-10'</span>, end: <span class="bui-code-green">'2026-11-12'</span>, allDay: <span class="bui-code-pink">true</span>, color: <span class="bui-code-green">'danger'</span>, category: <span class="bui-code-green">'work'</span> },
+  { id: 4, title: <span class="bui-code-green">'Gym'</span>, start: <span class="bui-code-green">'2026-11-11T18:00:00'</span>, end: <span class="bui-code-green">'2026-11-11T19:00:00'</span>, color: <span class="bui-code-green">'success'</span>, category: <span class="bui-code-green">'personal'</span> },
+  { id: 5, title: <span class="bui-code-green">'Dentist'</span>, start: <span class="bui-code-green">'2026-11-17T11:00:00'</span>, end: <span class="bui-code-green">'2026-11-17T12:00:00'</span>, color: <span class="bui-code-green">'warning'</span>, category: <span class="bui-code-green">'personal'</span> },
+  { id: 6, title: <span class="bui-code-green">'Workshop'</span>, start: <span class="bui-code-green">'2026-11-24T10:00:00'</span>, end: <span class="bui-code-green">'2026-11-24T13:00:00'</span>, color: <span class="bui-code-green">'secondary'</span>, category: <span class="bui-code-green">'work'</span> },
+];
+
+<span class="bui-code-pink">const</span> calendar = <span class="bui-code-pink">new</span> BasetCalendar(<span class="bui-code-green">'#cal-basic'</span>, {
+  view: <span class="bui-code-green">'month'</span>,
+  date: <span class="bui-code-green">'2026-11-04'</span>,
+  events: events,
+});
+<span class="bui-code-pink">&lt;/script</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
+<article class="bui-demo-card" id="ex-cal-month"><div class="bui-demo-title">Month view <span>today · selected day · "+N more"</span></div><div class="bui-demo-content bui-cal-docs-stage">
+<div id="cal-month"></div>
+</div><div class="bui-demo-code">Today is a filled circle, the clicked day gets an outline. A day with more events than <code>monthMaxEvents</code> shows a "+N more" button that opens the full list; multi-day and all-day events appear on every day they cover. Try the 12th (six events and an all-day event).</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML + CSS + JS</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-muted">&lt;!-- 1. the library (the stylesheet, then the script) --&gt;</span>
+<span class="bui-code-pink">&lt;link</span> <span class="bui-code-blue">rel</span>=<span class="bui-code-green">"stylesheet"</span> <span class="bui-code-blue">href</span>=<span class="bui-code-green">"assets/css/baset-ui.css"</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;script</span> <span class="bui-code-blue">src</span>=<span class="bui-code-green">"assets/js/baset-calendar.js"</span> <span class="bui-code-blue">defer</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/script</span><span class="bui-code-pink">&gt;</span>
+
+<span class="bui-code-muted">&lt;!-- 2. HTML --&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"cal-month"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+
+<span class="bui-code-muted">&lt;!-- 3. JavaScript --&gt;</span>
+<span class="bui-code-pink">&lt;script</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">const</span> events = [
+  { id: 1, title: <span class="bui-code-green">'Breakfast'</span>, start: <span class="bui-code-green">'2026-11-12T08:00:00'</span>, end: <span class="bui-code-green">'2026-11-12T08:45:00'</span>, color: <span class="bui-code-green">'success'</span> },
+  { id: 2, title: <span class="bui-code-green">'Standup'</span>, start: <span class="bui-code-green">'2026-11-12T09:30:00'</span>, end: <span class="bui-code-green">'2026-11-12T10:00:00'</span>, color: <span class="bui-code-green">'primary'</span> },
+  { id: 3, title: <span class="bui-code-green">'Code review'</span>, start: <span class="bui-code-green">'2026-11-12T11:00:00'</span>, end: <span class="bui-code-green">'2026-11-12T12:00:00'</span>, color: <span class="bui-code-green">'info'</span> },
+  { id: 4, title: <span class="bui-code-green">'Lunch'</span>, start: <span class="bui-code-green">'2026-11-12T13:00:00'</span>, end: <span class="bui-code-green">'2026-11-12T14:00:00'</span>, color: <span class="bui-code-green">'warning'</span> },
+  { id: 5, title: <span class="bui-code-green">'Sprint demo'</span>, start: <span class="bui-code-green">'2026-11-12T15:00:00'</span>, end: <span class="bui-code-green">'2026-11-12T16:00:00'</span>, color: <span class="bui-code-green">'danger'</span> },
+  { id: 6, title: <span class="bui-code-green">'Retro'</span>, start: <span class="bui-code-green">'2026-11-12T16:30:00'</span>, end: <span class="bui-code-green">'2026-11-12T17:30:00'</span>, color: <span class="bui-code-green">'secondary'</span> },
+  { id: 7, title: <span class="bui-code-green">'Company holiday'</span>, start: <span class="bui-code-green">'2026-11-12'</span>, allDay: <span class="bui-code-pink">true</span>, color: <span class="bui-code-green">'danger'</span> },
+  { id: 8, title: <span class="bui-code-green">'Conference'</span>, start: <span class="bui-code-green">'2026-11-18'</span>, end: <span class="bui-code-green">'2026-11-20'</span>, allDay: <span class="bui-code-pink">true</span>, color: <span class="bui-code-green">'primary'</span> },
+];
+
+<span class="bui-code-pink">new</span> BasetCalendar(<span class="bui-code-green">'#cal-month'</span>, {
+  view: <span class="bui-code-green">'month'</span>,
+  date: <span class="bui-code-green">'2026-11-12'</span>,
+  events: events,
+  monthMaxEvents: 3,   <span class="bui-code-muted">// chips per day before "+N more"</span>
+  firstDay: 0,         <span class="bui-code-muted">// 0 = Sunday … 6 = Saturday</span>
+});
+<span class="bui-code-pink">&lt;/script</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
+<article class="bui-demo-card" id="ex-cal-week"><div class="bui-demo-title">Week view <span>time slots · overlapping events</span></div><div class="bui-demo-content bui-cal-docs-stage">
+<div id="cal-week"></div>
+</div><div class="bui-demo-code">Events sit on a 24-hour grid. Events that overlap (Wednesday 10:00–12:00) are laid out side by side so none is hidden, all-day events live in the top row, an event that crosses midnight continues on the next day, and a red line marks the current time. Drag across an empty slot to create an event.</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML + CSS + JS</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-muted">&lt;!-- 1. the library (the stylesheet, then the script) --&gt;</span>
+<span class="bui-code-pink">&lt;link</span> <span class="bui-code-blue">rel</span>=<span class="bui-code-green">"stylesheet"</span> <span class="bui-code-blue">href</span>=<span class="bui-code-green">"assets/css/baset-ui.css"</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;script</span> <span class="bui-code-blue">src</span>=<span class="bui-code-green">"assets/js/baset-calendar.js"</span> <span class="bui-code-blue">defer</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/script</span><span class="bui-code-pink">&gt;</span>
+
+<span class="bui-code-muted">&lt;!-- 2. HTML --&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"cal-week"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+
+<span class="bui-code-muted">&lt;!-- 3. CSS (optional) --&gt;</span>
+<span class="bui-code-pink">&lt;style</span><span class="bui-code-pink">&gt;</span>
+#cal-week { --bui-cal-body-h: 520px; } /* height of the scrolling time grid */
+<span class="bui-code-pink">&lt;/style</span><span class="bui-code-pink">&gt;</span>
+
+<span class="bui-code-muted">&lt;!-- 4. JavaScript --&gt;</span>
+<span class="bui-code-pink">&lt;script</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">const</span> events = [
+  { id: 1, title: <span class="bui-code-green">'Standup'</span>, start: <span class="bui-code-green">'2026-11-04T10:00:00'</span>, end: <span class="bui-code-green">'2026-11-04T11:00:00'</span>, color: <span class="bui-code-green">'primary'</span> },
+  { id: 2, title: <span class="bui-code-green">'Client review'</span>, start: <span class="bui-code-green">'2026-11-04T10:30:00'</span>, end: <span class="bui-code-green">'2026-11-04T12:00:00'</span>, color: <span class="bui-code-green">'danger'</span> },
+  { id: 3, title: <span class="bui-code-green">'Lunch'</span>, start: <span class="bui-code-green">'2026-11-04T10:45:00'</span>, end: <span class="bui-code-green">'2026-11-04T11:30:00'</span>, color: <span class="bui-code-green">'success'</span> },
+  { id: 4, title: <span class="bui-code-green">'Planning'</span>, start: <span class="bui-code-green">'2026-11-03T14:00:00'</span>, end: <span class="bui-code-green">'2026-11-03T16:00:00'</span>, color: <span class="bui-code-green">'info'</span> },
+  { id: 5, title: <span class="bui-code-green">'Gym'</span>, start: <span class="bui-code-green">'2026-11-05T07:00:00'</span>, end: <span class="bui-code-green">'2026-11-05T08:00:00'</span>, color: <span class="bui-code-green">'success'</span> },
+  { id: 6, title: <span class="bui-code-green">'Offsite'</span>, start: <span class="bui-code-green">'2026-11-06'</span>, end: <span class="bui-code-green">'2026-11-07'</span>, allDay: <span class="bui-code-pink">true</span>, color: <span class="bui-code-green">'warning'</span> },
+  { id: 7, title: <span class="bui-code-green">'Night deploy'</span>, start: <span class="bui-code-green">'2026-11-05T22:30:00'</span>, end: <span class="bui-code-green">'2026-11-06T01:00:00'</span>, color: <span class="bui-code-green">'secondary'</span> },
+];
+
+<span class="bui-code-pink">new</span> BasetCalendar(<span class="bui-code-green">'#cal-week'</span>, {
+  view: <span class="bui-code-green">'week'</span>,
+  date: <span class="bui-code-green">'2026-11-04'</span>,
+  events: events,
+  hourHeight: 52,       <span class="bui-code-muted">// pixels per hour</span>
+  snap: 15,             <span class="bui-code-muted">// minutes: drag, resize and new events snap to this</span>
+  scrollTime: <span class="bui-code-green">'07:00'</span>,  <span class="bui-code-muted">// first visible time</span>
+});
+<span class="bui-code-pink">&lt;/script</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
+<article class="bui-demo-card" id="ex-cal-day"><div class="bui-demo-title">Day view <span>one day, full width</span></div><div class="bui-demo-content bui-cal-docs-stage">
+<div id="cal-day"></div>
+</div><div class="bui-demo-code">The same time grid for a single day: more room for titles and details. Limit the visible hours with <code>dayStart</code> and <code>dayEnd</code> (here 7:00 to 20:00).</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML + CSS + JS</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-muted">&lt;!-- 1. the library (the stylesheet, then the script) --&gt;</span>
+<span class="bui-code-pink">&lt;link</span> <span class="bui-code-blue">rel</span>=<span class="bui-code-green">"stylesheet"</span> <span class="bui-code-blue">href</span>=<span class="bui-code-green">"assets/css/baset-ui.css"</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;script</span> <span class="bui-code-blue">src</span>=<span class="bui-code-green">"assets/js/baset-calendar.js"</span> <span class="bui-code-blue">defer</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/script</span><span class="bui-code-pink">&gt;</span>
+
+<span class="bui-code-muted">&lt;!-- 2. HTML --&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"cal-day"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+
+<span class="bui-code-muted">&lt;!-- 3. JavaScript --&gt;</span>
+<span class="bui-code-pink">&lt;script</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">const</span> events = [
+  { id: 1, title: <span class="bui-code-green">'Standup'</span>, start: <span class="bui-code-green">'2026-11-04T10:00:00'</span>, end: <span class="bui-code-green">'2026-11-04T11:00:00'</span>, color: <span class="bui-code-green">'primary'</span> },
+  { id: 2, title: <span class="bui-code-green">'Client review'</span>, start: <span class="bui-code-green">'2026-11-04T10:30:00'</span>, end: <span class="bui-code-green">'2026-11-04T12:00:00'</span>, color: <span class="bui-code-green">'danger'</span> },
+  { id: 3, title: <span class="bui-code-green">'Lunch'</span>, start: <span class="bui-code-green">'2026-11-04T10:45:00'</span>, end: <span class="bui-code-green">'2026-11-04T11:30:00'</span>, color: <span class="bui-code-green">'success'</span> },
+  { id: 4, title: <span class="bui-code-green">'Planning'</span>, start: <span class="bui-code-green">'2026-11-03T14:00:00'</span>, end: <span class="bui-code-green">'2026-11-03T16:00:00'</span>, color: <span class="bui-code-green">'info'</span> },
+  { id: 5, title: <span class="bui-code-green">'Gym'</span>, start: <span class="bui-code-green">'2026-11-05T07:00:00'</span>, end: <span class="bui-code-green">'2026-11-05T08:00:00'</span>, color: <span class="bui-code-green">'success'</span> },
+  { id: 6, title: <span class="bui-code-green">'Offsite'</span>, start: <span class="bui-code-green">'2026-11-06'</span>, end: <span class="bui-code-green">'2026-11-07'</span>, allDay: <span class="bui-code-pink">true</span>, color: <span class="bui-code-green">'warning'</span> },
+  { id: 7, title: <span class="bui-code-green">'Night deploy'</span>, start: <span class="bui-code-green">'2026-11-05T22:30:00'</span>, end: <span class="bui-code-green">'2026-11-06T01:00:00'</span>, color: <span class="bui-code-green">'secondary'</span> },
+];
+
+<span class="bui-code-pink">new</span> BasetCalendar(<span class="bui-code-green">'#cal-day'</span>, {
+  view: <span class="bui-code-green">'day'</span>,
+  date: <span class="bui-code-green">'2026-11-04'</span>,
+  events: events,
+  dayStart: 7,    <span class="bui-code-muted">// first hour shown</span>
+  dayEnd: 20,     <span class="bui-code-muted">// last hour shown (exclusive)</span>
+  hourHeight: 60,
+});
+<span class="bui-code-pink">&lt;/script</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
+<article class="bui-demo-card" id="ex-cal-edit"><div class="bui-demo-title">Add, edit and delete <span>the event dialog</span></div><div class="bui-demo-content bui-cal-docs-stage">
+<div id="cal-edit"></div>
+<pre class="bui-net-log" id="cal-edit-log" aria-live="polite">Create, edit or delete an event to see the callbacks.</pre>
+</div><div class="bui-demo-code">Click <b>Add event</b>, click a day or drag over a time slot. The dialog has title, description, start and end date and time, an all-day switch, a category and a color. Open any event and choose <b>Edit</b> or <b>Delete</b> (delete asks you to click twice). The log shows what your callbacks receive.</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML + CSS + JS</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-muted">&lt;!-- 1. the library (the stylesheet, then the script) --&gt;</span>
+<span class="bui-code-pink">&lt;link</span> <span class="bui-code-blue">rel</span>=<span class="bui-code-green">"stylesheet"</span> <span class="bui-code-blue">href</span>=<span class="bui-code-green">"assets/css/baset-ui.css"</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;script</span> <span class="bui-code-blue">src</span>=<span class="bui-code-green">"assets/js/baset-calendar.js"</span> <span class="bui-code-blue">defer</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/script</span><span class="bui-code-pink">&gt;</span>
+
+<span class="bui-code-muted">&lt;!-- 2. HTML --&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"cal-edit"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;pre</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-net-log"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"cal-edit-log"</span> <span class="bui-code-blue">aria-live</span>=<span class="bui-code-green">"polite"</span><span class="bui-code-pink">&gt;</span>Create, edit or delete an event to see the callbacks.<span class="bui-code-pink">&lt;/pre</span><span class="bui-code-pink">&gt;</span>
+
+<span class="bui-code-muted">&lt;!-- 3. JavaScript --&gt;</span>
+<span class="bui-code-pink">&lt;script</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">const</span> events = [
+  { id: 1, title: <span class="bui-code-green">'Team standup'</span>, start: <span class="bui-code-green">'2026-11-04T09:30:00'</span>, end: <span class="bui-code-green">'2026-11-04T10:00:00'</span>, color: <span class="bui-code-green">'primary'</span>, category: <span class="bui-code-green">'work'</span> },
+  { id: 2, title: <span class="bui-code-green">'Design review'</span>, description: <span class="bui-code-green">'Walk through the new dashboard.'</span>, start: <span class="bui-code-green">'2026-11-05T14:00:00'</span>, end: <span class="bui-code-green">'2026-11-05T15:30:00'</span>, color: <span class="bui-code-green">'info'</span>, category: <span class="bui-code-green">'work'</span> },
+  { id: 3, title: <span class="bui-code-green">'Product launch'</span>, start: <span class="bui-code-green">'2026-11-10'</span>, end: <span class="bui-code-green">'2026-11-12'</span>, allDay: <span class="bui-code-pink">true</span>, color: <span class="bui-code-green">'danger'</span>, category: <span class="bui-code-green">'work'</span> },
+  { id: 4, title: <span class="bui-code-green">'Gym'</span>, start: <span class="bui-code-green">'2026-11-11T18:00:00'</span>, end: <span class="bui-code-green">'2026-11-11T19:00:00'</span>, color: <span class="bui-code-green">'success'</span>, category: <span class="bui-code-green">'personal'</span> },
+  { id: 5, title: <span class="bui-code-green">'Dentist'</span>, start: <span class="bui-code-green">'2026-11-17T11:00:00'</span>, end: <span class="bui-code-green">'2026-11-17T12:00:00'</span>, color: <span class="bui-code-green">'warning'</span>, category: <span class="bui-code-green">'personal'</span> },
+  { id: 6, title: <span class="bui-code-green">'Workshop'</span>, start: <span class="bui-code-green">'2026-11-24T10:00:00'</span>, end: <span class="bui-code-green">'2026-11-24T13:00:00'</span>, color: <span class="bui-code-green">'secondary'</span>, category: <span class="bui-code-green">'work'</span> },
+];
+
+<span class="bui-code-pink">const</span> log = document.getElementById(<span class="bui-code-green">'cal-edit-log'</span>);
+<span class="bui-code-pink">const</span> say = (text) =&gt; { log.textContent = text + <span class="bui-code-green">'\n'</span> + log.textContent; };
+
+<span class="bui-code-pink">new</span> BasetCalendar(<span class="bui-code-green">'#cal-edit'</span>, {
+  view: <span class="bui-code-green">'month'</span>,
+  date: <span class="bui-code-green">'2026-11-04'</span>,
+  events: events,
+  categories: [<span class="bui-code-green">'work'</span>, <span class="bui-code-green">'personal'</span>],
+  onEventCreate: (event) =&gt; say(<span class="bui-code-green">'create  '</span> + event.title + <span class="bui-code-green">'  '</span> + event.start),
+  onEventUpdate: (event, oldEvent, info) =&gt; say(<span class="bui-code-green">'update  '</span> + event.title + <span class="bui-code-green">'  ('</span> + info.source + <span class="bui-code-green">')  '</span> + oldEvent.start + <span class="bui-code-green">' -&gt; '</span> + event.start),
+  onEventDelete: (event) =&gt; say(<span class="bui-code-green">'delete  '</span> + event.title),
+});
+<span class="bui-code-pink">&lt;/script</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
+<article class="bui-demo-card" id="ex-cal-drag"><div class="bui-demo-title">Drag and drop <span>move events · drop preview · touch</span></div><div class="bui-demo-content bui-cal-docs-stage">
+<div class="bui-cal-docs-tools"><button class="bui-btn bui-btn-sm bui-btn-soft-primary" id="cal-drag-month" type="button">Month</button><button class="bui-btn bui-btn-sm bui-btn-soft-primary" id="cal-drag-week" type="button">Week</button></div>
+<div id="cal-drag"></div>
+<pre class="bui-net-log" id="cal-drag-log" aria-live="polite">Drag an event, then drop it.</pre>
+</div><div class="bui-demo-code">Drag an event to another day (month) or another time and day (week and day views). A card follows the pointer, a dashed ghost or a highlighted day shows where it will land, and the date and time update when you drop it. Text is never selected while dragging. On a phone or tablet, press and hold an event for a moment, then drag. Keyboard: focus an event and press <b>Alt + arrow keys</b>. Press <b>Esc</b> while dragging to cancel.</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML + CSS + JS</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-muted">&lt;!-- 1. the library (the stylesheet, then the script) --&gt;</span>
+<span class="bui-code-pink">&lt;link</span> <span class="bui-code-blue">rel</span>=<span class="bui-code-green">"stylesheet"</span> <span class="bui-code-blue">href</span>=<span class="bui-code-green">"assets/css/baset-ui.css"</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;script</span> <span class="bui-code-blue">src</span>=<span class="bui-code-green">"assets/js/baset-calendar.js"</span> <span class="bui-code-blue">defer</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/script</span><span class="bui-code-pink">&gt;</span>
+
+<span class="bui-code-muted">&lt;!-- 2. HTML --&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-cal-docs-tools"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-btn bui-btn-sm bui-btn-soft-primary"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"cal-drag-month"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span><span class="bui-code-pink">&gt;</span>Month<span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-btn bui-btn-sm bui-btn-soft-primary"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"cal-drag-week"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span><span class="bui-code-pink">&gt;</span>Week<span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"cal-drag"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;pre</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-net-log"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"cal-drag-log"</span> <span class="bui-code-blue">aria-live</span>=<span class="bui-code-green">"polite"</span><span class="bui-code-pink">&gt;</span>Drag an event, then drop it.<span class="bui-code-pink">&lt;/pre</span><span class="bui-code-pink">&gt;</span>
+
+<span class="bui-code-muted">&lt;!-- 3. JavaScript --&gt;</span>
+<span class="bui-code-pink">&lt;script</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">const</span> events = [
+  { id: 1, title: <span class="bui-code-green">'Standup'</span>, start: <span class="bui-code-green">'2026-11-04T10:00:00'</span>, end: <span class="bui-code-green">'2026-11-04T11:00:00'</span>, color: <span class="bui-code-green">'primary'</span> },
+  { id: 2, title: <span class="bui-code-green">'Client review'</span>, start: <span class="bui-code-green">'2026-11-04T10:30:00'</span>, end: <span class="bui-code-green">'2026-11-04T12:00:00'</span>, color: <span class="bui-code-green">'danger'</span> },
+  { id: 3, title: <span class="bui-code-green">'Lunch'</span>, start: <span class="bui-code-green">'2026-11-04T10:45:00'</span>, end: <span class="bui-code-green">'2026-11-04T11:30:00'</span>, color: <span class="bui-code-green">'success'</span> },
+  { id: 4, title: <span class="bui-code-green">'Planning'</span>, start: <span class="bui-code-green">'2026-11-03T14:00:00'</span>, end: <span class="bui-code-green">'2026-11-03T16:00:00'</span>, color: <span class="bui-code-green">'info'</span> },
+  { id: 5, title: <span class="bui-code-green">'Gym'</span>, start: <span class="bui-code-green">'2026-11-05T07:00:00'</span>, end: <span class="bui-code-green">'2026-11-05T08:00:00'</span>, color: <span class="bui-code-green">'success'</span> },
+  { id: 6, title: <span class="bui-code-green">'Offsite'</span>, start: <span class="bui-code-green">'2026-11-06'</span>, end: <span class="bui-code-green">'2026-11-07'</span>, allDay: <span class="bui-code-pink">true</span>, color: <span class="bui-code-green">'warning'</span> },
+  { id: 7, title: <span class="bui-code-green">'Night deploy'</span>, start: <span class="bui-code-green">'2026-11-05T22:30:00'</span>, end: <span class="bui-code-green">'2026-11-06T01:00:00'</span>, color: <span class="bui-code-green">'secondary'</span> },
+];
+
+<span class="bui-code-pink">const</span> log = document.getElementById(<span class="bui-code-green">'cal-drag-log'</span>);
+<span class="bui-code-pink">const</span> calendar = <span class="bui-code-pink">new</span> BasetCalendar(<span class="bui-code-green">'#cal-drag'</span>, {
+  view: <span class="bui-code-green">'week'</span>,
+  date: <span class="bui-code-green">'2026-11-04'</span>,
+  events: events,
+  draggable: <span class="bui-code-pink">true</span>,
+  onEventUpdate: (event, oldEvent, info) =&gt; {
+    log.textContent = info.source + <span class="bui-code-green">': '</span> + event.title + <span class="bui-code-green">'\n  from '</span> + oldEvent.start + <span class="bui-code-green">'\n  to   '</span> + event.start;
+    <span class="bui-code-muted">// return false here to refuse the move and put the event back</span>
+  },
+});
+document.getElementById(<span class="bui-code-green">'cal-drag-month'</span>).onclick = () =&gt; calendar.setView(<span class="bui-code-green">'month'</span>);
+document.getElementById(<span class="bui-code-green">'cal-drag-week'</span>).onclick = () =&gt; calendar.setView(<span class="bui-code-green">'week'</span>);
+<span class="bui-code-pink">&lt;/script</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
+<article class="bui-demo-card" id="ex-cal-resize"><div class="bui-demo-title">Resize events <span>drag the top or bottom edge</span></div><div class="bui-demo-content bui-cal-docs-stage">
+<div id="cal-resize"></div>
+<pre class="bui-net-log" id="cal-resize-log" aria-live="polite">Drag the bottom edge of an event.</pre>
+</div><div class="bui-demo-code">In week and day views every event has a handle on its top and bottom edge. Drag the bottom edge to change the end time or the top edge to change the start; the duration snaps to <code>snap</code> minutes and the ghost shows the new range. On touch screens the handles respond immediately. Set <code>resizable: false</code> to turn it off, or <code>editable: false</code> on one event to lock it.</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML + CSS + JS</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-muted">&lt;!-- 1. the library (the stylesheet, then the script) --&gt;</span>
+<span class="bui-code-pink">&lt;link</span> <span class="bui-code-blue">rel</span>=<span class="bui-code-green">"stylesheet"</span> <span class="bui-code-blue">href</span>=<span class="bui-code-green">"assets/css/baset-ui.css"</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;script</span> <span class="bui-code-blue">src</span>=<span class="bui-code-green">"assets/js/baset-calendar.js"</span> <span class="bui-code-blue">defer</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/script</span><span class="bui-code-pink">&gt;</span>
+
+<span class="bui-code-muted">&lt;!-- 2. HTML --&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"cal-resize"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;pre</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-net-log"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"cal-resize-log"</span> <span class="bui-code-blue">aria-live</span>=<span class="bui-code-green">"polite"</span><span class="bui-code-pink">&gt;</span>Drag the bottom edge of an event.<span class="bui-code-pink">&lt;/pre</span><span class="bui-code-pink">&gt;</span>
+
+<span class="bui-code-muted">&lt;!-- 3. JavaScript --&gt;</span>
+<span class="bui-code-pink">&lt;script</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">const</span> events = [
+  { id: 1, title: <span class="bui-code-green">'Workshop'</span>, start: <span class="bui-code-green">'2026-11-04T10:00:00'</span>, end: <span class="bui-code-green">'2026-11-04T11:30:00'</span>, color: <span class="bui-code-green">'primary'</span> },
+  { id: 2, title: <span class="bui-code-green">'Interviews'</span>, start: <span class="bui-code-green">'2026-11-05T13:00:00'</span>, end: <span class="bui-code-green">'2026-11-05T14:00:00'</span>, color: <span class="bui-code-green">'success'</span> },
+  { id: 3, title: <span class="bui-code-green">'Locked event'</span>, start: <span class="bui-code-green">'2026-11-06T09:00:00'</span>, end: <span class="bui-code-green">'2026-11-06T10:00:00'</span>, color: <span class="bui-code-green">'secondary'</span>, editable: <span class="bui-code-pink">false</span> },
+];
+
+<span class="bui-code-pink">new</span> BasetCalendar(<span class="bui-code-green">'#cal-resize'</span>, {
+  view: <span class="bui-code-green">'week'</span>,
+  date: <span class="bui-code-green">'2026-11-04'</span>,
+  events: events,
+  resizable: <span class="bui-code-pink">true</span>,
+  snap: 15,
+  dayStart: 7, dayEnd: 19,
+  onEventUpdate: (event, oldEvent, info) =&gt; {
+    <span class="bui-code-pink">if</span> (info.source !== <span class="bui-code-green">'resize'</span>) <span class="bui-code-pink">return</span>;
+    <span class="bui-code-pink">const</span> minutes = (<span class="bui-code-pink">new</span> Date(event.end) - <span class="bui-code-pink">new</span> Date(event.start)) / 60000;
+    document.getElementById(<span class="bui-code-green">'cal-resize-log'</span>).textContent = event.title + <span class="bui-code-green">': '</span> + oldEvent.end.slice(11, 16) + <span class="bui-code-green">' -&gt; '</span> + event.end.slice(11, 16) + <span class="bui-code-green">'  ('</span> + minutes + <span class="bui-code-green">' minutes)'</span>;
+  },
+});
+<span class="bui-code-pink">&lt;/script</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
+<article class="bui-demo-card" id="ex-cal-details"><div class="bui-demo-title">Event details popup <span>click an event</span></div><div class="bui-demo-content bui-cal-docs-stage">
+<div id="cal-details"></div>
+<pre class="bui-net-log" id="cal-details-log" aria-live="polite">Click "Design review" (custom handling) or any other event (built-in popup).</pre>
+</div><div class="bui-demo-code">Clicking an event opens its details with Edit and Delete. Use <code>onEventClick</code> to do something else: return <code>false</code> to stop the built-in popup (here a click on "Design review" only writes to the log), or call <code>calendar.showEvent(id)</code> yourself.</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML + CSS + JS</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-muted">&lt;!-- 1. the library (the stylesheet, then the script) --&gt;</span>
+<span class="bui-code-pink">&lt;link</span> <span class="bui-code-blue">rel</span>=<span class="bui-code-green">"stylesheet"</span> <span class="bui-code-blue">href</span>=<span class="bui-code-green">"assets/css/baset-ui.css"</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;script</span> <span class="bui-code-blue">src</span>=<span class="bui-code-green">"assets/js/baset-calendar.js"</span> <span class="bui-code-blue">defer</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/script</span><span class="bui-code-pink">&gt;</span>
+
+<span class="bui-code-muted">&lt;!-- 2. HTML --&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"cal-details"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;pre</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-net-log"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"cal-details-log"</span> <span class="bui-code-blue">aria-live</span>=<span class="bui-code-green">"polite"</span><span class="bui-code-pink">&gt;</span>Click "Design review" (custom handling) or any other event (built-in popup).<span class="bui-code-pink">&lt;/pre</span><span class="bui-code-pink">&gt;</span>
+
+<span class="bui-code-muted">&lt;!-- 3. JavaScript --&gt;</span>
+<span class="bui-code-pink">&lt;script</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">const</span> events = [
+  { id: 1, title: <span class="bui-code-green">'Team standup'</span>, start: <span class="bui-code-green">'2026-11-04T09:30:00'</span>, end: <span class="bui-code-green">'2026-11-04T10:00:00'</span>, color: <span class="bui-code-green">'primary'</span>, category: <span class="bui-code-green">'work'</span> },
+  { id: 2, title: <span class="bui-code-green">'Design review'</span>, description: <span class="bui-code-green">'Walk through the new dashboard.'</span>, start: <span class="bui-code-green">'2026-11-05T14:00:00'</span>, end: <span class="bui-code-green">'2026-11-05T15:30:00'</span>, color: <span class="bui-code-green">'info'</span>, category: <span class="bui-code-green">'work'</span> },
+  { id: 3, title: <span class="bui-code-green">'Product launch'</span>, start: <span class="bui-code-green">'2026-11-10'</span>, end: <span class="bui-code-green">'2026-11-12'</span>, allDay: <span class="bui-code-pink">true</span>, color: <span class="bui-code-green">'danger'</span>, category: <span class="bui-code-green">'work'</span> },
+  { id: 4, title: <span class="bui-code-green">'Gym'</span>, start: <span class="bui-code-green">'2026-11-11T18:00:00'</span>, end: <span class="bui-code-green">'2026-11-11T19:00:00'</span>, color: <span class="bui-code-green">'success'</span>, category: <span class="bui-code-green">'personal'</span> },
+  { id: 5, title: <span class="bui-code-green">'Dentist'</span>, start: <span class="bui-code-green">'2026-11-17T11:00:00'</span>, end: <span class="bui-code-green">'2026-11-17T12:00:00'</span>, color: <span class="bui-code-green">'warning'</span>, category: <span class="bui-code-green">'personal'</span> },
+  { id: 6, title: <span class="bui-code-green">'Workshop'</span>, start: <span class="bui-code-green">'2026-11-24T10:00:00'</span>, end: <span class="bui-code-green">'2026-11-24T13:00:00'</span>, color: <span class="bui-code-green">'secondary'</span>, category: <span class="bui-code-green">'work'</span> },
+];
+
+<span class="bui-code-pink">const</span> calendar = <span class="bui-code-pink">new</span> BasetCalendar(<span class="bui-code-green">'#cal-details'</span>, {
+  view: <span class="bui-code-green">'month'</span>,
+  date: <span class="bui-code-green">'2026-11-04'</span>,
+  events: events,
+  onEventClick: (event, jsEvent) =&gt; {
+    <span class="bui-code-pink">if</span> (event.title !== <span class="bui-code-green">'Design review'</span>) <span class="bui-code-pink">return</span>;   <span class="bui-code-muted">// everything else: the built-in popup</span>
+    document.getElementById(<span class="bui-code-green">'cal-details-log'</span>).textContent = <span class="bui-code-green">'Custom click: '</span> + event.title + <span class="bui-code-green">' · '</span> + event.description;
+    <span class="bui-code-pink">return</span> <span class="bui-code-pink">false</span>;                                  <span class="bui-code-muted">// false = no built-in popup</span>
+  },
+});
+<span class="bui-code-pink">&lt;/script</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
+<article class="bui-demo-card" id="ex-cal-rtl"><div class="bui-demo-title">Arabic and RTL <span>locale: "ar" · direction: "rtl"</span></div><div class="bui-demo-content bui-cal-docs-stage">
+<div id="cal-rtl"></div>
+</div><div class="bui-demo-code"><code>locale: "ar"</code> gives Arabic month and day names, numbers, times (ص / م) and labels, starts the week on Saturday, and switches the calendar to RTL. Everything mirrors: the toolbar, the grid, the time gutter, event stripes, resize handles, drag and the keyboard arrows. Use the <b>RTL</b> button in the top bar to flip the whole page; a calendar without a <code>direction</code> option follows it.</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML + CSS + JS</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-muted">&lt;!-- 1. the library (the stylesheet, then the script) --&gt;</span>
+<span class="bui-code-pink">&lt;link</span> <span class="bui-code-blue">rel</span>=<span class="bui-code-green">"stylesheet"</span> <span class="bui-code-blue">href</span>=<span class="bui-code-green">"assets/css/baset-ui.css"</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;script</span> <span class="bui-code-blue">src</span>=<span class="bui-code-green">"assets/js/baset-calendar.js"</span> <span class="bui-code-blue">defer</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/script</span><span class="bui-code-pink">&gt;</span>
+
+<span class="bui-code-muted">&lt;!-- 2. HTML --&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"cal-rtl"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+
+<span class="bui-code-muted">&lt;!-- 3. JavaScript --&gt;</span>
+<span class="bui-code-pink">&lt;script</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">const</span> events = [
+  { id: 1, title: <span class="bui-code-green">'اجتماع الفريق'</span>, description: <span class="bui-code-green">'مراجعة مهام الأسبوع.'</span>, start: <span class="bui-code-green">'2026-11-04T10:00:00'</span>, end: <span class="bui-code-green">'2026-11-04T11:00:00'</span>, color: <span class="bui-code-green">'primary'</span>, category: <span class="bui-code-green">'work'</span> },
+  { id: 2, title: <span class="bui-code-green">'غداء مع العميل'</span>, start: <span class="bui-code-green">'2026-11-04T10:30:00'</span>, end: <span class="bui-code-green">'2026-11-04T12:00:00'</span>, color: <span class="bui-code-green">'success'</span>, category: <span class="bui-code-green">'work'</span> },
+  { id: 3, title: <span class="bui-code-green">'مراجعة التصميم'</span>, start: <span class="bui-code-green">'2026-11-05T14:00:00'</span>, end: <span class="bui-code-green">'2026-11-05T15:30:00'</span>, color: <span class="bui-code-green">'info'</span>, category: <span class="bui-code-green">'work'</span> },
+  { id: 4, title: <span class="bui-code-green">'إجازة'</span>, start: <span class="bui-code-green">'2026-11-08'</span>, end: <span class="bui-code-green">'2026-11-10'</span>, allDay: <span class="bui-code-pink">true</span>, color: <span class="bui-code-green">'warning'</span>, category: <span class="bui-code-green">'personal'</span> },
+  { id: 5, title: <span class="bui-code-green">'موعد الطبيب'</span>, start: <span class="bui-code-green">'2026-11-15T16:00:00'</span>, end: <span class="bui-code-green">'2026-11-15T17:00:00'</span>, color: <span class="bui-code-green">'danger'</span>, category: <span class="bui-code-green">'personal'</span> },
+];
+
+<span class="bui-code-pink">new</span> BasetCalendar(<span class="bui-code-green">'#cal-rtl'</span>, {
+  view: <span class="bui-code-green">'week'</span>,
+  date: <span class="bui-code-green">'2026-11-04'</span>,
+  events: events,
+  locale: <span class="bui-code-green">'ar'</span>,        <span class="bui-code-muted">// Arabic names, labels and numbers</span>
+  direction: <span class="bui-code-green">'rtl'</span>,    <span class="bui-code-muted">// 'rtl' | 'ltr' | 'auto' (auto follows the locale)</span>
+  firstDay: 6,         <span class="bui-code-muted">// Saturday (this is also the default for "ar")</span>
+  categories: [{ value: <span class="bui-code-green">'work'</span>, label: <span class="bui-code-green">'عمل'</span>, color: <span class="bui-code-green">'primary'</span> }, { value: <span class="bui-code-green">'personal'</span>, label: <span class="bui-code-green">'شخصي'</span>, color: <span class="bui-code-green">'success'</span> }],
+});
+<span class="bui-code-pink">&lt;/script</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
+<article class="bui-demo-card" id="ex-cal-locale"><div class="bui-demo-title">Languages and first day <span>any Intl locale</span></div><div class="bui-demo-content bui-cal-docs-stage">
+<div class="bui-cal-docs-tools">
+  <select class="bui-input" id="cal-locale-lang" aria-label="Language"><option value="en">English</option><option value="fr">Français</option><option value="de">Deutsch</option><option value="ja">日本語</option><option value="ar-EG">العربية (مصر)</option></select>
+  <select class="bui-input" id="cal-locale-first" aria-label="First day of week"><option value="">First day: from locale</option><option value="0">Sunday</option><option value="1">Monday</option><option value="6">Saturday</option></select>
+  <select class="bui-input" id="cal-locale-hour" aria-label="Clock"><option value="">Clock: from locale</option><option value="12">12-hour</option><option value="24">24-hour</option></select>
+</div>
+<div id="cal-locale"></div>
+</div><div class="bui-demo-code">Month and weekday names, number digits and time formats come from the browser's <code>Intl</code> API, so any locale works. Only the calendar's own buttons and dialog need words: English and Arabic are built in, add another language with <code>BasetCalendar.locales.fr = { ... }</code> (missing keys fall back to English).</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML + CSS + JS</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-muted">&lt;!-- 1. the library (the stylesheet, then the script) --&gt;</span>
+<span class="bui-code-pink">&lt;link</span> <span class="bui-code-blue">rel</span>=<span class="bui-code-green">"stylesheet"</span> <span class="bui-code-blue">href</span>=<span class="bui-code-green">"assets/css/baset-ui.css"</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;script</span> <span class="bui-code-blue">src</span>=<span class="bui-code-green">"assets/js/baset-calendar.js"</span> <span class="bui-code-blue">defer</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/script</span><span class="bui-code-pink">&gt;</span>
+
+<span class="bui-code-muted">&lt;!-- 2. HTML --&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-cal-docs-tools"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;select</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-input"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"cal-locale-lang"</span> <span class="bui-code-blue">aria-label</span>=<span class="bui-code-green">"Language"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;option</span> <span class="bui-code-blue">value</span>=<span class="bui-code-green">"en"</span><span class="bui-code-pink">&gt;</span>English<span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;option</span> <span class="bui-code-blue">value</span>=<span class="bui-code-green">"fr"</span><span class="bui-code-pink">&gt;</span>Français<span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;option</span> <span class="bui-code-blue">value</span>=<span class="bui-code-green">"de"</span><span class="bui-code-pink">&gt;</span>Deutsch<span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;option</span> <span class="bui-code-blue">value</span>=<span class="bui-code-green">"ja"</span><span class="bui-code-pink">&gt;</span>日本語<span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;option</span> <span class="bui-code-blue">value</span>=<span class="bui-code-green">"ar-EG"</span><span class="bui-code-pink">&gt;</span>العربية (مصر)<span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/select</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;select</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-input"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"cal-locale-first"</span> <span class="bui-code-blue">aria-label</span>=<span class="bui-code-green">"First day of week"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;option</span> <span class="bui-code-blue">value</span>=<span class="bui-code-green">""</span><span class="bui-code-pink">&gt;</span>First day: from locale<span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;option</span> <span class="bui-code-blue">value</span>=<span class="bui-code-green">"0"</span><span class="bui-code-pink">&gt;</span>Sunday<span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;option</span> <span class="bui-code-blue">value</span>=<span class="bui-code-green">"1"</span><span class="bui-code-pink">&gt;</span>Monday<span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;option</span> <span class="bui-code-blue">value</span>=<span class="bui-code-green">"6"</span><span class="bui-code-pink">&gt;</span>Saturday<span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/select</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;select</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-input"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"cal-locale-hour"</span> <span class="bui-code-blue">aria-label</span>=<span class="bui-code-green">"Clock"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;option</span> <span class="bui-code-blue">value</span>=<span class="bui-code-green">""</span><span class="bui-code-pink">&gt;</span>Clock: from locale<span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;option</span> <span class="bui-code-blue">value</span>=<span class="bui-code-green">"12"</span><span class="bui-code-pink">&gt;</span>12-hour<span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;option</span> <span class="bui-code-blue">value</span>=<span class="bui-code-green">"24"</span><span class="bui-code-pink">&gt;</span>24-hour<span class="bui-code-pink">&lt;/option</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/select</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"cal-locale"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+
+<span class="bui-code-muted">&lt;!-- 3. JavaScript --&gt;</span>
+<span class="bui-code-pink">&lt;script</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">const</span> events = [
+  { id: 1, title: <span class="bui-code-green">'Standup'</span>, start: <span class="bui-code-green">'2026-11-04T10:00:00'</span>, end: <span class="bui-code-green">'2026-11-04T11:00:00'</span>, color: <span class="bui-code-green">'primary'</span> },
+  { id: 2, title: <span class="bui-code-green">'Client review'</span>, start: <span class="bui-code-green">'2026-11-04T10:30:00'</span>, end: <span class="bui-code-green">'2026-11-04T12:00:00'</span>, color: <span class="bui-code-green">'danger'</span> },
+  { id: 3, title: <span class="bui-code-green">'Lunch'</span>, start: <span class="bui-code-green">'2026-11-04T10:45:00'</span>, end: <span class="bui-code-green">'2026-11-04T11:30:00'</span>, color: <span class="bui-code-green">'success'</span> },
+  { id: 4, title: <span class="bui-code-green">'Planning'</span>, start: <span class="bui-code-green">'2026-11-03T14:00:00'</span>, end: <span class="bui-code-green">'2026-11-03T16:00:00'</span>, color: <span class="bui-code-green">'info'</span> },
+  { id: 5, title: <span class="bui-code-green">'Gym'</span>, start: <span class="bui-code-green">'2026-11-05T07:00:00'</span>, end: <span class="bui-code-green">'2026-11-05T08:00:00'</span>, color: <span class="bui-code-green">'success'</span> },
+  { id: 6, title: <span class="bui-code-green">'Offsite'</span>, start: <span class="bui-code-green">'2026-11-06'</span>, end: <span class="bui-code-green">'2026-11-07'</span>, allDay: <span class="bui-code-pink">true</span>, color: <span class="bui-code-green">'warning'</span> },
+  { id: 7, title: <span class="bui-code-green">'Night deploy'</span>, start: <span class="bui-code-green">'2026-11-05T22:30:00'</span>, end: <span class="bui-code-green">'2026-11-06T01:00:00'</span>, color: <span class="bui-code-green">'secondary'</span> },
+];
+
+<span class="bui-code-muted">// Words for the buttons and the dialog in a language that is not built in (the rest comes from Intl)</span>
+BasetCalendar.locales.fr = { today: <span class="bui-code-green">"Aujourd'hui"</span>, month: <span class="bui-code-green">'Mois'</span>, week: <span class="bui-code-green">'Semaine'</span>, day: <span class="bui-code-green">'Jour'</span>, allDay: <span class="bui-code-green">'Toute la journée'</span>, add: <span class="bui-code-green">'Ajouter'</span>, newEvent: <span class="bui-code-green">'Nouvel événement'</span>, save: <span class="bui-code-green">'Enregistrer'</span>, cancel: <span class="bui-code-green">'Annuler'</span>, delete: <span class="bui-code-green">'Supprimer'</span>, edit: <span class="bui-code-green">'Modifier'</span>, close: <span class="bui-code-green">'Fermer'</span>, title: <span class="bui-code-green">'Titre'</span>, description: <span class="bui-code-green">'Description'</span>, more: <span class="bui-code-green">'+{n} autres'</span> };
+
+<span class="bui-code-pink">const</span> calendar = <span class="bui-code-pink">new</span> BasetCalendar(<span class="bui-code-green">'#cal-locale'</span>, { view: <span class="bui-code-green">'month'</span>, date: <span class="bui-code-green">'2026-11-04'</span>, events: events, locale: <span class="bui-code-green">'en'</span> });
+<span class="bui-code-pink">const</span> apply = () =&gt; calendar.setOptions({
+  locale: document.getElementById(<span class="bui-code-green">'cal-locale-lang'</span>).value,
+  firstDay: document.getElementById(<span class="bui-code-green">'cal-locale-first'</span>).value === <span class="bui-code-green">''</span> ? <span class="bui-code-pink">null</span> : +document.getElementById(<span class="bui-code-green">'cal-locale-first'</span>).value,
+  hour12: document.getElementById(<span class="bui-code-green">'cal-locale-hour'</span>).value === <span class="bui-code-green">''</span> ? <span class="bui-code-pink">null</span> : document.getElementById(<span class="bui-code-green">'cal-locale-hour'</span>).value === <span class="bui-code-green">'12'</span>,
+});
+[<span class="bui-code-green">'lang'</span>, <span class="bui-code-green">'first'</span>, <span class="bui-code-green">'hour'</span>].forEach((n) =&gt; document.getElementById(<span class="bui-code-green">'cal-locale-'</span> + n).onchange = apply);
+<span class="bui-code-pink">&lt;/script</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
+<article class="bui-demo-card" id="ex-cal-theme"><div class="bui-demo-title">Light and dark <span>theme tokens</span></div><div class="bui-demo-content bui-cal-docs-stage">
+<div class="bui-cal-docs-tools"><button class="bui-btn bui-btn-sm bui-btn-soft-primary" id="cal-theme-light" type="button">Light</button><button class="bui-btn bui-btn-sm bui-btn-soft-primary" id="cal-theme-dark" type="button">Dark</button><button class="bui-btn bui-btn-sm bui-btn-soft-primary" id="cal-theme-brand" type="button">Green accent</button></div>
+<div id="cal-theme"></div>
+</div><div class="bui-demo-code">The calendar uses the library tokens, so it follows the page theme (the <b>☼</b> button in the top bar, or <code>class="bui-dark"</code> on <code>&lt;html&gt;</code>). To theme only one calendar, set <code>color-scheme</code> on it, as the buttons below do. Colors, shapes and sizes can be changed with the <code>--bui-cal-*</code> tokens.</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML + CSS + JS</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-muted">&lt;!-- 1. the library (the stylesheet, then the script) --&gt;</span>
+<span class="bui-code-pink">&lt;link</span> <span class="bui-code-blue">rel</span>=<span class="bui-code-green">"stylesheet"</span> <span class="bui-code-blue">href</span>=<span class="bui-code-green">"assets/css/baset-ui.css"</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;script</span> <span class="bui-code-blue">src</span>=<span class="bui-code-green">"assets/js/baset-calendar.js"</span> <span class="bui-code-blue">defer</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/script</span><span class="bui-code-pink">&gt;</span>
+
+<span class="bui-code-muted">&lt;!-- 2. HTML --&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-cal-docs-tools"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-btn bui-btn-sm bui-btn-soft-primary"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"cal-theme-light"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span><span class="bui-code-pink">&gt;</span>Light<span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-btn bui-btn-sm bui-btn-soft-primary"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"cal-theme-dark"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span><span class="bui-code-pink">&gt;</span>Dark<span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-btn bui-btn-sm bui-btn-soft-primary"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"cal-theme-brand"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span><span class="bui-code-pink">&gt;</span>Green accent<span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"cal-theme"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+
+<span class="bui-code-muted">&lt;!-- 3. CSS (optional) --&gt;</span>
+<span class="bui-code-pink">&lt;style</span><span class="bui-code-pink">&gt;</span>
+/* optional: change the calendar's own look with tokens */
+#cal-theme.is-green { --bui-cal-today: #1b9369; --bui-cal-select: #e0f4ed; --bui-cal-radius: 1.5rem; }
+<span class="bui-code-pink">&lt;/style</span><span class="bui-code-pink">&gt;</span>
+
+<span class="bui-code-muted">&lt;!-- 4. JavaScript --&gt;</span>
+<span class="bui-code-pink">&lt;script</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">const</span> events = [
+  { id: 1, title: <span class="bui-code-green">'Team standup'</span>, start: <span class="bui-code-green">'2026-11-04T09:30:00'</span>, end: <span class="bui-code-green">'2026-11-04T10:00:00'</span>, color: <span class="bui-code-green">'primary'</span>, category: <span class="bui-code-green">'work'</span> },
+  { id: 2, title: <span class="bui-code-green">'Design review'</span>, description: <span class="bui-code-green">'Walk through the new dashboard.'</span>, start: <span class="bui-code-green">'2026-11-05T14:00:00'</span>, end: <span class="bui-code-green">'2026-11-05T15:30:00'</span>, color: <span class="bui-code-green">'info'</span>, category: <span class="bui-code-green">'work'</span> },
+  { id: 3, title: <span class="bui-code-green">'Product launch'</span>, start: <span class="bui-code-green">'2026-11-10'</span>, end: <span class="bui-code-green">'2026-11-12'</span>, allDay: <span class="bui-code-pink">true</span>, color: <span class="bui-code-green">'danger'</span>, category: <span class="bui-code-green">'work'</span> },
+  { id: 4, title: <span class="bui-code-green">'Gym'</span>, start: <span class="bui-code-green">'2026-11-11T18:00:00'</span>, end: <span class="bui-code-green">'2026-11-11T19:00:00'</span>, color: <span class="bui-code-green">'success'</span>, category: <span class="bui-code-green">'personal'</span> },
+  { id: 5, title: <span class="bui-code-green">'Dentist'</span>, start: <span class="bui-code-green">'2026-11-17T11:00:00'</span>, end: <span class="bui-code-green">'2026-11-17T12:00:00'</span>, color: <span class="bui-code-green">'warning'</span>, category: <span class="bui-code-green">'personal'</span> },
+  { id: 6, title: <span class="bui-code-green">'Workshop'</span>, start: <span class="bui-code-green">'2026-11-24T10:00:00'</span>, end: <span class="bui-code-green">'2026-11-24T13:00:00'</span>, color: <span class="bui-code-green">'secondary'</span>, category: <span class="bui-code-green">'work'</span> },
+];
+
+<span class="bui-code-pink">new</span> BasetCalendar(<span class="bui-code-green">'#cal-theme'</span>, { view: <span class="bui-code-green">'month'</span>, date: <span class="bui-code-green">'2026-11-04'</span>, events: events });
+
+<span class="bui-code-pink">const</span> box = document.getElementById(<span class="bui-code-green">'cal-theme'</span>);
+document.getElementById(<span class="bui-code-green">'cal-theme-light'</span>).onclick = () =&gt; { box.style.colorScheme = <span class="bui-code-green">'light'</span>; };
+document.getElementById(<span class="bui-code-green">'cal-theme-dark'</span>).onclick = () =&gt; { box.style.colorScheme = <span class="bui-code-green">'dark'</span>; };
+document.getElementById(<span class="bui-code-green">'cal-theme-brand'</span>).onclick = () =&gt; box.classList.toggle(<span class="bui-code-green">'is-green'</span>);
+<span class="bui-code-pink">&lt;/script</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
+<article class="bui-demo-card" id="ex-cal-colors"><div class="bui-demo-title">Colors and categories <span>color · category · legend filter</span></div><div class="bui-demo-content bui-cal-docs-stage">
+<div id="cal-colors"></div>
+</div><div class="bui-demo-code"><code>color</code> is a theme color (<code>primary</code>, <code>secondary</code>, <code>success</code>, <code>danger</code>, <code>warning</code>, <code>info</code>) or any CSS color such as <code>"#e91e63"</code>. Give <code>categories</code> to get a category field in the dialog, a color default per category and a legend whose buttons show or hide that category. The dialog color row also has a free color picker.</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML + CSS + JS</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-muted">&lt;!-- 1. the library (the stylesheet, then the script) --&gt;</span>
+<span class="bui-code-pink">&lt;link</span> <span class="bui-code-blue">rel</span>=<span class="bui-code-green">"stylesheet"</span> <span class="bui-code-blue">href</span>=<span class="bui-code-green">"assets/css/baset-ui.css"</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;script</span> <span class="bui-code-blue">src</span>=<span class="bui-code-green">"assets/js/baset-calendar.js"</span> <span class="bui-code-blue">defer</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/script</span><span class="bui-code-pink">&gt;</span>
+
+<span class="bui-code-muted">&lt;!-- 2. HTML --&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"cal-colors"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+
+<span class="bui-code-muted">&lt;!-- 3. JavaScript --&gt;</span>
+<span class="bui-code-pink">&lt;script</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">const</span> events = [
+  { id: 1, title: <span class="bui-code-green">'Sprint planning'</span>, start: <span class="bui-code-green">'2026-11-03T09:00:00'</span>, end: <span class="bui-code-green">'2026-11-03T10:30:00'</span>, category: <span class="bui-code-green">'work'</span> },
+  { id: 2, title: <span class="bui-code-green">'Yoga'</span>, start: <span class="bui-code-green">'2026-11-04T07:30:00'</span>, end: <span class="bui-code-green">'2026-11-04T08:30:00'</span>, category: <span class="bui-code-green">'health'</span> },
+  { id: 3, title: <span class="bui-code-green">'Dinner with friends'</span>, start: <span class="bui-code-green">'2026-11-05T19:00:00'</span>, end: <span class="bui-code-green">'2026-11-05T21:00:00'</span>, category: <span class="bui-code-green">'social'</span> },
+  { id: 4, title: <span class="bui-code-green">'Brand pink'</span>, start: <span class="bui-code-green">'2026-11-06T11:00:00'</span>, end: <span class="bui-code-green">'2026-11-06T12:00:00'</span>, color: <span class="bui-code-green">'#e91e63'</span>, category: <span class="bui-code-green">'work'</span> },
+  { id: 5, title: <span class="bui-code-green">'Teal custom color'</span>, start: <span class="bui-code-green">'2026-11-09'</span>, allDay: <span class="bui-code-pink">true</span>, color: <span class="bui-code-green">'#0d9488'</span>, category: <span class="bui-code-green">'social'</span> },
+  { id: 6, title: <span class="bui-code-green">'Doctor'</span>, start: <span class="bui-code-green">'2026-11-10T16:00:00'</span>, end: <span class="bui-code-green">'2026-11-10T17:00:00'</span>, category: <span class="bui-code-green">'health'</span> },
+];
+
+<span class="bui-code-pink">new</span> BasetCalendar(<span class="bui-code-green">'#cal-colors'</span>, {
+  view: <span class="bui-code-green">'month'</span>,
+  date: <span class="bui-code-green">'2026-11-04'</span>,
+  events: events,
+  categories: [
+    { value: <span class="bui-code-green">'work'</span>, label: <span class="bui-code-green">'Work'</span>, color: <span class="bui-code-green">'primary'</span> },
+    { value: <span class="bui-code-green">'health'</span>, label: <span class="bui-code-green">'Health'</span>, color: <span class="bui-code-green">'success'</span> },
+    { value: <span class="bui-code-green">'social'</span>, label: <span class="bui-code-green">'Social'</span>, color: <span class="bui-code-green">'warning'</span> },
+  ],
+});
+<span class="bui-code-pink">&lt;/script</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
+<article class="bui-demo-card" id="ex-cal-callbacks"><div class="bui-demo-title">Callbacks and events <span>every hook, live</span></div><div class="bui-demo-content bui-cal-docs-stage">
+<div id="cal-callbacks"></div>
+<pre class="bui-net-log" id="cal-callbacks-log" aria-live="polite">Interact with the calendar.</pre>
+</div><div class="bui-demo-code">Every user action calls an option callback, fires a <code>bui:cal-*</code> DOM event on the container and reaches handlers added with <code>calendar.on(name, fn)</code>. Returning <code>false</code> from <code>onEventClick</code>, <code>onEventCreate</code>, <code>onEventUpdate</code> or <code>onEventDelete</code> cancels the action. Try clicking, dragging, creating, deleting and navigating.</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML + CSS + JS</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-muted">&lt;!-- 1. the library (the stylesheet, then the script) --&gt;</span>
+<span class="bui-code-pink">&lt;link</span> <span class="bui-code-blue">rel</span>=<span class="bui-code-green">"stylesheet"</span> <span class="bui-code-blue">href</span>=<span class="bui-code-green">"assets/css/baset-ui.css"</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;script</span> <span class="bui-code-blue">src</span>=<span class="bui-code-green">"assets/js/baset-calendar.js"</span> <span class="bui-code-blue">defer</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/script</span><span class="bui-code-pink">&gt;</span>
+
+<span class="bui-code-muted">&lt;!-- 2. HTML --&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"cal-callbacks"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;pre</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-net-log"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"cal-callbacks-log"</span> <span class="bui-code-blue">aria-live</span>=<span class="bui-code-green">"polite"</span><span class="bui-code-pink">&gt;</span>Interact with the calendar.<span class="bui-code-pink">&lt;/pre</span><span class="bui-code-pink">&gt;</span>
+
+<span class="bui-code-muted">&lt;!-- 3. JavaScript --&gt;</span>
+<span class="bui-code-pink">&lt;script</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">const</span> events = [
+  { id: 1, title: <span class="bui-code-green">'Team standup'</span>, start: <span class="bui-code-green">'2026-11-04T09:30:00'</span>, end: <span class="bui-code-green">'2026-11-04T10:00:00'</span>, color: <span class="bui-code-green">'primary'</span>, category: <span class="bui-code-green">'work'</span> },
+  { id: 2, title: <span class="bui-code-green">'Design review'</span>, description: <span class="bui-code-green">'Walk through the new dashboard.'</span>, start: <span class="bui-code-green">'2026-11-05T14:00:00'</span>, end: <span class="bui-code-green">'2026-11-05T15:30:00'</span>, color: <span class="bui-code-green">'info'</span>, category: <span class="bui-code-green">'work'</span> },
+  { id: 3, title: <span class="bui-code-green">'Product launch'</span>, start: <span class="bui-code-green">'2026-11-10'</span>, end: <span class="bui-code-green">'2026-11-12'</span>, allDay: <span class="bui-code-pink">true</span>, color: <span class="bui-code-green">'danger'</span>, category: <span class="bui-code-green">'work'</span> },
+  { id: 4, title: <span class="bui-code-green">'Gym'</span>, start: <span class="bui-code-green">'2026-11-11T18:00:00'</span>, end: <span class="bui-code-green">'2026-11-11T19:00:00'</span>, color: <span class="bui-code-green">'success'</span>, category: <span class="bui-code-green">'personal'</span> },
+  { id: 5, title: <span class="bui-code-green">'Dentist'</span>, start: <span class="bui-code-green">'2026-11-17T11:00:00'</span>, end: <span class="bui-code-green">'2026-11-17T12:00:00'</span>, color: <span class="bui-code-green">'warning'</span>, category: <span class="bui-code-green">'personal'</span> },
+  { id: 6, title: <span class="bui-code-green">'Workshop'</span>, start: <span class="bui-code-green">'2026-11-24T10:00:00'</span>, end: <span class="bui-code-green">'2026-11-24T13:00:00'</span>, color: <span class="bui-code-green">'secondary'</span>, category: <span class="bui-code-green">'work'</span> },
+];
+
+<span class="bui-code-pink">const</span> log = document.getElementById(<span class="bui-code-green">'cal-callbacks-log'</span>);
+<span class="bui-code-pink">const</span> say = (text) =&gt; { log.textContent = text + <span class="bui-code-green">'\n'</span> + log.textContent.split(<span class="bui-code-green">'\n'</span>).slice(0, 7).join(<span class="bui-code-green">'\n'</span>); };
+
+<span class="bui-code-pink">const</span> calendar = <span class="bui-code-pink">new</span> BasetCalendar(<span class="bui-code-green">'#cal-callbacks'</span>, {
+  view: <span class="bui-code-green">'month'</span>,
+  date: <span class="bui-code-green">'2026-11-04'</span>,
+  events: events,
+  onEventClick:  (event) =&gt; say(<span class="bui-code-green">'onEventClick   '</span> + event.title),
+  onEventCreate: (event) =&gt; say(<span class="bui-code-green">'onEventCreate  '</span> + event.title),
+  onEventUpdate: (event, oldEvent, info) =&gt; say(<span class="bui-code-green">'onEventUpdate  '</span> + event.title + <span class="bui-code-green">' ('</span> + info.source + <span class="bui-code-green">')'</span>),
+  onEventDelete: (event) =&gt; say(<span class="bui-code-green">'onEventDelete  '</span> + event.title),
+  onDateClick:   (date) =&gt; say(<span class="bui-code-green">'onDateClick    '</span> + date.toDateString()),
+  onViewChange:  (view, info) =&gt; say(<span class="bui-code-green">'onViewChange   '</span> + view + <span class="bui-code-green">' · '</span> + info.title),
+  onNavigate:    (date, view) =&gt; say(<span class="bui-code-green">'onNavigate     '</span> + date.toDateString()),
+});
+
+<span class="bui-code-muted">// The same things as DOM events and as on() handlers</span>
+document.getElementById(<span class="bui-code-green">'cal-callbacks'</span>).addEventListener(<span class="bui-code-green">'bui:cal-eventclick'</span>, () =&gt; { <span class="bui-code-muted">/* ... */</span> });
+calendar.on(<span class="bui-code-green">'change'</span>, (info) =&gt; say(<span class="bui-code-green">'change          '</span> + info.type));
+<span class="bui-code-pink">&lt;/script</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
+<article class="bui-demo-card" id="ex-cal-api"><div class="bui-demo-title">JavaScript API <span>methods, live</span></div><div class="bui-demo-content bui-cal-docs-stage">
+<div class="bui-cal-docs-tools">
+  <button class="bui-btn bui-btn-sm bui-btn-soft-primary" id="api-add" type="button">addEvent</button>
+  <button class="bui-btn bui-btn-sm bui-btn-soft-primary" id="api-update" type="button">updateEvent</button>
+  <button class="bui-btn bui-btn-sm bui-btn-soft-danger" id="api-remove" type="button">removeEvent</button>
+  <button class="bui-btn bui-btn-sm bui-btn-soft-primary" id="api-date" type="button">setDate('2026-12-25')</button>
+  <button class="bui-btn bui-btn-sm bui-btn-soft-primary" id="api-view" type="button">setView('day')</button>
+  <button class="bui-btn bui-btn-sm bui-btn-soft-primary" id="api-prev" type="button">prev()</button>
+  <button class="bui-btn bui-btn-sm bui-btn-soft-primary" id="api-next" type="button">next()</button>
+  <button class="bui-btn bui-btn-sm bui-btn-soft-primary" id="api-today" type="button">today()</button>
+  <button class="bui-btn bui-btn-sm bui-btn-outline" id="api-get" type="button">getEvents()</button>
+</div>
+<div id="cal-api"></div>
+<pre class="bui-net-log" id="cal-api-log" aria-live="polite">Use the buttons above.</pre>
+</div><div class="bui-demo-code">Everything the calendar does is available from code, and the page updates without a reload. <code>addEvent</code>, <code>updateEvent</code> and <code>removeEvent</code> change the data; <code>setDate</code>, <code>setView</code>, <code>next</code>, <code>prev</code> and <code>today</code> navigate; <code>getEvents</code> returns plain objects you can save.</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML + CSS + JS</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-muted">&lt;!-- 1. the library (the stylesheet, then the script) --&gt;</span>
+<span class="bui-code-pink">&lt;link</span> <span class="bui-code-blue">rel</span>=<span class="bui-code-green">"stylesheet"</span> <span class="bui-code-blue">href</span>=<span class="bui-code-green">"assets/css/baset-ui.css"</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;script</span> <span class="bui-code-blue">src</span>=<span class="bui-code-green">"assets/js/baset-calendar.js"</span> <span class="bui-code-blue">defer</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/script</span><span class="bui-code-pink">&gt;</span>
+
+<span class="bui-code-muted">&lt;!-- 2. HTML --&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-cal-docs-tools"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-btn bui-btn-sm bui-btn-soft-primary"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"api-add"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span><span class="bui-code-pink">&gt;</span>addEvent<span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-btn bui-btn-sm bui-btn-soft-primary"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"api-update"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span><span class="bui-code-pink">&gt;</span>updateEvent<span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-btn bui-btn-sm bui-btn-soft-danger"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"api-remove"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span><span class="bui-code-pink">&gt;</span>removeEvent<span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-btn bui-btn-sm bui-btn-soft-primary"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"api-date"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span><span class="bui-code-pink">&gt;</span>setDate('2026-12-25')<span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-btn bui-btn-sm bui-btn-soft-primary"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"api-view"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span><span class="bui-code-pink">&gt;</span>setView('day')<span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-btn bui-btn-sm bui-btn-soft-primary"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"api-prev"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span><span class="bui-code-pink">&gt;</span>prev()<span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-btn bui-btn-sm bui-btn-soft-primary"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"api-next"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span><span class="bui-code-pink">&gt;</span>next()<span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-btn bui-btn-sm bui-btn-soft-primary"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"api-today"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span><span class="bui-code-pink">&gt;</span>today()<span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-btn bui-btn-sm bui-btn-outline"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"api-get"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span><span class="bui-code-pink">&gt;</span>getEvents()<span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"cal-api"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;pre</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-net-log"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"cal-api-log"</span> <span class="bui-code-blue">aria-live</span>=<span class="bui-code-green">"polite"</span><span class="bui-code-pink">&gt;</span>Use the buttons above.<span class="bui-code-pink">&lt;/pre</span><span class="bui-code-pink">&gt;</span>
+
+<span class="bui-code-muted">&lt;!-- 3. JavaScript --&gt;</span>
+<span class="bui-code-pink">&lt;script</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">const</span> events = [
+  { id: 1, title: <span class="bui-code-green">'Team standup'</span>, start: <span class="bui-code-green">'2026-11-04T09:30:00'</span>, end: <span class="bui-code-green">'2026-11-04T10:00:00'</span>, color: <span class="bui-code-green">'primary'</span>, category: <span class="bui-code-green">'work'</span> },
+  { id: 2, title: <span class="bui-code-green">'Design review'</span>, description: <span class="bui-code-green">'Walk through the new dashboard.'</span>, start: <span class="bui-code-green">'2026-11-05T14:00:00'</span>, end: <span class="bui-code-green">'2026-11-05T15:30:00'</span>, color: <span class="bui-code-green">'info'</span>, category: <span class="bui-code-green">'work'</span> },
+  { id: 3, title: <span class="bui-code-green">'Product launch'</span>, start: <span class="bui-code-green">'2026-11-10'</span>, end: <span class="bui-code-green">'2026-11-12'</span>, allDay: <span class="bui-code-pink">true</span>, color: <span class="bui-code-green">'danger'</span>, category: <span class="bui-code-green">'work'</span> },
+  { id: 4, title: <span class="bui-code-green">'Gym'</span>, start: <span class="bui-code-green">'2026-11-11T18:00:00'</span>, end: <span class="bui-code-green">'2026-11-11T19:00:00'</span>, color: <span class="bui-code-green">'success'</span>, category: <span class="bui-code-green">'personal'</span> },
+  { id: 5, title: <span class="bui-code-green">'Dentist'</span>, start: <span class="bui-code-green">'2026-11-17T11:00:00'</span>, end: <span class="bui-code-green">'2026-11-17T12:00:00'</span>, color: <span class="bui-code-green">'warning'</span>, category: <span class="bui-code-green">'personal'</span> },
+  { id: 6, title: <span class="bui-code-green">'Workshop'</span>, start: <span class="bui-code-green">'2026-11-24T10:00:00'</span>, end: <span class="bui-code-green">'2026-11-24T13:00:00'</span>, color: <span class="bui-code-green">'secondary'</span>, category: <span class="bui-code-green">'work'</span> },
+];
+
+<span class="bui-code-pink">const</span> calendar = <span class="bui-code-pink">new</span> BasetCalendar(<span class="bui-code-green">'#cal-api'</span>, { view: <span class="bui-code-green">'month'</span>, date: <span class="bui-code-green">'2026-11-04'</span>, events: events });
+<span class="bui-code-pink">const</span> log = document.getElementById(<span class="bui-code-green">'cal-api-log'</span>);
+<span class="bui-code-pink">let</span> count = 0;
+
+document.getElementById(<span class="bui-code-green">'api-add'</span>).onclick = () =&gt; {
+  <span class="bui-code-pink">const</span> day = String(10 + count++ % 15).padStart(2, <span class="bui-code-green">'0'</span>);
+  <span class="bui-code-pink">const</span> event = calendar.addEvent({ title: <span class="bui-code-green">'Added from code'</span>, start: <span class="bui-code-green">'2026-11-'</span> + day + <span class="bui-code-green">'T15:00:00'</span>, end: <span class="bui-code-green">'2026-11-'</span> + day + <span class="bui-code-green">'T16:00:00'</span>, color: <span class="bui-code-green">'success'</span> });
+  log.textContent = <span class="bui-code-green">'addEvent -&gt; id '</span> + event.id;
+};
+document.getElementById(<span class="bui-code-green">'api-update'</span>).onclick = () =&gt; {
+  <span class="bui-code-pink">const</span> event = calendar.updateEvent(1, { title: <span class="bui-code-green">'Standup (moved)'</span>, start: <span class="bui-code-green">'2026-11-04T16:00:00'</span>, color: <span class="bui-code-green">'danger'</span> });
+  log.textContent = <span class="bui-code-green">'updateEvent(1) -&gt; '</span> + event.start + <span class="bui-code-green">' .. '</span> + event.end;
+};
+document.getElementById(<span class="bui-code-green">'api-remove'</span>).onclick = () =&gt; { log.textContent = <span class="bui-code-green">'removeEvent(2) -&gt; '</span> + calendar.removeEvent(2); };
+document.getElementById(<span class="bui-code-green">'api-date'</span>).onclick = () =&gt; calendar.setDate(<span class="bui-code-green">'2026-12-25'</span>);
+document.getElementById(<span class="bui-code-green">'api-view'</span>).onclick = () =&gt; calendar.setView(<span class="bui-code-green">'day'</span>);
+document.getElementById(<span class="bui-code-green">'api-prev'</span>).onclick = () =&gt; calendar.prev();
+document.getElementById(<span class="bui-code-green">'api-next'</span>).onclick = () =&gt; calendar.next();
+document.getElementById(<span class="bui-code-green">'api-today'</span>).onclick = () =&gt; calendar.today();
+document.getElementById(<span class="bui-code-green">'api-get'</span>).onclick = () =&gt; { log.textContent = JSON.stringify(calendar.getEvents().slice(0, 2), <span class="bui-code-pink">null</span>, 2) + <span class="bui-code-green">'\n... '</span> + calendar.getEvents().length + <span class="bui-code-green">' events'</span>; };
+<span class="bui-code-pink">&lt;/script</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
+<h3 style="margin:34px 0 14px;font-family:var(--bui-font-heading);font-size:18px;letter-spacing:-.4px">The event object</h3>
+<p class="bui-doc-note">Events go in with <code>events</code> or <code>addEvent()</code> and come out of <code>getEvents()</code>, callbacks and DOM events in the same format.</p>
+<div class="bui-ref-wrap"><table class="bui-ref"><thead><tr><th>Field</th><th>Meaning</th></tr></thead><tbody><tr><td><code>id</code></td><td>Unique id (number or string). Created for you if missing.</td></tr><tr><td><code>title</code></td><td>Text shown on the event.</td></tr><tr><td><code>description</code></td><td>Longer text, shown in the details popup.</td></tr><tr><td><code>start</code></td><td><code>"2026-11-04T10:00:00"</code> local time (no time zone), or a date-only string for all-day events. A <code>Date</code> is accepted too.</td></tr><tr><td><code>end</code></td><td>Same format. Missing end: start + <code>defaultDuration</code>. For all-day events the end day is <b>included</b>.</td></tr><tr><td><code>allDay</code></td><td><code>true</code> for all-day events (date-only <code>start</code> / <code>end</code> also make an all-day event).</td></tr><tr><td><code>color</code></td><td><code>primary</code> · <code>secondary</code> · <code>success</code> · <code>danger</code> · <code>warning</code> · <code>info</code>, or any CSS color. Default: the category color, then primary.</td></tr><tr><td><code>category</code></td><td>A <code>categories[].value</code>, or any text.</td></tr><tr><td><code>editable</code></td><td><code>false</code> locks this one event (no drag, resize, edit or delete).</td></tr><tr><td>anything else</td><td>Extra properties are kept and returned by <code>getEvents()</code>, for example <code>{ roomId: 7 }</code>.</td></tr></tbody></table></div>
+<h3 style="margin:34px 0 14px;font-family:var(--bui-font-heading);font-size:18px;letter-spacing:-.4px">Options</h3>
+<div class="bui-ref-wrap"><table class="bui-ref"><thead><tr><th>Option</th><th>Default</th><th>Description</th></tr></thead><tbody><tr><td><code>view</code></td><td><code>'month'</code></td><td>Starting view: <code>month</code>, <code>week</code> or <code>day</code>.</td></tr><tr><td><code>date</code></td><td>today</td><td>The date to show: a <code>Date</code> or a string such as <code>"2026-11-04"</code>.</td></tr><tr><td><code>events</code></td><td><code>[]</code></td><td>Array of events (see the event object below).</td></tr><tr><td><code>editable</code></td><td><code>true</code></td><td>Master switch for changing events: dialog editing, creating, deleting, dragging and resizing. <code>false</code> makes a read-only calendar (the details popup still opens).</td></tr><tr><td><code>selectable</code></td><td><code>true</code></td><td>Days are selectable, and clicking a day or a slot (or dragging over slots) opens the "new event" dialog. Needs <code>editable</code>.</td></tr><tr><td><code>draggable</code></td><td><code>true</code></td><td>Allow moving events by drag and drop (and Alt + arrow keys).</td></tr><tr><td><code>resizable</code></td><td><code>true</code></td><td>Allow resizing in week and day views.</td></tr><tr><td><code>locale</code></td><td>page <code>lang</code></td><td>Any BCP-47 tag: <code>"en"</code>, <code>"ar"</code>, <code>"fr"</code>, <code>"ar-EG"</code>. Sets names, digits, time format, labels (English and Arabic built in) and, when <code>direction</code> is <code>"auto"</code>, the direction.</td></tr><tr><td><code>direction</code></td><td><code>'auto'</code></td><td><code>"rtl"</code>, <code>"ltr"</code> or <code>"auto"</code>. Auto: follows the locale when <code>locale</code> is set, otherwise the page (<code>dir</code> on an ancestor).</td></tr><tr><td><code>firstDay</code></td><td>from locale</td><td>First day of the week, 0 (Sunday) to 6 (Saturday). Default comes from the locale (Arabic: Saturday).</td></tr><tr><td><code>hour12</code></td><td><code>null</code></td><td><code>true</code> / <code>false</code> to force a 12 / 24-hour clock; <code>null</code> uses the locale.</td></tr><tr><td><code>views</code></td><td><code>['month','week','day']</code></td><td>Views shown in the toolbar switcher. One view hides the switcher.</td></tr><tr><td><code>toolbar</code></td><td><code>true</code></td><td>Show the toolbar. Hide it to build your own with the methods.</td></tr><tr><td><code>addButton</code></td><td><code>true</code></td><td>Show the "Add event" button (needs <code>editable</code> and <code>selectable</code>).</td></tr><tr><td><code>categories</code></td><td><code>null</code></td><td><code>[{ value, label, color }]</code> or strings. Adds a category select, a legend that filters, and a default color per category.</td></tr><tr><td><code>colors</code></td><td>six theme colors</td><td>Colors offered as swatches in the dialog.</td></tr><tr><td><code>monthMaxEvents</code></td><td><code>3</code></td><td>Events shown per day (month view and the all-day row) before "+N more".</td></tr><tr><td><code>hourHeight</code></td><td><code>52</code></td><td>Pixels per hour in week and day views.</td></tr><tr><td><code>dayStart</code> <code>dayEnd</code></td><td><code>0</code> <code>24</code></td><td>First and last (excluded) hour shown in week and day views.</td></tr><tr><td><code>snap</code></td><td><code>15</code></td><td>Minutes that dragging, resizing and drag-to-create snap to.</td></tr><tr><td><code>scrollTime</code></td><td><code>'07:00'</code></td><td>Time the week and day grid scrolls to on first show.</td></tr><tr><td><code>height</code></td><td><code>null</code></td><td>Height of the scrolling time grid (number of pixels or a CSS length). Or set <code>--bui-cal-body-h</code> in CSS.</td></tr><tr><td><code>defaultDuration</code></td><td><code>60</code></td><td>Minutes for a new event that has no end.</td></tr><tr><td><code>defaultStartHour</code></td><td><code>9</code></td><td>Start hour when a month day is clicked.</td></tr><tr><td><code>confirmDelete</code></td><td><code>true</code></td><td>Delete needs a second click to confirm.</td></tr><tr><td><code>nowIndicator</code></td><td><code>true</code></td><td>Red "now" line in week and day views.</td></tr><tr><td><code>animate</code></td><td><code>true</code></td><td>Slide animation when navigating (respects reduced motion).</td></tr><tr><td><code>labels</code></td><td><code>{}</code></td><td>Override any label for this calendar, for example <code>{ today: "Now" }</code>.</td></tr></tbody></table></div>
+<h3 style="margin:34px 0 14px;font-family:var(--bui-font-heading);font-size:18px;letter-spacing:-.4px">Methods</h3>
+<div class="bui-ref-wrap"><table class="bui-ref"><thead><tr><th>Method</th><th>What it does</th></tr></thead><tbody><tr><td><code>addEvent(event)</code></td><td>Adds an event (or an array) and re-renders. Returns the stored event with its <code>id</code>.</td></tr><tr><td><code>updateEvent(id, data)</code></td><td>Merges <code>data</code> into the event. If you give a new <code>start</code> but no <code>end</code>, the duration is kept. Returns the event, or <code>null</code>.</td></tr><tr><td><code>removeEvent(id)</code></td><td>Removes the event. Returns <code>true</code> if it existed.</td></tr><tr><td><code>getEvents()</code></td><td>All events as plain objects in the documented format (safe to JSON.stringify and save).</td></tr><tr><td><code>getEventById(id)</code></td><td>One event or <code>null</code>.</td></tr><tr><td><code>setEvents(list)</code></td><td>Replaces all events (for example after loading from a server).</td></tr><tr><td><code>setDate(date)</code></td><td>Show the period that contains the date. <code>getDate()</code> returns the current date.</td></tr><tr><td><code>setView(view)</code></td><td>Switch to <code>"month"</code>, <code>"week"</code> or <code>"day"</code>. <code>getView()</code> returns it.</td></tr><tr><td><code>next()</code> <code>prev()</code> <code>today()</code></td><td>Navigate by one month, week or day, or jump to today.</td></tr><tr><td><code>getRange()</code></td><td><code>{ start, end }</code> (end excluded) of the dates on screen. Use it to load only the events you need.</td></tr><tr><td><code>select(date)</code></td><td>Highlight a day (like a click, without the dialog).</td></tr><tr><td><code>showEvent(id)</code> <code>openEditor(defaults)</code></td><td>Open the details popup, or the editor: <code>openEditor()</code> new, <code>openEditor({ id })</code> edit, <code>openEditor({ start, end, allDay })</code> new with values.</td></tr><tr><td><code>setOptions(options)</code></td><td>Change options later (locale, direction, firstDay, view, height …); the calendar rebuilds and keeps its events.</td></tr><tr><td><code>refresh()</code></td><td>Render again (after changing CSS variables, for example).</td></tr><tr><td><code>on(name, fn)</code> <code>off(name, fn)</code></td><td>Add or remove a handler for any event below.</td></tr><tr><td><code>destroy()</code></td><td>Removes listeners, timers, dialogs and markup, and restores the container.</td></tr><tr><td><code>BasetCalendar.instance(el)</code></td><td>The calendar already created on an element, or <code>null</code>.</td></tr></tbody></table></div>
+<h3 style="margin:34px 0 14px;font-family:var(--bui-font-heading);font-size:18px;letter-spacing:-.4px">Callbacks and events</h3>
+<p class="bui-doc-note">Three ways to listen, all with the same arguments: an option callback (<code>onEventUpdate</code>), a handler (<code>calendar.on("eventUpdate", fn)</code>) and a DOM event on the container (<code>bui:cal-eventupdate</code>, with <code>event.detail.args</code>). They fire for user actions; the API methods only fire <code>change</code>.</p>
+<div class="bui-ref-wrap"><table class="bui-ref"><thead><tr><th>Option callback</th><th>on() name</th><th>DOM event</th><th>When</th></tr></thead><tbody><tr><td><code>onEventClick(event, jsEvent)</code></td><td><code>eventClick</code></td><td><code>bui:cal-eventclick</code></td><td>An event was clicked or activated with Enter / Space. <b>Return <code>false</code></b> to skip the built-in popup.</td></tr><tr><td><code>onEventCreate(event)</code></td><td><code>eventCreate</code></td><td><code>bui:cal-eventcreate</code></td><td>The dialog saved a new event. <b>Return <code>false</code></b> to refuse it (for example after server validation).</td></tr><tr><td><code>onEventUpdate(event, oldEvent, info)</code></td><td><code>eventUpdate</code></td><td><code>bui:cal-eventupdate</code></td><td>An event changed by the dialog, a drag, a resize or the keyboard. <code>info.source</code> is <code>"edit"</code>, <code>"drag"</code>, <code>"resize"</code> or <code>"keyboard"</code>. <b>Return <code>false</code></b> to put it back.</td></tr><tr><td><code>onEventDelete(event)</code></td><td><code>eventDelete</code></td><td><code>bui:cal-eventdelete</code></td><td>Delete was confirmed. <b>Return <code>false</code></b> to keep the event.</td></tr><tr><td><code>onDateClick(date, jsEvent, info)</code></td><td><code>dateClick</code></td><td><code>bui:cal-dateclick</code></td><td>A day, a day header or an empty time slot was clicked (<code>date</code> includes the slot time). <b>Return <code>false</code></b> in month view to skip the new-event dialog.</td></tr><tr><td><code>onViewChange(view, info)</code></td><td><code>viewChange</code></td><td><code>bui:cal-viewchange</code></td><td>The view changed, from the toolbar or <code>setView()</code>. <code>info</code> has <code>title</code>, <code>date</code>, <code>start</code>, <code>end</code>.</td></tr><tr><td><code>onNavigate(date, view, range)</code></td><td><code>navigate</code></td><td><code>bui:cal-navigate</code></td><td>The visible period changed (prev, next, today, <code>setDate</code>, keyboard).</td></tr><tr><td>—</td><td><code>change</code></td><td><code>bui:cal-change</code></td><td>Any change to the event list: <code>{ type: "add" | "update" | "remove" | "set", event, source }</code>. Also fired by the API methods.</td></tr></tbody></table></div>
+<h3 style="margin:34px 0 14px;font-family:var(--bui-font-heading);font-size:18px;letter-spacing:-.4px">Classes and tokens</h3>
+<div class="bui-ref-wrap"><table class="bui-ref"><thead><tr><th>Name</th><th>Purpose</th></tr></thead><tbody><tr><td><code>.bui-cal</code></td><td>The container (the library adds it).</td></tr><tr><td><code>.bui-cal-toolbar</code> <code>.bui-cal-title</code> <code>.bui-cal-btn</code></td><td>Toolbar, title and its buttons (<code>.bui-cal-btn-primary</code>, <code>-danger</code>, <code>.bui-cal-seg</code> view switcher).</td></tr><tr><td><code>.bui-cal-cell</code> <code>.is-today</code> <code>.is-selected</code> <code>.is-outside</code></td><td>A day in month view and its states.</td></tr><tr><td><code>.bui-cal-ev</code> <code>.bui-cal-chip</code> <code>.bui-cal-tev</code></td><td>An event: chip (month, all-day row) or timed block. Its color is the <code>--ev</code> custom property.</td></tr><tr><td><code>.bui-cal-ghost</code> <code>.bui-cal-clone</code> <code>.is-drop</code></td><td>Drop preview, the card that follows the pointer, and the highlighted target day.</td></tr><tr><td><code>--bui-cal-today</code> <code>--bui-cal-select</code> <code>--bui-cal-radius</code></td><td>Tokens: today color, selected-day background, corner radius.</td></tr><tr><td><code>--bui-cal-cell-h</code> <code>--bui-cal-hour</code> <code>--bui-cal-body-h</code> <code>--bui-cal-gutter</code></td><td>Tokens: month row height, hour row height, time grid height and the width of the hour column.</td></tr></tbody></table></div>
+<h3 style="margin:34px 0 14px;font-family:var(--bui-font-heading);font-size:18px;letter-spacing:-.4px">Keyboard</h3>
+<div class="bui-ref-wrap"><table class="bui-ref"><thead><tr><th>Key</th><th>Action</th></tr></thead><tbody><tr><td>Tab</td><td>Moves between toolbar buttons, one day in the month grid, and events.</td></tr><tr><td>← → ↑ ↓</td><td>On a day: select the previous / next day or week (mirrored in RTL).</td></tr><tr><td>Enter / Space</td><td>On an event: open its details.</td></tr><tr><td>Alt + ← →</td><td>On an event: move it one day earlier / later (mirrored in RTL).</td></tr><tr><td>Alt + ↑ ↓</td><td>On an event: move by <code>snap</code> minutes (week and day) or by a week (month).</td></tr><tr><td>Esc</td><td>Close the dialog or the "+N more" list, or cancel a drag in progress.</td></tr></tbody></table></div>
+<h3 style="margin:34px 0 14px;font-family:var(--bui-font-heading);font-size:18px;letter-spacing:-.4px">Arabic, RTL and dark mode</h3>
+<p class="bui-doc-note">The stylesheet uses logical properties only (<code>inset-inline-start</code>, <code>margin-inline</code>, <code>border-inline-start</code>), so a calendar inside <code>dir="rtl"</code> mirrors fully: weekday order, the toolbar and its chevrons, the hour column, event stripes and handles. Layout decisions in JavaScript (arrow keys, slide animation) read the computed direction, and names, digits and times use <code>Intl.DateTimeFormat</code> with the Gregorian calendar, so the grid and the labels always agree. Colors come from <code>--bui-*</code> tokens with <code>light-dark()</code>, so <code>class="bui-dark"</code> on <code>&lt;html&gt;</code> (or <code>color-scheme</code> on one calendar) switches the theme. On narrow containers (under 640px wide) the month grid shows colored dots instead of titles; tap a day to see its events.</p>
+</div></section>
+      <div class="bui-pager"><a class="bui-btn bui-btn-outline" href="navigation.html"><span class="bui-flip">←</span> Navbar, sidebar &amp; footer</a><span></span></div>
+      <footer class="bui-footer"><span>© 2026 Baset UI. Built for makers.</span><span>Documentation · v1.0.0</span></footer>
+    </main>
+  </div>
+  <script src="../assets/js/baset-ui.js"></script>
+  <script src="../assets/js/baset-calendar.js"></script>
+  <script>
+(function () { try {
+const events = [
+  { id: 1, title: 'Team standup', start: '2026-11-04T09:30:00', end: '2026-11-04T10:00:00', color: 'primary', category: 'work' },
+  { id: 2, title: 'Design review', description: 'Walk through the new dashboard.', start: '2026-11-05T14:00:00', end: '2026-11-05T15:30:00', color: 'info', category: 'work' },
+  { id: 3, title: 'Product launch', start: '2026-11-10', end: '2026-11-12', allDay: true, color: 'danger', category: 'work' },
+  { id: 4, title: 'Gym', start: '2026-11-11T18:00:00', end: '2026-11-11T19:00:00', color: 'success', category: 'personal' },
+  { id: 5, title: 'Dentist', start: '2026-11-17T11:00:00', end: '2026-11-17T12:00:00', color: 'warning', category: 'personal' },
+  { id: 6, title: 'Workshop', start: '2026-11-24T10:00:00', end: '2026-11-24T13:00:00', color: 'secondary', category: 'work' },
+];
+
+const calendar = new BasetCalendar('#cal-basic', {
+  view: 'month',
+  date: '2026-11-04',
+  events: events,
+});
+} catch (e) { console.error('demo cal-basic:', e); } })();
+(function () { try {
+const events = [
+  { id: 1, title: 'Breakfast', start: '2026-11-12T08:00:00', end: '2026-11-12T08:45:00', color: 'success' },
+  { id: 2, title: 'Standup', start: '2026-11-12T09:30:00', end: '2026-11-12T10:00:00', color: 'primary' },
+  { id: 3, title: 'Code review', start: '2026-11-12T11:00:00', end: '2026-11-12T12:00:00', color: 'info' },
+  { id: 4, title: 'Lunch', start: '2026-11-12T13:00:00', end: '2026-11-12T14:00:00', color: 'warning' },
+  { id: 5, title: 'Sprint demo', start: '2026-11-12T15:00:00', end: '2026-11-12T16:00:00', color: 'danger' },
+  { id: 6, title: 'Retro', start: '2026-11-12T16:30:00', end: '2026-11-12T17:30:00', color: 'secondary' },
+  { id: 7, title: 'Company holiday', start: '2026-11-12', allDay: true, color: 'danger' },
+  { id: 8, title: 'Conference', start: '2026-11-18', end: '2026-11-20', allDay: true, color: 'primary' },
+];
+
+new BasetCalendar('#cal-month', {
+  view: 'month',
+  date: '2026-11-12',
+  events: events,
+  monthMaxEvents: 3,   // chips per day before "+N more"
+  firstDay: 0,         // 0 = Sunday … 6 = Saturday
+});
+} catch (e) { console.error('demo cal-month:', e); } })();
+(function () { try {
+const events = [
+  { id: 1, title: 'Standup', start: '2026-11-04T10:00:00', end: '2026-11-04T11:00:00', color: 'primary' },
+  { id: 2, title: 'Client review', start: '2026-11-04T10:30:00', end: '2026-11-04T12:00:00', color: 'danger' },
+  { id: 3, title: 'Lunch', start: '2026-11-04T10:45:00', end: '2026-11-04T11:30:00', color: 'success' },
+  { id: 4, title: 'Planning', start: '2026-11-03T14:00:00', end: '2026-11-03T16:00:00', color: 'info' },
+  { id: 5, title: 'Gym', start: '2026-11-05T07:00:00', end: '2026-11-05T08:00:00', color: 'success' },
+  { id: 6, title: 'Offsite', start: '2026-11-06', end: '2026-11-07', allDay: true, color: 'warning' },
+  { id: 7, title: 'Night deploy', start: '2026-11-05T22:30:00', end: '2026-11-06T01:00:00', color: 'secondary' },
+];
+
+new BasetCalendar('#cal-week', {
+  view: 'week',
+  date: '2026-11-04',
+  events: events,
+  hourHeight: 52,       // pixels per hour
+  snap: 15,             // minutes: drag, resize and new events snap to this
+  scrollTime: '07:00',  // first visible time
+});
+} catch (e) { console.error('demo cal-week:', e); } })();
+(function () { try {
+const events = [
+  { id: 1, title: 'Standup', start: '2026-11-04T10:00:00', end: '2026-11-04T11:00:00', color: 'primary' },
+  { id: 2, title: 'Client review', start: '2026-11-04T10:30:00', end: '2026-11-04T12:00:00', color: 'danger' },
+  { id: 3, title: 'Lunch', start: '2026-11-04T10:45:00', end: '2026-11-04T11:30:00', color: 'success' },
+  { id: 4, title: 'Planning', start: '2026-11-03T14:00:00', end: '2026-11-03T16:00:00', color: 'info' },
+  { id: 5, title: 'Gym', start: '2026-11-05T07:00:00', end: '2026-11-05T08:00:00', color: 'success' },
+  { id: 6, title: 'Offsite', start: '2026-11-06', end: '2026-11-07', allDay: true, color: 'warning' },
+  { id: 7, title: 'Night deploy', start: '2026-11-05T22:30:00', end: '2026-11-06T01:00:00', color: 'secondary' },
+];
+
+new BasetCalendar('#cal-day', {
+  view: 'day',
+  date: '2026-11-04',
+  events: events,
+  dayStart: 7,    // first hour shown
+  dayEnd: 20,     // last hour shown (exclusive)
+  hourHeight: 60,
+});
+} catch (e) { console.error('demo cal-day:', e); } })();
+(function () { try {
+const events = [
+  { id: 1, title: 'Team standup', start: '2026-11-04T09:30:00', end: '2026-11-04T10:00:00', color: 'primary', category: 'work' },
+  { id: 2, title: 'Design review', description: 'Walk through the new dashboard.', start: '2026-11-05T14:00:00', end: '2026-11-05T15:30:00', color: 'info', category: 'work' },
+  { id: 3, title: 'Product launch', start: '2026-11-10', end: '2026-11-12', allDay: true, color: 'danger', category: 'work' },
+  { id: 4, title: 'Gym', start: '2026-11-11T18:00:00', end: '2026-11-11T19:00:00', color: 'success', category: 'personal' },
+  { id: 5, title: 'Dentist', start: '2026-11-17T11:00:00', end: '2026-11-17T12:00:00', color: 'warning', category: 'personal' },
+  { id: 6, title: 'Workshop', start: '2026-11-24T10:00:00', end: '2026-11-24T13:00:00', color: 'secondary', category: 'work' },
+];
+
+const log = document.getElementById('cal-edit-log');
+const say = (text) => { log.textContent = text + '\n' + log.textContent; };
+
+new BasetCalendar('#cal-edit', {
+  view: 'month',
+  date: '2026-11-04',
+  events: events,
+  categories: ['work', 'personal'],
+  onEventCreate: (event) => say('create  ' + event.title + '  ' + event.start),
+  onEventUpdate: (event, oldEvent, info) => say('update  ' + event.title + '  (' + info.source + ')  ' + oldEvent.start + ' -> ' + event.start),
+  onEventDelete: (event) => say('delete  ' + event.title),
+});
+} catch (e) { console.error('demo cal-edit:', e); } })();
+(function () { try {
+const events = [
+  { id: 1, title: 'Standup', start: '2026-11-04T10:00:00', end: '2026-11-04T11:00:00', color: 'primary' },
+  { id: 2, title: 'Client review', start: '2026-11-04T10:30:00', end: '2026-11-04T12:00:00', color: 'danger' },
+  { id: 3, title: 'Lunch', start: '2026-11-04T10:45:00', end: '2026-11-04T11:30:00', color: 'success' },
+  { id: 4, title: 'Planning', start: '2026-11-03T14:00:00', end: '2026-11-03T16:00:00', color: 'info' },
+  { id: 5, title: 'Gym', start: '2026-11-05T07:00:00', end: '2026-11-05T08:00:00', color: 'success' },
+  { id: 6, title: 'Offsite', start: '2026-11-06', end: '2026-11-07', allDay: true, color: 'warning' },
+  { id: 7, title: 'Night deploy', start: '2026-11-05T22:30:00', end: '2026-11-06T01:00:00', color: 'secondary' },
+];
+
+const log = document.getElementById('cal-drag-log');
+const calendar = new BasetCalendar('#cal-drag', {
+  view: 'week',
+  date: '2026-11-04',
+  events: events,
+  draggable: true,
+  onEventUpdate: (event, oldEvent, info) => {
+    log.textContent = info.source + ': ' + event.title + '\n  from ' + oldEvent.start + '\n  to   ' + event.start;
+    // return false here to refuse the move and put the event back
+  },
+});
+document.getElementById('cal-drag-month').onclick = () => calendar.setView('month');
+document.getElementById('cal-drag-week').onclick = () => calendar.setView('week');
+} catch (e) { console.error('demo cal-drag:', e); } })();
+(function () { try {
+const events = [
+  { id: 1, title: 'Workshop', start: '2026-11-04T10:00:00', end: '2026-11-04T11:30:00', color: 'primary' },
+  { id: 2, title: 'Interviews', start: '2026-11-05T13:00:00', end: '2026-11-05T14:00:00', color: 'success' },
+  { id: 3, title: 'Locked event', start: '2026-11-06T09:00:00', end: '2026-11-06T10:00:00', color: 'secondary', editable: false },
+];
+
+new BasetCalendar('#cal-resize', {
+  view: 'week',
+  date: '2026-11-04',
+  events: events,
+  resizable: true,
+  snap: 15,
+  dayStart: 7, dayEnd: 19,
+  onEventUpdate: (event, oldEvent, info) => {
+    if (info.source !== 'resize') return;
+    const minutes = (new Date(event.end) - new Date(event.start)) / 60000;
+    document.getElementById('cal-resize-log').textContent = event.title + ': ' + oldEvent.end.slice(11, 16) + ' -> ' + event.end.slice(11, 16) + '  (' + minutes + ' minutes)';
+  },
+});
+} catch (e) { console.error('demo cal-resize:', e); } })();
+(function () { try {
+const events = [
+  { id: 1, title: 'Team standup', start: '2026-11-04T09:30:00', end: '2026-11-04T10:00:00', color: 'primary', category: 'work' },
+  { id: 2, title: 'Design review', description: 'Walk through the new dashboard.', start: '2026-11-05T14:00:00', end: '2026-11-05T15:30:00', color: 'info', category: 'work' },
+  { id: 3, title: 'Product launch', start: '2026-11-10', end: '2026-11-12', allDay: true, color: 'danger', category: 'work' },
+  { id: 4, title: 'Gym', start: '2026-11-11T18:00:00', end: '2026-11-11T19:00:00', color: 'success', category: 'personal' },
+  { id: 5, title: 'Dentist', start: '2026-11-17T11:00:00', end: '2026-11-17T12:00:00', color: 'warning', category: 'personal' },
+  { id: 6, title: 'Workshop', start: '2026-11-24T10:00:00', end: '2026-11-24T13:00:00', color: 'secondary', category: 'work' },
+];
+
+const calendar = new BasetCalendar('#cal-details', {
+  view: 'month',
+  date: '2026-11-04',
+  events: events,
+  onEventClick: (event, jsEvent) => {
+    if (event.title !== 'Design review') return;   // everything else: the built-in popup
+    document.getElementById('cal-details-log').textContent = 'Custom click: ' + event.title + ' · ' + event.description;
+    return false;                                  // false = no built-in popup
+  },
+});
+} catch (e) { console.error('demo cal-details:', e); } })();
+(function () { try {
+const events = [
+  { id: 1, title: 'اجتماع الفريق', description: 'مراجعة مهام الأسبوع.', start: '2026-11-04T10:00:00', end: '2026-11-04T11:00:00', color: 'primary', category: 'work' },
+  { id: 2, title: 'غداء مع العميل', start: '2026-11-04T10:30:00', end: '2026-11-04T12:00:00', color: 'success', category: 'work' },
+  { id: 3, title: 'مراجعة التصميم', start: '2026-11-05T14:00:00', end: '2026-11-05T15:30:00', color: 'info', category: 'work' },
+  { id: 4, title: 'إجازة', start: '2026-11-08', end: '2026-11-10', allDay: true, color: 'warning', category: 'personal' },
+  { id: 5, title: 'موعد الطبيب', start: '2026-11-15T16:00:00', end: '2026-11-15T17:00:00', color: 'danger', category: 'personal' },
+];
+
+new BasetCalendar('#cal-rtl', {
+  view: 'week',
+  date: '2026-11-04',
+  events: events,
+  locale: 'ar',        // Arabic names, labels and numbers
+  direction: 'rtl',    // 'rtl' | 'ltr' | 'auto' (auto follows the locale)
+  firstDay: 6,         // Saturday (this is also the default for "ar")
+  categories: [{ value: 'work', label: 'عمل', color: 'primary' }, { value: 'personal', label: 'شخصي', color: 'success' }],
+});
+} catch (e) { console.error('demo cal-rtl:', e); } })();
+(function () { try {
+const events = [
+  { id: 1, title: 'Standup', start: '2026-11-04T10:00:00', end: '2026-11-04T11:00:00', color: 'primary' },
+  { id: 2, title: 'Client review', start: '2026-11-04T10:30:00', end: '2026-11-04T12:00:00', color: 'danger' },
+  { id: 3, title: 'Lunch', start: '2026-11-04T10:45:00', end: '2026-11-04T11:30:00', color: 'success' },
+  { id: 4, title: 'Planning', start: '2026-11-03T14:00:00', end: '2026-11-03T16:00:00', color: 'info' },
+  { id: 5, title: 'Gym', start: '2026-11-05T07:00:00', end: '2026-11-05T08:00:00', color: 'success' },
+  { id: 6, title: 'Offsite', start: '2026-11-06', end: '2026-11-07', allDay: true, color: 'warning' },
+  { id: 7, title: 'Night deploy', start: '2026-11-05T22:30:00', end: '2026-11-06T01:00:00', color: 'secondary' },
+];
+
+// Words for the buttons and the dialog in a language that is not built in (the rest comes from Intl)
+BasetCalendar.locales.fr = { today: "Aujourd'hui", month: 'Mois', week: 'Semaine', day: 'Jour', allDay: 'Toute la journée', add: 'Ajouter', newEvent: 'Nouvel événement', save: 'Enregistrer', cancel: 'Annuler', delete: 'Supprimer', edit: 'Modifier', close: 'Fermer', title: 'Titre', description: 'Description', more: '+{n} autres' };
+
+const calendar = new BasetCalendar('#cal-locale', { view: 'month', date: '2026-11-04', events: events, locale: 'en' });
+const apply = () => calendar.setOptions({
+  locale: document.getElementById('cal-locale-lang').value,
+  firstDay: document.getElementById('cal-locale-first').value === '' ? null : +document.getElementById('cal-locale-first').value,
+  hour12: document.getElementById('cal-locale-hour').value === '' ? null : document.getElementById('cal-locale-hour').value === '12',
+});
+['lang', 'first', 'hour'].forEach((n) => document.getElementById('cal-locale-' + n).onchange = apply);
+} catch (e) { console.error('demo cal-locale:', e); } })();
+(function () { try {
+const events = [
+  { id: 1, title: 'Team standup', start: '2026-11-04T09:30:00', end: '2026-11-04T10:00:00', color: 'primary', category: 'work' },
+  { id: 2, title: 'Design review', description: 'Walk through the new dashboard.', start: '2026-11-05T14:00:00', end: '2026-11-05T15:30:00', color: 'info', category: 'work' },
+  { id: 3, title: 'Product launch', start: '2026-11-10', end: '2026-11-12', allDay: true, color: 'danger', category: 'work' },
+  { id: 4, title: 'Gym', start: '2026-11-11T18:00:00', end: '2026-11-11T19:00:00', color: 'success', category: 'personal' },
+  { id: 5, title: 'Dentist', start: '2026-11-17T11:00:00', end: '2026-11-17T12:00:00', color: 'warning', category: 'personal' },
+  { id: 6, title: 'Workshop', start: '2026-11-24T10:00:00', end: '2026-11-24T13:00:00', color: 'secondary', category: 'work' },
+];
+
+new BasetCalendar('#cal-theme', { view: 'month', date: '2026-11-04', events: events });
+
+const box = document.getElementById('cal-theme');
+document.getElementById('cal-theme-light').onclick = () => { box.style.colorScheme = 'light'; };
+document.getElementById('cal-theme-dark').onclick = () => { box.style.colorScheme = 'dark'; };
+document.getElementById('cal-theme-brand').onclick = () => box.classList.toggle('is-green');
+} catch (e) { console.error('demo cal-theme:', e); } })();
+(function () { try {
+const events = [
+  { id: 1, title: 'Sprint planning', start: '2026-11-03T09:00:00', end: '2026-11-03T10:30:00', category: 'work' },
+  { id: 2, title: 'Yoga', start: '2026-11-04T07:30:00', end: '2026-11-04T08:30:00', category: 'health' },
+  { id: 3, title: 'Dinner with friends', start: '2026-11-05T19:00:00', end: '2026-11-05T21:00:00', category: 'social' },
+  { id: 4, title: 'Brand pink', start: '2026-11-06T11:00:00', end: '2026-11-06T12:00:00', color: '#e91e63', category: 'work' },
+  { id: 5, title: 'Teal custom color', start: '2026-11-09', allDay: true, color: '#0d9488', category: 'social' },
+  { id: 6, title: 'Doctor', start: '2026-11-10T16:00:00', end: '2026-11-10T17:00:00', category: 'health' },
+];
+
+new BasetCalendar('#cal-colors', {
+  view: 'month',
+  date: '2026-11-04',
+  events: events,
+  categories: [
+    { value: 'work', label: 'Work', color: 'primary' },
+    { value: 'health', label: 'Health', color: 'success' },
+    { value: 'social', label: 'Social', color: 'warning' },
+  ],
+});
+} catch (e) { console.error('demo cal-colors:', e); } })();
+(function () { try {
+const events = [
+  { id: 1, title: 'Team standup', start: '2026-11-04T09:30:00', end: '2026-11-04T10:00:00', color: 'primary', category: 'work' },
+  { id: 2, title: 'Design review', description: 'Walk through the new dashboard.', start: '2026-11-05T14:00:00', end: '2026-11-05T15:30:00', color: 'info', category: 'work' },
+  { id: 3, title: 'Product launch', start: '2026-11-10', end: '2026-11-12', allDay: true, color: 'danger', category: 'work' },
+  { id: 4, title: 'Gym', start: '2026-11-11T18:00:00', end: '2026-11-11T19:00:00', color: 'success', category: 'personal' },
+  { id: 5, title: 'Dentist', start: '2026-11-17T11:00:00', end: '2026-11-17T12:00:00', color: 'warning', category: 'personal' },
+  { id: 6, title: 'Workshop', start: '2026-11-24T10:00:00', end: '2026-11-24T13:00:00', color: 'secondary', category: 'work' },
+];
+
+const log = document.getElementById('cal-callbacks-log');
+const say = (text) => { log.textContent = text + '\n' + log.textContent.split('\n').slice(0, 7).join('\n'); };
+
+const calendar = new BasetCalendar('#cal-callbacks', {
+  view: 'month',
+  date: '2026-11-04',
+  events: events,
+  onEventClick:  (event) => say('onEventClick   ' + event.title),
+  onEventCreate: (event) => say('onEventCreate  ' + event.title),
+  onEventUpdate: (event, oldEvent, info) => say('onEventUpdate  ' + event.title + ' (' + info.source + ')'),
+  onEventDelete: (event) => say('onEventDelete  ' + event.title),
+  onDateClick:   (date) => say('onDateClick    ' + date.toDateString()),
+  onViewChange:  (view, info) => say('onViewChange   ' + view + ' · ' + info.title),
+  onNavigate:    (date, view) => say('onNavigate     ' + date.toDateString()),
+});
+
+// The same things as DOM events and as on() handlers
+document.getElementById('cal-callbacks').addEventListener('bui:cal-eventclick', () => { /* ... */ });
+calendar.on('change', (info) => say('change          ' + info.type));
+} catch (e) { console.error('demo cal-callbacks:', e); } })();
+(function () { try {
+const events = [
+  { id: 1, title: 'Team standup', start: '2026-11-04T09:30:00', end: '2026-11-04T10:00:00', color: 'primary', category: 'work' },
+  { id: 2, title: 'Design review', description: 'Walk through the new dashboard.', start: '2026-11-05T14:00:00', end: '2026-11-05T15:30:00', color: 'info', category: 'work' },
+  { id: 3, title: 'Product launch', start: '2026-11-10', end: '2026-11-12', allDay: true, color: 'danger', category: 'work' },
+  { id: 4, title: 'Gym', start: '2026-11-11T18:00:00', end: '2026-11-11T19:00:00', color: 'success', category: 'personal' },
+  { id: 5, title: 'Dentist', start: '2026-11-17T11:00:00', end: '2026-11-17T12:00:00', color: 'warning', category: 'personal' },
+  { id: 6, title: 'Workshop', start: '2026-11-24T10:00:00', end: '2026-11-24T13:00:00', color: 'secondary', category: 'work' },
+];
+
+const calendar = new BasetCalendar('#cal-api', { view: 'month', date: '2026-11-04', events: events });
+const log = document.getElementById('cal-api-log');
+let count = 0;
+
+document.getElementById('api-add').onclick = () => {
+  const day = String(10 + count++ % 15).padStart(2, '0');
+  const event = calendar.addEvent({ title: 'Added from code', start: '2026-11-' + day + 'T15:00:00', end: '2026-11-' + day + 'T16:00:00', color: 'success' });
+  log.textContent = 'addEvent -> id ' + event.id;
+};
+document.getElementById('api-update').onclick = () => {
+  const event = calendar.updateEvent(1, { title: 'Standup (moved)', start: '2026-11-04T16:00:00', color: 'danger' });
+  log.textContent = 'updateEvent(1) -> ' + event.start + ' .. ' + event.end;
+};
+document.getElementById('api-remove').onclick = () => { log.textContent = 'removeEvent(2) -> ' + calendar.removeEvent(2); };
+document.getElementById('api-date').onclick = () => calendar.setDate('2026-12-25');
+document.getElementById('api-view').onclick = () => calendar.setView('day');
+document.getElementById('api-prev').onclick = () => calendar.prev();
+document.getElementById('api-next').onclick = () => calendar.next();
+document.getElementById('api-today').onclick = () => calendar.today();
+document.getElementById('api-get').onclick = () => { log.textContent = JSON.stringify(calendar.getEvents().slice(0, 2), null, 2) + '\n... ' + calendar.getEvents().length + ' events'; };
+} catch (e) { console.error('demo cal-api:', e); } })();
+  </script>
+</body>
+</html>
