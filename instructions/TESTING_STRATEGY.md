@@ -160,7 +160,7 @@ For every affected docs page, check:
 - Code examples match current APIs and files.
 - Console and network panel show no new errors.
 
-After the planned root migration, test both `index.html` and nested pages such as `getting-started/install.html` or `layout/grid-system.html` directly and after refresh.
+With the documentation in the repository root, test both `index.html` and nested pages such as `getting-started/install.html` or `layout/grid-system.html` directly and after refresh.
 
 ## 7. Playground and Code Generator tests
 
@@ -172,6 +172,9 @@ For the Playground:
 - Multiple previews do not leak state/styles into each other.
 - Theme and direction controls work where supported.
 - Keyboard operation and focus remain usable.
+- A global theme change affects all token-driven preview components, while component customization stays scoped.
+- Imported configuration is validated.
+- Copy and export actions give truthful feedback, and the Playground never executes generated code.
 
 For the Code Generator:
 
@@ -189,7 +192,25 @@ Use the browsers/devices available in the environment. Prioritize current Chromi
 
 At minimum, visually inspect a narrow mobile width, a tablet-like width, and a desktop width for responsive UI changes. Use the project's actual breakpoint values when testing responsive utilities.
 
-## 9. Reporting results
+## 9. Component-specific testing
+
+Apply these only when the component exists.
+
+- **Buttons:** all variants and sizes, disabled and loading states, icon placement, focus-visible state, long labels on narrow screens, and generated code for each supported target.
+- **Modal/dialog:** open and close methods, Escape, focus entering the dialog and being restored on close, documented background interaction, scroll-lock cleanup, and no duplicate listeners after repeated open/close.
+- **Dropdown, menu, select:** keyboard navigation, selection, outside click, Escape, popup positioning during scroll and resize, RTL placement, and screen-reader labeling and expanded state.
+- **Date/time picker and calendar:** valid and invalid values, min/max boundaries, locale and direction, keyboard navigation, documented time-zone assumptions, popup position during scroll/resize, and focus management.
+- **Data-heavy components (DataTable, Calendar, Tree):** empty and large datasets, search/filter, sorting, pagination or navigation, responsive behavior, performance with representative data, keyboard and accessibility behavior, and virtualization only if implemented.
+
+## 10. Accessibility checks
+
+Combine semantic markup review, keyboard-only testing, screen-reader spot checks where possible, and automated accessibility tools when available. An automated scanner does not prove full accessibility. Record known limitations and manually test complex interactions. Never claim accessibility compliance that was not audited.
+
+## 11. Test tooling policy
+
+Before adding test tooling: inspect existing scripts and dependencies, decide whether the tool is development-only, explain what it validates and its installation and maintenance cost, keep it out of the runtime core, and ask for approval before introducing a substantial new dependency or build requirement.
+
+## 12. Reporting results
 
 For every task, report:
 
@@ -209,6 +230,6 @@ Use clear status language:
 
 Never convert "not run" into "passed". Never report "all tests passed" unless all relevant tests were run.
 
-## 10. Definition of done
+## 13. Definition of done
 
 Testing is complete when relevant static, functional, visual, browser, accessibility, and documentation checks have been performed or explicitly marked not run/blocked; remaining issues are reported; the navigable preview is available; and the complete ZIP passes an integrity check.

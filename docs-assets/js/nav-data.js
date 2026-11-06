@@ -2,14 +2,14 @@
  * Baset UI docs — navigation manifest (docs-only).
  * Single source of truth for the sidebar, breadcrumbs, previous/next links
  * and the page-level entries of the search index.
- * Paths are relative to the docs/ folder.
+ * Paths are relative to the repository root, where the documentation pages live.
  */
 (function () {
   var D = (window.BUIDocs = window.BUIDocs || {});
 
   D.nav = {
     repoUrl: 'https://github.com/AbdulbasetRS/Baset-UI',
-    editBase: 'https://github.com/AbdulbasetRS/Baset-UI/edit/main/docs/',
+    editBase: 'https://github.com/AbdulbasetRS/Baset-UI/edit/main/',
     siteTitle: { en: 'Baset UI documentation', ar: 'توثيق Baset UI' },
     home: {
       id: 'index',

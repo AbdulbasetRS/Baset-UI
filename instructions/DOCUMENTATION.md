@@ -6,11 +6,11 @@ This document governs the public documentation website: its page structure, shar
 
 The docs site is a developer-facing website. Its scripts and styles must remain separate from the Baset-UI runtime.
 
-## 2. Current structure and target structure
+## 2. Structure
 
-The public repository baseline inspected for this instruction set currently places HTML pages inside `docs/`, with documentation-only CSS and JavaScript inside `docs/assets/`.
+The documentation pages live in the repository root and its category folders, with documentation-only CSS and JavaScript inside `docs-assets/`. They were moved there from `docs/` and `docs/assets/` (see section 10).
 
-The intended deployment structure is GitHub Pages from `main` / `(root)`. The canonical target after the documentation migration is:
+The deployment structure is GitHub Pages from `main` / `(root)`. The canonical structure is:
 
 ```text
 /
@@ -38,7 +38,7 @@ The intended deployment structure is GitHub Pages from `main` / `(root)`. The ca
 └── templates/
 ```
 
-This is a migration target, not a reason to duplicate pages. Inspect the actual checkout before every task. If migration has not happened, edit the existing `docs/` source in place. If it has happened, do not recreate a `docs/` folder for published pages.
+Inspect the actual checkout before every task. The migration has happened: do not recreate a `docs/` folder for published pages or duplicate pages.
 
 ## 3. GitHub Pages deployment
 
@@ -90,8 +90,8 @@ A small documented base-path helper may be used if the existing docs system need
 
 ## 5. Documentation-only assets
 
-- `docs.css` belongs in `docs-assets/css/` after migration.
-- Navigation, search, language, highlighting, token demo, and layout demo scripts belong in `docs-assets/js/` after migration.
+- `docs.css` belongs in `docs-assets/css/`.
+- Navigation, search, language, highlighting, token demo, and layout demo scripts belong in `docs-assets/js/`.
 - Do not place these scripts in `assets/js/`.
 - Do not tell library consumers to include documentation assets.
 - Load docs assets only on pages that need them, with correct relative paths.
@@ -154,9 +154,9 @@ Do not remove a language or theme mode while changing a page unless the task exp
 - Test links and file references from the page where they appear.
 - Do not execute arbitrary example code in the documentation page.
 
-## 10. Migration procedure from `docs/` to root
+## 10. Migration procedure from `docs/` to root (completed)
 
-Perform this as one controlled task:
+This migration was performed in Task 01. The procedure is kept as a reference for similar future moves and as a checklist for verifying that no stale references return:
 
 1. Inspect and inventory every file under `docs/`.
 2. Move HTML pages to the repository root and their category folders, preserving filenames and hierarchy where appropriate.

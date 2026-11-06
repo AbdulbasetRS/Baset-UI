@@ -26,7 +26,7 @@ Examples:
 
 Documentation navigation, search, language switching, code highlighting, demos, live token controls, and Playground UI are not part of the library runtime.
 
-They currently live under `docs/assets/`. After the documentation deployment migration, their target location is `docs-assets/`.
+They live under `docs-assets/`.
 
 Do not place docs-only assets in `assets/` and do not include them in consumer installation instructions.
 
@@ -62,7 +62,7 @@ docs-assets/
     └── other-docs-only-scripts.js
 ```
 
-The current public repository has `assets/css/baset-ui.css`, `assets/css/baset-ui-layout.css`, and docs files under `docs/assets/`. Treat the structure above as the target, not a claim that all listed files already exist.
+The repository currently has `assets/css/baset-ui.css`, `assets/css/baset-ui-layout.css`, and documentation-only files under `docs-assets/` (`css/docs.css` and the scripts `docs.js`, `highlight.js`, `init.js`, `layout-demo.js`, `nav-data.js`, `search.js`, and `tokens-live.js`). Treat the structure above as the target, not a claim that all listed library files already exist.
 
 ## 4. CSS file policy
 
@@ -163,7 +163,7 @@ Do not split every small helper into a separate file. Do not create empty or spe
 
 ### 5.4 Documentation JavaScript
 
-Keep documentation-only scripts in `docs/assets/js/` until the docs migration, then move them to `docs-assets/js/`.
+Keep documentation-only scripts in `docs-assets/js/`.
 
 Examples include navigation, search, language switching, code highlighting, live token demos, and layout demonstrations. These scripts must not be presented as part of the Baset-UI consumer API.
 

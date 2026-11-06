@@ -50,15 +50,15 @@ This is the public library area. It contains only assets intended to be consumed
 
 ### 4.2 Documentation website
 
-The current published repository has its HTML pages under `docs/` and documentation-only files under `docs/assets/`. The intended GitHub Pages deployment target is the repository root (`main` / `/(root)`), with HTML pages in the root and category folders and documentation-only assets in `docs-assets/`.
+The documentation HTML pages live in the repository root (`index.html`) and its category folders (`getting-started/`, `customize/`, `layout/`), and documentation-only files live in `docs-assets/`. The GitHub Pages deployment target is the repository root (`main` / `/(root)`).
 
-Treat this as a controlled migration: inspect the current location before changing it. Do not create a second copy of the documentation site or leave stale duplicate pages. The canonical final structure and migration checks are defined in `DOCUMENTATION.md`.
+The migration from `docs/` to the root is complete. Do not recreate a `docs/` folder, create a second copy of the documentation site, or leave stale duplicate pages. The canonical structure and checks are defined in `DOCUMENTATION.md`.
 
 ### 4.3 Instructions — `instructions/`
 
 All detailed engineering rules live in the eight Markdown documents in this folder. Claude Project Instructions are configured in Claude itself; do not create or rely on a new `CLAUDE.md` file as the primary instruction source.
 
-If an old root-level instruction file exists, do not leave two conflicting sources of truth. Follow the owner's requested migration: move/replace its relevant guidance into `instructions/`, update links, and remove the redundant root copy only after verifying that its content is preserved and the owner has authorized that cleanup.
+The former root-level instruction files (`ARCHITECTURE.md`, `CODE_GENERATOR.md`, `CONTRIBUTING.md`, `PLAYGROUND.md`, `TESTING.md`, `CLAUDE.md`, `START_HERE.md`, `PROJECT_BOOTSTRAP_PROMPT.md`) were reconciled into `instructions/` and removed. Do not recreate root-level copies or leave two conflicting sources of truth.
 
 ### 4.4 Templates — `templates/`
 
@@ -66,12 +66,11 @@ Reusable authoring templates live here. The existing `templates/COMPONENT_SPEC_T
 
 ## 5. Current baseline versus target architecture
 
-The public `main` branch inspected for these instructions contains:
+After the documentation reorganization, the repository contains:
 
 - `assets/css/baset-ui.css`, currently used for design tokens and theme variables.
 - `assets/css/baset-ui-layout.css`, currently used for containers, grid, breakpoints, and layout utilities.
-- Documentation HTML under `docs/`.
-- Documentation styles and scripts under `docs/assets/`.
+- Documentation HTML in the root and category folders, with documentation styles and scripts under `docs-assets/`.
 - `templates/COMPONENT_SPEC_TEMPLATE.md`.
 - No public runtime entry file named `assets/js/baset-ui.js` at the time of this baseline review.
 
@@ -90,6 +89,7 @@ The transition from the current baseline to the target architecture must preserv
 - Preserve existing public names; do not casually rename classes or variables.
 - The default theme is light through `:root` and `.bui-light` conventions where used.
 - Dark mode uses `.bui-dark` where used by the current implementation.
+- `.bui-dark` and the `bui-theme` browser-storage key (`"light"` or `"dark"`; absent means follow the operating system) are existing public conventions. Do not rename or replace them without an approved migration.
 - Direction comes from the standard `dir="ltr"` or `dir="rtl"` attribute, not an invented theme token.
 - Prefer `margin-inline`, `padding-inline`, `inset-inline-*`, `border-inline-*`, `text-align: start/end`, and other logical properties for directional behavior.
 - Use the existing breakpoint values and mobile-first ordering when responsive layout utilities are involved. Do not create a second breakpoint system.
@@ -120,6 +120,20 @@ Static CSS-only patterns do not need artificial JavaScript instances, methods, o
 
 Use `templates/COMPONENT_SPEC_TEMPLATE.md` for a new substantial component. Do not create a specification for every tiny fix.
 
+### 7.1 Component boundaries
+
+A component owns its markup contract, public classes and component-level tokens, optional JavaScript behavior, options and defaults, events and lifecycle, documentation examples, Playground schema (where applicable), Code Generator templates (where supported), and tests. Extract shared code only when it is genuinely shared and stable.
+
+### 7.2 Accessibility and motion baseline
+
+- Use semantic HTML first; add ARIA only when native semantics are insufficient, and keep ARIA state synchronized with the real state.
+- Give icon-only controls accessible names.
+- Keep focus visible (`:focus-visible`) and manage focus for dialogs, menus, popovers, and similar overlays.
+- Support Escape where it is an expected dismissal behavior.
+- Respect `prefers-reduced-motion`.
+- Do not communicate state by color alone.
+- Do not claim WCAG conformance without an appropriate audit.
+
 ## 8. JavaScript architecture
 
 JavaScript is optional. Use it only when markup and CSS cannot reasonably provide the required behavior.
@@ -139,12 +153,23 @@ When runtime scripts are introduced:
 
 A global `BUI` namespace is only an option if it fits the actual API and does not conflict with existing public contracts. Inspect the repository before introducing it.
 
+Illustrative API shapes (not a mandate, and not yet implemented): `BUI.toast({ message, variant })` for an instance-less component, or `BUI.datePicker(element, options)` for an element-based one. Where applicable, an interactive instance supports create/initialize, update of options or value, public actions, and destroy/dispose. Name events consistently, document them, dispatch them from a predictable target, and do not expose internal implementation details through them.
+
 ## 9. Themes, direction, and customization
 
 - Components consume semantic tokens rather than hardcoding separate light/dark colors throughout each component.
 - Theme changes should be token-driven and scoped correctly.
 - Component-local customization must not unexpectedly change every instance.
 - Prefer component-specific custom properties or a caller-supplied wrapper class.
+
+  ```css
+  .my-special-button {
+      --bui-button-bg: #6d28d9;
+      --bui-button-radius: 999px;
+  }
+  ```
+
+  The component consumes its local variables and keeps sensible global defaults. The names above are illustrative; define real component variables in the component's specification.
 - Do not duplicate global tokens in component files.
 - RTL/LTR differences should be handled through logical properties first. Use explicit direction selectors only when the browser behavior or component geometry requires them.
 - Icons with directional meaning may need direction-aware presentation; non-directional icons should not be mirrored blindly.
@@ -165,12 +190,16 @@ Standard HTML markup can often be copied into Blade, React, Vue, or Angular temp
 
 Do not add framework runtime code to `assets/`. Dedicated adapters, if later approved, must be separate, optional, and tested in the real framework lifecycle. They must not fork core styles or component behavior.
 
+An adapter is justified only when a component needs framework-specific lifecycle, state, refs, or event integration. An adapter must not duplicate core styles, fork component behavior, make the core depend on the framework, or imperatively mutate framework-owned DOM without a safe integration boundary.
+
 ## 12. Performance and security
 
 - Load only assets required by the page or feature.
 - Avoid expensive global DOM scans and unnecessary observers.
 - Lazy-load large optional modules when appropriate.
 - Keep documentation and Playground code out of the consumer runtime.
+- Consider virtualization only for genuinely large datasets, where measurement supports it and keyboard/accessibility implications are addressed.
+- Avoid adding a dependency for a marginal gain.
 - Treat Playground inputs and imported configuration as untrusted.
 - Render text safely and validate attributes/options.
 - Do not execute user-entered or generated code in the docs site.
@@ -187,6 +216,9 @@ Before changing a public contract or moving a core file:
 5. Test the new and old loading paths during a migration where feasible.
 6. Document any unavoidable breaking change and migration path.
 7. Remove obsolete files only after the replacement is verified.
+8. Deprecate before removing when practical, provide a migration example, and update the documentation and any release notes.
+
+When proposing a new shared abstraction or dependency, explain the problem it solves, why browser features or existing utilities are insufficient, its effect on size and maintenance, whether it can remain optional, how it affects framework compatibility, and how it can be tested. Do not introduce an architecture layer merely because it is fashionable.
 
 Do not rewrite unrelated components or reorganize the repository merely to match a proposed directory tree.
 

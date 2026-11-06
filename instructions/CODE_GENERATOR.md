@@ -18,6 +18,8 @@ The same normalized configuration must drive:
 
 Do not maintain one set of controls for preview and a different set of rules for export. Do not generate code by scraping the preview DOM or using fragile string replacements.
 
+Normalize user input before it reaches a generator: reject invalid values or fall back to documented defaults, and never insert raw user input into executable source. Do not create separate configuration logic for every target.
+
 ## 3. Component definition
 
 A component that supports generation should have a structured definition containing, as applicable:
@@ -31,6 +33,7 @@ A component that supports generation should have a structured definition contain
 - Target-specific support status.
 - Unsupported options and limitations.
 - Optional imports or framework setup.
+- Which export targets support each option.
 
 Use the component's real implementation as the authority. A schema must not invent options that the component does not support.
 
@@ -112,6 +115,10 @@ Distinguish an Angular template snippet from a tested Angular wrapper. Use Angul
 
 Ordinary HTML is valid Blade-compatible markup. Do not generate custom tags such as `<x-bui-button>` unless that Blade component/package actually exists and is documented.
 
+### Unsupported configuration
+
+If a selected target cannot represent an option, do not drop it silently. Show a clear explanation, offer a safe alternative when one exists, and add a note to the generated output when a manual adjustment is required. If a feature needs a dedicated adapter that does not exist, say so. The UI must not display unavailable targets as fully supported.
+
 ## 6. Interactive component output
 
 An interactive component may require multiple output files or sections:
@@ -140,6 +147,8 @@ The generator may output:
 For one customized instance, scope overrides to a unique wrapper class or the component's documented local variables. Do not unexpectedly change every instance on the page.
 
 Use `--bui-*` names for public variables. Do not emit duplicate global token declarations or create ad hoc global styles that conflict with the library.
+
+A complete small stylesheet for one customized component may be generated when useful. A global theme export should produce token overrides, not a collection of unrelated per-component overrides.
 
 ## 8. Safety and escaping
 
@@ -187,6 +196,7 @@ Syntax tests alone are insufficient for a target that claims interactive behavio
 - Confirm the schema and generator contract before multiplying templates.
 - Add additional targets only when there is a clear use case and a way to validate them.
 - Do not implement a large generator as part of an unrelated component task.
+- Recommended target order once the contract is confirmed: HTML, React JSX markup, Vue template, Angular template, Laravel Blade markup, interactive component integration, and dedicated framework adapters only when justified. Do not promise a target before its templates and examples are verified.
 - Keep generator code in the documentation/developer tooling area, not the runtime assets.
 
 ## 12. Definition of done

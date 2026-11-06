@@ -67,9 +67,9 @@
     var body = wrap ? '<div class="bui-container">\n' + markup + '\n</div>' : markup;
     frame.srcdoc = '<!doctype html><html><head><meta charset="utf-8">' +
       '<meta name="viewport" content="width=device-width, initial-scale=1">' +
-      '<link rel="stylesheet" href="' + cssUrl(root, '../assets/css/baset-ui.css') + '">' +
-      '<link rel="stylesheet" href="' + cssUrl(root, '../assets/css/baset-ui-layout.css') + '">' +
-      '<link rel="stylesheet" href="' + cssUrl(root, 'assets/css/docs.css') + '">' +
+      '<link rel="stylesheet" href="' + cssUrl(root, 'assets/css/baset-ui.css') + '">' +
+      '<link rel="stylesheet" href="' + cssUrl(root, 'assets/css/baset-ui-layout.css') + '">' +
+      '<link rel="stylesheet" href="' + cssUrl(root, 'docs-assets/css/docs.css') + '">' +
       '</head><body class="docs-gridlive docs-viewport__body">' + body + '</body></html>';
     frame.addEventListener('load', function () {
       try { applyPrefs(frame.contentDocument); } catch (e) { /* cross-origin: ignore */ }

@@ -4,7 +4,7 @@
 
 The Playground is part of the documentation/developer experience. It allows users to change supported options, inspect a live preview, and understand or export the corresponding code.
 
-It is not part of the library runtime and must not be required by applications that consume Baset-UI. Keep Playground scripts under the documentation asset area (`docs/assets/` today, `docs-assets/` after the docs migration), not under public runtime assets.
+It is not part of the library runtime and must not be required by applications that consume Baset-UI. Keep Playground scripts under the documentation asset area (`docs-assets/`), not under public runtime assets.
 
 The repository currently has documentation demonstrations such as live token/layout examples, but do not assume a complete component Playground exists. Extend the actual implementation rather than building a duplicate system.
 
@@ -74,6 +74,24 @@ A component definition/schema should describe, where applicable:
 
 Use one normalized configuration object as the input for Live Preview and Code Generator. Do not derive exported code by scraping the preview DOM.
 
+A conceptual component definition (the format may evolve; define and document the schema before implementing several definitions):
+
+```js
+const buttonDefinition = {
+    id: "button",
+    name: "Button",
+    defaults: { variant: "primary", size: "md", disabled: false, label: "Button" },
+    controls: [
+        { name: "variant", type: "select", options: ["primary", "secondary"] },
+        { name: "size", type: "select", options: ["sm", "md", "lg"] },
+        { name: "disabled", type: "boolean" },
+        { name: "label", type: "text" }
+    ]
+};
+```
+
+This is an architectural illustration. Button does not exist yet, and its option names are not a public contract.
+
 The actual component implementation remains authoritative; a schema cannot invent behavior.
 
 ## 5. Preview behavior
@@ -113,6 +131,14 @@ Do not show a framework target as supported unless its result is verified. Disti
 
 See `CODE_GENERATOR.md` for target status, output, escaping, and tests.
 
+### 7.1 Code panel
+
+The generated-code area includes a target selector (for example HTML, React JSX, Vue, Angular, or Laravel Blade), syntax highlighting only when a highlighting solution already exists or is approved, a copy action that reports truthful success or failure, a clear list of required imports, styles, scripts, packages, and setup steps, and a visible status when a target is experimental, markup-only, or unsupported. The panel must not imply that every target has a dedicated adapter.
+
+### 7.2 Configuration persistence
+
+Copying, downloading, and importing configuration JSON, and saving presets locally, are possible future capabilities. If browser storage is used: store only non-sensitive UI configuration, version the stored schema, handle invalid or old data, provide reset/clear behavior, and do not assume storage is available in every browser context. Do not build accounts, cloud sync, or server-side preset storage unless explicitly requested.
+
 ## 8. Global theme versus per-component customization
 
 Keep these use cases separate:
@@ -121,6 +147,8 @@ Keep these use cases separate:
 - Component Playground changes one component's supported properties or scoped overrides.
 
 A one-off button color must not silently rewrite the global brand token. A global theme change should not be implemented as unrelated overrides for every component.
+
+A third concept, *component defaults* (editing a component's documented default configuration), exists only if the project intentionally supports configurable theme defaults. Do not add it implicitly.
 
 ## 9. Documentation and usability
 
@@ -139,6 +167,7 @@ A one-off button color must not silently rewrite the global brand token. A globa
 - Debounce expensive preview operations where appropriate.
 - Do not add a large state-management dependency for a small static demo.
 - Clean up event handlers and observers when a Playground instance is destroyed or replaced.
+- Loading a documentation page without Playground assets must not break the page's normal component demo.
 
 ## 11. Testing
 
@@ -155,6 +184,10 @@ Test:
 - Safe handling of text containing quotes, angle brackets, ampersands, and Arabic characters.
 - No console errors or unintended changes to the docs shell.
 
-## 12. Definition of done
+## 12. Incremental rollout
+
+Validate the system with one real component before building more: a small Button Playground first, then the shared configuration and preview mechanism, HTML and JSX export templates, Vue/Angular/Blade markup templates after verification, the Global Theme Playground, interactive component previews, saved presets, and finally additional targets. Do not build every component's Playground in one pass.
+
+## 13. Definition of done
 
 A Playground task is complete when every exposed control is functional, the preview reflects the real component, configuration is shared with code generation where applicable, unsafe execution paths are absent, docs are synchronized, tests are reported, and the docs site can be previewed and delivered as a complete ZIP.

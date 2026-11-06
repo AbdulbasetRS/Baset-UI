@@ -31,6 +31,8 @@ Before implementation, state internally or in the working notes:
 
 If a task is genuinely ambiguous in a way that affects the public API, surface the decision rather than silently inventing a permanent convention. Otherwise make a conservative choice consistent with existing code.
 
+A small, coherent, verified library is a better foundation than a large collection of partially working components. Do not mark a component complete because its visual demo looks correct.
+
 ## 4. Adding or extending a component
 
 For a substantial new component, copy `templates/COMPONENT_SPEC_TEMPLATE.md` and define:
@@ -49,6 +51,8 @@ For a substantial new component, copy `templates/COMPONENT_SPEC_TEMPLATE.md` and
 
 Do not create an artificial specification for a tiny bug fix. Do not implement unsupported options simply because another UI library has them.
 
+Provide at least a basic example, the important variants, the relevant states, and a realistic use case. Realistic content often exposes layout or behavior problems that placeholder text hides. Keep the simplest use case simple: prefer HTML and CSS for a static component, and define initialization, options, events, updates, and cleanup only for an interactive one.
+
 ### Implementation order
 
 1. Preserve or define the smallest clear markup/API contract.
@@ -61,7 +65,22 @@ Do not create an artificial specification for a tiny bug fix. Do not implement u
 8. Add Playground and generated exports only when required and verified.
 9. Run relevant testing and visual checks.
 
-## 5. Public naming and compatibility
+## 5. Improving an existing component
+
+1. Inspect the current behavior and public API.
+2. Identify the bug or improvement and make a focused change.
+3. Preserve existing use cases.
+4. Update examples and documentation.
+5. Add regression coverage where possible.
+6. Explain any compatibility impact.
+
+Do not rewrite an existing component from scratch merely because a new pattern is preferred.
+
+## 6. Adding a framework integration
+
+A framework integration is separate and optional. Before creating one: confirm that core compatibility is insufficient for the use case, confirm the core API is stable enough, define how the framework owns state and DOM lifecycle, define event and value synchronization and cleanup, add framework-specific examples and tests, and keep core styles and behavior shared. Do not create adapter packages preemptively.
+
+## 7. Public naming and compatibility
 
 - Use `bui-` for public CSS classes.
 - Use `--bui-` for public CSS variables.
@@ -72,7 +91,7 @@ Do not create an artificial specification for a tiny bug fix. Do not implement u
 
 Before changing or removing a public class, variable, method, event, or option, search the repository and docs for usage. Prefer additive changes. For an unavoidable breaking change, explain the reason, document the migration, and obtain the required approval.
 
-## 6. CSS and JavaScript boundaries
+## 8. CSS and JavaScript boundaries
 
 Follow `instructions/ASSET_ORGANIZATION.md` for every asset decision.
 
@@ -83,7 +102,7 @@ Follow `instructions/ASSET_ORGANIZATION.md` for every asset decision.
 - Do not create a runtime entry point until actual runtime JavaScript is needed.
 - Do not add a package manager, compiler, bundler, or mandatory runtime dependency without explicit approval.
 
-## 7. Documentation and examples
+## 9. Documentation and examples
 
 Documentation is part of the implementation, not a later optional polish step.
 
@@ -98,7 +117,7 @@ When behavior, a public class, an option, a variable, an example, or a page chan
 
 Follow `instructions/DOCUMENTATION.md`.
 
-## 8. Playground and Code Generator
+## 10. Playground and Code Generator
 
 Only add Playground controls for real component options. Controls must affect the actual preview. Use one structured configuration model for preview and output.
 
@@ -106,7 +125,7 @@ Only add a generated target when its output is valid and its support status is e
 
 Follow `instructions/PLAYGROUND.md` and `instructions/CODE_GENERATOR.md`.
 
-## 9. Dependencies and tooling
+## 11. Dependencies and tooling
 
 Before adding a dependency or build tool, explain:
 
@@ -118,13 +137,13 @@ Before adding a dependency or build tool, explain:
 
 Do not add mandatory runtime dependencies without the owner's approval. Do not introduce a build system just to imitate another library.
 
-## 10. Validation
+## 12. Validation
 
 Follow `instructions/TESTING_STRATEGY.md`.
 
 Run the relevant available checks and report exact commands/results. Do not say a test passed if it was not executed. If the repository has no automated test runner for the touched area, perform and report the strongest practical manual/static checks instead.
 
-## 11. Task deliverables
+## 13. Task deliverables
 
 For every repository-changing task, follow `TASK_WORKFLOW.md`:
 
@@ -135,7 +154,7 @@ For every repository-changing task, follow `TASK_WORKFLOW.md`:
 
 Do not create a fake preview URL or claim that a server, browser session, test, or archive exists when it does not.
 
-## 12. Git and user changes
+## 14. Git and user changes
 
 - Never commit or push unless the user explicitly asks.
 - Do not rewrite Git history.
@@ -143,6 +162,24 @@ Do not create a fake preview URL or claim that a server, browser session, test, 
 - Do not delete unrelated files.
 - Do not include secrets, `.env` files, credentials, or local machine data in deliverable ZIPs.
 
-## 13. Definition of done
+## 15. Code quality checklist
+
+- [ ] No unnecessary runtime dependency and no framework dependency in the core.
+- [ ] Project naming conventions (`bui-`, `--bui-`) are used.
+- [ ] Shared design tokens are reused.
+- [ ] No accidental global CSS, duplicate code, or unused files.
+- [ ] RTL/LTR and light/dark themes are handled.
+- [ ] Responsive layout and keyboard behavior are checked where relevant.
+- [ ] Initialization and cleanup are checked where relevant.
+- [ ] No new console errors.
+- [ ] Documentation is updated and accurate.
+- [ ] Playground options reflect real functionality, and generated code reflects the same configuration.
+- [ ] Tests and limitations are reported.
+
+## 16. Change summary
+
+A useful change summary states the purpose, main implementation details, public API changes, files changed, preview access, tests performed, known limitations, and migration notes where applicable. `TASK_WORKFLOW.md` defines the required final report.
+
+## 17. Definition of done
 
 A task is complete when the requested behavior is implemented, relevant documentation is updated, compatibility and accessibility have been considered, applicable tests/checks are reported honestly, the preview is navigable, and a verified full-project ZIP is available.
