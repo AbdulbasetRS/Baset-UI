@@ -1957,3 +1957,112 @@ html.bui-cal-noselect, html.bui-cal-noselect body { user-select: none; -webkit-u
   .bui-cal-dl { grid-template-columns: 1fr; gap: 2px; } .bui-cal-dl dd { margin-block-end: 8px; }
 }
 @media (prefers-reduced-motion: reduce) { .bui-cal-view.is-anim, .bui-cal-dialog[open] { animation: none; } .bui-cal *, .bui-cal-btn, .bui-cal-ev { transition: none !important; } }
+
+/* =========================================================
+   23. Rich text editor
+   <div data-bui-editor> (or <textarea data-bui-editor>) + assets/js/baset-editor.js builds
+   .bui-editor > .bui-editor-toolbar (.bui-editor-group > .bui-editor-btn | .bui-editor-dd) + .bui-editor-body (.bui-editor-area) + .bui-editor-footer
+   Tokens: --bui-editor-min-height, --bui-editor-pad. Colors, radius and fonts come from the --bui-* tokens, so dark mode and RTL follow the page.
+   Force a theme on one editor with .bui-editor-dark / .bui-editor-light.
+   ========================================================= */
+.bui-editor { --bui-editor-min-height: 160px; --bui-editor-pad: 14px; position: relative; display: flex; flex-direction: column; min-width: 0; background: var(--bui-surface); color: var(--bui-ink); border: 1px solid var(--bui-input-border); border-radius: var(--bui-radius-4); font: 400 14px/1.6 var(--bui-font-body); transition: border-color .15s, box-shadow .15s; }
+.bui-editor *, .bui-editor *::before, .bui-editor *::after { box-sizing: border-box; }
+.bui-editor [hidden] { display: none !important; }
+.bui-editor-dark { color-scheme: dark; }
+.bui-editor-light { color-scheme: light; }
+.bui-editor.is-focus { border-color: var(--bui-primary); box-shadow: 0 0 0 3px color-mix(in srgb, var(--bui-primary) 14%, transparent); }
+.bui-editor.bui-editor-invalid { border-color: var(--bui-danger-base); }
+.bui-editor.is-disabled { opacity: .6; }
+.bui-editor.is-disabled .bui-editor-body { cursor: not-allowed; background: var(--bui-soft); }
+.bui-editor.is-readonly .bui-editor-toolbar { background: transparent; }
+
+/* Toolbar */
+.bui-editor-toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 2px; padding: 6px; background: var(--bui-soft); border-block-end: 1px solid var(--bui-line); border-start-start-radius: calc(var(--bui-radius-4) - 1px); border-start-end-radius: calc(var(--bui-radius-4) - 1px); }
+.bui-editor-sticky .bui-editor-toolbar { position: sticky; inset-block-start: 0; z-index: 5; }
+.bui-editor-group { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 1px; padding-inline: 4px; }
+.bui-editor-group + .bui-editor-group { border-inline-start: 1px solid var(--bui-line); }
+.bui-editor-btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; min-width: 32px; height: 32px; padding: 0 7px; border: 0; border-radius: var(--bui-radius-3); background: transparent; color: var(--bui-muted); font: 700 13px var(--bui-font-body); cursor: pointer; transition: background .12s, color .12s; }
+.bui-editor-btn:hover:not(:disabled) { background: color-mix(in srgb, var(--bui-ink) 8%, transparent); color: var(--bui-ink); }
+.bui-editor-btn.is-active, .bui-editor-dd.is-open > .bui-editor-btn { background: var(--bui-primary-bg-subtle); color: var(--bui-primary-fg); }
+.bui-editor-btn:disabled { opacity: .4; cursor: not-allowed; }
+.bui-editor-btn:focus-visible, .bui-editor-menu-item:focus-visible, .bui-editor-swatch:focus-visible { outline: 2px solid var(--bui-primary); outline-offset: 1px; }
+.bui-editor-btn svg { flex: none; display: block; }
+.bui-editor-glyph { display: inline-flex; align-items: center; justify-content: center; position: relative; line-height: 1; font-size: 14px; }
+.bui-editor-glyph.is-b { font-weight: 800; } .bui-editor-glyph.is-i { font-style: italic; font-family: Georgia, serif; } .bui-editor-glyph.is-u { text-decoration: underline; text-underline-offset: 2px; } .bui-editor-glyph.is-s { text-decoration: line-through; }
+.bui-editor-glyph sub, .bui-editor-glyph sup { font-size: 9px; line-height: 0; }
+.bui-editor-glyph.is-color { flex-direction: column; gap: 1px; }
+.bui-editor-glyph.is-color b { font: 800 14px/1 var(--bui-font-heading); }
+.bui-editor-bar { display: block; width: 16px; height: 3px; border-radius: 2px; background: var(--bui-warning-base); }
+.bui-editor-btn[data-tool="color"] .bui-editor-bar { background: var(--bui-ink); }
+.bui-editor-caret { width: 10px; height: 10px; opacity: .7; }
+.bui-editor-dd { position: relative; display: inline-flex; }
+.bui-editor-dd-toggle { padding-inline: 8px; }
+.bui-editor-dd-label { min-width: 32px; max-width: 110px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 12px; font-weight: 600; text-align: start; }
+.bui-editor:dir(rtl) .bui-editor-flip { transform: scaleX(-1); }
+
+/* Panels: menus, color picker, link / image / table forms */
+.bui-editor-panel { position: absolute; z-index: 30; inset-inline-start: 0; inset-block-start: calc(100% + 6px); box-sizing: border-box; padding: 10px; background: var(--bui-surface); color: var(--bui-ink); border: 1px solid var(--bui-line); border-radius: var(--bui-radius-4); box-shadow: 0 18px 44px rgb(0 0 0 / .18), 0 2px 8px rgb(0 0 0 / .06); font: 500 13px/1.4 var(--bui-font-body); animation: bui-select-in .14s ease both; }
+.bui-editor-panel.is-top { inset-block-start: auto; inset-block-end: calc(100% + 6px); --bui-select-shift: 6px; }
+.bui-editor-menu { min-width: 170px; max-height: min(320px, 60vh); padding: 6px; overflow: auto; overscroll-behavior: contain; }
+.bui-editor-menu-item { display: flex; width: 100%; padding: 8px 12px; border: 0; border-radius: var(--bui-radius-3); background: none; color: inherit; font: inherit; text-align: start; white-space: nowrap; cursor: pointer; }
+.bui-editor-menu-item:hover { background: var(--bui-soft); }
+.bui-editor-menu-item.is-active { background: var(--bui-primary-bg-subtle); color: var(--bui-primary-fg); font-weight: 700; }
+.bui-editor-menu-item[data-level="h1"] { font: 800 20px/1.3 var(--bui-font-heading); } .bui-editor-menu-item[data-level="h2"] { font: 800 18px/1.3 var(--bui-font-heading); } .bui-editor-menu-item[data-level="h3"] { font: 700 16px/1.3 var(--bui-font-heading); }
+.bui-editor-colors { width: 218px; display: grid; gap: 10px; }
+.bui-editor-swatches { display: grid; grid-template-columns: repeat(8, 22px); gap: 6px; }
+.bui-editor-swatch { width: 22px; height: 22px; padding: 0; border: 1px solid color-mix(in srgb, var(--bui-ink) 20%, transparent); border-radius: 6px; cursor: pointer; transition: transform .1s; }
+.bui-editor-swatch:hover { transform: scale(1.15); }
+.bui-editor-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; }
+.bui-editor-custom { display: inline-flex; align-items: center; gap: 8px; color: var(--bui-muted); font-size: 12px; font-weight: 600; cursor: pointer; }
+.bui-editor-custom input { width: 28px; height: 28px; padding: 0; border: 1px solid var(--bui-input-border); border-radius: var(--bui-radius-2); background: none; cursor: pointer; }
+.bui-editor-form-panel { width: min(320px, calc(100vw - 32px)); }
+.bui-editor-form { display: grid; gap: 12px; }
+.bui-editor-two { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.bui-editor-actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 8px; }
+.bui-editor-error { color: var(--bui-danger-fg); font-size: 12px; font-weight: 600; }
+.bui-editor .bui-input.is-invalid { border-color: var(--bui-danger-base); }
+
+/* Body, placeholder, source view, footer */
+.bui-editor-body { position: relative; display: flex; flex-direction: column; flex: 1 1 auto; min-height: var(--bui-editor-min-height); overflow: auto; overscroll-behavior: contain; }
+.bui-editor[data-resize="vertical"] .bui-editor-body { resize: vertical; } .bui-editor[data-resize="horizontal"] .bui-editor-body { resize: horizontal; } .bui-editor[data-resize="both"] .bui-editor-body { resize: both; }
+.bui-editor-area { flex: 1 0 auto; min-height: 0; padding: var(--bui-editor-pad); outline: none; overflow-wrap: anywhere; word-break: break-word; }
+.bui-editor-area:focus { outline: none; }
+.bui-editor-placeholder { position: absolute; inset-block-start: var(--bui-editor-pad); inset-inline: var(--bui-editor-pad); display: none; overflow: hidden; color: var(--bui-muted); opacity: .85; text-overflow: ellipsis; white-space: nowrap; pointer-events: none; }
+.bui-editor-body.is-empty .bui-editor-placeholder { display: block; }
+.bui-editor.is-source .bui-editor-placeholder { display: none; }
+.bui-editor-source { flex: 1 1 auto; width: 100%; min-height: 160px; padding: var(--bui-editor-pad); border: 0; outline: none; resize: none; background: transparent; color: var(--bui-ink); font: 12.5px/1.65 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; tab-size: 2; direction: ltr; text-align: left; }
+.bui-editor-footer { display: flex; justify-content: flex-end; padding: 6px 12px; border-block-start: 1px solid var(--bui-line); color: var(--bui-muted); font-size: 11px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.bui-editor.is-over .bui-editor-count { color: var(--bui-danger-fg); font-weight: 800; }
+
+/* Content typography (what the user writes) */
+.bui-editor-area > :first-child { margin-block-start: 0; }
+.bui-editor-area > :last-child { margin-block-end: 0; }
+.bui-editor-area p { margin: 0 0 .75em; }
+.bui-editor-area :is(h1, h2, h3, h4, h5, h6) { margin: 1em 0 .5em; font-family: var(--bui-font-heading); line-height: 1.25; letter-spacing: -.02em; }
+.bui-editor-area h1 { font-size: 2em; } .bui-editor-area h2 { font-size: 1.6em; } .bui-editor-area h3 { font-size: 1.3em; } .bui-editor-area h4 { font-size: 1.1em; } .bui-editor-area h5 { font-size: 1em; } .bui-editor-area h6 { font-size: .9em; text-transform: uppercase; letter-spacing: .04em; }
+.bui-editor-area :is(ul, ol) { margin: 0 0 .75em; padding-inline-start: 1.7em; }
+.bui-editor-area li > :is(ul, ol) { margin-block: .25em 0; }
+.bui-editor-area blockquote { margin: 0 0 .75em; padding-inline-start: 14px; border-inline-start: 3px solid var(--bui-primary-border); color: var(--bui-muted); }
+.bui-editor-area pre { margin: 0 0 .75em; padding: 12px 14px; overflow: auto; background: var(--bui-soft); border: 1px solid var(--bui-line); border-radius: var(--bui-radius-3); font: 12.5px/1.6 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; white-space: pre-wrap; direction: ltr; text-align: left; }
+.bui-editor-area code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+.bui-editor-area a { color: var(--bui-primary-fg); text-decoration: underline; text-underline-offset: 2px; }
+.bui-editor-area img { max-width: 100%; height: auto; border-radius: var(--bui-radius-2); }
+.bui-editor-area hr { margin: 1em 0; border: 0; border-block-start: 1px solid var(--bui-line); }
+.bui-editor-area table { width: 100%; margin: 0 0 .75em; border-collapse: collapse; table-layout: fixed; }
+.bui-editor-area :is(td, th) { min-width: 40px; padding: 6px 10px; border: 1px solid var(--bui-input-border); vertical-align: top; overflow-wrap: anywhere; }
+.bui-editor-area th { background: var(--bui-soft); font-weight: 700; text-align: start; }
+
+/* Fullscreen */
+.bui-editor.bui-editor-fullscreen { position: fixed; inset: 0; z-index: 1100; border: 0; border-radius: 0; }
+.bui-editor-fullscreen .bui-editor-toolbar { border-radius: 0; }
+/* !important: the editor height option is written inline on the body, and fullscreen has to override it */
+.bui-editor-fullscreen .bui-editor-body { flex: 1 1 0; height: auto !important; max-height: none !important; min-height: 0; resize: none; }
+html.bui-editor-lock { overflow: hidden; }
+
+@media (max-width: 575.98px) {
+  .bui-editor-toolbar { padding: 4px; }
+  .bui-editor-btn { min-width: 36px; height: 36px; }
+  .bui-editor-group { padding-inline: 2px; }
+}
+@media (prefers-reduced-motion: reduce) { .bui-editor-panel { animation: none; } .bui-editor-swatch { transition: none; } }
+@media print { .bui-editor-toolbar, .bui-editor-footer { display: none; } .bui-editor { border: 0; } }

@@ -27,6 +27,7 @@ Explore the full Baset UI documentation website, including interactive component
    - [Grid and layout](#grid-and-layout)
 6. [Date and time pickers](#date-and-time-pickers)
 7. [File upload](#file-upload)
+   - [Rich text editor](#rich-text-editor)
 8. [Charts and data visualization](#charts-and-data-visualization)
 9. [DataTable](#datatable)
    - [Calendar and scheduler](#calendar-and-scheduler)
@@ -131,6 +132,7 @@ baset-ui/
 │   ├── forms.html
 │   ├── datetime.html           # Date & time pickers: date, time, datetime-local, month, week
 │   ├── upload.html             # File upload: dropzone, previews, checks, uploads
+│   ├── editor.html             # Rich text editor: toolbars, fonts, colors, RTL, dark, source view, API
 │   ├── navigation.html         # Navbar, sidebar, footer and combined layouts
 │   ├── charts.html             # Charts: line, bar, area, pie, doughnut, radar, scatter, mixed, radial, gauge
 │   ├── datatable.html          # DataTable: 40 sections, 45 live examples
@@ -166,6 +168,7 @@ baset-ui/
 │       ├── baset-ui.js         # Optional interactions
 │       ├── baset-datetime.js   # Optional date & time pickers (needs section 18 of baset-ui.css)
 │       ├── baset-upload.js     # Optional file upload (needs section 19 of baset-ui.css)
+│       ├── baset-editor.js     # Optional rich text editor (needs section 23 of baset-ui.css)
 │       ├── baset-charts.js     # Optional SVG charts (needs section 20 of baset-ui.css)
 │       ├── baset-datatable.js  # Optional DataTable (needs section 21 of baset-ui.css)
 │       ├── baset-calendar.js   # Optional Calendar & Scheduler (needs section 23 of baset-ui.css)
@@ -191,6 +194,7 @@ baset-ui/
 | Form controls | `components/forms.html` | Text input, email input, select, checkbox, form layout, floating labels (basic, sizes, select, textarea), validation states with the i message button, password fields (show / hide, strength meter, requirements, Caps Lock), prefix / suffix inputs (+20, @, https://, $, %), custom select menu (automatic placement, groups, keyboard, modal), live validation forms, JS API |
 | Date & time pickers | `components/datetime.html` | The five native types (date, time, datetime-local, month, week) with floating and plain fields, min / max / step, required / disabled / readonly, sizes, popup or bottom sheet, locale / first day / 12-24 h, RTL, dark, custom colors, validation and submit, modal, JS API |
 | File upload | `components/upload.html` | Drop zone for `input[type=file]` with drag and drop, image grid and file list, checks (type, size, count), disabled and error states, and server uploads with progress, cancel and retry |
+| Rich text editor | `components/editor.html` | Basic, full, minimal and custom toolbars, fonts and sizes, text / background colors, RTL, dark mode, readonly, disabled, HTML source view, initial content, textarea / form use, JavaScript API (get / set content, `exec`), max length, height and resize |
 | Cards | `components/cards.html` | Stat cards (sparkline, progress, task lines), cards grid |
 | Alerts | `components/alerts.html` | Success, info, warning, danger, alert stack |
 | Badges | `components/badges.html` | Six status variants |
@@ -467,6 +471,27 @@ Add `data-bui-upload` to a native `<input type="file">` and load `assets/js/base
 
 Full examples: `components/upload.html`.
 
+## Rich text editor
+
+A WYSIWYG editor built on `contenteditable` and the Selection / Range API (formatting does not use `document.execCommand`). Load `assets/js/baset-editor.js` (the styles are **section 23** of `baset-ui.css`; `baset-ui.js` is not required). Full examples: `components/editor.html`.
+
+```html
+<script src="assets/js/baset-editor.js" defer></script>
+<div data-bui-editor data-bui-toolbar="full" data-bui-placeholder="Write something…" data-bui-height="260">
+  <p>Initial <strong>content</strong></p>
+</div>
+```
+
+A `<textarea data-bui-editor name="body">` keeps its `name`, so a normal form submit sends the HTML.
+
+- **Toolbar:** `data-bui-toolbar="full | basic | minimal | none"` or tool names, `|` starts a group: `bold italic | ul ol | link`. Tools: `bold italic underline strike subscript superscript clear fontFamily fontSize color highlight heading alignLeft alignCenter alignRight alignJustify ul ol indent outdent quote link image table hr codeBlock undo redo selectAll fullscreen source`.
+- **Attributes / options:** `data-bui-placeholder`, `-height`, `-min-height`, `-max-height`, `-resize`, `-dir`, `-locale` (`en`, `ar`), `-fonts` (`Arial|Georgia|Label=stack`), `-sizes`, `-colors`, `-maxlength`, `-counter`, `-readonly`, `-disabled`, `-name`, `-sticky`. `new BasetEditor(el, options)` overrides attributes; extra options: `value`, `sanitize`, `imageUpload(file)`, `maxImageSize`, `onChange`.
+- **JS:** `getHTML() getText() getLength() isEmpty() setHTML(html) insertHTML(html) clear() exec(name, value) undo() redo() selectAll() focus() toggleSource() toggleFullscreen() setReadonly() setDisabled() setPlaceholder() setDir() setHeight() setToolbar() on(name, fn) destroy()`; `BUI.editor.get(el) / create / init / sanitize / locales`.
+- **Events** (on the editor element): `bui:editor-change` (`detail.html`), `-ready`, `-focus`, `-blur`, `-source`, `-fullscreen`, `-error`.
+- **Safety:** content from paste, drop, `setHTML` and the source view goes through an allow-list sanitizer (no scripts, event handlers, `javascript:` links, iframes or unknown tags); Word / Google Docs markup is cleaned. Use `sanitize: false` only for content you trust, and always sanitize again on the server.
+- **Theme and direction:** built on the `--bui-*` tokens (dark mode and RTL follow the page; `.bui-editor-dark` / `.bui-editor-light` force one editor). Undo / redo use the editor's own history.
+
+
 ## Charts and data visualization
 
 Load `assets/js/baset-charts.js` (the styles are section 20 of `baset-ui.css`; no other script is needed). Charts are drawn as SVG, with no dependencies and no CDN. Colors, text and grid come from `--bui-chart-*` tokens built on the Baset UI tokens, so dark mode and RTL / LTR work without extra code.
@@ -727,6 +752,7 @@ With `baset-ui.js`, any element with `id="themeToggle"` becomes a toggle button.
 | Select menu | Custom listbox for `select.bui-input`, `select.bui-float-input`, `select.bui-float-prefix`; `BUI.select.open/close/isOpen()`; `data-bui-native` to opt out |
 | Date & time pickers | `assets/js/baset-datetime.js` (separate file): `data-bui-datetime` on `input[type=date|time|datetime-local|month|week]`; `BUI.datetime.init/open/close/isOpen()`, `BUI.datetime.locales` |
 | File upload | `assets/js/baset-upload.js` (separate file): `data-bui-upload` on `input[type=file]`; `BUI.upload.init/configure/files/add/remove/clear/upload/retry/validate()`; events `bui:upload-*` |
+| Rich text editor | `assets/js/baset-editor.js` (separate file): `data-bui-editor` on a `div` / `textarea`, or `new BasetEditor(target, options)`; `getHTML / setHTML / exec / undo / redo / destroy`; `BUI.editor.get/create/init/sanitize/locales`; events `bui:editor-*` |
 | Charts | `assets/js/baset-charts.js` (separate file): `new BasetChart(target, { type, data, options })` or `data-bui-chart`; `update / setOptions / setColors / toggle / resize / destroy()`; `BUI.chart.init/get()`; events `bui:chart-render`, `bui:chart-click` |
 | DataTable | `assets/js/baset-datatable.js` (separate file): `new BasetDataTable(target, options)` or `data-bui-datatable` on a `<table>`; `search / order / page / pageLength / column / rows / row / draw / export / destroy`; `BasetDataTable.locales`, `.adapters` |
 | Calendar & Scheduler | `assets/js/baset-calendar.js` (separate file): `new BasetCalendar(target, options)` or `data-bui-calendar`; `addEvent / updateEvent / removeEvent / getEvents / getEventById / setEvents / setDate / setView / next / prev / today / getRange / showEvent / openEditor / setOptions / on / off / destroy()`; events `bui:cal-*` |

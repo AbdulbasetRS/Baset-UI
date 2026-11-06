@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Rich text editor — Baset UI</title>
+  <link rel="stylesheet" href="../assets/css/baset-ui.css">
+  <link rel="stylesheet" href="../assets/css/docs.css">
+  <script src="../assets/js/baset-editor.js"></script>
+  <style>/* documentation-only layout for this page (can be moved to docs.css) */
+  .bui-edoc { background: var(--bui-surface); border: 1px solid var(--bui-line); border-radius: var(--bui-radius); box-shadow: var(--bui-shadow); margin-block-end: 18px; overflow: hidden; }
+  .bui-edoc-head { padding: 18px 20px 4px; } .bui-edoc-head h3 { margin: 0 0 4px; font: 800 16px var(--bui-font-heading); letter-spacing: -.3px; } .bui-edoc-head p { margin: 0; color: var(--bui-muted); font-size: 12.5px; line-height: 1.7; }
+  .bui-edoc-demo { display: grid; gap: 14px; padding: 16px 20px 20px; } .bui-edoc-demo > * { min-width: 0; }
+  .bui-edoc code { padding: 1px 5px; border-radius: 4px; background: var(--bui-soft); font-size: 11.5px; }
+  .bui-edoc .bui-code-card { margin: 0; border-radius: 0; border-inline: 0; border-block-end: 0; }
+  .bui-edoc-scroll { overflow-x: auto; } .bui-edoc-table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+  .bui-edoc-table :is(th, td) { padding: 10px 12px; border-block-end: 1px solid var(--bui-line); text-align: start; vertical-align: top; line-height: 1.6; } .bui-edoc-table th { color: var(--bui-muted); font-size: 11px; letter-spacing: .5px; text-transform: uppercase; }
+  .bui-edoc-note { margin: 0 0 14px; padding: 12px 14px; border-radius: var(--bui-radius-3); background: var(--bui-info-bg-subtle); color: var(--bui-info-fg); font-size: 12.5px; line-height: 1.7; }
+</style>
+  <script>try{if(localStorage.getItem('bui-theme')==='dark')document.documentElement.classList.add('bui-dark');var d=localStorage.getItem('bui-dir');if(d==='rtl'||d==='ltr')document.documentElement.dir=d}catch(e){}</script>
+</head>
+<body>
+  <div class="bui-app">
+    <aside class="bui-sidebar">
+      <a class="bui-brand" href="../index.html"><span class="bui-brand-mark">B</span><span>Baset UI<small>Component library</small></span></a>
+      <div class="bui-sidebar-label">GET STARTED</div>
+      <a class="bui-nav" href="../index.html#overview">Overview</a>
+      <a class="bui-nav" href="../index.html#installation">Installation</a>
+      <div class="bui-sidebar-label">LAYOUT</div>
+      <a class="bui-nav" href="../layout/grid.html">Grid system</a>
+      <div class="bui-sidebar-label">COMPONENTS</div>
+      <a class="bui-nav" href="buttons.html">Buttons</a>
+      <a class="bui-nav" href="forms.html">Form controls</a>
+      <a class="bui-nav" href="select.html">Select &amp; dropdown</a>
+      <a class="bui-nav" href="datetime.html">Date &amp; time pickers</a>
+      <a class="bui-nav" href="upload.html">File upload</a>
+      <a class="bui-nav active" href="editor.html">Rich text editor</a>
+      <a class="bui-nav" href="cards.html">Cards</a>
+      <a class="bui-nav" href="alerts.html">Alerts</a>
+      <a class="bui-nav" href="badges.html">Badges</a>
+      <a class="bui-nav" href="loaders.html">Loaders</a>
+      <a class="bui-nav" href="icons.html">Icons</a>
+      <a class="bui-nav" href="toasts.html">Toasts &amp; notifications</a>
+      <a class="bui-nav" href="modal.html">Modal</a>
+      <a class="bui-nav" href="utilities.html">Utilities</a>
+      <a class="bui-nav" href="charts.html">Charts &amp; data visualization</a>
+      <a class="bui-nav" href="datatable.html">DataTable</a>
+      <a class="bui-nav" href="navigation.html">Navbar, sidebar &amp; footer</a>
+      <div class="bui-sidebar-label">CUSTOMIZE</div>
+      <a class="bui-nav" href="../customize/colors.html">Default colors</a>
+      <a class="bui-nav" href="../customize/typography.html">Typography and shape</a>
+      <a class="bui-nav" href="../customize/theme.html">Theme</a>
+      <a class="bui-nav" href="../customize/token-playground.html">Token playground</a>
+      <a class="bui-nav" href="../customize/chart-playground.html">Chart playground</a>
+      <a class="bui-nav" href="../customize/datatable-playground.html">DataTable playground</a>
+      <a class="bui-nav" href="../customize/direction.html">Direction (RTL / LTR)</a>
+      <a class="bui-nav" href="../customize/layout-playground.html">Layout playground</a>
+      <div class="bui-sidebar-bottom"><span class="bui-status-dot"></span> Baset UI <span class="bui-version">v1.0.0</span></div>
+    </aside>
+    <main class="bui-main">
+      <header class="bui-topbar"><div class="bui-breadcrumb">Components <span>/</span> Rich text editor</div><div class="bui-top-actions"><span class="bui-pill">Vanilla CSS + JS</span><button class="bui-icon-btn bui-dir-btn" id="dirToggle" type="button" aria-label="Toggle direction (RTL / LTR)" title="Toggle direction (RTL / LTR)">RTL</button><button class="bui-icon-btn" id="themeToggle" type="button" aria-label="Toggle theme">☼</button></div></header>
+      <section class="bui-section"><div class="bui-section-heading"><div><span class="bui-eyebrow">COMPONENT</span><h2>Rich text editor</h2><p>A WYSIWYG editor built on <code>contenteditable</code> and the Selection / Range API. Every tool works on the selection, content is sanitized, and it follows dark mode and RTL.</p></div><span class="bui-step-count">16 examples</span></div>
+        <div class="bui-code-card"><div class="bui-code-head"><span><i></i> Installation</span><button class="bui-copy" type="button">Copy</button></div><pre><code>&lt;link rel="stylesheet" href="assets/css/baset-ui.css"&gt;
+&lt;script src="assets/js/baset-editor.js" defer&gt;&lt;/script&gt;
+
+&lt;div data-bui-editor data-bui-placeholder="Write something…"&gt;&lt;/div&gt;</code></pre></div>
+        <p class="bui-edoc-note"><b>Shortcuts:</b> Ctrl/Cmd + B, I, U (format), K (link), Z (undo), Y or Shift+Z (redo). Tab / Shift+Tab indent list items and move between table cells. Esc closes a panel or leaves fullscreen. Pasted content from Word, Google Docs and web pages is cleaned; scripts, event handlers, <code>javascript:</code> links and unknown tags are removed.</p>
+      </section>
+      <section class="bui-section">
+        <article class="bui-edoc" id="basic"><div class="bui-edoc-head"><h3>1. Basic Rich Text Editor</h3><p>Add <code>data-bui-editor</code> to any <code>div</code> or <code>textarea</code> and load <code>baset-editor.js</code>. The default toolbar is <code>basic</code>.</p></div><div class="bui-edoc-demo">
+<div data-bui-editor data-bui-placeholder="Write something…"></div>
+</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> index.html</span><button class="bui-copy" type="button">Copy</button></div><pre><code>&lt;div data-bui-editor data-bui-placeholder="Write something…"&gt;&lt;/div&gt;</code></pre></div></article>
+        <article class="bui-edoc" id="full"><div class="bui-edoc-head"><h3>2. Full Toolbar</h3><p><code>data-bui-toolbar="full"</code> turns on every tool. The content below is the initial content, written inside the element.</p></div><div class="bui-edoc-demo">
+<div data-bui-editor data-bui-toolbar="full" data-bui-height="280">
+  <h2>Welcome to Baset Editor</h2><p>This is <strong>bold</strong>, <em>italic</em> and <u>underlined</u> text with a <a href="https://example.com" target="_blank" rel="noopener noreferrer">link</a>.</p><ul><li>First item</li><li>Second item</li></ul><blockquote><p>A short quote.</p></blockquote>
+</div>
+</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> index.html</span><button class="bui-copy" type="button">Copy</button></div><pre><code>&lt;div data-bui-editor data-bui-toolbar="full" data-bui-height="280"&gt;
+  &lt;h2&gt;Welcome to Baset Editor&lt;/h2&gt;&lt;p&gt;This is &lt;strong&gt;bold&lt;/strong&gt;, &lt;em&gt;italic&lt;/em&gt; and &lt;u&gt;underlined&lt;/u&gt; text with a &lt;a href="https://example.com" target="_blank" rel="noopener noreferrer"&gt;link&lt;/a&gt;.&lt;/p&gt;&lt;ul&gt;&lt;li&gt;First item&lt;/li&gt;&lt;li&gt;Second item&lt;/li&gt;&lt;/ul&gt;&lt;blockquote&gt;&lt;p&gt;A short quote.&lt;/p&gt;&lt;/blockquote&gt;
+&lt;/div&gt;</code></pre></div></article>
+        <article class="bui-edoc" id="minimal"><div class="bui-edoc-head"><h3>3. Minimal Toolbar</h3><p><code>data-bui-toolbar="minimal"</code>: bold, italic, underline, lists and a link. Use <code>none</code> (or <code>false</code>) to hide the toolbar completely.</p></div><div class="bui-edoc-demo">
+<div data-bui-editor data-bui-toolbar="minimal" data-bui-placeholder="Short comment…" data-bui-min-height="90"></div>
+
+<div data-bui-editor data-bui-toolbar="none" data-bui-min-height="70">
+  <p>No toolbar: shortcuts such as Ctrl+B and Ctrl+I still work.</p>
+</div>
+</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> index.html</span><button class="bui-copy" type="button">Copy</button></div><pre><code>&lt;div data-bui-editor data-bui-toolbar="minimal" data-bui-placeholder="Short comment…" data-bui-min-height="90"&gt;&lt;/div&gt;
+
+&lt;div data-bui-editor data-bui-toolbar="none" data-bui-min-height="70"&gt;
+  &lt;p&gt;No toolbar: shortcuts such as Ctrl+B and Ctrl+I still work.&lt;/p&gt;
+&lt;/div&gt;</code></pre></div></article>
+        <article class="bui-edoc" id="custom"><div class="bui-edoc-head"><h3>4. Custom Toolbar</h3><p>Name the tools you want. A space separates tools and <code>|</code> starts a new group.</p></div><div class="bui-edoc-demo">
+<div data-bui-editor data-bui-toolbar="bold italic | link image | ul ol | undo redo" data-bui-placeholder="Custom toolbar…"></div>
+</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> index.html</span><button class="bui-copy" type="button">Copy</button></div><pre><code>&lt;div data-bui-editor data-bui-toolbar="bold italic | link image | ul ol | undo redo" data-bui-placeholder="Custom toolbar…"&gt;&lt;/div&gt;</code></pre></div></article>
+        <article class="bui-edoc" id="fonts"><div class="bui-edoc-head"><h3>5. Font Family &amp; Font Size</h3><p>Lists come from attributes: <code>data-bui-fonts</code> (separated by <code>|</code>, <code>Label=css stack</code> is allowed) and <code>data-bui-sizes</code> (px).</p></div><div class="bui-edoc-demo">
+<div data-bui-editor data-bui-toolbar="fontFamily fontSize | bold italic | clear"
+     data-bui-fonts="Arial|Georgia|Courier New|Verdana|Display=Manrope, sans-serif"
+     data-bui-sizes="12,16,20,28,40">
+  <p>Select a word, then choose a font or a size.</p>
+</div>
+</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> index.html</span><button class="bui-copy" type="button">Copy</button></div><pre><code>&lt;div data-bui-editor data-bui-toolbar="fontFamily fontSize | bold italic | clear"
+     data-bui-fonts="Arial|Georgia|Courier New|Verdana|Display=Manrope, sans-serif"
+     data-bui-sizes="12,16,20,28,40"&gt;
+  &lt;p&gt;Select a word, then choose a font or a size.&lt;/p&gt;
+&lt;/div&gt;</code></pre></div></article>
+        <article class="bui-edoc" id="colors"><div class="bui-edoc-head"><h3>6. Text &amp; Background Colors</h3><p>The palette is <code>data-bui-colors</code> (comma separated). The color picker also has a custom color input and a reset button.</p></div><div class="bui-edoc-demo">
+<div data-bui-editor data-bui-toolbar="bold | color highlight | clear"
+     data-bui-colors="#6658e8,#20ad7c,#d84b5d,#f2a33a,#368de5,#20213a,#ffffff,#6b7090">
+  <p>Color <strong>this text</strong> or highlight it.</p>
+</div>
+</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> index.html</span><button class="bui-copy" type="button">Copy</button></div><pre><code>&lt;div data-bui-editor data-bui-toolbar="bold | color highlight | clear"
+     data-bui-colors="#6658e8,#20ad7c,#d84b5d,#f2a33a,#368de5,#20213a,#ffffff,#6b7090"&gt;
+  &lt;p&gt;Color &lt;strong&gt;this text&lt;/strong&gt; or highlight it.&lt;/p&gt;
+&lt;/div&gt;</code></pre></div></article>
+        <article class="bui-edoc" id="rtl"><div class="bui-edoc-head"><h3>7. RTL Editor</h3><p><code>data-bui-dir="rtl"</code> sets the direction; <code>data-bui-locale="ar"</code> translates the toolbar. Without them the editor follows the page direction.</p></div><div class="bui-edoc-demo">
+<div data-bui-editor data-bui-toolbar="full" data-bui-dir="rtl" data-bui-locale="ar" data-bui-height="260">
+  <h2>مرحبًا بك في المحرر</h2><p>هذا محرر نصوص غني يدعم <strong>الكتابة من اليمين إلى اليسار</strong> بالكامل، بما في ذلك القوائم والاقتباسات.</p><ul><li>العنصر الأول</li><li>العنصر الثاني</li></ul>
+</div>
+</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> index.html</span><button class="bui-copy" type="button">Copy</button></div><pre><code>&lt;div data-bui-editor data-bui-toolbar="full" data-bui-dir="rtl" data-bui-locale="ar" data-bui-height="260"&gt;
+  &lt;h2&gt;مرحبًا بك في المحرر&lt;/h2&gt;&lt;p&gt;هذا محرر نصوص غني يدعم &lt;strong&gt;الكتابة من اليمين إلى اليسار&lt;/strong&gt; بالكامل، بما في ذلك القوائم والاقتباسات.&lt;/p&gt;&lt;ul&gt;&lt;li&gt;العنصر الأول&lt;/li&gt;&lt;li&gt;العنصر الثاني&lt;/li&gt;&lt;/ul&gt;
+&lt;/div&gt;</code></pre></div></article>
+        <article class="bui-edoc" id="dark"><div class="bui-edoc-head"><h3>8. Dark Mode</h3><p>The editor uses the <code>--bui-*</code> tokens, so it follows <code>.bui-dark</code> on the page (use the theme button above). Add <code>.bui-editor-dark</code> to force dark on one editor, or <code>.bui-editor-light</code> to force light.</p></div><div class="bui-edoc-demo">
+<div data-bui-editor class="bui-editor-dark" data-bui-toolbar="full">
+  <p>This editor is always dark.</p>
+</div>
+</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> index.html</span><button class="bui-copy" type="button">Copy</button></div><pre><code>&lt;div data-bui-editor class="bui-editor-dark" data-bui-toolbar="full"&gt;
+  &lt;p&gt;This editor is always dark.&lt;/p&gt;
+&lt;/div&gt;</code></pre></div></article>
+        <article class="bui-edoc" id="readonly"><div class="bui-edoc-head"><h3>9. Readonly Editor</h3><p>Content stays selectable and copyable, editing tools are disabled. Select all, HTML source and fullscreen still work.</p></div><div class="bui-edoc-demo">
+<div data-bui-editor data-bui-readonly data-bui-toolbar="full">
+  <p>You can read and copy this text, but not change it.</p>
+</div>
+</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> index.html</span><button class="bui-copy" type="button">Copy</button></div><pre><code>&lt;div data-bui-editor data-bui-readonly data-bui-toolbar="full"&gt;
+  &lt;p&gt;You can read and copy this text, but not change it.&lt;/p&gt;
+&lt;/div&gt;</code></pre></div></article>
+        <article class="bui-edoc" id="disabled"><div class="bui-edoc-head"><h3>10. Disabled Editor</h3><p><code>data-bui-disabled</code> (or <code>disabled</code>) turns everything off, and the editor is skipped by Tab.</p></div><div class="bui-edoc-demo">
+<div data-bui-editor data-bui-disabled data-bui-toolbar="basic">
+  <p>Disabled editor.</p>
+</div>
+</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> index.html</span><button class="bui-copy" type="button">Copy</button></div><pre><code>&lt;div data-bui-editor data-bui-disabled data-bui-toolbar="basic"&gt;
+  &lt;p&gt;Disabled editor.&lt;/p&gt;
+&lt;/div&gt;</code></pre></div></article>
+        <article class="bui-edoc" id="source"><div class="bui-edoc-head"><h3>11. HTML Source Code View</h3><p>The <code>source</code> tool switches to a code view. When you switch back, the HTML is sanitized and loaded into the editor.</p></div><div class="bui-edoc-demo">
+<div data-bui-editor data-bui-toolbar="bold italic underline | ul ol | link | source" data-bui-height="220">
+  <p>Open the <strong>&lt;/&gt;</strong> view, edit the HTML and come back.</p>
+</div>
+</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> index.html</span><button class="bui-copy" type="button">Copy</button></div><pre><code>&lt;div data-bui-editor data-bui-toolbar="bold italic underline | ul ol | link | source" data-bui-height="220"&gt;
+  &lt;p&gt;Open the &lt;strong&gt;&amp;lt;/&amp;gt;&lt;/strong&gt; view, edit the HTML and come back.&lt;/p&gt;
+&lt;/div&gt;</code></pre></div></article>
+        <article class="bui-edoc" id="initial"><div class="bui-edoc-head"><h3>12. Editor with Initial Content</h3><p>Initial content is the HTML inside the element, or the value of a <code>textarea</code>. A textarea keeps its <code>name</code>, so a normal form submit sends the HTML.</p></div><div class="bui-edoc-demo">
+<form id="ed-form">
+  <textarea name="message" data-bui-editor data-bui-toolbar="basic" data-bui-height="180">&lt;p&gt;Hello &lt;strong&gt;team&lt;/strong&gt;,&lt;/p&gt;&lt;p&gt;This content came from a textarea.&lt;/p&gt;</textarea>
+  <button class="bui-btn bui-btn-primary bui-btn-sm" type="submit" style="margin-top:10px">Show submitted value</button>
+  <pre id="ed-form-out" class="bui-muted" style="white-space:pre-wrap"></pre>
+</form>
+<script>
+  document.getElementById('ed-form').addEventListener('submit', (e) => {
+    e.preventDefault();
+    document.getElementById('ed-form-out').textContent = new FormData(e.target).get('message');
+  });
+</script>
+</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> index.html</span><button class="bui-copy" type="button">Copy</button></div><pre><code>&lt;form id="ed-form"&gt;
+  &lt;textarea name="message" data-bui-editor data-bui-toolbar="basic" data-bui-height="180"&gt;&amp;lt;p&amp;gt;Hello &amp;lt;strong&amp;gt;team&amp;lt;/strong&amp;gt;,&amp;lt;/p&amp;gt;&amp;lt;p&amp;gt;This content came from a textarea.&amp;lt;/p&amp;gt;&lt;/textarea&gt;
+  &lt;button class="bui-btn bui-btn-primary bui-btn-sm" type="submit" style="margin-top:10px"&gt;Show submitted value&lt;/button&gt;
+  &lt;pre id="ed-form-out" class="bui-muted" style="white-space:pre-wrap"&gt;&lt;/pre&gt;
+&lt;/form&gt;
+&lt;script&gt;
+  document.getElementById('ed-form').addEventListener('submit', (e) =&gt; {
+    e.preventDefault();
+    document.getElementById('ed-form-out').textContent = new FormData(e.target).get('message');
+  });
+&lt;/script&gt;</code></pre></div></article>
+        <article class="bui-edoc" id="api"><div class="bui-edoc-head"><h3>13. JavaScript API Examples</h3><p>Create an editor with <code>new BasetEditor(target, options)</code>. Options override attributes. <code>exec(name, value)</code> runs any tool from code.</p></div><div class="bui-edoc-demo">
+<div id="api-ed"></div>
+<div class="bui-button-row" style="margin-top:10px">
+  <button class="bui-btn bui-btn-soft-primary bui-btn-sm" id="api-bold">exec('bold')</button>
+  <button class="bui-btn bui-btn-soft-primary bui-btn-sm" id="api-h2">exec('heading', 'h2')</button>
+  <button class="bui-btn bui-btn-soft-primary bui-btn-sm" id="api-color">exec('color', '#d84b5d')</button>
+  <button class="bui-btn bui-btn-soft-primary bui-btn-sm" id="api-link">exec('link', {…})</button>
+  <button class="bui-btn bui-btn-soft-primary bui-btn-sm" id="api-table">exec('table', {…})</button>
+  <button class="bui-btn bui-btn-soft-secondary bui-btn-sm" id="api-ro">Toggle readonly</button>
+</div>
+<script>
+  const apiEd = new BasetEditor('#api-ed', {
+    toolbar: 'full', height: 200, placeholder: 'Select some text, then click a button…',
+    value: '<p>Select a few words and use the buttons below.</p>'
+  });
+  const $id = (id) => document.getElementById(id);
+  $id('api-bold').onclick = () => apiEd.exec('bold');
+  $id('api-h2').onclick = () => apiEd.exec('heading', 'h2');
+  $id('api-color').onclick = () => apiEd.exec('color', '#d84b5d');
+  $id('api-link').onclick = () => apiEd.exec('link', { href: 'https://example.com', newTab: true });
+  $id('api-table').onclick = () => apiEd.exec('table', { rows: 2, cols: 3, header: true });
+  $id('api-ro').onclick = () => apiEd.setReadonly(!apiEd.o.readonly);
+</script>
+</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> index.html</span><button class="bui-copy" type="button">Copy</button></div><pre><code>&lt;div id="api-ed"&gt;&lt;/div&gt;
+&lt;div class="bui-button-row" style="margin-top:10px"&gt;
+  &lt;button class="bui-btn bui-btn-soft-primary bui-btn-sm" id="api-bold"&gt;exec('bold')&lt;/button&gt;
+  &lt;button class="bui-btn bui-btn-soft-primary bui-btn-sm" id="api-h2"&gt;exec('heading', 'h2')&lt;/button&gt;
+  &lt;button class="bui-btn bui-btn-soft-primary bui-btn-sm" id="api-color"&gt;exec('color', '#d84b5d')&lt;/button&gt;
+  &lt;button class="bui-btn bui-btn-soft-primary bui-btn-sm" id="api-link"&gt;exec('link', {…})&lt;/button&gt;
+  &lt;button class="bui-btn bui-btn-soft-primary bui-btn-sm" id="api-table"&gt;exec('table', {…})&lt;/button&gt;
+  &lt;button class="bui-btn bui-btn-soft-secondary bui-btn-sm" id="api-ro"&gt;Toggle readonly&lt;/button&gt;
+&lt;/div&gt;
+&lt;script&gt;
+  const apiEd = new BasetEditor('#api-ed', {
+    toolbar: 'full', height: 200, placeholder: 'Select some text, then click a button…',
+    value: '&lt;p&gt;Select a few words and use the buttons below.&lt;/p&gt;'
+  });
+  const $id = (id) =&gt; document.getElementById(id);
+  $id('api-bold').onclick = () =&gt; apiEd.exec('bold');
+  $id('api-h2').onclick = () =&gt; apiEd.exec('heading', 'h2');
+  $id('api-color').onclick = () =&gt; apiEd.exec('color', '#d84b5d');
+  $id('api-link').onclick = () =&gt; apiEd.exec('link', { href: 'https://example.com', newTab: true });
+  $id('api-table').onclick = () =&gt; apiEd.exec('table', { rows: 2, cols: 3, header: true });
+  $id('api-ro').onclick = () =&gt; apiEd.setReadonly(!apiEd.o.readonly);
+&lt;/script&gt;</code></pre></div></article>
+        <article class="bui-edoc" id="get"><div class="bui-edoc-head"><h3>14. Getting HTML Content</h3><p><code>getHTML()</code> returns clean, sanitized HTML (no helper characters, empty string when the editor is empty). <code>getText()</code>, <code>getLength()</code> and <code>isEmpty()</code> are also available. The <code>bui:editor-change</code> event fires on every change.</p></div><div class="bui-edoc-demo">
+<div id="get-ed" data-bui-editor data-bui-toolbar="basic" data-bui-height="150">
+  <p>Type here and watch the HTML below.</p>
+</div>
+<div class="bui-button-row" style="margin-top:10px">
+  <button class="bui-btn bui-btn-primary bui-btn-sm" id="get-btn">getHTML()</button>
+  <span class="bui-muted" id="get-len"></span>
+</div>
+<pre id="get-out" style="white-space:pre-wrap;overflow:auto"></pre>
+<script>
+  const getEd = BUI.editor.get('#get-ed');
+  const show = () => {
+    document.getElementById('get-out').textContent = getEd.getHTML();
+    document.getElementById('get-len').textContent = getEd.getLength() + ' characters';
+  };
+  document.getElementById('get-btn').onclick = show;
+  document.getElementById('get-ed').addEventListener('bui:editor-change', show);
+  show();
+</script>
+</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> index.html</span><button class="bui-copy" type="button">Copy</button></div><pre><code>&lt;div id="get-ed" data-bui-editor data-bui-toolbar="basic" data-bui-height="150"&gt;
+  &lt;p&gt;Type here and watch the HTML below.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="bui-button-row" style="margin-top:10px"&gt;
+  &lt;button class="bui-btn bui-btn-primary bui-btn-sm" id="get-btn"&gt;getHTML()&lt;/button&gt;
+  &lt;span class="bui-muted" id="get-len"&gt;&lt;/span&gt;
+&lt;/div&gt;
+&lt;pre id="get-out" style="white-space:pre-wrap;overflow:auto"&gt;&lt;/pre&gt;
+&lt;script&gt;
+  const getEd = BUI.editor.get('#get-ed');
+  const show = () =&gt; {
+    document.getElementById('get-out').textContent = getEd.getHTML();
+    document.getElementById('get-len').textContent = getEd.getLength() + ' characters';
+  };
+  document.getElementById('get-btn').onclick = show;
+  document.getElementById('get-ed').addEventListener('bui:editor-change', show);
+  show();
+&lt;/script&gt;</code></pre></div></article>
+        <article class="bui-edoc" id="set"><div class="bui-edoc-head"><h3>15. Setting Editor Content</h3><p><code>setHTML(html)</code> replaces the content (it is sanitized), <code>insertHTML(html)</code> inserts at the caret, and <code>clear()</code> empties the editor. Undo and redo work after each of them.</p></div><div class="bui-edoc-demo">
+<div id="set-ed" data-bui-editor data-bui-toolbar="basic" data-bui-height="170"></div>
+<div class="bui-button-row" style="margin-top:10px">
+  <button class="bui-btn bui-btn-soft-primary bui-btn-sm" id="set-a">setHTML()</button>
+  <button class="bui-btn bui-btn-soft-primary bui-btn-sm" id="set-b">insertHTML()</button>
+  <button class="bui-btn bui-btn-soft-danger bui-btn-sm" id="set-c">clear()</button>
+  <button class="bui-btn bui-btn-soft-secondary bui-btn-sm" id="set-d">Unsafe HTML</button>
+</div>
+<script>
+  const setEd = BUI.editor.get('#set-ed');
+  document.getElementById('set-a').onclick = () => setEd.setHTML('<h3>New content</h3><p>Replaced with <em>setHTML()</em>.</p>');
+  document.getElementById('set-b').onclick = () => setEd.insertHTML('<strong> [inserted] </strong>');
+  document.getElementById('set-c').onclick = () => setEd.clear();
+  // scripts, event handlers and javascript: links are removed
+  document.getElementById('set-d').onclick = () => setEd.setHTML('<p onclick="alert(1)">Safe <a href="javascript:alert(1)">link</a><script>alert(1)<\/script></p>');
+</script>
+</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> index.html</span><button class="bui-copy" type="button">Copy</button></div><pre><code>&lt;div id="set-ed" data-bui-editor data-bui-toolbar="basic" data-bui-height="170"&gt;&lt;/div&gt;
+&lt;div class="bui-button-row" style="margin-top:10px"&gt;
+  &lt;button class="bui-btn bui-btn-soft-primary bui-btn-sm" id="set-a"&gt;setHTML()&lt;/button&gt;
+  &lt;button class="bui-btn bui-btn-soft-primary bui-btn-sm" id="set-b"&gt;insertHTML()&lt;/button&gt;
+  &lt;button class="bui-btn bui-btn-soft-danger bui-btn-sm" id="set-c"&gt;clear()&lt;/button&gt;
+  &lt;button class="bui-btn bui-btn-soft-secondary bui-btn-sm" id="set-d"&gt;Unsafe HTML&lt;/button&gt;
+&lt;/div&gt;
+&lt;script&gt;
+  const setEd = BUI.editor.get('#set-ed');
+  document.getElementById('set-a').onclick = () =&gt; setEd.setHTML('&lt;h3&gt;New content&lt;/h3&gt;&lt;p&gt;Replaced with &lt;em&gt;setHTML()&lt;/em&gt;.&lt;/p&gt;');
+  document.getElementById('set-b').onclick = () =&gt; setEd.insertHTML('&lt;strong&gt; [inserted] &lt;/strong&gt;');
+  document.getElementById('set-c').onclick = () =&gt; setEd.clear();
+  // scripts, event handlers and javascript: links are removed
+  document.getElementById('set-d').onclick = () =&gt; setEd.setHTML('&lt;p onclick="alert(1)"&gt;Safe &lt;a href="javascript:alert(1)"&gt;link&lt;/a&gt;&lt;script&gt;alert(1)&lt;\/script&gt;&lt;/p&gt;');
+&lt;/script&gt;</code></pre></div></article>
+        <article class="bui-edoc" id="limits"><div class="bui-edoc-head"><h3>16. Max Length, Height &amp; Resize</h3><p><code>data-bui-maxlength</code> limits the characters (typing and paste) and shows a counter. <code>data-bui-height</code>, <code>-min-height</code> and <code>-max-height</code> set the size, <code>data-bui-resize</code> (<code>vertical</code>, <code>horizontal</code>, <code>both</code>) adds a resize handle, and <code>data-bui-sticky</code> keeps the toolbar visible while scrolling.</p></div><div class="bui-edoc-demo">
+<div data-bui-editor data-bui-toolbar="minimal" data-bui-maxlength="120" data-bui-height="140" data-bui-resize="vertical" data-bui-placeholder="Up to 120 characters…"></div>
+</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> index.html</span><button class="bui-copy" type="button">Copy</button></div><pre><code>&lt;div data-bui-editor data-bui-toolbar="minimal" data-bui-maxlength="120" data-bui-height="140" data-bui-resize="vertical" data-bui-placeholder="Up to 120 characters…"&gt;&lt;/div&gt;</code></pre></div></article>
+      </section>
+      <section class="bui-section"><div class="bui-section-heading"><div><span class="bui-eyebrow">REFERENCE</span><h2>Attributes and options</h2><p>Attributes are read once; <code>new BasetEditor(el, options)</code> overrides them.</p></div></div>
+<article class="bui-edoc"><div class="bui-edoc-scroll"><table class="bui-edoc-table"><thead><tr><th>Attribute</th><th>Option</th><th>Purpose</th></tr></thead><tbody><tr><td><code>data-bui-editor</code></td><td>–</td><td>Turns a <code>div</code> or <code>textarea</code> into an editor (auto-init, also for elements added later)</td></tr><tr><td><code>data-bui-toolbar</code></td><td><code>toolbar</code></td><td><code>full</code>, <code>basic</code> (default), <code>minimal</code>, <code>none</code>/<code>false</code>, or tool names: <code>bold italic | ul ol</code></td></tr><tr><td><code>data-bui-placeholder</code></td><td><code>placeholder</code></td><td>Placeholder text (a textarea's own <code>placeholder</code> also works)</td></tr><tr><td><code>data-bui-height</code> / <code>-min-height</code> / <code>-max-height</code></td><td><code>height</code>, <code>minHeight</code>, <code>maxHeight</code></td><td>Number (px) or any CSS length. Min height defaults to 160</td></tr><tr><td><code>data-bui-resize</code></td><td><code>resize</code></td><td><code>vertical</code>, <code>horizontal</code>, <code>both</code>, <code>none</code></td></tr><tr><td><code>data-bui-dir</code></td><td><code>dir</code></td><td><code>rtl</code>, <code>ltr</code> or empty to follow the page</td></tr><tr><td><code>data-bui-locale</code></td><td><code>locale</code></td><td><code>en</code> or <code>ar</code> (add more with <code>BUI.editor.locales.fr = {…}</code>); defaults to the <code>lang</code> attribute</td></tr><tr><td><code>data-bui-fonts</code></td><td><code>fonts</code></td><td><code>Arial|Georgia|Label=css stack</code> (option: array of strings or <code>{label, value}</code>)</td></tr><tr><td><code>data-bui-sizes</code></td><td><code>sizes</code></td><td><code>12,16,24</code> (px) or any CSS size</td></tr><tr><td><code>data-bui-colors</code></td><td><code>colors</code></td><td>Palette of the two color pickers</td></tr><tr><td><code>data-bui-maxlength</code> / <code>maxlength</code></td><td><code>maxlength</code></td><td>Maximum characters; shows a counter</td></tr><tr><td><code>data-bui-counter</code></td><td><code>counter</code></td><td>Show the character counter without a limit</td></tr><tr><td><code>data-bui-readonly</code> / <code>readonly</code></td><td><code>readonly</code></td><td>Read only</td></tr><tr><td><code>data-bui-disabled</code> / <code>disabled</code></td><td><code>disabled</code></td><td>Disabled</td></tr><tr><td><code>data-bui-name</code></td><td><code>name</code></td><td>Adds a hidden input with the HTML (a textarea keeps its own <code>name</code>)</td></tr><tr><td><code>data-bui-sticky</code></td><td><code>sticky</code></td><td>Sticky toolbar</td></tr><tr><td>–</td><td><code>value</code></td><td>Initial HTML (overrides the element content)</td></tr><tr><td>–</td><td><code>sanitize</code></td><td><code>true</code> (default), a function <code>(html) => html</code>, or <code>false</code> for trusted content only</td></tr><tr><td>–</td><td><code>imageUpload</code>, <code>maxImageSize</code></td><td><code>async (file) => url</code> uploads images to your server; without it images become data URIs (default max 2 MB)</td></tr><tr><td>–</td><td><code>onChange</code></td><td><code>(html, editor) => {}</code></td></tr></tbody></table></div></article></section>
+      <section class="bui-section"><div class="bui-section-heading"><div><span class="bui-eyebrow">REFERENCE</span><h2>Toolbar tools</h2></div></div><article class="bui-edoc"><div class="bui-edoc-scroll"><table class="bui-edoc-table"><thead><tr><th>Group</th><th>Tool names</th></tr></thead><tbody><tr><td>Text</td><td><code>bold italic underline strike subscript superscript clear</code></td></tr><tr><td>Font</td><td><code>fontFamily fontSize color highlight</code></td></tr><tr><td>Paragraph</td><td><code>heading alignLeft alignCenter alignRight alignJustify ul ol indent outdent quote</code></td></tr><tr><td>Insert</td><td><code>link image table hr codeBlock</code></td></tr><tr><td>Editing</td><td><code>undo redo selectAll fullscreen source</code></td></tr></tbody></table></div></article>
+<div class="bui-section-heading" style="margin-top:28px"><div><span class="bui-eyebrow">REFERENCE</span><h2>JavaScript API and events</h2></div></div><article class="bui-edoc"><div class="bui-edoc-scroll"><table class="bui-edoc-table"><thead><tr><th>Method</th><th>Description</th></tr></thead><tbody><tr><td><code>getHTML()</code>, <code>getText()</code>, <code>getLength()</code>, <code>isEmpty()</code></td><td>Read the content</td></tr><tr><td><code>setHTML(html)</code>, <code>insertHTML(html)</code>, <code>clear()</code></td><td>Write the content (always sanitized unless <code>sanitize: false</code>)</td></tr><tr><td><code>exec(name, value)</code></td><td>Run a tool: <code>bold</code>, <code>heading</code> (<code>'h2'</code>), <code>fontFamily</code>, <code>fontSize</code>, <code>color</code>, <code>highlight</code>, <code>align</code>, <code>link</code> (<code>{href, text, newTab}</code>), <code>unlink</code>, <code>image</code> (<code>{src, alt, width}</code>), <code>table</code> (<code>{rows, cols, header}</code>), … all tool names below</td></tr><tr><td><code>undo()</code>, <code>redo()</code>, <code>selectAll()</code>, <code>focus()</code>, <code>blur()</code></td><td>Editing controls</td></tr><tr><td><code>toggleSource(on)</code>, <code>toggleFullscreen(on)</code></td><td>Views</td></tr><tr><td><code>setReadonly(bool)</code>, <code>setDisabled(bool)</code>, <code>setPlaceholder(text)</code>, <code>setDir(dir)</code>, <code>setHeight(h)</code>, <code>setToolbar(spec)</code></td><td>Change options at runtime</td></tr><tr><td><code>on(name, fn)</code>, <code>destroy()</code></td><td>Events and cleanup</td></tr><tr><td><code>BUI.editor.get(el)</code>, <code>.create(el, opts)</code>, <code>.init(root)</code>, <code>.sanitize(html)</code></td><td>Namespace helpers</td></tr></tbody></table></div></article><article class="bui-edoc"><div class="bui-edoc-scroll"><table class="bui-edoc-table"><thead><tr><th>Event (on the editor element)</th><th>When</th></tr></thead><tbody><tr><td><code>bui:editor-change</code></td><td>Content changed (<code>detail.html</code>, <code>detail.editor</code>)</td></tr><tr><td><code>bui:editor-ready</code>, <code>-focus</code>, <code>-blur</code></td><td>Lifecycle</td></tr><tr><td><code>bui:editor-source</code>, <code>-fullscreen</code></td><td>View changed (<code>detail.on</code>)</td></tr><tr><td><code>bui:editor-error</code></td><td>An image could not be inserted (<code>detail.message</code>)</td></tr></tbody></table></div></article></section>
+      <footer class="bui-footer"><span>© 2026 Baset UI. Built for makers.</span><span>Documentation · v1.0.0</span></footer>
+    </main>
+  </div>
+  <script src="../assets/js/baset-ui.js"></script>
+</body>
+</html>
