@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="en" dir="ltr" data-docs-root="../" data-page="customize/typography">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Typography · Baset UI</title>
+<meta name="description" content="Font families, sizes, weights, line heights and customization.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230f766e'/%3E%3Crect x='7' y='8' width='18' height='3.6' rx='1.8' fill='%23fff'/%3E%3Crect x='7' y='14.2' width='12' height='3.6' rx='1.8' fill='%23fff'/%3E%3Crect x='7' y='20.4' width='15' height='3.6' rx='1.8' fill='%23fff'/%3E%3C/svg%3E">
+<script src="../assets/js/init.js"></script>
+<link rel="stylesheet" href="../../assets/css/baset-ui.css">
+<link rel="stylesheet" href="../assets/css/docs.css">
+</head>
+<body>
+<a class="docs-skip" href="#content"><span lang="en">Skip to content</span><span lang="ar">تخطَّ إلى المحتوى</span></a>
+<header class="docs-navbar" id="docs-navbar"></header>
+<div class="docs-backdrop" id="docs-backdrop" hidden></div>
+<div class="docs-layout">
+<aside class="docs-sidebar" id="docs-sidebar"></aside>
+<main class="docs-main" id="content" tabindex="-1">
+<article class="docs-article">
+<noscript>
+<div class="docs-callout docs-callout--note" role="note">
+<p class="docs-callout__title"><span lang="en">JavaScript is off</span><span lang="ar">جافاسكربت معطَّل</span></p>
+<p lang="en">Page content stays readable, but the navigation menu, search, table of contents and the language, direction and theme switches need JavaScript. Content is shown in English.</p>
+<p lang="ar">يبقى محتوى الصفحة مقروءًا، لكن قائمة التنقل والبحث وفهرس الصفحة ومفاتيح اللغة والاتجاه والثيم تحتاج إلى جافاسكربت. يُعرض المحتوى بالإنجليزية.</p>
+</div>
+
+</noscript>
+<h1><span lang="en">Typography</span><span lang="ar">الخطوط</span></h1>
+<p class="docs-lead" lang="en">The typography tokens that exist today: two font stacks, eight sizes, four weights and two line heights, and how to change them.</p>
+<p class="docs-lead" lang="ar">tokens الخطوط الموجودة اليوم: مجموعتا خطوط، وثمانية أحجام، وأربعة أوزان، وارتفاعا سطر، وكيف تغيّرها.</p>
+<div class="docs-callout docs-callout--info" role="note">
+<p class="docs-callout__title"><span lang="en">Tokens, not classes</span><span lang="ar">tokens وليست أصنافًا</span></p>
+<p lang="en">Baset UI defines typography as CSS variables. It does not style <code>&lt;h1&gt;</code>–<code>&lt;h6&gt;</code>, <code>&lt;p&gt;</code> or any element, and it ships no text utility classes yet. You apply the tokens in your own CSS with <code>var()</code>.</p>
+<p lang="ar">تعرّف Baset UI الخطوط كمتغيرات CSS. ولا تنسّق <code>&lt;h1&gt;</code>–<code>&lt;h6&gt;</code> ولا <code>&lt;p&gt;</code> ولا أي عنصر، ولا تشحن أصناف نصوص مساعدة بعد. تطبّق الـ tokens في CSS الخاص بك بـ <code>var()</code>.</p>
+</div>
+<h2 id="font-families"><span lang="en">Font families</span><span lang="ar">عائلات الخطوط</span></h2>
+<p lang="en">Two stacks are defined. Both use fonts already installed on the reader's device, so no font file is downloaded and there is no layout shift from font loading.</p>
+<p lang="ar">معرَّفة مجموعتان. كلتاهما تستخدم خطوطًا مثبتة أصلًا على جهاز القارئ، فلا يُنزَّل أي ملف خط ولا يحدث اهتزاز في التخطيط بسبب تحميل الخطوط.</p>
+<div class="docs-table-wrap">
+<table>
+<thead><tr>
+<th scope="col"><span lang="en">Token</span><span lang="ar">المتغير</span></th>
+<th scope="col"><span lang="en">Value</span><span lang="ar">القيمة</span></th>
+<th scope="col"><span lang="en">Use</span><span lang="ar">الاستخدام</span></th>
+</tr></thead>
+<tbody>
+<tr data-token="--bui-font-family-base" data-kind="other">
+<td><code>--bui-font-family-base</code></td>
+<td data-slot="value"><code class="docs-token-value">system-ui, -apple-system, "Segoe UI", Tahoma, "Noto Sans Arabic", "Noto Sans", Roboto, "Helvetica Neue", Arial, sans-serif</code></td>
+<td class="docs-wrap"><span lang="en">Interface and body text. Includes Arabic-capable fallbacks (Tahoma, Noto Sans Arabic).</span><span lang="ar">نص الواجهة والمتن. يتضمن بدائل تدعم العربية (Tahoma وNoto Sans Arabic).</span></td>
+</tr>
+<tr data-token="--bui-font-family-mono" data-kind="other">
+<td><code>--bui-font-family-mono</code></td>
+<td data-slot="value"><code class="docs-token-value">ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace</code></td>
+<td class="docs-wrap"><span lang="en">Code.</span><span lang="ar">الشيفرة.</span></td>
+</tr>
+</tbody></table></div>
+<div class="docs-demo"><span class="docs-demo__label"><span lang="en">Live</span><span lang="ar">عرض حي</span></span><p class="docs-specimen" style="font-family:var(--bui-font-family-base)"><span lang="en">Base: The quick brown fox jumps over the lazy dog.</span><span lang="ar">الأساسي: نص تجريبي يعرض الخط الأساسي في الواجهة.</span></p><p class="docs-specimen" style="font-family:var(--bui-font-family-mono)"><span lang="en">Mono: const total = 12 + 30;</span><span lang="ar">أحادي المسافة: const total = 12 + 30;</span></p></div>
+<div class="docs-callout docs-callout--note" role="note">
+<p class="docs-callout__title"><span lang="en">Which font you actually see</span><span lang="ar">أي خط تراه فعليًّا</span></p>
+<p lang="en">A system font stack renders differently on each operating system, so appearance and Arabic glyph shapes vary between devices. Rendering has not been compared across platforms.</p>
+<p lang="ar">مجموعة خطوط النظام تُعرض بشكل مختلف على كل نظام تشغيل، لذا يختلف المظهر وأشكال الحروف العربية بين الأجهزة. ولم تُقارَن النتائج بين المنصات.</p>
+</div>
+<h2 id="font-sizes"><span lang="en">Font sizes</span><span lang="ar">أحجام الخطوط</span></h2>
+<p lang="en">Sizes use <code>rem</code>, so they follow the reader's browser font-size setting.</p>
+<p lang="ar">تستخدم الأحجام وحدة <code>rem</code>، فتتبع إعداد حجم الخط في متصفح القارئ.</p>
+<div class="docs-table-wrap">
+<table>
+<thead><tr>
+<th scope="col"><span lang="en">Token</span><span lang="ar">المتغير</span></th>
+<th scope="col"><span lang="en">Value</span><span lang="ar">القيمة</span></th>
+<th scope="col"><span lang="en">Use</span><span lang="ar">الاستخدام</span></th>
+</tr></thead>
+<tbody>
+<tr data-token="--bui-font-size-xs" data-kind="other">
+<td><code>--bui-font-size-xs</code></td>
+<td data-slot="value"><code class="docs-token-value">0.75rem</code></td>
+<td class="docs-wrap"><span lang="en">Labels and badges</span><span lang="ar">الوسوم والشارات</span></td>
+</tr>
+<tr data-token="--bui-font-size-sm" data-kind="other">
+<td><code>--bui-font-size-sm</code></td>
+<td data-slot="value"><code class="docs-token-value">0.875rem</code></td>
+<td class="docs-wrap"><span lang="en">Secondary text, tables</span><span lang="ar">النص الثانوي والجداول</span></td>
+</tr>
+<tr data-token="--bui-font-size-md" data-kind="other">
+<td><code>--bui-font-size-md</code></td>
+<td data-slot="value"><code class="docs-token-value">1rem</code></td>
+<td class="docs-wrap"><span lang="en">Body text</span><span lang="ar">نص المتن</span></td>
+</tr>
+<tr data-token="--bui-font-size-lg" data-kind="other">
+<td><code>--bui-font-size-lg</code></td>
+<td data-slot="value"><code class="docs-token-value">1.125rem</code></td>
+<td class="docs-wrap"><span lang="en">Lead text</span><span lang="ar">النص التمهيدي</span></td>
+</tr>
+<tr data-token="--bui-font-size-xl" data-kind="other">
+<td><code>--bui-font-size-xl</code></td>
+<td data-slot="value"><code class="docs-token-value">1.25rem</code></td>
+<td class="docs-wrap"><span lang="en">Small headings</span><span lang="ar">العناوين الصغيرة</span></td>
+</tr>
+<tr data-token="--bui-font-size-2xl" data-kind="other">
+<td><code>--bui-font-size-2xl</code></td>
+<td data-slot="value"><code class="docs-token-value">1.5rem</code></td>
+<td class="docs-wrap"><span lang="en">Section headings</span><span lang="ar">عناوين الأقسام</span></td>
+</tr>
+<tr data-token="--bui-font-size-3xl" data-kind="other">
+<td><code>--bui-font-size-3xl</code></td>
+<td data-slot="value"><code class="docs-token-value">1.875rem</code></td>
+<td class="docs-wrap"><span lang="en">Large headings</span><span lang="ar">العناوين الكبيرة</span></td>
+</tr>
+<tr data-token="--bui-font-size-4xl" data-kind="other">
+<td><code>--bui-font-size-4xl</code></td>
+<td data-slot="value"><code class="docs-token-value">2.5rem</code></td>
+<td class="docs-wrap"><span lang="en">Page titles</span><span lang="ar">عناوين الصفحات</span></td>
+</tr>
+</tbody></table></div>
+<div class="docs-demo"><span class="docs-demo__label"><span lang="en">Live</span><span lang="ar">عرض حي</span></span><p class="docs-specimen" style="font-size:var(--bui-font-size-xs)"><span lang="en">xs · Labels and badges</span><span lang="ar">xs · الوسوم والشارات</span></p><p class="docs-specimen" style="font-size:var(--bui-font-size-sm)"><span lang="en">sm · Secondary text, tables</span><span lang="ar">sm · النص الثانوي والجداول</span></p><p class="docs-specimen" style="font-size:var(--bui-font-size-md)"><span lang="en">md · Body text</span><span lang="ar">md · نص المتن</span></p><p class="docs-specimen" style="font-size:var(--bui-font-size-lg)"><span lang="en">lg · Lead text</span><span lang="ar">lg · النص التمهيدي</span></p><p class="docs-specimen" style="font-size:var(--bui-font-size-xl)"><span lang="en">xl · Small headings</span><span lang="ar">xl · العناوين الصغيرة</span></p><p class="docs-specimen" style="font-size:var(--bui-font-size-2xl)"><span lang="en">2xl · Section headings</span><span lang="ar">2xl · عناوين الأقسام</span></p><p class="docs-specimen" style="font-size:var(--bui-font-size-3xl)"><span lang="en">3xl · Large headings</span><span lang="ar">3xl · العناوين الكبيرة</span></p><p class="docs-specimen" style="font-size:var(--bui-font-size-4xl)"><span lang="en">4xl · Page titles</span><span lang="ar">4xl · عناوين الصفحات</span></p></div>
+<h2 id="font-weights"><span lang="en">Font weights</span><span lang="ar">أوزان الخطوط</span></h2>
+<div class="docs-table-wrap">
+<table>
+<thead><tr>
+<th scope="col"><span lang="en">Token</span><span lang="ar">المتغير</span></th>
+<th scope="col"><span lang="en">Value</span><span lang="ar">القيمة</span></th>
+<th scope="col"><span lang="en">Use</span><span lang="ar">الاستخدام</span></th>
+</tr></thead>
+<tbody>
+<tr data-token="--bui-font-weight-regular" data-kind="other">
+<td><code>--bui-font-weight-regular</code></td>
+<td data-slot="value"><code class="docs-token-value">400</code></td>
+<td class="docs-wrap"><span lang="en">Regular</span><span lang="ar">عادي</span></td>
+</tr>
+<tr data-token="--bui-font-weight-medium" data-kind="other">
+<td><code>--bui-font-weight-medium</code></td>
+<td data-slot="value"><code class="docs-token-value">500</code></td>
+<td class="docs-wrap"><span lang="en">Medium</span><span lang="ar">متوسط</span></td>
+</tr>
+<tr data-token="--bui-font-weight-semibold" data-kind="other">
+<td><code>--bui-font-weight-semibold</code></td>
+<td data-slot="value"><code class="docs-token-value">600</code></td>
+<td class="docs-wrap"><span lang="en">Semibold</span><span lang="ar">شبه عريض</span></td>
+</tr>
+<tr data-token="--bui-font-weight-bold" data-kind="other">
+<td><code>--bui-font-weight-bold</code></td>
+<td data-slot="value"><code class="docs-token-value">700</code></td>
+<td class="docs-wrap"><span lang="en">Bold</span><span lang="ar">عريض</span></td>
+</tr>
+</tbody></table></div>
+<div class="docs-demo"><span class="docs-demo__label"><span lang="en">Live</span><span lang="ar">عرض حي</span></span><p class="docs-specimen" style="font-weight:var(--bui-font-weight-regular)"><span lang="en">Regular — The quick brown fox</span><span lang="ar">عادي — نص تجريبي للوزن</span></p><p class="docs-specimen" style="font-weight:var(--bui-font-weight-medium)"><span lang="en">Medium — The quick brown fox</span><span lang="ar">متوسط — نص تجريبي للوزن</span></p><p class="docs-specimen" style="font-weight:var(--bui-font-weight-semibold)"><span lang="en">Semibold — The quick brown fox</span><span lang="ar">شبه عريض — نص تجريبي للوزن</span></p><p class="docs-specimen" style="font-weight:var(--bui-font-weight-bold)"><span lang="en">Bold — The quick brown fox</span><span lang="ar">عريض — نص تجريبي للوزن</span></p></div>
+<p lang="en">Whether a weight looks different depends on the font: a system font may not provide all four weights, in which case the browser picks the nearest one.</p>
+<p lang="ar">ظهور الفرق بين الأوزان يعتمد على الخط: قد لا يوفّر خط النظام الأوزان الأربعة، فيختار المتصفح أقرب وزن.</p>
+<h2 id="line-heights"><span lang="en">Line heights</span><span lang="ar">ارتفاع السطر</span></h2>
+<div class="docs-table-wrap">
+<table>
+<thead><tr>
+<th scope="col"><span lang="en">Token</span><span lang="ar">المتغير</span></th>
+<th scope="col"><span lang="en">Value</span><span lang="ar">القيمة</span></th>
+<th scope="col"><span lang="en">Use</span><span lang="ar">الاستخدام</span></th>
+</tr></thead>
+<tbody>
+<tr data-token="--bui-line-height-tight" data-kind="other">
+<td><code>--bui-line-height-tight</code></td>
+<td data-slot="value"><code class="docs-token-value">1.25</code></td>
+<td class="docs-wrap"><span lang="en">Headings and short, single-line text.</span><span lang="ar">العناوين والنصوص القصيرة في سطر واحد.</span></td>
+</tr>
+<tr data-token="--bui-line-height-base" data-kind="other">
+<td><code>--bui-line-height-base</code></td>
+<td data-slot="value"><code class="docs-token-value">1.65</code></td>
+<td class="docs-wrap"><span lang="en">Body text and paragraphs.</span><span lang="ar">نص المتن والفقرات.</span></td>
+</tr>
+</tbody></table></div>
+<div class="docs-demo-grid"><div class="docs-demo"><span class="docs-demo__label"><code>--bui-line-height-tight</code></span><p class="docs-specimen" style="line-height:var(--bui-line-height-tight)"><span lang="en">Line height is the distance between baselines. Too tight and lines blur together; too loose and the paragraph falls apart.</span><span lang="ar">ارتفاع السطر هو المسافة بين خطوط الأساس. إن ضاق كثيرًا تداخلت الأسطر، وإن اتسع كثيرًا تفكّكت الفقرة.</span></p></div><div class="docs-demo"><span class="docs-demo__label"><code>--bui-line-height-base</code></span><p class="docs-specimen" style="line-height:var(--bui-line-height-base)"><span lang="en">Line height is the distance between baselines. Too tight and lines blur together; too loose and the paragraph falls apart.</span><span lang="ar">ارتفاع السطر هو المسافة بين خطوط الأساس. إن ضاق كثيرًا تداخلت الأسطر، وإن اتسع كثيرًا تفكّكت الفقرة.</span></p></div></div>
+<div class="docs-callout docs-callout--note" role="note">
+<p class="docs-callout__title"><span lang="en">Arabic needs more room</span><span lang="ar">العربية تحتاج مساحة أكبر</span></p>
+<p lang="en">Arabic letters have taller ascenders, descenders and dots. This documentation site raises the base line height to 1.85 for Arabic (<code>html[lang="ar"] body</code>). Baset UI has no such rule, so add one if your content is Arabic.</p>
+<p lang="ar">للحروف العربية صواعد ونوازل ونقاط أعلى. يرفع موقع التوثيق هذا ارتفاع السطر الأساسي إلى 1.85 للعربية (<code>html[lang="ar"] body</code>). ولا توجد قاعدة كهذه في Baset UI، فأضفها إن كان محتواك عربيًّا.</p>
+</div>
+<h2 id="text-utilities"><span lang="en">Text utilities</span><span lang="ar">أصناف النصوص المساعدة</span></h2>
+<p lang="en"><span class="docs-badge docs-badge--missing"><span lang="en">Not implemented yet</span><span lang="ar">غير منفَّذ بعد</span></span> No <code>bui-</code> text utility classes exist (size, weight, alignment, transform, truncation). Do not use names such as <code>bui-text-lg</code> or <code>bui-fw-bold</code>; they are not defined. The project architecture also says the core should not become a large utility framework, so utilities will be added only when components need them.</p>
+<p lang="ar"><span class="docs-badge docs-badge--missing"><span lang="en">Not implemented yet</span><span lang="ar">غير منفَّذ بعد</span></span> لا توجد أي أصناف نصوص مساعدة بالبادئة <code>bui-</code> (الحجم والوزن والمحاذاة والتحويل والاقتطاع). لا تستخدم أسماء مثل <code>bui-text-lg</code> أو <code>bui-fw-bold</code>؛ فهي غير معرَّفة. كما تنص بنية المشروع على ألا يتحول الـ core إلى إطار أدوات ضخم، لذا ستُضاف الأدوات فقط عند حاجة المكونات إليها.</p>
+<p lang="en">Until then, write a class of your own that reads the tokens:</p>
+<p lang="ar">إلى ذلك الحين اكتب صنفًا خاصًّا بك يقرأ الـ tokens:</p>
+<pre class="docs-code" data-lang="css"><code>.heading-lg {
+  font-size: var(--bui-font-size-2xl);
+  font-weight: var(--bui-font-weight-semibold);
+  line-height: var(--bui-line-height-tight);
+}
+
+.prose p {
+  font-size: var(--bui-font-size-md);
+  line-height: var(--bui-line-height-base);
+  text-align: start; /* logical: follows the direction */
+}
+</code></pre>
+<p lang="en">Prefer <code>text-align: start</code> and <code>end</code> to <code>left</code> and <code>right</code> so alignment follows the direction.</p>
+<p lang="ar">فضّل <code>text-align: start</code> و<code>end</code> على <code>left</code> و<code>right</code> لتتبع المحاذاة الاتجاه.</p>
+<h2 id="typography-customization"><span lang="en">Typography customization</span><span lang="ar">تخصيص الخطوط</span></h2>
+<h3 id="custom-font"><span lang="en">Use your own font</span><span lang="ar">استخدام خط خاص بك</span></h3>
+<p lang="en">Load the font yourself, then point the token at it. Keep the original stack as the fallback:</p>
+<p lang="ar">حمّل الخط بنفسك ثم وجّه الـ token إليه. وأبقِ المجموعة الأصلية كبديل:</p>
+<pre class="docs-code" data-lang="css"><code>@font-face {
+  font-family: "My Font";
+  src: url("fonts/my-font.woff2") format("woff2");
+  font-display: swap;
+}
+
+:root {
+  --bui-font-family-base: "My Font", system-ui, -apple-system, "Segoe UI", Tahoma, "Noto Sans Arabic", sans-serif;
+}
+</code></pre>
+<ul>
+  <li><span lang="en">Check that the font supports Arabic if your content is Arabic; otherwise the browser falls back for those letters.</span><span lang="ar">تأكد أن الخط يدعم العربية إن كان محتواك عربيًّا؛ وإلا استخدم المتصفح بديلًا لتلك الحروف.</span></li>
+  <li><span lang="en">A web font adds a download. Baset UI does not load one for you.</span><span lang="ar">الخط المحمَّل من الويب يضيف تنزيلًا. ولا تحمّل Baset UI أيّ خط عنك.</span></li>
+</ul>
+<h3 id="custom-scale"><span lang="en">Change the size scale</span><span lang="ar">تغيير سلّم الأحجام</span></h3>
+<pre class="docs-code" data-lang="css"><code>:root {
+  --bui-font-size-md: 1.0625rem;  /* slightly larger body text */
+  --bui-line-height-base: 1.7;
+}
+
+/* Arabic content */
+:lang(ar) {
+  --bui-line-height-base: 1.85;
+}
+</code></pre>
+<p lang="en">These overrides are not theme-dependent, so one <code>:root</code> block is enough (unlike colors).</p>
+<p lang="ar">هذه التعديلات لا ترتبط بالثيم، لذا تكفي كتلة <code>:root</code> واحدة (بخلاف الألوان).</p>
+</article>
+<footer class="docs-footer" id="docs-footer"></footer>
+</main>
+<aside class="docs-toc" id="docs-toc"></aside>
+</div>
+<div id="docs-live" class="docs-sr-only" role="status" aria-live="polite"></div>
+<script src="../assets/js/nav-data.js" defer></script>
+<script src="../assets/js/highlight.js" defer></script>
+<script src="../assets/js/search.js" defer></script>
+<script src="../assets/js/docs.js" defer></script>
+<script src="../assets/js/tokens-live.js" defer></script>
+</body>
+</html>

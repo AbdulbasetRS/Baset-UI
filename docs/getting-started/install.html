@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en" dir="ltr" data-docs-root="../" data-page="getting-started/install">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Install · Baset UI</title>
+<meta name="description" content="Which installation methods exist today, which do not, and what is needed before announcing them.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230f766e'/%3E%3Crect x='7' y='8' width='18' height='3.6' rx='1.8' fill='%23fff'/%3E%3Crect x='7' y='14.2' width='12' height='3.6' rx='1.8' fill='%23fff'/%3E%3Crect x='7' y='20.4' width='15' height='3.6' rx='1.8' fill='%23fff'/%3E%3C/svg%3E">
+<script src="../assets/js/init.js"></script>
+<link rel="stylesheet" href="../../assets/css/baset-ui.css">
+<link rel="stylesheet" href="../assets/css/docs.css">
+</head>
+<body>
+<a class="docs-skip" href="#content"><span lang="en">Skip to content</span><span lang="ar">تخطَّ إلى المحتوى</span></a>
+<header class="docs-navbar" id="docs-navbar"></header>
+<div class="docs-backdrop" id="docs-backdrop" hidden></div>
+<div class="docs-layout">
+<aside class="docs-sidebar" id="docs-sidebar"></aside>
+<main class="docs-main" id="content" tabindex="-1">
+<article class="docs-article">
+<noscript>
+<div class="docs-callout docs-callout--note" role="note">
+<p class="docs-callout__title"><span lang="en">JavaScript is off</span><span lang="ar">جافاسكربت معطَّل</span></p>
+<p lang="en">Page content stays readable, but the navigation menu, search, table of contents and the language, direction and theme switches need JavaScript. Content is shown in English.</p>
+<p lang="ar">يبقى محتوى الصفحة مقروءًا، لكن قائمة التنقل والبحث وفهرس الصفحة ومفاتيح اللغة والاتجاه والثيم تحتاج إلى جافاسكربت. يُعرض المحتوى بالإنجليزية.</p>
+</div>
+
+</noscript>
+<h1><span lang="en">Install</span><span lang="ar">التثبيت</span></h1>
+<p class="docs-lead" lang="en">Only one installation method exists today: downloading the source files from GitHub. CDN and npm are not available yet, and this page lists what must be done before they can be announced.</p>
+<p class="docs-lead" lang="ar">توجد اليوم طريقة تثبيت واحدة فقط: تحميل ملفات المصدر من GitHub. CDN وnpm غير متاحين بعد، وتسرد هذه الصفحة ما يجب إنجازه قبل الإعلان عنهما.</p>
+<h2 id="methods-at-a-glance"><span lang="en">Installation methods at a glance</span><span lang="ar">طرق التثبيت في لمحة</span></h2>
+<div class="docs-table-wrap">
+<table>
+<thead><tr>
+<th scope="col"><span lang="en">Method</span><span lang="ar">الطريقة</span></th>
+<th scope="col"><span lang="en">Status</span><span lang="ar">الحالة</span></th>
+<th scope="col"><span lang="en">Details</span><span lang="ar">التفاصيل</span></th>
+</tr></thead>
+<tbody>
+<tr><td><span lang="en">Download source files (GitHub)</span><span lang="ar">تحميل ملفات المصدر (GitHub)</span></td><td><span class="docs-badge docs-badge--available"><span lang="en">Available</span><span lang="ar">متاح</span></span></td><td><span lang="en">Clone or download a ZIP. Contains the token stylesheet only.</span><span lang="ar">استنساخ المستودع أو تحميل ZIP. يحتوي على ملف الـ tokens فقط.</span></td></tr>
+<tr><td><span lang="en">CDN</span><span lang="ar">CDN</span></td><td><span class="docs-badge docs-badge--missing"><span lang="en">Not implemented yet</span><span lang="ar">غير منفَّذ بعد</span></span></td><td><span lang="en">No released files, no version tags, no published URLs.</span><span lang="ar">لا ملفات مُصدَرة ولا وسوم إصدارات ولا روابط منشورة.</span></td></tr>
+<tr><td><span lang="en">npm</span><span lang="ar">npm</span></td><td><span class="docs-badge docs-badge--missing"><span lang="en">Not implemented yet</span><span lang="ar">غير منفَّذ بعد</span></span></td><td><span lang="en">No <code>package.json</code>; nothing is published to the registry.</span><span lang="ar">لا يوجد <code>package.json</code>، ولا شيء منشور في السجل.</span></td></tr>
+<tr><td><span lang="en">Framework packages (React, Vue, Angular, Laravel)</span><span lang="ar">حزم الأطر (React وVue وAngular وLaravel)</span></td><td><span class="docs-badge docs-badge--planned"><span lang="en">Planned</span><span lang="ar">مخطَّط</span></span></td><td><span lang="en">Optional and not started. See <a href="approach.html#framework-agnostic-architecture">Approach</a>.</span><span lang="ar">اختيارية ولم يبدأ العمل عليها. راجع <a href="approach.html#framework-agnostic-architecture">المنهجية</a>.</span></td></tr>
+</tbody></table></div>
+<h2 id="download-source"><span lang="en">Downloading source files</span><span lang="ar">تحميل ملفات المصدر</span></h2>
+<p lang="en">This is the only supported way to get Baset UI today.</p>
+<p lang="ar">هذه هي الطريقة الوحيدة المدعومة للحصول على Baset UI اليوم.</p>
+<h3 id="clone"><span lang="en">Clone the repository</span><span lang="ar">استنساخ المستودع</span></h3>
+<pre class="docs-code" data-lang="bash"><code>git clone https://github.com/AbdulbasetRS/Baset-UI.git
+cd Baset-UI
+git rev-parse HEAD   # note this commit hash
+</code></pre>
+<p lang="en">Then copy <code>assets/css/baset-ui.css</code> into your project.</p>
+<p lang="ar">ثم انسخ الملف <code>assets/css/baset-ui.css</code> إلى مشروعك.</p>
+<h3 id="zip"><span lang="en">Download a ZIP</span><span lang="ar">تحميل ملف ZIP</span></h3>
+<p lang="en">On the GitHub repository page choose <em>Code</em> then <em>Download ZIP</em>. You get the current state of the default branch.</p>
+<p lang="ar">في صفحة المستودع على GitHub اختر <em>Code</em> ثم <em>Download ZIP</em>. ستحصل على الحالة الحالية للفرع الافتراضي.</p>
+<div class="docs-callout docs-callout--warning" role="note">
+<p class="docs-callout__title"><span lang="en">No versions to pin yet</span><span lang="ar">لا توجد إصدارات لتثبيتها بعد</span></p>
+<p lang="en">The repository has no version tags or releases, so there is no stable version number. Token names and values may still change. Record the commit hash you copied from.</p>
+<p lang="ar">لا يحتوي المستودع على وسوم إصدارات (tags) ولا Releases، فلا يوجد رقم إصدار مستقر. قد تتغير أسماء الـ tokens وقيمها. سجّل رمز الـ commit الذي نسخت منه.</p>
+</div>
+<div class="docs-callout docs-callout--danger" role="note">
+<p class="docs-callout__title"><span lang="en">No license file yet</span><span lang="ar">لا يوجد ملف ترخيص بعد</span></p>
+<p lang="en">The repository does not contain a <code>LICENSE</code> file, so the terms of use are not defined. The project owner needs to add one.</p>
+<p lang="ar">لا يحتوي المستودع على ملف <code>LICENSE</code>، لذلك شروط الاستخدام غير محددة. على مالك المشروع إضافة ملف ترخيص.</p>
+</div>
+<h2 id="required-files"><span lang="en">Required files</span><span lang="ar">الملفات المطلوبة</span></h2>
+<div class="docs-table-wrap">
+<table>
+<thead><tr>
+<th scope="col"><span lang="en">File</span><span lang="ar">الملف</span></th>
+<th scope="col"><span lang="en">Purpose</span><span lang="ar">الغرض</span></th>
+<th scope="col"><span lang="en">Status</span><span lang="ar">الحالة</span></th>
+</tr></thead>
+<tbody>
+<tr><td><code>assets/css/baset-ui.css</code></td><td><span lang="en">Design tokens and light/dark theme variables. The only file you need today.</span><span lang="ar">Design Tokens ومتغيرات الثيم الفاتح والداكن. الملف الوحيد الذي تحتاجه اليوم.</span></td><td><span class="docs-badge docs-badge--foundation"><span lang="en">Foundation (pre-release)</span><span lang="ar">أساس أولي (تمهيدي)</span></span></td></tr>
+<tr><td><code>assets/js/baset-ui.js</code></td><td><span lang="en">JavaScript entry for interactive components. The README quick start mentions this path, but the file does not exist and nothing needs it today.</span><span lang="ar">مدخل جافاسكربت للمكونات التفاعلية. يذكر README هذا المسار، لكن الملف غير موجود ولا شيء يحتاجه اليوم.</span></td><td><span class="docs-badge docs-badge--missing"><span lang="en">Not implemented yet</span><span lang="ar">غير منفَّذ بعد</span></span></td></tr>
+<tr><td><code>assets/css/components/*</code></td><td><span lang="en">Per-component stylesheets.</span><span lang="ar">ملفات أنماط لكل مكوّن.</span></td><td><span class="docs-badge docs-badge--missing"><span lang="en">Not implemented yet</span><span lang="ar">غير منفَّذ بعد</span></span></td></tr>
+<tr><td><span lang="en">Fonts and icons</span><span lang="ar">الخطوط والأيقونات</span></td><td><span lang="en">Nothing to install. The stylesheet uses the system font stack and no icon set is bundled.</span><span lang="ar">لا شيء لتثبيته. يستخدم ملف الأنماط خطوط النظام ولا توجد مجموعة أيقونات مضمَّنة.</span></td><td><span class="docs-badge docs-badge--available"><span lang="en">Available</span><span lang="ar">متاح</span></span></td></tr>
+</tbody></table></div>
+<h2 id="installation-examples"><span lang="en">Installation examples</span><span lang="ar">أمثلة التثبيت</span></h2>
+<h3 id="example-html"><span lang="en">Plain HTML</span><span lang="ar">HTML عادي</span></h3>
+<p lang="en">Copy the file to your project, then link it before your own styles:</p>
+<p lang="ar">انسخ الملف إلى مشروعك ثم اربطه قبل أنماطك الخاصة:</p>
+<pre class="docs-code" data-lang="html" data-title="index.html"><code>&lt;link rel="stylesheet" href="./css/baset-ui.css"&gt;
+</code></pre>
+<h3 id="example-frameworks"><span lang="en">Framework projects</span><span lang="ar">مشاريع الأطر</span></h3>
+<div class="docs-callout docs-callout--warning" role="note">
+<p class="docs-callout__title"><span lang="en">Untested</span><span lang="ar">لم يُختبر</span></p>
+<p lang="en">These show the generic way of loading a plain stylesheet in each environment. They have not been verified in sample Baset UI applications, and no framework-specific package exists.</p>
+<p lang="ar">تعرض هذه الأمثلة الطريقة العامة لتحميل ملف أنماط عادي في كل بيئة. لم يُتحقق منها في تطبيقات تجريبية لـ Baset UI، ولا توجد حزمة خاصة بأي إطار.</p>
+</div>
+<p lang="en"><strong>Laravel Blade</strong>: copy the file to <code>public/css/</code>.</p>
+<p lang="ar"><strong>Laravel Blade</strong>: انسخ الملف إلى <code>public/css/</code>.</p>
+<pre class="docs-code" data-lang="blade" data-title="resources/views/layouts/app.blade.php"><code>&lt;link rel="stylesheet" href="{{ asset('css/baset-ui.css') }}"&gt;
+</code></pre>
+<p lang="en"><strong>React</strong> and <strong>Vue</strong> with a bundler that supports CSS imports: import the file once in your entry module.</p>
+<p lang="ar"><strong>React</strong> و<strong>Vue</strong> مع أداة تجميع تدعم استيراد CSS: استورد الملف مرة واحدة في وحدة المدخل.</p>
+<pre class="docs-code" data-lang="js" data-title="src/main.js"><code>import './baset-ui.css';
+</code></pre>
+<p lang="en"><strong>Angular</strong>: add the file to the <code>styles</code> array of your project in <code>angular.json</code>.</p>
+<p lang="ar"><strong>Angular</strong>: أضف الملف إلى مصفوفة <code>styles</code> الخاصة بمشروعك في <code>angular.json</code>.</p>
+<pre class="docs-code" data-lang="text" data-title="angular.json"><code>"styles": ["src/baset-ui.css", "src/styles.css"]
+</code></pre>
+<h2 id="before-announcing"><span lang="en">Before CDN and npm can be announced</span><span lang="ar">قبل الإعلان عن CDN وnpm</span></h2>
+<p lang="en">Neither method is documented as available because neither is implemented. These are the things that must exist first. Items marked <em>Decision needed</em> belong to the project owner.</p>
+<p lang="ar">لم يُوثَّق أي من الطريقتين كمتاح لأن أيًّا منهما لم يُنفَّذ. هذه الأمور يجب أن تتوفر أولًا. البنود الموسومة <em>Decision needed</em> تعود لمالك المشروع.</p>
+<h3 id="cdn-requirements"><span lang="en">CDN</span><span lang="ar">CDN</span></h3>
+<div class="docs-table-wrap">
+<table>
+<thead><tr>
+<th scope="col"><span lang="en">Requirement</span><span lang="ar">المتطلب</span></th>
+<th scope="col"><span lang="en">Status</span><span lang="ar">الحالة</span></th>
+</tr></thead>
+<tbody>
+<tr><td><span lang="en">A tagged, versioned release so URLs can pin an exact version.</span><span lang="ar">إصدار موسوم برقم نسخة حتى تثبّت الروابط نسخة محددة.</span></td><td><span class="docs-badge docs-badge--missing"><span lang="en">Needed</span><span lang="ar">مطلوب</span></span></td></tr>
+<tr><td><span lang="en">Stable file paths for each released file.</span><span lang="ar">مسارات ثابتة لكل ملف مُصدَر.</span></td><td><span class="docs-badge docs-badge--missing"><span lang="en">Needed</span><span lang="ar">مطلوب</span></span></td></tr>
+<tr><td><span lang="en">Whether to ship minified files. Producing them needs a build step, which requires the owner's approval.</span><span lang="ar">هل تُنشر ملفات مصغَّرة. إنتاجها يتطلب خطوة بناء تحتاج موافقة المالك.</span></td><td><span class="docs-badge docs-badge--planned"><span lang="en">Decision needed</span><span lang="ar">يحتاج قرارًا</span></span></td></tr>
+<tr><td><span lang="en">Subresource Integrity (SRI) hashes published for each file.</span><span lang="ar">نشر بصمات SRI لكل ملف.</span></td><td><span class="docs-badge docs-badge--missing"><span lang="en">Needed</span><span lang="ar">مطلوب</span></span></td></tr>
+<tr><td><span lang="en">A host or CDN that actually serves the files, checked by loading them from a clean page.</span><span lang="ar">مضيف أو CDN يقدّم الملفات فعلًا، مع التحقق بتحميلها من صفحة نظيفة.</span></td><td><span class="docs-badge docs-badge--missing"><span lang="en">Needed</span><span lang="ar">مطلوب</span></span></td></tr>
+<tr><td><span lang="en">A <code>LICENSE</code> file in the repository.</span><span lang="ar">ملف <code>LICENSE</code> في المستودع.</span></td><td><span class="docs-badge docs-badge--missing"><span lang="en">Needed</span><span lang="ar">مطلوب</span></span></td></tr>
+</tbody></table></div>
+<h3 id="npm-requirements"><span lang="en">npm</span><span lang="ar">npm</span></h3>
+<div class="docs-table-wrap">
+<table>
+<thead><tr>
+<th scope="col"><span lang="en">Requirement</span><span lang="ar">المتطلب</span></th>
+<th scope="col"><span lang="en">Status</span><span lang="ar">الحالة</span></th>
+</tr></thead>
+<tbody>
+<tr><td><span lang="en">A <code>package.json</code> with name, version, license and the list of files to publish.</span><span lang="ar">ملف <code>package.json</code> فيه الاسم والإصدار والترخيص وقائمة الملفات المنشورة.</span></td><td><span class="docs-badge docs-badge--missing"><span lang="en">Needed</span><span lang="ar">مطلوب</span></span></td></tr>
+<tr><td><span lang="en">The package name (for example unscoped or under an <code>@baset-ui</code> scope) and confirmation that it is free on the registry.</span><span lang="ar">اسم الحزمة (مثلًا بدون نطاق أو تحت نطاق <code>@baset-ui</code>) والتأكد من أنه متاح في السجل.</span></td><td><span class="docs-badge docs-badge--planned"><span lang="en">Decision needed</span><span lang="ar">يحتاج قرارًا</span></span></td></tr>
+<tr><td><span lang="en">A <code>LICENSE</code> file in the repository.</span><span lang="ar">ملف <code>LICENSE</code> في المستودع.</span></td><td><span class="docs-badge docs-badge--missing"><span lang="en">Needed</span><span lang="ar">مطلوب</span></span></td></tr>
+<tr><td><span lang="en">Publishing access on npm and a documented release process.</span><span lang="ar">صلاحية النشر على npm وعملية إصدار موثَّقة.</span></td><td><span class="docs-badge docs-badge--missing"><span lang="en">Needed</span><span lang="ar">مطلوب</span></span></td></tr>
+<tr><td><span lang="en">Version tags that match the package version.</span><span lang="ar">وسوم إصدارات تطابق رقم إصدار الحزمة.</span></td><td><span class="docs-badge docs-badge--missing"><span lang="en">Needed</span><span lang="ar">مطلوب</span></span></td></tr>
+<tr><td><span lang="en">A verified install in a clean project, loading the stylesheet from <code>node_modules</code>.</span><span lang="ar">تثبيت متحقَّق منه في مشروع نظيف مع تحميل ملف الأنماط من <code>node_modules</code>.</span></td><td><span class="docs-badge docs-badge--missing"><span lang="en">Needed</span><span lang="ar">مطلوب</span></span></td></tr>
+</tbody></table></div>
+<p lang="en">When these are done, this page will be updated. Until then, any <code>npm install</code> or CDN <code>&lt;link&gt;</code> you see elsewhere for Baset UI is not an official method.</p>
+<p lang="ar">عند إنجازها ستُحدَّث هذه الصفحة. إلى ذلك الحين، أي أمر <code>npm install</code> أو رابط CDN تراه في مكان آخر لـ Baset UI ليس طريقة رسمية.</p>
+</article>
+<footer class="docs-footer" id="docs-footer"></footer>
+</main>
+<aside class="docs-toc" id="docs-toc"></aside>
+</div>
+<div id="docs-live" class="docs-sr-only" role="status" aria-live="polite"></div>
+<script src="../assets/js/nav-data.js" defer></script>
+<script src="../assets/js/highlight.js" defer></script>
+<script src="../assets/js/search.js" defer></script>
+<script src="../assets/js/docs.js" defer></script>
+</body>
+</html>

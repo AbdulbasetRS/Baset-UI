@@ -1,0 +1,150 @@
+/*!
+ * Baset UI — core design tokens (foundation, pre-release)
+ *
+ * This file currently contains ONLY design tokens and theme variables.
+ * It contains no component styles, no reset and no element selectors.
+ * Token names and values may still change before the first release.
+ *
+ * Conventions
+ *   - Every custom property starts with --bui-
+ *   - Light theme is the default (:root and .bui-light)
+ *   - Dark theme is applied with the .bui-dark class on any element
+ *   - Direction is controlled with the standard dir attribute, not with tokens
+ *
+ * Only tokens that are actually consumed are defined. Add new tokens when a
+ * real component needs them, not speculatively.
+ */
+
+/* ---------------------------------------------------------------------------
+   1. Theme-independent tokens
+   ------------------------------------------------------------------------ */
+:root {
+  /* Typography */
+  --bui-font-family-base: system-ui, -apple-system, "Segoe UI", Tahoma, "Noto Sans Arabic", "Noto Sans", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --bui-font-family-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+
+  --bui-font-size-xs: 0.75rem;
+  --bui-font-size-sm: 0.875rem;
+  --bui-font-size-md: 1rem;
+  --bui-font-size-lg: 1.125rem;
+  --bui-font-size-xl: 1.25rem;
+  --bui-font-size-2xl: 1.5rem;
+  --bui-font-size-3xl: 1.875rem;
+  --bui-font-size-4xl: 2.5rem;
+
+  --bui-font-weight-regular: 400;
+  --bui-font-weight-medium: 500;
+  --bui-font-weight-semibold: 600;
+  --bui-font-weight-bold: 700;
+
+  --bui-line-height-tight: 1.25;
+  --bui-line-height-base: 1.65;
+
+  /* Spacing (4px base unit) */
+  --bui-space-1: 0.25rem;
+  --bui-space-2: 0.5rem;
+  --bui-space-3: 0.75rem;
+  --bui-space-4: 1rem;
+  --bui-space-5: 1.25rem;
+  --bui-space-6: 1.5rem;
+  --bui-space-8: 2rem;
+  --bui-space-10: 2.5rem;
+  --bui-space-12: 3rem;
+  --bui-space-16: 4rem;
+
+  /* Border radius */
+  --bui-radius-sm: 0.25rem;
+  --bui-radius-md: 0.5rem;
+  --bui-radius-lg: 0.75rem;
+  --bui-radius-full: 9999px;
+
+  /* Border and focus */
+  --bui-border-width: 1px;
+  --bui-focus-ring-width: 2px;
+  --bui-focus-ring-offset: 2px;
+
+  /* Motion */
+  --bui-duration-fast: 120ms;
+  --bui-duration-base: 200ms;
+  --bui-easing-standard: cubic-bezier(0.2, 0, 0, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --bui-duration-fast: 0ms;
+    --bui-duration-base: 0ms;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   2. Light theme (default)
+   ------------------------------------------------------------------------ */
+:root,
+.bui-light {
+  color-scheme: light;
+
+  /* Surfaces and text */
+  --bui-color-bg: #fafaf7;
+  --bui-color-surface: #ffffff;
+  --bui-color-surface-muted: #f1f1ec;
+  --bui-color-text: #1c1f1e;
+  --bui-color-text-muted: #565d5b;
+  --bui-color-border: #e1e1da;
+  --bui-color-border-strong: #8a8e85;
+
+  /* Brand */
+  --bui-color-primary: #0f766e;
+  --bui-color-primary-hover: #115e59;
+  --bui-color-on-primary: #ffffff;
+  --bui-color-primary-subtle: #dcf0ec;
+
+  /* Semantic */
+  --bui-color-success: #15803d;
+  --bui-color-success-subtle: #e1f4e7;
+  --bui-color-warning: #b45309;
+  --bui-color-warning-subtle: #fcefd6;
+  --bui-color-danger: #b91c1c;
+  --bui-color-danger-subtle: #fbe7e7;
+  --bui-color-info: #0369a1;
+  --bui-color-info-subtle: #def0fa;
+
+  /* Shadows */
+  --bui-shadow-sm: 0 1px 2px rgb(28 31 30 / 0.08);
+  --bui-shadow-md: 0 4px 12px rgb(28 31 30 / 0.1);
+  --bui-shadow-lg: 0 16px 40px rgb(28 31 30 / 0.18);
+}
+
+/* ---------------------------------------------------------------------------
+   3. Dark theme
+   Applied by adding .bui-dark to <html> (page-wide) or to any element
+   (scoped region).
+   ------------------------------------------------------------------------ */
+.bui-dark {
+  color-scheme: dark;
+
+  --bui-color-bg: #0f1312;
+  --bui-color-surface: #161b1a;
+  --bui-color-surface-muted: #1e2524;
+  --bui-color-text: #e8ecea;
+  --bui-color-text-muted: #a3adaa;
+  --bui-color-border: #2a3331;
+  --bui-color-border-strong: #5f6d69;
+
+  --bui-color-primary: #2dd4bf;
+  --bui-color-primary-hover: #5eead4;
+  --bui-color-on-primary: #04211d;
+  --bui-color-primary-subtle: #12332f;
+
+  --bui-color-success: #4ade80;
+  --bui-color-success-subtle: #12301c;
+  --bui-color-warning: #fbbf24;
+  --bui-color-warning-subtle: #36290b;
+  --bui-color-danger: #f87171;
+  --bui-color-danger-subtle: #3b1919;
+  --bui-color-info: #38bdf8;
+  --bui-color-info-subtle: #0f2d3e;
+
+  --bui-shadow-sm: 0 1px 2px rgb(0 0 0 / 0.5);
+  --bui-shadow-md: 0 4px 12px rgb(0 0 0 / 0.5);
+  --bui-shadow-lg: 0 16px 40px rgb(0 0 0 / 0.6);
+}

@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en" dir="ltr" data-docs-root="../" data-page="getting-started/browsers-devices">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Browsers &amp; Devices · Baset UI</title>
+<meta name="description" content="Proposed browser support policy, platform features relied on, and what has and has not been tested.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230f766e'/%3E%3Crect x='7' y='8' width='18' height='3.6' rx='1.8' fill='%23fff'/%3E%3Crect x='7' y='14.2' width='12' height='3.6' rx='1.8' fill='%23fff'/%3E%3Crect x='7' y='20.4' width='15' height='3.6' rx='1.8' fill='%23fff'/%3E%3C/svg%3E">
+<script src="../assets/js/init.js"></script>
+<link rel="stylesheet" href="../../assets/css/baset-ui.css">
+<link rel="stylesheet" href="../assets/css/docs.css">
+</head>
+<body>
+<a class="docs-skip" href="#content"><span lang="en">Skip to content</span><span lang="ar">تخطَّ إلى المحتوى</span></a>
+<header class="docs-navbar" id="docs-navbar"></header>
+<div class="docs-backdrop" id="docs-backdrop" hidden></div>
+<div class="docs-layout">
+<aside class="docs-sidebar" id="docs-sidebar"></aside>
+<main class="docs-main" id="content" tabindex="-1">
+<article class="docs-article">
+<noscript>
+<div class="docs-callout docs-callout--note" role="note">
+<p class="docs-callout__title"><span lang="en">JavaScript is off</span><span lang="ar">جافاسكربت معطَّل</span></p>
+<p lang="en">Page content stays readable, but the navigation menu, search, table of contents and the language, direction and theme switches need JavaScript. Content is shown in English.</p>
+<p lang="ar">يبقى محتوى الصفحة مقروءًا، لكن قائمة التنقل والبحث وفهرس الصفحة ومفاتيح اللغة والاتجاه والثيم تحتاج إلى جافاسكربت. يُعرض المحتوى بالإنجليزية.</p>
+</div>
+
+</noscript>
+<h1><span lang="en">Browsers &amp; Devices</span><span lang="ar">المتصفحات والأجهزة</span></h1>
+<p class="docs-lead" lang="en">Which browsers Baset UI intends to support, which platform features it relies on, and how this documentation site responds to screen size. Nothing here claims cross-browser testing that has not happened.</p>
+<p class="docs-lead" lang="ar">المتصفحات التي تنوي Baset UI دعمها، وميزات المنصة التي تعتمد عليها، وكيف يستجيب موقع التوثيق لحجم الشاشة. لا شيء هنا يدّعي اختبارًا على متصفحات لم يحدث.</p>
+<div class="docs-callout docs-callout--warning" role="note">
+<p class="docs-callout__title"><span lang="en">Status</span><span lang="ar">الحالة</span></p>
+<p lang="en">The support policy below is a <em>proposal</em> waiting for the project owner's approval. No cross-browser test results are recorded in the repository yet, and no browser is currently listed as verified for Baset UI.</p>
+<p lang="ar">سياسة الدعم أدناه <em>مقترح</em> بانتظار موافقة مالك المشروع. لا توجد نتائج اختبار عبر المتصفحات مسجَّلة في المستودع بعد، ولا يُدرج أي متصفح حاليًا كمتحقَّق منه لـ Baset UI.</p>
+</div>
+<h2 id="supported-browsers"><span lang="en">Supported browsers</span><span lang="ar">المتصفحات المدعومة</span></h2>
+<div class="docs-table-wrap">
+<table>
+<thead><tr>
+<th scope="col"><span lang="en">Browser</span><span lang="ar">المتصفح</span></th>
+<th scope="col"><span lang="en">Proposed target</span><span lang="ar">الهدف المقترح</span></th>
+<th scope="col"><span lang="en">Verified</span><span lang="ar">التحقق</span></th>
+</tr></thead>
+<tbody>
+<tr><td><span lang="en">Chrome and Edge (desktop)</span><span lang="ar">Chrome وEdge (سطح المكتب)</span></td><td><span lang="en">Current stable version</span><span lang="ar">النسخة المستقرة الحالية</span></td><td><span class="docs-badge docs-badge--missing"><span lang="en">Not done</span><span lang="ar">لم يُنفَّذ</span></span></td></tr>
+<tr><td><span lang="en">Firefox (desktop)</span><span lang="ar">Firefox (سطح المكتب)</span></td><td><span lang="en">Current stable version</span><span lang="ar">النسخة المستقرة الحالية</span></td><td><span class="docs-badge docs-badge--missing"><span lang="en">Not done</span><span lang="ar">لم يُنفَّذ</span></span></td></tr>
+<tr><td><span lang="en">Safari (macOS)</span><span lang="ar">Safari (macOS)</span></td><td><span lang="en">Current stable version</span><span lang="ar">النسخة المستقرة الحالية</span></td><td><span class="docs-badge docs-badge--missing"><span lang="en">Not done</span><span lang="ar">لم يُنفَّذ</span></span></td></tr>
+<tr><td><span lang="en">Safari on iOS and iPadOS</span><span lang="ar">Safari على iOS وiPadOS</span></td><td><span lang="en">Current stable version</span><span lang="ar">النسخة المستقرة الحالية</span></td><td><span class="docs-badge docs-badge--missing"><span lang="en">Not done</span><span lang="ar">لم يُنفَّذ</span></span></td></tr>
+<tr><td><span lang="en">Chrome on Android</span><span lang="ar">Chrome على Android</span></td><td><span lang="en">Current stable version</span><span lang="ar">النسخة المستقرة الحالية</span></td><td><span class="docs-badge docs-badge--missing"><span lang="en">Not done</span><span lang="ar">لم يُنفَّذ</span></span></td></tr>
+<tr><td><span lang="en">Internet Explorer</span><span lang="ar">Internet Explorer</span></td><td><span lang="en">Not targeted; no polyfills</span><span lang="ar">غير مستهدف؛ بلا polyfills</span></td><td><span lang="en">Not applicable</span><span lang="ar">لا ينطبق</span></td></tr>
+</tbody></table></div>
+<p lang="en"><span class="docs-badge docs-badge--planned"><span lang="en">Proposed</span><span lang="ar">مقترح</span></span> The targets above are a proposal. The Verified column stays empty until tests are actually run.</p>
+<p lang="ar"><span class="docs-badge docs-badge--planned"><span lang="en">Proposed</span><span lang="ar">مقترح</span></span> الأهداف أعلاه مقترحة. يبقى عمود التحقق فارغًا إلى أن تُشغَّل اختبارات فعلية.</p>
+<h2 id="platform-features"><span lang="en">Platform features relied on</span><span lang="ar">ميزات المنصة المعتمَد عليها</span></h2>
+<p lang="en">The foundation uses modern CSS features. The table lists the ones whose availability was checked against MDN's Baseline data on 2026-11-05. It is not a complete feature audit; a full audit is planned.</p>
+<p lang="ar">يستخدم الأساس ميزات CSS حديثة. يسرد الجدول الميزات التي فُحصت إتاحتها مقابل بيانات Baseline في MDN بتاريخ 2026-11-05. وهو ليس تدقيقًا كاملًا للميزات؛ التدقيق الكامل مخطَّط.</p>
+<div class="docs-table-wrap">
+<table>
+<thead><tr>
+<th scope="col"><span lang="en">Feature</span><span lang="ar">الميزة</span></th>
+<th scope="col"><span lang="en">Used for</span><span lang="ar">الاستخدام</span></th>
+<th scope="col"><span lang="en">Baseline (MDN)</span><span lang="ar">Baseline (‏MDN)</span></th>
+</tr></thead>
+<tbody>
+<tr><td><span lang="en">CSS logical properties (<code>margin-inline</code> and related)</span><span lang="ar">الخصائص المنطقية في CSS (<code>margin-inline</code> وأخواتها)</span></td><td><span lang="en">RTL/LTR layout</span><span lang="ar">تخطيط RTL/LTR</span></td><td><span lang="en">Widely available; all browsers since April 2021</span><span lang="ar">متاحة على نطاق واسع؛ كل المتصفحات منذ أبريل 2021</span></td></tr>
+<tr><td><span lang="en"><code>:focus-visible</code></span><span lang="ar"><code>:focus-visible</code></span></td><td><span lang="en">Focus outlines</span><span lang="ar">إطارات التركيز</span></td><td><span lang="en">Widely available; all browsers since March 2022</span><span lang="ar">متاحة على نطاق واسع؛ كل المتصفحات منذ مارس 2022</span></td></tr>
+<tr><td><span lang="en"><code>&lt;dialog&gt;</code> element</span><span lang="ar">عنصر <code>&lt;dialog&gt;</code></span></td><td><span lang="en">Documentation search only</span><span lang="ar">بحث التوثيق فقط</span></td><td><span lang="en">Widely available; all browsers since March 2022</span><span lang="ar">متاح على نطاق واسع؛ كل المتصفحات منذ مارس 2022</span></td></tr>
+<tr><td><span lang="en"><code>inert</code> attribute</span><span lang="ar">الخاصية <code>inert</code></span></td><td><span lang="en">Documentation mobile menu only</span><span lang="ar">قائمة الجوال في التوثيق فقط</span></td><td><span lang="en">Widely available; all browsers since April 2023</span><span lang="ar">متاحة على نطاق واسع؛ كل المتصفحات منذ أبريل 2023</span></td></tr>
+</tbody></table></div>
+<p lang="en">Sources: MDN pages for <a href="https://developer.mozilla.org/docs/Web/CSS/:focus-visible" rel="noopener">:focus-visible</a>, <a href="https://developer.mozilla.org/es/docs/Web/CSS/Reference/Properties/margin-inline" rel="noopener">margin-inline</a>, <a href="https://developer.mozilla.org/es/docs/Web/HTML/Elemento/dialog" rel="noopener">dialog</a> and <a href="https://developer.mozilla.org/ja/docs/Web/HTML/Global_attributes/inert" rel="noopener">inert</a> (some are localized pages). CSS custom properties, which the whole token system depends on, were not individually checked here.</p>
+<p lang="ar">المصادر: صفحات MDN لكل من <a href="https://developer.mozilla.org/docs/Web/CSS/:focus-visible" rel="noopener">:focus-visible</a> و<a href="https://developer.mozilla.org/es/docs/Web/CSS/Reference/Properties/margin-inline" rel="noopener">margin-inline</a> و<a href="https://developer.mozilla.org/es/docs/Web/HTML/Elemento/dialog" rel="noopener">dialog</a> و<a href="https://developer.mozilla.org/ja/docs/Web/HTML/Global_attributes/inert" rel="noopener">inert</a> (بعضها صفحات مترجمة). أما خصائص CSS المخصصة التي يقوم عليها نظام الـ tokens كله فلم تُفحص هنا على حدة.</p>
+<h2 id="desktop-support"><span lang="en">Desktop support</span><span lang="ar">دعم سطح المكتب</span></h2>
+<p lang="en"><span class="docs-badge docs-badge--planned"><span lang="en">Proposed</span><span lang="ar">مقترح</span></span> Components are meant to work with mouse and keyboard, and must not depend on hover for any essential function. Interactive components will document their keyboard behavior. The documentation site shows the sidebar, content and a sticky page outline side by side on wide screens.</p>
+<p lang="ar"><span class="docs-badge docs-badge--planned"><span lang="en">Proposed</span><span lang="ar">مقترح</span></span> يُقصد أن تعمل المكونات بالفأرة ولوحة المفاتيح، ويجب ألا تعتمد على التمرير (hover) في أي وظيفة أساسية. ستوثّق المكونات التفاعلية سلوك لوحة المفاتيح لكل منها. يعرض موقع التوثيق على الشاشات العريضة الشريط الجانبي والمحتوى وفهرسًا ثابتًا للصفحة جنبًا إلى جنب.</p>
+<h2 id="mobile-support"><span lang="en">Mobile support</span><span lang="ar">دعم الجوال</span></h2>
+<p lang="en"><span class="docs-badge docs-badge--planned"><span lang="en">Proposed</span><span lang="ar">مقترح</span></span> Design starts from narrow screens where appropriate, controls must stay usable by touch, and nothing may force horizontal scrolling of the page. On this site, below 960px wide the sidebar becomes a menu drawer. It has not been tested on physical phones or tablets.</p>
+<p lang="ar"><span class="docs-badge docs-badge--planned"><span lang="en">Proposed</span><span lang="ar">مقترح</span></span> يبدأ التصميم من الشاشات الضيقة حيث يناسب ذلك، ويجب أن تبقى العناصر قابلة للاستخدام باللمس، ولا يجوز أن يُفرض تمرير أفقي للصفحة. في هذا الموقع، تحت عرض 960px يتحول الشريط الجانبي إلى قائمة منزلقة. لم يُختبر على هواتف أو أجهزة لوحية فعلية.</p>
+<h2 id="responsive-behavior"><span lang="en">Responsive behavior</span><span lang="ar">السلوك المتجاوب</span></h2>
+<p lang="en">How this documentation site adapts (these are measurements of the docs site, not of the library):</p>
+<p lang="ar">كيف يتكيف موقع التوثيق هذا (هذه قياسات للموقع وليست للمكتبة):</p>
+<div class="docs-table-wrap">
+<table>
+<thead><tr>
+<th scope="col"><span lang="en">Viewport width</span><span lang="ar">عرض الشاشة</span></th>
+<th scope="col"><span lang="en">Layout</span><span lang="ar">التخطيط</span></th>
+</tr></thead>
+<tbody>
+<tr><td><span lang="en">1200px and wider</span><span lang="ar">1200px فأكثر</span></td><td><span lang="en">Sidebar, content and page outline in three columns.</span><span lang="ar">الشريط الجانبي والمحتوى وفهرس الصفحة في ثلاثة أعمدة.</span></td></tr>
+<tr><td><span lang="en">960px to 1199px</span><span lang="ar">من 960px إلى 1199px</span></td><td><span lang="en">Sidebar and content. The page outline moves to a collapsible box at the top of the article.</span><span lang="ar">الشريط الجانبي والمحتوى. ينتقل فهرس الصفحة إلى صندوق قابل للطي أعلى المقال.</span></td></tr>
+<tr><td><span lang="en">768px to 959px</span><span lang="ar">من 768px إلى 959px</span></td><td><span lang="en">Single column. The sidebar becomes a drawer opened from the menu button.</span><span lang="ar">عمود واحد. يصبح الشريط الجانبي دُرجًا يُفتح من زر القائمة.</span></td></tr>
+<tr><td><span lang="en">Below 768px</span><span lang="ar">أقل من 768px</span></td><td><span lang="en">As above; top bar links are hidden, search shows an icon only, and language, direction and theme switches move into the drawer.</span><span lang="ar">كما سبق؛ تُخفى روابط الشريط العلوي، ويعرض البحث أيقونة فقط، وتنتقل مفاتيح اللغة والاتجاه والثيم إلى الدُّرج.</span></td></tr>
+</tbody></table></div>
+<p lang="en">For the library, tokens do not define breakpoints. Each component's page will describe its responsive behavior.</p>
+<p lang="ar">بالنسبة للمكتبة، لا تعرّف الـ tokens نقاط توقف. ستصف صفحة كل مكوّن سلوكه المتجاوب.</p>
+<h2 id="compatibility-policy"><span lang="en">Browser compatibility policy</span><span lang="ar">سياسة توافق المتصفحات</span></h2>
+<p lang="en"><span class="docs-badge docs-badge--planned"><span lang="en">Proposed</span><span lang="ar">مقترح</span></span> Proposed rules, pending the owner's approval:</p>
+<p lang="ar"><span class="docs-badge docs-badge--planned"><span lang="en">Proposed</span><span lang="ar">مقترح</span></span> قواعد مقترحة بانتظار موافقة المالك:</p>
+<ul>
+  <li><span lang="en">Target current stable releases of the browsers listed above.</span><span lang="ar">استهداف النسخ المستقرة الحالية من المتصفحات المذكورة أعلاه.</span></li>
+  <li><span lang="en">Rely on platform features that are widely available, and record each one on this page.</span><span lang="ar">الاعتماد على ميزات المنصة المتاحة على نطاق واسع وتسجيل كل واحدة في هذه الصفحة.</span></li>
+  <li><span lang="en">Feature-detect optional browser APIs and degrade gracefully instead of failing.</span><span lang="ar">اكتشاف واجهات المتصفح الاختيارية ثم التراجع بسلاسة بدل الفشل.</span></li>
+  <li><span lang="en">No polyfills and no transpilation in the core, since there is no build step.</span><span lang="ar">بلا polyfills ولا transpilation في النواة، لأنه لا توجد خطوة بناء.</span></li>
+  <li><span lang="en">Each component page lists any browser-specific limitation it has.</span><span lang="ar">تذكر صفحة كل مكوّن أي قيود خاصة بالمتصفحات.</span></li>
+  <li><span lang="en">Verified browsers are listed only after tests were actually run, with versions.</span><span lang="ar">لا تُدرج المتصفحات المتحقَّق منها إلا بعد تشغيل اختبارات فعلية، مع أرقام الإصدارات.</span></li>
+</ul>
+</article>
+<footer class="docs-footer" id="docs-footer"></footer>
+</main>
+<aside class="docs-toc" id="docs-toc"></aside>
+</div>
+<div id="docs-live" class="docs-sr-only" role="status" aria-live="polite"></div>
+<script src="../assets/js/nav-data.js" defer></script>
+<script src="../assets/js/highlight.js" defer></script>
+<script src="../assets/js/search.js" defer></script>
+<script src="../assets/js/docs.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en" dir="ltr" data-docs-root="../" data-page="customize/css-variables">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CSS Variables · Baset UI</title>
+<meta name="description" content="Naming conventions, the complete variable index, overrides and examples.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230f766e'/%3E%3Crect x='7' y='8' width='18' height='3.6' rx='1.8' fill='%23fff'/%3E%3Crect x='7' y='14.2' width='12' height='3.6' rx='1.8' fill='%23fff'/%3E%3Crect x='7' y='20.4' width='15' height='3.6' rx='1.8' fill='%23fff'/%3E%3C/svg%3E">
+<script src="../assets/js/init.js"></script>
+<link rel="stylesheet" href="../../assets/css/baset-ui.css">
+<link rel="stylesheet" href="../assets/css/docs.css">
+</head>
+<body>
+<a class="docs-skip" href="#content"><span lang="en">Skip to content</span><span lang="ar">تخطَّ إلى المحتوى</span></a>
+<header class="docs-navbar" id="docs-navbar"></header>
+<div class="docs-backdrop" id="docs-backdrop" hidden></div>
+<div class="docs-layout">
+<aside class="docs-sidebar" id="docs-sidebar"></aside>
+<main class="docs-main" id="content" tabindex="-1">
+<article class="docs-article">
+<noscript>
+<div class="docs-callout docs-callout--note" role="note">
+<p class="docs-callout__title"><span lang="en">JavaScript is off</span><span lang="ar">جافاسكربت معطَّل</span></p>
+<p lang="en">Page content stays readable, but the navigation menu, search, table of contents and the language, direction and theme switches need JavaScript. Content is shown in English.</p>
+<p lang="ar">يبقى محتوى الصفحة مقروءًا، لكن قائمة التنقل والبحث وفهرس الصفحة ومفاتيح اللغة والاتجاه والثيم تحتاج إلى جافاسكربت. يُعرض المحتوى بالإنجليزية.</p>
+</div>
+
+</noscript>
+<h1><span lang="en">CSS Variables</span><span lang="ar">متغيرات CSS</span></h1>
+<p class="docs-lead" lang="en">The naming rules, the complete list of variables that exist, and practical ways to override them. Values and usage for each variable are in the reference under Getting Started.</p>
+<p class="docs-lead" lang="ar">قواعد التسمية، والقائمة الكاملة للمتغيرات الموجودة، وطرق عملية لتعديلها. قيم كل متغير واستخدامه في المرجع ضمن قسم البدء.</p>
+<div class="docs-callout docs-callout--note" role="note">
+<p class="docs-callout__title"><span lang="en">Where is the reference?</span><span lang="ar">أين المرجع؟</span></p>
+<p lang="en">The per-variable tables with live values are on <a href="../getting-started/css-variables.html">Getting Started, CSS Variables</a>. This page does not repeat them; it adds the conventions, the complete index and customization recipes.</p>
+<p lang="ar">جداول كل متغير مع القيم الحية في <a href="../getting-started/css-variables.html">البدء، متغيرات CSS</a>. لا تكرّرها هذه الصفحة؛ بل تضيف القواعد والفهرس الكامل وطرق التخصيص.</p>
+</div>
+<h2 id="naming-conventions"><span lang="en">Variable naming conventions</span><span lang="ar">قواعد تسمية المتغيرات</span></h2>
+<pre class="docs-code" data-lang="css"><code>--bui-{category}-{name}[-{modifier}]
+</code></pre>
+<div class="docs-table-wrap">
+<table>
+<thead><tr>
+<th scope="col"><span lang="en">Rule</span><span lang="ar">القاعدة</span></th>
+<th scope="col"><span lang="en">Example</span><span lang="ar">مثال</span></th>
+</tr></thead>
+<tbody>
+<tr><td><span lang="en">Every variable starts with <code>--bui-</code>.</span><span lang="ar">كل متغير يبدأ بـ <code>--bui-</code>.</span></td><td><code>--bui-color-text</code></td></tr>
+<tr><td><span lang="en">Lowercase words separated by hyphens.</span><span lang="ar">كلمات صغيرة مفصولة بشرطات.</span></td><td><code>--bui-font-size-sm</code></td></tr>
+<tr><td><span lang="en">The category comes first.</span><span lang="ar">الفئة تأتي أولًا.</span></td><td><code>--bui-radius-md</code></td></tr>
+<tr><td><span lang="en">Sizes use <code>xs sm md lg xl 2xl 3xl 4xl</code>; radius uses <code>sm md lg full</code>.</span><span lang="ar">الأحجام <code>xs sm md lg xl 2xl 3xl 4xl</code>؛ والزوايا <code>sm md lg full</code>.</span></td><td><code>--bui-font-size-2xl</code></td></tr>
+<tr><td><span lang="en">Spacing uses a number that equals the step, not the pixel value.</span><span lang="ar">المسافات تستخدم رقم الدرجة وليس قيمة البكسل.</span></td><td><code>--bui-space-4</code> (1rem)</td></tr>
+<tr><td><span lang="en">A <code>-subtle</code> suffix is a tinted background; <code>-hover</code> is a hover state; <code>on-</code> is content placed on a color.</span><span lang="ar">اللاحقة <code>-subtle</code> خلفية خفيفة؛ و<code>-hover</code> حالة التمرير؛ و<code>on-</code> محتوى فوق لون.</span></td><td><code>--bui-color-primary-subtle</code>, <code>--bui-color-on-primary</code></td></tr>
+<tr><td><span lang="en">Names describe purpose, not appearance, so values can change per theme.</span><span lang="ar">الأسماء تصف الغرض لا المظهر، فتتغير القيم حسب الثيم.</span></td><td><span lang="en"><code>--bui-color-text</code>, not <code>-black</code></span><span lang="ar"><code>--bui-color-text</code> وليس <code>-black</code></span></td></tr>
+</tbody></table></div>
+<p lang="en">Class names follow the same idea with the prefix <code>bui-</code>. No component class exists yet, and the <code>BUI</code> JavaScript namespace does not exist yet.</p>
+<p lang="ar">تتبع أسماء الأصناف الفكرة نفسها بالبادئة <code>bui-</code>. لا يوجد أي صنف مكوّن بعد، ومساحة الاسم <code>BUI</code> في جافاسكربت غير موجودة بعد.</p>
+<h2 id="complete-list"><span lang="en">All implemented variables</span><span lang="ar">كل المتغيرات المنفَّذة</span></h2>
+<p lang="en">There are <strong>58</strong> variables in <code>assets/css/baset-ui.css</code>. This index is generated from that file when the page is built.</p>
+<p lang="ar">يوجد <strong>58</strong> متغيرًا في <code>assets/css/baset-ui.css</code>. هذا الفهرس مولَّد من ذلك الملف عند بناء الصفحة.</p>
+<div class="docs-table-wrap">
+<table>
+<thead><tr>
+<th scope="col"><span lang="en">Category</span><span lang="ar">الفئة</span></th>
+<th scope="col"><span lang="en">Count</span><span lang="ar">العدد</span></th>
+<th scope="col"><span lang="en">Per theme</span><span lang="ar">حسب الثيم</span></th>
+<th scope="col"><span lang="en">Variables</span><span lang="ar">المتغيرات</span></th>
+</tr></thead>
+<tbody>
+<tr><td><span lang="en">Color</span><span lang="ar">الألوان</span></td><td>19</td><td><span lang="en">Light and dark</span><span lang="ar">فاتح وداكن</span></td><td><span class="docs-varlist"><code>--bui-color-bg</code> <code>--bui-color-surface</code> <code>--bui-color-surface-muted</code> <code>--bui-color-text</code> <code>--bui-color-text-muted</code> <code>--bui-color-border</code> <code>--bui-color-border-strong</code> <code>--bui-color-primary</code> <code>--bui-color-primary-hover</code> <code>--bui-color-on-primary</code> <code>--bui-color-primary-subtle</code> <code>--bui-color-success</code> <code>--bui-color-success-subtle</code> <code>--bui-color-warning</code> <code>--bui-color-warning-subtle</code> <code>--bui-color-danger</code> <code>--bui-color-danger-subtle</code> <code>--bui-color-info</code> <code>--bui-color-info-subtle</code></span></td></tr>
+<tr><td><span lang="en">Shadow</span><span lang="ar">الظلال</span></td><td>3</td><td><span lang="en">Light and dark</span><span lang="ar">فاتح وداكن</span></td><td><span class="docs-varlist"><code>--bui-shadow-sm</code> <code>--bui-shadow-md</code> <code>--bui-shadow-lg</code></span></td></tr>
+<tr><td><span lang="en">Font family</span><span lang="ar">عائلة الخط</span></td><td>2</td><td><span lang="en">Same in both</span><span lang="ar">نفسها في الاثنين</span></td><td><span class="docs-varlist"><code>--bui-font-family-base</code> <code>--bui-font-family-mono</code></span></td></tr>
+<tr><td><span lang="en">Font size</span><span lang="ar">حجم الخط</span></td><td>8</td><td><span lang="en">Same in both</span><span lang="ar">نفسها في الاثنين</span></td><td><span class="docs-varlist"><code>--bui-font-size-xs</code> <code>--bui-font-size-sm</code> <code>--bui-font-size-md</code> <code>--bui-font-size-lg</code> <code>--bui-font-size-xl</code> <code>--bui-font-size-2xl</code> <code>--bui-font-size-3xl</code> <code>--bui-font-size-4xl</code></span></td></tr>
+<tr><td><span lang="en">Font weight</span><span lang="ar">وزن الخط</span></td><td>4</td><td><span lang="en">Same in both</span><span lang="ar">نفسها في الاثنين</span></td><td><span class="docs-varlist"><code>--bui-font-weight-regular</code> <code>--bui-font-weight-medium</code> <code>--bui-font-weight-semibold</code> <code>--bui-font-weight-bold</code></span></td></tr>
+<tr><td><span lang="en">Line height</span><span lang="ar">ارتفاع السطر</span></td><td>2</td><td><span lang="en">Same in both</span><span lang="ar">نفسها في الاثنين</span></td><td><span class="docs-varlist"><code>--bui-line-height-tight</code> <code>--bui-line-height-base</code></span></td></tr>
+<tr><td><span lang="en">Space</span><span lang="ar">المسافة</span></td><td>10</td><td><span lang="en">Same in both</span><span lang="ar">نفسها في الاثنين</span></td><td><span class="docs-varlist"><code>--bui-space-1</code> <code>--bui-space-2</code> <code>--bui-space-3</code> <code>--bui-space-4</code> <code>--bui-space-5</code> <code>--bui-space-6</code> <code>--bui-space-8</code> <code>--bui-space-10</code> <code>--bui-space-12</code> <code>--bui-space-16</code></span></td></tr>
+<tr><td><span lang="en">Radius</span><span lang="ar">الزاوية</span></td><td>4</td><td><span lang="en">Same in both</span><span lang="ar">نفسها في الاثنين</span></td><td><span class="docs-varlist"><code>--bui-radius-sm</code> <code>--bui-radius-md</code> <code>--bui-radius-lg</code> <code>--bui-radius-full</code></span></td></tr>
+<tr><td><span lang="en">Border</span><span lang="ar">الحد</span></td><td>1</td><td><span lang="en">Same in both</span><span lang="ar">نفسها في الاثنين</span></td><td><span class="docs-varlist"><code>--bui-border-width</code></span></td></tr>
+<tr><td><span lang="en">Focus ring</span><span lang="ar">حلقة التركيز</span></td><td>2</td><td><span lang="en">Same in both</span><span lang="ar">نفسها في الاثنين</span></td><td><span class="docs-varlist"><code>--bui-focus-ring-width</code> <code>--bui-focus-ring-offset</code></span></td></tr>
+<tr><td><span lang="en">Duration</span><span lang="ar">المدة</span></td><td>2</td><td><span lang="en">Same in both</span><span lang="ar">نفسها في الاثنين</span></td><td><span class="docs-varlist"><code>--bui-duration-fast</code> <code>--bui-duration-base</code></span></td></tr>
+<tr><td><span lang="en">Easing</span><span lang="ar">التسارع</span></td><td>1</td><td><span lang="en">Same in both</span><span lang="ar">نفسها في الاثنين</span></td><td><span class="docs-varlist"><code>--bui-easing-standard</code></span></td></tr>
+</tbody></table></div>
+<div class="docs-callout docs-callout--info" role="note">
+<p class="docs-callout__title"><span lang="en">Not variables</span><span lang="ar">ليست متغيرات</span></p>
+<p lang="en">Breakpoints, a z-index scale, a secondary color, container widths, grid columns and component variables are <strong>not</strong> defined. They are listed on the Layout pages and on Colors.</p>
+<p lang="ar">نقاط التوقف ومقياس z-index واللون الثانوي وعروض الحاويات وأعمدة الشبكة ومتغيرات المكونات <strong>غير</strong> معرَّفة. وهي مذكورة في صفحات Layout وصفحة الألوان.</p>
+</div>
+<h2 id="custom-overrides"><span lang="en">Custom overrides</span><span lang="ar">التعديلات المخصصة</span></h2>
+<div class="docs-table-wrap">
+<table>
+<thead><tr>
+<th scope="col"><span lang="en">Where</span><span lang="ar">أين</span></th>
+<th scope="col"><span lang="en">Scope</span><span lang="ar">النطاق</span></th>
+<th scope="col"><span lang="en">Use for</span><span lang="ar">يُستخدم لـ</span></th>
+</tr></thead>
+<tbody>
+<tr><td><span lang="en">Your stylesheet on <code>:root</code> (and <code>.bui-dark</code>)</span><span lang="ar">ملف أنماطك على <code>:root</code> (و<code>.bui-dark</code>)</span></td><td><span lang="en">Whole site</span><span lang="ar">الموقع كله</span></td><td><span lang="en">Brand, density, fonts</span><span lang="ar">العلامة والكثافة والخطوط</span></td></tr>
+<tr><td><span lang="en">A wrapper class such as <code>.my-scope</code></span><span lang="ar">صنف مغلِّف مثل <code>.my-scope</code></span></td><td><span lang="en">That element and its children</span><span lang="ar">العنصر وأبناؤه</span></td><td><span lang="en">One section or widget</span><span lang="ar">قسم أو عنصر واجهة واحد</span></td></tr>
+<tr><td><span lang="en">A <code>style</code> attribute</span><span lang="ar">سمة <code>style</code></span></td><td><span lang="en">That element and its children</span><span lang="ar">العنصر وأبناؤه</span></td><td><span lang="en">One-off, runtime values</span><span lang="ar">قيم لمرة واحدة أو وقت التشغيل</span></td></tr>
+<tr><td><span lang="en">JavaScript <code>style.setProperty</code></span><span lang="ar">جافاسكربت <code>style.setProperty</code></span></td><td><span lang="en">The element you call it on</span><span lang="ar">العنصر الذي تستدعيها عليه</span></td><td><span lang="en">Values chosen by the user</span><span lang="ar">قيم يختارها المستخدم</span></td></tr>
+</tbody></table></div>
+<pre class="docs-code" data-lang="js"><code>// Set a token on one element
+element.style.setProperty('--bui-radius-md', '0.75rem');
+
+// Read the value the browser computed
+var value = getComputedStyle(element).getPropertyValue('--bui-radius-md').trim();
+
+// Remove your override
+element.style.removeProperty('--bui-radius-md');
+</code></pre>
+<div class="docs-callout docs-callout--warning" role="note">
+<p class="docs-callout__title"><span lang="en">Override colors in both themes</span><span lang="ar">عدّل الألوان في الثيمين</span></p>
+<p lang="en">Setting a color token with <code>style</code> on <code>&lt;html&gt;</code> also wins over <code>.bui-dark</code> on the same element, so the dark theme would show your light value. For colors, use the two-block pattern in a stylesheet (<code>:root</code> and <code>.bui-dark</code>), or set the value again when the theme changes.</p>
+<p lang="ar">ضبط token لوني بـ <code>style</code> على <code>&lt;html&gt;</code> يتفوق أيضًا على <code>.bui-dark</code> على العنصر نفسه، فيعرض الثيم الداكن قيمتك الفاتحة. للألوان استخدم نمط الكتلتين في ملف أنماط (<code>:root</code> و<code>.bui-dark</code>)، أو اضبط القيمة من جديد عند تغيّر الثيم.</p>
+</div>
+<h3 id="fallbacks"><span lang="en">Fallback values</span><span lang="ar">القيم الاحتياطية</span></h3>
+<p lang="en"><code>var()</code> accepts a fallback for when a variable is not defined, which helps if the stylesheet fails to load:</p>
+<p lang="ar">تقبل <code>var()</code> قيمة احتياطية عند عدم تعريف المتغير، وهذا يفيد إن لم يُحمَّل ملف الأنماط:</p>
+<pre class="docs-code" data-lang="css"><code>.card { padding: var(--bui-space-4, 1rem); }
+</code></pre>
+<h2 id="practical-examples"><span lang="en">Practical customization examples</span><span lang="ar">أمثلة تخصيص عملية</span></h2>
+<h3 id="ex-brand"><span lang="en">Brand colors</span><span lang="ar">ألوان العلامة</span></h3>
+<pre class="docs-code" data-lang="css"><code>:root     { --bui-color-primary: #7c3aed; --bui-color-primary-hover: #6d28d9; }
+.bui-dark { --bui-color-primary: #a78bfa; --bui-color-primary-hover: #c4b5fd; }
+</code></pre>
+<h3 id="ex-round"><span lang="en">Rounder corners</span><span lang="ar">زوايا أكثر استدارة</span></h3>
+<pre class="docs-code" data-lang="css"><code>:root {
+  --bui-radius-md: 0.75rem;
+  --bui-radius-lg: 1rem;
+}
+</code></pre>
+<h3 id="ex-contrast"><span lang="en">Stronger control borders</span><span lang="ar">حدود عناصر أقوى</span></h3>
+<pre class="docs-code" data-lang="css"><code>:root     { --bui-color-border-strong: #5c6058; }
+.bui-dark { --bui-color-border-strong: #8a9a95; }
+</code></pre>
+<h3 id="ex-motion"><span lang="en">Disable motion for everyone</span><span lang="ar">إيقاف الحركة للجميع</span></h3>
+<pre class="docs-code" data-lang="css"><code>:root {
+  --bui-duration-fast: 0ms;
+  --bui-duration-base: 0ms;
+}
+</code></pre>
+<p lang="en">Reduced motion is already respected: the two duration tokens become <code>0ms</code> when the reader prefers reduced motion.</p>
+<p lang="ar">تقليل الحركة مُراعى أصلًا: يصبح الـ tokenان للمدة <code>0ms</code> عندما يفضّل القارئ تقليل الحركة.</p>
+<h3 id="ex-live"><span lang="en">Try it</span><span lang="ar">جرّبها</span></h3>
+<p lang="en">The interactive preview for the primary color and the radius is on <a href="../getting-started/css-variables.html#live-demo">Getting Started, CSS Variables</a>.</p>
+<p lang="ar">المعاينة التفاعلية للون الأساسي والزاوية في <a href="../getting-started/css-variables.html#live-demo">البدء، متغيرات CSS</a>.</p>
+<div class="docs-callout docs-callout--note" role="note">
+<p class="docs-callout__title"><span lang="en">Example values</span><span lang="ar">قيم توضيحية</span></p>
+<p lang="en">The hex values are examples and their contrast has not been verified. Measure before using them.</p>
+<p lang="ar">قيم hex هذه أمثلة ولم يُتحقق من تباينها. قِسها قبل استخدامها.</p>
+</div>
+</article>
+<footer class="docs-footer" id="docs-footer"></footer>
+</main>
+<aside class="docs-toc" id="docs-toc"></aside>
+</div>
+<div id="docs-live" class="docs-sr-only" role="status" aria-live="polite"></div>
+<script src="../assets/js/nav-data.js" defer></script>
+<script src="../assets/js/highlight.js" defer></script>
+<script src="../assets/js/search.js" defer></script>
+<script src="../assets/js/docs.js" defer></script>
+</body>
+</html>

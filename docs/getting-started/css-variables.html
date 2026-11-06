@@ -1,0 +1,580 @@
+<!doctype html>
+<html lang="en" dir="ltr" data-docs-root="../" data-page="getting-started/css-variables">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CSS Variables · Baset UI</title>
+<meta name="description" content="Every design token defined today: colors, typography, spacing, radius, shadows, themes and how to customize them.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230f766e'/%3E%3Crect x='7' y='8' width='18' height='3.6' rx='1.8' fill='%23fff'/%3E%3Crect x='7' y='14.2' width='12' height='3.6' rx='1.8' fill='%23fff'/%3E%3Crect x='7' y='20.4' width='15' height='3.6' rx='1.8' fill='%23fff'/%3E%3C/svg%3E">
+<script src="../assets/js/init.js"></script>
+<link rel="stylesheet" href="../../assets/css/baset-ui.css">
+<link rel="stylesheet" href="../assets/css/docs.css">
+</head>
+<body>
+<a class="docs-skip" href="#content"><span lang="en">Skip to content</span><span lang="ar">تخطَّ إلى المحتوى</span></a>
+<header class="docs-navbar" id="docs-navbar"></header>
+<div class="docs-backdrop" id="docs-backdrop" hidden></div>
+<div class="docs-layout">
+<aside class="docs-sidebar" id="docs-sidebar"></aside>
+<main class="docs-main" id="content" tabindex="-1">
+<article class="docs-article">
+<noscript>
+<div class="docs-callout docs-callout--note" role="note">
+<p class="docs-callout__title"><span lang="en">JavaScript is off</span><span lang="ar">جافاسكربت معطَّل</span></p>
+<p lang="en">Page content stays readable, but the navigation menu, search, table of contents and the language, direction and theme switches need JavaScript. Content is shown in English.</p>
+<p lang="ar">يبقى محتوى الصفحة مقروءًا، لكن قائمة التنقل والبحث وفهرس الصفحة ومفاتيح اللغة والاتجاه والثيم تحتاج إلى جافاسكربت. يُعرض المحتوى بالإنجليزية.</p>
+</div>
+
+</noscript>
+<h1><span lang="en">CSS Variables</span><span lang="ar">متغيرات CSS</span></h1>
+<p class="docs-lead" lang="en">Every design token defined today in <code>assets/css/baset-ui.css</code>, with the values the browser actually computes, and how to customize them.</p>
+<p class="docs-lead" lang="ar">كل Design Token معرَّف اليوم في <code>assets/css/baset-ui.css</code>، مع القيم التي يحسبها المتصفح فعليًا، وطريقة تخصيصها.</p>
+<h2 id="global-css-variables"><span lang="en">Global CSS variables</span><span lang="ar">متغيرات CSS العامة</span></h2>
+<p lang="en"><span class="docs-badge docs-badge--foundation"><span lang="en">Foundation (pre-release)</span><span lang="ar">أساس أولي (تمهيدي)</span></span> Tokens are CSS custom properties named <code>--bui-{category}-{name}</code>. Load the stylesheet, then read them with <code>var()</code> anywhere:</p>
+<p lang="ar"><span class="docs-badge docs-badge--foundation"><span lang="en">Foundation (pre-release)</span><span lang="ar">أساس أولي (تمهيدي)</span></span> الـ tokens خصائص CSS مخصصة بأسماء على الشكل <code>--bui-{الفئة}-{الاسم}</code>. حمّل ملف الأنماط ثم اقرأها بـ <code>var()</code> في أي مكان:</p>
+<pre class="docs-code" data-lang="css"><code>.card {
+  padding: var(--bui-space-4);
+  border: var(--bui-border-width) solid var(--bui-color-border);
+  border-radius: var(--bui-radius-lg);
+  background: var(--bui-color-surface);
+  box-shadow: var(--bui-shadow-sm);
+}
+</code></pre>
+<div class="docs-callout docs-callout--warning" role="note">
+<p class="docs-callout__title"><span lang="en">Pre-release</span><span lang="ar">نسخة تمهيدية</span></p>
+<p lang="en">Names and values can still change before the first release, and there are no version tags yet. Only tokens that this site or a planned component actually uses are defined.</p>
+<p lang="ar">قد تتغير الأسماء والقيم قبل الإصدار الأول، ولا توجد وسوم إصدارات بعد. لا تُعرَّف إلا الـ tokens التي يستخدمها هذا الموقع أو مكوّن مخطَّط فعلًا.</p>
+</div>
+<p lang="en">The values in the tables below are read live from the stylesheet loaded on this page (a static copy is shown when JavaScript is off). They are not typed by hand.</p>
+<p lang="ar">القيم في الجداول أدناه تُقرأ مباشرة من ملف الأنماط المحمَّل في هذه الصفحة (وتظهر نسخة ثابتة عند تعطيل جافاسكربت). لم تُكتب يدويًا.</p>
+<h3 id="other-tokens"><span lang="en">Borders, focus and motion</span><span lang="ar">الحدود والتركيز والحركة</span></h3>
+<div class="docs-table-wrap">
+<table>
+<thead><tr>
+<th scope="col"><span lang="en">Token</span><span lang="ar">المتغير</span></th>
+<th scope="col"><span lang="en">Value</span><span lang="ar">القيمة</span></th>
+<th scope="col"><span lang="en">Use</span><span lang="ar">الاستخدام</span></th>
+</tr></thead>
+<tbody>
+<tr data-token="--bui-border-width" data-kind="other">
+<td><code>--bui-border-width</code></td>
+<td data-slot="value"><code class="docs-token-value">1px</code></td>
+<td class="docs-wrap"><span lang="en">Default border width.</span><span lang="ar">عرض الحد الافتراضي.</span></td>
+</tr>
+<tr data-token="--bui-focus-ring-width" data-kind="other">
+<td><code>--bui-focus-ring-width</code></td>
+<td data-slot="value"><code class="docs-token-value">2px</code></td>
+<td class="docs-wrap"><span lang="en">Width of the visible focus outline used with <code>:focus-visible</code>.</span><span lang="ar">عرض إطار التركيز المرئي المستخدم مع <code>:focus-visible</code>.</span></td>
+</tr>
+<tr data-token="--bui-focus-ring-offset" data-kind="other">
+<td><code>--bui-focus-ring-offset</code></td>
+<td data-slot="value"><code class="docs-token-value">2px</code></td>
+<td class="docs-wrap"><span lang="en">Gap between an element and its focus outline.</span><span lang="ar">المسافة بين العنصر وإطار التركيز.</span></td>
+</tr>
+<tr data-token="--bui-duration-fast" data-kind="other">
+<td><code>--bui-duration-fast</code></td>
+<td data-slot="value"><code class="docs-token-value">120ms</code></td>
+<td class="docs-wrap"><span lang="en">Short transitions. Becomes <code>0ms</code> under <code>prefers-reduced-motion: reduce</code>.</span><span lang="ar">الانتقالات القصيرة. تصبح <code>0ms</code> عند <code>prefers-reduced-motion: reduce</code>.</span></td>
+</tr>
+<tr data-token="--bui-duration-base" data-kind="other">
+<td><code>--bui-duration-base</code></td>
+<td data-slot="value"><code class="docs-token-value">200ms</code></td>
+<td class="docs-wrap"><span lang="en">Standard transitions. Also <code>0ms</code> under reduced motion.</span><span lang="ar">الانتقالات القياسية. وتصبح <code>0ms</code> أيضًا عند تقليل الحركة.</span></td>
+</tr>
+<tr data-token="--bui-easing-standard" data-kind="other">
+<td><code>--bui-easing-standard</code></td>
+<td data-slot="value"><code class="docs-token-value">cubic-bezier(0.2, 0, 0, 1)</code></td>
+<td class="docs-wrap"><span lang="en">Standard easing curve.</span><span lang="ar">منحنى التسارع القياسي.</span></td>
+</tr>
+</tbody></table></div>
+<div class="docs-callout docs-callout--info" role="note">
+<p class="docs-callout__title"><span lang="en">Not defined yet</span><span lang="ar">غير معرَّف بعد</span></p>
+<p lang="en">A secondary color, a z-index scale, breakpoints and component-level variables (for example per-button variables) do not exist. Breakpoints cannot be CSS variables anyway, because custom properties cannot be used inside media queries.</p>
+<p lang="ar">لا يوجد لون ثانوي ولا مقياس z-index ولا نقاط توقف ولا متغيرات على مستوى المكوّن (مثل متغيرات خاصة بالزر). ونقاط التوقف لا يمكن أن تكون متغيرات CSS أصلًا، لأن الخصائص المخصصة لا تُستخدم داخل media queries.</p>
+</div>
+<h2 id="color-variables"><span lang="en">Color variables</span><span lang="ar">متغيرات الألوان</span></h2>
+<h3 id="colors-surfaces"><span lang="en">Surfaces, text and borders</span><span lang="ar">الأسطح والنص والحدود</span></h3>
+<div class="docs-table-wrap">
+<table>
+<thead><tr>
+<th scope="col"><span lang="en">Token</span><span lang="ar">المتغير</span></th>
+<th scope="col"><span lang="en">Light</span><span lang="ar">الفاتح</span></th>
+<th scope="col"><span lang="en">Dark</span><span lang="ar">الداكن</span></th>
+<th scope="col"><span lang="en">Use</span><span lang="ar">الاستخدام</span></th>
+</tr></thead>
+<tbody>
+<tr data-token="--bui-color-bg" data-kind="color">
+<td><code>--bui-color-bg</code></td>
+<td data-slot="light"><code class="docs-token-value">#fafaf7</code></td>
+<td data-slot="dark"><code class="docs-token-value">#0f1312</code></td>
+<td class="docs-wrap"><span lang="en">Page background.</span><span lang="ar">خلفية الصفحة.</span></td>
+</tr>
+<tr data-token="--bui-color-surface" data-kind="color">
+<td><code>--bui-color-surface</code></td>
+<td data-slot="light"><code class="docs-token-value">#ffffff</code></td>
+<td data-slot="dark"><code class="docs-token-value">#161b1a</code></td>
+<td class="docs-wrap"><span lang="en">Cards, panels, dialogs.</span><span lang="ar">البطاقات واللوحات والنوافذ.</span></td>
+</tr>
+<tr data-token="--bui-color-surface-muted" data-kind="color">
+<td><code>--bui-color-surface-muted</code></td>
+<td data-slot="light"><code class="docs-token-value">#f1f1ec</code></td>
+<td data-slot="dark"><code class="docs-token-value">#1e2524</code></td>
+<td class="docs-wrap"><span lang="en">Subtle fills such as code backgrounds and table headers.</span><span lang="ar">تعبئات خفيفة مثل خلفية الشيفرة ورؤوس الجداول.</span></td>
+</tr>
+<tr data-token="--bui-color-text" data-kind="color">
+<td><code>--bui-color-text</code></td>
+<td data-slot="light"><code class="docs-token-value">#1c1f1e</code></td>
+<td data-slot="dark"><code class="docs-token-value">#e8ecea</code></td>
+<td class="docs-wrap"><span lang="en">Primary text.</span><span lang="ar">النص الأساسي.</span></td>
+</tr>
+<tr data-token="--bui-color-text-muted" data-kind="color">
+<td><code>--bui-color-text-muted</code></td>
+<td data-slot="light"><code class="docs-token-value">#565d5b</code></td>
+<td data-slot="dark"><code class="docs-token-value">#a3adaa</code></td>
+<td class="docs-wrap"><span lang="en">Secondary text.</span><span lang="ar">النص الثانوي.</span></td>
+</tr>
+<tr data-token="--bui-color-border" data-kind="color">
+<td><code>--bui-color-border</code></td>
+<td data-slot="light"><code class="docs-token-value">#e1e1da</code></td>
+<td data-slot="dark"><code class="docs-token-value">#2a3331</code></td>
+<td class="docs-wrap"><span lang="en">Decorative dividers and card borders.</span><span lang="ar">الفواصل الزخرفية وحدود البطاقات.</span></td>
+</tr>
+<tr data-token="--bui-color-border-strong" data-kind="color">
+<td><code>--bui-color-border-strong</code></td>
+<td data-slot="light"><code class="docs-token-value">#8a8e85</code></td>
+<td data-slot="dark"><code class="docs-token-value">#5f6d69</code></td>
+<td class="docs-wrap"><span lang="en">Borders of interactive controls. Chosen to reach at least 3:1 against the page background.</span><span lang="ar">حدود العناصر التفاعلية. اختيرت لتصل إلى 3:1 على الأقل مقابل خلفية الصفحة.</span></td>
+</tr>
+</tbody></table></div>
+<h3 id="colors-brand"><span lang="en">Brand</span><span lang="ar">العلامة</span></h3>
+<div class="docs-table-wrap">
+<table>
+<thead><tr>
+<th scope="col"><span lang="en">Token</span><span lang="ar">المتغير</span></th>
+<th scope="col"><span lang="en">Light</span><span lang="ar">الفاتح</span></th>
+<th scope="col"><span lang="en">Dark</span><span lang="ar">الداكن</span></th>
+<th scope="col"><span lang="en">Use</span><span lang="ar">الاستخدام</span></th>
+</tr></thead>
+<tbody>
+<tr data-token="--bui-color-primary" data-kind="color">
+<td><code>--bui-color-primary</code></td>
+<td data-slot="light"><code class="docs-token-value">#0f766e</code></td>
+<td data-slot="dark"><code class="docs-token-value">#2dd4bf</code></td>
+<td class="docs-wrap"><span lang="en">Brand color: links, key actions, focus outline.</span><span lang="ar">لون العلامة: الروابط والإجراءات الرئيسية وإطار التركيز.</span></td>
+</tr>
+<tr data-token="--bui-color-primary-hover" data-kind="color">
+<td><code>--bui-color-primary-hover</code></td>
+<td data-slot="light"><code class="docs-token-value">#115e59</code></td>
+<td data-slot="dark"><code class="docs-token-value">#5eead4</code></td>
+<td class="docs-wrap"><span lang="en">Primary in a hover state.</span><span lang="ar">اللون الأساسي في حالة التمرير.</span></td>
+</tr>
+<tr data-token="--bui-color-on-primary" data-kind="color">
+<td><code>--bui-color-on-primary</code></td>
+<td data-slot="light"><code class="docs-token-value">#ffffff</code></td>
+<td data-slot="dark"><code class="docs-token-value">#04211d</code></td>
+<td class="docs-wrap"><span lang="en">Text and icons placed on a primary background.</span><span lang="ar">النص والأيقونات الموضوعة على خلفية أساسية.</span></td>
+</tr>
+<tr data-token="--bui-color-primary-subtle" data-kind="color">
+<td><code>--bui-color-primary-subtle</code></td>
+<td data-slot="light"><code class="docs-token-value">#dcf0ec</code></td>
+<td data-slot="dark"><code class="docs-token-value">#12332f</code></td>
+<td class="docs-wrap"><span lang="en">Tinted background related to primary.</span><span lang="ar">خلفية بتدرج خفيف مرتبط باللون الأساسي.</span></td>
+</tr>
+</tbody></table></div>
+<h3 id="colors-semantic"><span lang="en">Semantic colors</span><span lang="ar">الألوان الدلالية</span></h3>
+<div class="docs-table-wrap">
+<table>
+<thead><tr>
+<th scope="col"><span lang="en">Token</span><span lang="ar">المتغير</span></th>
+<th scope="col"><span lang="en">Light</span><span lang="ar">الفاتح</span></th>
+<th scope="col"><span lang="en">Dark</span><span lang="ar">الداكن</span></th>
+<th scope="col"><span lang="en">Use</span><span lang="ar">الاستخدام</span></th>
+</tr></thead>
+<tbody>
+<tr data-token="--bui-color-success" data-kind="color">
+<td><code>--bui-color-success</code></td>
+<td data-slot="light"><code class="docs-token-value">#15803d</code></td>
+<td data-slot="dark"><code class="docs-token-value">#4ade80</code></td>
+<td class="docs-wrap"><span lang="en">Success: borders, icons, dots.</span><span lang="ar">النجاح: الحدود والأيقونات والنقاط.</span></td>
+</tr>
+<tr data-token="--bui-color-success-subtle" data-kind="color">
+<td><code>--bui-color-success-subtle</code></td>
+<td data-slot="light"><code class="docs-token-value">#e1f4e7</code></td>
+<td data-slot="dark"><code class="docs-token-value">#12301c</code></td>
+<td class="docs-wrap"><span lang="en">Success tinted background.</span><span lang="ar">خلفية النجاح الخفيفة.</span></td>
+</tr>
+<tr data-token="--bui-color-warning" data-kind="color">
+<td><code>--bui-color-warning</code></td>
+<td data-slot="light"><code class="docs-token-value">#b45309</code></td>
+<td data-slot="dark"><code class="docs-token-value">#fbbf24</code></td>
+<td class="docs-wrap"><span lang="en">Warning.</span><span lang="ar">التحذير.</span></td>
+</tr>
+<tr data-token="--bui-color-warning-subtle" data-kind="color">
+<td><code>--bui-color-warning-subtle</code></td>
+<td data-slot="light"><code class="docs-token-value">#fcefd6</code></td>
+<td data-slot="dark"><code class="docs-token-value">#36290b</code></td>
+<td class="docs-wrap"><span lang="en">Warning tinted background.</span><span lang="ar">خلفية التحذير الخفيفة.</span></td>
+</tr>
+<tr data-token="--bui-color-danger" data-kind="color">
+<td><code>--bui-color-danger</code></td>
+<td data-slot="light"><code class="docs-token-value">#b91c1c</code></td>
+<td data-slot="dark"><code class="docs-token-value">#f87171</code></td>
+<td class="docs-wrap"><span lang="en">Error and destructive actions.</span><span lang="ar">الخطأ والإجراءات المدمّرة.</span></td>
+</tr>
+<tr data-token="--bui-color-danger-subtle" data-kind="color">
+<td><code>--bui-color-danger-subtle</code></td>
+<td data-slot="light"><code class="docs-token-value">#fbe7e7</code></td>
+<td data-slot="dark"><code class="docs-token-value">#3b1919</code></td>
+<td class="docs-wrap"><span lang="en">Danger tinted background.</span><span lang="ar">خلفية الخطر الخفيفة.</span></td>
+</tr>
+<tr data-token="--bui-color-info" data-kind="color">
+<td><code>--bui-color-info</code></td>
+<td data-slot="light"><code class="docs-token-value">#0369a1</code></td>
+<td data-slot="dark"><code class="docs-token-value">#38bdf8</code></td>
+<td class="docs-wrap"><span lang="en">Informational.</span><span lang="ar">المعلومات.</span></td>
+</tr>
+<tr data-token="--bui-color-info-subtle" data-kind="color">
+<td><code>--bui-color-info-subtle</code></td>
+<td data-slot="light"><code class="docs-token-value">#def0fa</code></td>
+<td data-slot="dark"><code class="docs-token-value">#0f2d3e</code></td>
+<td class="docs-wrap"><span lang="en">Info tinted background.</span><span lang="ar">خلفية المعلومات الخفيفة.</span></td>
+</tr>
+</tbody></table></div>
+<p lang="en">Do not communicate state by color alone. Pair semantic colors with text or an icon, as the status labels on these pages do.</p>
+<p lang="ar">لا تنقل الحالة بالألوان وحدها. اقرن الألوان الدلالية بنص أو أيقونة، كما تفعل وسوم الحالة في هذه الصفحات.</p>
+<h2 id="typography-variables"><span lang="en">Typography variables</span><span lang="ar">متغيرات الخطوط</span></h2>
+<div class="docs-table-wrap">
+<table>
+<thead><tr>
+<th scope="col"><span lang="en">Token</span><span lang="ar">المتغير</span></th>
+<th scope="col"><span lang="en">Value</span><span lang="ar">القيمة</span></th>
+<th scope="col"><span lang="en">Use</span><span lang="ar">الاستخدام</span></th>
+</tr></thead>
+<tbody>
+<tr data-token="--bui-font-family-base" data-kind="other">
+<td><code>--bui-font-family-base</code></td>
+<td data-slot="value"><code class="docs-token-value">system-ui, -apple-system, "Segoe UI", Tahoma, "Noto Sans Arabic", "Noto Sans", Roboto, "Helvetica Neue", Arial, sans-serif</code></td>
+<td class="docs-wrap"><span lang="en">Base font stack: system fonts, with Arabic-capable fallbacks. No web font is loaded.</span><span lang="ar">مجموعة الخطوط الأساسية: خطوط النظام مع بدائل تدعم العربية. لا يُحمَّل أي خط ويب.</span></td>
+</tr>
+<tr data-token="--bui-font-family-mono" data-kind="other">
+<td><code>--bui-font-family-mono</code></td>
+<td data-slot="value"><code class="docs-token-value">ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace</code></td>
+<td class="docs-wrap"><span lang="en">Monospace stack for code.</span><span lang="ar">مجموعة الخط أحادي المسافة للشيفرة.</span></td>
+</tr>
+</tbody></table></div>
+<div class="docs-table-wrap">
+<table>
+<thead><tr>
+<th scope="col"><span lang="en">Token</span><span lang="ar">المتغير</span></th>
+<th scope="col"><span lang="en">Value</span><span lang="ar">القيمة</span></th>
+<th scope="col"><span lang="en">Use</span><span lang="ar">الاستخدام</span></th>
+</tr></thead>
+<tbody>
+<tr data-token="--bui-font-size-xs" data-kind="space">
+<td><code>--bui-font-size-xs</code></td>
+<td data-slot="value"><code class="docs-token-value">0.75rem</code></td>
+<td class="docs-wrap"><span lang="en">Smallest text: labels, badges.</span><span lang="ar">أصغر نص: الوسوم والشارات.</span></td>
+</tr>
+<tr data-token="--bui-font-size-sm" data-kind="space">
+<td><code>--bui-font-size-sm</code></td>
+<td data-slot="value"><code class="docs-token-value">0.875rem</code></td>
+<td class="docs-wrap"><span lang="en">Secondary text, tables.</span><span lang="ar">النص الثانوي والجداول.</span></td>
+</tr>
+<tr data-token="--bui-font-size-md" data-kind="space">
+<td><code>--bui-font-size-md</code></td>
+<td data-slot="value"><code class="docs-token-value">1rem</code></td>
+<td class="docs-wrap"><span lang="en">Body text.</span><span lang="ar">نص المتن.</span></td>
+</tr>
+<tr data-token="--bui-font-size-lg" data-kind="space">
+<td><code>--bui-font-size-lg</code></td>
+<td data-slot="value"><code class="docs-token-value">1.125rem</code></td>
+<td class="docs-wrap"><span lang="en">Lead text.</span><span lang="ar">النص التمهيدي.</span></td>
+</tr>
+<tr data-token="--bui-font-size-xl" data-kind="space">
+<td><code>--bui-font-size-xl</code></td>
+<td data-slot="value"><code class="docs-token-value">1.25rem</code></td>
+<td class="docs-wrap"><span lang="en">Small headings.</span><span lang="ar">العناوين الصغيرة.</span></td>
+</tr>
+<tr data-token="--bui-font-size-2xl" data-kind="space">
+<td><code>--bui-font-size-2xl</code></td>
+<td data-slot="value"><code class="docs-token-value">1.5rem</code></td>
+<td class="docs-wrap"><span lang="en">Section headings.</span><span lang="ar">عناوين الأقسام.</span></td>
+</tr>
+<tr data-token="--bui-font-size-3xl" data-kind="space">
+<td><code>--bui-font-size-3xl</code></td>
+<td data-slot="value"><code class="docs-token-value">1.875rem</code></td>
+<td class="docs-wrap"><span lang="en">Large headings.</span><span lang="ar">العناوين الكبيرة.</span></td>
+</tr>
+<tr data-token="--bui-font-size-4xl" data-kind="space">
+<td><code>--bui-font-size-4xl</code></td>
+<td data-slot="value"><code class="docs-token-value">2.5rem</code></td>
+<td class="docs-wrap"><span lang="en">Page titles.</span><span lang="ar">عناوين الصفحات.</span></td>
+</tr>
+</tbody></table></div>
+<div class="docs-table-wrap">
+<table>
+<thead><tr>
+<th scope="col"><span lang="en">Token</span><span lang="ar">المتغير</span></th>
+<th scope="col"><span lang="en">Value</span><span lang="ar">القيمة</span></th>
+<th scope="col"><span lang="en">Use</span><span lang="ar">الاستخدام</span></th>
+</tr></thead>
+<tbody>
+<tr data-token="--bui-font-weight-regular" data-kind="other">
+<td><code>--bui-font-weight-regular</code></td>
+<td data-slot="value"><code class="docs-token-value">400</code></td>
+<td class="docs-wrap"><span lang="en">Regular weight.</span><span lang="ar">الوزن العادي.</span></td>
+</tr>
+<tr data-token="--bui-font-weight-medium" data-kind="other">
+<td><code>--bui-font-weight-medium</code></td>
+<td data-slot="value"><code class="docs-token-value">500</code></td>
+<td class="docs-wrap"><span lang="en">Medium weight.</span><span lang="ar">الوزن المتوسط.</span></td>
+</tr>
+<tr data-token="--bui-font-weight-semibold" data-kind="other">
+<td><code>--bui-font-weight-semibold</code></td>
+<td data-slot="value"><code class="docs-token-value">600</code></td>
+<td class="docs-wrap"><span lang="en">Semibold weight.</span><span lang="ar">وزن شبه عريض.</span></td>
+</tr>
+<tr data-token="--bui-font-weight-bold" data-kind="other">
+<td><code>--bui-font-weight-bold</code></td>
+<td data-slot="value"><code class="docs-token-value">700</code></td>
+<td class="docs-wrap"><span lang="en">Bold weight.</span><span lang="ar">الوزن العريض.</span></td>
+</tr>
+<tr data-token="--bui-line-height-tight" data-kind="other">
+<td><code>--bui-line-height-tight</code></td>
+<td data-slot="value"><code class="docs-token-value">1.25</code></td>
+<td class="docs-wrap"><span lang="en">Headings.</span><span lang="ar">العناوين.</span></td>
+</tr>
+<tr data-token="--bui-line-height-base" data-kind="other">
+<td><code>--bui-line-height-base</code></td>
+<td data-slot="value"><code class="docs-token-value">1.65</code></td>
+<td class="docs-wrap"><span lang="en">Body text. Arabic text may need more room; this site raises it to 1.85 for Arabic.</span><span lang="ar">نص المتن. قد يحتاج النص العربي مساحة أكبر؛ يرفعها هذا الموقع إلى 1.85 للعربية.</span></td>
+</tr>
+</tbody></table></div>
+<h2 id="spacing-variables"><span lang="en">Spacing variables</span><span lang="ar">متغيرات المسافات</span></h2>
+<p lang="en">A 4px (0.25rem) base unit. The bar shows the width of each step.</p>
+<p lang="ar">وحدة أساس 4px (‏0.25rem). يعرض الشريط عرض كل خطوة.</p>
+<div class="docs-table-wrap">
+<table>
+<thead><tr>
+<th scope="col"><span lang="en">Token</span><span lang="ar">المتغير</span></th>
+<th scope="col"><span lang="en">Value</span><span lang="ar">القيمة</span></th>
+<th scope="col"><span lang="en">Use</span><span lang="ar">الاستخدام</span></th>
+</tr></thead>
+<tbody>
+<tr data-token="--bui-space-1" data-kind="space">
+<td><code>--bui-space-1</code></td>
+<td data-slot="value"><code class="docs-token-value">0.25rem</code></td>
+<td class="docs-wrap"><span lang="en">Tight gaps.</span><span lang="ar">فجوات ضيقة.</span></td>
+</tr>
+<tr data-token="--bui-space-2" data-kind="space">
+<td><code>--bui-space-2</code></td>
+<td data-slot="value"><code class="docs-token-value">0.5rem</code></td>
+<td class="docs-wrap"><span lang="en">Small gaps.</span><span lang="ar">فجوات صغيرة.</span></td>
+</tr>
+<tr data-token="--bui-space-3" data-kind="space">
+<td><code>--bui-space-3</code></td>
+<td data-slot="value"><code class="docs-token-value">0.75rem</code></td>
+<td class="docs-wrap"><span lang="en">Control padding.</span><span lang="ar">حشوة العناصر.</span></td>
+</tr>
+<tr data-token="--bui-space-4" data-kind="space">
+<td><code>--bui-space-4</code></td>
+<td data-slot="value"><code class="docs-token-value">1rem</code></td>
+<td class="docs-wrap"><span lang="en">Default gap and padding.</span><span lang="ar">الفجوة والحشوة الافتراضية.</span></td>
+</tr>
+<tr data-token="--bui-space-5" data-kind="space">
+<td><code>--bui-space-5</code></td>
+<td data-slot="value"><code class="docs-token-value">1.25rem</code></td>
+<td class="docs-wrap"><span lang="en">Comfortable padding.</span><span lang="ar">حشوة مريحة.</span></td>
+</tr>
+<tr data-token="--bui-space-6" data-kind="space">
+<td><code>--bui-space-6</code></td>
+<td data-slot="value"><code class="docs-token-value">1.5rem</code></td>
+<td class="docs-wrap"><span lang="en">Section padding.</span><span lang="ar">حشوة الأقسام.</span></td>
+</tr>
+<tr data-token="--bui-space-8" data-kind="space">
+<td><code>--bui-space-8</code></td>
+<td data-slot="value"><code class="docs-token-value">2rem</code></td>
+<td class="docs-wrap"><span lang="en">Large gaps.</span><span lang="ar">فجوات كبيرة.</span></td>
+</tr>
+<tr data-token="--bui-space-10" data-kind="space">
+<td><code>--bui-space-10</code></td>
+<td data-slot="value"><code class="docs-token-value">2.5rem</code></td>
+<td class="docs-wrap"><span lang="en">Extra large gaps.</span><span lang="ar">فجوات كبيرة جدًا.</span></td>
+</tr>
+<tr data-token="--bui-space-12" data-kind="space">
+<td><code>--bui-space-12</code></td>
+<td data-slot="value"><code class="docs-token-value">3rem</code></td>
+<td class="docs-wrap"><span lang="en">Section spacing.</span><span lang="ar">تباعد الأقسام.</span></td>
+</tr>
+<tr data-token="--bui-space-16" data-kind="space">
+<td><code>--bui-space-16</code></td>
+<td data-slot="value"><code class="docs-token-value">4rem</code></td>
+<td class="docs-wrap"><span lang="en">Page-level spacing.</span><span lang="ar">تباعد على مستوى الصفحة.</span></td>
+</tr>
+</tbody></table></div>
+<h2 id="border-radius"><span lang="en">Border radius</span><span lang="ar">زوايا الحواف</span></h2>
+<div class="docs-table-wrap">
+<table>
+<thead><tr>
+<th scope="col"><span lang="en">Token</span><span lang="ar">المتغير</span></th>
+<th scope="col"><span lang="en">Value</span><span lang="ar">القيمة</span></th>
+<th scope="col"><span lang="en">Use</span><span lang="ar">الاستخدام</span></th>
+</tr></thead>
+<tbody>
+<tr data-token="--bui-radius-sm" data-kind="radius">
+<td><code>--bui-radius-sm</code></td>
+<td data-slot="value"><code class="docs-token-value">0.25rem</code></td>
+<td class="docs-wrap"><span lang="en">Small elements such as inline code.</span><span lang="ar">عناصر صغيرة مثل الشيفرة المضمَّنة.</span></td>
+</tr>
+<tr data-token="--bui-radius-md" data-kind="radius">
+<td><code>--bui-radius-md</code></td>
+<td data-slot="value"><code class="docs-token-value">0.5rem</code></td>
+<td class="docs-wrap"><span lang="en">Controls.</span><span lang="ar">العناصر التفاعلية.</span></td>
+</tr>
+<tr data-token="--bui-radius-lg" data-kind="radius">
+<td><code>--bui-radius-lg</code></td>
+<td data-slot="value"><code class="docs-token-value">0.75rem</code></td>
+<td class="docs-wrap"><span lang="en">Cards and panels.</span><span lang="ar">البطاقات واللوحات.</span></td>
+</tr>
+<tr data-token="--bui-radius-full" data-kind="radius">
+<td><code>--bui-radius-full</code></td>
+<td data-slot="value"><code class="docs-token-value">9999px</code></td>
+<td class="docs-wrap"><span lang="en">Pills and circles.</span><span lang="ar">الأقراص والدوائر.</span></td>
+</tr>
+</tbody></table></div>
+<h2 id="shadows"><span lang="en">Shadows</span><span lang="ar">الظلال</span></h2>
+<p lang="en">Shadows differ between themes: dark surfaces need stronger shadows to remain visible.</p>
+<p lang="ar">تختلف الظلال بين الثيمين: الأسطح الداكنة تحتاج ظلالًا أقوى لتبقى ظاهرة.</p>
+<div class="docs-table-wrap">
+<table>
+<thead><tr>
+<th scope="col"><span lang="en">Token</span><span lang="ar">المتغير</span></th>
+<th scope="col"><span lang="en">Light</span><span lang="ar">الفاتح</span></th>
+<th scope="col"><span lang="en">Dark</span><span lang="ar">الداكن</span></th>
+<th scope="col"><span lang="en">Use</span><span lang="ar">الاستخدام</span></th>
+</tr></thead>
+<tbody>
+<tr data-token="--bui-shadow-sm" data-kind="shadow">
+<td><code>--bui-shadow-sm</code></td>
+<td data-slot="light"><code class="docs-token-value">0 1px 2px rgb(28 31 30 / 0.08)</code></td>
+<td data-slot="dark"><code class="docs-token-value">0 1px 2px rgb(0 0 0 / 0.5)</code></td>
+<td class="docs-wrap"><span lang="en">Cards at rest.</span><span lang="ar">البطاقات في وضعها العادي.</span></td>
+</tr>
+<tr data-token="--bui-shadow-md" data-kind="shadow">
+<td><code>--bui-shadow-md</code></td>
+<td data-slot="light"><code class="docs-token-value">0 4px 12px rgb(28 31 30 / 0.1)</code></td>
+<td data-slot="dark"><code class="docs-token-value">0 4px 12px rgb(0 0 0 / 0.5)</code></td>
+<td class="docs-wrap"><span lang="en">Raised elements.</span><span lang="ar">العناصر المرتفعة.</span></td>
+</tr>
+<tr data-token="--bui-shadow-lg" data-kind="shadow">
+<td><code>--bui-shadow-lg</code></td>
+<td data-slot="light"><code class="docs-token-value">0 16px 40px rgb(28 31 30 / 0.18)</code></td>
+<td data-slot="dark"><code class="docs-token-value">0 16px 40px rgb(0 0 0 / 0.6)</code></td>
+<td class="docs-wrap"><span lang="en">Dialogs and drawers.</span><span lang="ar">النوافذ والأدراج.</span></td>
+</tr>
+</tbody></table></div>
+<h2 id="theme-variables"><span lang="en">Theme variables</span><span lang="ar">متغيرات الثيم</span></h2>
+<p lang="en">The theme-independent tokens are defined on <code>:root</code>. Color and shadow tokens come in two sets: the light set on <code>:root</code> and <code>.bui-light</code> (the default), and the dark set on <code>.bui-dark</code>. Each set also declares <code>color-scheme</code>.</p>
+<p lang="ar">الـ tokens غير المرتبطة بالثيم معرَّفة على <code>:root</code>. أما الألوان والظلال ففي مجموعتين: الفاتحة على <code>:root</code> و<code>.bui-light</code> (الافتراضية)، والداكنة على <code>.bui-dark</code>. وتعلن كل مجموعة قيمة <code>color-scheme</code> أيضًا.</p>
+<p lang="en">Add the class to <code>&lt;html&gt;</code> for a page-wide theme, or to any element for a scoped region:</p>
+<p lang="ar">أضف الصنف إلى <code>&lt;html&gt;</code> لثيم يشمل الصفحة، أو إلى أي عنصر لمنطقة محصورة:</p>
+<pre class="docs-code" data-lang="html"><code>&lt;html class="bui-dark"&gt; ... &lt;/html&gt;
+
+&lt;section class="bui-dark"&gt;
+  This region uses the dark tokens.
+&lt;/section&gt;
+</code></pre>
+<p lang="en">The stylesheet does not switch themes by itself, and it does not read or write browser storage. Deciding when to add <code>bui-dark</code> is up to your page. For example, to follow the operating system setting:</p>
+<p lang="ar">لا يبدّل ملف الأنماط الثيم من تلقاء نفسه ولا يقرأ التخزين في المتصفح أو يكتب فيه. قرار إضافة <code>bui-dark</code> متروك لصفحتك. مثلًا لاتباع إعداد نظام التشغيل:</p>
+<pre class="docs-code" data-lang="js"><code>var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+document.documentElement.classList.toggle('bui-dark', prefersDark);
+</code></pre>
+<p lang="en">This documentation site additionally remembers the reader's choice in <code>localStorage</code> under the key <code>bui-theme</code>. That behavior belongs to the docs site, not to the library.</p>
+<p lang="ar">يحفظ موقع التوثيق هذا أيضًا اختيار القارئ في <code>localStorage</code> تحت المفتاح <code>bui-theme</code>. هذا السلوك يخص موقع التوثيق وليس المكتبة.</p>
+<h2 id="how-to-customize"><span lang="en">How to customize variables</span><span lang="ar">طريقة تخصيص المتغيرات</span></h2>
+<h3 id="customize-globally"><span lang="en">Override globally</span><span lang="ar">تخصيص عام</span></h3>
+<p lang="en">Load your own stylesheet after <code>baset-ui.css</code> and override the tokens you want. Override color tokens in both themes:</p>
+<p lang="ar">حمّل ملف أنماطك بعد <code>baset-ui.css</code> وعدّل الـ tokens التي تريدها. عدّل tokens الألوان في الثيمين:</p>
+<pre class="docs-code" data-lang="css" data-title="my-theme.css"><code>/* my-theme.css, loaded after baset-ui.css */
+:root {
+  --bui-color-primary: #7c3aed;
+  --bui-color-primary-hover: #6d28d9;
+}
+
+.bui-dark {
+  --bui-color-primary: #a78bfa;
+  --bui-color-primary-hover: #c4b5fd;
+}
+</code></pre>
+<div class="docs-callout docs-callout--warning" role="note">
+<p class="docs-callout__title"><span lang="en">Why both blocks?</span><span lang="ar">لماذا الكتلتان؟</span></p>
+<p lang="en"><code>:root</code> and <code>.bui-dark</code> have the same specificity, so the later rule wins. If you only override <code>:root</code> after the stylesheet, your value also wins in dark mode, and the dark theme will use your light color.</p>
+<p lang="ar">للمحددين <code>:root</code> و<code>.bui-dark</code> الخصوصية نفسها، فتفوز القاعدة الأحدث. إن عدّلت <code>:root</code> فقط بعد ملف الأنماط فستفوز قيمتك في الوضع الداكن أيضًا، وسيستخدم الثيم الداكن لونك الفاتح.</p>
+</div>
+<h3 id="customize-scoped"><span lang="en">Override for one region</span><span lang="ar">تخصيص لمنطقة واحدة</span></h3>
+<p lang="en">Custom properties are inherited, so setting a token on a wrapper changes only what is inside it:</p>
+<p lang="ar">الخصائص المخصصة تُورَّث، لذا فضبط token على عنصر مغلِّف يغيّر ما بداخله فقط:</p>
+<pre class="docs-code" data-lang="css"><code>.my-scope {
+  --bui-color-primary: #7c3aed;
+  --bui-radius-md: 0.75rem;
+}
+</code></pre>
+<h3 id="live-demo"><span lang="en">Live demo</span><span lang="ar">عرض حي</span></h3>
+<p lang="en">Change the values and watch the preview. The overrides are set on the preview element only, so nothing else on this page changes. The theme selector adds <code>bui-light</code> or <code>bui-dark</code> to the preview only.</p>
+<p lang="ar">غيّر القيم وراقب المعاينة. التعديلات مضبوطة على عنصر المعاينة فقط، فلا يتغير أي شيء آخر في الصفحة. يضيف محدد الثيم <code>bui-light</code> أو <code>bui-dark</code> إلى المعاينة فقط.</p>
+<div class="docs-sandbox">
+<div class="docs-sandbox__controls">
+<label><span><span lang="en">Primary color</span><span lang="ar">اللون الأساسي</span></span><input type="color" id="sbx-primary" value="#0f766e"></label>
+<label><span><span lang="en">Radius (--bui-radius-md)</span><span lang="ar">الزاوية (--bui-radius-md)</span></span>
+<select id="sbx-radius">
+<option value="0">0</option>
+<option value="0.25rem">0.25rem</option>
+<option value="0.5rem" selected>0.5rem</option>
+<option value="0.75rem">0.75rem</option>
+<option value="1rem">1rem</option>
+<option value="1.5rem">1.5rem</option>
+</select></label>
+<label><span><span lang="en">Theme in preview</span><span lang="ar">الثيم في المعاينة</span></span>
+<select id="sbx-theme">
+<option value="page" data-en="Same as page" data-ar="مثل الصفحة">Same as page</option>
+<option value="light" data-en="Light" data-ar="فاتح">Light</option>
+<option value="dark" data-en="Dark" data-ar="داكن">Dark</option>
+</select></label>
+<button type="button" class="docs-sandbox__reset" id="sbx-reset"><span lang="en">Reset</span><span lang="ar">إعادة الضبط</span></button>
+</div>
+<div class="docs-sandbox__preview" id="sbx-preview">
+<h4><span lang="en">Preview</span><span lang="ar">معاينة</span></h4>
+<p><span lang="en">Everything here uses only --bui-* tokens.</span><span lang="ar">كل ما هنا يستخدم tokens بادئتها --bui-* فقط.</span></p>
+<span class="docs-sandbox__chip"><span lang="en">Primary</span><span lang="ar">أساسي</span></span>
+<div class="docs-sandbox__tint"><span lang="en">Tinted background from --bui-color-primary-subtle</span><span lang="ar">خلفية خفيفة من --bui-color-primary-subtle</span></div>
+</div>
+<p class="docs-sandbox__result" id="sbx-result" role="status"></p>
+</div>
+<p lang="en">The CSS for what you chose:</p>
+<p lang="ar">شيفرة CSS لما اخترته:</p>
+<pre class="docs-code" id="sbx-code" data-lang="css"><code>.my-scope {
+  --bui-color-primary: #0f766e;
+  --bui-radius-md: 0.5rem;
+}
+</code></pre>
+<p lang="en">Notice that choosing <em>Dark</em> in the preview does not change your primary color: an override set directly on an element beats the theme class on the same element. That is the same reason you need both blocks when overriding globally.</p>
+<p lang="ar">لاحظ أن اختيار <em>داكن</em> في المعاينة لا يغيّر لونك الأساسي: التعديل المضبوط مباشرة على العنصر يتفوق على صنف الثيم على العنصر نفسه. وهذا هو السبب نفسه الذي يجعلك تحتاج الكتلتين عند التعديل العام.</p>
+<h3 id="customize-checklist"><span lang="en">Before you ship a custom color</span><span lang="ar">قبل اعتماد لون مخصص</span></h3>
+<ul>
+  <li><span lang="en">Check that <code>--bui-color-on-primary</code> still reaches 4.5:1 on your new primary. The demo above reports the ratio.</span><span lang="ar">تأكد أن <code>--bui-color-on-primary</code> ما زال يحقق 4.5:1 على لونك الأساسي الجديد. يعرض العرض أعلاه النسبة.</span></li>
+  <li><span lang="en">Provide the dark-theme values as well.</span><span lang="ar">قدّم قيم الثيم الداكن أيضًا.</span></li>
+  <li><span lang="en">Do not rename tokens; override their values.</span><span lang="ar">لا تغيّر أسماء الـ tokens؛ عدّل قيمها.</span></li>
+</ul>
+</article>
+<footer class="docs-footer" id="docs-footer"></footer>
+</main>
+<aside class="docs-toc" id="docs-toc"></aside>
+</div>
+<div id="docs-live" class="docs-sr-only" role="status" aria-live="polite"></div>
+<script src="../assets/js/nav-data.js" defer></script>
+<script src="../assets/js/highlight.js" defer></script>
+<script src="../assets/js/search.js" defer></script>
+<script src="../assets/js/docs.js" defer></script>
+<script src="../assets/js/tokens-live.js" defer></script>
+</body>
+</html>

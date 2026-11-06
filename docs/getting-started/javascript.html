@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en" dir="ltr" data-docs-root="../" data-page="getting-started/javascript">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>JavaScript · Baset UI</title>
+<meta name="description" content="Current JavaScript status (none yet) and the contracts future component scripts must follow.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230f766e'/%3E%3Crect x='7' y='8' width='18' height='3.6' rx='1.8' fill='%23fff'/%3E%3Crect x='7' y='14.2' width='12' height='3.6' rx='1.8' fill='%23fff'/%3E%3Crect x='7' y='20.4' width='15' height='3.6' rx='1.8' fill='%23fff'/%3E%3C/svg%3E">
+<script src="../assets/js/init.js"></script>
+<link rel="stylesheet" href="../../assets/css/baset-ui.css">
+<link rel="stylesheet" href="../assets/css/docs.css">
+</head>
+<body>
+<a class="docs-skip" href="#content"><span lang="en">Skip to content</span><span lang="ar">تخطَّ إلى المحتوى</span></a>
+<header class="docs-navbar" id="docs-navbar"></header>
+<div class="docs-backdrop" id="docs-backdrop" hidden></div>
+<div class="docs-layout">
+<aside class="docs-sidebar" id="docs-sidebar"></aside>
+<main class="docs-main" id="content" tabindex="-1">
+<article class="docs-article">
+<noscript>
+<div class="docs-callout docs-callout--note" role="note">
+<p class="docs-callout__title"><span lang="en">JavaScript is off</span><span lang="ar">جافاسكربت معطَّل</span></p>
+<p lang="en">Page content stays readable, but the navigation menu, search, table of contents and the language, direction and theme switches need JavaScript. Content is shown in English.</p>
+<p lang="ar">يبقى محتوى الصفحة مقروءًا، لكن قائمة التنقل والبحث وفهرس الصفحة ومفاتيح اللغة والاتجاه والثيم تحتاج إلى جافاسكربت. يُعرض المحتوى بالإنجليزية.</p>
+</div>
+
+</noscript>
+<h1><span lang="en">JavaScript</span><span lang="ar">جافاسكربت</span></h1>
+<p class="docs-lead" lang="en">Baset UI has no JavaScript yet. This page states that plainly and records the contracts that future component scripts must meet, so that no API is documented before it exists.</p>
+<p class="docs-lead" lang="ar">لا تحتوي Baset UI على جافاسكربت بعد. تذكر هذه الصفحة ذلك بوضوح، وتسجّل القواعد التي يجب أن تلتزم بها سكربتات المكونات مستقبلًا، حتى لا يُوثَّق أي API قبل وجوده.</p>
+<div class="docs-callout docs-callout--warning" role="note">
+<p class="docs-callout__title"><span lang="en">No API to use</span><span lang="ar">لا يوجد API لتستخدمه</span></p>
+<p lang="en">No file in the repository defines <code>window.BUI</code> or any component method, option or event. Any <code>BUI.something()</code> call you may see in planning documents is an illustration of a convention, not an available API.</p>
+<p lang="ar">لا يعرّف أي ملف في المستودع <code>window.BUI</code> ولا أي دالة أو خيار أو حدث لمكوّن. أي استدعاء مثل <code>BUI.something()</code> قد تراه في وثائق التخطيط هو توضيح لعرف وليس API متاحًا.</p>
+</div>
+<div class="docs-table-wrap">
+<table>
+<thead><tr>
+<th scope="col"><span lang="en">Topic</span><span lang="ar">الموضوع</span></th>
+<th scope="col"><span lang="en">Status</span><span lang="ar">الحالة</span></th>
+</tr></thead>
+<tbody>
+<tr><td><span lang="en">JavaScript installation</span><span lang="ar">تثبيت جافاسكربت</span></td><td><span class="docs-badge docs-badge--missing"><span lang="en">Not implemented yet</span><span lang="ar">غير منفَّذ بعد</span></span></td></tr>
+<tr><td><span lang="en">Initialization</span><span lang="ar">التهيئة</span></td><td><span class="docs-badge docs-badge--planned"><span lang="en">Planned</span><span lang="ar">مخطَّط</span></span></td></tr>
+<tr><td><span lang="en">Component APIs</span><span lang="ar">واجهات المكونات</span></td><td><span class="docs-badge docs-badge--missing"><span lang="en">Not implemented yet</span><span lang="ar">غير منفَّذ بعد</span></span></td></tr>
+<tr><td><span lang="en">Events</span><span lang="ar">الأحداث</span></td><td><span class="docs-badge docs-badge--missing"><span lang="en">Not implemented yet</span><span lang="ar">غير منفَّذ بعد</span></span></td></tr>
+<tr><td><span lang="en">Lifecycle</span><span lang="ar">دورة الحياة</span></td><td><span class="docs-badge docs-badge--planned"><span lang="en">Planned</span><span lang="ar">مخطَّط</span></span></td></tr>
+<tr><td><span lang="en">Configuration</span><span lang="ar">الإعدادات</span></td><td><span class="docs-badge docs-badge--planned"><span lang="en">Planned</span><span lang="ar">مخطَّط</span></span></td></tr>
+<tr><td><span lang="en">Multiple instances</span><span lang="ar">نسخ متعددة</span></td><td><span class="docs-badge docs-badge--planned"><span lang="en">Planned</span><span lang="ar">مخطَّط</span></span></td></tr>
+<tr><td><span lang="en">Error handling</span><span lang="ar">معالجة الأخطاء</span></td><td><span class="docs-badge docs-badge--planned"><span lang="en">Planned</span><span lang="ar">مخطَّط</span></span></td></tr>
+</tbody></table></div>
+<h2 id="javascript-installation"><span lang="en">JavaScript installation</span><span lang="ar">تثبيت جافاسكربت</span></h2>
+<p lang="en"><span class="docs-badge docs-badge--missing"><span lang="en">Not implemented yet</span><span lang="ar">غير منفَّذ بعد</span></span> There is no script to install. The README quick start mentions <code>assets/js/baset-ui.js</code> as an intended path, but that file does not exist. Static CSS usage needs no JavaScript, so you can use the token stylesheet today without it. When scripts exist, they will be loadable per component, so using one component does not require loading all of them.</p>
+<p lang="ar"><span class="docs-badge docs-badge--missing"><span lang="en">Not implemented yet</span><span lang="ar">غير منفَّذ بعد</span></span> لا يوجد سكربت لتثبيته. يذكر README المسار <code>assets/js/baset-ui.js</code> كمسار مقصود، لكن الملف غير موجود. استخدام CSS الساكن لا يحتاج جافاسكربت، فيمكنك استخدام ملف الـ tokens اليوم بدونها. وحين توجد السكربتات ستكون قابلة للتحميل لكل مكوّن على حدة، فلا يتطلب استخدام مكوّن واحد تحميلها كلها.</p>
+<h2 id="initialization"><span lang="en">Initialization</span><span lang="ar">التهيئة</span></h2>
+<p lang="en"><span class="docs-badge docs-badge--planned"><span lang="en">Planned</span><span lang="ar">مخطَّط</span></span> Rules every interactive component must follow:</p>
+<p lang="ar"><span class="docs-badge docs-badge--planned"><span lang="en">Planned</span><span lang="ar">مخطَّط</span></span> قواعد يجب أن يلتزم بها كل مكوّن تفاعلي:</p>
+<ul>
+  <li><span lang="en">Initialization is predictable and scoped to one element.</span><span lang="ar">التهيئة متوقعة ومحصورة في عنصر واحد.</span></li>
+  <li><span lang="en">Initializing the same element twice is safe and never duplicates event listeners.</span><span lang="ar">تهيئة العنصر نفسه مرتين آمنة ولا تكرر مستمعات الأحداث.</span></li>
+  <li><span lang="en">Baset UI never assumes it owns the whole page or the lifetime of an element.</span><span lang="ar">لا تفترض Baset UI أنها تملك الصفحة كلها أو عمر العنصر.</span></li>
+  <li><span lang="en">Inside a framework, initialize after the framework has rendered the element and destroy before it removes it, so Baset UI does not compete with the framework's rendering.</span><span lang="ar">داخل الأطر: تُهيَّأ بعد أن يعرض الإطار العنصر وتُتلَف قبل أن يزيله، حتى لا تنافس Baset UI عملية العرض في الإطار.</span></li>
+</ul>
+<h2 id="component-apis"><span lang="en">Component APIs</span><span lang="ar">واجهات المكونات</span></h2>
+<p lang="en"><span class="docs-badge docs-badge--missing"><span lang="en">Not implemented yet</span><span lang="ar">غير منفَّذ بعد</span></span> No component API exists. Every interactive component will get its own documented API, and its page will list exactly these things:</p>
+<p lang="ar"><span class="docs-badge docs-badge--missing"><span lang="en">Not implemented yet</span><span lang="ar">غير منفَّذ بعد</span></span> لا توجد واجهة لأي مكوّن. سيحصل كل مكوّن تفاعلي على واجهته الموثَّقة، وستسرد صفحته هذه الأمور بالضبط:</p>
+<ul>
+  <li><span lang="en">How to create an instance.</span><span lang="ar">كيف تنشئ نسخة.</span></li>
+  <li><span lang="en">Options, their types, defaults and allowed values.</span><span lang="ar">الخيارات وأنواعها وقيمها الافتراضية والمسموح بها.</span></li>
+  <li><span lang="en">Methods, with parameters and results.</span><span lang="ar">الدوال مع معاملاتها ونتائجها.</span></li>
+  <li><span lang="en">Events and their payloads.</span><span lang="ar">الأحداث وحمولاتها.</span></li>
+</ul>
+<p lang="en">Examples will be added only for APIs that have been implemented and run.</p>
+<p lang="ar">لن تُضاف أمثلة إلا للواجهات التي نُفِّذت وجُرِّبت.</p>
+<h2 id="events"><span lang="en">Events</span><span lang="ar">الأحداث</span></h2>
+<p lang="en"><span class="docs-badge docs-badge--missing"><span lang="en">Not implemented yet</span><span lang="ar">غير منفَّذ بعد</span></span> No events exist. When they are added they must be named consistently, documented, dispatched from a predictable target, and useful both to vanilla JavaScript and to framework integrations, without exposing internal implementation details.</p>
+<p lang="ar"><span class="docs-badge docs-badge--missing"><span lang="en">Not implemented yet</span><span lang="ar">غير منفَّذ بعد</span></span> لا توجد أحداث. عند إضافتها يجب أن تُسمّى بشكل متسق، وتُوثَّق، وتُطلَق من هدف متوقع، وتفيد جافاسكربت الخالصة وتكاملات الأطر معًا، دون كشف تفاصيل التنفيذ الداخلية.</p>
+<h2 id="lifecycle"><span lang="en">Lifecycle</span><span lang="ar">دورة الحياة</span></h2>
+<p lang="en"><span class="docs-badge docs-badge--planned"><span lang="en">Planned</span><span lang="ar">مخطَّط</span></span> Interactive instances are intended to support creation, updates, public actions and destruction. Destroying an instance removes its listeners, observers, timers and any DOM it generated. Components that are only HTML and CSS have no instance and no lifecycle. See <a href="approach.html#component-lifecycle">Approach</a>.</p>
+<p lang="ar"><span class="docs-badge docs-badge--planned"><span lang="en">Planned</span><span lang="ar">مخطَّط</span></span> يُقصد أن تدعم النسخ التفاعلية الإنشاء والتحديث والإجراءات العامة والإتلاف. يزيل إتلاف النسخة مستمعاتها ومراقِباتها ومؤقتاتها وأي DOM ولّدته. المكونات التي هي HTML وCSS فقط ليس لها نسخة ولا دورة حياة. راجع <a href="approach.html#component-lifecycle">المنهجية</a>.</p>
+<h2 id="configuration"><span lang="en">Configuration</span><span lang="ar">الإعدادات</span></h2>
+<p lang="en"><span class="docs-badge docs-badge--planned"><span lang="en">Planned</span><span lang="ar">مخطَّط</span></span> Every option will have a documented type, default and allowed values; invalid values are rejected or fall back to the documented default. The way options are passed (JavaScript object, HTML attributes, or both) is not decided yet and will be fixed with the first interactive component.</p>
+<p lang="ar"><span class="docs-badge docs-badge--planned"><span lang="en">Planned</span><span lang="ar">مخطَّط</span></span> سيكون لكل خيار نوع وقيمة افتراضية وقيم مسموح بها موثَّقة؛ والقيم غير الصالحة تُرفض أو تعود إلى القيمة الافتراضية الموثَّقة. طريقة تمرير الخيارات (كائن جافاسكربت أو خصائص HTML أو كلاهما) لم تُحسم بعد وستُحدَّد مع أول مكوّن تفاعلي.</p>
+<h2 id="multiple-instances"><span lang="en">Multiple instances</span><span lang="ar">النسخ المتعددة</span></h2>
+<p lang="en"><span class="docs-badge docs-badge--planned"><span lang="en">Planned</span><span lang="ar">مخطَّط</span></span> Several instances of a component on one page must not interfere with each other. Each works only inside its own element, and destroying one leaves the others untouched.</p>
+<p lang="ar"><span class="docs-badge docs-badge--planned"><span lang="en">Planned</span><span lang="ar">مخطَّط</span></span> يجب ألا تتداخل عدة نسخ من المكوّن في صفحة واحدة. تعمل كل نسخة داخل عنصرها فقط، وإتلاف إحداها لا يمس الأخرى.</p>
+<h2 id="error-handling"><span lang="en">Error handling</span><span lang="ar">معالجة الأخطاء</span></h2>
+<p lang="en"><span class="docs-badge docs-badge--planned"><span lang="en">Planned</span><span lang="ar">مخطَّط</span></span> Options are validated and problems are reported clearly. Missing optional browser APIs are handled gracefully rather than breaking the page. The library never uses <code>eval()</code> and never builds executable code from user input.</p>
+<p lang="ar"><span class="docs-badge docs-badge--planned"><span lang="en">Planned</span><span lang="ar">مخطَّط</span></span> تُتحقَّق من الخيارات وتُبلَّغ المشكلات بوضوح. يُتعامل مع غياب واجهات المتصفح الاختيارية بسلاسة بدل كسر الصفحة. لا تستخدم المكتبة <code>eval()</code> ولا تبني شيفرة قابلة للتنفيذ من مدخلات المستخدم.</p>
+<h2 id="docs-scripts"><span lang="en">About the scripts on this site</span><span lang="ar">عن السكربتات في هذا الموقع</span></h2>
+<p lang="en">The scripts in <code>docs/assets/js/</code> power this documentation site (menu, search, copy buttons, theme switch). They live in a global named <code>BUIDocs</code> and are documentation tooling only. They are not part of the Baset UI library, are not a model for its API, and should not be copied into applications.</p>
+<p lang="ar">السكربتات في <code>docs/assets/js/</code> تشغّل موقع التوثيق هذا (القائمة والبحث وأزرار النسخ وتبديل الثيم). وهي تعيش في كائن عام اسمه <code>BUIDocs</code> وهي أدوات للتوثيق فقط. ليست جزءًا من مكتبة Baset UI ولا نموذجًا لواجهتها، ولا ينبغي نسخها إلى التطبيقات.</p>
+</article>
+<footer class="docs-footer" id="docs-footer"></footer>
+</main>
+<aside class="docs-toc" id="docs-toc"></aside>
+</div>
+<div id="docs-live" class="docs-sr-only" role="status" aria-live="polite"></div>
+<script src="../assets/js/nav-data.js" defer></script>
+<script src="../assets/js/highlight.js" defer></script>
+<script src="../assets/js/search.js" defer></script>
+<script src="../assets/js/docs.js" defer></script>
+</body>
+</html>

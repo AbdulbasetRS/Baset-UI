@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en" dir="ltr" data-docs-root="../" data-page="getting-started/approach">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Approach · Baset UI</title>
+<meta name="description" content="Design philosophy and architecture: framework-agnostic, progressive enhancement, modular, CSS architecture, lifecycle, RTL/LTR.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230f766e'/%3E%3Crect x='7' y='8' width='18' height='3.6' rx='1.8' fill='%23fff'/%3E%3Crect x='7' y='14.2' width='12' height='3.6' rx='1.8' fill='%23fff'/%3E%3Crect x='7' y='20.4' width='15' height='3.6' rx='1.8' fill='%23fff'/%3E%3C/svg%3E">
+<script src="../assets/js/init.js"></script>
+<link rel="stylesheet" href="../../assets/css/baset-ui.css">
+<link rel="stylesheet" href="../assets/css/docs.css">
+</head>
+<body>
+<a class="docs-skip" href="#content"><span lang="en">Skip to content</span><span lang="ar">تخطَّ إلى المحتوى</span></a>
+<header class="docs-navbar" id="docs-navbar"></header>
+<div class="docs-backdrop" id="docs-backdrop" hidden></div>
+<div class="docs-layout">
+<aside class="docs-sidebar" id="docs-sidebar"></aside>
+<main class="docs-main" id="content" tabindex="-1">
+<article class="docs-article">
+<noscript>
+<div class="docs-callout docs-callout--note" role="note">
+<p class="docs-callout__title"><span lang="en">JavaScript is off</span><span lang="ar">جافاسكربت معطَّل</span></p>
+<p lang="en">Page content stays readable, but the navigation menu, search, table of contents and the language, direction and theme switches need JavaScript. Content is shown in English.</p>
+<p lang="ar">يبقى محتوى الصفحة مقروءًا، لكن قائمة التنقل والبحث وفهرس الصفحة ومفاتيح اللغة والاتجاه والثيم تحتاج إلى جافاسكربت. يُعرض المحتوى بالإنجليزية.</p>
+</div>
+
+</noscript>
+<h1><span lang="en">Approach</span><span lang="ar">المنهجية</span></h1>
+<p class="docs-lead" lang="en">The principles behind Baset UI and the architecture it is built toward. Sections describe design intent unless they say what exists today.</p>
+<p class="docs-lead" lang="ar">المبادئ التي تقوم عليها Baset UI والبنية التي تُبنى نحوها. تصف الأقسام نية التصميم ما لم تذكر ما هو موجود اليوم.</p>
+<h2 id="design-philosophy"><span lang="en">Design philosophy</span><span lang="ar">فلسفة التصميم</span></h2>
+<ul>
+  <li><span lang="en"><strong>One implementation.</strong> Core components are not forked for React, Vue, Angular or Blade.</span><span lang="ar"><strong>تنفيذ واحد.</strong> لا تُنسخ المكونات الأساسية لكل من React وVue وAngular وBlade.</span></li>
+  <li><span lang="en"><strong>Progressive enhancement.</strong> Static components work without JavaScript whenever practical.</span><span lang="ar"><strong>تحسين تدريجي.</strong> تعمل المكونات الساكنة بلا جافاسكربت متى كان ذلك عمليًا.</span></li>
+  <li><span lang="en"><strong>Modularity.</strong> Components can be loaded and maintained independently.</span><span lang="ar"><strong>وحدات مستقلة.</strong> يمكن تحميل المكونات وصيانتها بشكل مستقل.</span></li>
+  <li><span lang="en"><strong>Design tokens.</strong> Shared appearance is controlled through CSS custom properties.</span><span lang="ar"><strong>Design Tokens.</strong> يُتحكم في المظهر المشترك عبر خصائص CSS المخصصة.</span></li>
+  <li><span lang="en"><strong>Accessible by default.</strong> Semantic HTML first, then keyboard behavior, focus management and ARIA where needed.</span><span lang="ar"><strong>إتاحة افتراضية.</strong> HTML دلالي أولًا، ثم سلوك لوحة المفاتيح وإدارة التركيز وARIA عند الحاجة.</span></li>
+  <li><span lang="en"><strong>Direction-aware.</strong> RTL and LTR are supported from the beginning.</span><span lang="ar"><strong>واعية بالاتجاه.</strong> دعم RTL وLTR منذ البداية.</span></li>
+  <li><span lang="en"><strong>No unnecessary dependencies.</strong> No mandatory runtime dependency and no mandatory build step.</span><span lang="ar"><strong>بلا اعتماديات غير ضرورية.</strong> لا اعتمادية تشغيل إلزامية ولا خطوة بناء إلزامية.</span></li>
+  <li><span lang="en"><strong>Honest support claims.</strong> Unfinished integrations and exports are labeled as such.</span><span lang="ar"><strong>صدق في الادّعاءات.</strong> التكاملات والتصديرات غير المكتملة تُوسَم كذلك.</span></li>
+  <li><span lang="en"><strong>Backward compatibility.</strong> Public classes, variables, methods and events change only with a documented migration path.</span><span lang="ar"><strong>توافق رجعي.</strong> لا تتغير الأصناف والمتغيرات والدوال والأحداث العامة إلا بمسار ترحيل موثَّق.</span></li>
+</ul>
+<p lang="en">The layers below are the intended architecture, with the state of each today.</p>
+<p lang="ar">الطبقات أدناه هي البنية المقصودة مع حالة كل طبقة اليوم.</p>
+<ol class="docs-stack">
+<li><span class="docs-stack__text"><strong><span lang="en">Core styles</span><span lang="ar">الأنماط الأساسية</span></strong><span><span lang="en">Design tokens, themes, direction-aware foundations.</span><span lang="ar">Design Tokens والثيمات وأسس الاتجاه.</span></span></span><span class="docs-badge docs-badge--foundation"><span lang="en">Foundation (pre-release)</span><span lang="ar">أساس أولي (تمهيدي)</span></span></li>
+<li><span class="docs-stack__text"><strong><span lang="en">Component styles</span><span lang="ar">أنماط المكونات</span></strong><span><span lang="en">Each component owns its styling.</span><span lang="ar">كل مكوّن يملك أنماطه.</span></span></span><span class="docs-badge docs-badge--planned"><span lang="en">Planned</span><span lang="ar">مخطَّط</span></span></li>
+<li><span class="docs-stack__text"><strong><span lang="en">Core JavaScript</span><span lang="ar">جافاسكربت الأساسية</span></strong><span><span lang="en">Shared helpers, only where components need them.</span><span lang="ar">مساعدات مشتركة، فقط حيث تحتاجها المكونات.</span></span></span><span class="docs-badge docs-badge--missing"><span lang="en">Not implemented yet</span><span lang="ar">غير منفَّذ بعد</span></span></li>
+<li><span class="docs-stack__text"><strong><span lang="en">Component JavaScript</span><span lang="ar">جافاسكربت المكونات</span></strong><span><span lang="en">Interactive behavior of each component.</span><span lang="ar">سلوك كل مكوّن تفاعلي.</span></span></span><span class="docs-badge docs-badge--missing"><span lang="en">Not implemented yet</span><span lang="ar">غير منفَّذ بعد</span></span></li>
+<li><span class="docs-stack__text"><strong><span lang="en">Documentation site</span><span lang="ar">موقع التوثيق</span></strong><span><span lang="en">Separate from the runtime.</span><span lang="ar">منفصل عن بيئة التشغيل.</span></span></span><span class="docs-badge docs-badge--available"><span lang="en">Available</span><span lang="ar">متاح</span></span></li>
+<li><span class="docs-stack__text"><strong><span lang="en">Playground and Code Generator</span><span lang="ar">Playground وCode Generator</span></strong><span><span lang="en">Developer tools driven by one component configuration.</span><span lang="ar">أدوات للمطورين تعتمد على إعداد واحد لكل مكوّن.</span></span></span><span class="docs-badge docs-badge--planned"><span lang="en">Planned</span><span lang="ar">مخطَّط</span></span></li>
+<li><span class="docs-stack__text"><strong><span lang="en">Framework adapters</span><span lang="ar">محوّلات الأطر</span></strong><span><span lang="en">Optional packages that depend on the core.</span><span lang="ar">حزم اختيارية تعتمد على النواة.</span></span></span><span class="docs-badge docs-badge--planned"><span lang="en">Planned</span><span lang="ar">مخطَّط</span></span></li>
+</ol>
+<h2 id="framework-agnostic-architecture"><span lang="en">Framework agnostic architecture</span><span lang="ar">بنية مستقلة عن الأطر</span></h2>
+<p lang="en">The core uses platform standards and does not import React, Vue, Angular or Laravel. Markup uses normal HTML attributes and classes that any framework can render, and styles avoid selectors that depend on a framework's generated DOM.</p>
+<p lang="ar">تعتمد النواة على معايير المنصة ولا تستورد React أو Vue أو Angular أو Laravel. يستخدم الـ markup خصائص HTML وأصنافًا عادية يمكن لأي إطار عرضها، وتتجنب الأنماط المحددات التي تعتمد على DOM يولّده إطار بعينه.</p>
+<p lang="en">A framework adapter is justified only when a component needs framework-specific lifecycle, state, refs or event integration. Such an adapter must be separately installable, depend on the core, clean up after itself, and never fork the component behavior. No adapter exists today.</p>
+<p lang="ar">يُبرَّر المحوّل فقط حين يحتاج المكوّن إلى تكامل مع دورة حياة الإطار أو حالته أو مراجعه أو أحداثه. ويجب أن يُثبَّت بشكل منفصل، ويعتمد على النواة، وينظّف ما ينشئه، ولا ينسخ سلوك المكوّن. لا يوجد أي محوّل اليوم.</p>
+<h2 id="vanilla-javascript"><span lang="en">Vanilla JavaScript</span><span lang="ar">جافاسكربت خالصة</span></h2>
+<p lang="en"><span class="docs-badge docs-badge--missing"><span lang="en">Not implemented yet</span><span lang="ar">غير منفَّذ بعد</span></span> There is no JavaScript in the library yet. The rules future scripts must follow:</p>
+<p lang="ar"><span class="docs-badge docs-badge--missing"><span lang="en">Not implemented yet</span><span lang="ar">غير منفَّذ بعد</span></span> لا توجد جافاسكربت في المكتبة بعد. القواعد التي ستلتزم بها السكربتات مستقبلًا:</p>
+<ul>
+  <li><span lang="en">Plain JavaScript only; no framework and no <code>eval()</code>.</span><span lang="ar">جافاسكربت خالصة فقط؛ بلا إطار ولا <code>eval()</code>.</span></li>
+  <li><span lang="en">A global API, when one is appropriate, lives under the <code>BUI</code> namespace. A simple HTML/CSS component needs no global API.</span><span lang="ar">إن لزم API عام فيكون تحت مساحة الاسم <code>BUI</code>. المكوّن البسيط (HTML/CSS) لا يحتاج API عامًا.</span></li>
+  <li><span lang="en">Scope all work to the component's own element and never assume Baset UI owns the whole page.</span><span lang="ar">حصر كل العمل في عنصر المكوّن نفسه، وعدم افتراض أن Baset UI تملك الصفحة كلها.</span></li>
+  <li><span lang="en">Handle missing optional browser APIs gracefully.</span><span lang="ar">التعامل بسلاسة مع غياب واجهات المتصفح الاختيارية.</span></li>
+</ul>
+<p lang="en">See <a href="javascript.html">JavaScript</a> for details.</p>
+<p lang="ar">التفاصيل في صفحة <a href="javascript.html">جافاسكربت</a>.</p>
+<h2 id="progressive-enhancement"><span lang="en">Progressive enhancement</span><span lang="ar">التحسين التدريجي</span></h2>
+<p lang="en">Content and basic styling come from HTML and CSS. JavaScript is added only for behavior that HTML cannot provide, such as overlays and keyboard-driven widgets.</p>
+<p lang="ar">المحتوى والتنسيق الأساسي يأتيان من HTML وCSS. تُضاف جافاسكربت فقط للسلوك الذي لا يوفره HTML، مثل النوافذ المنبثقة والعناصر المعتمدة على لوحة المفاتيح.</p>
+<p lang="en">This documentation site follows the same rule: the article text is plain HTML and stays readable without JavaScript. The menu, search, table of contents, copy buttons and the language, direction and theme switches need JavaScript, and without it the page is shown in English.</p>
+<p lang="ar">يتبع موقع التوثيق هذا القاعدة نفسها: نص المقالات HTML عادي ويبقى مقروءًا بلا جافاسكربت. أما القائمة والبحث وفهرس الصفحة وأزرار النسخ ومفاتيح اللغة والاتجاه والثيم فتحتاج إلى جافاسكربت، وبدونها تُعرض الصفحة بالإنجليزية.</p>
+<h2 id="modular-architecture"><span lang="en">Modular architecture</span><span lang="ar">البنية المعيارية</span></h2>
+<p lang="en">A component owns its markup contract, styles, JavaScript (if any), options, events, documentation and tests. Shared code is extracted only when several components genuinely need it. Loading one component must not require loading all of them, and documentation or Playground code stays out of the runtime.</p>
+<p lang="ar">يملك المكوّن عقد الـ markup وأنماطه وجافاسكربت الخاصة به (إن وُجدت) وخياراته وأحداثه وتوثيقه واختباراته. لا يُستخرج كود مشترك إلا حين تحتاجه عدة مكونات فعلًا. تحميل مكوّن واحد يجب ألا يتطلب تحميلها كلها، ويبقى كود التوثيق وPlayground خارج بيئة التشغيل.</p>
+<h2 id="css-architecture"><span lang="en">CSS architecture</span><span lang="ar">بنية CSS</span></h2>
+<p lang="en"><span class="docs-badge docs-badge--foundation"><span lang="en">Foundation (pre-release)</span><span lang="ar">أساس أولي (تمهيدي)</span></span> The token layer exists today. Component styles are planned.</p>
+<p lang="ar"><span class="docs-badge docs-badge--foundation"><span lang="en">Foundation (pre-release)</span><span lang="ar">أساس أولي (تمهيدي)</span></span> طبقة الـ tokens موجودة اليوم. أنماط المكونات مخططة.</p>
+<ul>
+  <li><span lang="en">Class prefix <code>bui-</code>, custom property prefix <code>--bui-</code>.</span><span lang="ar">بادئة الأصناف <code>bui-</code>، وبادئة الخصائص المخصصة <code>--bui-</code>.</span></li>
+  <li><span lang="en">Shared values live in tokens. Components consume semantic tokens such as <code>--bui-color-surface</code> instead of hardcoding colors, so one theme switch restyles everything.</span><span lang="ar">القيم المشتركة تعيش في tokens. تستهلك المكونات tokens دلالية مثل <code>--bui-color-surface</code> بدل ترميز الألوان مباشرة، فيعيد تبديل الثيم تنسيق كل شيء.</span></li>
+  <li><span lang="en">Direction-sensitive layout uses CSS logical properties (see below).</span><span lang="ar">التخطيط المتأثر بالاتجاه يستخدم الخصائص المنطقية في CSS (انظر أدناه).</span></li>
+  <li><span lang="en">Component styles are scoped to <code>bui-</code> classes. No broad selectors such as <code>button</code> or <code>*</code> and no <code>!important</code> unless a documented compatibility problem requires it. The current stylesheet contains no element selectors and no resets.</span><span lang="ar">تُحصر أنماط المكونات في أصناف <code>bui-</code>. بلا محددات واسعة مثل <code>button</code> أو <code>*</code> وبلا <code>!important</code> إلا لمشكلة توافق موثقة. الملف الحالي لا يحتوي محددات عناصر ولا reset.</span></li>
+  <li><span lang="en">Customizing one instance must not restyle every instance: override tokens on a wrapper element. This already works for tokens; see <a href="css-variables.html#how-to-customize">How to customize</a>.</span><span lang="ar">تخصيص نسخة واحدة يجب ألا يغيّر كل النسخ: تُعدَّل الـ tokens على عنصر مغلِّف. هذا يعمل اليوم مع الـ tokens؛ انظر <a href="css-variables.html#how-to-customize">طريقة التخصيص</a>.</span></li>
+  <li><span lang="en">Motion durations are tokens and become zero under <code>prefers-reduced-motion: reduce</code>.</span><span lang="ar">مدد الحركة tokens وتصبح صفرًا عند <code>prefers-reduced-motion: reduce</code>.</span></li>
+</ul>
+<div class="docs-callout docs-callout--info" role="note">
+<p class="docs-callout__title"><span lang="en">Component class naming is not fixed yet</span><span lang="ar">تسمية أصناف المكونات لم تُحسم بعد</span></p>
+<p lang="en">The exact naming pattern after the <code>bui-</code> prefix will be settled when the first component, Button, is specified. Until then no component class names are documented.</p>
+<p lang="ar">سيُحسم نمط التسمية بعد البادئة <code>bui-</code> عند توصيف أول مكوّن وهو Button. إلى ذلك الحين لا تُوثَّق أسماء أصناف للمكونات.</p>
+</div>
+<h2 id="component-lifecycle"><span lang="en">Component lifecycle</span><span lang="ar">دورة حياة المكوّن</span></h2>
+<p lang="en"><span class="docs-badge docs-badge--planned"><span lang="en">Planned</span><span lang="ar">مخطَّط</span></span> No interactive component exists, so there is no lifecycle API yet. The intended stages for interactive components:</p>
+<p lang="ar"><span class="docs-badge docs-badge--planned"><span lang="en">Planned</span><span lang="ar">مخطَّط</span></span> لا يوجد مكوّن تفاعلي، لذا لا توجد واجهة لدورة الحياة بعد. المراحل المقصودة للمكونات التفاعلية:</p>
+<ol>
+  <li><span lang="en"><strong>Initialize</strong>: predictable, scoped to one element, safe to repeat without duplicating listeners.</span><span lang="ar"><strong>التهيئة</strong>: متوقعة، محصورة في عنصر واحد، ويمكن تكرارها بأمان دون تكرار المستمعات.</span></li>
+  <li><span lang="en"><strong>Update</strong>: options or value can change after creation, where that is meaningful.</span><span lang="ar"><strong>التحديث</strong>: يمكن تغيير الخيارات أو القيمة بعد الإنشاء حيث يكون ذلك منطقيًا.</span></li>
+  <li><span lang="en"><strong>Destroy</strong>: removes listeners, observers, timers and any generated DOM.</span><span lang="ar"><strong>الإتلاف</strong>: يزيل المستمعات والمراقِبات والمؤقتات وأي DOM مولَّد.</span></li>
+</ol>
+<p lang="en">Static CSS-only components have no lifecycle.</p>
+<p lang="ar">المكونات الساكنة (CSS فقط) ليس لها دورة حياة.</p>
+<h2 id="rtl-ltr"><span lang="en">RTL and LTR support</span><span lang="ar">دعم RTL وLTR</span></h2>
+<p lang="en">Direction is controlled by the standard <code>dir</code> attribute on <code>&lt;html&gt;</code> or on any element. Layout uses CSS logical properties so a single rule works in both directions:</p>
+<p lang="ar">يُتحكم في الاتجاه عبر الخاصية القياسية <code>dir</code> على <code>&lt;html&gt;</code> أو أي عنصر. يستخدم التخطيط الخصائص المنطقية في CSS ليعمل قالب واحد في الاتجاهين:</p>
+<div class="docs-table-wrap">
+<table>
+<thead><tr>
+<th scope="col"><span lang="en">Instead of</span><span lang="ar">بدلًا من</span></th>
+<th scope="col"><span lang="en">Use</span><span lang="ar">استخدم</span></th>
+</tr></thead>
+<tbody>
+<tr><td><code>margin-left</code>, <code>margin-right</code></td><td><code>margin-inline-start</code>, <code>margin-inline-end</code></td></tr>
+<tr><td><code>padding-left</code>, <code>padding-right</code></td><td><code>padding-inline-start</code>, <code>padding-inline-end</code></td></tr>
+<tr><td><code>left</code>, <code>right</code></td><td><code>inset-inline-start</code>, <code>inset-inline-end</code></td></tr>
+<tr><td><code>border-left</code></td><td><code>border-inline-start</code></td></tr>
+<tr><td><code>text-align: left</code></td><td><code>text-align: start</code></td></tr>
+</tbody></table></div>
+<pre class="docs-code" data-lang="css"><code>.panel {
+  padding-inline: var(--bui-space-4);
+  border-inline-start: 4px solid var(--bui-color-primary);
+  text-align: start;
+}
+</code></pre>
+<p lang="en">Other rules: do not blindly apply <code>row-reverse</code>; do not force text or controls to LTR; give direction-sensitive icons and keyboard behavior explicit RTL handling; test with Arabic and English labels.</p>
+<p lang="ar">قواعد أخرى: لا تستخدم <code>row-reverse</code> دون تفكير؛ لا تجبر النص أو العناصر على LTR؛ عالج الأيقونات وسلوك لوحة المفاتيح المتأثرة بالاتجاه صراحةً؛ واختبر بتسميات عربية وإنجليزية.</p>
+<p lang="en">You can see this in action here: switch language or press the RTL button in the top bar. The sidebar, breadcrumbs and previous/next links mirror, while code blocks stay left-to-right.</p>
+<p lang="ar">يمكنك رؤية ذلك هنا: بدّل اللغة أو اضغط زر RTL في الشريط العلوي. تنعكس الشريط الجانبي ومسار التنقل وروابط السابق/التالي، بينما تبقى كتل الشيفرة من اليسار إلى اليمين.</p>
+</article>
+<footer class="docs-footer" id="docs-footer"></footer>
+</main>
+<aside class="docs-toc" id="docs-toc"></aside>
+</div>
+<div id="docs-live" class="docs-sr-only" role="status" aria-live="polite"></div>
+<script src="../assets/js/nav-data.js" defer></script>
+<script src="../assets/js/highlight.js" defer></script>
+<script src="../assets/js/search.js" defer></script>
+<script src="../assets/js/docs.js" defer></script>
+</body>
+</html>

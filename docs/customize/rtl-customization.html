@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en" dir="ltr" data-docs-root="../" data-page="customize/rtl-customization">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RTL Customization · Baset UI</title>
+<meta name="description" content="RTL architecture, logical properties and direction customization.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230f766e'/%3E%3Crect x='7' y='8' width='18' height='3.6' rx='1.8' fill='%23fff'/%3E%3Crect x='7' y='14.2' width='12' height='3.6' rx='1.8' fill='%23fff'/%3E%3Crect x='7' y='20.4' width='15' height='3.6' rx='1.8' fill='%23fff'/%3E%3C/svg%3E">
+<script src="../assets/js/init.js"></script>
+<link rel="stylesheet" href="../../assets/css/baset-ui.css">
+<link rel="stylesheet" href="../assets/css/docs.css">
+</head>
+<body>
+<a class="docs-skip" href="#content"><span lang="en">Skip to content</span><span lang="ar">تخطَّ إلى المحتوى</span></a>
+<header class="docs-navbar" id="docs-navbar"></header>
+<div class="docs-backdrop" id="docs-backdrop" hidden></div>
+<div class="docs-layout">
+<aside class="docs-sidebar" id="docs-sidebar"></aside>
+<main class="docs-main" id="content" tabindex="-1">
+<article class="docs-article">
+<noscript>
+<div class="docs-callout docs-callout--note" role="note">
+<p class="docs-callout__title"><span lang="en">JavaScript is off</span><span lang="ar">جافاسكربت معطَّل</span></p>
+<p lang="en">Page content stays readable, but the navigation menu, search, table of contents and the language, direction and theme switches need JavaScript. Content is shown in English.</p>
+<p lang="ar">يبقى محتوى الصفحة مقروءًا، لكن قائمة التنقل والبحث وفهرس الصفحة ومفاتيح اللغة والاتجاه والثيم تحتاج إلى جافاسكربت. يُعرض المحتوى بالإنجليزية.</p>
+</div>
+
+</noscript>
+<h1><span lang="en">RTL Customization</span><span lang="ar">تخصيص RTL</span></h1>
+<p class="docs-lead" lang="en">How direction works in Baset UI today, the logical CSS properties to use, what to know before direction-aware components exist, and how to customize direction in your own pages.</p>
+<p class="docs-lead" lang="ar">كيف يعمل الاتجاه في Baset UI اليوم، والخصائص المنطقية التي تستخدمها، وما يجب معرفته قبل وجود مكونات تراعي الاتجاه، وكيف تخصّص الاتجاه في صفحاتك.</p>
+<div class="docs-callout docs-callout--info" role="note">
+<p class="docs-callout__title"><span lang="en">Current state</span><span lang="ar">الوضع الحالي</span></p>
+<p lang="en">Baset UI has no direction tokens, no direction JavaScript and no components yet. What exists is a rule: use the standard <code>dir</code> attribute and logical CSS properties. RTL and LTR support for future components is a project requirement and is <strong>untested</strong> because there are no components to test.</p>
+<p lang="ar">لا توجد في Baset UI tokens للاتجاه ولا جافاسكربت للاتجاه ولا مكونات بعد. الموجود هو قاعدة: استخدم السمة القياسية <code>dir</code> والخصائص المنطقية في CSS. دعم RTL وLTR للمكونات المستقبلية شرط في المشروع وهو <strong>غير مختبر</strong> لعدم وجود مكونات لاختبارها.</p>
+</div>
+<h2 id="rtl-architecture"><span lang="en">RTL architecture</span><span lang="ar">بنية RTL</span></h2>
+<ul>
+  <li><span lang="en">Direction is set by the HTML <code>dir</code> attribute (<code>ltr</code>, <code>rtl</code> or <code>auto</code>) on <code>&lt;html&gt;</code> or on any element. It is not a theme and not a class.</span><span lang="ar">يُضبط الاتجاه بالسمة <code>dir</code> في HTML (‏<code>ltr</code> أو <code>rtl</code> أو <code>auto</code>) على <code>&lt;html&gt;</code> أو أي عنصر. وهو ليس ثيمًا ولا صنفًا.</span></li>
+  <li><span lang="en">Styles are written with logical properties, so one stylesheet serves both directions. There is no separate RTL stylesheet and no automatic flipping step.</span><span lang="ar">تُكتب الأنماط بخصائص منطقية، فيخدم ملف واحد الاتجاهين. لا يوجد ملف RTL منفصل ولا خطوة قلب تلقائية.</span></li>
+  <li><span lang="en">Language and direction are independent. Arabic is usually RTL, but a page can show English in RTL or Arabic in LTR, as this site lets you try with the language and direction buttons.</span><span lang="ar">اللغة والاتجاه مستقلان. العربية عادةً RTL، لكن يمكن للصفحة عرض الإنجليزية بتخطيط RTL أو العربية بتخطيط LTR، كما يتيح هذا الموقع بزرّي اللغة والاتجاه.</span></li>
+  <li><span lang="en">Tokens are the same in both directions. A token such as <code>--bui-space-4</code> is a size, not a side.</span><span lang="ar">الـ tokens نفسها في الاتجاهين. فالـ token مثل <code>--bui-space-4</code> مقاس وليس جهة.</span></li>
+</ul>
+<pre class="docs-code" data-lang="html"><code>&lt;html lang="ar" dir="rtl"&gt; ... &lt;/html&gt;
+
+&lt;!-- a region with a different direction --&gt;
+&lt;p dir="ltr"&gt;Order #4821&lt;/p&gt;
+</code></pre>
+<h2 id="logical-properties"><span lang="en">Logical CSS properties</span><span lang="ar">خصائص CSS المنطقية</span></h2>
+<p lang="en">Replace physical sides with logical ones. They map to left or right depending on <code>dir</code>.</p>
+<p lang="ar">استبدل الجهات الفيزيائية بمنطقية. فهي تتحول إلى يمين أو يسار حسب <code>dir</code>.</p>
+<div class="docs-table-wrap">
+<table>
+<thead><tr>
+<th scope="col"><span lang="en">Instead of</span><span lang="ar">بدلًا من</span></th>
+<th scope="col"><span lang="en">Use</span><span lang="ar">استخدم</span></th>
+</tr></thead>
+<tbody>
+<tr><td><code>margin-left</code> / <code>margin-right</code></td><td><code>margin-inline-start</code> / <code>margin-inline-end</code></td></tr>
+<tr><td><code>padding-left</code> / <code>padding-right</code></td><td><code>padding-inline-start</code> / <code>padding-inline-end</code></td></tr>
+<tr><td><code>margin: 0 1rem</code> (both sides)</td><td><code>margin-inline: 1rem</code></td></tr>
+<tr><td><code>border-left</code></td><td><code>border-inline-start</code></td></tr>
+<tr><td><code>left</code> / <code>right</code> (positioned)</td><td><code>inset-inline-start</code> / <code>inset-inline-end</code></td></tr>
+<tr><td><code>text-align: left</code></td><td><code>text-align: start</code></td></tr>
+<tr><td><code>border-top-left-radius</code></td><td><code>border-start-start-radius</code></td></tr>
+<tr><td><code>width</code> / <code>height</code> (for flow-relative size)</td><td><code>inline-size</code> / <code>block-size</code></td></tr>
+</tbody></table></div>
+<div class="docs-callout docs-callout--warning" role="note">
+<p class="docs-callout__title"><span lang="en">Be careful with these</span><span lang="ar">احذر من هذه</span></p>
+<p lang="en">Do not use <code>flex-direction: row-reverse</code> to fake RTL: it also reverses the keyboard and reading order. Flex and grid already follow <code>dir</code>. Do not force <code>direction: ltr</code> on text. Mirror directional icons (arrows, chevrons) but not logos, numerals, clocks or media controls.</p>
+<p lang="ar">لا تستخدم <code>flex-direction: row-reverse</code> لتقليد RTL: فهو يعكس ترتيب لوحة المفاتيح والقراءة أيضًا. flex وgrid يتبعان <code>dir</code> أصلًا. ولا تفرض <code>direction: ltr</code> على النص. اعكس الأيقونات الاتجاهية (الأسهم) ولا تعكس الشعارات والأرقام والساعات وأزرار الوسائط.</p>
+</div>
+<p lang="en">Browser support for logical properties has not been verified for Baset UI. See <a href="../getting-started/browsers-devices.html">Browsers &amp; Devices</a>, where the support policy is still a proposal.</p>
+<p lang="ar">لم يُتحقق من دعم المتصفحات للخصائص المنطقية في Baset UI. راجع <a href="../getting-started/browsers-devices.html">المتصفحات والأجهزة</a> حيث ما زالت سياسة الدعم مقترحة.</p>
+<h2 id="direction-aware"><span lang="en">Direction-aware components</span><span lang="ar">مكونات تراعي الاتجاه</span></h2>
+<p lang="en"><span class="docs-badge docs-badge--planned"><span lang="en">Planned</span><span lang="ar">مخطَّط</span></span> No component exists yet, so there is nothing direction-aware to document. The project rules every future component must meet:</p>
+<p lang="ar"><span class="docs-badge docs-badge--planned"><span lang="en">Planned</span><span lang="ar">مخطَّط</span></span> لا يوجد أي مكوّن بعد، فلا شيء يراعي الاتجاه لتوثيقه. هذه قواعد المشروع التي سيلتزم بها كل مكوّن قادم:</p>
+<ul>
+  <li><span lang="en">Layout uses logical properties and no hard-coded left or right.</span><span lang="ar">يستخدم التخطيط خصائص منطقية دون left أو right ثابتة.</span></li>
+  <li><span lang="en">Directional icons mirror in RTL; non-directional ones do not.</span><span lang="ar">تنعكس الأيقونات الاتجاهية في RTL ولا تنعكس غير الاتجاهية.</span></li>
+  <li><span lang="en">Keyboard behavior is direction-aware where it matters (for example, which arrow key moves to the next item in a horizontal list).</span><span lang="ar">يراعي سلوك لوحة المفاتيح الاتجاه حيث يلزم (مثل أي سهم ينقل إلى العنصر التالي في قائمة أفقية).</span></li>
+  <li><span lang="en">Each component is reviewed with Arabic and English labels in both directions before it is called complete.</span><span lang="ar">يُراجع كل مكوّن بتسميات عربية وإنجليزية في الاتجاهين قبل اعتباره مكتملًا.</span></li>
+</ul>
+<h2 id="rtl-ltr-customization"><span lang="en">RTL / LTR customization</span><span lang="ar">تخصيص RTL / LTR</span></h2>
+<h3 id="live-direction"><span lang="en">Live example</span><span lang="ar">مثال حي</span></h3>
+<p lang="en">Both boxes use identical CSS. Only the <code>dir</code> attribute differs. The accent bar, the spacing and the arrow flip by themselves.</p>
+<p lang="ar">للصندوقين CSS مطابق. الفرق في السمة <code>dir</code> فقط. ينقلب شريط التمييز والمسافة والسهم من تلقاء نفسها.</p>
+<div class="docs-demo-grid"><div class="docs-demo"><div class="docs-dirdemo" dir="ltr"><p><code>dir="ltr"</code></p><div class="docs-dirdemo__row"><span class="docs-dirdemo__item docs-dirdemo__item--start"><span lang="en">start</span><span lang="ar">البداية</span></span><span class="docs-dirdemo__item docs-dirdemo__item--end"><span lang="en">end</span><span lang="ar">النهاية</span></span></div><p style="margin-block-start:var(--bui-space-2)"><span class="docs-dirdemo__arrow docs-dirdemo__arrow--mirror" aria-hidden="true">→</span> <span lang="en">next</span><span lang="ar">التالي</span></p></div></div><div class="docs-demo"><div class="docs-dirdemo" dir="rtl"><p><code>dir="rtl"</code></p><div class="docs-dirdemo__row"><span class="docs-dirdemo__item docs-dirdemo__item--start"><span lang="en">start</span><span lang="ar">البداية</span></span><span class="docs-dirdemo__item docs-dirdemo__item--end"><span lang="en">end</span><span lang="ar">النهاية</span></span></div><p style="margin-block-start:var(--bui-space-2)"><span class="docs-dirdemo__arrow docs-dirdemo__arrow--mirror" aria-hidden="true">→</span> <span lang="en">next</span><span lang="ar">التالي</span></p></div></div></div>
+<pre class="docs-code" data-lang="css"><code>.item--start {
+  margin-inline-end: auto;          /* pushes the next item to the far end */
+  border-inline-start-width: 4px;   /* accent on the start side */
+}
+.item--end { padding-inline-start: var(--bui-space-6); }
+
+/* mirror a directional icon only in RTL */
+[dir="rtl"] .icon-arrow { transform: scaleX(-1); }
+</code></pre>
+<h3 id="mixed-direction"><span lang="en">Mixed content</span><span lang="ar">محتوى مختلط</span></h3>
+<p lang="en">Wrap embedded text of the other direction in an element with its own <code>dir</code> (or <code>dir="auto"</code> for user-generated text), instead of reordering characters yourself.</p>
+<p lang="ar">غلّف النص المضمَّن ذا الاتجاه الآخر بعنصر له <code>dir</code> خاص (أو <code>dir="auto"</code> للنص الذي يكتبه المستخدمون)، بدل إعادة ترتيب الحروف بنفسك.</p>
+<pre class="docs-code" data-lang="html"><code>&lt;p dir="rtl"&gt;رقم الطلب: &lt;bdi dir="ltr"&gt;AB-4821&lt;/bdi&gt;&lt;/p&gt;
+&lt;p&gt;&lt;bdi dir="auto"&gt;user input&lt;/bdi&gt;&lt;/p&gt;
+</code></pre>
+<h3 id="switching-direction"><span lang="en">Switching direction</span><span lang="ar">تبديل الاتجاه</span></h3>
+<pre class="docs-code" data-lang="js"><code>function setDirection(dir) { // 'ltr' | 'rtl'
+  document.documentElement.setAttribute('dir', dir);
+}
+</code></pre>
+<p lang="en">Switching direction is a one-attribute change; nothing needs to be re-rendered. This site stores the choice in <code>localStorage</code> (<code>bui-docs-dir</code>), which is a docs-site feature only.</p>
+<p lang="ar">تبديل الاتجاه تغيير سمة واحدة؛ ولا حاجة لإعادة رسم أي شيء. يحفظ هذا الموقع الاختيار في <code>localStorage</code> (‏<code>bui-docs-dir</code>) وهي ميزة في موقع التوثيق فقط.</p>
+<h3 id="fonts-rtl"><span lang="en">Fonts and line height for Arabic</span><span lang="ar">الخطوط وارتفاع السطر للعربية</span></h3>
+<pre class="docs-code" data-lang="css"><code>:root:lang(ar) {
+  --bui-line-height-base: 1.85;
+}
+</code></pre>
+<p lang="en">The base font stack already lists Arabic-capable fonts. See <a href="typography.html">Typography</a> for changing it.</p>
+<p lang="ar">تتضمن مجموعة الخط الأساسية خطوطًا تدعم العربية أصلًا. راجع <a href="typography.html">الخطوط</a> لتغييرها.</p>
+<h2 id="not-implemented"><span lang="en">Not implemented yet</span><span lang="ar">غير منفَّذ بعد</span></h2>
+<div class="docs-table-wrap">
+<table>
+<thead><tr>
+<th scope="col"><span lang="en">Feature</span><span lang="ar">الميزة</span></th>
+<th scope="col"><span lang="en">Status</span><span lang="ar">الحالة</span></th>
+<th scope="col"><span lang="en">Notes</span><span lang="ar">ملاحظات</span></th>
+</tr></thead>
+<tbody>
+<tr><td><span lang="en">Direction-aware components</span><span lang="ar">مكونات تراعي الاتجاه</span></td><td><span class="docs-badge docs-badge--planned"><span lang="en">Planned</span><span lang="ar">مخطَّط</span></span></td><td><span lang="en">Arrive with the first components.</span><span lang="ar">تصل مع أول المكونات.</span></td></tr>
+<tr><td><span lang="en">Direction helper in JavaScript</span><span lang="ar">أداة اتجاه في جافاسكربت</span></td><td><span class="docs-badge docs-badge--missing"><span lang="en">Not implemented yet</span><span lang="ar">غير منفَّذ بعد</span></span></td><td><span lang="en">No script exists.</span><span lang="ar">لا يوجد سكربت.</span></td></tr>
+<tr><td><span lang="en">RTL/LTR automated tests for the library</span><span lang="ar">اختبارات RTL/LTR آلية للمكتبة</span></td><td><span class="docs-badge docs-badge--missing"><span lang="en">Not done</span><span lang="ar">لم يُنفَّذ</span></span></td><td><span lang="en">There is nothing to test yet.</span><span lang="ar">لا شيء يُختبر بعد.</span></td></tr>
+</tbody></table></div>
+</article>
+<footer class="docs-footer" id="docs-footer"></footer>
+</main>
+<aside class="docs-toc" id="docs-toc"></aside>
+</div>
+<div id="docs-live" class="docs-sr-only" role="status" aria-live="polite"></div>
+<script src="../assets/js/nav-data.js" defer></script>
+<script src="../assets/js/highlight.js" defer></script>
+<script src="../assets/js/search.js" defer></script>
+<script src="../assets/js/docs.js" defer></script>
+</body>
+</html>

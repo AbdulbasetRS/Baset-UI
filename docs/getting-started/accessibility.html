@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="en" dir="ltr" data-docs-root="../" data-page="getting-started/accessibility">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Accessibility · Baset UI</title>
+<meta name="description" content="Accessibility principles, measured color contrast of the tokens, keyboard use of this site and testing status.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230f766e'/%3E%3Crect x='7' y='8' width='18' height='3.6' rx='1.8' fill='%23fff'/%3E%3Crect x='7' y='14.2' width='12' height='3.6' rx='1.8' fill='%23fff'/%3E%3Crect x='7' y='20.4' width='15' height='3.6' rx='1.8' fill='%23fff'/%3E%3C/svg%3E">
+<script src="../assets/js/init.js"></script>
+<link rel="stylesheet" href="../../assets/css/baset-ui.css">
+<link rel="stylesheet" href="../assets/css/docs.css">
+</head>
+<body>
+<a class="docs-skip" href="#content"><span lang="en">Skip to content</span><span lang="ar">تخطَّ إلى المحتوى</span></a>
+<header class="docs-navbar" id="docs-navbar"></header>
+<div class="docs-backdrop" id="docs-backdrop" hidden></div>
+<div class="docs-layout">
+<aside class="docs-sidebar" id="docs-sidebar"></aside>
+<main class="docs-main" id="content" tabindex="-1">
+<article class="docs-article">
+<noscript>
+<div class="docs-callout docs-callout--note" role="note">
+<p class="docs-callout__title"><span lang="en">JavaScript is off</span><span lang="ar">جافاسكربت معطَّل</span></p>
+<p lang="en">Page content stays readable, but the navigation menu, search, table of contents and the language, direction and theme switches need JavaScript. Content is shown in English.</p>
+<p lang="ar">يبقى محتوى الصفحة مقروءًا، لكن قائمة التنقل والبحث وفهرس الصفحة ومفاتيح اللغة والاتجاه والثيم تحتاج إلى جافاسكربت. يُعرض المحتوى بالإنجليزية.</p>
+</div>
+
+</noscript>
+<h1><span lang="en">Accessibility</span><span lang="ar">إمكانية الوصول</span></h1>
+<p class="docs-lead" lang="en">Accessibility principles for Baset UI, the contrast of today's tokens measured from the real values, how to use this site with a keyboard, and an honest account of what has and has not been tested.</p>
+<p class="docs-lead" lang="ar">مبادئ إمكانية الوصول في Baset UI، وتباين الـ tokens الحالية مقيسًا من القيم الفعلية، وكيفية استخدام هذا الموقع بلوحة المفاتيح، وبيان صريح بما اختُبر وما لم يُختبر.</p>
+<div class="docs-callout docs-callout--warning" role="note">
+<p class="docs-callout__title"><span lang="en">No conformance claim</span><span lang="ar">لا ادّعاء بالمطابقة</span></p>
+<p lang="en">Baset UI makes no WCAG conformance claim. No components exist yet, and no accessibility audit has been performed. This page records principles and measurements, not certification.</p>
+<p lang="ar">لا تدّعي Baset UI المطابقة لأي مستوى من WCAG. لا توجد مكونات بعد، ولم يُجرَ أي تدقيق لإمكانية الوصول. تسجّل هذه الصفحة مبادئ وقياسات، وليست شهادة.</p>
+</div>
+<h2 id="accessibility-philosophy"><span lang="en">Accessibility philosophy</span><span lang="ar">فلسفة إمكانية الوصول</span></h2>
+<p lang="en">Accessibility is part of the definition of done for every component, not a later pass. A component is not complete because it looks right; it must also work with a keyboard, expose its state, and keep visible focus.</p>
+<p lang="ar">إمكانية الوصول جزء من تعريف الإنجاز لكل مكوّن وليست مرحلة لاحقة. المكوّن لا يكتمل لأن شكله سليم؛ بل يجب أن يعمل بلوحة المفاتيح، ويكشف حالته، ويحافظ على تركيز مرئي.</p>
+<ul>
+  <li><span lang="en">Semantic HTML first; ARIA only when native semantics are not enough.</span><span lang="ar">HTML دلالي أولًا؛ وARIA فقط حين لا تكفي الدلالات الأصلية.</span></li>
+  <li><span lang="en">Every interactive widget works with the keyboard.</span><span lang="ar">كل عنصر تفاعلي يعمل بلوحة المفاتيح.</span></li>
+  <li><span lang="en">Focus is always visible and managed correctly for overlays.</span><span lang="ar">التركيز دائمًا مرئي ويُدار بشكل صحيح للنوافذ المنبثقة.</span></li>
+  <li><span lang="en">Never communicate state by color alone.</span><span lang="ar">لا تنقل الحالة بالألوان وحدها.</span></li>
+  <li><span lang="en">Respect reduced-motion preferences.</span><span lang="ar">احترام تفضيل تقليل الحركة.</span></li>
+</ul>
+<h2 id="semantic-html"><span lang="en">Semantic HTML</span><span lang="ar">HTML الدلالي</span></h2>
+<div class="docs-table-wrap">
+<table>
+<thead><tr>
+<th scope="col"><span lang="en">You need</span><span lang="ar">تحتاج</span></th>
+<th scope="col"><span lang="en">Use</span><span lang="ar">استخدم</span></th>
+</tr></thead>
+<tbody>
+<tr><td><span lang="en">An action (save, open, toggle)</span><span lang="ar">إجراء (حفظ، فتح، تبديل)</span></td><td><code>&lt;button type="button"&gt;</code></td></tr>
+<tr><td><span lang="en">Navigation to another page or section</span><span lang="ar">تنقل إلى صفحة أو قسم آخر</span></td><td><code>&lt;a href&gt;</code></td></tr>
+<tr><td><span lang="en">A group of navigation links</span><span lang="ar">مجموعة روابط تنقل</span></td><td><code>&lt;nav&gt;</code> + accessible name</td></tr>
+<tr><td><span lang="en">Tabular data</span><span lang="ar">بيانات جدولية</span></td><td><code>&lt;table&gt;</code> with <code>&lt;th scope&gt;</code></td></tr>
+<tr><td><span lang="en">A modal window</span><span lang="ar">نافذة مشروطة</span></td><td><code>&lt;dialog&gt;</code> opened with <code>showModal()</code></td></tr>
+</tbody></table></div>
+<pre class="docs-code" data-lang="html"><code>&lt;!-- Prefer --&gt;
+&lt;button type="button"&gt;Save&lt;/button&gt;
+
+&lt;!-- Avoid: not focusable, no role, no keyboard support --&gt;
+&lt;div class="clickable"&gt;Save&lt;/div&gt;
+</code></pre>
+<p lang="en">This site follows the same rule: landmarks (<code>header</code>, <code>nav</code>, <code>main</code>, <code>aside</code>, <code>footer</code>), real headings in order, real tables and real buttons. Each block of content carries a <code>lang</code> attribute, and the language that is not active is removed from the page, so a screen reader does not read both.</p>
+<p lang="ar">يتبع هذا الموقع القاعدة نفسها: معالم الصفحة (<code>header</code> و<code>nav</code> و<code>main</code> و<code>aside</code> و<code>footer</code>)، وعناوين حقيقية مرتبة، وجداول وأزرار حقيقية. وتحمل كل كتلة محتوى الخاصية <code>lang</code>، وتُزال اللغة غير الفعالة من الصفحة حتى لا يقرأ قارئ الشاشة اللغتين معًا.</p>
+<h2 id="keyboard-navigation"><span lang="en">Keyboard navigation</span><span lang="ar">التنقل بلوحة المفاتيح</span></h2>
+<p lang="en">Keys on this documentation site:</p>
+<p lang="ar">المفاتيح في موقع التوثيق هذا:</p>
+<div class="docs-table-wrap">
+<table>
+<thead><tr>
+<th scope="col"><span lang="en">Key</span><span lang="ar">المفتاح</span></th>
+<th scope="col"><span lang="en">Action</span><span lang="ar">الإجراء</span></th>
+</tr></thead>
+<tbody>
+<tr><td><kbd>Tab</kbd> / <kbd>Shift</kbd> + <kbd>Tab</kbd></td><td><span lang="en">Move forward or back. The first stop is a "Skip to content" link.</span><span lang="ar">الانتقال للأمام أو للخلف. أول محطة رابط "تخطَّ إلى المحتوى".</span></td></tr>
+<tr><td><kbd>Enter</kbd> / <kbd>Space</kbd></td><td><span lang="en">Activate the focused button (<kbd>Enter</kbd> also follows links).</span><span lang="ar">تفعيل الزر المركَّز عليه (ويتبع <kbd>Enter</kbd> الروابط أيضًا).</span></td></tr>
+<tr><td><kbd>Ctrl</kbd> + <kbd>K</kbd>, <kbd>⌘</kbd> + <kbd>K</kbd>, <kbd>/</kbd></td><td><span lang="en">Open search.</span><span lang="ar">فتح البحث.</span></td></tr>
+<tr><td><kbd>↑</kbd> / <kbd>↓</kbd>, <kbd>Enter</kbd></td><td><span lang="en">In search: move through results, open the selected one.</span><span lang="ar">في البحث: التنقل بين النتائج وفتح المحدد.</span></td></tr>
+<tr><td><kbd>Esc</kbd></td><td><span lang="en">Close search or the mobile menu.</span><span lang="ar">إغلاق البحث أو قائمة الجوال.</span></td></tr>
+</tbody></table></div>
+<p lang="en">Keyboard behavior of future components (menus, dialogs, pickers) will be specified and documented per component. None exists yet.</p>
+<p lang="ar">سيُحدَّد سلوك لوحة المفاتيح للمكونات المستقبلية (القوائم والنوافذ والمنتقيات) ويُوثَّق لكل مكوّن. لا يوجد أي منها بعد.</p>
+<h2 id="focus-management"><span lang="en">Focus management</span><span lang="ar">إدارة التركيز</span></h2>
+<ul>
+  <li><span lang="en">Visible focus uses <code>:focus-visible</code> with the <code>--bui-focus-ring-width</code> and <code>--bui-focus-ring-offset</code> tokens, in the primary color.</span><span lang="ar">يستخدم التركيز المرئي <code>:focus-visible</code> مع tokens ‏<code>--bui-focus-ring-width</code> و<code>--bui-focus-ring-offset</code> وبلون العلامة.</span></li>
+  <li><span lang="en">Search is a native <code>&lt;dialog&gt;</code> opened with <code>showModal()</code>. Focus moves into it, Escape closes it, and focus returns to where it was.</span><span lang="ar">البحث عنصر <code>&lt;dialog&gt;</code> أصلي يُفتح بـ <code>showModal()</code>. ينتقل التركيز إليه، ويغلقه Esc، ويعود التركيز إلى موضعه السابق.</span></li>
+  <li><span lang="en">On small screens, opening the menu moves focus into it and makes the page content inert. Closing it returns focus to the menu button.</span><span lang="ar">على الشاشات الصغيرة، يؤدي فتح القائمة إلى نقل التركيز إليها وجعل محتوى الصفحة غير تفاعلي (inert). وإغلاقها يعيد التركيز إلى زر القائمة.</span></li>
+  <li><span lang="en">Future overlays (modal, dropdown, popover) must manage focus the same way. This is a requirement, not an implementation.</span><span lang="ar">يجب أن تدير النوافذ المنبثقة المستقبلية (modal وdropdown وpopover) التركيز بالطريقة نفسها. هذا شرط وليس تنفيذًا.</span></li>
+</ul>
+<h2 id="aria-attributes"><span lang="en">ARIA attributes</span><span lang="ar">خصائص ARIA</span></h2>
+<p lang="en">ARIA is used on this site only where native elements do not express the state. ARIA state must always match the real state.</p>
+<p lang="ar">تُستخدم ARIA في هذا الموقع فقط حيث لا تعبّر العناصر الأصلية عن الحالة. ويجب أن تطابق حالة ARIA الحالة الحقيقية دائمًا.</p>
+<div class="docs-table-wrap">
+<table>
+<thead><tr>
+<th scope="col"><span lang="en">Attribute</span><span lang="ar">الخاصية</span></th>
+<th scope="col"><span lang="en">Where</span><span lang="ar">أين</span></th>
+</tr></thead>
+<tbody>
+<tr><td><code>aria-current="page"</code></td><td><span lang="en">Current page in the sidebar and breadcrumbs.</span><span lang="ar">الصفحة الحالية في الشريط الجانبي ومسار التنقل.</span></td></tr>
+<tr><td><code>aria-current="location"</code></td><td><span lang="en">Current section in the page outline.</span><span lang="ar">القسم الحالي في فهرس الصفحة.</span></td></tr>
+<tr><td><code>aria-expanded</code>, <code>aria-controls</code></td><td><span lang="en">Menu button.</span><span lang="ar">زر القائمة.</span></td></tr>
+<tr><td><code>aria-pressed</code></td><td><span lang="en">Theme and direction toggles.</span><span lang="ar">مفتاحا الثيم والاتجاه.</span></td></tr>
+<tr><td><code>role="combobox"</code>, <code>aria-activedescendant</code>, <code>role="listbox"</code></td><td><span lang="en">Search field and its results.</span><span lang="ar">حقل البحث ونتائجه.</span></td></tr>
+<tr><td><code>aria-live</code> / <code>role="status"</code></td><td><span lang="en">Copy-button feedback and search result count.</span><span lang="ar">ملاحظات زر النسخ وعدد نتائج البحث.</span></td></tr>
+<tr><td><code>aria-label</code></td><td><span lang="en">Icon-only buttons and unnamed landmarks. Labels switch with the page language.</span><span lang="ar">الأزرار التي تحمل أيقونة فقط والمعالم بلا اسم. تتبدل الأسماء مع لغة الصفحة.</span></td></tr>
+</tbody></table></div>
+<h2 id="screen-reader-support"><span lang="en">Screen reader support</span><span lang="ar">دعم قارئات الشاشة</span></h2>
+<p lang="en"><span class="docs-badge docs-badge--planned"><span lang="en">Untested</span><span lang="ar">لم يُختبر</span></span> This site is built with semantics intended to work with screen readers, but it has <strong>not</strong> been tested with NVDA, JAWS, VoiceOver, TalkBack or any other screen reader. Do not treat it as verified.</p>
+<p lang="ar"><span class="docs-badge docs-badge--planned"><span lang="en">Untested</span><span lang="ar">لم يُختبر</span></span> بُني هذا الموقع بدلالات يُقصد بها العمل مع قارئات الشاشة، لكنه <strong>لم</strong> يُختبر مع NVDA أو JAWS أو VoiceOver أو TalkBack أو غيرها. لا تعتبره متحققًا منه.</p>
+<h2 id="color-contrast"><span lang="en">Color contrast</span><span lang="ar">تباين الألوان</span></h2>
+<p lang="en">The ratios below are computed from the real token values with the WCAG 2.x relative-luminance formula, using the stylesheet loaded on this page (a static copy is shown when JavaScript is off). Text needs at least 4.5:1; borders and icons that identify controls need at least 3:1.</p>
+<p lang="ar">النسب أدناه محسوبة من القيم الفعلية للـ tokens بمعادلة اللمعان النسبي في WCAG 2.x، باستخدام ملف الأنماط المحمَّل في هذه الصفحة (وتظهر نسخة ثابتة عند تعطيل جافاسكربت). يحتاج النص 4.5:1 على الأقل؛ والحدود والأيقونات التي تعرّف العناصر التفاعلية تحتاج 3:1 على الأقل.</p>
+<div class="docs-table-wrap">
+<table>
+<thead><tr>
+<th scope="col"><span lang="en">Foreground on background</span><span lang="ar">النص/العنصر على الخلفية</span></th>
+<th scope="col"><span lang="en">Needs</span><span lang="ar">المطلوب</span></th>
+<th scope="col"><span lang="en">Light</span><span lang="ar">الفاتح</span></th>
+<th scope="col"><span lang="en">Dark</span><span lang="ar">الداكن</span></th>
+</tr></thead>
+<tbody>
+<tr data-fg="--bui-color-text" data-bg="--bui-color-bg" data-min="4.5">
+<td class="docs-wrap"><span lang="en">Body text on the page</span><span lang="ar">نص المتن على الصفحة</span><br><code>--bui-color-text</code> / <code>--bui-color-bg</code></td>
+<td>4.5:1</td>
+<td data-slot="ratio-light"><code class="docs-token-value">15.89:1</code> <span class="docs-badge docs-badge--available"><span lang="en">Pass</span><span lang="ar">ناجح</span></span></td>
+<td data-slot="ratio-dark"><code class="docs-token-value">15.70:1</code> <span class="docs-badge docs-badge--available"><span lang="en">Pass</span><span lang="ar">ناجح</span></span></td>
+</tr>
+<tr data-fg="--bui-color-text" data-bg="--bui-color-surface" data-min="4.5">
+<td class="docs-wrap"><span lang="en">Body text on cards</span><span lang="ar">نص المتن على البطاقات</span><br><code>--bui-color-text</code> / <code>--bui-color-surface</code></td>
+<td>4.5:1</td>
+<td data-slot="ratio-light"><code class="docs-token-value">16.61:1</code> <span class="docs-badge docs-badge--available"><span lang="en">Pass</span><span lang="ar">ناجح</span></span></td>
+<td data-slot="ratio-dark"><code class="docs-token-value">14.61:1</code> <span class="docs-badge docs-badge--available"><span lang="en">Pass</span><span lang="ar">ناجح</span></span></td>
+</tr>
+<tr data-fg="--bui-color-text-muted" data-bg="--bui-color-bg" data-min="4.5">
+<td class="docs-wrap"><span lang="en">Muted text on the page</span><span lang="ar">النص الثانوي على الصفحة</span><br><code>--bui-color-text-muted</code> / <code>--bui-color-bg</code></td>
+<td>4.5:1</td>
+<td data-slot="ratio-light"><code class="docs-token-value">6.45:1</code> <span class="docs-badge docs-badge--available"><span lang="en">Pass</span><span lang="ar">ناجح</span></span></td>
+<td data-slot="ratio-dark"><code class="docs-token-value">8.12:1</code> <span class="docs-badge docs-badge--available"><span lang="en">Pass</span><span lang="ar">ناجح</span></span></td>
+</tr>
+<tr data-fg="--bui-color-text-muted" data-bg="--bui-color-surface-muted" data-min="4.5">
+<td class="docs-wrap"><span lang="en">Muted text on subtle fills</span><span lang="ar">النص الثانوي على التعبئات الخفيفة</span><br><code>--bui-color-text-muted</code> / <code>--bui-color-surface-muted</code></td>
+<td>4.5:1</td>
+<td data-slot="ratio-light"><code class="docs-token-value">5.95:1</code> <span class="docs-badge docs-badge--available"><span lang="en">Pass</span><span lang="ar">ناجح</span></span></td>
+<td data-slot="ratio-dark"><code class="docs-token-value">6.78:1</code> <span class="docs-badge docs-badge--available"><span lang="en">Pass</span><span lang="ar">ناجح</span></span></td>
+</tr>
+<tr data-fg="--bui-color-primary" data-bg="--bui-color-bg" data-min="4.5">
+<td class="docs-wrap"><span lang="en">Links and primary text on the page</span><span lang="ar">الروابط والنص الأساسي على الصفحة</span><br><code>--bui-color-primary</code> / <code>--bui-color-bg</code></td>
+<td>4.5:1</td>
+<td data-slot="ratio-light"><code class="docs-token-value">5.23:1</code> <span class="docs-badge docs-badge--available"><span lang="en">Pass</span><span lang="ar">ناجح</span></span></td>
+<td data-slot="ratio-dark"><code class="docs-token-value">10.05:1</code> <span class="docs-badge docs-badge--available"><span lang="en">Pass</span><span lang="ar">ناجح</span></span></td>
+</tr>
+<tr data-fg="--bui-color-on-primary" data-bg="--bui-color-primary" data-min="4.5">
+<td class="docs-wrap"><span lang="en">Text on a primary background</span><span lang="ar">النص على خلفية أساسية</span><br><code>--bui-color-on-primary</code> / <code>--bui-color-primary</code></td>
+<td>4.5:1</td>
+<td data-slot="ratio-light"><code class="docs-token-value">5.47:1</code> <span class="docs-badge docs-badge--available"><span lang="en">Pass</span><span lang="ar">ناجح</span></span></td>
+<td data-slot="ratio-dark"><code class="docs-token-value">9.09:1</code> <span class="docs-badge docs-badge--available"><span lang="en">Pass</span><span lang="ar">ناجح</span></span></td>
+</tr>
+<tr data-fg="--bui-color-on-primary" data-bg="--bui-color-primary-hover" data-min="4.5">
+<td class="docs-wrap"><span lang="en">Text on a primary hover background</span><span lang="ar">النص على خلفية أساسية في حالة التمرير</span><br><code>--bui-color-on-primary</code> / <code>--bui-color-primary-hover</code></td>
+<td>4.5:1</td>
+<td data-slot="ratio-light"><code class="docs-token-value">7.58:1</code> <span class="docs-badge docs-badge--available"><span lang="en">Pass</span><span lang="ar">ناجح</span></span></td>
+<td data-slot="ratio-dark"><code class="docs-token-value">11.44:1</code> <span class="docs-badge docs-badge--available"><span lang="en">Pass</span><span lang="ar">ناجح</span></span></td>
+</tr>
+<tr data-fg="--bui-color-text" data-bg="--bui-color-primary-subtle" data-min="4.5">
+<td class="docs-wrap"><span lang="en">Text on the primary tint</span><span lang="ar">النص على التدرج الخفيف للأساسي</span><br><code>--bui-color-text</code> / <code>--bui-color-primary-subtle</code></td>
+<td>4.5:1</td>
+<td data-slot="ratio-light"><code class="docs-token-value">14.02:1</code> <span class="docs-badge docs-badge--available"><span lang="en">Pass</span><span lang="ar">ناجح</span></span></td>
+<td data-slot="ratio-dark"><code class="docs-token-value">11.44:1</code> <span class="docs-badge docs-badge--available"><span lang="en">Pass</span><span lang="ar">ناجح</span></span></td>
+</tr>
+<tr data-fg="--bui-color-text" data-bg="--bui-color-success-subtle" data-min="4.5">
+<td class="docs-wrap"><span lang="en">Text on the success tint</span><span lang="ar">النص على تدرج النجاح</span><br><code>--bui-color-text</code> / <code>--bui-color-success-subtle</code></td>
+<td>4.5:1</td>
+<td data-slot="ratio-light"><code class="docs-token-value">14.47:1</code> <span class="docs-badge docs-badge--available"><span lang="en">Pass</span><span lang="ar">ناجح</span></span></td>
+<td data-slot="ratio-dark"><code class="docs-token-value">12.02:1</code> <span class="docs-badge docs-badge--available"><span lang="en">Pass</span><span lang="ar">ناجح</span></span></td>
+</tr>
+<tr data-fg="--bui-color-text" data-bg="--bui-color-warning-subtle" data-min="4.5">
+<td class="docs-wrap"><span lang="en">Text on the warning tint</span><span lang="ar">النص على تدرج التحذير</span><br><code>--bui-color-text</code> / <code>--bui-color-warning-subtle</code></td>
+<td>4.5:1</td>
+<td data-slot="ratio-light"><code class="docs-token-value">14.60:1</code> <span class="docs-badge docs-badge--available"><span lang="en">Pass</span><span lang="ar">ناجح</span></span></td>
+<td data-slot="ratio-dark"><code class="docs-token-value">11.91:1</code> <span class="docs-badge docs-badge--available"><span lang="en">Pass</span><span lang="ar">ناجح</span></span></td>
+</tr>
+<tr data-fg="--bui-color-text" data-bg="--bui-color-danger-subtle" data-min="4.5">
+<td class="docs-wrap"><span lang="en">Text on the danger tint</span><span lang="ar">النص على تدرج الخطر</span><br><code>--bui-color-text</code> / <code>--bui-color-danger-subtle</code></td>
+<td>4.5:1</td>
+<td data-slot="ratio-light"><code class="docs-token-value">13.99:1</code> <span class="docs-badge docs-badge--available"><span lang="en">Pass</span><span lang="ar">ناجح</span></span></td>
+<td data-slot="ratio-dark"><code class="docs-token-value">13.16:1</code> <span class="docs-badge docs-badge--available"><span lang="en">Pass</span><span lang="ar">ناجح</span></span></td>
+</tr>
+<tr data-fg="--bui-color-text" data-bg="--bui-color-info-subtle" data-min="4.5">
+<td class="docs-wrap"><span lang="en">Text on the info tint</span><span lang="ar">النص على تدرج المعلومات</span><br><code>--bui-color-text</code> / <code>--bui-color-info-subtle</code></td>
+<td>4.5:1</td>
+<td data-slot="ratio-light"><code class="docs-token-value">14.20:1</code> <span class="docs-badge docs-badge--available"><span lang="en">Pass</span><span lang="ar">ناجح</span></span></td>
+<td data-slot="ratio-dark"><code class="docs-token-value">12.02:1</code> <span class="docs-badge docs-badge--available"><span lang="en">Pass</span><span lang="ar">ناجح</span></span></td>
+</tr>
+<tr data-fg="--bui-color-success" data-bg="--bui-color-surface" data-min="3">
+<td class="docs-wrap"><span lang="en">Success indicator on cards</span><span lang="ar">مؤشر النجاح على البطاقات</span><br><code>--bui-color-success</code> / <code>--bui-color-surface</code></td>
+<td>3:1</td>
+<td data-slot="ratio-light"><code class="docs-token-value">5.02:1</code> <span class="docs-badge docs-badge--available"><span lang="en">Pass</span><span lang="ar">ناجح</span></span></td>
+<td data-slot="ratio-dark"><code class="docs-token-value">9.99:1</code> <span class="docs-badge docs-badge--available"><span lang="en">Pass</span><span lang="ar">ناجح</span></span></td>
+</tr>
+<tr data-fg="--bui-color-warning" data-bg="--bui-color-surface" data-min="3">
+<td class="docs-wrap"><span lang="en">Warning indicator on cards</span><span lang="ar">مؤشر التحذير على البطاقات</span><br><code>--bui-color-warning</code> / <code>--bui-color-surface</code></td>
+<td>3:1</td>
+<td data-slot="ratio-light"><code class="docs-token-value">5.02:1</code> <span class="docs-badge docs-badge--available"><span lang="en">Pass</span><span lang="ar">ناجح</span></span></td>
+<td data-slot="ratio-dark"><code class="docs-token-value">10.43:1</code> <span class="docs-badge docs-badge--available"><span lang="en">Pass</span><span lang="ar">ناجح</span></span></td>
+</tr>
+<tr data-fg="--bui-color-danger" data-bg="--bui-color-surface" data-min="3">
+<td class="docs-wrap"><span lang="en">Danger indicator on cards</span><span lang="ar">مؤشر الخطر على البطاقات</span><br><code>--bui-color-danger</code> / <code>--bui-color-surface</code></td>
+<td>3:1</td>
+<td data-slot="ratio-light"><code class="docs-token-value">6.47:1</code> <span class="docs-badge docs-badge--available"><span lang="en">Pass</span><span lang="ar">ناجح</span></span></td>
+<td data-slot="ratio-dark"><code class="docs-token-value">6.30:1</code> <span class="docs-badge docs-badge--available"><span lang="en">Pass</span><span lang="ar">ناجح</span></span></td>
+</tr>
+<tr data-fg="--bui-color-info" data-bg="--bui-color-surface" data-min="3">
+<td class="docs-wrap"><span lang="en">Info indicator on cards</span><span lang="ar">مؤشر المعلومات على البطاقات</span><br><code>--bui-color-info</code> / <code>--bui-color-surface</code></td>
+<td>3:1</td>
+<td data-slot="ratio-light"><code class="docs-token-value">5.93:1</code> <span class="docs-badge docs-badge--available"><span lang="en">Pass</span><span lang="ar">ناجح</span></span></td>
+<td data-slot="ratio-dark"><code class="docs-token-value">8.13:1</code> <span class="docs-badge docs-badge--available"><span lang="en">Pass</span><span lang="ar">ناجح</span></span></td>
+</tr>
+<tr data-fg="--bui-color-border-strong" data-bg="--bui-color-bg" data-min="3">
+<td class="docs-wrap"><span lang="en">Control borders on the page</span><span lang="ar">حدود العناصر التفاعلية على الصفحة</span><br><code>--bui-color-border-strong</code> / <code>--bui-color-bg</code></td>
+<td>3:1</td>
+<td data-slot="ratio-light"><code class="docs-token-value">3.19:1</code> <span class="docs-badge docs-badge--available"><span lang="en">Pass</span><span lang="ar">ناجح</span></span></td>
+<td data-slot="ratio-dark"><code class="docs-token-value">3.46:1</code> <span class="docs-badge docs-badge--available"><span lang="en">Pass</span><span lang="ar">ناجح</span></span></td>
+</tr>
+</tbody></table></div>
+<ul>
+  <li><span lang="en"><code>--bui-color-border</code> is for decorative dividers only. Do not use it as the only boundary of an interactive control; use <code>--bui-color-border-strong</code>.</span><span lang="ar"><code>--bui-color-border</code> للفواصل الزخرفية فقط. لا تستخدمه كحد وحيد لعنصر تفاعلي؛ استخدم <code>--bui-color-border-strong</code>.</span></li>
+  <li><span lang="en">These are measurements of token pairs. They do not certify a component, and any color you override must be re-checked.</span><span lang="ar">هذه قياسات لأزواج من الـ tokens. لا تثبت سلامة مكوّن، وأي لون تعدّله يجب إعادة فحصه.</span></li>
+</ul>
+<h2 id="accessibility-testing"><span lang="en">Accessibility testing</span><span lang="ar">اختبار إمكانية الوصول</span></h2>
+<p lang="en">The testing approach for the project (see <code>TESTING.md</code>) combines semantic review, keyboard-only testing, screen-reader spot checks and automated tools. An automated scanner never proves full accessibility. Current status:</p>
+<p lang="ar">يجمع نهج الاختبار في المشروع (انظر <code>TESTING.md</code>) بين مراجعة الدلالات والاختبار بلوحة المفاتيح فقط وفحوص قارئات الشاشة وأدوات الفحص الآلي. والفحص الآلي لا يثبت أبدًا إمكانية وصول كاملة. الحالة الحالية:</p>
+<div class="docs-table-wrap">
+<table>
+<thead><tr>
+<th scope="col"><span lang="en">Check</span><span lang="ar">الفحص</span></th>
+<th scope="col"><span lang="en">Status</span><span lang="ar">الحالة</span></th>
+</tr></thead>
+<tbody>
+<tr><td><span lang="en">Contrast of token pairs (table above)</span><span lang="ar">تباين أزواج الـ tokens (الجدول أعلاه)</span></td><td><span class="docs-badge docs-badge--available"><span lang="en">Available</span><span lang="ar">متاح</span></span></td></tr>
+<tr><td><span lang="en">Keyboard checks of this site's navigation, search and menu, scripted in Chromium during development</span><span lang="ar">فحوص لوحة المفاتيح لتنقل هذا الموقع وبحثه وقائمته، بسكربت في Chromium أثناء التطوير</span></td><td><span class="docs-badge docs-badge--available"><span lang="en">Available</span><span lang="ar">متاح</span></span></td></tr>
+<tr><td><span lang="en">Keyboard checks in Firefox and Safari</span><span lang="ar">فحوص لوحة المفاتيح في Firefox وSafari</span></td><td><span class="docs-badge docs-badge--missing"><span lang="en">Not done</span><span lang="ar">لم يُنفَّذ</span></span></td></tr>
+<tr><td><span lang="en">Automated accessibility scanner</span><span lang="ar">أداة فحص آلي لإمكانية الوصول</span></td><td><span class="docs-badge docs-badge--missing"><span lang="en">Not done</span><span lang="ar">لم يُنفَّذ</span></span></td></tr>
+<tr><td><span lang="en">Screen reader testing</span><span lang="ar">اختبار قارئات الشاشة</span></td><td><span class="docs-badge docs-badge--missing"><span lang="en">Not done</span><span lang="ar">لم يُنفَّذ</span></span></td></tr>
+<tr><td><span lang="en">Component accessibility audits</span><span lang="ar">تدقيق إمكانية الوصول للمكونات</span></td><td><span class="docs-badge docs-badge--planned"><span lang="en">Planned</span><span lang="ar">مخطَّط</span></span></td></tr>
+</tbody></table></div>
+</article>
+<footer class="docs-footer" id="docs-footer"></footer>
+</main>
+<aside class="docs-toc" id="docs-toc"></aside>
+</div>
+<div id="docs-live" class="docs-sr-only" role="status" aria-live="polite"></div>
+<script src="../assets/js/nav-data.js" defer></script>
+<script src="../assets/js/highlight.js" defer></script>
+<script src="../assets/js/search.js" defer></script>
+<script src="../assets/js/docs.js" defer></script>
+<script src="../assets/js/tokens-live.js" defer></script>
+</body>
+</html>

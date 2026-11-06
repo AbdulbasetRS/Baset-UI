@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en" dir="ltr" data-docs-root="" data-page="index">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Baset UI documentation</title>
+<meta name="description" content="Documentation home for Baset UI, a framework-agnostic UI library: project status and where to start.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230f766e'/%3E%3Crect x='7' y='8' width='18' height='3.6' rx='1.8' fill='%23fff'/%3E%3Crect x='7' y='14.2' width='12' height='3.6' rx='1.8' fill='%23fff'/%3E%3Crect x='7' y='20.4' width='15' height='3.6' rx='1.8' fill='%23fff'/%3E%3C/svg%3E">
+<script src="assets/js/init.js"></script>
+<link rel="stylesheet" href="../assets/css/baset-ui.css">
+<link rel="stylesheet" href="assets/css/docs.css">
+</head>
+<body>
+<a class="docs-skip" href="#content"><span lang="en">Skip to content</span><span lang="ar">تخطَّ إلى المحتوى</span></a>
+<header class="docs-navbar" id="docs-navbar"></header>
+<div class="docs-backdrop" id="docs-backdrop" hidden></div>
+<div class="docs-layout">
+<aside class="docs-sidebar" id="docs-sidebar"></aside>
+<main class="docs-main" id="content" tabindex="-1">
+<article class="docs-article">
+<noscript>
+<div class="docs-callout docs-callout--note" role="note">
+<p class="docs-callout__title"><span lang="en">JavaScript is off</span><span lang="ar">جافاسكربت معطَّل</span></p>
+<p lang="en">Page content stays readable, but the navigation menu, search, table of contents and the language, direction and theme switches need JavaScript. Content is shown in English.</p>
+<p lang="ar">يبقى محتوى الصفحة مقروءًا، لكن قائمة التنقل والبحث وفهرس الصفحة ومفاتيح اللغة والاتجاه والثيم تحتاج إلى جافاسكربت. يُعرض المحتوى بالإنجليزية.</p>
+</div>
+
+</noscript>
+<h1><span lang="en">Baset UI documentation</span><span lang="ar">توثيق Baset UI</span></h1>
+<p class="docs-lead" lang="en">Baset UI is a framework-agnostic UI library built with standard HTML, CSS and vanilla JavaScript. This site documents what exists today and says plainly what does not exist yet.</p>
+<p class="docs-lead" lang="ar">Baset UI مكتبة واجهات مستقلة عن أي إطار عمل، مبنية بـ HTML وCSS وJavaScript خالصة. يوثّق هذا الموقع ما هو موجود اليوم، ويذكر بوضوح ما لم يُنفَّذ بعد.</p>
+<div class="docs-callout docs-callout--warning" role="note">
+<p class="docs-callout__title"><span lang="en">Early stage</span><span lang="ar">مرحلة مبكرة</span></p>
+<p lang="en">Baset UI is in its foundation phase. Today the repository provides design tokens (colors, typography, spacing, radius, shadows) with light and dark themes, plus this documentation site. There are <strong>no components, no JavaScript, no CDN files and no npm package yet</strong>.</p>
+<p lang="ar">Baset UI في مرحلة التأسيس. يوفّر المستودع اليوم Design Tokens (ألوان وخطوط ومسافات وزوايا وظلال) مع ثيمين فاتح وداكن، إضافة إلى موقع التوثيق هذا. <strong>لا توجد مكونات ولا جافاسكربت ولا ملفات CDN ولا حزمة npm بعد</strong>.</p>
+</div>
+<h2 id="start-here"><span lang="en">Start here</span><span lang="ar">ابدأ من هنا</span></h2>
+<p lang="en">The documentation has three sections. Getting Started explains the project, how to get the files that exist, the principles behind it, and the design tokens you can use today.</p>
+<p lang="ar">للتوثيق ثلاثة أقسام. يشرح قسم البدء المشروع، وكيف تحصل على الملفات الموجودة، والمبادئ التي يقوم عليها، والـ Design Tokens التي يمكنك استخدامها اليوم.</p>
+<ul class="docs-cards">
+<li><a class="docs-card" href="getting-started/introduction.html"><span class="docs-card__title"><span lang="en">Introduction</span><span lang="ar">المقدمة</span></span><span class="docs-card__text"><span lang="en">What Baset UI is, its goals and a basic usage example.</span><span lang="ar">ما هي Baset UI وأهدافها ومثال استخدام أساسي.</span></span></a></li>
+<li><a class="docs-card" href="getting-started/install.html"><span class="docs-card__title"><span lang="en">Install</span><span lang="ar">التثبيت</span></span><span class="docs-card__text"><span lang="en">The one install method that exists, and what is missing for CDN and npm.</span><span lang="ar">طريقة التثبيت الوحيدة المتاحة، وما ينقص لـ CDN وnpm.</span></span></a></li>
+<li><a class="docs-card" href="getting-started/approach.html"><span class="docs-card__title"><span lang="en">Approach</span><span lang="ar">المنهجية</span></span><span class="docs-card__text"><span lang="en">Design philosophy and architecture.</span><span lang="ar">فلسفة التصميم والبنية المعمارية.</span></span></a></li>
+<li><a class="docs-card" href="getting-started/css-variables.html"><span class="docs-card__title"><span lang="en">CSS Variables</span><span lang="ar">متغيرات CSS</span></span><span class="docs-card__text"><span lang="en">Every token that is defined today, with live values.</span><span lang="ar">كل Token معرّف اليوم، مع القيم الحية.</span></span></a></li>
+<li><a class="docs-card" href="getting-started/javascript.html"><span class="docs-card__title"><span lang="en">JavaScript</span><span lang="ar">جافاسكربت</span></span><span class="docs-card__text"><span lang="en">Current status and the contracts future scripts must follow.</span><span lang="ar">الحالة الحالية والقواعد التي ستلتزم بها السكربتات مستقبلًا.</span></span></a></li>
+<li><a class="docs-card" href="getting-started/browsers-devices.html"><span class="docs-card__title"><span lang="en">Browsers &amp; Devices</span><span lang="ar">المتصفحات والأجهزة</span></span><span class="docs-card__text"><span lang="en">Proposed support policy and what has been verified.</span><span lang="ar">سياسة الدعم المقترحة وما تم التحقق منه.</span></span></a></li>
+<li><a class="docs-card" href="getting-started/accessibility.html"><span class="docs-card__title"><span lang="en">Accessibility</span><span lang="ar">إمكانية الوصول</span></span><span class="docs-card__text"><span lang="en">Principles, measured contrast and testing status.</span><span lang="ar">المبادئ وقياسات التباين وحالة الاختبار.</span></span></a></li>
+</ul>
+<h2 id="customize"><span lang="en">Customize</span><span lang="ar">التخصيص</span></h2>
+<p lang="en">How to change what exists today: the color, typography and spacing tokens, themes and direction.</p>
+<p lang="ar">كيف تغيّر ما هو موجود اليوم: tokens الألوان والخطوط والمسافات، والثيمات، والاتجاه.</p>
+<ul class="docs-cards">
+<li><a class="docs-card" href="customize/colors.html"><span class="docs-card__title"><span lang="en">Colors</span><span lang="ar">الألوان</span></span><span class="docs-card__text"><span lang="en">Palette, light and dark values, usage and customization.</span><span lang="ar">اللوحة، وقيم الفاتح والداكن، والاستخدام والتخصيص.</span></span></a></li>
+<li><a class="docs-card" href="customize/color-modes.html"><span class="docs-card__title"><span lang="en">Color Modes</span><span lang="ar">أوضاع الألوان</span></span><span class="docs-card__text"><span lang="en">Theme architecture, switching, persistence and custom themes.</span><span lang="ar">بنية الثيم والتبديل والحفظ والثيمات المخصصة.</span></span></a></li>
+<li><a class="docs-card" href="customize/typography.html"><span class="docs-card__title"><span lang="en">Typography</span><span lang="ar">الخطوط</span></span><span class="docs-card__text"><span lang="en">Font families, sizes, weights and line heights.</span><span lang="ar">عائلات الخطوط والأحجام والأوزان وارتفاع السطر.</span></span></a></li>
+<li><a class="docs-card" href="customize/spacing.html"><span class="docs-card__title"><span lang="en">Spacing</span><span lang="ar">المسافات</span></span><span class="docs-card__text"><span lang="en">The spacing scale, margin, padding and gap.</span><span lang="ar">سلّم المسافات والهوامش والحشوة والفجوات.</span></span></a></li>
+<li><a class="docs-card" href="customize/css-variables.html"><span class="docs-card__title"><span lang="en">CSS Variables</span><span lang="ar">متغيرات CSS</span></span><span class="docs-card__text"><span lang="en">Naming, the complete index and overrides.</span><span lang="ar">التسمية والفهرس الكامل والتعديلات.</span></span></a></li>
+<li><a class="docs-card" href="customize/rtl-customization.html"><span class="docs-card__title"><span lang="en">RTL Customization</span><span lang="ar">تخصيص RTL</span></span><span class="docs-card__text"><span lang="en">Logical properties and direction.</span><span lang="ar">الخصائص المنطقية والاتجاه.</span></span></a></li>
+</ul>
+<h2 id="layout"><span lang="en">Layout</span><span lang="ar">التخطيط</span></h2>
+<p lang="en">The layout system does not exist yet. These pages say so plainly and show the native CSS you can use today with the tokens.</p>
+<p lang="ar">نظام التخطيط غير موجود بعد. تقول هذه الصفحات ذلك بوضوح وتعرض CSS الأصلي الذي يمكنك استخدامه اليوم مع الـ tokens.</p>
+<ul class="docs-cards">
+<li><a class="docs-card" href="layout/containers.html"><span class="docs-card__title"><span lang="en">Containers</span><span lang="ar">الحاويات</span></span><span class="docs-card__text"><span lang="en">Fixed, fluid and responsive containers.</span><span lang="ar">الحاويات الثابتة والسائلة والمتجاوبة.</span></span></a></li>
+<li><a class="docs-card" href="layout/grid-system.html"><span class="docs-card__title"><span lang="en">Grid System</span><span lang="ar">نظام الشبكة</span></span><span class="docs-card__text"><span lang="en">Native CSS Grid with the spacing tokens.</span><span lang="ar">CSS Grid الأصلية مع tokens المسافات.</span></span></a></li>
+<li><a class="docs-card" href="layout/breakpoints.html"><span class="docs-card__title"><span lang="en">Breakpoints</span><span lang="ar">نقاط التوقف</span></span><span class="docs-card__text"><span lang="en">None defined; mobile-first guidance.</span><span lang="ar">لا شيء معرَّف؛ وإرشادات mobile-first.</span></span></a></li>
+<li><a class="docs-card" href="layout/display.html"><span class="docs-card__title"><span lang="en">Display</span><span lang="ar">العرض</span></span><span class="docs-card__text"><span lang="en">Display, visibility and hiding content.</span><span lang="ar">العرض والإظهار وإخفاء المحتوى.</span></span></a></li>
+<li><a class="docs-card" href="layout/flexbox.html"><span class="docs-card__title"><span lang="en">Flexbox</span><span lang="ar">Flexbox</span></span><span class="docs-card__text"><span lang="en">A live playground for native flex.</span><span lang="ar">ساحة تجربة حية لـ flex الأصلي.</span></span></a></li>
+<li><a class="docs-card" href="layout/spacing-utilities.html"><span class="docs-card__title"><span lang="en">Spacing Utilities</span><span lang="ar">أدوات المسافات</span></span><span class="docs-card__text"><span lang="en">Not implemented; native alternatives.</span><span lang="ar">غير منفَّذة؛ والبدائل الأصلية.</span></span></a></li>
+</ul>
+<h2 id="project-status"><span lang="en">Project status</span><span lang="ar">حالة المشروع</span></h2>
+<p lang="en">Each area below is labeled with what actually exists in the repository today. Phase numbers refer to <code>ROADMAP.md</code>.</p>
+<p lang="ar">كل مجال أدناه موسوم بما هو موجود فعلًا في المستودع اليوم. أرقام المراحل تشير إلى ملف <code>ROADMAP.md</code>.</p>
+<div class="docs-table-wrap">
+<table>
+<thead><tr>
+<th scope="col"><span lang="en">Area</span><span lang="ar">المجال</span></th>
+<th scope="col"><span lang="en">Status</span><span lang="ar">الحالة</span></th>
+<th scope="col"><span lang="en">Notes</span><span lang="ar">ملاحظات</span></th>
+</tr></thead>
+<tbody>
+<tr><td><span lang="en">Design tokens and themes</span><span lang="ar">Design Tokens والثيمات</span></td><td><span class="docs-badge docs-badge--foundation"><span lang="en">Foundation (pre-release)</span><span lang="ar">أساس أولي (تمهيدي)</span></span></td><td><span lang="en"><code>assets/css/baset-ui.css</code>: colors, typography, spacing, radius, shadows, motion; light and dark.</span><span lang="ar"><code>assets/css/baset-ui.css</code>: ألوان وخطوط ومسافات وزوايا وظلال وحركة؛ فاتح وداكن.</span></td></tr>
+<tr><td><span lang="en">Documentation site: Getting Started, Customize, Layout</span><span lang="ar">موقع التوثيق: البدء والتخصيص والتخطيط</span></td><td><span class="docs-badge docs-badge--available"><span lang="en">Available</span><span lang="ar">متاح</span></span></td><td><span lang="en">The pages you are reading.</span><span lang="ar">الصفحات التي تقرؤها الآن.</span></td></tr>
+<tr><td><span lang="en">Layout system (containers, grid, flex and display utilities, breakpoints)</span><span lang="ar">نظام التخطيط (الحاويات والشبكة وأدوات flex والعرض ونقاط التوقف)</span></td><td><span class="docs-badge docs-badge--missing"><span lang="en">Not implemented yet</span><span lang="ar">غير منفَّذ بعد</span></span></td><td><span lang="en">Only documented as native CSS patterns. See Layout.</span><span lang="ar">موثَّق فقط كأنماط CSS أصلية. راجع التخطيط.</span></td></tr>
+<tr><td><span lang="en">Components (Button, Badge, Alert, Card, form controls)</span><span lang="ar">المكونات (Button وBadge وAlert وCard وعناصر النماذج)</span></td><td><span class="docs-badge docs-badge--planned"><span lang="en">Planned</span><span lang="ar">مخطَّط</span></span></td><td><span lang="en">Roadmap Phase 2. Button comes first.</span><span lang="ar">المرحلة 2 في خارطة الطريق. يبدأ العمل بـ Button.</span></td></tr>
+<tr><td><span lang="en">Vanilla JavaScript (<code>BUI</code> namespace)</span><span lang="ar">جافاسكربت خالصة (مساحة الاسم <code>BUI</code>)</span></td><td><span class="docs-badge docs-badge--missing"><span lang="en">Not implemented yet</span><span lang="ar">غير منفَّذ بعد</span></span></td><td><span lang="en">No script file exists yet.</span><span lang="ar">لا يوجد أي ملف سكربت بعد.</span></td></tr>
+<tr><td><span lang="en">CDN files</span><span lang="ar">ملفات CDN</span></td><td><span class="docs-badge docs-badge--missing"><span lang="en">Not implemented yet</span><span lang="ar">غير منفَّذ بعد</span></span></td><td><span lang="en">See Install for what is required first.</span><span lang="ar">راجع صفحة التثبيت لمعرفة المطلوب أولًا.</span></td></tr>
+<tr><td><span lang="en">npm package</span><span lang="ar">حزمة npm</span></td><td><span class="docs-badge docs-badge--missing"><span lang="en">Not implemented yet</span><span lang="ar">غير منفَّذ بعد</span></span></td><td><span lang="en">No <code>package.json</code>, nothing published.</span><span lang="ar">لا يوجد <code>package.json</code> ولا شيء منشور.</span></td></tr>
+<tr><td><span lang="en">Component Playground</span><span lang="ar">Component Playground</span></td><td><span class="docs-badge docs-badge--planned"><span lang="en">Planned</span><span lang="ar">مخطَّط</span></span></td><td><span lang="en">Roadmap Phase 3, Button as the pilot.</span><span lang="ar">المرحلة 3، وButton هو التجربة الأولى.</span></td></tr>
+<tr><td><span lang="en">Code Generator</span><span lang="ar">Code Generator</span></td><td><span class="docs-badge docs-badge--planned"><span lang="en">Planned</span><span lang="ar">مخطَّط</span></span></td><td><span lang="en">Roadmap Phase 4.</span><span lang="ar">المرحلة 4.</span></td></tr>
+<tr><td><span lang="en">Framework adapters (React, Vue, Angular, Laravel)</span><span lang="ar">محوّلات الأطر (React وVue وAngular وLaravel)</span></td><td><span class="docs-badge docs-badge--planned"><span lang="en">Planned</span><span lang="ar">مخطَّط</span></span></td><td><span lang="en">Roadmap Phase 7. Optional, only if there is real demand.</span><span lang="ar">المرحلة 7. اختيارية، وفقط عند وجود طلب فعلي.</span></td></tr>
+</tbody></table></div>
+<h2 id="status-labels"><span lang="en">Status labels</span><span lang="ar">معاني وسوم الحالة</span></h2>
+<div class="docs-table-wrap">
+<table>
+<thead><tr>
+<th scope="col"><span lang="en">Label</span><span lang="ar">الوسم</span></th>
+<th scope="col"><span lang="en">Meaning</span><span lang="ar">المعنى</span></th>
+</tr></thead>
+<tbody>
+<tr><td><span class="docs-badge docs-badge--available"><span lang="en">Available</span><span lang="ar">متاح</span></span></td><td><span lang="en">Implemented and usable today.</span><span lang="ar">منفَّذ ويمكن استخدامه اليوم.</span></td></tr>
+<tr><td><span class="docs-badge docs-badge--foundation"><span lang="en">Foundation (pre-release)</span><span lang="ar">أساس أولي (تمهيدي)</span></span></td><td><span lang="en">Exists in the repository, but is pre-release: names and values may still change.</span><span lang="ar">موجود في المستودع لكنه تمهيدي: قد تتغير الأسماء والقيم.</span></td></tr>
+<tr><td><span class="docs-badge docs-badge--planned"><span lang="en">Planned</span><span lang="ar">مخطَّط</span></span></td><td><span lang="en">Part of the plan. It does not exist yet.</span><span lang="ar">ضمن الخطة. غير موجود بعد.</span></td></tr>
+<tr><td><span class="docs-badge docs-badge--missing"><span lang="en">Not implemented yet</span><span lang="ar">غير منفَّذ بعد</span></span></td><td><span lang="en">Nothing exists. Do not rely on it.</span><span lang="ar">لا يوجد شيء منه. لا تعتمد عليه.</span></td></tr>
+<tr><td><span class="docs-badge docs-badge--planned"><span lang="en">Proposed</span><span lang="ar">مقترح</span></span></td><td><span lang="en">A recommendation that waits for the project owner's approval.</span><span lang="ar">توصية بانتظار موافقة مالك المشروع.</span></td></tr>
+<tr><td><span class="docs-badge docs-badge--planned"><span lang="en">Untested</span><span lang="ar">لم يُختبر</span></span></td><td><span lang="en">Written from general platform knowledge, not yet verified with Baset UI.</span><span lang="ar">مكتوب من معرفة عامة بالمنصة، ولم يُتحقق منه مع Baset UI بعد.</span></td></tr>
+</tbody></table></div>
+<h2 id="using-this-site"><span lang="en">Using this site</span><span lang="ar">استخدام هذا الموقع</span></h2>
+<ul>
+  <li><span lang="en"><strong>Language, direction and theme</strong>: use the three buttons in the top bar (inside the menu on small screens). Language and direction are independent, so you can view English in RTL or Arabic in LTR.</span><span lang="ar"><strong>اللغة والاتجاه والثيم</strong>: استخدم الأزرار الثلاثة في الشريط العلوي (داخل القائمة على الشاشات الصغيرة). اللغة والاتجاه مستقلان، فيمكنك عرض الإنجليزية بتخطيط RTL أو العربية بتخطيط LTR.</span></li>
+  <li><span lang="en"><strong>Search</strong>: press <kbd>Ctrl</kbd> + <kbd>K</kbd> (<kbd>⌘</kbd> + <kbd>K</kbd> on Mac) or <kbd>/</kbd>. You can search in English or Arabic.</span><span lang="ar"><strong>البحث</strong>: اضغط <kbd>Ctrl</kbd> + <kbd>K</kbd> (أو <kbd>⌘</kbd> + <kbd>K</kbd> على Mac) أو <kbd>/</kbd>. يمكنك البحث بالإنجليزية أو بالعربية.</span></li>
+  <li><span lang="en"><strong>Code blocks</strong>: every block has a Copy button.</span><span lang="ar"><strong>كتل الشيفرة</strong>: لكل كتلة زر نسخ.</span></li>
+</ul>
+</article>
+<footer class="docs-footer" id="docs-footer"></footer>
+</main>
+<aside class="docs-toc" id="docs-toc"></aside>
+</div>
+<div id="docs-live" class="docs-sr-only" role="status" aria-live="polite"></div>
+<script src="assets/js/nav-data.js" defer></script>
+<script src="assets/js/highlight.js" defer></script>
+<script src="assets/js/search.js" defer></script>
+<script src="assets/js/docs.js" defer></script>
+</body>
+</html>
