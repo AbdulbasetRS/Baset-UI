@@ -4,10 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Flexbox · Baset UI</title>
-<meta name="description" content="Flexbox status and a live playground.">
+<meta name="description" content="Flex utilities and a live class playground.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230f766e'/%3E%3Crect x='7' y='8' width='18' height='3.6' rx='1.8' fill='%23fff'/%3E%3Crect x='7' y='14.2' width='12' height='3.6' rx='1.8' fill='%23fff'/%3E%3Crect x='7' y='20.4' width='15' height='3.6' rx='1.8' fill='%23fff'/%3E%3C/svg%3E">
 <script src="../assets/js/init.js"></script>
 <link rel="stylesheet" href="../../assets/css/baset-ui.css">
+<link rel="stylesheet" href="../../assets/css/baset-ui-layout.css">
 <link rel="stylesheet" href="../assets/css/docs.css">
 </head>
 <body>
@@ -27,79 +28,110 @@
 
 </noscript>
 <h1><span lang="en">Flexbox</span><span lang="ar">Flexbox</span></h1>
-<p class="docs-lead" lang="en">Baset UI has no flex utility classes. Flexbox is a native CSS feature, so everything here works today in your own CSS; use <code>gap</code> with the spacing tokens, and it follows the page direction automatically.</p>
-<p class="docs-lead" lang="ar">لا توجد في Baset UI أصناف مساعدة لـ flex. وFlexbox ميزة CSS أصلية، فكل ما هنا يعمل اليوم في CSS الخاص بك؛ استخدم <code>gap</code> مع tokens المسافات، فيتبع اتجاه الصفحة تلقائيًّا.</p>
-<div class="docs-callout docs-callout--warning" role="note">
-<p class="docs-callout__title"><span lang="en">No layout system exists yet</span><span lang="ar">لا يوجد نظام تخطيط بعد</span></p>
-<p lang="en">Baset UI currently ships design tokens only (<code>assets/css/baset-ui.css</code>). There are no <code>bui-</code> layout classes, no breakpoints and no JavaScript. This page documents what is true today. Examples that use <code>display</code>, <code>flex</code> or <code>grid</code> are plain CSS that you write yourself with the tokens; the class names in them belong to your code, not to Baset UI.</p>
-<p lang="ar">تشحن Baset UI اليوم Design Tokens فقط (<code>assets/css/baset-ui.css</code>). لا توجد أصناف تخطيط بالبادئة <code>bui-</code> ولا نقاط توقف ولا جافاسكربت. توثّق هذه الصفحة ما هو صحيح اليوم. الأمثلة التي تستخدم <code>display</code> أو <code>flex</code> أو <code>grid</code> هي CSS عادي تكتبه أنت بالـ tokens؛ وأسماء الأصناف فيها تخص شيفرتك وليست من Baset UI.</p>
+<p class="docs-lead" lang="en">Flex utilities set the flex properties of a container (direction, wrap, justification, alignment). They work on any element with <code>bui-d-flex</code>, and on <code>bui-row</code>, which is already a flex container.</p>
+<p class="docs-lead" lang="ar">تضبط أدوات flex خصائص flex لحاوية (الاتجاه والالتفاف والتوزيع والمحاذاة). وتعمل على أي عنصر عليه <code>bui-d-flex</code>، وعلى <code>bui-row</code> الذي هو حاوية flex أصلًا.</p>
+<div class="docs-callout docs-callout--info" role="note">
+<p class="docs-callout__title"><span lang="en">Files you need</span><span lang="ar">الملفات التي تحتاجها</span></p>
+<p lang="en">Load both stylesheets: <code>assets/css/baset-ui.css</code> (the tokens; the layout uses its <code>--bui-space-*</code> values) and <code>assets/css/baset-ui-layout.css</code>. The layout file has no JavaScript, no colors, no reset and no <code>!important</code>.</p>
+<p lang="ar">حمّل ملفَّي الأنماط: <code>assets/css/baset-ui.css</code> (الـ tokens؛ فالتخطيط يستخدم قيم <code>--bui-space-*</code>) و<code>assets/css/baset-ui-layout.css</code>. ملف التخطيط بلا جافاسكربت ولا ألوان ولا reset ولا <code>!important</code>.</p>
 </div>
-<div class="docs-table-wrap">
-<table>
-<thead><tr>
-<th scope="col"><span lang="en">Feature</span><span lang="ar">الميزة</span></th>
-<th scope="col"><span lang="en">Status</span><span lang="ar">الحالة</span></th>
-</tr></thead>
-<tbody>
-<tr><td><span lang="en">Flex utility classes (direction, justify, align, wrap, grow)</span><span lang="ar">أصناف flex المساعدة (الاتجاه والمحاذاة والالتفاف والنمو)</span></td><td><span class="docs-badge docs-badge--missing"><span lang="en">Not implemented yet</span><span lang="ar">غير منفَّذ بعد</span></span></td></tr>
-<tr><td><span lang="en">Native Flexbox in your own CSS</span><span lang="ar">Flexbox الأصلية في CSS الخاص بك</span></td><td><span class="docs-badge docs-badge--available"><span lang="en">Available</span><span lang="ar">متاح</span></span></td></tr>
-</tbody></table></div>
 <h2 id="flex-live"><span lang="en">Live playground</span><span lang="ar">ساحة تجربة حية</span></h2>
-<p lang="en">Change the properties and see the result. The CSS below the stage is exactly what is applied.</p>
-<p lang="ar">غيّر الخصائص وشاهد النتيجة. شيفرة CSS تحت المنصة هي بالضبط ما يُطبَّق.</p>
-<div class="docs-demo"><div class="docs-controls"><label><span><span lang="en">flex-direction</span><span lang="ar">flex-direction</span></span><select id="fx-direction"><option value="row" selected>row</option><option value="row-reverse">row-reverse</option><option value="column">column</option><option value="column-reverse">column-reverse</option></select></label><label><span><span lang="en">justify-content</span><span lang="ar">justify-content</span></span><select id="fx-justify"><option value="flex-start" selected>flex-start</option><option value="center">center</option><option value="flex-end">flex-end</option><option value="space-between">space-between</option><option value="space-around">space-around</option><option value="space-evenly">space-evenly</option></select></label><label><span><span lang="en">align-items</span><span lang="ar">align-items</span></span><select id="fx-align"><option value="stretch" selected>stretch</option><option value="flex-start">flex-start</option><option value="center">center</option><option value="flex-end">flex-end</option><option value="baseline">baseline</option></select></label><label><span><span lang="en">flex-wrap</span><span lang="ar">flex-wrap</span></span><select id="fx-wrap"><option value="nowrap" selected>nowrap</option><option value="wrap">wrap</option><option value="wrap-reverse">wrap-reverse</option></select></label><label><span><span lang="en">gap</span><span lang="ar">gap</span></span><select id="fx-gap"><option value="0">0</option><option value="var(--bui-space-2)" selected>var(--bui-space-2)</option><option value="var(--bui-space-4)">var(--bui-space-4)</option><option value="var(--bui-space-8)">var(--bui-space-8)</option></select></label></div><div class="docs-flexstage" id="flex-stage" style="display:flex"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span></div></div>
-<pre class="docs-code" id="flex-code" data-lang="css"><code>.stage {
-  display: flex;
-}
+<p lang="en">Pick classes and see them applied to the stage. The code below the stage is the exact markup with the classes you chose.</p>
+<p lang="ar">اختر أصنافًا وشاهدها مطبّقة على المنصة. والكود تحت المنصة هو الكود الفعلي بالأصناف التي اخترتها.</p>
+<div class="docs-demo"><div class="docs-controls" data-classplay data-stage="flex-stage" data-code="flex-code" data-base="bui-d-flex" data-keep="docs-flexstage"><label><span><span lang="en">direction</span><span lang="ar">الاتجاه</span></span><select><option value="" selected>(none)</option><option value="bui-flex-row">bui-flex-row</option><option value="bui-flex-row-reverse">bui-flex-row-reverse</option><option value="bui-flex-column">bui-flex-column</option><option value="bui-flex-column-reverse">bui-flex-column-reverse</option></select></label><label><span><span lang="en">justify-content</span><span lang="ar">justify-content</span></span><select><option value="" selected>(none)</option><option value="bui-justify-content-start">bui-justify-content-start</option><option value="bui-justify-content-center">bui-justify-content-center</option><option value="bui-justify-content-end">bui-justify-content-end</option><option value="bui-justify-content-between">bui-justify-content-between</option><option value="bui-justify-content-around">bui-justify-content-around</option><option value="bui-justify-content-evenly">bui-justify-content-evenly</option></select></label><label><span><span lang="en">align-items</span><span lang="ar">align-items</span></span><select><option value="" selected>(none)</option><option value="bui-align-items-start">bui-align-items-start</option><option value="bui-align-items-center">bui-align-items-center</option><option value="bui-align-items-end">bui-align-items-end</option><option value="bui-align-items-baseline">bui-align-items-baseline</option><option value="bui-align-items-stretch">bui-align-items-stretch</option></select></label><label><span><span lang="en">wrap</span><span lang="ar">الالتفاف</span></span><select><option value="" selected>(none)</option><option value="bui-flex-nowrap">bui-flex-nowrap</option><option value="bui-flex-wrap">bui-flex-wrap</option><option value="bui-flex-wrap-reverse">bui-flex-wrap-reverse</option></select></label></div><div id="flex-stage" class="docs-flexstage bui-d-flex"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span></div></div>
+<pre class="docs-code" id="flex-code" data-lang="html"><code>&lt;div class="bui-d-flex"&gt;
+  &lt;div&gt;1&lt;/div&gt;
+&lt;/div&gt;
 </code></pre>
 <div class="docs-callout docs-callout--note" role="note">
-<p class="docs-callout__title"><span lang="en">Direction and <code>row-reverse</code></span><span lang="ar">الاتجاه و<code>row-reverse</code></span></p>
-<p lang="en"><code>row</code> already follows the page direction: items start at the inline-start side, so in RTL the first item is on the right. Switch the direction in the top bar and watch the stage. Use <code>row-reverse</code> only when you really want the opposite order, not to make RTL work.</p>
-<p lang="ar"><code>row</code> يتبع اتجاه الصفحة أصلًا: تبدأ العناصر من جهة البداية، فيكون العنصر الأول على اليمين في RTL. بدّل الاتجاه من الشريط العلوي وراقب المنصة. استخدم <code>row-reverse</code> فقط عندما تريد حقًّا الترتيب المعاكس، لا لتشغيل RTL.</p>
+<p class="docs-callout__title"><span lang="en">Direction and RTL</span><span lang="ar">الاتجاه وRTL</span></p>
+<p lang="en"><code>bui-flex-row</code> already follows the page direction: items start at the inline-start side, so in RTL the first item is on the right. Switch the direction in the top bar and watch the stage. Use <code>row-reverse</code> only when you really want the opposite order, not to make RTL work.</p>
+<p lang="ar"><code>bui-flex-row</code> يتبع اتجاه الصفحة أصلًا: تبدأ العناصر من جهة البداية، فيكون العنصر الأول على اليمين في RTL. بدّل الاتجاه من الشريط العلوي وراقب المنصة. استخدم <code>row-reverse</code> فقط عندما تريد حقًّا الترتيب المعاكس، لا لتشغيل RTL.</p>
 </div>
 <h2 id="flex-direction"><span lang="en">Flex direction</span><span lang="ar">اتجاه flex</span></h2>
 <div class="docs-table-wrap">
 <table>
 <thead><tr>
-<th scope="col"><span lang="en">Value</span><span lang="ar">القيمة</span></th>
-<th scope="col"><span lang="en">Main axis</span><span lang="ar">المحور الرئيسي</span></th>
+<th scope="col"><span lang="en">Class</span><span lang="ar">الصنف</span></th>
+<th scope="col"><span lang="en">CSS</span><span lang="ar">CSS</span></th>
 </tr></thead>
 <tbody>
-<tr><td><code>row</code></td><td><span lang="en">Inline direction, start to end (default)</span><span lang="ar">اتجاه السطر، من البداية إلى النهاية (الافتراضي)</span></td></tr>
-<tr><td><code>row-reverse</code></td><td><span lang="en">Inline direction, end to start</span><span lang="ar">اتجاه السطر، من النهاية إلى البداية</span></td></tr>
-<tr><td><code>column</code></td><td><span lang="en">Top to bottom</span><span lang="ar">من الأعلى إلى الأسفل</span></td></tr>
-<tr><td><code>column-reverse</code></td><td><span lang="en">Bottom to top</span><span lang="ar">من الأسفل إلى الأعلى</span></td></tr>
+<tr><td><code>bui-flex-row</code></td><td><code>flex-direction: row</code></td></tr>
+<tr><td><code>bui-flex-row-reverse</code></td><td><code>flex-direction: row-reverse</code></td></tr>
+<tr><td><code>bui-flex-column</code></td><td><code>flex-direction: column</code></td></tr>
+<tr><td><code>bui-flex-column-reverse</code></td><td><code>flex-direction: column-reverse</code></td></tr>
 </tbody></table></div>
-<h2 id="justify-content"><span lang="en">Justify content</span><span lang="ar">محاذاة المحتوى (justify-content)</span></h2>
-<p lang="en">Distributes items along the main axis: <code>flex-start</code>, <code>center</code>, <code>flex-end</code>, <code>space-between</code>, <code>space-around</code>, <code>space-evenly</code>. <code>flex-start</code> and <code>flex-end</code> follow the direction, so they are start and end, not left and right.</p>
-<p lang="ar">يوزّع العناصر على المحور الرئيسي: <code>flex-start</code> و<code>center</code> و<code>flex-end</code> و<code>space-between</code> و<code>space-around</code> و<code>space-evenly</code>. وتتبع <code>flex-start</code> و<code>flex-end</code> الاتجاه، فهما البداية والنهاية وليستا يسارًا ويمينًا.</p>
-<h2 id="align-items"><span lang="en">Align items</span><span lang="ar">محاذاة العناصر (align-items)</span></h2>
-<p lang="en">Aligns items on the cross axis: <code>stretch</code> (default), <code>flex-start</code>, <code>center</code>, <code>flex-end</code>, <code>baseline</code>. Use <code>align-self</code> on one item to override.</p>
-<p lang="ar">يحاذي العناصر على المحور العرضي: <code>stretch</code> (الافتراضي) و<code>flex-start</code> و<code>center</code> و<code>flex-end</code> و<code>baseline</code>. استخدم <code>align-self</code> على عنصر واحد لتجاوزها.</p>
-<h2 id="flex-wrap"><span lang="en">Flex wrap</span><span lang="ar">الالتفاف (flex-wrap)</span></h2>
-<p lang="en">By default items stay on one line (<code>nowrap</code>) and can overflow. Use <code>wrap</code> for toolbars, tag lists and anything that must fit narrow screens.</p>
-<p lang="ar">افتراضيًّا تبقى العناصر في سطر واحد (<code>nowrap</code>) وقد تفيض. استخدم <code>wrap</code> لأشرطة الأدوات وقوائم الوسوم وكل ما يجب أن يتسع للشاشات الضيقة.</p>
-<h2 id="flex-utilities"><span lang="en">Flex utilities</span><span lang="ar">أدوات flex المساعدة</span></h2>
-<pre class="docs-code" data-lang="css"><code>.row   { display: flex; flex-wrap: wrap; gap: var(--bui-space-4); align-items: center; }
-.row &gt; .grow   { flex: 1 1 0; min-inline-size: 0; }  /* take the remaining space */
-.row &gt; .push   { margin-inline-start: auto; }         /* push to the far end */
-</code></pre>
-<ul>
-  <li><span lang="en"><code>min-inline-size: 0</code> lets a flex child shrink below its content so long text does not overflow.</span><span lang="ar"><code>min-inline-size: 0</code> يسمح للابن بالانكماش دون محتواه فلا يفيض النص الطويل.</span></li>
-  <li><span lang="en"><code>margin-inline-start: auto</code> pushes an item to the end in both directions.</span><span lang="ar"><code>margin-inline-start: auto</code> يدفع العنصر إلى النهاية في الاتجاهين.</span></li>
-</ul>
-<h2 id="decisions"><span lang="en">Decisions before implementing</span><span lang="ar">قرارات قبل التنفيذ</span></h2>
-<p lang="en">These need the project owner's decision. Nothing here is implemented or promised.</p>
-<p lang="ar">هذه تحتاج قرار مالك المشروع. لا شيء منها منفَّذ أو موعود به.</p>
+<h2 id="justify-content"><span lang="en">Justify content</span><span lang="ar">محاذاة المحتوى</span></h2>
 <div class="docs-table-wrap">
 <table>
 <thead><tr>
-<th scope="col"><span lang="en">Question</span><span lang="ar">السؤال</span></th>
-<th scope="col"><span lang="en">Status</span><span lang="ar">الحالة</span></th>
+<th scope="col"><span lang="en">Class</span><span lang="ar">الصنف</span></th>
+<th scope="col"><span lang="en">CSS</span><span lang="ar">CSS</span></th>
 </tr></thead>
 <tbody>
-<tr><td><span lang="en">Should flex utilities be classes, or only documented patterns?</span><span lang="ar">هل تكون أدوات flex أصنافًا، أم أنماطًا موثّقة فقط؟</span></td><td><span class="docs-badge docs-badge--planned"><span lang="en">Decision needed</span><span lang="ar">يحتاج قرارًا</span></span></td></tr>
-<tr><td><span lang="en">Follow the architecture rule: add them only when a component needs them?</span><span lang="ar">هل نلتزم بقاعدة البنية: إضافتها فقط عند حاجة مكوّن إليها؟</span></td><td><span class="docs-badge docs-badge--planned"><span lang="en">Decision needed</span><span lang="ar">يحتاج قرارًا</span></span></td></tr>
+<tr><td><code>bui-justify-content-start</code></td><td><code>justify-content: flex-start</code></td></tr>
+<tr><td><code>bui-justify-content-end</code></td><td><code>justify-content: flex-end</code></td></tr>
+<tr><td><code>bui-justify-content-center</code></td><td><code>justify-content: center</code></td></tr>
+<tr><td><code>bui-justify-content-between</code></td><td><code>justify-content: space-between</code></td></tr>
+<tr><td><code>bui-justify-content-around</code></td><td><code>justify-content: space-around</code></td></tr>
+<tr><td><code>bui-justify-content-evenly</code></td><td><code>justify-content: space-evenly</code></td></tr>
+</tbody></table></div>
+<p lang="en"><code>start</code> and <code>end</code> follow the direction: they are not left and right.</p>
+<p lang="ar">تتبع <code>start</code> و<code>end</code> الاتجاه: فهما ليسا يسارًا ويمينًا.</p>
+<h2 id="align-items"><span lang="en">Align items</span><span lang="ar">محاذاة العناصر</span></h2>
+<div class="docs-table-wrap">
+<table>
+<thead><tr>
+<th scope="col"><span lang="en">Class</span><span lang="ar">الصنف</span></th>
+<th scope="col"><span lang="en">CSS</span><span lang="ar">CSS</span></th>
+</tr></thead>
+<tbody>
+<tr><td><code>bui-align-items-start</code></td><td><code>align-items: flex-start</code></td></tr>
+<tr><td><code>bui-align-items-end</code></td><td><code>align-items: flex-end</code></td></tr>
+<tr><td><code>bui-align-items-center</code></td><td><code>align-items: center</code></td></tr>
+<tr><td><code>bui-align-items-baseline</code></td><td><code>align-items: baseline</code></td></tr>
+<tr><td><code>bui-align-items-stretch</code></td><td><code>align-items: stretch</code></td></tr>
+</tbody></table></div>
+<p lang="en"><code>bui-align-content-{start|end|center|between|around|stretch}</code> distributes wrapped lines, and <code>bui-align-self-{auto|start|end|center|baseline|stretch}</code> aligns one item.</p>
+<p lang="ar">يوزّع <code>bui-align-content-{start|end|center|between|around|stretch}</code> الأسطر الملتفّة، ويحاذي <code>bui-align-self-{auto|start|end|center|baseline|stretch}</code> عنصرًا واحدًا.</p>
+<h2 id="flex-wrap"><span lang="en">Flex wrap</span><span lang="ar">الالتفاف</span></h2>
+<div class="docs-table-wrap">
+<table>
+<thead><tr>
+<th scope="col"><span lang="en">Class</span><span lang="ar">الصنف</span></th>
+<th scope="col"><span lang="en">CSS</span><span lang="ar">CSS</span></th>
+</tr></thead>
+<tbody>
+<tr><td><code>bui-flex-wrap</code></td><td><code>flex-wrap: wrap</code></td></tr>
+<tr><td><code>bui-flex-nowrap</code></td><td><code>flex-wrap: nowrap</code></td></tr>
+<tr><td><code>bui-flex-wrap-reverse</code></td><td><code>flex-wrap: wrap-reverse</code></td></tr>
+</tbody></table></div>
+<p lang="en">A <code>bui-row</code> is already <code>wrap</code>. A plain <code>bui-d-flex</code> container is <code>nowrap</code> by default and can overflow: add <code>bui-flex-wrap</code> for toolbars and tag lists.</p>
+<p lang="ar">الـ <code>bui-row</code> هو <code>wrap</code> أصلًا. أما حاوية <code>bui-d-flex</code> العادية فهي <code>nowrap</code> افتراضيًّا وقد تفيض: أضف <code>bui-flex-wrap</code> لأشرطة الأدوات وقوائم الوسوم.</p>
+<h2 id="flex-utilities"><span lang="en">Responsive flex utilities</span><span lang="ar">أدوات flex المتجاوبة</span></h2>
+<p lang="en">Every class above has breakpoint variants: <code>bui-flex-{breakpoint}-column</code>, <code>bui-justify-content-md-between</code>, <code>bui-align-items-lg-center</code>. The example stacks on small screens and becomes a row from <code>md</code>:</p>
+<p lang="ar">لكل صنف أعلاه متغيرات لنقاط التوقف: <code>bui-flex-{نقطة التوقف}-column</code> و<code>bui-justify-content-md-between</code> و<code>bui-align-items-lg-center</code>. يتكدس المثال على الشاشات الصغيرة ويصبح صفًّا من <code>md</code>:</p>
+<pre class="docs-code" id="vp-src-23" data-lang="html"><code>&lt;div class="bui-d-flex bui-flex-column bui-flex-md-row bui-justify-content-md-between"&gt;
+  &lt;div&gt;Logo&lt;/div&gt;
+  &lt;div&gt;Menu&lt;/div&gt;
+  &lt;div&gt;Actions&lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<p lang="en">Choose a width: the preview is a separate frame, so the breakpoints react to its width, not to your window. The preview wraps this markup in a <code>bui-container</code>.</p>
+<p lang="ar">اختر عرضًا: المعاينة إطار منفصل، فتستجيب نقاط التوقف لعرضه وليس لعرض نافذتك. تغلّف المعاينة هذا الكود بـ <code>bui-container</code>.</p>
+<div class="docs-viewport" data-viewport data-source="vp-src-23"><div class="docs-viewport__bar" role="group" aria-label="Preview width in pixels"><button type="button" data-w="0" aria-pressed="false"><span lang="en">Fit</span><span lang="ar">ملء العرض</span></button><button type="button" data-w="320" aria-pressed="false">320</button><button type="button" data-w="768" aria-pressed="false">768</button><button type="button" data-w="992" aria-pressed="false">992</button><span class="docs-viewport__info" aria-live="polite"><span lang="en">Preview width <b data-info-w></b> · breakpoint <b data-info-bp></b></span><span lang="ar">عرض المعاينة <b data-info-w></b> · نقطة التوقف <b data-info-bp></b></span></span></div><div class="docs-viewport__stage"><iframe class="docs-viewport__frame" title="Responsive preview"></iframe></div></div>
+<h2 id="not-implemented"><span lang="en">Not implemented</span><span lang="ar">غير منفَّذ</span></h2>
+<div class="docs-table-wrap">
+<table>
+<thead><tr>
+<th scope="col"><span lang="en">Feature</span><span lang="ar">الميزة</span></th>
+<th scope="col"><span lang="en">Status</span><span lang="ar">الحالة</span></th>
+<th scope="col"><span lang="en">Notes</span><span lang="ar">ملاحظات</span></th>
+</tr></thead>
+<tbody>
+<tr><td><span lang="en"><code>flex-grow</code>, <code>flex-shrink</code>, <code>flex-fill</code> utilities</span><span lang="ar">أدوات <code>flex-grow</code> و<code>flex-shrink</code> و<code>flex-fill</code></span></td><td><span class="docs-badge docs-badge--missing"><span lang="en">Not implemented yet</span><span lang="ar">غير منفَّذ بعد</span></span></td><td><span lang="en">Use <code>bui-col</code> inside a row, or your own CSS.</span><span lang="ar">استخدم <code>bui-col</code> داخل صف أو CSS خاصًّا بك.</span></td></tr>
+<tr><td><span lang="en">Gap utilities (<code>bui-gap-*</code>)</span><span lang="ar">أدوات الفجوة (<code>bui-gap-*</code>)</span></td><td><span class="docs-badge docs-badge--missing"><span lang="en">Not implemented yet</span><span lang="ar">غير منفَّذ بعد</span></span></td><td><span lang="en">Use <code>bui-g-*</code> on a row, or <code>gap: var(--bui-space-4)</code>.</span><span lang="ar">استخدم <code>bui-g-*</code> على صف، أو <code>gap: var(--bui-space-4)</code>.</span></td></tr>
+<tr><td><span lang="en"><code>justify-items</code>, <code>justify-self</code>, <code>place-*</code></span><span lang="ar"><code>justify-items</code> و<code>justify-self</code> و<code>place-*</code></span></td><td><span class="docs-badge docs-badge--missing"><span lang="en">Not implemented yet</span><span lang="ar">غير منفَّذ بعد</span></span></td><td><span lang="en">Not requested.</span><span lang="ar">لم تُطلب.</span></td></tr>
 </tbody></table></div>
 </article>
 <footer class="docs-footer" id="docs-footer"></footer>

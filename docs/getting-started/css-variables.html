@@ -89,8 +89,8 @@
 </tbody></table></div>
 <div class="docs-callout docs-callout--info" role="note">
 <p class="docs-callout__title"><span lang="en">Not defined yet</span><span lang="ar">غير معرَّف بعد</span></p>
-<p lang="en">A secondary color, a z-index scale, breakpoints and component-level variables (for example per-button variables) do not exist. Breakpoints cannot be CSS variables anyway, because custom properties cannot be used inside media queries.</p>
-<p lang="ar">لا يوجد لون ثانوي ولا مقياس z-index ولا نقاط توقف ولا متغيرات على مستوى المكوّن (مثل متغيرات خاصة بالزر). ونقاط التوقف لا يمكن أن تكون متغيرات CSS أصلًا، لأن الخصائص المخصصة لا تُستخدم داخل media queries.</p>
+<p lang="en">A secondary color, a z-index scale, breakpoint tokens and component-level variables (for example per-button variables) do not exist. Breakpoints cannot be CSS variables anyway, because custom properties cannot be used inside media queries; they are defined once in the layout stylesheet (see <a href="../layout/breakpoints.html">Breakpoints</a>). That stylesheet also declares two local variables on <code>.bui-row</code>, <code>--bui-gutter-x</code> and <code>--bui-gutter-y</code>, which are not part of the token list above.</p>
+<p lang="ar">لا يوجد لون ثانوي ولا مقياس z-index ولا tokens لنقاط التوقف ولا متغيرات على مستوى المكوّن (مثل متغيرات خاصة بالزر). ونقاط التوقف لا يمكن أن تكون متغيرات CSS أصلًا، لأن الخصائص المخصصة لا تُستخدم داخل media queries؛ وهي معرَّفة مرة واحدة في ملف التخطيط (راجع <a href="../layout/breakpoints.html">نقاط التوقف</a>). ويعلن ذلك الملف أيضًا متغيرين محليين على <code>.bui-row</code> هما <code>--bui-gutter-x</code> و<code>--bui-gutter-y</code> وليسا ضمن قائمة الـ tokens أعلاه.</p>
 </div>
 <h2 id="color-variables"><span lang="en">Color variables</span><span lang="ar">متغيرات الألوان</span></h2>
 <h3 id="colors-surfaces"><span lang="en">Surfaces, text and borders</span><span lang="ar">الأسطح والنص والحدود</span></h3>

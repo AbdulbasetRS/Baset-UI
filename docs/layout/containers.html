@@ -4,10 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Containers · Baset UI</title>
-<meta name="description" content="Fixed, fluid and responsive containers.">
+<meta name="description" content="Fixed and fluid containers.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230f766e'/%3E%3Crect x='7' y='8' width='18' height='3.6' rx='1.8' fill='%23fff'/%3E%3Crect x='7' y='14.2' width='12' height='3.6' rx='1.8' fill='%23fff'/%3E%3Crect x='7' y='20.4' width='15' height='3.6' rx='1.8' fill='%23fff'/%3E%3C/svg%3E">
 <script src="../assets/js/init.js"></script>
 <link rel="stylesheet" href="../../assets/css/baset-ui.css">
+<link rel="stylesheet" href="../../assets/css/baset-ui-layout.css">
 <link rel="stylesheet" href="../assets/css/docs.css">
 </head>
 <body>
@@ -27,73 +28,84 @@
 
 </noscript>
 <h1><span lang="en">Containers</span><span lang="ar">الحاويات</span></h1>
-<p class="docs-lead" lang="en">A container limits the width of page content and keeps it centered with side padding. Baset UI has no container class yet; this page shows how to build the three common kinds with the tokens.</p>
-<p class="docs-lead" lang="ar">الحاوية تحدّ عرض محتوى الصفحة وتبقيه في الوسط مع حشوة جانبية. لا يوجد صنف حاوية في Baset UI بعد؛ وتعرض هذه الصفحة كيف تبني الأنواع الثلاثة الشائعة بالـ tokens.</p>
-<div class="docs-callout docs-callout--warning" role="note">
-<p class="docs-callout__title"><span lang="en">No layout system exists yet</span><span lang="ar">لا يوجد نظام تخطيط بعد</span></p>
-<p lang="en">Baset UI currently ships design tokens only (<code>assets/css/baset-ui.css</code>). There are no <code>bui-</code> layout classes, no breakpoints and no JavaScript. This page documents what is true today. Examples that use <code>display</code>, <code>flex</code> or <code>grid</code> are plain CSS that you write yourself with the tokens; the class names in them belong to your code, not to Baset UI.</p>
-<p lang="ar">تشحن Baset UI اليوم Design Tokens فقط (<code>assets/css/baset-ui.css</code>). لا توجد أصناف تخطيط بالبادئة <code>bui-</code> ولا نقاط توقف ولا جافاسكربت. توثّق هذه الصفحة ما هو صحيح اليوم. الأمثلة التي تستخدم <code>display</code> أو <code>flex</code> أو <code>grid</code> هي CSS عادي تكتبه أنت بالـ tokens؛ وأسماء الأصناف فيها تخص شيفرتك وليست من Baset UI.</p>
+<p class="docs-lead" lang="en">Containers center your content and limit its width. Baset UI has two: a responsive fixed-width container and a fluid one.</p>
+<p class="docs-lead" lang="ar">الحاويات تُوسِّط محتواك وتحدّ عرضه. لدى Baset UI حاويتان: حاوية متجاوبة بعرض أقصى، وحاوية سائلة.</p>
+<div class="docs-callout docs-callout--info" role="note">
+<p class="docs-callout__title"><span lang="en">Files you need</span><span lang="ar">الملفات التي تحتاجها</span></p>
+<p lang="en">Load both stylesheets: <code>assets/css/baset-ui.css</code> (the tokens; the layout uses its <code>--bui-space-*</code> values) and <code>assets/css/baset-ui-layout.css</code>. The layout file has no JavaScript, no colors, no reset and no <code>!important</code>.</p>
+<p lang="ar">حمّل ملفَّي الأنماط: <code>assets/css/baset-ui.css</code> (الـ tokens؛ فالتخطيط يستخدم قيم <code>--bui-space-*</code>) و<code>assets/css/baset-ui-layout.css</code>. ملف التخطيط بلا جافاسكربت ولا ألوان ولا reset ولا <code>!important</code>.</p>
 </div>
 <div class="docs-table-wrap">
 <table>
 <thead><tr>
-<th scope="col"><span lang="en">Feature</span><span lang="ar">الميزة</span></th>
+<th scope="col"><span lang="en">Class</span><span lang="ar">الصنف</span></th>
+<th scope="col"><span lang="en">Width</span><span lang="ar">العرض</span></th>
 <th scope="col"><span lang="en">Status</span><span lang="ar">الحالة</span></th>
 </tr></thead>
 <tbody>
-<tr><td><span lang="en">Fixed container class</span><span lang="ar">صنف حاوية ثابتة</span></td><td><span class="docs-badge docs-badge--missing"><span lang="en">Not implemented yet</span><span lang="ar">غير منفَّذ بعد</span></span></td></tr>
-<tr><td><span lang="en">Fluid container class</span><span lang="ar">صنف حاوية سائلة</span></td><td><span class="docs-badge docs-badge--missing"><span lang="en">Not implemented yet</span><span lang="ar">غير منفَّذ بعد</span></span></td></tr>
-<tr><td><span lang="en">Responsive container classes</span><span lang="ar">أصناف حاويات متجاوبة</span></td><td><span class="docs-badge docs-badge--missing"><span lang="en">Not implemented yet</span><span lang="ar">غير منفَّذ بعد</span></span></td></tr>
-<tr><td><span lang="en">Container width tokens</span><span lang="ar">tokens لعروض الحاويات</span></td><td><span class="docs-badge docs-badge--missing"><span lang="en">Not implemented yet</span><span lang="ar">غير منفَّذ بعد</span></span></td></tr>
+<tr><td><code>bui-container</code></td><td><span lang="en">100% below 576px; then 540, 720, 960, 1140, 1500, 1800px at sm, md, lg, xl, xxl, xxxl</span><span lang="ar">100% تحت 576px؛ ثم 540 و720 و960 و1140 و1500 و1800px عند sm وmd وlg وxl وxxl وxxxl</span></td><td><span class="docs-badge docs-badge--available"><span lang="en">Available</span><span lang="ar">متاح</span></span></td></tr>
+<tr><td><code>bui-container-fluid</code></td><td>100%</td><td><span class="docs-badge docs-badge--available"><span lang="en">Available</span><span lang="ar">متاح</span></span></td></tr>
+<tr><td><code>bui-container-{breakpoint}</code></td><td><span lang="en">—</span><span lang="ar">—</span></td><td><span class="docs-badge docs-badge--missing"><span lang="en">Not implemented yet</span><span lang="ar">غير منفَّذ بعد</span></span></td></tr>
 </tbody></table></div>
 <h2 id="fixed-containers"><span lang="en">Fixed containers</span><span lang="ar">الحاويات الثابتة</span></h2>
-<p lang="en">A fixed container has a maximum width and is centered. It never gets wider than the maximum, and it shrinks on small screens because <code>max-inline-size</code> is a limit, not a width.</p>
-<p lang="ar">للحاوية الثابتة أقصى عرض وتتوسط الصفحة. لا تتجاوز العرض الأقصى وتنكمش على الشاشات الصغيرة لأن <code>max-inline-size</code> حدّ وليس عرضًا.</p>
-<pre class="docs-code" data-lang="css"><code>.my-container {
-  inline-size: 100%;
-  max-inline-size: 72rem;
-  margin-inline: auto;
-  padding-inline: var(--bui-space-4);
-}
-</code></pre>
-<div class="docs-demo"><span class="docs-demo__label"><span lang="en">Live: a container with max-inline-size: 24rem</span><span lang="ar">عرض حي: حاوية بـ max-inline-size: 24rem</span></span><div style="inline-size:100%;max-inline-size:24rem;margin-inline:auto;padding-inline:var(--bui-space-4);border:var(--bui-border-width) dashed var(--bui-color-border-strong);border-radius:var(--bui-radius-md)"><span class="docs-bar"><span lang="en">Content stays inside the limit and is centered.</span><span lang="ar">يبقى المحتوى داخل الحدّ ويتوسط.</span></span></div></div>
-<h2 id="fluid-containers"><span lang="en">Fluid containers</span><span lang="ar">الحاويات السائلة</span></h2>
-<p lang="en">A fluid container fills the available width and only keeps side padding.</p>
-<p lang="ar">تملأ الحاوية السائلة العرض المتاح وتحتفظ بالحشوة الجانبية فقط.</p>
-<pre class="docs-code" data-lang="css"><code>.my-container-fluid {
-  inline-size: 100%;
-  padding-inline: var(--bui-space-4);
-}
-</code></pre>
-<div class="docs-demo"><span class="docs-demo__label"><span lang="en">Live: full width</span><span lang="ar">عرض حي: العرض الكامل</span></span><div style="inline-size:100%;padding-inline:var(--bui-space-4);border:var(--bui-border-width) dashed var(--bui-color-border-strong);border-radius:var(--bui-radius-md)"><span class="docs-bar"><span lang="en">Fills the whole width.</span><span lang="ar">يملأ العرض بالكامل.</span></span></div></div>
-<h2 id="responsive-containers"><span lang="en">Responsive containers</span><span lang="ar">الحاويات المتجاوبة</span></h2>
-<p lang="en">A responsive container changes its maximum width at your breakpoints. Write it mobile-first with <code>min-width</code> queries. The breakpoint values below are examples; see <a href="breakpoints.html">Breakpoints</a>.</p>
-<p lang="ar">تغيّر الحاوية المتجاوبة أقصى عرض لها عند نقاط التوقف لديك. اكتبها بأسلوب mobile-first باستعلامات <code>min-width</code>. قيم نقاط التوقف أدناه أمثلة؛ راجع <a href="breakpoints.html">نقاط التوقف</a>.</p>
-<pre class="docs-code" data-lang="css"><code>.my-container {
-  inline-size: 100%;
-  margin-inline: auto;
-  padding-inline: var(--bui-space-4);
-}
-@media (min-width: 40rem) { .my-container { max-inline-size: 38rem; } }
-@media (min-width: 64rem) { .my-container { max-inline-size: 60rem; } }
-</code></pre>
-<ul>
-  <li><span lang="en">Use <code>margin-inline: auto</code> and <code>padding-inline</code> so the container behaves the same in RTL and LTR.</span><span lang="ar">استخدم <code>margin-inline: auto</code> و<code>padding-inline</code> ليتصرف الحاوي بالطريقة نفسها في RTL وLTR.</span></li>
-  <li><span lang="en">Do not set a fixed <code>width</code> in pixels; it causes horizontal scrolling on small screens.</span><span lang="ar">لا تضبط <code>width</code> ثابتًا بالبكسل؛ فهو يسبب تمريرًا أفقيًّا على الشاشات الصغيرة.</span></li>
-</ul>
-<h2 id="decisions"><span lang="en">Decisions before implementing</span><span lang="ar">قرارات قبل التنفيذ</span></h2>
-<p lang="en">These need the project owner's decision. Nothing here is implemented or promised.</p>
-<p lang="ar">هذه تحتاج قرار مالك المشروع. لا شيء منها منفَّذ أو موعود به.</p>
+<p lang="en"><code>bui-container</code> is always centered (<code>margin-inline: auto</code>) and has <code>1.5rem</code> of side padding. Its maximum width grows with each breakpoint, so the line length of your content stays comfortable on big screens.</p>
+<p lang="ar">تتوسط <code>bui-container</code> دائمًا (‏<code>margin-inline: auto</code>) ولها حشوة جانبية <code>1.5rem</code>. ويزداد أقصى عرضها مع كل نقطة توقف، فيبقى طول سطر محتواك مريحًا على الشاشات الكبيرة.</p>
 <div class="docs-table-wrap">
 <table>
 <thead><tr>
-<th scope="col"><span lang="en">Question</span><span lang="ar">السؤال</span></th>
+<th scope="col"><span lang="en">Breakpoint</span><span lang="ar">نقطة التوقف</span></th>
+<th scope="col"><span lang="en">Maximum width</span><span lang="ar">أقصى عرض</span></th>
+</tr></thead>
+<tbody>
+<tr><td><code>xs</code> (480px)</td><td><span lang="en">none (fluid)</span><span lang="ar">لا يوجد (سائلة)</span></td></tr>
+<tr><td><code>sm</code> (576px)</td><td>540px</td></tr>
+<tr><td><code>md</code> (768px)</td><td>720px</td></tr>
+<tr><td><code>lg</code> (992px)</td><td>960px</td></tr>
+<tr><td><code>xl</code> (1200px)</td><td>1140px</td></tr>
+<tr><td><code>xxl</code> (1600px)</td><td>1500px</td></tr>
+<tr><td><code>xxxl</code> (1920px)</td><td>1800px</td></tr>
+</tbody></table></div>
+<h2 id="fluid-containers"><span lang="en">Fluid containers</span><span lang="ar">الحاويات السائلة</span></h2>
+<p lang="en"><code>bui-container-fluid</code> is full width at every size and keeps the same side padding. Use it for full-bleed sections such as a header bar.</p>
+<p lang="ar">تملأ <code>bui-container-fluid</code> العرض كاملًا في كل الأحجام وتحتفظ بالحشوة الجانبية نفسها. استخدمها للأقسام التي تمتد على كامل العرض مثل شريط الرأس.</p>
+<h2 id="responsive-containers"><span lang="en">Responsive containers</span><span lang="ar">الحاويات المتجاوبة</span></h2>
+<p lang="en">Use the preview to compare the two at every width. Pick a breakpoint, or press Fit and resize your window.</p>
+<p lang="ar">استخدم المعاينة للمقارنة بينهما في كل عرض. اختر نقطة توقف أو اضغط "ملء العرض" وغيّر حجم نافذتك.</p>
+<pre class="docs-code" id="vp-src-1" data-lang="html"><code>&lt;div class="bui-container"&gt;bui-container&lt;/div&gt;
+&lt;div class="bui-container-fluid"&gt;bui-container-fluid&lt;/div&gt;
+</code></pre>
+<p lang="en">Choose a width: the preview is a separate frame, so the breakpoints react to its width, not to your window. The markup is rendered as is.</p>
+<p lang="ar">اختر عرضًا: المعاينة إطار منفصل، فتستجيب نقاط التوقف لعرضه وليس لعرض نافذتك. يُعرض الكود كما هو.</p>
+<div class="docs-viewport" data-viewport data-source="vp-src-1" data-wrap="none"><div class="docs-viewport__bar" role="group" aria-label="Preview width in pixels"><button type="button" data-w="0" aria-pressed="false"><span lang="en">Fit</span><span lang="ar">ملء العرض</span></button><button type="button" data-w="320" aria-pressed="false">320</button><button type="button" data-w="480" aria-pressed="false">480</button><button type="button" data-w="576" aria-pressed="false">576</button><button type="button" data-w="768" aria-pressed="false">768</button><button type="button" data-w="992" aria-pressed="false">992</button><button type="button" data-w="1200" aria-pressed="false">1200</button><span class="docs-viewport__info" aria-live="polite"><span lang="en">Preview width <b data-info-w></b> · breakpoint <b data-info-bp></b></span><span lang="ar">عرض المعاينة <b data-info-w></b> · نقطة التوقف <b data-info-bp></b></span></span></div><div class="docs-viewport__stage"><iframe class="docs-viewport__frame" title="Responsive preview"></iframe></div></div>
+<h2 id="usage"><span lang="en">Usage rules</span><span lang="ar">قواعد الاستخدام</span></h2>
+<ul>
+  <li><span lang="en">Put a <code>bui-row</code> inside a container. The container padding is what keeps the row from touching the screen edge.</span><span lang="ar">ضع <code>bui-row</code> داخل حاوية. حشوة الحاوية هي ما يمنع الصف من ملامسة حافة الشاشة.</span></li>
+  <li><span lang="en">Do not nest a container inside a container or inside a column.</span><span lang="ar">لا تضع حاوية داخل حاوية أو داخل عمود.</span></li>
+  <li><span lang="en">Do not add your own horizontal margin or width to a container: change the class, or write your own container class (below).</span><span lang="ar">لا تضف هامشًا أفقيًّا أو عرضًا خاصًّا إلى الحاوية: بدّل الصنف، أو اكتب صنف حاوية خاصًّا بك (أدناه).</span></li>
+  <li><span lang="en">The container has no background, border or color.</span><span lang="ar">لا تملك الحاوية خلفية ولا حدًّا ولا لونًا.</span></li>
+</ul>
+<h3 id="custom-container"><span lang="en">Your own container width</span><span lang="ar">عرض حاوية خاص بك</span></h3>
+<p lang="en">If you need a narrower reading column, write your own class. This one is not part of Baset UI:</p>
+<p lang="ar">إن احتجت عمود قراءة أضيق فاكتب صنفًا خاصًّا بك. هذا الصنف ليس جزءًا من Baset UI:</p>
+<pre class="docs-code" data-lang="css"><code>.my-narrow {
+  inline-size: 100%;
+  max-inline-size: 40rem;
+  margin-inline: auto;
+  padding-inline: var(--bui-space-6);
+}
+</code></pre>
+<h2 id="decisions"><span lang="en">Decisions for the project owner</span><span lang="ar">قرارات لمالك المشروع</span></h2>
+<p lang="en">These choices were made to deliver the feature and need your approval.</p>
+<p lang="ar">اتُّخذت هذه الاختيارات لتسليم الميزة وتحتاج موافقتك.</p>
+<div class="docs-table-wrap">
+<table>
+<thead><tr>
+<th scope="col"><span lang="en">Decision</span><span lang="ar">القرار</span></th>
 <th scope="col"><span lang="en">Status</span><span lang="ar">الحالة</span></th>
 </tr></thead>
 <tbody>
-<tr><td><span lang="en">Should containers exist as classes, or stay a documented pattern?</span><span lang="ar">هل تكون الحاويات أصنافًا، أم تبقى نمطًا موثّقًا؟</span></td><td><span class="docs-badge docs-badge--planned"><span lang="en">Decision needed</span><span lang="ar">يحتاج قرارًا</span></span></td></tr>
-<tr><td><span lang="en">Which maximum widths, and are they tokens?</span><span lang="ar">ما أقصى العروض، وهل تكون tokens؟</span></td><td><span class="docs-badge docs-badge--planned"><span lang="en">Decision needed</span><span lang="ar">يحتاج قرارًا</span></span></td></tr>
-<tr><td><span lang="en">Which breakpoints do responsive containers use?</span><span lang="ar">أي نقاط توقف تستخدمها الحاويات المتجاوبة؟</span></td><td><span class="docs-badge docs-badge--planned"><span lang="en">Decision needed</span><span lang="ar">يحتاج قرارًا</span></span></td></tr>
+<tr><td><span lang="en">The maximum widths and the 1.5rem side padding (see the Grid System page).</span><span lang="ar">أقصى العروض والحشوة الجانبية 1.5rem (راجع صفحة نظام الشبكة).</span></td><td><span class="docs-badge docs-badge--planned"><span lang="en">Decision needed</span><span lang="ar">يحتاج قرارًا</span></span></td></tr>
+<tr><td><span lang="en">Whether breakpoint containers (<code>bui-container-md</code>) are wanted.</span><span lang="ar">هل نريد حاويات لكل نقطة توقف (<code>bui-container-md</code>).</span></td><td><span class="docs-badge docs-badge--planned"><span lang="en">Decision needed</span><span lang="ar">يحتاج قرارًا</span></span></td></tr>
 </tbody></table></div>
 </article>
 <footer class="docs-footer" id="docs-footer"></footer>
@@ -105,5 +117,6 @@
 <script src="../assets/js/highlight.js" defer></script>
 <script src="../assets/js/search.js" defer></script>
 <script src="../assets/js/docs.js" defer></script>
+<script src="../assets/js/layout-demo.js" defer></script>
 </body>
 </html>

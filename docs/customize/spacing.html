@@ -27,8 +27,8 @@
 
 </noscript>
 <h1><span lang="en">Spacing</span><span lang="ar">المسافات</span></h1>
-<p class="docs-lead" lang="en">The spacing scale that exists today and how to use it for margin, padding and gaps. Spacing is provided as tokens; there are no spacing utility classes yet.</p>
-<p class="docs-lead" lang="ar">سلّم المسافات الموجود اليوم وكيف تستخدمه للهوامش والحشوة والفجوات. المسافات مقدَّمة كـ tokens، ولا توجد أصناف مساعدة للمسافات بعد.</p>
+<p class="docs-lead" lang="en">The spacing scale that exists today and how to use it for margin, padding and gaps. Spacing is provided as tokens. The only spacing classes are the grid gutters; margin, padding and gap utility classes do not exist.</p>
+<p class="docs-lead" lang="ar">سلّم المسافات الموجود اليوم وكيف تستخدمه للهوامش والحشوة والفجوات. المسافات مقدَّمة كـ tokens. وأصناف المسافات الوحيدة هي مسافات الشبكة؛ أما أصناف الهامش والحشوة والفجوة فغير موجودة.</p>
 <h2 id="spacing-scale"><span lang="en">Spacing scale</span><span lang="ar">سلّم المسافات</span></h2>
 <p lang="en">The scale is based on a 4px (0.25rem) unit. The steps are <code>1, 2, 3, 4, 5, 6, 8, 10, 12, 16</code>. There is no <code>7</code>, <code>9</code>, <code>11</code> or step <code>0</code>; use <code>0</code> directly when you need none. Values are in <code>rem</code>, so they scale with the reader's font-size setting.</p>
 <p lang="ar">يقوم السلّم على وحدة 4px (‏0.25rem). والدرجات هي <code>1, 2, 3, 4, 5, 6, 8, 10, 12, 16</code>. لا توجد درجة <code>7</code> أو <code>9</code> أو <code>11</code> أو <code>0</code>؛ استخدم <code>0</code> مباشرة عند عدم الحاجة. القيم بوحدة <code>rem</code> فتتبع إعداد حجم الخط عند القارئ.</p>
@@ -111,8 +111,8 @@
 }
 </code></pre>
 <div class="docs-demo"><span class="docs-demo__label"><code>gap: var(--bui-space-2)</code></span><div class="docs-gapdemo" style="gap:var(--bui-space-2);margin-block-end:var(--bui-space-4)"><span>1</span><span>2</span><span>3</span><span>4</span></div><span class="docs-demo__label"><code>gap: var(--bui-space-4)</code></span><div class="docs-gapdemo" style="gap:var(--bui-space-4);margin-block-end:var(--bui-space-4)"><span>1</span><span>2</span><span>3</span><span>4</span></div><span class="docs-demo__label"><code>gap: var(--bui-space-8)</code></span><div class="docs-gapdemo" style="gap:var(--bui-space-8);margin-block-end:var(--bui-space-4)"><span>1</span><span>2</span><span>3</span><span>4</span></div></div>
-<p lang="en"><span class="docs-badge docs-badge--missing"><span lang="en">Not implemented yet</span><span lang="ar">غير منفَّذ بعد</span></span> There are no gap utility classes (for example <code>bui-gap-4</code>). See <a href="../layout/spacing-utilities.html">Spacing Utilities</a>.</p>
-<p lang="ar"><span class="docs-badge docs-badge--missing"><span lang="en">Not implemented yet</span><span lang="ar">غير منفَّذ بعد</span></span> لا توجد أصناف مساعدة للفجوات (مثل <code>bui-gap-4</code>). راجع <a href="../layout/spacing-utilities.html">أدوات المسافات</a>.</p>
+<p lang="en"><span class="docs-badge docs-badge--missing"><span lang="en">Not implemented yet</span><span lang="ar">غير منفَّذ بعد</span></span> There are no gap utility classes (for example <code>bui-gap-4</code>). For the columns of a grid use the gutter classes (<code>bui-g-3</code>). See <a href="../layout/spacing-utilities.html">Spacing Utilities</a>.</p>
+<p lang="ar"><span class="docs-badge docs-badge--missing"><span lang="en">Not implemented yet</span><span lang="ar">غير منفَّذ بعد</span></span> لا توجد أصناف مساعدة للفجوات (مثل <code>bui-gap-4</code>). وللأعمدة في الشبكة استخدم أصناف المسافات (<code>bui-g-3</code>). راجع <a href="../layout/spacing-utilities.html">أدوات المسافات</a>.</p>
 <h2 id="responsive-spacing"><span lang="en">Responsive spacing</span><span lang="ar">مسافات متجاوبة</span></h2>
 <p lang="en">There are no responsive spacing tokens or classes. Two techniques work today with the tokens you have.</p>
 <p lang="ar">لا توجد tokens أو أصناف لمسافات متجاوبة. وتعمل اليوم تقنيتان بالـ tokens الموجودة.</p>
@@ -131,8 +131,8 @@
 </code></pre>
 <div class="docs-callout docs-callout--note" role="note">
 <p class="docs-callout__title"><span lang="en">Breakpoint values are yours</span><span lang="ar">قيم نقاط التوقف لك</span></p>
-<p lang="en"><code>48rem</code> is only an example. Baset UI defines no breakpoints, and a CSS variable cannot be used inside a media query. See <a href="../layout/breakpoints.html">Breakpoints</a>.</p>
-<p lang="ar"><code>48rem</code> مثال فقط. لا تعرّف Baset UI أي نقاط توقف، ولا يمكن استخدام متغير CSS داخل استعلام وسائط. راجع <a href="../layout/breakpoints.html">نقاط التوقف</a>.</p>
+<p lang="en"><code>48rem</code> is only an example. To change at the same widths as the grid use the official breakpoints (for example <code>768px</code> for <code>md</code>); a CSS variable cannot be used inside a media query. See <a href="../layout/breakpoints.html">Breakpoints</a>.</p>
+<p lang="ar"><code>48rem</code> مثال فقط. وللتغيّر عند نفس عروض الشبكة استخدم نقاط التوقف الرسمية (مثل <code>768px</code> لـ <code>md</code>)؛ ولا يمكن استخدام متغير CSS داخل استعلام وسائط. راجع <a href="../layout/breakpoints.html">نقاط التوقف</a>.</p>
 </div>
 <h2 id="spacing-customization"><span lang="en">Spacing customization</span><span lang="ar">تخصيص المسافات</span></h2>
 <p lang="en">Override the tokens to change the density of everything that uses them. Because spacing is theme-independent, one <code>:root</code> block is enough:</p>

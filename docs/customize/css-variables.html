@@ -52,8 +52,8 @@
 <tr><td><span lang="en">A <code>-subtle</code> suffix is a tinted background; <code>-hover</code> is a hover state; <code>on-</code> is content placed on a color.</span><span lang="ar">اللاحقة <code>-subtle</code> خلفية خفيفة؛ و<code>-hover</code> حالة التمرير؛ و<code>on-</code> محتوى فوق لون.</span></td><td><code>--bui-color-primary-subtle</code>, <code>--bui-color-on-primary</code></td></tr>
 <tr><td><span lang="en">Names describe purpose, not appearance, so values can change per theme.</span><span lang="ar">الأسماء تصف الغرض لا المظهر، فتتغير القيم حسب الثيم.</span></td><td><span lang="en"><code>--bui-color-text</code>, not <code>-black</code></span><span lang="ar"><code>--bui-color-text</code> وليس <code>-black</code></span></td></tr>
 </tbody></table></div>
-<p lang="en">Class names follow the same idea with the prefix <code>bui-</code>. No component class exists yet, and the <code>BUI</code> JavaScript namespace does not exist yet.</p>
-<p lang="ar">تتبع أسماء الأصناف الفكرة نفسها بالبادئة <code>bui-</code>. لا يوجد أي صنف مكوّن بعد، ومساحة الاسم <code>BUI</code> في جافاسكربت غير موجودة بعد.</p>
+<p lang="en">Class names follow the same idea with the prefix <code>bui-</code>. The only classes that exist are the layout classes (<code>bui-container</code>, <code>bui-row</code>, <code>bui-col-*</code> and the utilities); no component class exists yet, and the <code>BUI</code> JavaScript namespace does not exist yet.</p>
+<p lang="ar">تتبع أسماء الأصناف الفكرة نفسها بالبادئة <code>bui-</code>. والأصناف الموجودة فقط هي أصناف التخطيط (<code>bui-container</code> و<code>bui-row</code> و<code>bui-col-*</code> والأدوات)؛ ولا يوجد أي صنف مكوّن بعد، ومساحة الاسم <code>BUI</code> في جافاسكربت غير موجودة بعد.</p>
 <h2 id="complete-list"><span lang="en">All implemented variables</span><span lang="ar">كل المتغيرات المنفَّذة</span></h2>
 <p lang="en">There are <strong>58</strong> variables in <code>assets/css/baset-ui.css</code>. This index is generated from that file when the page is built.</p>
 <p lang="ar">يوجد <strong>58</strong> متغيرًا في <code>assets/css/baset-ui.css</code>. هذا الفهرس مولَّد من ذلك الملف عند بناء الصفحة.</p>
@@ -81,9 +81,25 @@
 </tbody></table></div>
 <div class="docs-callout docs-callout--info" role="note">
 <p class="docs-callout__title"><span lang="en">Not variables</span><span lang="ar">ليست متغيرات</span></p>
-<p lang="en">Breakpoints, a z-index scale, a secondary color, container widths, grid columns and component variables are <strong>not</strong> defined. They are listed on the Layout pages and on Colors.</p>
-<p lang="ar">نقاط التوقف ومقياس z-index واللون الثانوي وعروض الحاويات وأعمدة الشبكة ومتغيرات المكونات <strong>غير</strong> معرَّفة. وهي مذكورة في صفحات Layout وصفحة الألوان.</p>
+<p lang="en">Breakpoints (they cannot be variables), a z-index scale, a secondary color, container widths, grid column counts and component variables are <strong>not</strong> tokens. The layout stylesheet declares two local variables, <code>--bui-gutter-x</code> and <code>--bui-gutter-y</code>, described in the next section.</p>
+<p lang="ar">نقاط التوقف (لا يمكن أن تكون متغيرات) ومقياس z-index واللون الثانوي وعروض الحاويات وعدد أعمدة الشبكة ومتغيرات المكونات <strong>ليست</strong> tokens. ويعلن ملف التخطيط متغيرين محليين هما <code>--bui-gutter-x</code> و<code>--bui-gutter-y</code> يوضحهما القسم التالي.</p>
 </div>
+<h3 id="layout-variables"><span lang="en">Layout module variables</span><span lang="ar">متغيرات وحدة التخطيط</span></h3>
+<p lang="en"><code>baset-ui-layout.css</code> declares two local variables on <code>.bui-row</code>. They are not on <code>:root</code> and are not tokens, so they are not in the table above.</p>
+<p lang="ar">يعلن <code>baset-ui-layout.css</code> متغيرين محليين على <code>.bui-row</code>. وليسا على <code>:root</code> ولا يُعدّان tokens، لذا ليسا في الجدول أعلاه.</p>
+<div class="docs-table-wrap">
+<table>
+<thead><tr>
+<th scope="col"><span lang="en">Variable</span><span lang="ar">المتغير</span></th>
+<th scope="col"><span lang="en">Default</span><span lang="ar">الافتراضي</span></th>
+<th scope="col"><span lang="en">Set by</span><span lang="ar">يُضبط بواسطة</span></th>
+</tr></thead>
+<tbody>
+<tr><td><code>--bui-gutter-x</code></td><td><code>var(--bui-space-6)</code></td><td><code>bui-g-*</code>, <code>bui-gx-*</code></td></tr>
+<tr><td><code>--bui-gutter-y</code></td><td><code>0rem</code></td><td><code>bui-g-*</code>, <code>bui-gy-*</code></td></tr>
+</tbody></table></div>
+<p lang="en">See <a href="../layout/grid-system.html#gutters">Grid System, Gutters</a>.</p>
+<p lang="ar">راجع <a href="../layout/grid-system.html#gutters">نظام الشبكة، المسافات بين الأعمدة</a>.</p>
 <h2 id="custom-overrides"><span lang="en">Custom overrides</span><span lang="ar">التعديلات المخصصة</span></h2>
 <div class="docs-table-wrap">
 <table>

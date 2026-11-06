@@ -4,10 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Grid System · Baset UI</title>
-<meta name="description" content="Grid status and native CSS Grid patterns.">
+<meta name="description" content="The 12-column responsive grid: containers, rows, columns, gutters, alignment, offset and order.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230f766e'/%3E%3Crect x='7' y='8' width='18' height='3.6' rx='1.8' fill='%23fff'/%3E%3Crect x='7' y='14.2' width='12' height='3.6' rx='1.8' fill='%23fff'/%3E%3Crect x='7' y='20.4' width='15' height='3.6' rx='1.8' fill='%23fff'/%3E%3C/svg%3E">
 <script src="../assets/js/init.js"></script>
 <link rel="stylesheet" href="../../assets/css/baset-ui.css">
+<link rel="stylesheet" href="../../assets/css/baset-ui-layout.css">
 <link rel="stylesheet" href="../assets/css/docs.css">
 </head>
 <body>
@@ -27,79 +28,610 @@
 
 </noscript>
 <h1><span lang="en">Grid System</span><span lang="ar">نظام الشبكة</span></h1>
-<p class="docs-lead" lang="en">Baset UI has no grid system (no 12-column grid, no row or column classes). Native CSS Grid already solves most layouts; this page shows how to use it with the tokens.</p>
-<p class="docs-lead" lang="ar">لا يوجد في Baset UI نظام شبكة (لا شبكة 12 عمودًا ولا أصناف صفوف أو أعمدة). وCSS Grid الأصلية تحلّ معظم التخطيطات؛ وتعرض هذه الصفحة كيف تستخدمها مع الـ tokens.</p>
-<div class="docs-callout docs-callout--warning" role="note">
-<p class="docs-callout__title"><span lang="en">No layout system exists yet</span><span lang="ar">لا يوجد نظام تخطيط بعد</span></p>
-<p lang="en">Baset UI currently ships design tokens only (<code>assets/css/baset-ui.css</code>). There are no <code>bui-</code> layout classes, no breakpoints and no JavaScript. This page documents what is true today. Examples that use <code>display</code>, <code>flex</code> or <code>grid</code> are plain CSS that you write yourself with the tokens; the class names in them belong to your code, not to Baset UI.</p>
-<p lang="ar">تشحن Baset UI اليوم Design Tokens فقط (<code>assets/css/baset-ui.css</code>). لا توجد أصناف تخطيط بالبادئة <code>bui-</code> ولا نقاط توقف ولا جافاسكربت. توثّق هذه الصفحة ما هو صحيح اليوم. الأمثلة التي تستخدم <code>display</code> أو <code>flex</code> أو <code>grid</code> هي CSS عادي تكتبه أنت بالـ tokens؛ وأسماء الأصناف فيها تخص شيفرتك وليست من Baset UI.</p>
+<p class="docs-lead" lang="en">A mobile-first, 12-column layout system made of containers, rows and columns, with responsive classes for seven breakpoints, gutters tied to the spacing tokens, and the utilities that complete it. It is plain CSS: no JavaScript and no build step.</p>
+<p class="docs-lead" lang="ar">نظام تخطيط mobile-first من 12 عمودًا يتكوّن من حاويات وصفوف وأعمدة، بأصناف متجاوبة لسبع نقاط توقف، ومسافات مرتبطة بـ tokens المسافات، والأدوات التي تُكمله. هو CSS خالص: بلا جافاسكربت ولا خطوة بناء.</p>
+<h2 id="introduction"><span lang="en">Introduction</span><span lang="ar">مقدمة</span></h2>
+<div class="docs-callout docs-callout--info" role="note">
+<p class="docs-callout__title"><span lang="en">Files you need</span><span lang="ar">الملفات التي تحتاجها</span></p>
+<p lang="en">Load both stylesheets: <code>assets/css/baset-ui.css</code> (the tokens; the layout uses its <code>--bui-space-*</code> values) and <code>assets/css/baset-ui-layout.css</code>. The layout file has no JavaScript, no colors, no reset and no <code>!important</code>.</p>
+<p lang="ar">حمّل ملفَّي الأنماط: <code>assets/css/baset-ui.css</code> (الـ tokens؛ فالتخطيط يستخدم قيم <code>--bui-space-*</code>) و<code>assets/css/baset-ui-layout.css</code>. ملف التخطيط بلا جافاسكربت ولا ألوان ولا reset ولا <code>!important</code>.</p>
 </div>
+<p lang="en">The system has three layers that you nest: a <strong>container</strong> centers the content and limits its width, a <strong>row</strong> holds the columns and creates the gutters, and <strong>columns</strong> take a share of the 12 available columns.</p>
+<p lang="ar">يتكوّن النظام من ثلاث طبقات تضعها داخل بعضها: <strong>الحاوية</strong> تُوسِّط المحتوى وتحدّ عرضه، و<strong>الصف</strong> يحمل الأعمدة وينشئ المسافات بينها، و<strong>الأعمدة</strong> تأخذ حصة من الأعمدة الاثني عشر.</p>
+<pre class="docs-code" data-lang="html"><code>&lt;link rel="stylesheet" href="assets/css/baset-ui.css"&gt;
+&lt;link rel="stylesheet" href="assets/css/baset-ui-layout.css"&gt;
+
+&lt;div class="bui-container"&gt;
+  &lt;div class="bui-row"&gt;
+    &lt;div class="bui-col-12 bui-col-md-6"&gt;Half width from 768px&lt;/div&gt;
+    &lt;div class="bui-col-12 bui-col-md-6"&gt;Half width from 768px&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<h3 id="how-it-works"><span lang="en">How it works</span><span lang="ar">كيف يعمل</span></h3>
+<ul>
+  <li><span lang="en">The row is a flex container that wraps. Its <strong>direct children</strong> are the columns: each gets side padding equal to half the gutter, and the row pulls itself out by the same amount with a negative inline margin so the content lines up with the container.</span><span lang="ar">الصف حاوية flex تلتف عناصرها. و<strong>أبناؤه المباشرون</strong> هم الأعمدة: يأخذ كل منهم حشوة جانبية بنصف المسافة، ويسحب الصف نفسه بالمقدار ذاته بهامش سالب فيتحاذى المحتوى مع الحاوية.</span></li>
+  <li><span lang="en">Column width is a percentage of the row: <code>bui-col-6</code> is 50%, <code>bui-col-4</code> is 33.333333%. If a row holds more than 12 columns, the extra ones wrap to a new line.</span><span lang="ar">عرض العمود نسبة من الصف: <code>bui-col-6</code> يساوي 50% و<code>bui-col-4</code> يساوي 33.333333%. وإن زادت أعمدة الصف عن 12 التفّت الزائدة إلى سطر جديد.</span></li>
+  <li><span lang="en">Any element works as a column because the gutter rule targets <code>.bui-row &gt; *</code>. An element without a <code>bui-col*</code> class simply takes the full width.</span><span lang="ar">يصلح أي عنصر عمودًا لأن قاعدة المسافات تستهدف <code>.bui-row &gt; *</code>. والعنصر بلا صنف <code>bui-col*</code> يأخذ العرض كاملًا.</span></li>
+  <li><span lang="en">All spacing is logical (<code>margin-inline</code>, <code>padding-inline</code>), so the same CSS works in LTR and RTL. The first column starts at the inline-start side.</span><span lang="ar">كل المسافات منطقية (<code>margin-inline</code> و<code>padding-inline</code>)، فيعمل CSS نفسه في LTR وRTL. ويبدأ العمود الأول من جهة البداية.</span></li>
+  <li><span lang="en">The layout file contains no colors. In the examples on this page the columns are tinted only so you can see them; that tint comes from the documentation site, not from Baset UI.</span><span lang="ar">لا يحتوي ملف التخطيط أي ألوان. وتلوين الأعمدة في أمثلة هذه الصفحة لتراها فقط؛ وهو من موقع التوثيق وليس من Baset UI.</span></li>
+</ul>
+<div class="docs-callout docs-callout--note" role="note">
+<p class="docs-callout__title"><span lang="en">About the live examples</span><span lang="ar">عن الأمثلة الحية</span></p>
+<p lang="en">Each example shows the exact markup that is rendered above it. In your own page, put the row inside a <code>bui-container</code> or <code>bui-container-fluid</code>: the container's side padding is what keeps the row from touching the screen edge. The examples here sit inside a box with the same padding. The "Responsive" examples use a resizable preview frame, so you can see every breakpoint without resizing your window.</p>
+<p lang="ar">يعرض كل مثال الكود الفعلي الذي رُسم فوقه. في صفحتك ضع الصف داخل <code>bui-container</code> أو <code>bui-container-fluid</code>: حشوة الحاوية الجانبية هي ما يمنع الصف من ملامسة حافة الشاشة. وأمثلة هذه الصفحة داخل صندوق له الحشوة نفسها. وأمثلة "المتجاوب" تستخدم إطار معاينة قابلًا لتغيير الحجم، فترى كل نقطة توقف دون تغيير حجم نافذتك.</p>
+</div>
+<h2 id="containers"><span lang="en">Container and container fluid</span><span lang="ar">الحاوية والحاوية السائلة</span></h2>
+<div class="docs-table-wrap">
+<table>
+<thead><tr>
+<th scope="col"><span lang="en">Class</span><span lang="ar">الصنف</span></th>
+<th scope="col"><span lang="en">Behavior</span><span lang="ar">السلوك</span></th>
+</tr></thead>
+<tbody>
+<tr><td><code>bui-container</code></td><td><span lang="en">Full width below 576px. From <code>sm</code> up it has a maximum width that grows with each breakpoint (table below). Always centered.</span><span lang="ar">عرض كامل تحت 576px. ومن <code>sm</code> فصاعدًا لها أقصى عرض يزداد مع كل نقطة توقف (الجدول أدناه). وتتوسط دائمًا.</span></td></tr>
+<tr><td><code>bui-container-fluid</code></td><td><span lang="en">Always 100% wide, at every breakpoint.</span><span lang="ar">بعرض 100% دائمًا في كل نقاط التوقف.</span></td></tr>
+</tbody></table></div>
+<p lang="en">Both have <code>1.5rem</code> of side padding (<code>--bui-space-6</code>). Maximum widths include that padding.</p>
+<p lang="ar">لكليهما حشوة جانبية <code>1.5rem</code> (‏<code>--bui-space-6</code>). وأقصى العروض تشمل هذه الحشوة.</p>
+<div class="docs-table-wrap">
+<table>
+<thead><tr>
+<th scope="col"><span lang="en">Breakpoint</span><span lang="ar">نقطة التوقف</span></th>
+<th scope="col"><span lang="en"><code>bui-container</code> maximum width</span><span lang="ar">أقصى عرض لـ <code>bui-container</code></span></th>
+</tr></thead>
+<tbody>
+<tr><td><code>xs</code> (480px)</td><td><span lang="en">none, still fluid</span><span lang="ar">لا شيء، ما زالت سائلة</span></td></tr>
+<tr><td><code>sm</code> (576px)</td><td>540px</td></tr>
+<tr><td><code>md</code> (768px)</td><td>720px</td></tr>
+<tr><td><code>lg</code> (992px)</td><td>960px</td></tr>
+<tr><td><code>xl</code> (1200px)</td><td>1140px</td></tr>
+<tr><td><code>xxl</code> (1600px)</td><td>1500px</td></tr>
+<tr><td><code>xxxl</code> (1920px)</td><td>1800px</td></tr>
+</tbody></table></div>
+<pre class="docs-code" id="vp-src-2" data-lang="html"><code>&lt;div class="bui-container"&gt;Container: centered, capped by breakpoint&lt;/div&gt;
+&lt;div class="bui-container-fluid"&gt;Container fluid: always full width&lt;/div&gt;
+</code></pre>
+<p lang="en">Choose a width: the preview is a separate frame, so the breakpoints react to its width, not to your window. The markup is rendered as is.</p>
+<p lang="ar">اختر عرضًا: المعاينة إطار منفصل، فتستجيب نقاط التوقف لعرضه وليس لعرض نافذتك. يُعرض الكود كما هو.</p>
+<div class="docs-viewport" data-viewport data-source="vp-src-2" data-wrap="none"><div class="docs-viewport__bar" role="group" aria-label="Preview width in pixels"><button type="button" data-w="0" aria-pressed="false"><span lang="en">Fit</span><span lang="ar">ملء العرض</span></button><button type="button" data-w="320" aria-pressed="false">320</button><button type="button" data-w="480" aria-pressed="false">480</button><button type="button" data-w="576" aria-pressed="false">576</button><button type="button" data-w="768" aria-pressed="false">768</button><button type="button" data-w="992" aria-pressed="false">992</button><button type="button" data-w="1200" aria-pressed="false">1200</button><span class="docs-viewport__info" aria-live="polite"><span lang="en">Preview width <b data-info-w></b> · breakpoint <b data-info-bp></b></span><span lang="ar">عرض المعاينة <b data-info-w></b> · نقطة التوقف <b data-info-bp></b></span></span></div><div class="docs-viewport__stage"><iframe class="docs-viewport__frame" title="Responsive preview"></iframe></div></div>
+<p lang="en">More detail is on the <a href="containers.html">Containers</a> page.</p>
+<p lang="ar">مزيد من التفاصيل في صفحة <a href="containers.html">الحاويات</a>.</p>
+<h2 id="breakpoints"><span lang="en">Breakpoints</span><span lang="ar">نقاط التوقف</span></h2>
+<p lang="en">Seven breakpoints, all <code>min-width</code>, mobile first. Below 480px there is no query: those are the base styles and the starting point of every layout.</p>
+<p lang="ar">سبع نقاط توقف كلها <code>min-width</code> بأسلوب mobile-first. وتحت 480px لا يوجد استعلام: تلك هي الأنماط الأساسية ونقطة بداية كل تخطيط.</p>
+<div class="docs-table-wrap">
+<table>
+<thead><tr>
+<th scope="col"><span lang="en">Breakpoint</span><span lang="ar">نقطة التوقف</span></th>
+<th scope="col"><span lang="en">Width</span><span lang="ar">العرض</span></th>
+<th scope="col"><span lang="en">Class infix</span><span lang="ar">لاحقة الصنف</span></th>
+<th scope="col"><span lang="en">Media query</span><span lang="ar">استعلام الوسائط</span></th>
+</tr></thead>
+<tbody>
+<tr><td><span lang="en"><em>(none)</em></span><span lang="ar"><em>(بدون)</em></span></td><td><span lang="en">below 480px</span><span lang="ar">أقل من 480px</span></td><td>—</td><td><span lang="en">base styles, no query</span><span lang="ar">الأنماط الأساسية بلا استعلام</span></td></tr>
+<tr><td><code>xs</code></td><td>480px</td><td><code>-xs</code></td><td><code>@media (min-width: 480px)</code></td></tr>
+<tr><td><code>sm</code></td><td>576px</td><td><code>-sm</code></td><td><code>@media (min-width: 576px)</code></td></tr>
+<tr><td><code>md</code></td><td>768px</td><td><code>-md</code></td><td><code>@media (min-width: 768px)</code></td></tr>
+<tr><td><code>lg</code></td><td>992px</td><td><code>-lg</code></td><td><code>@media (min-width: 992px)</code></td></tr>
+<tr><td><code>xl</code></td><td>1200px</td><td><code>-xl</code></td><td><code>@media (min-width: 1200px)</code></td></tr>
+<tr><td><code>xxl</code></td><td>1600px</td><td><code>-xxl</code></td><td><code>@media (min-width: 1600px)</code></td></tr>
+<tr><td><code>xxxl</code></td><td>1920px</td><td><code>-xxxl</code></td><td><code>@media (min-width: 1920px)</code></td></tr>
+</tbody></table></div>
+<p lang="en">A class with a breakpoint infix applies <strong>from that width upward</strong>. See the <a href="breakpoints.html">Breakpoints</a> page for how the values are stored and how to change them.</p>
+<p lang="ar">الصنف ذو لاحقة نقطة التوقف يُطبَّق <strong>من ذلك العرض فصاعدًا</strong>. راجع صفحة <a href="breakpoints.html">نقاط التوقف</a> لمعرفة كيف تُخزَّن القيم وكيف تُغيَّر.</p>
+<div class="docs-demo"><span class="docs-demo__label"><span lang="en">Live: your window right now</span><span lang="ar">عرض حي: نافذتك الآن</span></span><span class="docs-readout" id="viewport-readout">—</span></div>
+<h2 id="twelve-column"><span lang="en">12-column grid</span><span lang="ar">شبكة الـ 12 عمودًا</span></h2>
+<p lang="en">Use <code>bui-col-1</code> to <code>bui-col-12</code>. The numbers in a row should add up to 12 (or less).</p>
+<p lang="ar">استخدم <code>bui-col-1</code> حتى <code>bui-col-12</code>. ويفضّل أن يكون مجموع الأرقام في الصف 12 (أو أقل).</p>
+<div class="docs-demo docs-gridlive"><span class="docs-demo__label"><span lang="en">Twelve equal columns</span><span lang="ar">اثنا عشر عمودًا متساويًا</span></span>
+<div class="bui-row">
+  <div class="bui-col-1">1</div>
+  <div class="bui-col-1">2</div>
+  <div class="bui-col-1">3</div>
+  <div class="bui-col-1">4</div>
+  <div class="bui-col-1">5</div>
+  <div class="bui-col-1">6</div>
+  <div class="bui-col-1">7</div>
+  <div class="bui-col-1">8</div>
+  <div class="bui-col-1">9</div>
+  <div class="bui-col-1">10</div>
+  <div class="bui-col-1">11</div>
+  <div class="bui-col-1">12</div>
+</div>
+</div>
+<pre class="docs-code" data-lang="html"><code>&lt;div class="bui-row"&gt;
+  &lt;div class="bui-col-1"&gt;1&lt;/div&gt;
+  &lt;div class="bui-col-1"&gt;2&lt;/div&gt;
+  &lt;div class="bui-col-1"&gt;3&lt;/div&gt;
+  &lt;div class="bui-col-1"&gt;4&lt;/div&gt;
+  &lt;div class="bui-col-1"&gt;5&lt;/div&gt;
+  &lt;div class="bui-col-1"&gt;6&lt;/div&gt;
+  &lt;div class="bui-col-1"&gt;7&lt;/div&gt;
+  &lt;div class="bui-col-1"&gt;8&lt;/div&gt;
+  &lt;div class="bui-col-1"&gt;9&lt;/div&gt;
+  &lt;div class="bui-col-1"&gt;10&lt;/div&gt;
+  &lt;div class="bui-col-1"&gt;11&lt;/div&gt;
+  &lt;div class="bui-col-1"&gt;12&lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<div class="docs-demo docs-gridlive"><span class="docs-demo__label"><span lang="en">Two halves: 6 / 6</span><span lang="ar">نصفان: 6 / 6</span></span>
+<div class="bui-row">
+  <div class="bui-col-6">6</div>
+  <div class="bui-col-6">6</div>
+</div>
+</div>
+<pre class="docs-code" data-lang="html"><code>&lt;div class="bui-row"&gt;
+  &lt;div class="bui-col-6"&gt;6&lt;/div&gt;
+  &lt;div class="bui-col-6"&gt;6&lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<div class="docs-demo docs-gridlive"><span class="docs-demo__label"><span lang="en">Three thirds: 4 / 4 / 4</span><span lang="ar">ثلاثة أثلاث: 4 / 4 / 4</span></span>
+<div class="bui-row">
+  <div class="bui-col-4">4</div>
+  <div class="bui-col-4">4</div>
+  <div class="bui-col-4">4</div>
+</div>
+</div>
+<pre class="docs-code" data-lang="html"><code>&lt;div class="bui-row"&gt;
+  &lt;div class="bui-col-4"&gt;4&lt;/div&gt;
+  &lt;div class="bui-col-4"&gt;4&lt;/div&gt;
+  &lt;div class="bui-col-4"&gt;4&lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<div class="docs-demo docs-gridlive"><span class="docs-demo__label"><span lang="en">Side, main, side: 3 / 6 / 3</span><span lang="ar">جانب ومحتوى وجانب: 3 / 6 / 3</span></span>
+<div class="bui-row">
+  <div class="bui-col-3">3</div>
+  <div class="bui-col-6">6</div>
+  <div class="bui-col-3">3</div>
+</div>
+</div>
+<pre class="docs-code" data-lang="html"><code>&lt;div class="bui-row"&gt;
+  &lt;div class="bui-col-3"&gt;3&lt;/div&gt;
+  &lt;div class="bui-col-6"&gt;6&lt;/div&gt;
+  &lt;div class="bui-col-3"&gt;3&lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<p lang="en">On narrow screens a plain <code>bui-col-6</code> stays 50% wide, because it has no breakpoint. To stack columns on small screens, start with <code>bui-col-12</code> and add a larger width at a breakpoint, as in the next section.</p>
+<p lang="ar">على الشاشات الضيقة يبقى <code>bui-col-6</code> بعرض 50% لأنه بلا نقطة توقف. ولتكديس الأعمدة على الشاشات الصغيرة ابدأ بـ <code>bui-col-12</code> وأضف عرضًا أكبر عند نقطة توقف، كما في القسم التالي.</p>
+<h2 id="responsive-columns"><span lang="en">Responsive columns</span><span lang="ar">أعمدة متجاوبة</span></h2>
+<p lang="en">Add a breakpoint between <code>col</code> and the number: <code>bui-col-{breakpoint}-{1..12}</code>. Classes combine, and the largest matching breakpoint wins, because larger breakpoints are written later in the stylesheet.</p>
+<p lang="ar">أضف نقطة التوقف بين <code>col</code> والرقم: <code>bui-col-{نقطة التوقف}-{1..12}</code>. وتجتمع الأصناف ويفوز أكبر نقطة توقف مطابقة، لأن النقاط الأكبر مكتوبة لاحقًا في ملف الأنماط.</p>
+<div class="docs-table-wrap">
+<table>
+<thead><tr>
+<th scope="col"><span lang="en">Classes</span><span lang="ar">الأصناف</span></th>
+<th scope="col"><span lang="en">Below 480px</span><span lang="ar">تحت 480px</span></th>
+<th scope="col"><span lang="en">480–767px</span><span lang="ar">480–767px</span></th>
+<th scope="col"><span lang="en">768–991px</span><span lang="ar">768–991px</span></th>
+<th scope="col"><span lang="en">992px and up</span><span lang="ar">992px فأكثر</span></th>
+</tr></thead>
+<tbody>
+<tr><td><code>bui-col-12 bui-col-md-6 bui-col-lg-4</code></td><td>12/12</td><td>12/12</td><td>6/12</td><td>4/12</td></tr>
+<tr><td><code>bui-col-12 bui-col-xs-6 bui-col-md-4 bui-col-lg-3</code></td><td>12/12</td><td>6/12</td><td>4/12</td><td>3/12</td></tr>
+</tbody></table></div>
+<pre class="docs-code" id="vp-src-7" data-lang="html"><code>&lt;div class="bui-row"&gt;
+  &lt;div class="bui-col-12 bui-col-xs-6 bui-col-md-4 bui-col-lg-3"&gt;1&lt;/div&gt;
+  &lt;div class="bui-col-12 bui-col-xs-6 bui-col-md-4 bui-col-lg-3"&gt;2&lt;/div&gt;
+  &lt;div class="bui-col-12 bui-col-xs-6 bui-col-md-4 bui-col-lg-3"&gt;3&lt;/div&gt;
+  &lt;div class="bui-col-12 bui-col-xs-6 bui-col-md-4 bui-col-lg-3"&gt;4&lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<p lang="en">Choose a width: the preview is a separate frame, so the breakpoints react to its width, not to your window. The preview wraps this markup in a <code>bui-container</code>.</p>
+<p lang="ar">اختر عرضًا: المعاينة إطار منفصل، فتستجيب نقاط التوقف لعرضه وليس لعرض نافذتك. تغلّف المعاينة هذا الكود بـ <code>bui-container</code>.</p>
+<div class="docs-viewport" data-viewport data-source="vp-src-7"><div class="docs-viewport__bar" role="group" aria-label="Preview width in pixels"><button type="button" data-w="0" aria-pressed="false"><span lang="en">Fit</span><span lang="ar">ملء العرض</span></button><button type="button" data-w="320" aria-pressed="false">320</button><button type="button" data-w="480" aria-pressed="false">480</button><button type="button" data-w="576" aria-pressed="false">576</button><button type="button" data-w="768" aria-pressed="false">768</button><button type="button" data-w="992" aria-pressed="false">992</button><button type="button" data-w="1200" aria-pressed="false">1200</button><span class="docs-viewport__info" aria-live="polite"><span lang="en">Preview width <b data-info-w></b> · breakpoint <b data-info-bp></b></span><span lang="ar">عرض المعاينة <b data-info-w></b> · نقطة التوقف <b data-info-bp></b></span></span></div><div class="docs-viewport__stage"><iframe class="docs-viewport__frame" title="Responsive preview"></iframe></div></div>
+<h2 id="gutters"><span lang="en">Gutters</span><span lang="ar">المسافات بين الأعمدة</span></h2>
+<p lang="en">Put a gutter class on the <strong>row</strong>. <code>bui-g-*</code> sets both directions, <code>bui-gx-*</code> only the horizontal gutter, <code>bui-gy-*</code> only the vertical one. The steps are tied to the existing spacing tokens:</p>
+<p lang="ar">ضع صنف المسافات على <strong>الصف</strong>. يضبط <code>bui-g-*</code> الاتجاهين، و<code>bui-gx-*</code> المسافة الأفقية فقط، و<code>bui-gy-*</code> الرأسية فقط. والدرجات مرتبطة بـ tokens المسافات الموجودة:</p>
+<div class="docs-table-wrap">
+<table>
+<thead><tr>
+<th scope="col"><span lang="en">Step</span><span lang="ar">الدرجة</span></th>
+<th scope="col"><span lang="en">Token</span><span lang="ar">الـ token</span></th>
+<th scope="col"><span lang="en">Size</span><span lang="ar">المقدار</span></th>
+</tr></thead>
+<tbody>
+<tr><td><code>0</code></td><td><span lang="en">none</span><span lang="ar">لا شيء</span></td><td>0</td></tr>
+<tr><td><code>1</code></td><td><code>--bui-space-1</code></td><td>0.25rem (4px)</td></tr>
+<tr><td><code>2</code></td><td><code>--bui-space-2</code></td><td>0.5rem (8px)</td></tr>
+<tr><td><code>3</code></td><td><code>--bui-space-4</code></td><td>1rem (16px)</td></tr>
+<tr><td><code>4</code></td><td><code>--bui-space-6</code></td><td>1.5rem (24px)</td></tr>
+<tr><td><code>5</code></td><td><code>--bui-space-12</code></td><td>3rem (48px)</td></tr>
+<tr><td><span lang="en">default (no class)</span><span lang="ar">الافتراضي (بلا صنف)</span></td><td><code>--bui-space-6</code></td><td><span lang="en">1.5rem horizontal, 0 vertical</span><span lang="ar">1.5rem أفقيًا و0 رأسيًا</span></td></tr>
+</tbody></table></div>
+<p lang="en">Under the hood a gutter class only sets two local variables on the row, <code>--bui-gutter-x</code> and <code>--bui-gutter-y</code>. You may set them yourself, in your own class, with any length.</p>
+<p lang="ar">في الداخل يضبط صنف المسافات متغيرين محليين على الصف فقط هما <code>--bui-gutter-x</code> و<code>--bui-gutter-y</code>. ويمكنك ضبطهما بنفسك في صنف خاص بك بأي طول.</p>
+<div class="docs-demo docs-gridlive"><span class="docs-demo__label"><span lang="en">Gutter variations: 0, 3 and 5</span><span lang="ar">تنويعات المسافات: 0 و3 و5</span></span>
+<div class="bui-row bui-g-0">
+  <div class="bui-col-4">g-0</div>
+  <div class="bui-col-4">g-0</div>
+  <div class="bui-col-4">g-0</div>
+</div>
+<div class="bui-row bui-g-3">
+  <div class="bui-col-4">g-3</div>
+  <div class="bui-col-4">g-3</div>
+  <div class="bui-col-4">g-3</div>
+</div>
+<div class="bui-row bui-g-5">
+  <div class="bui-col-4">g-5</div>
+  <div class="bui-col-4">g-5</div>
+  <div class="bui-col-4">g-5</div>
+</div>
+</div>
+<pre class="docs-code" data-lang="html"><code>&lt;div class="bui-row bui-g-0"&gt;
+  &lt;div class="bui-col-4"&gt;g-0&lt;/div&gt;
+  &lt;div class="bui-col-4"&gt;g-0&lt;/div&gt;
+  &lt;div class="bui-col-4"&gt;g-0&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="bui-row bui-g-3"&gt;
+  &lt;div class="bui-col-4"&gt;g-3&lt;/div&gt;
+  &lt;div class="bui-col-4"&gt;g-3&lt;/div&gt;
+  &lt;div class="bui-col-4"&gt;g-3&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="bui-row bui-g-5"&gt;
+  &lt;div class="bui-col-4"&gt;g-5&lt;/div&gt;
+  &lt;div class="bui-col-4"&gt;g-5&lt;/div&gt;
+  &lt;div class="bui-col-4"&gt;g-5&lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<div class="docs-demo docs-gridlive"><span class="docs-demo__label"><span lang="en">Horizontal and vertical gutters set separately</span><span lang="ar">مسافة أفقية ورأسية بقيم مستقلة</span></span>
+<div class="bui-row bui-gx-4 bui-gy-1">
+  <div class="bui-col-6">gx-4 gy-1</div>
+  <div class="bui-col-6">gx-4 gy-1</div>
+  <div class="bui-col-6">gx-4 gy-1</div>
+  <div class="bui-col-6">gx-4 gy-1</div>
+</div>
+</div>
+<pre class="docs-code" data-lang="html"><code>&lt;div class="bui-row bui-gx-4 bui-gy-1"&gt;
+  &lt;div class="bui-col-6"&gt;gx-4 gy-1&lt;/div&gt;
+  &lt;div class="bui-col-6"&gt;gx-4 gy-1&lt;/div&gt;
+  &lt;div class="bui-col-6"&gt;gx-4 gy-1&lt;/div&gt;
+  &lt;div class="bui-col-6"&gt;gx-4 gy-1&lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<div class="docs-callout docs-callout--note" role="note">
+<p class="docs-callout__title"><span lang="en">Gutters are not responsive</span><span lang="ar">المسافات ليست متجاوبة</span></p>
+<p lang="en">There are no classes such as <code>bui-g-md-3</code>. To change a gutter at a breakpoint, set <code>--bui-gutter-x</code> in your own media query.</p>
+<p lang="ar">لا توجد أصناف مثل <code>bui-g-md-3</code>. لتغيير المسافة عند نقطة توقف اضبط <code>--bui-gutter-x</code> في استعلام وسائط خاص بك.</p>
+</div>
+<h2 id="auto-layout"><span lang="en">Auto layout</span><span lang="ar">التخطيط التلقائي</span></h2>
+<p lang="en"><code>bui-col</code> shares the free space equally. <code>bui-col-auto</code> is only as wide as its content. They also exist per breakpoint: <code>bui-col-md</code>, <code>bui-col-md-auto</code>.</p>
+<p lang="ar">يوزّع <code>bui-col</code> المساحة الحرة بالتساوي. و<code>bui-col-auto</code> بعرض محتواه فقط. وهما موجودان لكل نقطة توقف أيضًا: <code>bui-col-md</code> و<code>bui-col-md-auto</code>.</p>
+<div class="docs-demo docs-gridlive"><span class="docs-demo__label"><span lang="en">Equal columns, a content-sized column, and a fixed column between flexible ones</span><span lang="ar">أعمدة متساوية، وعمود بعرض محتواه، وعمود ثابت بين أعمدة مرنة</span></span>
+<div class="bui-row">
+  <div class="bui-col">col</div>
+  <div class="bui-col">col</div>
+  <div class="bui-col">col</div>
+</div>
+<div class="bui-row">
+  <div class="bui-col">col</div>
+  <div class="bui-col-auto">auto: fits its content</div>
+  <div class="bui-col">col</div>
+</div>
+<div class="bui-row">
+  <div class="bui-col">col</div>
+  <div class="bui-col-6">col-6</div>
+  <div class="bui-col">col</div>
+</div>
+</div>
+<pre class="docs-code" data-lang="html"><code>&lt;div class="bui-row"&gt;
+  &lt;div class="bui-col"&gt;col&lt;/div&gt;
+  &lt;div class="bui-col"&gt;col&lt;/div&gt;
+  &lt;div class="bui-col"&gt;col&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="bui-row"&gt;
+  &lt;div class="bui-col"&gt;col&lt;/div&gt;
+  &lt;div class="bui-col-auto"&gt;auto: fits its content&lt;/div&gt;
+  &lt;div class="bui-col"&gt;col&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="bui-row"&gt;
+  &lt;div class="bui-col"&gt;col&lt;/div&gt;
+  &lt;div class="bui-col-6"&gt;col-6&lt;/div&gt;
+  &lt;div class="bui-col"&gt;col&lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<h2 id="nesting"><span lang="en">Nesting</span><span lang="ar">التداخل</span></h2>
+<p lang="en">Put a new <code>bui-row</code> inside a column. The nested columns are measured against the parent column, and they have their own 12-column grid. Do not add a container inside.</p>
+<p lang="ar">ضع <code>bui-row</code> جديدًا داخل عمود. تُقاس الأعمدة المتداخلة نسبةً إلى العمود الأب، ولها شبكة 12 عمودًا خاصة بها. لا تضف حاوية بالداخل.</p>
+<div class="docs-demo docs-gridlive"><span class="docs-demo__label"><span lang="en">Nested grid</span><span lang="ar">شبكة متداخلة</span></span>
+<div class="bui-row">
+  <div class="bui-col-8">
+    Level 1: 8 of 12
+    <div class="bui-row">
+      <div class="bui-col-6">Level 2: 6 of 12</div>
+      <div class="bui-col-6">Level 2: 6 of 12</div>
+    </div>
+  </div>
+  <div class="bui-col-4">Level 1: 4 of 12</div>
+</div>
+</div>
+<pre class="docs-code" data-lang="html"><code>&lt;div class="bui-row"&gt;
+  &lt;div class="bui-col-8"&gt;
+    Level 1: 8 of 12
+    &lt;div class="bui-row"&gt;
+      &lt;div class="bui-col-6"&gt;Level 2: 6 of 12&lt;/div&gt;
+      &lt;div class="bui-col-6"&gt;Level 2: 6 of 12&lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="bui-col-4"&gt;Level 1: 4 of 12&lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<h2 id="alignment"><span lang="en">Row and column alignment</span><span lang="ar">محاذاة الصف والأعمدة</span></h2>
+<p lang="en">Alignment uses the flex utilities on the <strong>row</strong> (all columns) or on a <strong>column</strong> (<code>align-self</code>). The rows below have a fixed minimum height so the vertical alignment is visible.</p>
+<p lang="ar">تستخدم المحاذاة أدوات flex على <strong>الصف</strong> (كل الأعمدة) أو على <strong>عمود</strong> (‏<code>align-self</code>). وللصفوف أدناه ارتفاع أدنى ثابت لتظهر المحاذاة الرأسية.</p>
+<h3 id="align-vertical"><span lang="en">Vertical alignment</span><span lang="ar">المحاذاة الرأسية</span></h3>
+<div class="docs-demo docs-gridlive"><span class="docs-demo__label"><span lang="en">align-items on the row</span><span lang="ar">align-items على الصف</span></span>
+<div class="bui-row bui-align-items-start" style="min-block-size: 6rem">
+  <div class="bui-col-4">start</div>
+  <div class="bui-col-4">start</div>
+  <div class="bui-col-4">start</div>
+</div>
+<div class="bui-row bui-align-items-center" style="min-block-size: 6rem">
+  <div class="bui-col-4">center</div>
+  <div class="bui-col-4">center</div>
+  <div class="bui-col-4">center</div>
+</div>
+<div class="bui-row bui-align-items-end" style="min-block-size: 6rem">
+  <div class="bui-col-4">end</div>
+  <div class="bui-col-4">end</div>
+  <div class="bui-col-4">end</div>
+</div>
+</div>
+<pre class="docs-code" data-lang="html"><code>&lt;div class="bui-row bui-align-items-start" style="min-block-size: 6rem"&gt;
+  &lt;div class="bui-col-4"&gt;start&lt;/div&gt;
+  &lt;div class="bui-col-4"&gt;start&lt;/div&gt;
+  &lt;div class="bui-col-4"&gt;start&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="bui-row bui-align-items-center" style="min-block-size: 6rem"&gt;
+  &lt;div class="bui-col-4"&gt;center&lt;/div&gt;
+  &lt;div class="bui-col-4"&gt;center&lt;/div&gt;
+  &lt;div class="bui-col-4"&gt;center&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="bui-row bui-align-items-end" style="min-block-size: 6rem"&gt;
+  &lt;div class="bui-col-4"&gt;end&lt;/div&gt;
+  &lt;div class="bui-col-4"&gt;end&lt;/div&gt;
+  &lt;div class="bui-col-4"&gt;end&lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<div class="docs-demo docs-gridlive"><span class="docs-demo__label"><span lang="en">align-self on single columns</span><span lang="ar">align-self على أعمدة منفردة</span></span>
+<div class="bui-row" style="min-block-size: 8rem">
+  <div class="bui-col-4 bui-align-self-start">align-self-start</div>
+  <div class="bui-col-4 bui-align-self-center">align-self-center</div>
+  <div class="bui-col-4 bui-align-self-end">align-self-end</div>
+</div>
+</div>
+<pre class="docs-code" data-lang="html"><code>&lt;div class="bui-row" style="min-block-size: 8rem"&gt;
+  &lt;div class="bui-col-4 bui-align-self-start"&gt;align-self-start&lt;/div&gt;
+  &lt;div class="bui-col-4 bui-align-self-center"&gt;align-self-center&lt;/div&gt;
+  &lt;div class="bui-col-4 bui-align-self-end"&gt;align-self-end&lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<h3 id="align-horizontal"><span lang="en">Horizontal alignment</span><span lang="ar">المحاذاة الأفقية</span></h3>
+<div class="docs-demo docs-gridlive"><span class="docs-demo__label"><span lang="en">justify-content on the row. start and end follow the page direction.</span><span lang="ar">justify-content على الصف. وتتبع البداية والنهاية اتجاه الصفحة.</span></span>
+<div class="bui-row bui-justify-content-start">
+  <div class="bui-col-4">start</div>
+</div>
+<div class="bui-row bui-justify-content-center">
+  <div class="bui-col-4">center</div>
+</div>
+<div class="bui-row bui-justify-content-end">
+  <div class="bui-col-4">end</div>
+</div>
+<div class="bui-row bui-justify-content-between">
+  <div class="bui-col-3">between</div>
+  <div class="bui-col-3">between</div>
+</div>
+<div class="bui-row bui-justify-content-around">
+  <div class="bui-col-3">around</div>
+  <div class="bui-col-3">around</div>
+</div>
+</div>
+<pre class="docs-code" data-lang="html"><code>&lt;div class="bui-row bui-justify-content-start"&gt;
+  &lt;div class="bui-col-4"&gt;start&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="bui-row bui-justify-content-center"&gt;
+  &lt;div class="bui-col-4"&gt;center&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="bui-row bui-justify-content-end"&gt;
+  &lt;div class="bui-col-4"&gt;end&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="bui-row bui-justify-content-between"&gt;
+  &lt;div class="bui-col-3"&gt;between&lt;/div&gt;
+  &lt;div class="bui-col-3"&gt;between&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="bui-row bui-justify-content-around"&gt;
+  &lt;div class="bui-col-3"&gt;around&lt;/div&gt;
+  &lt;div class="bui-col-3"&gt;around&lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<h3 id="align-content"><span lang="en">Wrapped lines</span><span lang="ar">الأسطر الملتفّة</span></h3>
+<p lang="en"><code>bui-align-content-*</code> distributes whole lines when the row is taller than its content and its columns wrap onto several lines.</p>
+<p lang="ar">يوزّع <code>bui-align-content-*</code> الأسطر كاملةً عندما يكون الصف أطول من محتواه وتلتف أعمدته على عدة أسطر.</p>
+<div class="docs-demo docs-gridlive"><span class="docs-demo__label"><span lang="en">align-content-between</span><span lang="ar">align-content-between</span></span>
+<div class="bui-row bui-align-content-between" style="min-block-size: 11rem">
+  <div class="bui-col-6">1</div>
+  <div class="bui-col-6">2</div>
+  <div class="bui-col-6">3</div>
+  <div class="bui-col-6">4</div>
+</div>
+</div>
+<pre class="docs-code" data-lang="html"><code>&lt;div class="bui-row bui-align-content-between" style="min-block-size: 11rem"&gt;
+  &lt;div class="bui-col-6"&gt;1&lt;/div&gt;
+  &lt;div class="bui-col-6"&gt;2&lt;/div&gt;
+  &lt;div class="bui-col-6"&gt;3&lt;/div&gt;
+  &lt;div class="bui-col-6"&gt;4&lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<h2 id="offset-order"><span lang="en">Offset and order</span><span lang="ar">الإزاحة والترتيب</span></h2>
+<h3 id="offset"><span lang="en">Offset</span><span lang="ar">الإزاحة</span></h3>
+<p lang="en"><code>bui-offset-{0..11}</code> adds empty columns before an element, from the inline-start side. It follows the direction, so in RTL it pushes from the right. Responsive: <code>bui-offset-md-3</code>.</p>
+<p lang="ar">يضيف <code>bui-offset-{0..11}</code> أعمدة فارغة قبل العنصر من جهة البداية. ويتبع الاتجاه، فيدفع في RTL من اليمين. ومتجاوب: <code>bui-offset-md-3</code>.</p>
+<div class="docs-demo docs-gridlive"><span class="docs-demo__label"><span lang="en">Offsets</span><span lang="ar">الإزاحات</span></span>
+<div class="bui-row">
+  <div class="bui-col-4">4</div>
+  <div class="bui-col-4 bui-offset-4">4, offset 4</div>
+</div>
+<div class="bui-row">
+  <div class="bui-col-3 bui-offset-3">3, offset 3</div>
+  <div class="bui-col-3 bui-offset-3">3, offset 3</div>
+</div>
+<div class="bui-row">
+  <div class="bui-col-6 bui-offset-3">6, offset 3</div>
+</div>
+</div>
+<pre class="docs-code" data-lang="html"><code>&lt;div class="bui-row"&gt;
+  &lt;div class="bui-col-4"&gt;4&lt;/div&gt;
+  &lt;div class="bui-col-4 bui-offset-4"&gt;4, offset 4&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="bui-row"&gt;
+  &lt;div class="bui-col-3 bui-offset-3"&gt;3, offset 3&lt;/div&gt;
+  &lt;div class="bui-col-3 bui-offset-3"&gt;3, offset 3&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="bui-row"&gt;
+  &lt;div class="bui-col-6 bui-offset-3"&gt;6, offset 3&lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<h3 id="order"><span lang="en">Order</span><span lang="ar">الترتيب</span></h3>
+<p lang="en"><code>bui-order-first</code>, <code>bui-order-0</code> to <code>bui-order-5</code> and <code>bui-order-last</code> change the visual order only.</p>
+<p lang="ar">يغيّر كل من <code>bui-order-first</code> و<code>bui-order-0</code> حتى <code>bui-order-5</code> و<code>bui-order-last</code> الترتيب البصري فقط.</p>
+<div class="docs-demo docs-gridlive"><span class="docs-demo__label"><span lang="en">Order</span><span lang="ar">الترتيب</span></span>
+<div class="bui-row">
+  <div class="bui-col-4 bui-order-last">DOM 1 (last)</div>
+  <div class="bui-col-4">DOM 2</div>
+  <div class="bui-col-4 bui-order-first">DOM 3 (first)</div>
+</div>
+</div>
+<pre class="docs-code" data-lang="html"><code>&lt;div class="bui-row"&gt;
+  &lt;div class="bui-col-4 bui-order-last"&gt;DOM 1 (last)&lt;/div&gt;
+  &lt;div class="bui-col-4"&gt;DOM 2&lt;/div&gt;
+  &lt;div class="bui-col-4 bui-order-first"&gt;DOM 3 (first)&lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<div class="docs-callout docs-callout--warning" role="note">
+<p class="docs-callout__title"><span lang="en">Order changes what you see, not the reading order</span><span lang="ar">الترتيب يغيّر ما تراه لا ترتيب القراءة</span></p>
+<p lang="en">Keyboard focus and screen readers follow the order in the HTML, not the visual order. Use <code>order</code> only when the two orders do not need to match, and keep the HTML in a meaningful sequence. This behavior has not been tested with assistive technology here.</p>
+<p lang="ar">يتبع تركيز لوحة المفاتيح وقارئات الشاشة ترتيب الـ HTML وليس الترتيب البصري. استخدم <code>order</code> فقط عندما لا يلزم تطابق الترتيبين، وأبقِ الـ HTML في تسلسل مفهوم. ولم يُختبر هذا السلوك هنا مع تقنيات المساعدة.</p>
+</div>
+<h2 id="display-flex"><span lang="en">Display and flex utilities</span><span lang="ar">أدوات العرض وflex</span></h2>
+<p lang="en">The grid comes with the layout utilities it needs. Every one has the same breakpoint variants as the columns (<code>bui-d-md-none</code>, <code>bui-flex-lg-row</code>, and so on). Details and live examples are on the <a href="display.html">Display</a> and <a href="flexbox.html">Flexbox</a> pages.</p>
+<p lang="ar">يأتي النظام مع أدوات التخطيط التي يحتاجها. ولكل منها نفس متغيرات نقاط التوقف للأعمدة (<code>bui-d-md-none</code> و<code>bui-flex-lg-row</code> وغيرهما). التفاصيل والأمثلة الحية في صفحتي <a href="display.html">العرض</a> و<a href="flexbox.html">Flexbox</a>.</p>
+<div class="docs-table-wrap">
+<table>
+<thead><tr>
+<th scope="col"><span lang="en">Property</span><span lang="ar">الخاصية</span></th>
+<th scope="col"><span lang="en">Classes</span><span lang="ar">الأصناف</span></th>
+</tr></thead>
+<tbody>
+<tr><td>display</td><td><code>bui-d-{none|inline|inline-block|block|flex|inline-flex|grid}</code></td></tr>
+<tr><td>flex-direction</td><td><code>bui-flex-{row|row-reverse|column|column-reverse}</code></td></tr>
+<tr><td>flex-wrap</td><td><code>bui-flex-{wrap|nowrap|wrap-reverse}</code></td></tr>
+<tr><td>justify-content</td><td><code>bui-justify-content-{start|end|center|between|around|evenly}</code></td></tr>
+<tr><td>align-items</td><td><code>bui-align-items-{start|end|center|baseline|stretch}</code></td></tr>
+<tr><td>align-content</td><td><code>bui-align-content-{start|end|center|between|around|stretch}</code></td></tr>
+<tr><td>align-self</td><td><code>bui-align-self-{auto|start|end|center|baseline|stretch}</code></td></tr>
+</tbody></table></div>
+<h2 id="practical-examples"><span lang="en">Practical responsive examples</span><span lang="ar">أمثلة متجاوبة عملية</span></h2>
+<h3 id="ex-cards"><span lang="en">A card grid: 1, 2, 3 then 4 per line</span><span lang="ar">شبكة بطاقات: 1 ثم 2 ثم 3 ثم 4 في السطر</span></h3>
+<pre class="docs-code" id="vp-src-18" data-lang="html"><code>&lt;div class="bui-row bui-g-3"&gt;
+  &lt;div class="bui-col-12 bui-col-sm-6 bui-col-lg-4 bui-col-xl-3"&gt;1&lt;/div&gt;
+  &lt;div class="bui-col-12 bui-col-sm-6 bui-col-lg-4 bui-col-xl-3"&gt;2&lt;/div&gt;
+  &lt;div class="bui-col-12 bui-col-sm-6 bui-col-lg-4 bui-col-xl-3"&gt;3&lt;/div&gt;
+  &lt;div class="bui-col-12 bui-col-sm-6 bui-col-lg-4 bui-col-xl-3"&gt;4&lt;/div&gt;
+  &lt;div class="bui-col-12 bui-col-sm-6 bui-col-lg-4 bui-col-xl-3"&gt;5&lt;/div&gt;
+  &lt;div class="bui-col-12 bui-col-sm-6 bui-col-lg-4 bui-col-xl-3"&gt;6&lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<p lang="en">Choose a width: the preview is a separate frame, so the breakpoints react to its width, not to your window. The preview wraps this markup in a <code>bui-container</code>.</p>
+<p lang="ar">اختر عرضًا: المعاينة إطار منفصل، فتستجيب نقاط التوقف لعرضه وليس لعرض نافذتك. تغلّف المعاينة هذا الكود بـ <code>bui-container</code>.</p>
+<div class="docs-viewport" data-viewport data-source="vp-src-18"><div class="docs-viewport__bar" role="group" aria-label="Preview width in pixels"><button type="button" data-w="0" aria-pressed="false"><span lang="en">Fit</span><span lang="ar">ملء العرض</span></button><button type="button" data-w="320" aria-pressed="false">320</button><button type="button" data-w="576" aria-pressed="false">576</button><button type="button" data-w="992" aria-pressed="false">992</button><button type="button" data-w="1200" aria-pressed="false">1200</button><span class="docs-viewport__info" aria-live="polite"><span lang="en">Preview width <b data-info-w></b> · breakpoint <b data-info-bp></b></span><span lang="ar">عرض المعاينة <b data-info-w></b> · نقطة التوقف <b data-info-bp></b></span></span></div><div class="docs-viewport__stage"><iframe class="docs-viewport__frame" title="Responsive preview"></iframe></div></div>
+<h3 id="ex-sidebar"><span lang="en">Sidebar and content</span><span lang="ar">شريط جانبي ومحتوى</span></h3>
+<pre class="docs-code" id="vp-src-19" data-lang="html"><code>&lt;div class="bui-row bui-g-4"&gt;
+  &lt;div class="bui-col-12 bui-col-md-4 bui-col-lg-3"&gt;Sidebar&lt;/div&gt;
+  &lt;div class="bui-col-12 bui-col-md-8 bui-col-lg-9"&gt;Content&lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<p lang="en">Choose a width: the preview is a separate frame, so the breakpoints react to its width, not to your window. The preview wraps this markup in a <code>bui-container</code>.</p>
+<p lang="ar">اختر عرضًا: المعاينة إطار منفصل، فتستجيب نقاط التوقف لعرضه وليس لعرض نافذتك. تغلّف المعاينة هذا الكود بـ <code>bui-container</code>.</p>
+<div class="docs-viewport" data-viewport data-source="vp-src-19"><div class="docs-viewport__bar" role="group" aria-label="Preview width in pixels"><button type="button" data-w="0" aria-pressed="false"><span lang="en">Fit</span><span lang="ar">ملء العرض</span></button><button type="button" data-w="320" aria-pressed="false">320</button><button type="button" data-w="768" aria-pressed="false">768</button><button type="button" data-w="992" aria-pressed="false">992</button><span class="docs-viewport__info" aria-live="polite"><span lang="en">Preview width <b data-info-w></b> · breakpoint <b data-info-bp></b></span><span lang="ar">عرض المعاينة <b data-info-w></b> · نقطة التوقف <b data-info-bp></b></span></span></div><div class="docs-viewport__stage"><iframe class="docs-viewport__frame" title="Responsive preview"></iframe></div></div>
+<h3 id="ex-reorder"><span lang="en">Reorder and hide by breakpoint</span><span lang="ar">إعادة الترتيب والإخفاء حسب نقطة التوقف</span></h3>
+<pre class="docs-code" id="vp-src-20" data-lang="html"><code>&lt;div class="bui-row bui-align-items-center"&gt;
+  &lt;div class="bui-col-12 bui-col-md-6 bui-order-md-last"&gt;Image (first on small screens, last from md)&lt;/div&gt;
+  &lt;div class="bui-col-12 bui-col-md-6"&gt;Text&lt;/div&gt;
+  &lt;div class="bui-col-12 bui-d-none bui-d-lg-block"&gt;Only from lg: extra column&lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<p lang="en">Choose a width: the preview is a separate frame, so the breakpoints react to its width, not to your window. The preview wraps this markup in a <code>bui-container</code>.</p>
+<p lang="ar">اختر عرضًا: المعاينة إطار منفصل، فتستجيب نقاط التوقف لعرضه وليس لعرض نافذتك. تغلّف المعاينة هذا الكود بـ <code>bui-container</code>.</p>
+<div class="docs-viewport" data-viewport data-source="vp-src-20"><div class="docs-viewport__bar" role="group" aria-label="Preview width in pixels"><button type="button" data-w="0" aria-pressed="false"><span lang="en">Fit</span><span lang="ar">ملء العرض</span></button><button type="button" data-w="320" aria-pressed="false">320</button><button type="button" data-w="768" aria-pressed="false">768</button><button type="button" data-w="992" aria-pressed="false">992</button><span class="docs-viewport__info" aria-live="polite"><span lang="en">Preview width <b data-info-w></b> · breakpoint <b data-info-bp></b></span><span lang="ar">عرض المعاينة <b data-info-w></b> · نقطة التوقف <b data-info-bp></b></span></span></div><div class="docs-viewport__stage"><iframe class="docs-viewport__frame" title="Responsive preview"></iframe></div></div>
+<h2 id="rtl-dark"><span lang="en">RTL, LTR and dark mode</span><span lang="ar">RTL وLTR والوضع الداكن</span></h2>
+<ul>
+  <li><span lang="en">Switch the direction in the top bar and look at any example: the first column moves to the right, offsets push from the right, and nothing is re-rendered. The layout file has no physical <code>left</code>/<code>right</code> property.</span><span lang="ar">بدّل الاتجاه من الشريط العلوي وانظر إلى أي مثال: ينتقل العمود الأول إلى اليمين وتدفع الإزاحات من اليمين دون إعادة رسم. ولا توجد في ملف التخطيط أي خاصية <code>left</code>/<code>right</code> فيزيائية.</span></li>
+  <li><span lang="en">Dark mode needs nothing: the layout defines no colors, so the theme tokens do not touch it.</span><span lang="ar">الوضع الداكن لا يحتاج شيئًا: لا يعرّف التخطيط أي ألوان، فلا تمسّه tokens الثيم.</span></li>
+</ul>
+<h2 id="class-reference"><span lang="en">Class reference</span><span lang="ar">مرجع الأصناف</span></h2>
+<div class="docs-table-wrap">
+<table>
+<thead><tr>
+<th scope="col"><span lang="en">Class</span><span lang="ar">الصنف</span></th>
+<th scope="col"><span lang="en">Responsive variants</span><span lang="ar">متغيرات متجاوبة</span></th>
+<th scope="col"><span lang="en">Effect</span><span lang="ar">التأثير</span></th>
+</tr></thead>
+<tbody>
+<tr><td><code>bui-container</code></td><td><span lang="en">no</span><span lang="ar">لا</span></td><td><span lang="en">Centered, max width per breakpoint</span><span lang="ar">متوسطة، وأقصى عرض لكل نقطة توقف</span></td></tr>
+<tr><td><code>bui-container-fluid</code></td><td><span lang="en">no</span><span lang="ar">لا</span></td><td><span lang="en">Centered, 100% wide</span><span lang="ar">متوسطة، بعرض 100%</span></td></tr>
+<tr><td><code>bui-row</code></td><td><span lang="en">no</span><span lang="ar">لا</span></td><td><span lang="en">Wrapping flex row, creates gutters</span><span lang="ar">صف flex ملتف، وينشئ المسافات</span></td></tr>
+<tr><td><code>bui-col</code>, <code>bui-col-auto</code></td><td><span lang="en">yes</span><span lang="ar">نعم</span></td><td><span lang="en">Equal share, content width</span><span lang="ar">حصة متساوية، وعرض المحتوى</span></td></tr>
+<tr><td><code>bui-col-1</code> … <code>bui-col-12</code></td><td><span lang="en">yes</span><span lang="ar">نعم</span></td><td><span lang="en">n/12 of the row</span><span lang="ar">n/12 من الصف</span></td></tr>
+<tr><td><code>bui-offset-0</code> … <code>bui-offset-11</code></td><td><span lang="en">yes</span><span lang="ar">نعم</span></td><td><span lang="en">Inline-start margin of n/12</span><span lang="ar">هامش بداية بمقدار n/12</span></td></tr>
+<tr><td><code>bui-order-first|0…5|last</code></td><td><span lang="en">yes</span><span lang="ar">نعم</span></td><td><span lang="en">Visual order</span><span lang="ar">الترتيب البصري</span></td></tr>
+<tr><td><code>bui-g-0…5</code>, <code>bui-gx-0…5</code>, <code>bui-gy-0…5</code></td><td><span lang="en">no</span><span lang="ar">لا</span></td><td><span lang="en">Gutters, from spacing tokens</span><span lang="ar">المسافات، من tokens المسافات</span></td></tr>
+<tr><td><span lang="en">Display and flex utilities (table above)</span><span lang="ar">أدوات العرض وflex (الجدول أعلاه)</span></td><td><span lang="en">yes</span><span lang="ar">نعم</span></td><td><span lang="en">See the Display and Flexbox pages</span><span lang="ar">راجع صفحتي العرض وFlexbox</span></td></tr>
+</tbody></table></div>
+<h2 id="limits"><span lang="en">Not implemented</span><span lang="ar">غير منفَّذ</span></h2>
 <div class="docs-table-wrap">
 <table>
 <thead><tr>
 <th scope="col"><span lang="en">Feature</span><span lang="ar">الميزة</span></th>
 <th scope="col"><span lang="en">Status</span><span lang="ar">الحالة</span></th>
+<th scope="col"><span lang="en">Why or alternative</span><span lang="ar">السبب أو البديل</span></th>
 </tr></thead>
 <tbody>
-<tr><td><span lang="en">Row and column classes (for example 12-column)</span><span lang="ar">أصناف الصفوف والأعمدة (مثل 12 عمودًا)</span></td><td><span class="docs-badge docs-badge--missing"><span lang="en">Not implemented yet</span><span lang="ar">غير منفَّذ بعد</span></span></td></tr>
-<tr><td><span lang="en">Gutter classes</span><span lang="ar">أصناف المسافات بين الأعمدة</span></td><td><span class="docs-badge docs-badge--missing"><span lang="en">Not implemented yet</span><span lang="ar">غير منفَّذ بعد</span></span></td></tr>
-<tr><td><span lang="en">Responsive column classes</span><span lang="ar">أصناف أعمدة متجاوبة</span></td><td><span class="docs-badge docs-badge--missing"><span lang="en">Not implemented yet</span><span lang="ar">غير منفَّذ بعد</span></span></td></tr>
-<tr><td><span lang="en">Native CSS Grid with <code>--bui-space-*</code> gaps</span><span lang="ar">CSS Grid الأصلية مع فجوات <code>--bui-space-*</code></span></td><td><span class="docs-badge docs-badge--available"><span lang="en">Available</span><span lang="ar">متاح</span></span></td></tr>
+<tr><td><span lang="en">Responsive gutter classes (<code>bui-g-md-3</code>)</span><span lang="ar">أصناف مسافات متجاوبة (<code>bui-g-md-3</code>)</span></td><td><span class="docs-badge docs-badge--missing"><span lang="en">Not implemented yet</span><span lang="ar">غير منفَّذ بعد</span></span></td><td><span lang="en">Set <code>--bui-gutter-x</code> in your own media query.</span><span lang="ar">اضبط <code>--bui-gutter-x</code> في استعلام وسائط خاص بك.</span></td></tr>
+<tr><td><span lang="en">Per-row column counts (<code>bui-row-cols-3</code>)</span><span lang="ar">عدد أعمدة لكل صف (<code>bui-row-cols-3</code>)</span></td><td><span class="docs-badge docs-badge--missing"><span lang="en">Not implemented yet</span><span lang="ar">غير منفَّذ بعد</span></span></td><td><span lang="en">Outside the requested scope.</span><span lang="ar">خارج النطاق المطلوب.</span></td></tr>
+<tr><td><span lang="en">Breakpoint-specific containers (<code>bui-container-md</code>)</span><span lang="ar">حاويات لكل نقطة توقف (<code>bui-container-md</code>)</span></td><td><span class="docs-badge docs-badge--missing"><span lang="en">Not implemented yet</span><span lang="ar">غير منفَّذ بعد</span></span></td><td><span lang="en">Outside the requested scope.</span><span lang="ar">خارج النطاق المطلوب.</span></td></tr>
+<tr><td><span lang="en">Margin, padding and gap utilities</span><span lang="ar">أدوات الهوامش والحشوة والفجوة</span></td><td><span class="docs-badge docs-badge--missing"><span lang="en">Not implemented yet</span><span lang="ar">غير منفَّذ بعد</span></span></td><td><span lang="en">See Spacing Utilities.</span><span lang="ar">راجع أدوات المسافات.</span></td></tr>
+<tr><td><span lang="en">Offsets above 11, order above 5</span><span lang="ar">إزاحات أكبر من 11 وترتيب أكبر من 5</span></td><td><span class="docs-badge docs-badge--missing"><span lang="en">Not implemented yet</span><span lang="ar">غير منفَّذ بعد</span></span></td><td><span lang="en">Use your own class.</span><span lang="ar">استخدم صنفًا خاصًّا بك.</span></td></tr>
+<tr><td><span lang="en">Flex grow, shrink and fill utilities</span><span lang="ar">أدوات flex للنمو والانكماش والملء</span></td><td><span class="docs-badge docs-badge--missing"><span lang="en">Not implemented yet</span><span lang="ar">غير منفَّذ بعد</span></span></td><td><span lang="en">Outside the requested scope.</span><span lang="ar">خارج النطاق المطلوب.</span></td></tr>
+<tr><td><span lang="en">A CSS Grid based layout class</span><span lang="ar">صنف تخطيط قائم على CSS Grid</span></td><td><span class="docs-badge docs-badge--missing"><span lang="en">Not implemented yet</span><span lang="ar">غير منفَّذ بعد</span></span></td><td><span lang="en">Native CSS Grid still works in your own CSS.</span><span lang="ar">يعمل CSS Grid الأصلي في CSS الخاص بك.</span></td></tr>
 </tbody></table></div>
-<h2 id="grid-architecture"><span lang="en">Grid architecture</span><span lang="ar">بنية الشبكة</span></h2>
-<p lang="en">Native grid is built from a container with <code>display: grid</code> and the columns you define; children are placed automatically. It is direction-aware: columns start from the inline-start side, so the same CSS works in RTL.</p>
-<p lang="ar">تتكوّن الشبكة الأصلية من حاوية <code>display: grid</code> والأعمدة التي تعرّفها؛ وتُوضع العناصر الأبناء تلقائيًّا. وهي تراعي الاتجاه: تبدأ الأعمدة من جهة البداية، فيعمل CSS نفسه في RTL.</p>
-<h2 id="columns"><span lang="en">Columns</span><span lang="ar">الأعمدة</span></h2>
-<pre class="docs-code" data-lang="css"><code>.my-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr)); /* three equal columns */
-  gap: var(--bui-space-4);
-}
-</code></pre>
-<p lang="en"><code>minmax(0, 1fr)</code> lets columns shrink below their content width, which prevents horizontal overflow from long words or code.</p>
-<p lang="ar"><code>minmax(0, 1fr)</code> يسمح للأعمدة بالانكماش دون عرض محتواها، فيمنع الفيضان الأفقي من الكلمات الطويلة أو الشيفرة.</p>
-<h2 id="rows"><span lang="en">Rows</span><span lang="ar">الصفوف</span></h2>
-<p lang="en">Rows are created automatically as items wrap. Size them with <code>grid-auto-rows</code> only if you need a fixed height.</p>
-<p lang="ar">تُنشأ الصفوف تلقائيًّا مع التفاف العناصر. اضبط حجمها بـ <code>grid-auto-rows</code> فقط إن احتجت ارتفاعًا ثابتًا.</p>
-<h2 id="gutters"><span lang="en">Gutters</span><span lang="ar">المسافات بين الأعمدة</span></h2>
-<p lang="en">Use <code>gap</code> (or <code>column-gap</code> / <code>row-gap</code>) with a spacing token. Gutters are not part of the item size, so there is no negative margin trick.</p>
-<p lang="ar">استخدم <code>gap</code> (أو <code>column-gap</code> / <code>row-gap</code>) مع token للمسافة. المسافات ليست جزءًا من حجم العنصر، فلا حاجة لحيلة الهوامش السالبة.</p>
-<h2 id="responsive-layouts"><span lang="en">Responsive layouts</span><span lang="ar">تخطيطات متجاوبة</span></h2>
-<h3 id="auto-fit"><span lang="en">Automatic: no breakpoints</span><span lang="ar">تلقائي: بلا نقاط توقف</span></h3>
-<pre class="docs-code" data-lang="css"><code>.my-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
-  gap: var(--bui-space-4);
-}
-</code></pre>
-<p lang="en">The number of columns adapts to the available width. <code>min(100%, 15rem)</code> keeps a single column from overflowing on very narrow screens.</p>
-<p lang="ar">يتكيّف عدد الأعمدة مع العرض المتاح. و<code>min(100%, 15rem)</code> يمنع العمود الواحد من الفيضان على الشاشات الضيقة جدًّا.</p>
-<h3 id="grid-live"><span lang="en">Live example</span><span lang="ar">مثال حي</span></h3>
-<div class="docs-demo"><div class="docs-controls"><label><span><span lang="en">grid-template-columns</span><span lang="ar">grid-template-columns</span></span><select id="gr-columns"><option value="repeat(1, minmax(0, 1fr))">repeat(1, minmax(0, 1fr))</option><option value="repeat(2, minmax(0, 1fr))">repeat(2, minmax(0, 1fr))</option><option value="repeat(3, minmax(0, 1fr))" selected>repeat(3, minmax(0, 1fr))</option><option value="repeat(auto-fit, minmax(min(100%, 8rem), 1fr))">repeat(auto-fit, minmax(min(100%, 8rem), 1fr))</option></select></label><label><span><span lang="en">gap</span><span lang="ar">gap</span></span><select id="gr-gap"><option value="var(--bui-space-2)">var(--bui-space-2)</option><option value="var(--bui-space-4)" selected>var(--bui-space-4)</option><option value="var(--bui-space-8)">var(--bui-space-8)</option></select></label></div><div class="docs-flexstage" id="grid-stage" style="display:grid"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span></div></div>
-<pre class="docs-code" id="grid-code" data-lang="css"><code>.stage {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: var(--bui-space-4);
-}
-</code></pre>
-<h3 id="grid-bp"><span lang="en">With breakpoints</span><span lang="ar">مع نقاط التوقف</span></h3>
-<pre class="docs-code" data-lang="css"><code>.my-grid { display: grid; gap: var(--bui-space-4); grid-template-columns: 1fr; }
-@media (min-width: 40rem) { .my-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-@media (min-width: 64rem) { .my-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
-</code></pre>
-<h2 id="decisions"><span lang="en">Decisions before implementing</span><span lang="ar">قرارات قبل التنفيذ</span></h2>
-<p lang="en">These need the project owner's decision. Nothing here is implemented or promised.</p>
-<p lang="ar">هذه تحتاج قرار مالك المشروع. لا شيء منها منفَّذ أو موعود به.</p>
+<h2 id="testing-status"><span lang="en">Testing status</span><span lang="ar">حالة الاختبار</span></h2>
 <div class="docs-table-wrap">
 <table>
 <thead><tr>
-<th scope="col"><span lang="en">Question</span><span lang="ar">السؤال</span></th>
+<th scope="col"><span lang="en">Check</span><span lang="ar">الفحص</span></th>
+<th scope="col"><span lang="en">Result</span><span lang="ar">النتيجة</span></th>
+</tr></thead>
+<tbody>
+<tr><td><span lang="en">Computed-style tests in Chromium: columns 1–12, all 7 breakpoints (84 responsive classes), combined classes, offsets, order, gutters 0–5 on both axes, nesting, display and flex utilities; at 17 widths from 320px to 2400px, in LTR and RTL; no horizontal overflow</span><span lang="ar">اختبارات الأنماط المحسوبة في Chromium: الأعمدة 1–12 ونقاط التوقف السبع (84 صنفًا متجاوبًا) والأصناف المجمَّعة والإزاحة والترتيب والمسافات 0–5 في المحورين والتداخل وأدوات العرض وflex؛ على 17 عرضًا من 320px إلى 2400px في LTR وRTL؛ دون تمرير أفقي</span></td><td><span lang="en">Run, all passed</span><span lang="ar">نُفِّذت ونجحت كلها</span></td></tr>
+<tr><td><span lang="en">Firefox, Safari, real phones and tablets</span><span lang="ar">Firefox وSafari والهواتف واللوحيات الحقيقية</span></td><td><span class="docs-badge docs-badge--planned"><span lang="en">Untested</span><span lang="ar">لم يُختبر</span></span></td></tr>
+<tr><td><span lang="en">Screen readers (relevant to <code>order</code>)</span><span lang="ar">قارئات الشاشة (مهمة لـ <code>order</code>)</span></td><td><span class="docs-badge docs-badge--planned"><span lang="en">Untested</span><span lang="ar">لم يُختبر</span></span></td></tr>
+<tr><td><span lang="en">Interaction with Baset UI components</span><span lang="ar">التفاعل مع مكونات Baset UI</span></td><td><span lang="en">Not applicable: no component exists yet</span><span lang="ar">غير منطبق: لا يوجد أي مكوّن بعد</span></td></tr>
+</tbody></table></div>
+<h2 id="decisions"><span lang="en">Decisions for the project owner</span><span lang="ar">قرارات لمالك المشروع</span></h2>
+<p lang="en">These choices were made to deliver the feature and need your approval.</p>
+<p lang="ar">اتُّخذت هذه الاختيارات لتسليم الميزة وتحتاج موافقتك.</p>
+<div class="docs-table-wrap">
+<table>
+<thead><tr>
+<th scope="col"><span lang="en">Decision</span><span lang="ar">القرار</span></th>
 <th scope="col"><span lang="en">Status</span><span lang="ar">الحالة</span></th>
 </tr></thead>
 <tbody>
-<tr><td><span lang="en">Does Baset UI need a grid at all, or is documenting native Grid enough?</span><span lang="ar">هل تحتاج Baset UI شبكة أصلًا، أم يكفي توثيق Grid الأصلية؟</span></td><td><span class="docs-badge docs-badge--planned"><span lang="en">Decision needed</span><span lang="ar">يحتاج قرارًا</span></span></td></tr>
-<tr><td><span lang="en">If yes: how many columns, and which class names?</span><span lang="ar">إن احتاجت: كم عمودًا، وما أسماء الأصناف؟</span></td><td><span class="docs-badge docs-badge--planned"><span lang="en">Decision needed</span><span lang="ar">يحتاج قرارًا</span></span></td></tr>
-<tr><td><span lang="en">Gutter sizes: reuse the spacing tokens or add new ones?</span><span lang="ar">مقاسات المسافات: إعادة استخدام tokens المسافات أم إضافة جديدة؟</span></td><td><span class="docs-badge docs-badge--planned"><span lang="en">Decision needed</span><span lang="ar">يحتاج قرارًا</span></span></td></tr>
+<tr><td><span lang="en">Container maximum widths: 540, 720, 960, 1140, 1500, 1800px, and container side padding of 1.5rem.</span><span lang="ar">أقصى عروض الحاوية: 540 و720 و960 و1140 و1500 و1800px، وحشوة جانبية 1.5rem.</span></td><td><span class="docs-badge docs-badge--planned"><span lang="en">Decision needed</span><span lang="ar">يحتاج قرارًا</span></span></td></tr>
+<tr><td><span lang="en">Default gutter of 1.5rem, and the 0 / 1 / 2 / 4 / 6 / 12 mapping of <code>g-0</code> to <code>g-5</code> onto spacing tokens.</span><span lang="ar">مسافة افتراضية 1.5rem، وربط <code>g-0</code> إلى <code>g-5</code> بالدرجات 0 / 1 / 2 / 4 / 6 / 12 من tokens المسافات.</span></td><td><span class="docs-badge docs-badge--planned"><span lang="en">Decision needed</span><span lang="ar">يحتاج قرارًا</span></span></td></tr>
+<tr><td><span lang="en">Breakpoints in <code>px</code> as requested (not <code>rem</code>), and no <code>!important</code> on utilities (so load order matters).</span><span lang="ar">نقاط التوقف بوحدة <code>px</code> كما طُلب (وليس <code>rem</code>)، وبلا <code>!important</code> في الأدوات (فلترتيب التحميل أثر).</span></td><td><span class="docs-badge docs-badge--planned"><span lang="en">Decision needed</span><span lang="ar">يحتاج قرارًا</span></span></td></tr>
+<tr><td><span lang="en"><code>.bui-row &gt; *</code> applies gutter padding to every direct child; <code>align-self</code> utilities were added beyond the requested list because column alignment needs them.</span><span lang="ar">يطبّق <code>.bui-row &gt; *</code> حشوة المسافات على كل ابن مباشر؛ وأُضيفت أدوات <code>align-self</code> زيادة على القائمة المطلوبة لأن محاذاة الأعمدة تحتاجها.</span></td><td><span class="docs-badge docs-badge--planned"><span lang="en">Decision needed</span><span lang="ar">يحتاج قرارًا</span></span></td></tr>
+<tr><td><span lang="en">The layout file is plain hand-readable CSS, but it is generated by a script that is not in the repository. Edit it directly, or approve adding the generator.</span><span lang="ar">ملف التخطيط CSS عادي مقروء، لكنه مولَّد بسكربت ليس في المستودع. عدّله مباشرة، أو وافق على إضافة المولّد.</span></td><td><span class="docs-badge docs-badge--planned"><span lang="en">Decision needed</span><span lang="ar">يحتاج قرارًا</span></span></td></tr>
 </tbody></table></div>
 </article>
 <footer class="docs-footer" id="docs-footer"></footer>

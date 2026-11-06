@@ -31,8 +31,8 @@
 <p class="docs-lead" lang="ar">كيف يعمل الاتجاه في Baset UI اليوم، والخصائص المنطقية التي تستخدمها، وما يجب معرفته قبل وجود مكونات تراعي الاتجاه، وكيف تخصّص الاتجاه في صفحاتك.</p>
 <div class="docs-callout docs-callout--info" role="note">
 <p class="docs-callout__title"><span lang="en">Current state</span><span lang="ar">الوضع الحالي</span></p>
-<p lang="en">Baset UI has no direction tokens, no direction JavaScript and no components yet. What exists is a rule: use the standard <code>dir</code> attribute and logical CSS properties. RTL and LTR support for future components is a project requirement and is <strong>untested</strong> because there are no components to test.</p>
-<p lang="ar">لا توجد في Baset UI tokens للاتجاه ولا جافاسكربت للاتجاه ولا مكونات بعد. الموجود هو قاعدة: استخدم السمة القياسية <code>dir</code> والخصائص المنطقية في CSS. دعم RTL وLTR للمكونات المستقبلية شرط في المشروع وهو <strong>غير مختبر</strong> لعدم وجود مكونات لاختبارها.</p>
+<p lang="en">Baset UI has no direction tokens, no direction JavaScript and no components yet. What exists is a rule: use the standard <code>dir</code> attribute and logical CSS properties. RTL and LTR support for future components is a project requirement and is <strong>untested</strong> because there are no components to test. The layout module is the exception: its columns, offsets and alignment were checked in both directions (computed styles in Chromium).</p>
+<p lang="ar">لا توجد في Baset UI tokens للاتجاه ولا جافاسكربت للاتجاه ولا مكونات بعد. الموجود هو قاعدة: استخدم السمة القياسية <code>dir</code> والخصائص المنطقية في CSS. دعم RTL وLTR للمكونات المستقبلية شرط في المشروع وهو <strong>غير مختبر</strong> لعدم وجود مكونات لاختبارها. ووحدة التخطيط استثناء: فُحصت أعمدتها وإزاحاتها ومحاذاتها في الاتجاهين (أنماط محسوبة في Chromium).</p>
 </div>
 <h2 id="rtl-architecture"><span lang="en">RTL architecture</span><span lang="ar">بنية RTL</span></h2>
 <ul>
@@ -76,7 +76,7 @@
 <p lang="en"><span class="docs-badge docs-badge--planned"><span lang="en">Planned</span><span lang="ar">مخطَّط</span></span> No component exists yet, so there is nothing direction-aware to document. The project rules every future component must meet:</p>
 <p lang="ar"><span class="docs-badge docs-badge--planned"><span lang="en">Planned</span><span lang="ar">مخطَّط</span></span> لا يوجد أي مكوّن بعد، فلا شيء يراعي الاتجاه لتوثيقه. هذه قواعد المشروع التي سيلتزم بها كل مكوّن قادم:</p>
 <ul>
-  <li><span lang="en">Layout uses logical properties and no hard-coded left or right.</span><span lang="ar">يستخدم التخطيط خصائص منطقية دون left أو right ثابتة.</span></li>
+  <li><span lang="en">Layout uses logical properties and no hard-coded left or right. The layout module (<code>baset-ui-layout.css</code>) already follows this rule: it has no physical <code>left</code>/<code>right</code> property.</span><span lang="ar">يستخدم التخطيط خصائص منطقية دون left أو right ثابتة. ووحدة التخطيط (<code>baset-ui-layout.css</code>) تلتزم بهذه القاعدة أصلًا: لا توجد فيها خاصية <code>left</code>/<code>right</code> فيزيائية.</span></li>
   <li><span lang="en">Directional icons mirror in RTL; non-directional ones do not.</span><span lang="ar">تنعكس الأيقونات الاتجاهية في RTL ولا تنعكس غير الاتجاهية.</span></li>
   <li><span lang="en">Keyboard behavior is direction-aware where it matters (for example, which arrow key moves to the next item in a horizontal list).</span><span lang="ar">يراعي سلوك لوحة المفاتيح الاتجاه حيث يلزم (مثل أي سهم ينقل إلى العنصر التالي في قائمة أفقية).</span></li>
   <li><span lang="en">Each component is reviewed with Arabic and English labels in both directions before it is called complete.</span><span lang="ar">يُراجع كل مكوّن بتسميات عربية وإنجليزية في الاتجاهين قبل اعتباره مكتملًا.</span></li>

@@ -51,8 +51,8 @@
 cd Baset-UI
 git rev-parse HEAD   # note this commit hash
 </code></pre>
-<p lang="en">Then copy <code>assets/css/baset-ui.css</code> into your project.</p>
-<p lang="ar">ثم انسخ الملف <code>assets/css/baset-ui.css</code> إلى مشروعك.</p>
+<p lang="en">Then copy <code>assets/css/baset-ui.css</code> (and, if you use the layout classes, <code>assets/css/baset-ui-layout.css</code>) into your project.</p>
+<p lang="ar">ثم انسخ الملف <code>assets/css/baset-ui.css</code> (و<code>assets/css/baset-ui-layout.css</code> إن استخدمت أصناف التخطيط) إلى مشروعك.</p>
 <h3 id="zip"><span lang="en">Download a ZIP</span><span lang="ar">تحميل ملف ZIP</span></h3>
 <p lang="en">On the GitHub repository page choose <em>Code</em> then <em>Download ZIP</em>. You get the current state of the default branch.</p>
 <p lang="ar">في صفحة المستودع على GitHub اختر <em>Code</em> ثم <em>Download ZIP</em>. ستحصل على الحالة الحالية للفرع الافتراضي.</p>
@@ -75,7 +75,8 @@ git rev-parse HEAD   # note this commit hash
 <th scope="col"><span lang="en">Status</span><span lang="ar">الحالة</span></th>
 </tr></thead>
 <tbody>
-<tr><td><code>assets/css/baset-ui.css</code></td><td><span lang="en">Design tokens and light/dark theme variables. The only file you need today.</span><span lang="ar">Design Tokens ومتغيرات الثيم الفاتح والداكن. الملف الوحيد الذي تحتاجه اليوم.</span></td><td><span class="docs-badge docs-badge--foundation"><span lang="en">Foundation (pre-release)</span><span lang="ar">أساس أولي (تمهيدي)</span></span></td></tr>
+<tr><td><code>assets/css/baset-ui.css</code></td><td><span lang="en">Design tokens and light/dark theme variables. The only file you must load.</span><span lang="ar">Design Tokens ومتغيرات الثيم الفاتح والداكن. الملف الوحيد الذي يجب تحميله.</span></td><td><span class="docs-badge docs-badge--foundation"><span lang="en">Foundation (pre-release)</span><span lang="ar">أساس أولي (تمهيدي)</span></span></td></tr>
+<tr><td><code>assets/css/baset-ui-layout.css</code></td><td><span lang="en">Containers, 12-column grid, gutters and layout utilities. Optional: load it only if you use the layout classes. It needs <code>baset-ui.css</code> for the spacing tokens. See <a href="../layout/grid-system.html">Grid System</a>.</span><span lang="ar">الحاويات وشبكة 12 عمودًا والمسافات وأدوات التخطيط. اختياري: حمّله فقط إن استخدمت أصناف التخطيط. ويحتاج <code>baset-ui.css</code> لـ tokens المسافات. راجع <a href="../layout/grid-system.html">نظام الشبكة</a>.</span></td><td><span class="docs-badge docs-badge--available"><span lang="en">Available</span><span lang="ar">متاح</span></span></td></tr>
 <tr><td><code>assets/js/baset-ui.js</code></td><td><span lang="en">JavaScript entry for interactive components. The README quick start mentions this path, but the file does not exist and nothing needs it today.</span><span lang="ar">مدخل جافاسكربت للمكونات التفاعلية. يذكر README هذا المسار، لكن الملف غير موجود ولا شيء يحتاجه اليوم.</span></td><td><span class="docs-badge docs-badge--missing"><span lang="en">Not implemented yet</span><span lang="ar">غير منفَّذ بعد</span></span></td></tr>
 <tr><td><code>assets/css/components/*</code></td><td><span lang="en">Per-component stylesheets.</span><span lang="ar">ملفات أنماط لكل مكوّن.</span></td><td><span class="docs-badge docs-badge--missing"><span lang="en">Not implemented yet</span><span lang="ar">غير منفَّذ بعد</span></span></td></tr>
 <tr><td><span lang="en">Fonts and icons</span><span lang="ar">الخطوط والأيقونات</span></td><td><span lang="en">Nothing to install. The stylesheet uses the system font stack and no icon set is bundled.</span><span lang="ar">لا شيء لتثبيته. يستخدم ملف الأنماط خطوط النظام ولا توجد مجموعة أيقونات مضمَّنة.</span></td><td><span class="docs-badge docs-badge--available"><span lang="en">Available</span><span lang="ar">متاح</span></span></td></tr>
@@ -85,6 +86,8 @@ git rev-parse HEAD   # note this commit hash
 <p lang="en">Copy the file to your project, then link it before your own styles:</p>
 <p lang="ar">انسخ الملف إلى مشروعك ثم اربطه قبل أنماطك الخاصة:</p>
 <pre class="docs-code" data-lang="html" data-title="index.html"><code>&lt;link rel="stylesheet" href="./css/baset-ui.css"&gt;
+&lt;!-- optional: layout classes (container, row, col, utilities) --&gt;
+&lt;link rel="stylesheet" href="./css/baset-ui-layout.css"&gt;
 </code></pre>
 <h3 id="example-frameworks"><span lang="en">Framework projects</span><span lang="ar">مشاريع الأطر</span></h3>
 <div class="docs-callout docs-callout--warning" role="note">

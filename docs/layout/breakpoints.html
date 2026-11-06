@@ -4,10 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Breakpoints · Baset UI</title>
-<meta name="description" content="Breakpoints status, mobile-first approach and customization.">
+<meta name="description" content="The seven official breakpoints, mobile-first behavior and customization.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230f766e'/%3E%3Crect x='7' y='8' width='18' height='3.6' rx='1.8' fill='%23fff'/%3E%3Crect x='7' y='14.2' width='12' height='3.6' rx='1.8' fill='%23fff'/%3E%3Crect x='7' y='20.4' width='15' height='3.6' rx='1.8' fill='%23fff'/%3E%3C/svg%3E">
 <script src="../assets/js/init.js"></script>
 <link rel="stylesheet" href="../../assets/css/baset-ui.css">
+<link rel="stylesheet" href="../../assets/css/baset-ui-layout.css">
 <link rel="stylesheet" href="../assets/css/docs.css">
 </head>
 <body>
@@ -27,77 +28,118 @@
 
 </noscript>
 <h1><span lang="en">Breakpoints</span><span lang="ar">نقاط التوقف</span></h1>
-<p class="docs-lead" lang="en">Baset UI defines no breakpoints today. This page explains why they are not CSS variables, shows the breakpoints this documentation site uses for itself, and gives a mobile-first pattern you can copy.</p>
-<p class="docs-lead" lang="ar">لا تعرّف Baset UI أي نقاط توقف اليوم. توضح هذه الصفحة لماذا لا تكون متغيرات CSS، وتعرض نقاط التوقف التي يستخدمها موقع التوثيق لنفسه، وتقدّم نمط mobile-first يمكنك نسخه.</p>
-<h2 id="implemented-breakpoints"><span lang="en">Implemented breakpoints</span><span lang="ar">نقاط التوقف المنفَّذة</span></h2>
-<div class="docs-callout docs-callout--warning" role="note">
-<p class="docs-callout__title"><span lang="en">None in the library</span><span lang="ar">لا شيء في المكتبة</span></p>
-<p lang="en"><code>assets/css/baset-ui.css</code> contains no <code>@media</code> width queries and no breakpoint tokens. The only media query in it is <code>prefers-reduced-motion</code>. There is no named scale (such as sm, md, lg).</p>
-<p lang="ar">لا يحتوي <code>assets/css/baset-ui.css</code> على أي استعلام عرض <code>@media</code> ولا tokens لنقاط التوقف. والاستعلام الوحيد فيه هو <code>prefers-reduced-motion</code>. ولا يوجد سلّم مسمّى (مثل sm وmd وlg).</p>
-</div>
-<p lang="en">For reference, this documentation site (not the library) uses these three widths in <code>docs/assets/css/docs.css</code>:</p>
-<p lang="ar">للمرجع، يستخدم موقع التوثيق هذا (وليس المكتبة) هذه الأعراض الثلاثة في <code>docs/assets/css/docs.css</code>:</p>
+<p class="docs-lead" lang="en">Baset UI has seven official breakpoints. They are mobile first: base styles apply below 480px, and every breakpoint adds styles from its width upward.</p>
+<p class="docs-lead" lang="ar">لدى Baset UI سبع نقاط توقف رسمية. وهي mobile-first: تُطبَّق الأنماط الأساسية تحت 480px، وتضيف كل نقطة توقف أنماطًا من عرضها فصاعدًا.</p>
+<h2 id="implemented-breakpoints"><span lang="en">Breakpoints</span><span lang="ar">نقاط التوقف</span></h2>
 <div class="docs-table-wrap">
 <table>
 <thead><tr>
+<th scope="col"><span lang="en">Breakpoint</span><span lang="ar">نقطة التوقف</span></th>
 <th scope="col"><span lang="en">Width</span><span lang="ar">العرض</span></th>
-<th scope="col"><span lang="en">What changes on this site</span><span lang="ar">ما الذي يتغير في هذا الموقع</span></th>
-<th scope="col"><span lang="en">Part of Baset UI?</span><span lang="ar">جزء من Baset UI؟</span></th>
+<th scope="col"><span lang="en"><code>bui-container</code> max width</span><span lang="ar">أقصى عرض لـ <code>bui-container</code></span></th>
+<th scope="col"><span lang="en">Class infix</span><span lang="ar">لاحقة الصنف</span></th>
+<th scope="col"><span lang="en">Media query</span><span lang="ar">استعلام الوسائط</span></th>
 </tr></thead>
 <tbody>
-<tr><td><code>max-width: 75rem</code></td><td><span lang="en">The table of contents moves from a side rail to a collapsible block inside the page.</span><span lang="ar">ينتقل فهرس المحتوى من عمود جانبي إلى كتلة قابلة للطي داخل الصفحة.</span></td><td><span lang="en">No</span><span lang="ar">لا</span></td></tr>
-<tr><td><code>max-width: 60rem</code></td><td><span lang="en">The sidebar becomes a drawer opened from a menu button.</span><span lang="ar">يتحول الشريط الجانبي إلى درج يُفتح بزر قائمة.</span></td><td><span lang="en">No</span><span lang="ar">لا</span></td></tr>
-<tr><td><code>max-width: 47.99rem</code></td><td><span lang="en">Top bar links are hidden and preferences move into the drawer.</span><span lang="ar">تُخفى روابط الشريط العلوي وتنتقل التفضيلات إلى الدرج.</span></td><td><span lang="en">No</span><span lang="ar">لا</span></td></tr>
+<tr><td><span lang="en"><em>(none)</em></span><span lang="ar"><em>(بدون)</em></span></td><td><span lang="en">below 480px</span><span lang="ar">أقل من 480px</span></td><td>100%</td><td>—</td><td><span lang="en">base styles, no query</span><span lang="ar">الأنماط الأساسية بلا استعلام</span></td></tr>
+<tr><td><code>xs</code></td><td>480px</td><td>100%</td><td><code>-xs</code></td><td><code>@media (min-width: 480px)</code></td></tr>
+<tr><td><code>sm</code></td><td>576px</td><td>540px</td><td><code>-sm</code></td><td><code>@media (min-width: 576px)</code></td></tr>
+<tr><td><code>md</code></td><td>768px</td><td>720px</td><td><code>-md</code></td><td><code>@media (min-width: 768px)</code></td></tr>
+<tr><td><code>lg</code></td><td>992px</td><td>960px</td><td><code>-lg</code></td><td><code>@media (min-width: 992px)</code></td></tr>
+<tr><td><code>xl</code></td><td>1200px</td><td>1140px</td><td><code>-xl</code></td><td><code>@media (min-width: 1200px)</code></td></tr>
+<tr><td><code>xxl</code></td><td>1600px</td><td>1500px</td><td><code>-xxl</code></td><td><code>@media (min-width: 1600px)</code></td></tr>
+<tr><td><code>xxxl</code></td><td>1920px</td><td>1800px</td><td><code>-xxxl</code></td><td><code>@media (min-width: 1920px)</code></td></tr>
 </tbody></table></div>
-<div class="docs-demo"><span class="docs-demo__label"><span lang="en">Live: current viewport width (resize the window)</span><span lang="ar">عرض حي: عرض نافذة العرض الحالي (غيّر حجم النافذة)</span></span><span class="docs-readout" id="viewport-readout">—</span></div>
+<p lang="en">Every width is the <em>minimum</em> viewport width at which the breakpoint starts. The values are in <code>px</code>.</p>
+<p lang="ar">كل عرض هو الحد <em>الأدنى</em> لعرض الشاشة الذي تبدأ عنده نقطة التوقف. والقيم بوحدة <code>px</code>.</p>
+<div class="docs-demo"><span class="docs-demo__label"><span lang="en">Live: your window right now</span><span lang="ar">عرض حي: نافذتك الآن</span></span><span class="docs-readout" id="viewport-readout">—</span></div>
+<h3 id="bp-ladder"><span lang="en">See the breakpoints switch</span><span lang="ar">شاهد نقاط التوقف تتبدّل</span></h3>
+<p lang="en">Each line below appears only from its breakpoint, using the real <code>bui-d-{breakpoint}-block</code> classes. Choose a width in the preview.</p>
+<p lang="ar">يظهر كل سطر أدناه من نقطة توقفه فقط، باستخدام أصناف <code>bui-d-{نقطة التوقف}-block</code> الحقيقية. اختر عرضًا في المعاينة.</p>
+<pre class="docs-code" id="vp-src-21" data-lang="html"><code>&lt;div class="bui-d-block"&gt;base: always visible&lt;/div&gt;
+&lt;div class="bui-d-none bui-d-xs-block"&gt;xs: visible from 480px&lt;/div&gt;
+&lt;div class="bui-d-none bui-d-sm-block"&gt;sm: visible from 576px&lt;/div&gt;
+&lt;div class="bui-d-none bui-d-md-block"&gt;md: visible from 768px&lt;/div&gt;
+&lt;div class="bui-d-none bui-d-lg-block"&gt;lg: visible from 992px&lt;/div&gt;
+&lt;div class="bui-d-none bui-d-xl-block"&gt;xl: visible from 1200px&lt;/div&gt;
+</code></pre>
+<p lang="en">Choose a width: the preview is a separate frame, so the breakpoints react to its width, not to your window. The preview wraps this markup in a <code>bui-container</code>.</p>
+<p lang="ar">اختر عرضًا: المعاينة إطار منفصل، فتستجيب نقاط التوقف لعرضه وليس لعرض نافذتك. تغلّف المعاينة هذا الكود بـ <code>bui-container</code>.</p>
+<div class="docs-viewport" data-viewport data-source="vp-src-21"><div class="docs-viewport__bar" role="group" aria-label="Preview width in pixels"><button type="button" data-w="0" aria-pressed="false"><span lang="en">Fit</span><span lang="ar">ملء العرض</span></button><button type="button" data-w="320" aria-pressed="false">320</button><button type="button" data-w="480" aria-pressed="false">480</button><button type="button" data-w="576" aria-pressed="false">576</button><button type="button" data-w="768" aria-pressed="false">768</button><button type="button" data-w="992" aria-pressed="false">992</button><button type="button" data-w="1200" aria-pressed="false">1200</button><span class="docs-viewport__info" aria-live="polite"><span lang="en">Preview width <b data-info-w></b> · breakpoint <b data-info-bp></b></span><span lang="ar">عرض المعاينة <b data-info-w></b> · نقطة التوقف <b data-info-bp></b></span></span></div><div class="docs-viewport__stage"><iframe class="docs-viewport__frame" title="Responsive preview"></iframe></div></div>
 <h2 id="responsive-behavior"><span lang="en">Responsive behavior</span><span lang="ar">السلوك المتجاوب</span></h2>
 <ul>
-  <li><span lang="en">Everything in the library is already width-independent: tokens are plain values and carry no layout.</span><span lang="ar">كل ما في المكتبة مستقل عن العرض أصلًا: الـ tokens قيم عادية ولا تحمل تخطيطًا.</span></li>
-  <li><span lang="en">Spacing and type sizes use <code>rem</code>, so they follow the reader's font-size setting.</span><span lang="ar">المسافات وأحجام الخطوط بوحدة <code>rem</code>، فتتبع إعداد حجم الخط عند القارئ.</span></li>
-  <li><span lang="en">Responsive behavior of components will be written in each component's own stylesheet.</span><span lang="ar">سيُكتب السلوك المتجاوب للمكونات في ملف الأنماط الخاص بكل مكوّن.</span></li>
+  <li><span lang="en">Every responsive class has the same name pattern: <code>bui-{name}-{breakpoint}-{value}</code>, for example <code>bui-col-md-6</code>, <code>bui-offset-lg-2</code>, <code>bui-d-xl-none</code>, <code>bui-flex-sm-column</code>.</span><span lang="ar">لكل صنف متجاوب نمط التسمية نفسه: <code>bui-{الاسم}-{نقطة التوقف}-{القيمة}</code>، مثل <code>bui-col-md-6</code> و<code>bui-offset-lg-2</code> و<code>bui-d-xl-none</code> و<code>bui-flex-sm-column</code>.</span></li>
+  <li><span lang="en">Classes combine. When several apply, the one for the largest matching breakpoint wins.</span><span lang="ar">تجتمع الأصناف. وعندما ينطبق عدة منها يفوز صنف أكبر نقطة توقف مطابقة.</span></li>
+  <li><span lang="en">The infix does not mean "only at": <code>bui-d-md-none</code> hides from 768px up. To hide only in a range, combine classes, for example <code>bui-d-md-none bui-d-xl-block</code>.</span><span lang="ar">اللاحقة لا تعني "عند فقط": يخفي <code>bui-d-md-none</code> من 768px فصاعدًا. ولإخفاء نطاق محدد اجمع الأصناف، مثل <code>bui-d-md-none bui-d-xl-block</code>.</span></li>
+  <li><span lang="en">The grid itself does not cause horizontal scrolling (checked from 320px to 2400px). Wide content inside a column, such as a long code line or a table, can still overflow it: make that content scrollable or let it wrap.</span><span lang="ar">الشبكة نفسها لا تسبب تمريرًا أفقيًّا (فُحصت من 320px إلى 2400px). لكن المحتوى العريض داخل عمود، كسطر شيفرة طويل أو جدول، قد يفيض منه: اجعله قابلًا للتمرير أو دعه يلتف.</span></li>
 </ul>
 <h2 id="mobile-first"><span lang="en">Mobile-first approach</span><span lang="ar">أسلوب mobile-first</span></h2>
-<p lang="en">The project guidance is to design for narrow screens first where appropriate: write the small-screen styles without a query, then add <code>min-width</code> queries that enhance the layout as space allows.</p>
-<p lang="ar">توجيه المشروع هو التصميم للشاشات الضيقة أولًا حيث يناسب: اكتب أنماط الشاشة الصغيرة بلا استعلام، ثم أضف استعلامات <code>min-width</code> تحسّن التخطيط كلما اتسعت المساحة.</p>
-<pre class="docs-code" data-lang="css"><code>.layout { display: grid; gap: var(--bui-space-4); }      /* narrow: one column */
-
-@media (min-width: 48rem) {
-  .layout { grid-template-columns: 16rem minmax(0, 1fr); }  /* wider: sidebar + content */
+<p lang="en">Write the small-screen layout first, with no breakpoint, then add classes for larger screens. A single column that grows is the usual pattern:</p>
+<p lang="ar">اكتب تخطيط الشاشة الصغيرة أولًا بلا نقطة توقف، ثم أضف أصنافًا للشاشات الأكبر. والنمط المعتاد عمود واحد يتسع:</p>
+<pre class="docs-code" data-lang="html"><code>&lt;div class="bui-col-12 bui-col-md-6 bui-col-xl-4"&gt;...&lt;/div&gt;
+&lt;!-- under 768px: full width, 768px+: half, 1200px+: one third --&gt;
+</code></pre>
+<p lang="en">Your layout must work below 480px too: that range has no query and is where every design starts.</p>
+<p lang="ar">يجب أن يعمل تخطيطك تحت 480px أيضًا: هذا النطاق بلا استعلام وهو نقطة بداية كل تصميم.</p>
+<h2 id="where-defined"><span lang="en">Where the values live</span><span lang="ar">أين تُخزَّن القيم</span></h2>
+<p lang="en">CSS custom properties cannot be used in a media query condition, so the breakpoints are not variables. Instead they are defined <strong>once</strong>, in <code>assets/css/baset-ui-layout.css</code>:</p>
+<p lang="ar">لا يمكن استخدام الخصائص المخصصة داخل شرط استعلام الوسائط، لذا فنقاط التوقف ليست متغيرات. بل هي معرَّفة <strong>مرة واحدة</strong> في <code>assets/css/baset-ui-layout.css</code>:</p>
+<ul>
+  <li><span lang="en">A table in the header comment lists the seven values.</span><span lang="ar">جدول في تعليق رأس الملف يسرد القيم السبع.</span></li>
+  <li><span lang="en">Section 5 of the file has exactly seven <code>@media (min-width: …)</code> blocks, in ascending order, and every responsive class lives inside one of them. Each value appears once.</span><span lang="ar">يضم القسم 5 من الملف سبع كتل <code>@media (min-width: …)</code> بالضبط بترتيب تصاعدي، وكل صنف متجاوب داخل إحداها. وتظهر كل قيمة مرة واحدة.</span></li>
+</ul>
+<pre class="docs-code" data-lang="css"><code>/* excerpt from baset-ui-layout.css, section 5 */
+@media (min-width: 768px) {
+  .bui-container { max-inline-size: 720px; }
+  /* ...every -md- class... */
+  .bui-col-md-6 { flex: 0 0 auto; inline-size: 50%; }
 }
 </code></pre>
-<ul>
-  <li><span lang="en">Use <code>rem</code> (or <code>em</code>) in media queries so breakpoints respect zoom and font-size changes.</span><span lang="ar">استخدم <code>rem</code> (أو <code>em</code>) في استعلامات الوسائط لتحترم نقاط التوقف التكبير وتغيير حجم الخط.</span></li>
-  <li><span lang="en">Prevent horizontal overflow: avoid fixed pixel widths and use <code>min-inline-size: 0</code> on flex or grid children that hold long content.</span><span lang="ar">امنع الفيضان الأفقي: تجنّب العروض الثابتة بالبكسل واستخدم <code>min-inline-size: 0</code> على أبناء flex أو grid الذين يحملون محتوى طويلًا.</span></li>
-  <li><span lang="en">Keep touch targets comfortable on small screens.</span><span lang="ar">أبقِ مساحات اللمس مريحة على الشاشات الصغيرة.</span></li>
-</ul>
 <h2 id="breakpoint-customization"><span lang="en">Breakpoint customization</span><span lang="ar">تخصيص نقاط التوقف</span></h2>
-<div class="docs-callout docs-callout--info" role="note">
-<p class="docs-callout__title"><span lang="en">Why not a variable?</span><span lang="ar">لماذا ليست متغيرًا؟</span></p>
-<p lang="en">CSS custom properties cannot be used inside a media query condition: <code>@media (min-width: var(--bui-bp-md))</code> does not work. That is why there is no breakpoint token.</p>
-<p lang="ar">لا يمكن استخدام الخصائص المخصصة في شرط استعلام الوسائط: <code>@media (min-width: var(--bui-bp-md))</code> لا يعمل. ولهذا لا يوجد token لنقاط التوقف.</p>
-</div>
-<p lang="en">Choose your own values and use them consistently. One way is to document them in a comment at the top of your stylesheet:</p>
-<p lang="ar">اختر قيمك وطبّقها باتساق. إحدى الطرق توثيقها في تعليق في أعلى ملف أنماطك:</p>
-<pre class="docs-code" data-lang="css"><code>/* My breakpoints (media queries cannot read CSS variables):
-   small  40rem
-   medium 48rem
-   large  64rem */
+<h3 id="own-queries"><span lang="en">In your own CSS</span><span lang="ar">في CSS الخاص بك</span></h3>
+<p lang="en">Use the same values so your components change at the same widths as the grid:</p>
+<p lang="ar">استخدم القيم نفسها لتتغير مكوناتك عند نفس عروض الشبكة:</p>
+<pre class="docs-code" data-lang="css"><code>@media (min-width: 480px)  { /* xs  */ }
+@media (min-width: 576px)  { /* sm  */ }
+@media (min-width: 768px)  { /* md  */ }
+@media (min-width: 992px)  { /* lg  */ }
+@media (min-width: 1200px) { /* xl  */ }
+@media (min-width: 1600px) { /* xxl */ }
+@media (min-width: 1920px) { /* xxxl */ }
 </code></pre>
-<p lang="en">Another technique avoids breakpoints for many cases: intrinsic layouts such as <code>repeat(auto-fit, minmax(...))</code> in <a href="grid-system.html">Grid System</a>.</p>
-<p lang="ar">وتقنية أخرى تتفادى نقاط التوقف في حالات كثيرة: التخطيطات الذاتية مثل <code>repeat(auto-fit, minmax(...))</code> في <a href="grid-system.html">نظام الشبكة</a>.</p>
-<h2 id="decisions"><span lang="en">Decisions before implementing</span><span lang="ar">قرارات قبل التنفيذ</span></h2>
-<p lang="en">These need the project owner's decision. Nothing here is implemented or promised.</p>
-<p lang="ar">هذه تحتاج قرار مالك المشروع. لا شيء منها منفَّذ أو موعود به.</p>
+<h3 id="change-values"><span lang="en">Changing an official value</span><span lang="ar">تغيير قيمة رسمية</span></h3>
+<p lang="en">Edit the value in its <code>@media</code> line and in the header table of <code>baset-ui-layout.css</code>. There is no other copy to keep in sync, but if you also use the value in your own CSS you must update that as well. If you ship a modified copy, tell your team: the documented widths on this site describe the file as delivered.</p>
+<p lang="ar">عدّل القيمة في سطر <code>@media</code> الخاص بها وفي جدول رأس <code>baset-ui-layout.css</code>. لا توجد نسخة أخرى تحتاج مزامنة، لكن إن استخدمت القيمة في CSS الخاص بك فعدّلها هناك أيضًا. وإن شحنت نسخة معدّلة فأخبر فريقك: فالعروض الموثقة في هذا الموقع تصف الملف كما سُلِّم.</p>
+<div class="docs-callout docs-callout--note" role="note">
+<p class="docs-callout__title"><span lang="en">This site uses other widths for itself</span><span lang="ar">هذا الموقع يستخدم عروضًا أخرى لنفسه</span></p>
+<p lang="en">The documentation site's own navigation changes at 75rem, 60rem and 48rem. Those are the docs site's choices, not Baset UI breakpoints. The grid examples on these pages follow the seven official breakpoints.</p>
+<p lang="ar">تتغير ملاحة موقع التوثيق نفسه عند 75rem و60rem و48rem. هذه اختيارات الموقع وليست نقاط توقف Baset UI. أما أمثلة الشبكة في هذه الصفحات فتتبع نقاط التوقف الرسمية السبع.</p>
+</div>
+<h2 id="not-implemented"><span lang="en">Not implemented</span><span lang="ar">غير منفَّذ</span></h2>
 <div class="docs-table-wrap">
 <table>
 <thead><tr>
-<th scope="col"><span lang="en">Question</span><span lang="ar">السؤال</span></th>
+<th scope="col"><span lang="en">Feature</span><span lang="ar">الميزة</span></th>
+<th scope="col"><span lang="en">Status</span><span lang="ar">الحالة</span></th>
+<th scope="col"><span lang="en">Notes</span><span lang="ar">ملاحظات</span></th>
+</tr></thead>
+<tbody>
+<tr><td><span lang="en">Breakpoint tokens (<code>--bui-breakpoint-md</code>)</span><span lang="ar">tokens لنقاط التوقف (<code>--bui-breakpoint-md</code>)</span></td><td><span class="docs-badge docs-badge--missing"><span lang="en">Not implemented yet</span><span lang="ar">غير منفَّذ بعد</span></span></td><td><span lang="en">Would be unused by the CSS itself. Not added.</span><span lang="ar">لن يستخدمها CSS نفسه. لم تُضَف.</span></td></tr>
+<tr><td><span lang="en">Container queries</span><span lang="ar">استعلامات الحاويات</span></td><td><span class="docs-badge docs-badge--missing"><span lang="en">Not implemented yet</span><span lang="ar">غير منفَّذ بعد</span></span></td><td><span lang="en">Not used by the layout.</span><span lang="ar">لا يستخدمها التخطيط.</span></td></tr>
+<tr><td><span lang="en">Max-width ("only up to") breakpoint classes</span><span lang="ar">أصناف نقاط التوقف بحد أقصى ("حتى" عرض معين)</span></td><td><span class="docs-badge docs-badge--missing"><span lang="en">Not implemented yet</span><span lang="ar">غير منفَّذ بعد</span></span></td><td><span lang="en">Combine two classes instead.</span><span lang="ar">اجمع صنفين بدلًا منها.</span></td></tr>
+</tbody></table></div>
+<h2 id="decisions"><span lang="en">Decisions for the project owner</span><span lang="ar">قرارات لمالك المشروع</span></h2>
+<p lang="en">These choices were made to deliver the feature and need your approval.</p>
+<p lang="ar">اتُّخذت هذه الاختيارات لتسليم الميزة وتحتاج موافقتك.</p>
+<div class="docs-table-wrap">
+<table>
+<thead><tr>
+<th scope="col"><span lang="en">Decision</span><span lang="ar">القرار</span></th>
 <th scope="col"><span lang="en">Status</span><span lang="ar">الحالة</span></th>
 </tr></thead>
 <tbody>
-<tr><td><span lang="en">Should the library define an official breakpoint scale?</span><span lang="ar">هل تعرّف المكتبة سلّم نقاط توقف رسميًّا؟</span></td><td><span class="docs-badge docs-badge--planned"><span lang="en">Decision needed</span><span lang="ar">يحتاج قرارًا</span></span></td></tr>
-<tr><td><span lang="en">If yes, which values, and which names?</span><span lang="ar">إن كان نعم، فما القيم وما الأسماء؟</span></td><td><span class="docs-badge docs-badge--planned"><span lang="en">Decision needed</span><span lang="ar">يحتاج قرارًا</span></span></td></tr>
-<tr><td><span lang="en">Will components use media queries, container queries or both?</span><span lang="ar">هل تستخدم المكونات استعلامات الوسائط أم استعلامات الحاويات أم كليهما؟</span></td><td><span class="docs-badge docs-badge--planned"><span lang="en">Decision needed</span><span lang="ar">يحتاج قرارًا</span></span></td></tr>
+<tr><td><span lang="en">The seven values and the <code>px</code> unit are as specified in the request.</span><span lang="ar">القيم السبع ووحدة <code>px</code> كما حُدِّدت في الطلب.</span></td><td><span class="docs-badge docs-badge--planned"><span lang="en">Decision needed</span><span lang="ar">يحتاج قرارًا</span></span></td></tr>
+<tr><td><span lang="en">Whether to add informational breakpoint tokens to <code>baset-ui.css</code> for JavaScript use.</span><span lang="ar">هل تُضاف tokens معلوماتية لنقاط التوقف إلى <code>baset-ui.css</code> لاستخدام جافاسكربت.</span></td><td><span class="docs-badge docs-badge--planned"><span lang="en">Decision needed</span><span lang="ar">يحتاج قرارًا</span></span></td></tr>
 </tbody></table></div>
 </article>
 <footer class="docs-footer" id="docs-footer"></footer>

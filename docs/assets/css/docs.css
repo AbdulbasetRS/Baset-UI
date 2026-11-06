@@ -386,7 +386,8 @@ h3:hover .docs-anchor,
 }
 .docs-table-wrap th { background: var(--bui-color-surface-muted); font-weight: var(--bui-font-weight-semibold); white-space: nowrap; }
 .docs-table-wrap tr:last-child td { border-block-end: 0; }
-.docs-table-wrap td:first-child { white-space: nowrap; }
+.docs-table-wrap td:first-child,
+.docs-table-wrap td code { white-space: nowrap; }
 .docs-table-wrap td.docs-wrap { white-space: normal; }
 
 /* Callouts */
@@ -965,6 +966,60 @@ html[dir="rtl"] .docs-pager__arrow--prev { transform: none; }
   font-size: var(--bui-font-size-sm); overflow-wrap: anywhere;
 }
 .docs-readout { font-variant-numeric: tabular-nums; font-weight: var(--bui-font-weight-semibold); }
+
+/* Grid demos: colors exist only to make the columns visible. The library has none. */
+.docs-gridlive { color: var(--bui-color-text); }
+.docs-article .docs-demo.docs-gridlive { padding-inline: var(--bui-space-6); }
+.docs-gridlive .bui-row > * {
+  min-block-size: 3rem;
+  padding-block: 0;
+  line-height: 3rem;
+  font-size: var(--bui-font-size-sm);
+  text-align: center;
+  background-color: var(--bui-color-primary-subtle);
+  background-clip: content-box;
+  overflow-wrap: anywhere;
+}
+.docs-gridlive .bui-row > *:nth-child(even) { background-color: var(--bui-color-info-subtle); }
+.docs-gridlive .bui-row .bui-row > * { background-color: var(--bui-color-warning-subtle); }
+.docs-gridlive .bui-row .bui-row > *:nth-child(even) { background-color: var(--bui-color-success-subtle); }
+.docs-gridlive .bui-row { margin-block-end: var(--bui-space-2); }
+.docs-gridlive .bui-container > :not(.bui-row),
+.docs-gridlive .bui-container-fluid > :not(.bui-row) {
+  padding-block: var(--bui-space-2);
+  font-size: var(--bui-font-size-sm);
+  text-align: center;
+  background-color: var(--bui-color-primary-subtle);
+}
+.docs-viewport__body { margin: 0; padding-block: var(--bui-space-3); background: var(--bui-color-bg); }
+.docs-viewport__body > .bui-container,
+.docs-viewport__body > .bui-container-fluid { background-color: var(--bui-color-surface-muted); }
+
+.docs-viewport {
+  margin-block: var(--bui-space-4) var(--bui-space-6);
+  border: var(--bui-border-width) solid var(--bui-color-border);
+  border-radius: var(--bui-radius-lg);
+  background: var(--bui-color-surface);
+  overflow: hidden;
+}
+.docs-viewport__bar {
+  display: flex; flex-wrap: wrap; align-items: center; gap: var(--bui-space-2);
+  padding: var(--bui-space-3);
+  border-block-end: var(--bui-border-width) solid var(--bui-color-border);
+  background: var(--bui-color-surface-muted);
+}
+.docs-viewport__bar button {
+  min-block-size: 2.25rem; padding-inline: var(--bui-space-3);
+  border: var(--bui-border-width) solid var(--bui-color-border-strong); border-radius: var(--bui-radius-md);
+  background: var(--bui-color-surface); color: var(--bui-color-text); font: inherit; font-size: var(--bui-font-size-sm); cursor: pointer;
+}
+.docs-viewport__bar button[aria-pressed="true"] { background: var(--bui-color-primary); border-color: var(--bui-color-primary); color: var(--bui-color-on-primary); }
+.docs-viewport__info { margin-inline-start: auto; font-size: var(--bui-font-size-xs); color: var(--bui-color-text-muted); }
+.docs-viewport__stage { overflow-x: auto; background: var(--bui-color-bg); }
+.docs-viewport__frame { display: block; max-inline-size: none; block-size: 18rem; border: 0; background: var(--bui-color-bg); margin-inline: auto; }
+
+/* Inline code is always left-to-right and isolated, so selectors such as ".bui-row > *" keep their order inside Arabic text */
+.docs-article code { direction: ltr; unicode-bidi: isolate; }
 
 /* ------------------------------------------------- Language visibility
    Keep last: it has to win over any display value set above. Elements that

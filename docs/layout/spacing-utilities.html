@@ -4,10 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Spacing Utilities · Baset UI</title>
-<meta name="description" content="Spacing utility classes status and native alternatives.">
+<meta name="description" content="Gutter classes and the status of margin, padding and gap utilities.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230f766e'/%3E%3Crect x='7' y='8' width='18' height='3.6' rx='1.8' fill='%23fff'/%3E%3Crect x='7' y='14.2' width='12' height='3.6' rx='1.8' fill='%23fff'/%3E%3Crect x='7' y='20.4' width='15' height='3.6' rx='1.8' fill='%23fff'/%3E%3C/svg%3E">
 <script src="../assets/js/init.js"></script>
 <link rel="stylesheet" href="../../assets/css/baset-ui.css">
+<link rel="stylesheet" href="../../assets/css/baset-ui-layout.css">
 <link rel="stylesheet" href="../assets/css/docs.css">
 </head>
 <body>
@@ -27,12 +28,12 @@
 
 </noscript>
 <h1><span lang="en">Spacing Utilities</span><span lang="ar">أدوات المسافات</span></h1>
-<p class="docs-lead" lang="en">Spacing utilities would be classes that set margin, padding or gap from the spacing scale. None exist today. The spacing scale itself does exist as tokens; it is documented under Customize.</p>
-<p class="docs-lead" lang="ar">أدوات المسافات هي أصناف تضبط الهامش أو الحشوة أو الفجوة من سلّم المسافات. لا يوجد أي منها اليوم. أما سلّم المسافات نفسه فموجود كـ tokens وهو موثّق في قسم Customize.</p>
-<div class="docs-callout docs-callout--warning" role="note">
-<p class="docs-callout__title"><span lang="en">No layout system exists yet</span><span lang="ar">لا يوجد نظام تخطيط بعد</span></p>
-<p lang="en">Baset UI currently ships design tokens only (<code>assets/css/baset-ui.css</code>). There are no <code>bui-</code> layout classes, no breakpoints and no JavaScript. This page documents what is true today. Examples that use <code>display</code>, <code>flex</code> or <code>grid</code> are plain CSS that you write yourself with the tokens; the class names in them belong to your code, not to Baset UI.</p>
-<p lang="ar">تشحن Baset UI اليوم Design Tokens فقط (<code>assets/css/baset-ui.css</code>). لا توجد أصناف تخطيط بالبادئة <code>bui-</code> ولا نقاط توقف ولا جافاسكربت. توثّق هذه الصفحة ما هو صحيح اليوم. الأمثلة التي تستخدم <code>display</code> أو <code>flex</code> أو <code>grid</code> هي CSS عادي تكتبه أنت بالـ tokens؛ وأسماء الأصناف فيها تخص شيفرتك وليست من Baset UI.</p>
+<p class="docs-lead" lang="en">The only spacing utilities Baset UI has are the gutter classes of the grid. Margin, padding and gap utility classes do not exist. The spacing scale itself is available as tokens.</p>
+<p class="docs-lead" lang="ar">أدوات المسافات الوحيدة في Baset UI هي أصناف مسافات الشبكة. أما أصناف الهامش والحشوة والفجوة فغير موجودة. وسلّم المسافات نفسه متاح كـ tokens.</p>
+<div class="docs-callout docs-callout--info" role="note">
+<p class="docs-callout__title"><span lang="en">Files you need</span><span lang="ar">الملفات التي تحتاجها</span></p>
+<p lang="en">Load both stylesheets: <code>assets/css/baset-ui.css</code> (the tokens; the layout uses its <code>--bui-space-*</code> values) and <code>assets/css/baset-ui-layout.css</code>. The layout file has no JavaScript, no colors, no reset and no <code>!important</code>.</p>
+<p lang="ar">حمّل ملفَّي الأنماط: <code>assets/css/baset-ui.css</code> (الـ tokens؛ فالتخطيط يستخدم قيم <code>--bui-space-*</code>) و<code>assets/css/baset-ui-layout.css</code>. ملف التخطيط بلا جافاسكربت ولا ألوان ولا reset ولا <code>!important</code>.</p>
 </div>
 <div class="docs-table-wrap">
 <table>
@@ -41,6 +42,7 @@
 <th scope="col"><span lang="en">Status</span><span lang="ar">الحالة</span></th>
 </tr></thead>
 <tbody>
+<tr><td><span lang="en">Gutter classes <code>bui-g-*</code>, <code>bui-gx-*</code>, <code>bui-gy-*</code> (0 to 5)</span><span lang="ar">أصناف المسافات <code>bui-g-*</code> و<code>bui-gx-*</code> و<code>bui-gy-*</code> (من 0 إلى 5)</span></td><td><span class="docs-badge docs-badge--available"><span lang="en">Available</span><span lang="ar">متاح</span></span></td></tr>
 <tr><td><span lang="en">Margin utility classes</span><span lang="ar">أصناف الهوامش المساعدة</span></td><td><span class="docs-badge docs-badge--missing"><span lang="en">Not implemented yet</span><span lang="ar">غير منفَّذ بعد</span></span></td></tr>
 <tr><td><span lang="en">Padding utility classes</span><span lang="ar">أصناف الحشوة المساعدة</span></td><td><span class="docs-badge docs-badge--missing"><span lang="en">Not implemented yet</span><span lang="ar">غير منفَّذ بعد</span></span></td></tr>
 <tr><td><span lang="en">Gap utility classes</span><span lang="ar">أصناف الفجوات المساعدة</span></td><td><span class="docs-badge docs-badge--missing"><span lang="en">Not implemented yet</span><span lang="ar">غير منفَّذ بعد</span></span></td></tr>
@@ -49,6 +51,24 @@
 </tbody></table></div>
 <p lang="en">Class names such as <code>bui-m-4</code>, <code>bui-p-2</code> or <code>bui-gap-3</code> are <strong>not</strong> defined. Do not use them.</p>
 <p lang="ar">أسماء أصناف مثل <code>bui-m-4</code> أو <code>bui-p-2</code> أو <code>bui-gap-3</code> <strong>غير</strong> معرَّفة. لا تستخدمها.</p>
+<h2 id="gutters"><span lang="en">Gutters (available)</span><span lang="ar">أصناف المسافات بين الأعمدة (متاحة)</span></h2>
+<p lang="en">Put the class on a <code>bui-row</code>. The full explanation and live examples are in <a href="grid-system.html#gutters">Grid System, Gutters</a>.</p>
+<p lang="ar">ضع الصنف على <code>bui-row</code>. الشرح الكامل والأمثلة الحية في <a href="grid-system.html#gutters">نظام الشبكة، المسافات بين الأعمدة</a>.</p>
+<div class="docs-table-wrap">
+<table>
+<thead><tr>
+<th scope="col"><span lang="en">Step</span><span lang="ar">الدرجة</span></th>
+<th scope="col"><span lang="en">Token</span><span lang="ar">الـ token</span></th>
+<th scope="col"><span lang="en"><code>bui-g-n</code> / <code>bui-gx-n</code> / <code>bui-gy-n</code></span><span lang="ar"><code>bui-g-n</code> / <code>bui-gx-n</code> / <code>bui-gy-n</code></span></th>
+</tr></thead>
+<tbody>
+<tr><td>0</td><td><span lang="en">none</span><span lang="ar">لا شيء</span></td><td>0</td></tr>
+<tr><td>1</td><td><code>--bui-space-1</code></td><td>0.25rem</td></tr>
+<tr><td>2</td><td><code>--bui-space-2</code></td><td>0.5rem</td></tr>
+<tr><td>3</td><td><code>--bui-space-4</code></td><td>1rem</td></tr>
+<tr><td>4</td><td><code>--bui-space-6</code></td><td>1.5rem</td></tr>
+<tr><td>5</td><td><code>--bui-space-12</code></td><td>3rem</td></tr>
+</tbody></table></div>
 <h2 id="margin"><span lang="en">Margin</span><span lang="ar">الهامش</span></h2>
 <p lang="en">Use the tokens with logical properties in your own CSS. See the examples in <a href="../customize/spacing.html#margin-padding">Spacing</a>.</p>
 <p lang="ar">استخدم الـ tokens مع الخصائص المنطقية في CSS الخاص بك. راجع الأمثلة في <a href="../customize/spacing.html#margin-padding">المسافات</a>.</p>
@@ -60,21 +80,19 @@
 <h2 id="gap"><span lang="en">Gap</span><span lang="ar">الفجوة</span></h2>
 <pre class="docs-code" data-lang="css"><code>.cluster { display: flex; flex-wrap: wrap; gap: var(--bui-space-3); }
 </code></pre>
-<h2 id="responsive-spacing-utilities"><span lang="en">Responsive spacing utilities</span><span lang="ar">أدوات مسافات متجاوبة</span></h2>
-<p lang="en">Not implemented. For responsive spacing use <code>clamp()</code> or a media query in your own CSS, as shown in <a href="../customize/spacing.html#responsive-spacing">Spacing, Responsive spacing</a>.</p>
-<p lang="ar">غير منفَّذ. للمسافات المتجاوبة استخدم <code>clamp()</code> أو استعلام وسائط في CSS الخاص بك، كما في <a href="../customize/spacing.html#responsive-spacing">المسافات، مسافات متجاوبة</a>.</p>
-<h2 id="decisions"><span lang="en">Decisions before implementing</span><span lang="ar">قرارات قبل التنفيذ</span></h2>
-<p lang="en">These need the project owner's decision. Nothing here is implemented or promised.</p>
-<p lang="ar">هذه تحتاج قرار مالك المشروع. لا شيء منها منفَّذ أو موعود به.</p>
+<p lang="en">For a flex container with gaps you can also use a grid row: <code>bui-row bui-g-3</code>. Responsive spacing is covered in <a href="../customize/spacing.html#responsive-spacing">Spacing, Responsive spacing</a>.</p>
+<p lang="ar">ولحاوية flex بفجوات يمكنك استخدام صف الشبكة: <code>bui-row bui-g-3</code>. والمسافات المتجاوبة موضحة في <a href="../customize/spacing.html#responsive-spacing">المسافات، مسافات متجاوبة</a>.</p>
+<h2 id="decisions"><span lang="en">Decisions for the project owner</span><span lang="ar">قرارات لمالك المشروع</span></h2>
+<p lang="en">These choices were made to deliver the feature and need your approval.</p>
+<p lang="ar">اتُّخذت هذه الاختيارات لتسليم الميزة وتحتاج موافقتك.</p>
 <div class="docs-table-wrap">
 <table>
 <thead><tr>
-<th scope="col"><span lang="en">Question</span><span lang="ar">السؤال</span></th>
+<th scope="col"><span lang="en">Decision</span><span lang="ar">القرار</span></th>
 <th scope="col"><span lang="en">Status</span><span lang="ar">الحالة</span></th>
 </tr></thead>
 <tbody>
-<tr><td><span lang="en">Are spacing utilities wanted at all? The architecture says the core should not become a large utility framework.</span><span lang="ar">هل نحتاج أدوات مسافات أصلًا؟ تنص البنية على ألا يتحول الـ core إلى إطار أدوات ضخم.</span></td><td><span class="docs-badge docs-badge--planned"><span lang="en">Decision needed</span><span lang="ar">يحتاج قرارًا</span></span></td></tr>
-<tr><td><span lang="en">If yes: naming scheme, which sides, which steps, and whether they are responsive.</span><span lang="ar">إن احتجناها: نظام التسمية، والجهات، والدرجات، وهل تكون متجاوبة.</span></td><td><span class="docs-badge docs-badge--planned"><span lang="en">Decision needed</span><span lang="ar">يحتاج قرارًا</span></span></td></tr>
+<tr><td><span lang="en">Are margin, padding and gap utilities wanted at all? The architecture says the core should not become a large utility framework, so they were not added.</span><span lang="ar">هل نحتاج أدوات الهامش والحشوة والفجوة أصلًا؟ تنص البنية على ألا يتحول الـ core إلى إطار أدوات ضخم، لذا لم تُضَف.</span></td><td><span class="docs-badge docs-badge--planned"><span lang="en">Decision needed</span><span lang="ar">يحتاج قرارًا</span></span></td></tr>
 </tbody></table></div>
 </article>
 <footer class="docs-footer" id="docs-footer"></footer>

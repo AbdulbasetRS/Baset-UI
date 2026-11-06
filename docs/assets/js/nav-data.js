@@ -212,12 +212,12 @@
             path: 'layout/containers.html',
             title: { en: 'Containers', ar: 'الحاويات' },
             description: {
-              en: 'Fixed, fluid and responsive containers: what exists (nothing yet) and how to build them with the tokens.',
-              ar: 'الحاويات الثابتة والسائلة والمتجاوبة: ما هو موجود (لا شيء بعد) وكيف تبنيها بالـ tokens.'
+              en: 'Fixed and fluid containers: bui-container, bui-container-fluid, maximum widths per breakpoint.',
+              ar: 'الحاويات الثابتة والسائلة: bui-container وbui-container-fluid وأقصى العروض لكل نقطة توقف.'
             },
             keywords: {
-              en: 'containers fixed fluid responsive max-inline-size width center',
-              ar: 'حاويات ثابتة سائلة متجاوبة عرض أقصى توسيط'
+              en: 'containers container fluid bui-container bui-container-fluid max width centered responsive',
+              ar: 'حاويات bui-container bui-container-fluid عرض أقصى توسيط متجاوب سائلة ثابتة'
             }
           },
           {
@@ -225,12 +225,12 @@
             path: 'layout/grid-system.html',
             title: { en: 'Grid System', ar: 'نظام الشبكة' },
             description: {
-              en: 'Grid status (not implemented) and native CSS Grid patterns: columns, rows, gutters and responsive layouts.',
-              ar: 'حالة الشبكة (غير منفَّذة) وأنماط CSS Grid الأصلية: الأعمدة والصفوف والمسافات والتخطيطات المتجاوبة.'
+              en: 'The 12-column responsive grid: containers, rows, columns, gutters, auto layout, nesting, alignment, offset and order.',
+              ar: 'شبكة الـ 12 عمودًا المتجاوبة: الحاويات والصفوف والأعمدة والمسافات والتخطيط التلقائي والتداخل والمحاذاة والإزاحة والترتيب.'
             },
             keywords: {
-              en: 'grid system columns rows gutters responsive layout css grid auto-fit minmax gap',
-              ar: 'شبكة نظام أعمدة صفوف مسافات تخطيط متجاوب'
+              en: 'grid system 12 columns bui-row bui-col bui-col-md-6 gutters bui-g-3 offset order nesting auto layout responsive align',
+              ar: 'شبكة نظام 12 عمود صف أعمدة bui-row bui-col مسافات إزاحة ترتيب تداخل تخطيط تلقائي محاذاة متجاوب'
             }
           },
           {
@@ -238,12 +238,12 @@
             path: 'layout/breakpoints.html',
             title: { en: 'Breakpoints', ar: 'نقاط التوقف' },
             description: {
-              en: 'Implemented breakpoints (none), responsive behavior, the mobile-first approach and breakpoint customization.',
-              ar: 'نقاط التوقف المنفَّذة (لا يوجد)، والسلوك المتجاوب، وأسلوب mobile-first، وتخصيص نقاط التوقف.'
+              en: 'The seven official breakpoints (xs to xxxl), the mobile-first approach, where the values live and how to customize them.',
+              ar: 'نقاط التوقف الرسمية السبع (من xs إلى xxxl)، وأسلوب mobile-first، وأين تُخزَّن القيم، وكيف تخصّصها.'
             },
             keywords: {
-              en: 'breakpoints media queries mobile first responsive min-width rem container queries',
-              ar: 'نقاط التوقف استعلامات الوسائط متجاوب mobile first'
+              en: 'breakpoints xs sm md lg xl xxl xxxl 480 576 768 992 1200 1600 1920 media queries min-width mobile first',
+              ar: 'نقاط التوقف xs sm md lg xl xxl xxxl استعلامات الوسائط mobile first 768 992 1200'
             }
           },
           {
@@ -251,12 +251,12 @@
             path: 'layout/display.html',
             title: { en: 'Display', ar: 'العرض' },
             description: {
-              en: 'Display and visibility: native CSS and HTML equivalents, hiding techniques and their accessibility effect.',
-              ar: 'العرض والإظهار: المكافئات الأصلية في CSS وHTML، وأساليب الإخفاء وأثرها على إمكانية الوصول.'
+              en: 'Display and visibility utilities (bui-d-*) with responsive variants, and how to show or hide content by breakpoint.',
+              ar: 'أدوات العرض والإظهار (bui-d-*) مع متغيرات متجاوبة، وكيف تُظهر المحتوى أو تُخفيه حسب نقطة التوقف.'
             },
             keywords: {
-              en: 'display visibility hidden none block inline flex grid visually hidden sr-only responsive show hide',
-              ar: 'عرض إظهار إخفاء hidden none block inline قارئ الشاشة متجاوب'
+              en: 'display visibility bui-d-none bui-d-md-block hidden show hide responsive utilities',
+              ar: 'عرض إظهار إخفاء bui-d-none bui-d-md-block hidden أدوات متجاوب'
             }
           },
           {
@@ -264,12 +264,12 @@
             path: 'layout/flexbox.html',
             title: { en: 'Flexbox', ar: 'Flexbox' },
             description: {
-              en: 'Flexbox status and a live playground: direction, justify content, align items, wrap and utilities.',
-              ar: 'حالة Flexbox مع ساحة تجربة حية: الاتجاه ومحاذاة المحتوى والعناصر والالتفاف والأدوات.'
+              en: 'Flex utilities: direction, justify-content, align-items, align-content, align-self and wrap, with a live class playground.',
+              ar: 'أدوات flex: الاتجاه وjustify-content وalign-items وalign-content وalign-self والالتفاف، مع ساحة تجربة حية بالأصناف.'
             },
             keywords: {
-              en: 'flexbox flex direction justify content align items wrap gap utilities playground',
-              ar: 'flexbox اتجاه محاذاة التفاف فجوة أدوات تجربة'
+              en: 'flexbox flex direction justify-content align-items align-content align-self wrap bui-flex bui-justify-content utilities playground',
+              ar: 'flexbox اتجاه محاذاة التفاف bui-flex bui-justify-content bui-align-items أدوات تجربة'
             }
           },
           {
@@ -277,12 +277,12 @@
             path: 'layout/spacing-utilities.html',
             title: { en: 'Spacing Utilities', ar: 'أدوات المسافات' },
             description: {
-              en: 'Margin, padding and gap utility classes: not implemented, with the native alternatives.',
-              ar: 'أصناف الهامش والحشوة والفجوة المساعدة: غير منفَّذة، مع البدائل الأصلية.'
+              en: 'The grid gutter classes (bui-g, bui-gx, bui-gy) and the status of margin, padding and gap utilities (not implemented).',
+              ar: 'أصناف مسافات الشبكة (bui-g وbui-gx وbui-gy) وحالة أدوات الهامش والحشوة والفجوة (غير منفَّذة).'
             },
             keywords: {
-              en: 'spacing utilities margin padding gap classes responsive not implemented',
-              ar: 'أدوات المسافات هامش حشوة فجوة أصناف غير منفذ'
+              en: 'spacing utilities gutters bui-g-3 bui-gx bui-gy margin padding gap not implemented',
+              ar: 'أدوات المسافات مسافات bui-g-3 bui-gx bui-gy هامش حشوة فجوة غير منفذ'
             }
           }
         ]
