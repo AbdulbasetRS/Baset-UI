@@ -102,6 +102,10 @@ Follow `instructions/ASSET_ORGANIZATION.md` for every asset decision.
 - Do not create a runtime entry point until actual runtime JavaScript is needed.
 - Do not add a package manager, compiler, bundler, or mandatory runtime dependency without explicit approval.
 
+### Icons
+
+Follow the icon usage policy in `ARCHITECTURE.md`, section 10. Use only the official Baset-UI icon assets, never emoji or Unicode/text characters as icons, and never an external icon library without approval. If a needed icon is missing, omit the optional icon, or report it and request approval when it is essential.
+
 ## 9. Documentation and examples
 
 Documentation is part of the implementation, not a later optional polish step.
@@ -172,6 +176,7 @@ Do not create a fake preview URL or claim that a server, browser session, test, 
 - [ ] Responsive layout and keyboard behavior are checked where relevant.
 - [ ] Initialization and cleanup are checked where relevant.
 - [ ] No new console errors.
+- [ ] Icons come from official Baset-UI assets; no emoji or text-character icon substitutes.
 - [ ] Documentation is updated and accurate.
 - [ ] Playground options reflect real functionality, and generated code reflects the same configuration.
 - [ ] Tests and limitations are reported.

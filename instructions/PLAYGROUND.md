@@ -6,7 +6,7 @@ The Playground is part of the documentation/developer experience. It allows user
 
 It is not part of the library runtime and must not be required by applications that consume Baset-UI. Keep Playground scripts under the documentation asset area (`docs-assets/`), not under public runtime assets.
 
-The repository currently has documentation demonstrations such as live token/layout examples, but do not assume a complete component Playground exists. Extend the actual implementation rather than building a duplicate system.
+Never assume a Playground exists for a given component or for the global theme. Inspect the documentation assets and pages first, and extend the actual implementation rather than building a duplicate system.
 
 ## 2. Playground modes
 
@@ -39,6 +39,7 @@ Rules:
 - Do not add decorative/inert controls.
 - Use the component's actual defaults and validation.
 - Do not claim a Playground exists for a component until it is usable.
+- An icon control offers only icon names that exist in the actual Baset-UI icon system; if no icon system or icon exists, do not show the control. See `ARCHITECTURE.md`, section 10.
 
 ## 3. Page experience
 
@@ -74,7 +75,7 @@ A component definition/schema should describe, where applicable:
 
 Use one normalized configuration object as the input for Live Preview and Code Generator. Do not derive exported code by scraping the preview DOM.
 
-A conceptual component definition (the format may evolve; define and document the schema before implementing several definitions):
+A conceptual component definition. This example is illustrative only: it is not a verified public API, the format may evolve, and the schema must be defined and documented before several definitions are implemented:
 
 ```js
 const buttonDefinition = {
@@ -90,7 +91,7 @@ const buttonDefinition = {
 };
 ```
 
-This is an architectural illustration. Button does not exist yet, and its option names are not a public contract.
+The component name, option names, and values above are placeholders for illustration and are not a public contract. A real definition is derived from the implemented component.
 
 The actual component implementation remains authoritative; a schema cannot invent behavior.
 
@@ -133,11 +134,11 @@ See `CODE_GENERATOR.md` for target status, output, escaping, and tests.
 
 ### 7.1 Code panel
 
-The generated-code area includes a target selector (for example HTML, React JSX, Vue, Angular, or Laravel Blade), syntax highlighting only when a highlighting solution already exists or is approved, a copy action that reports truthful success or failure, a clear list of required imports, styles, scripts, packages, and setup steps, and a visible status when a target is experimental, markup-only, or unsupported. The panel must not imply that every target has a dedicated adapter.
+The generated-code area includes a target selector (for example HTML, React JSX, Vue, Angular, or Laravel Blade), syntax highlighting only when a highlighting solution already exists or is approved, a copy action that reports truthful success or failure, a clear list of required imports, styles, scripts, packages, and setup steps, and a visible status when a target is experimental, markup-only, or unsupported. The panel must not imply that every target has a dedicated adapter. Generated output never contains emoji or text-character icon placeholders (see `CODE_GENERATOR.md`).
 
 ### 7.2 Configuration persistence
 
-Copying, downloading, and importing configuration JSON, and saving presets locally, are possible future capabilities. If browser storage is used: store only non-sensitive UI configuration, version the stored schema, handle invalid or old data, provide reset/clear behavior, and do not assume storage is available in every browser context. Do not build accounts, cloud sync, or server-side preset storage unless explicitly requested.
+Copying, downloading, and importing configuration JSON, and saving presets locally, are optional capabilities and are never assumed to exist. If browser storage is used: store only non-sensitive UI configuration, version the stored schema, handle invalid or old data, provide reset/clear behavior, and do not assume storage is available in every browser context. Do not build accounts, cloud sync, or server-side preset storage unless explicitly requested.
 
 ## 8. Global theme versus per-component customization
 
@@ -182,11 +183,12 @@ Test:
 - Keyboard use and visible focus.
 - Generated output matching the preview configuration.
 - Safe handling of text containing quotes, angle brackets, ampersands, and Arabic characters.
+- Icon controls offer only real icon names, and no emoji or text-character icon substitutes appear in the preview.
 - No console errors or unintended changes to the docs shell.
 
 ## 12. Incremental rollout
 
-Validate the system with one real component before building more: a small Button Playground first, then the shared configuration and preview mechanism, HTML and JSX export templates, Vue/Angular/Blade markup templates after verification, the Global Theme Playground, interactive component previews, saved presets, and finally additional targets. Do not build every component's Playground in one pass.
+Validate the system with one small, real, implemented component before building more. Then add, in order: the shared configuration and preview mechanism, HTML and JSX export templates, Vue/Angular/Blade markup templates after verification, the Global Theme Playground, interactive component previews, saved presets, and finally additional targets. Do not build every component's Playground in one pass.
 
 ## 13. Definition of done
 

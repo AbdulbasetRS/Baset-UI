@@ -61,6 +61,7 @@ If pre-existing changes overlap the requested files, incorporate them carefully 
 - Do not create unnecessary files, placeholders, duplicate implementations, dependencies, or build tools.
 - Preserve existing behavior unless a change is explicitly requested.
 - Keep RTL/LTR, light/dark, responsive behavior, and accessibility in scope where relevant.
+- Follow the icon usage policy in `ARCHITECTURE.md`, section 10: official Baset-UI icon assets only, never emoji or text characters as icons.
 - Do not claim support for code or framework targets that have not been implemented and tested.
 
 ## 6. Phase D — Update documentation
@@ -91,6 +92,7 @@ At minimum, as relevant:
 - Check RTL/LTR and light/dark behavior where applicable.
 - Check narrow and wide viewports.
 - Check accessibility basics and keyboard behavior for controls.
+- Check that no emoji or text-character icon substitutes were introduced.
 
 Report commands and results exactly. If a test could not be run, say why. Never invent passing results.
 

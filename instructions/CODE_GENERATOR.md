@@ -4,7 +4,7 @@
 
 The Code Generator is a documentation/Playground developer tool. It turns a component's structured configuration into code examples for a selected target. It is not part of the Baset-UI runtime and must never be required to use the library.
 
-This document defines the rules for implementing or extending the generator. It does not claim that a complete generator or every target already exists. Inspect the working tree and mark each feature as implemented, experimental, planned, or unavailable.
+This document defines the rules for implementing or extending the generator. Never assume that a generator or a given target exists. Inspect the working tree and mark each feature as implemented, experimental, planned, or unavailable.
 
 ## 2. Core rule: one configuration, multiple outputs
 
@@ -39,7 +39,7 @@ Use the component's real implementation as the authority. A schema must not inve
 
 ## 4. Generator input and result
 
-A conceptual input may look like:
+The following shapes are illustrative, not verified public APIs. A conceptual input may look like:
 
 ```js
 {
@@ -119,6 +119,16 @@ Ordinary HTML is valid Blade-compatible markup. Do not generate custom tags such
 
 If a selected target cannot represent an option, do not drop it silently. Show a clear explanation, offer a safe alternative when one exists, and add a note to the generated output when a manual adjustment is required. If a feature needs a dedicated adapter that does not exist, say so. The UI must not display unavailable targets as fully supported.
 
+### Icons
+
+Generated code follows the icon usage policy in `ARCHITECTURE.md`, section 10:
+
+- Output uses the real Baset-UI icon markup and only icon names that exist in the actual icon system.
+- Output lists the icon assets and setup it requires, and only assets that exist.
+- Never generate emoji, Unicode symbols, or CSS text characters as icon placeholders.
+- If an icon is requested but no icon system or matching icon exists, omit the icon, report the omission as an unsupported option, and do not substitute a character.
+- Icon-only output includes an accessible name, and purely decorative icons are hidden from assistive technologies.
+
 ## 6. Interactive component output
 
 An interactive component may require multiple output files or sections:
@@ -186,6 +196,7 @@ For each supported target, verify:
 - Correct class/attribute syntax for that target.
 - Required imports and assets.
 - Unsupported options are reported, not silently dropped.
+- Icon output uses real icon names and assets, with no emoji or text-character placeholders.
 - Interactive lifecycle and cleanup where claimed.
 
 Syntax tests alone are insufficient for a target that claims interactive behavior. Test in the actual target environment.

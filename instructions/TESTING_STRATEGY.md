@@ -6,7 +6,7 @@ Testing protects public CSS and JavaScript contracts, component behavior, respon
 
 The testing approach should grow with the real project. Do not introduce a large testing stack before it is justified, but do not treat visual inspection alone as sufficient for complex interaction.
 
-The current public baseline does not show a dedicated automated test framework. Inspect the actual working tree before choosing tools. Do not add mandatory test dependencies or a build system without approval.
+Before choosing tools, inspect the existing test scripts, configuration, and dependencies, and reuse existing testing infrastructure when it is appropriate. Do not add mandatory test dependencies or a build system without approval. Test actual functionality and edge cases, not only the initial appearance.
 
 ## 2. Testing layers
 
@@ -22,6 +22,7 @@ Use available tools or lightweight scripts to check:
 - Stale references to renamed files.
 - Documentation links and navigation targets.
 - No accidental debug output or new console errors.
+- No emoji or Unicode/text-character icon substitutes in project-authored files (see `ARCHITECTURE.md`, section 10), and no reference to an icon file or icon name that does not exist.
 
 Do not install a dependency solely to run a check that can reasonably be performed with existing tools, unless the project owner approves it.
 
@@ -104,6 +105,7 @@ A plain HTML snippet is not an integration test.
 | Direction | RTL and LTR |
 | Responsive | Small, medium, and large viewports |
 | Accessibility | Semantics, labels, keyboard, focus, ARIA where needed |
+| Icons | Official icon assets only, no emoji or text-character substitutes, accessible names, theme and RTL/LTR behavior |
 | Browser | Actual target browsers/devices where available |
 | Documentation | Examples match the implementation; links and assets load |
 | Playground | Controls update the real preview; state stays isolated |
@@ -158,9 +160,10 @@ For every affected docs page, check:
 - Arabic/English direction and language switching where available.
 - Light/dark docs theme.
 - Code examples match current APIs and files.
+- Icons in page content come from approved assets; no emoji or text-character icons.
 - Console and network panel show no new errors.
 
-With the documentation in the repository root, test both `index.html` and nested pages such as `getting-started/install.html` or `layout/grid-system.html` directly and after refresh.
+Test both the root `index.html` and nested pages such as `getting-started/install.html` or `layout/grid-system.html` directly and after refresh.
 
 ## 7. Playground and Code Generator tests
 
@@ -185,6 +188,7 @@ For the Code Generator:
 - Unsupported options are not silently dropped.
 - Only tested targets are marked supported.
 - Interactive output is tested in the environment it claims to support.
+- Generated output never contains emoji or text-character icon placeholders and references only real icon names and assets.
 
 ## 8. Browser and viewport coverage
 

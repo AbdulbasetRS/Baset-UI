@@ -62,7 +62,7 @@ docs-assets/
     └── other-docs-only-scripts.js
 ```
 
-The repository currently has `assets/css/baset-ui.css`, `assets/css/baset-ui-layout.css`, and documentation-only files under `docs-assets/` (`css/docs.css` and the scripts `docs.js`, `highlight.js`, `init.js`, `layout-demo.js`, `nav-data.js`, `search.js`, and `tokens-live.js`). Treat the structure above as the target, not a claim that all listed library files already exist.
+This tree is the intended organization, not an inventory. Files marked "only if" exist only when the corresponding feature is real. Always inspect the actual checkout to learn which files exist, and never reference a file that does not.
 
 ## 4. CSS file policy
 
@@ -93,7 +93,7 @@ Do not create files such as:
 - `baset-ui-breakpoints.css`
 - `baset-ui-helpers.css`
 
-The current `baset-ui-layout.css` is a transitional existing file. Do not create another layout file. During the designated consolidation task, merge its validated rules into `baset-ui.css`, preserve every supported class and responsive behavior, update all references and documentation, then remove the old file only after validation.
+If a legacy file in `assets/css/` overlaps this foundation, do not create another file of the same kind. Handle it with the legacy-file rules in section 8.
 
 ### 4.2 Optional feature stylesheets
 
@@ -128,9 +128,9 @@ Do not create a separate file for one small variant, a handful of selectors, or 
 
 ## 5. JavaScript file policy
 
-### 5.1 Current-state rule
+### 5.1 Runtime JavaScript rule
 
-Do not assume `assets/js/baset-ui.js` exists. The public baseline inspected for this instruction set did not contain a runtime JavaScript entry point. The JavaScript under the documentation site is documentation code, not library runtime code.
+Never assume `assets/js/baset-ui.js` exists; check the checkout. JavaScript under `docs-assets/` is documentation code, not library runtime code.
 
 Never create an empty `baset-ui.js` just to satisfy a proposed structure. If a task is CSS-only, keep it CSS-only.
 
@@ -173,6 +173,9 @@ Examples include navigation, search, language switching, code highlighting, live
 - Do not add large font/icon bundles for a single optional glyph.
 - Document licenses and attribution for third-party assets.
 - Do not invent an icon naming API before one exists.
+- Do not add an external icon library or a mandatory icon dependency without explicit approval.
+- Never use emoji or Unicode/text characters as icons. The full icon usage policy is in `ARCHITECTURE.md`, section 10; follow it for every icon decision.
+- Icon assets live in `assets/icons/` only when they are real, public, and distributed intentionally. Never reference an icon file or icon name that does not exist.
 - Keep documentation logos, favicons, and illustrative images separate if they are not library assets.
 
 ## 7. Loading order
@@ -192,9 +195,23 @@ For a page using an optional feature stylesheet, load core first and the optiona
 
 For runtime JavaScript, load only the files required by the feature. Use `defer` for normal static scripts where appropriate. Do not load documentation scripts in a consumer application.
 
-These paths are illustrative and must be adjusted for a nested page's relative depth. See `DOCUMENTATION.md` for GitHub Pages path rules.
+These paths are illustrative (an optional feature stylesheet is loaded only if that feature exists) and must be adjusted for a nested page's relative depth. See `DOCUMENTATION.md` for GitHub Pages path rules.
 
-## 8. Asset migration procedure
+## 8. Legacy files and asset migration
+
+### 8.1 Legacy files
+
+An existing file that conflicts with the architecture above (for example a foundational stylesheet split out of `baset-ui.css`) is a legacy file. Handle it as follows:
+
+- Preserve its working behavior until a migration is explicitly scoped.
+- Inspect every reference to it: page links, script tags, documentation, examples, and generated code.
+- Migrate only inside an explicitly scoped task, preserving every supported class, variable, selector, and responsive behavior.
+- Validate the new loading path on root and nested pages.
+- Remove the legacy file only after confirming that no required references remain.
+
+Do not create additional files of the same legacy kind, and do not treat a legacy file as part of the permanent architecture.
+
+### 8.2 Migration procedure
 
 When merging, moving, or renaming assets:
 
@@ -218,6 +235,8 @@ Never overwrite user changes or delete a file just because it appears redundant 
 - Bundling every optional feature into a file users must always load.
 - Duplicating shared tokens across feature files.
 - Adding a build process or package manager requirement without approval.
+- Adding an external icon library or icon dependency without approval.
+- Using emoji, Unicode symbols, or CSS text characters as icons.
 - Referencing a file that does not exist.
 
 ## 10. Definition of done
