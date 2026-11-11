@@ -59,305 +59,305 @@
 <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"date"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-input"</span> <span class="bui-code-blue">name</span>=<span class="bui-code-green">"birthday"</span> <span class="bui-code-blue">data-bui-datetime</span><span class="bui-code-pink">&gt;</span></code></pre></div>
 <p class="bui-doc-note">Inputs added later (for example by your framework or after a fetch) are found automatically. To set one up yourself: <code>BUI.datetime.init(container)</code>.</p>
 <h3 style="margin:34px 0 14px;font-family:var(--bui-font-heading);font-size:18px;letter-spacing:-.4px">The five types</h3><article class="bui-demo-card" id="dt-types"><div class="bui-demo-title">Floating-label fields <span>date · time · datetime-local · month · week</span></div><div class="bui-demo-content">
-<div class="bui-form-grid">
-  <div class="bui-float">
+<div class="bui-row">
+  <div class="bui-col-12 bui-col-md-6 bui-float">
     <input class="bui-float-input" type="date" id="dt-date" name="dt-date" data-bui-datetime placeholder=" " value="2026-10-29">
     <label class="bui-float-label" for="dt-date">Date</label>
   </div>
-  <div class="bui-float">
+  <div class="bui-col-12 bui-col-md-6 bui-float">
     <input class="bui-float-input" type="time" id="dt-time" name="dt-time" data-bui-datetime placeholder=" " value="14:30">
     <label class="bui-float-label" for="dt-time">Time</label>
   </div>
-  <div class="bui-float">
+  <div class="bui-col-12 bui-col-md-6 bui-float">
     <input class="bui-float-input" type="datetime-local" id="dt-datetime" name="dt-datetime" data-bui-datetime placeholder=" " value="2026-10-29T14:30">
     <label class="bui-float-label" for="dt-datetime">Date and time</label>
   </div>
-  <div class="bui-float">
+  <div class="bui-col-12 bui-col-md-6 bui-float">
     <input class="bui-float-input" type="month" id="dt-month" name="dt-month" data-bui-datetime placeholder=" " value="2026-10">
     <label class="bui-float-label" for="dt-month">Month and year</label>
   </div>
-  <div class="bui-float">
+  <div class="bui-col-12 bui-col-md-6 bui-float">
     <input class="bui-float-input" type="week" id="dt-week" name="dt-week" data-bui-datetime placeholder=" " value="2026-W44">
     <label class="bui-float-label" for="dt-week">Week</label>
   </div>
 </div>
-</div><div class="bui-demo-code">Click anywhere on the field (or the icon), or focus it and press <b>Alt + ↓</b> or <b>F4</b>. To type instead, reach the field with <b>Tab</b>, or set <code>data-bui-click-open="false"</code> so only the icon opens the picker. Picking a day, month or week closes the popup; time lists stay open until Done or Esc.</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-form-grid"</span><span class="bui-code-pink">&gt;</span>
-  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float"</span><span class="bui-code-pink">&gt;</span>
+</div><div class="bui-demo-code">Click anywhere on the field (or the icon), or focus it and press <b>Alt + ↓</b> or <b>F4</b>. To type instead, reach the field with <b>Tab</b>, or set <code>data-bui-click-open="false"</code> so only the icon opens the picker. Picking a day, month or week closes the popup; time lists stay open until Done or Esc.</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-row"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-12 bui-col-md-6 bui-float"</span><span class="bui-code-pink">&gt;</span>
     <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"date"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"dt-date"</span> <span class="bui-code-blue">name</span>=<span class="bui-code-green">"dt-date"</span> <span class="bui-code-blue">data-bui-datetime</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span> <span class="bui-code-blue">value</span>=<span class="bui-code-green">"2026-10-29"</span><span class="bui-code-pink">&gt;</span>
     <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"dt-date"</span><span class="bui-code-pink">&gt;</span>Date<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
   <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
-  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-12 bui-col-md-6 bui-float"</span><span class="bui-code-pink">&gt;</span>
     <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"time"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"dt-time"</span> <span class="bui-code-blue">name</span>=<span class="bui-code-green">"dt-time"</span> <span class="bui-code-blue">data-bui-datetime</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span> <span class="bui-code-blue">value</span>=<span class="bui-code-green">"14:30"</span><span class="bui-code-pink">&gt;</span>
     <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"dt-time"</span><span class="bui-code-pink">&gt;</span>Time<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
   <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
-  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-12 bui-col-md-6 bui-float"</span><span class="bui-code-pink">&gt;</span>
     <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"datetime-local"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"dt-datetime"</span> <span class="bui-code-blue">name</span>=<span class="bui-code-green">"dt-datetime"</span> <span class="bui-code-blue">data-bui-datetime</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span> <span class="bui-code-blue">value</span>=<span class="bui-code-green">"2026-10-29T14:30"</span><span class="bui-code-pink">&gt;</span>
     <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"dt-datetime"</span><span class="bui-code-pink">&gt;</span>Date and time<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
   <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
-  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-12 bui-col-md-6 bui-float"</span><span class="bui-code-pink">&gt;</span>
     <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"month"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"dt-month"</span> <span class="bui-code-blue">name</span>=<span class="bui-code-green">"dt-month"</span> <span class="bui-code-blue">data-bui-datetime</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span> <span class="bui-code-blue">value</span>=<span class="bui-code-green">"2026-10"</span><span class="bui-code-pink">&gt;</span>
     <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"dt-month"</span><span class="bui-code-pink">&gt;</span>Month and year<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
   <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
-  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-12 bui-col-md-6 bui-float"</span><span class="bui-code-pink">&gt;</span>
     <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"week"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"dt-week"</span> <span class="bui-code-blue">name</span>=<span class="bui-code-green">"dt-week"</span> <span class="bui-code-blue">data-bui-datetime</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span> <span class="bui-code-blue">value</span>=<span class="bui-code-green">"2026-W44"</span><span class="bui-code-pink">&gt;</span>
     <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"dt-week"</span><span class="bui-code-pink">&gt;</span>Week<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
   <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
 <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
 <article class="bui-demo-card" id="dt-plain"><div class="bui-demo-title">Plain fields <span>.bui-input inside .bui-field</span></div><div class="bui-demo-content">
-<div class="bui-form-grid">
-  <label class="bui-field">Date
+<div class="bui-row">
+  <label class="bui-col-12 bui-col-md-6 bui-field">Date
     <input class="bui-input" type="date" id="dt-p-date" name="dt-p-date" data-bui-datetime value="2026-10-29">
   </label>
-  <label class="bui-field">Time
+  <label class="bui-col-12 bui-col-md-6 bui-field">Time
     <input class="bui-input" type="time" id="dt-p-time" name="dt-p-time" data-bui-datetime>
   </label>
-  <label class="bui-field">Date and time
+  <label class="bui-col-12 bui-col-md-6 bui-field">Date and time
     <input class="bui-input" type="datetime-local" id="dt-p-datetime" name="dt-p-datetime" data-bui-datetime>
   </label>
-  <label class="bui-field">Month and year
+  <label class="bui-col-12 bui-col-md-6 bui-field">Month and year
     <input class="bui-input" type="month" id="dt-p-month" name="dt-p-month" data-bui-datetime>
   </label>
-  <label class="bui-field">Week
+  <label class="bui-col-12 bui-col-md-6 bui-field">Week
     <input class="bui-input" type="week" id="dt-p-week" name="dt-p-week" data-bui-datetime>
   </label>
 </div>
-</div><div class="bui-demo-code">A plain input that is not inside <code>.bui-float</code> gets a small <code>&lt;span class="bui-dt"&gt;</code> wrapper for the button. You can add that wrapper yourself.</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-form-grid"</span><span class="bui-code-pink">&gt;</span>
-  <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-field"</span><span class="bui-code-pink">&gt;</span>Date
+</div><div class="bui-demo-code">A plain input that is not inside <code>.bui-float</code> gets a small <code>&lt;span class="bui-dt"&gt;</code> wrapper for the button. You can add that wrapper yourself.</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-row"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-12 bui-col-md-6 bui-field"</span><span class="bui-code-pink">&gt;</span>Date
     <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-input"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"date"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"dt-p-date"</span> <span class="bui-code-blue">name</span>=<span class="bui-code-green">"dt-p-date"</span> <span class="bui-code-blue">data-bui-datetime</span> <span class="bui-code-blue">value</span>=<span class="bui-code-green">"2026-10-29"</span><span class="bui-code-pink">&gt;</span>
   <span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
-  <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-field"</span><span class="bui-code-pink">&gt;</span>Time
+  <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-12 bui-col-md-6 bui-field"</span><span class="bui-code-pink">&gt;</span>Time
     <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-input"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"time"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"dt-p-time"</span> <span class="bui-code-blue">name</span>=<span class="bui-code-green">"dt-p-time"</span> <span class="bui-code-blue">data-bui-datetime</span><span class="bui-code-pink">&gt;</span>
   <span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
-  <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-field"</span><span class="bui-code-pink">&gt;</span>Date and time
+  <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-12 bui-col-md-6 bui-field"</span><span class="bui-code-pink">&gt;</span>Date and time
     <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-input"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"datetime-local"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"dt-p-datetime"</span> <span class="bui-code-blue">name</span>=<span class="bui-code-green">"dt-p-datetime"</span> <span class="bui-code-blue">data-bui-datetime</span><span class="bui-code-pink">&gt;</span>
   <span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
-  <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-field"</span><span class="bui-code-pink">&gt;</span>Month and year
+  <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-12 bui-col-md-6 bui-field"</span><span class="bui-code-pink">&gt;</span>Month and year
     <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-input"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"month"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"dt-p-month"</span> <span class="bui-code-blue">name</span>=<span class="bui-code-green">"dt-p-month"</span> <span class="bui-code-blue">data-bui-datetime</span><span class="bui-code-pink">&gt;</span>
   <span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
-  <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-field"</span><span class="bui-code-pink">&gt;</span>Week
+  <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-12 bui-col-md-6 bui-field"</span><span class="bui-code-pink">&gt;</span>Week
     <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-input"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"week"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"dt-p-week"</span> <span class="bui-code-blue">name</span>=<span class="bui-code-green">"dt-p-week"</span> <span class="bui-code-blue">data-bui-datetime</span><span class="bui-code-pink">&gt;</span>
   <span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
 <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
 <h3 style="margin:34px 0 14px;font-family:var(--bui-font-heading);font-size:18px;letter-spacing:-.4px">Minimum, maximum and step</h3><p class="bui-doc-note">The popup reads <code>min</code>, <code>max</code> and <code>step</code> from the input every time it opens, so you can change them with JavaScript at any time. Days, months, years, hours and minutes that are not allowed are dimmed and cannot be chosen, and the arrows stop at the limits. The browser still validates the value, so <code>:invalid</code>, <code>validity.rangeUnderflow</code> and the form message work.</p>
 <article class="bui-demo-card" id="dt-minmax"><div class="bui-demo-title">Limits <span>min · max</span></div><div class="bui-demo-content">
-<div class="bui-form-grid">
-  <div class="bui-float">
+<div class="bui-row">
+  <div class="bui-col-12 bui-col-md-6 bui-float">
     <input class="bui-float-input" type="date" id="dt-mm-date" name="dt-mm-date" data-bui-datetime placeholder=" " min="2026-10-10" max="2026-12-20" value="2026-10-29">
     <label class="bui-float-label" for="dt-mm-date">Date (10 Oct – 20 Dec 2026)</label>
   </div>
-  <div class="bui-float">
+  <div class="bui-col-12 bui-col-md-6 bui-float">
     <input class="bui-float-input" type="time" id="dt-mm-time" name="dt-mm-time" data-bui-datetime placeholder=" " min="09:00" max="17:00" step="900" value="09:30">
     <label class="bui-float-label" for="dt-mm-time">Opening hours (09:00 – 17:00)</label>
   </div>
-  <div class="bui-float">
+  <div class="bui-col-12 bui-col-md-6 bui-float">
     <input class="bui-float-input" type="datetime-local" id="dt-mm-datetime" name="dt-mm-datetime" data-bui-datetime placeholder=" " min="2026-11-01T08:00" max="2026-11-30T18:00">
     <label class="bui-float-label" for="dt-mm-datetime">Meeting (from 1 Nov, 08:00 – 18:00)</label>
   </div>
-  <div class="bui-float">
+  <div class="bui-col-12 bui-col-md-6 bui-float">
     <input class="bui-float-input" type="month" id="dt-mm-month" name="dt-mm-month" data-bui-datetime placeholder=" " min="2026-03" max="2027-02" value="2026-10">
     <label class="bui-float-label" for="dt-mm-month">Month (Mar 2026 – Feb 2027)</label>
   </div>
-  <div class="bui-float">
+  <div class="bui-col-12 bui-col-md-6 bui-float">
     <input class="bui-float-input" type="week" id="dt-mm-week" name="dt-mm-week" data-bui-datetime placeholder=" " min="2026-W10" max="2026-W30">
     <label class="bui-float-label" for="dt-mm-week">Week (W10 – W30 of 2026)</label>
   </div>
 </div>
-</div><div class="bui-demo-code">Time: the minute list shows only the 15-minute steps, and the hours outside 09:00–17:00 are disabled.</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-form-grid"</span><span class="bui-code-pink">&gt;</span>
-  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float"</span><span class="bui-code-pink">&gt;</span>
+</div><div class="bui-demo-code">Time: the minute list shows only the 15-minute steps, and the hours outside 09:00–17:00 are disabled.</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-row"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-12 bui-col-md-6 bui-float"</span><span class="bui-code-pink">&gt;</span>
     <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"date"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"dt-mm-date"</span> <span class="bui-code-blue">name</span>=<span class="bui-code-green">"dt-mm-date"</span> <span class="bui-code-blue">data-bui-datetime</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span> <span class="bui-code-blue">min</span>=<span class="bui-code-green">"2026-10-10"</span> <span class="bui-code-blue">max</span>=<span class="bui-code-green">"2026-12-20"</span> <span class="bui-code-blue">value</span>=<span class="bui-code-green">"2026-10-29"</span><span class="bui-code-pink">&gt;</span>
     <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"dt-mm-date"</span><span class="bui-code-pink">&gt;</span>Date (10 Oct – 20 Dec 2026)<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
   <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
-  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-12 bui-col-md-6 bui-float"</span><span class="bui-code-pink">&gt;</span>
     <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"time"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"dt-mm-time"</span> <span class="bui-code-blue">name</span>=<span class="bui-code-green">"dt-mm-time"</span> <span class="bui-code-blue">data-bui-datetime</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span> <span class="bui-code-blue">min</span>=<span class="bui-code-green">"09:00"</span> <span class="bui-code-blue">max</span>=<span class="bui-code-green">"17:00"</span> <span class="bui-code-blue">step</span>=<span class="bui-code-green">"900"</span> <span class="bui-code-blue">value</span>=<span class="bui-code-green">"09:30"</span><span class="bui-code-pink">&gt;</span>
     <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"dt-mm-time"</span><span class="bui-code-pink">&gt;</span>Opening hours (09:00 – 17:00)<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
   <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
-  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-12 bui-col-md-6 bui-float"</span><span class="bui-code-pink">&gt;</span>
     <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"datetime-local"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"dt-mm-datetime"</span> <span class="bui-code-blue">name</span>=<span class="bui-code-green">"dt-mm-datetime"</span> <span class="bui-code-blue">data-bui-datetime</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span> <span class="bui-code-blue">min</span>=<span class="bui-code-green">"2026-11-01T08:00"</span> <span class="bui-code-blue">max</span>=<span class="bui-code-green">"2026-11-30T18:00"</span><span class="bui-code-pink">&gt;</span>
     <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"dt-mm-datetime"</span><span class="bui-code-pink">&gt;</span>Meeting (from 1 Nov, 08:00 – 18:00)<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
   <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
-  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-12 bui-col-md-6 bui-float"</span><span class="bui-code-pink">&gt;</span>
     <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"month"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"dt-mm-month"</span> <span class="bui-code-blue">name</span>=<span class="bui-code-green">"dt-mm-month"</span> <span class="bui-code-blue">data-bui-datetime</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span> <span class="bui-code-blue">min</span>=<span class="bui-code-green">"2026-03"</span> <span class="bui-code-blue">max</span>=<span class="bui-code-green">"2027-02"</span> <span class="bui-code-blue">value</span>=<span class="bui-code-green">"2026-10"</span><span class="bui-code-pink">&gt;</span>
     <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"dt-mm-month"</span><span class="bui-code-pink">&gt;</span>Month (Mar 2026 – Feb 2027)<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
   <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
-  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-12 bui-col-md-6 bui-float"</span><span class="bui-code-pink">&gt;</span>
     <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"week"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"dt-mm-week"</span> <span class="bui-code-blue">name</span>=<span class="bui-code-green">"dt-mm-week"</span> <span class="bui-code-blue">data-bui-datetime</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span> <span class="bui-code-blue">min</span>=<span class="bui-code-green">"2026-W10"</span> <span class="bui-code-blue">max</span>=<span class="bui-code-green">"2026-W30"</span><span class="bui-code-pink">&gt;</span>
     <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"dt-mm-week"</span><span class="bui-code-pink">&gt;</span>Week (W10 – W30 of 2026)<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
   <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
 <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
 <article class="bui-demo-card" id="dt-step"><div class="bui-demo-title">Step <span>step</span></div><div class="bui-demo-content">
-<div class="bui-form-grid">
-  <div class="bui-float">
+<div class="bui-row">
+  <div class="bui-col-12 bui-col-md-6 bui-float">
     <input class="bui-float-input" type="time" id="dt-st-time5" name="dt-st-time5" data-bui-datetime placeholder=" " step="300">
     <label class="bui-float-label" for="dt-st-time5">Every 5 minutes</label>
   </div>
-  <div class="bui-float">
+  <div class="bui-col-12 bui-col-md-6 bui-float">
     <input class="bui-float-input" type="time" id="dt-st-time1" name="dt-st-time1" data-bui-datetime placeholder=" " step="1" value="08:15:30">
     <label class="bui-float-label" for="dt-st-time1">With seconds</label>
   </div>
-  <div class="bui-float">
+  <div class="bui-col-12 bui-col-md-6 bui-float">
     <input class="bui-float-input" type="date" id="dt-st-date7" name="dt-st-date7" data-bui-datetime placeholder=" " step="7" min="2026-10-05" value="2026-10-19">
     <label class="bui-float-label" for="dt-st-date7">Every 7 days from 5 Oct (Mondays)</label>
   </div>
-  <div class="bui-float">
+  <div class="bui-col-12 bui-col-md-6 bui-float">
     <input class="bui-float-input" type="month" id="dt-st-month3" name="dt-st-month3" data-bui-datetime placeholder=" " step="3" min="2026-01" value="2026-04">
     <label class="bui-float-label" for="dt-st-month3">Every 3 months (quarters)</label>
   </div>
-  <div class="bui-float">
+  <div class="bui-col-12 bui-col-md-6 bui-float">
     <input class="bui-float-input" type="week" id="dt-st-week2" name="dt-st-week2" data-bui-datetime placeholder=" " step="2" min="2026-W02">
     <label class="bui-float-label" for="dt-st-week2">Every 2 weeks</label>
   </div>
 </div>
-</div><div class="bui-demo-code">Step works as in the browser: it counts from <code>min</code> (or from the default start) in days, months, weeks or seconds.</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-form-grid"</span><span class="bui-code-pink">&gt;</span>
-  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float"</span><span class="bui-code-pink">&gt;</span>
+</div><div class="bui-demo-code">Step works as in the browser: it counts from <code>min</code> (or from the default start) in days, months, weeks or seconds.</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-row"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-12 bui-col-md-6 bui-float"</span><span class="bui-code-pink">&gt;</span>
     <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"time"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"dt-st-time5"</span> <span class="bui-code-blue">name</span>=<span class="bui-code-green">"dt-st-time5"</span> <span class="bui-code-blue">data-bui-datetime</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span> <span class="bui-code-blue">step</span>=<span class="bui-code-green">"300"</span><span class="bui-code-pink">&gt;</span>
     <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"dt-st-time5"</span><span class="bui-code-pink">&gt;</span>Every 5 minutes<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
   <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
-  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-12 bui-col-md-6 bui-float"</span><span class="bui-code-pink">&gt;</span>
     <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"time"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"dt-st-time1"</span> <span class="bui-code-blue">name</span>=<span class="bui-code-green">"dt-st-time1"</span> <span class="bui-code-blue">data-bui-datetime</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span> <span class="bui-code-blue">step</span>=<span class="bui-code-green">"1"</span> <span class="bui-code-blue">value</span>=<span class="bui-code-green">"08:15:30"</span><span class="bui-code-pink">&gt;</span>
     <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"dt-st-time1"</span><span class="bui-code-pink">&gt;</span>With seconds<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
   <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
-  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-12 bui-col-md-6 bui-float"</span><span class="bui-code-pink">&gt;</span>
     <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"date"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"dt-st-date7"</span> <span class="bui-code-blue">name</span>=<span class="bui-code-green">"dt-st-date7"</span> <span class="bui-code-blue">data-bui-datetime</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span> <span class="bui-code-blue">step</span>=<span class="bui-code-green">"7"</span> <span class="bui-code-blue">min</span>=<span class="bui-code-green">"2026-10-05"</span> <span class="bui-code-blue">value</span>=<span class="bui-code-green">"2026-10-19"</span><span class="bui-code-pink">&gt;</span>
     <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"dt-st-date7"</span><span class="bui-code-pink">&gt;</span>Every 7 days from 5 Oct (Mondays)<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
   <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
-  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-12 bui-col-md-6 bui-float"</span><span class="bui-code-pink">&gt;</span>
     <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"month"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"dt-st-month3"</span> <span class="bui-code-blue">name</span>=<span class="bui-code-green">"dt-st-month3"</span> <span class="bui-code-blue">data-bui-datetime</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span> <span class="bui-code-blue">step</span>=<span class="bui-code-green">"3"</span> <span class="bui-code-blue">min</span>=<span class="bui-code-green">"2026-01"</span> <span class="bui-code-blue">value</span>=<span class="bui-code-green">"2026-04"</span><span class="bui-code-pink">&gt;</span>
     <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"dt-st-month3"</span><span class="bui-code-pink">&gt;</span>Every 3 months (quarters)<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
   <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
-  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-12 bui-col-md-6 bui-float"</span><span class="bui-code-pink">&gt;</span>
     <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"week"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"dt-st-week2"</span> <span class="bui-code-blue">name</span>=<span class="bui-code-green">"dt-st-week2"</span> <span class="bui-code-blue">data-bui-datetime</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span> <span class="bui-code-blue">step</span>=<span class="bui-code-green">"2"</span> <span class="bui-code-blue">min</span>=<span class="bui-code-green">"2026-W02"</span><span class="bui-code-pink">&gt;</span>
     <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"dt-st-week2"</span><span class="bui-code-pink">&gt;</span>Every 2 weeks<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
   <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
 <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
 <h3 style="margin:34px 0 14px;font-family:var(--bui-font-heading);font-size:18px;letter-spacing:-.4px">Required, disabled and read-only</h3><article class="bui-demo-card" id="dt-states"><div class="bui-demo-title">Field states <span>required · disabled · readonly · value</span></div><div class="bui-demo-content">
-<div class="bui-form-grid">
-  <div class="bui-float">
+<div class="bui-row">
+  <div class="bui-col-12 bui-col-md-6 bui-float">
     <input class="bui-float-input" type="date" id="dt-s-req" name="dt-s-req" data-bui-datetime placeholder=" " required>
     <label class="bui-float-label" for="dt-s-req">Required date</label>
   </div>
-  <div class="bui-float">
+  <div class="bui-col-12 bui-col-md-6 bui-float">
     <input class="bui-float-input" type="date" id="dt-s-val" name="dt-s-val" data-bui-datetime placeholder=" " value="2026-12-25">
     <label class="bui-float-label" for="dt-s-val">With a value</label>
   </div>
-  <div class="bui-float">
+  <div class="bui-col-12 bui-col-md-6 bui-float">
     <input class="bui-float-input" type="datetime-local" id="dt-s-dis" name="dt-s-dis" data-bui-datetime placeholder=" " value="2026-10-29T09:00" disabled>
     <label class="bui-float-label" for="dt-s-dis">Disabled</label>
   </div>
-  <div class="bui-float">
+  <div class="bui-col-12 bui-col-md-6 bui-float">
     <input class="bui-float-input" type="time" id="dt-s-ro" name="dt-s-ro" data-bui-datetime placeholder=" " value="18:45" readonly>
     <label class="bui-float-label" for="dt-s-ro">Read-only</label>
   </div>
 </div>
-</div><div class="bui-demo-code">A required field has no Clear button. A disabled or read-only field cannot open the picker (the button is disabled), exactly like the native control.</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-form-grid"</span><span class="bui-code-pink">&gt;</span>
-  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float"</span><span class="bui-code-pink">&gt;</span>
+</div><div class="bui-demo-code">A required field has no Clear button. A disabled or read-only field cannot open the picker (the button is disabled), exactly like the native control.</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-row"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-12 bui-col-md-6 bui-float"</span><span class="bui-code-pink">&gt;</span>
     <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"date"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"dt-s-req"</span> <span class="bui-code-blue">name</span>=<span class="bui-code-green">"dt-s-req"</span> <span class="bui-code-blue">data-bui-datetime</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span> <span class="bui-code-blue">required</span><span class="bui-code-pink">&gt;</span>
     <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"dt-s-req"</span><span class="bui-code-pink">&gt;</span>Required date<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
   <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
-  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-12 bui-col-md-6 bui-float"</span><span class="bui-code-pink">&gt;</span>
     <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"date"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"dt-s-val"</span> <span class="bui-code-blue">name</span>=<span class="bui-code-green">"dt-s-val"</span> <span class="bui-code-blue">data-bui-datetime</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span> <span class="bui-code-blue">value</span>=<span class="bui-code-green">"2026-12-25"</span><span class="bui-code-pink">&gt;</span>
     <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"dt-s-val"</span><span class="bui-code-pink">&gt;</span>With a value<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
   <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
-  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-12 bui-col-md-6 bui-float"</span><span class="bui-code-pink">&gt;</span>
     <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"datetime-local"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"dt-s-dis"</span> <span class="bui-code-blue">name</span>=<span class="bui-code-green">"dt-s-dis"</span> <span class="bui-code-blue">data-bui-datetime</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span> <span class="bui-code-blue">value</span>=<span class="bui-code-green">"2026-10-29T09:00"</span> <span class="bui-code-blue">disabled</span><span class="bui-code-pink">&gt;</span>
     <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"dt-s-dis"</span><span class="bui-code-pink">&gt;</span>Disabled<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
   <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
-  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-12 bui-col-md-6 bui-float"</span><span class="bui-code-pink">&gt;</span>
     <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"time"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"dt-s-ro"</span> <span class="bui-code-blue">name</span>=<span class="bui-code-green">"dt-s-ro"</span> <span class="bui-code-blue">data-bui-datetime</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span> <span class="bui-code-blue">value</span>=<span class="bui-code-green">"18:45"</span> <span class="bui-code-blue">readonly</span><span class="bui-code-pink">&gt;</span>
     <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"dt-s-ro"</span><span class="bui-code-pink">&gt;</span>Read-only<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
   <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
 <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
 <h3 style="margin:34px 0 14px;font-family:var(--bui-font-heading);font-size:18px;letter-spacing:-.4px">Size and layout</h3><article class="bui-demo-card" id="dt-sizes"><div class="bui-demo-title">Sizes <span>.bui-float-sm · .bui-float-lg · data-bui-size</span></div><div class="bui-demo-content">
-<div class="bui-form-grid">
-  <div class="bui-float bui-float-sm">
+<div class="bui-row">
+  <div class="bui-col-12 bui-col-md-6 bui-float bui-float-sm">
     <input class="bui-float-input" type="date" id="dt-z-sm" name="dt-z-sm" data-bui-datetime placeholder=" " data-bui-size="sm" value="2026-10-29">
     <label class="bui-float-label" for="dt-z-sm">Small</label>
   </div>
-  <div class="bui-float">
+  <div class="bui-col-12 bui-col-md-6 bui-float">
     <input class="bui-float-input" type="date" id="dt-z-md" name="dt-z-md" data-bui-datetime placeholder=" " value="2026-10-29">
     <label class="bui-float-label" for="dt-z-md">Default</label>
   </div>
-  <div class="bui-float bui-float-lg">
+  <div class="bui-col-12 bui-col-md-6 bui-float bui-float-lg">
     <input class="bui-float-input" type="date" id="dt-z-lg" name="dt-z-lg" data-bui-datetime placeholder=" " data-bui-size="lg" value="2026-10-29">
     <label class="bui-float-label" for="dt-z-lg">Large</label>
   </div>
 </div>
-</div><div class="bui-demo-code">The field size comes from the float class; <code>data-bui-size="sm | lg"</code> changes the size of the popup (the cell size, <code>--bui-dt-cell</code>: 32, 40 or 46 px).</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-form-grid"</span><span class="bui-code-pink">&gt;</span>
-  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float bui-float-sm"</span><span class="bui-code-pink">&gt;</span>
+</div><div class="bui-demo-code">The field size comes from the float class; <code>data-bui-size="sm | lg"</code> changes the size of the popup (the cell size, <code>--bui-dt-cell</code>: 32, 40 or 46 px).</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-row"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-12 bui-col-md-6 bui-float bui-float-sm"</span><span class="bui-code-pink">&gt;</span>
     <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"date"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"dt-z-sm"</span> <span class="bui-code-blue">name</span>=<span class="bui-code-green">"dt-z-sm"</span> <span class="bui-code-blue">data-bui-datetime</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span> <span class="bui-code-blue">data-bui-size</span>=<span class="bui-code-green">"sm"</span> <span class="bui-code-blue">value</span>=<span class="bui-code-green">"2026-10-29"</span><span class="bui-code-pink">&gt;</span>
     <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"dt-z-sm"</span><span class="bui-code-pink">&gt;</span>Small<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
   <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
-  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-12 bui-col-md-6 bui-float"</span><span class="bui-code-pink">&gt;</span>
     <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"date"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"dt-z-md"</span> <span class="bui-code-blue">name</span>=<span class="bui-code-green">"dt-z-md"</span> <span class="bui-code-blue">data-bui-datetime</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span> <span class="bui-code-blue">value</span>=<span class="bui-code-green">"2026-10-29"</span><span class="bui-code-pink">&gt;</span>
     <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"dt-z-md"</span><span class="bui-code-pink">&gt;</span>Default<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
   <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
-  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float bui-float-lg"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-12 bui-col-md-6 bui-float bui-float-lg"</span><span class="bui-code-pink">&gt;</span>
     <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"date"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"dt-z-lg"</span> <span class="bui-code-blue">name</span>=<span class="bui-code-green">"dt-z-lg"</span> <span class="bui-code-blue">data-bui-datetime</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span> <span class="bui-code-blue">data-bui-size</span>=<span class="bui-code-green">"lg"</span> <span class="bui-code-blue">value</span>=<span class="bui-code-green">"2026-10-29"</span><span class="bui-code-pink">&gt;</span>
     <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"dt-z-lg"</span><span class="bui-code-pink">&gt;</span>Large<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
   <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
 <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
 <article class="bui-demo-card" id="dt-mode"><div class="bui-demo-title">Popup or bottom sheet <span>data-bui-mode</span></div><div class="bui-demo-content">
-<div class="bui-form-grid">
-  <div class="bui-float">
+<div class="bui-row">
+  <div class="bui-col-12 bui-col-md-6 bui-float">
     <input class="bui-float-input" type="datetime-local" id="dt-m-auto" name="dt-m-auto" data-bui-datetime placeholder=" " value="2026-10-29T14:30">
     <label class="bui-float-label" for="dt-m-auto">Automatic</label>
   </div>
-  <div class="bui-float">
+  <div class="bui-col-12 bui-col-md-6 bui-float">
     <input class="bui-float-input" type="datetime-local" id="dt-m-sheet" name="dt-m-sheet" data-bui-datetime placeholder=" " data-bui-mode="sheet" value="2026-10-29T14:30">
     <label class="bui-float-label" for="dt-m-sheet">Always a bottom sheet</label>
   </div>
-  <div class="bui-float">
+  <div class="bui-col-12 bui-col-md-6 bui-float">
     <input class="bui-float-input" type="datetime-local" id="dt-m-pop" name="dt-m-pop" data-bui-datetime placeholder=" " data-bui-mode="popover" value="2026-10-29T14:30">
     <label class="bui-float-label" for="dt-m-pop">Always a popup</label>
   </div>
 </div>
-</div><div class="bui-demo-code">By default the popup opens below the field, or above it when there is more room there, and it never leaves the window. On screens up to 560 px wide it becomes a bottom sheet with a backdrop. Resize the window to try it.</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-form-grid"</span><span class="bui-code-pink">&gt;</span>
-  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float"</span><span class="bui-code-pink">&gt;</span>
+</div><div class="bui-demo-code">By default the popup opens below the field, or above it when there is more room there, and it never leaves the window. On screens up to 560 px wide it becomes a bottom sheet with a backdrop. Resize the window to try it.</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-row"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-12 bui-col-md-6 bui-float"</span><span class="bui-code-pink">&gt;</span>
     <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"datetime-local"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"dt-m-auto"</span> <span class="bui-code-blue">name</span>=<span class="bui-code-green">"dt-m-auto"</span> <span class="bui-code-blue">data-bui-datetime</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span> <span class="bui-code-blue">value</span>=<span class="bui-code-green">"2026-10-29T14:30"</span><span class="bui-code-pink">&gt;</span>
     <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"dt-m-auto"</span><span class="bui-code-pink">&gt;</span>Automatic<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
   <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
-  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-12 bui-col-md-6 bui-float"</span><span class="bui-code-pink">&gt;</span>
     <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"datetime-local"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"dt-m-sheet"</span> <span class="bui-code-blue">name</span>=<span class="bui-code-green">"dt-m-sheet"</span> <span class="bui-code-blue">data-bui-datetime</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span> <span class="bui-code-blue">data-bui-mode</span>=<span class="bui-code-green">"sheet"</span> <span class="bui-code-blue">value</span>=<span class="bui-code-green">"2026-10-29T14:30"</span><span class="bui-code-pink">&gt;</span>
     <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"dt-m-sheet"</span><span class="bui-code-pink">&gt;</span>Always a bottom sheet<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
   <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
-  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-12 bui-col-md-6 bui-float"</span><span class="bui-code-pink">&gt;</span>
     <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"datetime-local"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"dt-m-pop"</span> <span class="bui-code-blue">name</span>=<span class="bui-code-green">"dt-m-pop"</span> <span class="bui-code-blue">data-bui-datetime</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span> <span class="bui-code-blue">data-bui-mode</span>=<span class="bui-code-green">"popover"</span> <span class="bui-code-blue">value</span>=<span class="bui-code-green">"2026-10-29T14:30"</span><span class="bui-code-pink">&gt;</span>
     <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"dt-m-pop"</span><span class="bui-code-pink">&gt;</span>Always a popup<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
   <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
 <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
 <h3 style="margin:34px 0 14px;font-family:var(--bui-font-heading);font-size:18px;letter-spacing:-.4px">Language, locale and clock</h3><p class="bui-doc-note">Month and day names, digits, the first day of the week and the 12 / 24-hour clock come from the browser locale for the nearest <code>lang</code> attribute (or <code>data-bui-locale</code>). The words of the buttons are in English and Arabic; add another language in one object, as in the French example below (missing keys fall back to English). The format of the native field itself (for example <code>mm/dd/yyyy</code>) is chosen by the browser from the user's own settings.</p>
 <article class="bui-demo-card" id="dt-locale"><div class="bui-demo-title">Locale, first day, week numbers <span>data-bui-locale · data-bui-first-day · data-bui-hour12 · data-bui-week-numbers</span></div><div class="bui-demo-content">
-<div class="bui-form-grid">
-  <div class="bui-float">
+<div class="bui-row">
+  <div class="bui-col-12 bui-col-md-6 bui-float">
     <input class="bui-float-input" type="date" id="dt-l-fr" name="dt-l-fr" data-bui-datetime placeholder=" " data-bui-locale="fr" data-bui-first-day="1" data-bui-week-numbers value="2026-10-29">
     <label class="bui-float-label" for="dt-l-fr">Date (français, lundi, semaines)</label>
   </div>
-  <div class="bui-float">
+  <div class="bui-col-12 bui-col-md-6 bui-float">
     <input class="bui-float-input" type="time" id="dt-l-fr-time" name="dt-l-fr-time" data-bui-datetime placeholder=" " data-bui-locale="fr" data-bui-hour12="false" value="14:30">
     <label class="bui-float-label" for="dt-l-fr-time">Heure (24 h)</label>
   </div>
-  <div class="bui-float">
+  <div class="bui-col-12 bui-col-md-6 bui-float">
     <input class="bui-float-input" type="datetime-local" id="dt-l-de" name="dt-l-de" data-bui-datetime placeholder=" " data-bui-locale="de" data-bui-first-day="1" data-bui-hour12="false" value="2026-10-29T14:30">
     <label class="bui-float-label" for="dt-l-de">Datum und Uhrzeit (Deutsch, 24 h)</label>
   </div>
-  <div class="bui-float">
+  <div class="bui-col-12 bui-col-md-6 bui-float">
     <input class="bui-float-input" type="time" id="dt-l-en" name="dt-l-en" data-bui-datetime placeholder=" " data-bui-hour12="true" value="14:30">
     <label class="bui-float-label" for="dt-l-en">Time (12 h, forced)</label>
   </div>
 </div>
-</div><div class="bui-demo-code">The week picker always starts on Monday (ISO 8601) and shows week numbers.</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-form-grid"</span><span class="bui-code-pink">&gt;</span>
-  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float"</span><span class="bui-code-pink">&gt;</span>
+</div><div class="bui-demo-code">The week picker always starts on Monday (ISO 8601) and shows week numbers.</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-row"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-12 bui-col-md-6 bui-float"</span><span class="bui-code-pink">&gt;</span>
     <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"date"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"dt-l-fr"</span> <span class="bui-code-blue">name</span>=<span class="bui-code-green">"dt-l-fr"</span> <span class="bui-code-blue">data-bui-datetime</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span> <span class="bui-code-blue">data-bui-locale</span>=<span class="bui-code-green">"fr"</span> <span class="bui-code-blue">data-bui-first-day</span>=<span class="bui-code-green">"1"</span> <span class="bui-code-blue">data-bui-week-numbers</span> <span class="bui-code-blue">value</span>=<span class="bui-code-green">"2026-10-29"</span><span class="bui-code-pink">&gt;</span>
     <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"dt-l-fr"</span><span class="bui-code-pink">&gt;</span>Date (français, lundi, semaines)<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
   <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
-  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-12 bui-col-md-6 bui-float"</span><span class="bui-code-pink">&gt;</span>
     <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"time"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"dt-l-fr-time"</span> <span class="bui-code-blue">name</span>=<span class="bui-code-green">"dt-l-fr-time"</span> <span class="bui-code-blue">data-bui-datetime</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span> <span class="bui-code-blue">data-bui-locale</span>=<span class="bui-code-green">"fr"</span> <span class="bui-code-blue">data-bui-hour12</span>=<span class="bui-code-green">"false"</span> <span class="bui-code-blue">value</span>=<span class="bui-code-green">"14:30"</span><span class="bui-code-pink">&gt;</span>
     <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"dt-l-fr-time"</span><span class="bui-code-pink">&gt;</span>Heure (24 h)<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
   <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
-  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-12 bui-col-md-6 bui-float"</span><span class="bui-code-pink">&gt;</span>
     <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"datetime-local"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"dt-l-de"</span> <span class="bui-code-blue">name</span>=<span class="bui-code-green">"dt-l-de"</span> <span class="bui-code-blue">data-bui-datetime</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span> <span class="bui-code-blue">data-bui-locale</span>=<span class="bui-code-green">"de"</span> <span class="bui-code-blue">data-bui-first-day</span>=<span class="bui-code-green">"1"</span> <span class="bui-code-blue">data-bui-hour12</span>=<span class="bui-code-green">"false"</span> <span class="bui-code-blue">value</span>=<span class="bui-code-green">"2026-10-29T14:30"</span><span class="bui-code-pink">&gt;</span>
     <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"dt-l-de"</span><span class="bui-code-pink">&gt;</span>Datum und Uhrzeit (Deutsch, 24 h)<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
   <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
-  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-12 bui-col-md-6 bui-float"</span><span class="bui-code-pink">&gt;</span>
     <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"time"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"dt-l-en"</span> <span class="bui-code-blue">name</span>=<span class="bui-code-green">"dt-l-en"</span> <span class="bui-code-blue">data-bui-datetime</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span> <span class="bui-code-blue">data-bui-hour12</span>=<span class="bui-code-green">"true"</span> <span class="bui-code-blue">value</span>=<span class="bui-code-green">"14:30"</span><span class="bui-code-pink">&gt;</span>
     <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"dt-l-en"</span><span class="bui-code-pink">&gt;</span>Time (12 h, forced)<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
   <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
@@ -370,48 +370,48 @@
 };</code></pre></div></article>
 <article class="bui-demo-card" id="dt-rtl"><div class="bui-demo-title">Right to left <span>dir="rtl" · lang="ar"</span></div><div class="bui-demo-content">
 <div dir="rtl" lang="ar">
-  <div class="bui-form-grid">
-    <div class="bui-float">
+  <div class="bui-row">
+    <div class="bui-col-12 bui-col-md-6 bui-float">
       <input class="bui-float-input" type="date" id="dt-r-date" name="dt-r-date" data-bui-datetime placeholder=" " value="2026-10-29">
       <label class="bui-float-label" for="dt-r-date">تاريخ الميلاد</label>
     </div>
-    <div class="bui-float">
+    <div class="bui-col-12 bui-col-md-6 bui-float">
       <input class="bui-float-input" type="time" id="dt-r-time" name="dt-r-time" data-bui-datetime placeholder=" " value="14:30">
       <label class="bui-float-label" for="dt-r-time">وقت الاجتماع</label>
     </div>
-    <div class="bui-float">
+    <div class="bui-col-12 bui-col-md-6 bui-float">
       <input class="bui-float-input" type="datetime-local" id="dt-r-datetime" name="dt-r-datetime" data-bui-datetime placeholder=" " value="2026-10-29T14:30">
       <label class="bui-float-label" for="dt-r-datetime">موعد التسليم</label>
     </div>
-    <div class="bui-float">
+    <div class="bui-col-12 bui-col-md-6 bui-float">
       <input class="bui-float-input" type="month" id="dt-r-month" name="dt-r-month" data-bui-datetime placeholder=" " value="2026-10">
       <label class="bui-float-label" for="dt-r-month">شهر الاشتراك</label>
     </div>
-    <div class="bui-float">
+    <div class="bui-col-12 bui-col-md-6 bui-float">
       <input class="bui-float-input" type="week" id="dt-r-week" name="dt-r-week" data-bui-datetime placeholder=" " value="2026-W44">
       <label class="bui-float-label" for="dt-r-week">أسبوع الإجازة</label>
     </div>
   </div>
 </div>
 </div><div class="bui-demo-code">The popup copies the direction and language of the field: arrows, columns and the sheet mirror, the week starts on Saturday, the keyboard arrows follow the reading direction. Use the RTL button in the top bar to flip this whole page.</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">dir</span>=<span class="bui-code-green">"rtl"</span> <span class="bui-code-blue">lang</span>=<span class="bui-code-green">"ar"</span><span class="bui-code-pink">&gt;</span>
-  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-form-grid"</span><span class="bui-code-pink">&gt;</span>
-    <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-row"</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-12 bui-col-md-6 bui-float"</span><span class="bui-code-pink">&gt;</span>
       <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"date"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"dt-r-date"</span> <span class="bui-code-blue">name</span>=<span class="bui-code-green">"dt-r-date"</span> <span class="bui-code-blue">data-bui-datetime</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span> <span class="bui-code-blue">value</span>=<span class="bui-code-green">"2026-10-29"</span><span class="bui-code-pink">&gt;</span>
       <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"dt-r-date"</span><span class="bui-code-pink">&gt;</span>تاريخ الميلاد<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
     <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
-    <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float"</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-12 bui-col-md-6 bui-float"</span><span class="bui-code-pink">&gt;</span>
       <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"time"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"dt-r-time"</span> <span class="bui-code-blue">name</span>=<span class="bui-code-green">"dt-r-time"</span> <span class="bui-code-blue">data-bui-datetime</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span> <span class="bui-code-blue">value</span>=<span class="bui-code-green">"14:30"</span><span class="bui-code-pink">&gt;</span>
       <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"dt-r-time"</span><span class="bui-code-pink">&gt;</span>وقت الاجتماع<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
     <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
-    <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float"</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-12 bui-col-md-6 bui-float"</span><span class="bui-code-pink">&gt;</span>
       <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"datetime-local"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"dt-r-datetime"</span> <span class="bui-code-blue">name</span>=<span class="bui-code-green">"dt-r-datetime"</span> <span class="bui-code-blue">data-bui-datetime</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span> <span class="bui-code-blue">value</span>=<span class="bui-code-green">"2026-10-29T14:30"</span><span class="bui-code-pink">&gt;</span>
       <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"dt-r-datetime"</span><span class="bui-code-pink">&gt;</span>موعد التسليم<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
     <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
-    <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float"</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-12 bui-col-md-6 bui-float"</span><span class="bui-code-pink">&gt;</span>
       <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"month"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"dt-r-month"</span> <span class="bui-code-blue">name</span>=<span class="bui-code-green">"dt-r-month"</span> <span class="bui-code-blue">data-bui-datetime</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span> <span class="bui-code-blue">value</span>=<span class="bui-code-green">"2026-10"</span><span class="bui-code-pink">&gt;</span>
       <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"dt-r-month"</span><span class="bui-code-pink">&gt;</span>شهر الاشتراك<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
     <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
-    <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float"</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-12 bui-col-md-6 bui-float"</span><span class="bui-code-pink">&gt;</span>
       <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"week"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"dt-r-week"</span> <span class="bui-code-blue">name</span>=<span class="bui-code-green">"dt-r-week"</span> <span class="bui-code-blue">data-bui-datetime</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span> <span class="bui-code-blue">value</span>=<span class="bui-code-green">"2026-W44"</span><span class="bui-code-pink">&gt;</span>
       <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"dt-r-week"</span><span class="bui-code-pink">&gt;</span>أسبوع الإجازة<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
     <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
@@ -419,54 +419,54 @@
 <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
 <h3 style="margin:34px 0 14px;font-family:var(--bui-font-heading);font-size:18px;letter-spacing:-.4px">Dark mode and colors</h3><article class="bui-demo-card" id="dt-dark"><div class="bui-demo-title">Dark surface <span>follows color-scheme</span></div><div class="bui-demo-content">
 <div style="color-scheme:dark;background:var(--bui-bg);color:var(--bui-ink);padding:22px 18px 70px;border-radius:12px">
-  <div class="bui-form-grid">
-    <div class="bui-float">
+  <div class="bui-row">
+    <div class="bui-col-12 bui-col-md-6 bui-float">
       <input class="bui-float-input" type="date" id="dt-d-date" name="dt-d-date" data-bui-datetime placeholder=" " value="2026-10-29">
       <label class="bui-float-label" for="dt-d-date">Date</label>
     </div>
-    <div class="bui-float">
+    <div class="bui-col-12 bui-col-md-6 bui-float">
       <input class="bui-float-input" type="datetime-local" id="dt-d-dt" name="dt-d-dt" data-bui-datetime placeholder=" " value="2026-10-29T14:30">
       <label class="bui-float-label" for="dt-d-dt">Date and time</label>
     </div>
   </div>
 </div>
 </div><div class="bui-demo-code">The picker uses the same tokens as the rest of the library, so it follows <code>class="bui-dark"</code> on <code>&lt;html&gt;</code> and the theme button in the top bar. This demo shows a dark area inside a light page with <code>color-scheme: dark</code>.</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">style</span>=<span class="bui-code-green">"color-scheme:dark;background:var(--bui-bg);color:var(--bui-ink);padding:22px 18px 70px;border-radius:12px"</span><span class="bui-code-pink">&gt;</span>
-  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-form-grid"</span><span class="bui-code-pink">&gt;</span>
-    <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-row"</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-12 bui-col-md-6 bui-float"</span><span class="bui-code-pink">&gt;</span>
       <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"date"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"dt-d-date"</span> <span class="bui-code-blue">name</span>=<span class="bui-code-green">"dt-d-date"</span> <span class="bui-code-blue">data-bui-datetime</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span> <span class="bui-code-blue">value</span>=<span class="bui-code-green">"2026-10-29"</span><span class="bui-code-pink">&gt;</span>
       <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"dt-d-date"</span><span class="bui-code-pink">&gt;</span>Date<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
     <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
-    <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float"</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-12 bui-col-md-6 bui-float"</span><span class="bui-code-pink">&gt;</span>
       <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"datetime-local"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"dt-d-dt"</span> <span class="bui-code-blue">name</span>=<span class="bui-code-green">"dt-d-dt"</span> <span class="bui-code-blue">data-bui-datetime</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span> <span class="bui-code-blue">value</span>=<span class="bui-code-green">"2026-10-29T14:30"</span><span class="bui-code-pink">&gt;</span>
       <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"dt-d-dt"</span><span class="bui-code-pink">&gt;</span>Date and time<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
     <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
   <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
 <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
 <article class="bui-demo-card" id="dt-colors"><div class="bui-demo-title">Custom colors and shape <span>data-bui-popup-class · --bui-dt-*</span></div><div class="bui-demo-content">
-<div class="bui-form-grid">
-  <div class="bui-float">
+<div class="bui-row">
+  <div class="bui-col-12 bui-col-md-6 bui-float">
     <input class="bui-float-input" type="date" id="dt-c-def" name="dt-c-def" data-bui-datetime placeholder=" " value="2026-10-29">
     <label class="bui-float-label" for="dt-c-def">Default</label>
   </div>
-  <div class="bui-float">
+  <div class="bui-col-12 bui-col-md-6 bui-float">
     <input class="bui-float-input" type="date" id="dt-c-green" name="dt-c-green" data-bui-datetime placeholder=" " data-bui-popup-class="bui-dt-green" value="2026-10-29">
     <label class="bui-float-label" for="dt-c-green">Green and round</label>
   </div>
-  <div class="bui-float">
+  <div class="bui-col-12 bui-col-md-6 bui-float">
     <input class="bui-float-input" type="datetime-local" id="dt-c-ink" name="dt-c-ink" data-bui-datetime placeholder=" " data-bui-popup-class="bui-dt-ink" value="2026-10-29T14:30">
     <label class="bui-float-label" for="dt-c-ink">Always dark</label>
   </div>
 </div>
-</div><div class="bui-demo-code">The popup is added to the end of the page (or to the open modal), so style it with a class named in <code>data-bui-popup-class</code>, or set the variables on <code>:root</code>. The classes above are in <code>docs.css</code> for this page only.</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-form-grid"</span><span class="bui-code-pink">&gt;</span>
-  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float"</span><span class="bui-code-pink">&gt;</span>
+</div><div class="bui-demo-code">The popup is added to the end of the page (or to the open modal), so style it with a class named in <code>data-bui-popup-class</code>, or set the variables on <code>:root</code>. The classes above are in <code>docs.css</code> for this page only.</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-row"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-12 bui-col-md-6 bui-float"</span><span class="bui-code-pink">&gt;</span>
     <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"date"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"dt-c-def"</span> <span class="bui-code-blue">name</span>=<span class="bui-code-green">"dt-c-def"</span> <span class="bui-code-blue">data-bui-datetime</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span> <span class="bui-code-blue">value</span>=<span class="bui-code-green">"2026-10-29"</span><span class="bui-code-pink">&gt;</span>
     <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"dt-c-def"</span><span class="bui-code-pink">&gt;</span>Default<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
   <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
-  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-12 bui-col-md-6 bui-float"</span><span class="bui-code-pink">&gt;</span>
     <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"date"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"dt-c-green"</span> <span class="bui-code-blue">name</span>=<span class="bui-code-green">"dt-c-green"</span> <span class="bui-code-blue">data-bui-datetime</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span> <span class="bui-code-blue">data-bui-popup-class</span>=<span class="bui-code-green">"bui-dt-green"</span> <span class="bui-code-blue">value</span>=<span class="bui-code-green">"2026-10-29"</span><span class="bui-code-pink">&gt;</span>
     <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"dt-c-green"</span><span class="bui-code-pink">&gt;</span>Green and round<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
   <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
-  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-12 bui-col-md-6 bui-float"</span><span class="bui-code-pink">&gt;</span>
     <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"datetime-local"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"dt-c-ink"</span> <span class="bui-code-blue">name</span>=<span class="bui-code-green">"dt-c-ink"</span> <span class="bui-code-blue">data-bui-datetime</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span> <span class="bui-code-blue">data-bui-popup-class</span>=<span class="bui-code-green">"bui-dt-ink"</span> <span class="bui-code-blue">value</span>=<span class="bui-code-green">"2026-10-29T14:30"</span><span class="bui-code-pink">&gt;</span>
     <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"dt-c-ink"</span><span class="bui-code-pink">&gt;</span>Always dark<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
   <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
@@ -486,22 +486,22 @@
 :root { <span class="bui-code-blue">--bui-dt-cell</span>: 44px; <span class="bui-code-blue">--bui-dt-font-size</span>: 14px; }</code></pre></div></article>
 <h3 style="margin:34px 0 14px;font-family:var(--bui-font-heading);font-size:18px;letter-spacing:-.4px">In forms</h3><article class="bui-demo-card" id="dt-form-demo"><div class="bui-demo-title">Validation and submit <span>data-bui-validate · FormData</span></div><div class="bui-demo-content">
 <form id="dt-form" data-bui-validate novalidate>
-  <div class="bui-form-grid">
-    <div class="bui-float">
+  <div class="bui-row">
+    <div class="bui-col-12 bui-col-md-6 bui-float">
       <input class="bui-float-input" type="date" id="dt-f-date" name="date" data-bui-datetime placeholder=" "
              required min="2026-10-30" max="2026-12-31" data-error-required="Choose a date" data-error-min="Pick a day after today" data-success="Available">
       <label class="bui-float-label" for="dt-f-date">Appointment date</label>
     </div>
-    <div class="bui-float">
+    <div class="bui-col-12 bui-col-md-6 bui-float">
       <input class="bui-float-input" type="time" id="dt-f-time" name="time" data-bui-datetime placeholder=" "
              required min="09:00" max="17:00" step="900" data-error-required="Choose a time" data-error-min="Opening hours start at 09:00" data-error-max="Closing time is 17:00">
       <label class="bui-float-label" for="dt-f-time">Time (09:00 – 17:00)</label>
     </div>
-    <div class="bui-float">
+    <div class="bui-col-12 bui-col-md-6 bui-float">
       <input class="bui-float-input" type="month" id="dt-f-month" name="month" data-bui-datetime placeholder=" " value="2026-11">
       <label class="bui-float-label" for="dt-f-month">Billing month</label>
     </div>
-    <div class="bui-float">
+    <div class="bui-col-12 bui-col-md-6 bui-float">
       <input class="bui-float-input" type="week" id="dt-f-week" name="week" data-bui-datetime placeholder=" ">
       <label class="bui-float-label" for="dt-f-week">Week</label>
     </div>
@@ -513,22 +513,22 @@
 </form>
 <pre class="bui-net-log" id="dt-form-out" aria-live="polite">Submit the form to see the values the server would receive.</pre>
 </div><div class="bui-demo-code">The values are plain strings in the native formats (<code>2026-11-05</code>, <code>14:30</code>, <code>2026-11</code>, <code>2026-W45</code>). Submit with empty required fields, or type a date before the minimum, to see the messages.</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;form</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"dt-form"</span> <span class="bui-code-blue">data-bui-validate</span> <span class="bui-code-blue">novalidate</span><span class="bui-code-pink">&gt;</span>
-  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-form-grid"</span><span class="bui-code-pink">&gt;</span>
-    <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-row"</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-12 bui-col-md-6 bui-float"</span><span class="bui-code-pink">&gt;</span>
       <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"date"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"dt-f-date"</span> <span class="bui-code-blue">name</span>=<span class="bui-code-green">"date"</span> <span class="bui-code-blue">data-bui-datetime</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span>
              <span class="bui-code-blue">required</span> <span class="bui-code-blue">min</span>=<span class="bui-code-green">"2026-10-30"</span> <span class="bui-code-blue">max</span>=<span class="bui-code-green">"2026-12-31"</span> <span class="bui-code-blue">data-error-required</span>=<span class="bui-code-green">"Choose a date"</span> <span class="bui-code-blue">data-error-min</span>=<span class="bui-code-green">"Pick a day after today"</span> <span class="bui-code-blue">data-success</span>=<span class="bui-code-green">"Available"</span><span class="bui-code-pink">&gt;</span>
       <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"dt-f-date"</span><span class="bui-code-pink">&gt;</span>Appointment date<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
     <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
-    <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float"</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-12 bui-col-md-6 bui-float"</span><span class="bui-code-pink">&gt;</span>
       <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"time"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"dt-f-time"</span> <span class="bui-code-blue">name</span>=<span class="bui-code-green">"time"</span> <span class="bui-code-blue">data-bui-datetime</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span>
              <span class="bui-code-blue">required</span> <span class="bui-code-blue">min</span>=<span class="bui-code-green">"09:00"</span> <span class="bui-code-blue">max</span>=<span class="bui-code-green">"17:00"</span> <span class="bui-code-blue">step</span>=<span class="bui-code-green">"900"</span> <span class="bui-code-blue">data-error-required</span>=<span class="bui-code-green">"Choose a time"</span> <span class="bui-code-blue">data-error-min</span>=<span class="bui-code-green">"Opening hours start at 09:00"</span> <span class="bui-code-blue">data-error-max</span>=<span class="bui-code-green">"Closing time is 17:00"</span><span class="bui-code-pink">&gt;</span>
       <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"dt-f-time"</span><span class="bui-code-pink">&gt;</span>Time (09:00 – 17:00)<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
     <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
-    <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float"</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-12 bui-col-md-6 bui-float"</span><span class="bui-code-pink">&gt;</span>
       <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"month"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"dt-f-month"</span> <span class="bui-code-blue">name</span>=<span class="bui-code-green">"month"</span> <span class="bui-code-blue">data-bui-datetime</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span> <span class="bui-code-blue">value</span>=<span class="bui-code-green">"2026-11"</span><span class="bui-code-pink">&gt;</span>
       <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"dt-f-month"</span><span class="bui-code-pink">&gt;</span>Billing month<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
     <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
-    <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float"</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-12 bui-col-md-6 bui-float"</span><span class="bui-code-pink">&gt;</span>
       <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"week"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"dt-f-week"</span> <span class="bui-code-blue">name</span>=<span class="bui-code-green">"week"</span> <span class="bui-code-blue">data-bui-datetime</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span><span class="bui-code-pink">&gt;</span>
       <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"dt-f-week"</span><span class="bui-code-pink">&gt;</span>Week<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
     <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
@@ -549,12 +549,12 @@ form.addEventListener(<span class="bui-code-green">'bui:valid'</span>, (event) =
 <dialog class="bui-modal" id="dt-modal" aria-labelledby="dt-modal-title">
   <div class="bui-modal-header"><h3 class="bui-modal-title" id="dt-modal-title">Schedule a call</h3><button type="button" class="bui-modal-close" aria-label="Close" data-bui-modal-close>×</button></div>
   <div class="bui-modal-body">
-    <div class="bui-form-grid">
-      <div class="bui-float">
+    <div class="bui-row">
+      <div class="bui-col-12 bui-col-md-6 bui-float">
         <input class="bui-float-input" type="date" id="dt-modal-date" name="date" data-bui-datetime placeholder=" " value="2026-10-30">
         <label class="bui-float-label" for="dt-modal-date">Date</label>
       </div>
-      <div class="bui-float">
+      <div class="bui-col-12 bui-col-md-6 bui-float">
         <input class="bui-float-input" type="time" id="dt-modal-time" name="time" data-bui-datetime placeholder=" " value="10:00">
         <label class="bui-float-label" for="dt-modal-time">Time</label>
       </div>
@@ -567,12 +567,12 @@ form.addEventListener(<span class="bui-code-green">'bui:valid'</span>, (event) =
 <span class="bui-code-pink">&lt;dialog</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-modal"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"dt-modal"</span> <span class="bui-code-blue">aria-labelledby</span>=<span class="bui-code-green">"dt-modal-title"</span><span class="bui-code-pink">&gt;</span>
   <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-modal-header"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;h3</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-modal-title"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"dt-modal-title"</span><span class="bui-code-pink">&gt;</span>Schedule a call<span class="bui-code-pink">&lt;/h3</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-modal-close"</span> <span class="bui-code-blue">aria-label</span>=<span class="bui-code-green">"Close"</span> <span class="bui-code-blue">data-bui-modal-close</span><span class="bui-code-pink">&gt;</span>×<span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
   <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-modal-body"</span><span class="bui-code-pink">&gt;</span>
-    <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-form-grid"</span><span class="bui-code-pink">&gt;</span>
-      <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float"</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-row"</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-12 bui-col-md-6 bui-float"</span><span class="bui-code-pink">&gt;</span>
         <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"date"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"dt-modal-date"</span> <span class="bui-code-blue">name</span>=<span class="bui-code-green">"date"</span> <span class="bui-code-blue">data-bui-datetime</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span> <span class="bui-code-blue">value</span>=<span class="bui-code-green">"2026-10-30"</span><span class="bui-code-pink">&gt;</span>
         <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"dt-modal-date"</span><span class="bui-code-pink">&gt;</span>Date<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
       <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
-      <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float"</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-12 bui-col-md-6 bui-float"</span><span class="bui-code-pink">&gt;</span>
         <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-input"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"time"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"dt-modal-time"</span> <span class="bui-code-blue">name</span>=<span class="bui-code-green">"time"</span> <span class="bui-code-blue">data-bui-datetime</span> <span class="bui-code-blue">placeholder</span>=<span class="bui-code-green">" "</span> <span class="bui-code-blue">value</span>=<span class="bui-code-green">"10:00"</span><span class="bui-code-pink">&gt;</span>
         <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-float-label"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"dt-modal-time"</span><span class="bui-code-pink">&gt;</span>Time<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
       <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>

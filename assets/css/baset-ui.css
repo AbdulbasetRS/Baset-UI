@@ -198,7 +198,6 @@ h1, h2 { font-family: var(--bui-font-heading); letter-spacing: -1.5px; }
 /* =========================================================
    5. Form controls
    ========================================================= */
-.bui-form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: calc(var(--bui-spacer) * 1.25); }
 .bui-field { display: flex; flex-direction: column; gap: 9px; font-size: 11px; font-weight: 700; color: var(--bui-muted); }
 .bui-input { width: 100%; border: 1px solid var(--bui-input-border); border-radius: var(--bui-radius-3); padding: 11px 12px; background: var(--bui-surface); color: var(--bui-ink); outline: none; font-size: 12px; transition: .2s; }
 .bui-input:focus { border-color: var(--bui-primary); box-shadow: 0 0 0 3px color-mix(in srgb, var(--bui-primary) 14%, transparent); }
@@ -209,7 +208,6 @@ h1, h2 { font-family: var(--bui-font-heading); letter-spacing: -1.5px; }
 /* =========================================================
    6. Cards
    ========================================================= */
-.bui-cards-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--bui-spacer); }
 .bui-stat-card { padding: calc(var(--bui-spacer) * 1.25); background: var(--bui-surface); border: 1px solid var(--bui-line); border-radius: var(--bui-radius); box-shadow: var(--bui-shadow); }
 .bui-stat-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 22px; }
 .bui-stat-icon { width: 35px; height: 35px; display: grid; place-items: center; border-radius: 11px; font-size: 18px; font-weight: 700; }
@@ -263,13 +261,12 @@ h1, h2 { font-family: var(--bui-font-heading); letter-spacing: -1.5px; }
 .bui-badge-info { background: var(--bui-info-bg-subtle); color: var(--bui-info-fg); }
 
 /* =========================================================
-   9. Feature grid
+   9. Feature cards (lay them out with .bui-row > .bui-col-*)
    ========================================================= */
-.bui-feature-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: calc(var(--bui-spacer) * .875); }
-.bui-feature-grid > * { padding: calc(var(--bui-spacer) * 1.25); background: var(--bui-surface); border: 1px solid var(--bui-line); border-radius: var(--bui-radius-4); }
+.bui-feature { padding: calc(var(--bui-spacer) * 1.25); background: var(--bui-surface); border: 1px solid var(--bui-line); border-radius: var(--bui-radius-4); }
 .bui-feature-icon { width: 32px; height: 32px; display: grid; place-items: center; background: var(--bui-primary-soft); color: var(--bui-primary); border-radius: var(--bui-radius-3); font-size: 16px; margin-bottom: 15px; }
-.bui-feature-grid strong { font-size: 12px; }
-.bui-feature-grid p { font-size: 11px; color: var(--bui-muted); line-height: 1.7; margin-bottom: 0; }
+.bui-feature strong { font-size: 12px; }
+.bui-feature p { font-size: 11px; color: var(--bui-muted); line-height: 1.7; margin-bottom: 0; }
 
 /* =========================================================
    10. Loaders
@@ -350,11 +347,6 @@ h1, h2 { font-family: var(--bui-font-heading); letter-spacing: -1.5px; }
 /* =========================================================
    12. Responsive & motion
    ========================================================= */
-@media (max-width: 760px) {
-  .bui-cards-grid,
-  .bui-feature-grid,
-  .bui-form-grid { grid-template-columns: 1fr; }
-}
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { transition: none !important; }
   .bui-spinner, .bui-dots i, .bui-bars i, .bui-ripple i, .bui-progress-indeterminate span { animation-duration: 2.4s !important; }
@@ -1372,8 +1364,7 @@ select.bui-float-prefix { appearance: none; padding-inline: 14px 22px; border: 0
 .bui-chart-stat strong { color: var(--bui-ink); font: 800 20px/1.1 var(--bui-font-heading); letter-spacing: -.5px; }
 .bui-chart-stat span { color: var(--bui-success-fg); font-size: 12px; font-weight: 700; }
 .bui-chart-stat span.is-down { color: var(--bui-danger-fg); }
-.bui-chart-grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 16px; }
-.bui-chart-kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 170px), 1fr)); gap: 12px; margin-block-end: 16px; }
+.bui-chart-kpis { margin-block-end: 16px; } /* spacing only: lay the tiles out with .bui-row > .bui-col-* */
 .bui-chart-kpi { padding: 14px 16px; background: var(--bui-surface); border: 1px solid var(--bui-line); border-radius: var(--bui-radius-4); }
 .bui-chart-kpi small { display: block; color: var(--bui-muted); font-size: 12px; font-weight: 600; }
 .bui-chart-kpi strong { display: block; margin-block: 4px 2px; color: var(--bui-ink); font: 800 22px/1.1 var(--bui-font-heading); letter-spacing: -.6px; }

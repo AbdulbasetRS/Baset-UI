@@ -308,7 +308,7 @@ h1 em { font-style: normal; color: var(--bui-primary); }
 .bui-chart-tools .bui-btn[aria-pressed="true"]:not(.bui-btn-primary) { border-color: var(--bui-primary-border); background: var(--bui-primary-soft); color: var(--bui-primary-text); }
 .bui-chart-log { margin: 12px 0 0; padding: 10px 12px; border-radius: var(--bui-radius-3); background: var(--bui-soft); color: var(--bui-muted); font: 11px/1.6 ui-monospace, monospace; white-space: pre-wrap; overflow-wrap: anywhere; }
 .bui-chart-resize { width: 100%; min-width: 220px; max-width: 100%; padding: 14px; overflow: hidden; resize: horizontal; border: 1px dashed var(--bui-input-border); border-radius: var(--bui-radius-3); }
-.bui-demo-content .bui-chart-grid-2 + .bui-chart-grid-2 { margin-block-start: 16px; }
+.bui-demo-content .bui-row:has(> .bui-chart-card) + .bui-row:has(> .bui-chart-card) { margin-block-start: 16px; }
 
 /* ---------- Chart playground ---------- */
 .bui-tp-field { display: grid; gap: 6px; margin-bottom: 12px; }

@@ -183,7 +183,7 @@ baset-ui/
 └── .gitattributes
 ```
 
-`baset-ui.css` is organised in numbered sections (tokens, base, layout helpers, buttons, forms, cards, alerts, badges, feature grid, responsive) so a new component has an obvious place to go.
+`baset-ui.css` is organised in numbered sections (tokens, base, layout helpers, buttons, forms, cards, alerts, badges, feature cards, responsive) so a new component has an obvious place to go.
 
 ## Components
 
@@ -203,7 +203,7 @@ baset-ui/
 | Toasts & notifications | `components/toasts.html` | Success, info, warning, danger, toast stack |
 | Modal | `components/modal.html` | Basic, sizes, positions, drawers, confirmations, forms, media, nested, RTL, JS API (confirm, alert, prompt, show) |
 | Navbar, sidebar & footer | `components/navigation.html` | Navbar (basic, inverse / primary, centered element, app header with clock / time zone / language / theme / notifications / user, avatar-only user button, always collapsed, sticky, RTL), sidebar (basic, groups, user, Help and Log out, mini rail, RTL), footer (simple, columns, inverse, status, RTL), layouts (landing page, dashboard, push and overlay drawer sidebar, RTL dashboard) |
-| Utilities | `components/utilities.html` | Feature grid |
+| Utilities | `components/utilities.html` | Feature cards |
 | Charts & data visualization | `components/charts.html` | Line (basic, multiple, smooth, points, area fill), bar (vertical, horizontal, grouped, stacked, rounded, negative values), area (basic, multiple, stacked), pie, doughnut (center text, custom colors, legend with values and percentages), radar, scatter, mixed bar + line, radial progress, gauge; animation styles and easings; sales and operations dashboards; options, number formats, empty and invalid data, JS API, live data, responsive, RTL, dark mode |
 | DataTable | `components/datatable.html` | 40 sections (incl. a complete with-API / without-API example): HTML-table and JS init, pagination, search, multi-column sort, column visibility / reorder / resize, filters and search builder, selection, inline and modal editing, row actions, buttons, copy / CSV / Excel / PDF / JSON / print, responsive and card view, AJAX and server-side, Laravel API, state, grouping, fixed columns, virtual scrolling, i18n, RTL, dark, themes, API, events, extensions |
 | Calendar & Scheduler | `components/calendar.html` | 14 live examples, each with complete HTML + CSS + JS and a Copy button: basic, month ("+N more"), week (overlapping events), day, add / edit / delete, drag and drop, resizing, details popup, Arabic RTL, languages and first day, light / dark, colors and categories, callbacks and events, JavaScript API; plus the option, method, callback and keyboard reference |
@@ -226,15 +226,15 @@ Every example on these pages shows the live preview, the class list, and a code 
 
 Modifiers: sizes `.bui-btn-sm` / `.bui-btn-lg`, `.bui-btn-pill`, `.bui-btn-block` (full width), `.bui-btn-icon` (square, icon-only; add `aria-label`). Group buttons with `.bui-btn-group`. Use the native `disabled` attribute for the disabled state; every style also works on `<a class="bui-btn …">`. Color tokens: `--bui-success`, `--bui-danger`, `--bui-warning`, `--bui-info`, `--bui-secondary`, `--bui-inverse`. Row helper: `.bui-button-row`.
 
-**Forms** — `.bui-field` (label wrapper), `.bui-input` (input / select), `.bui-checkline` (checkbox or radio line), `.bui-form-grid` (two-column layout, one column on mobile). Floating labels and validation: see [Floating labels and validation](#floating-labels-and-validation).
+**Forms** — `.bui-field` (label wrapper), `.bui-input` (input / select), `.bui-checkline` (checkbox or radio line), form layouts use the grid system: `.bui-row` with `.bui-col-12 .bui-col-md-6` on each field (two columns from 768px, one on mobile). Floating labels and validation: see [Floating labels and validation](#floating-labels-and-validation).
 
-**Cards** — `.bui-stat-card` with `.bui-stat-top`, `.bui-stat-icon` (`-purple`, `-blue`, `-orange`), `.bui-stat-change`, `.bui-stat-neutral`, `.bui-stat-label`, `.bui-sparkline`, `.bui-progress`, `.bui-task-lines`. Layout: `.bui-cards-grid`.
+**Cards** — `.bui-stat-card` with `.bui-stat-top`, `.bui-stat-icon` (`-purple`, `-blue`, `-orange`), `.bui-stat-change`, `.bui-stat-neutral`, `.bui-stat-label`, `.bui-sparkline`, `.bui-progress`, `.bui-task-lines`. Layout: `.bui-row` with `.bui-col-12 .bui-col-md-4` on each card.
 
 **Alerts** — `.bui-alert` + `.bui-alert-success` / `-info` / `-warning` / `-danger`; `.bui-dismiss` for the close button; `.bui-alert-stack` to stack several.
 
 **Badges** — `.bui-badge` + `.bui-badge-primary` / `-success` / `-warning` / `-danger` / `-neutral` / `-info`; group with `.bui-badge-row`.
 
-**Feature grid** — `.bui-feature-grid` with `.bui-feature-icon` inside each item.
+**Feature cards** — `.bui-feature` (card look for one item) with `.bui-feature-icon` inside; lay the items out with `.bui-row` and `.bui-col-*`.
 
 **Helpers** — `.bui-muted` (small muted text).
 
@@ -272,6 +272,16 @@ A mobile-first, 12-column flexbox grid. It is CSS only (no JavaScript), uses log
 | `.bui-stack`, `.bui-cluster` | Vertical flow and wrapping inline group, spaced by the gutter classes |
 
 Breakpoints follow the viewport width (min-width), not the container width.
+
+**Breaking change — removed layout classes.** `.bui-form-grid`, `.bui-cards-grid`, `.bui-feature-grid`, `.bui-chart-grid-2` and the grid part of `.bui-chart-kpis` were removed; use the grid system instead.
+
+| Removed | Use instead |
+|---|---|
+| `.bui-form-grid` | `.bui-row` + `.bui-col-12 .bui-col-md-6` on each field |
+| `.bui-cards-grid` | `.bui-row` + `.bui-col-12 .bui-col-md-4` on each card |
+| `.bui-feature-grid` | `.bui-row` + `.bui-col-12 .bui-col-md-4 .bui-feature` on each item |
+| `.bui-chart-grid-2` | `.bui-row` + `.bui-col-12 .bui-col-lg-6` on each chart card |
+| `.bui-chart-kpis` (grid) | `.bui-row .bui-chart-kpis` + `.bui-col-6 .bui-col-lg` on each tile (the class now only adds bottom spacing) |
 
 ## Toasts and notifications
 

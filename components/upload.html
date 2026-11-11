@@ -135,12 +135,12 @@
   <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
 <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
 <article class="bui-demo-card" id="up-avatar-form"><div class="bui-demo-title">Profile form <span>avatar inside a form</span></div><div class="bui-demo-content">
-<form id="up-profile" class="bui-form-grid" style="align-items:center">
-  <div>
+<form id="up-profile" class="bui-row">
+  <div class="bui-col-12 bui-col-md-6">
     <label class="bui-upload-caption" for="up-profile-photo">Profile photo</label>
     <input type="file" id="up-profile-photo" name="photo" accept="image/png,image/jpeg,image/webp" data-bui-upload data-bui-variant="avatar" data-bui-max-size="2MB">
   </div>
-  <div>
+  <div class="bui-col-12 bui-col-md-6">
     <label class="bui-field">Display name
       <input class="bui-input" type="text" name="name" value="Sara Ahmed">
     </label>
@@ -150,12 +150,12 @@
     <pre class="bui-net-log" id="up-profile-out" aria-live="polite">Choose a photo and save to see what the form sends.</pre>
   </div>
 </form>
-</div><div class="bui-demo-code">The photo is a normal file field: it is sent with the other fields as <code>multipart/form-data</code>. Remove the photo and save: the form sends none.</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;form</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"up-profile"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-form-grid"</span> <span class="bui-code-blue">style</span>=<span class="bui-code-green">"align-items:center"</span><span class="bui-code-pink">&gt;</span>
-  <span class="bui-code-pink">&lt;div</span><span class="bui-code-pink">&gt;</span>
+</div><div class="bui-demo-code">The photo is a normal file field: it is sent with the other fields as <code>multipart/form-data</code>. Remove the photo and save: the form sends none.</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;form</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"up-profile"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-row"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-12 bui-col-md-6"</span><span class="bui-code-pink">&gt;</span>
     <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-upload-caption"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"up-profile-photo"</span><span class="bui-code-pink">&gt;</span>Profile photo<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
     <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"file"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"up-profile-photo"</span> <span class="bui-code-blue">name</span>=<span class="bui-code-green">"photo"</span> <span class="bui-code-blue">accept</span>=<span class="bui-code-green">"image/png,image/jpeg,image/webp"</span> <span class="bui-code-blue">data-bui-upload</span> <span class="bui-code-blue">data-bui-variant</span>=<span class="bui-code-green">"avatar"</span> <span class="bui-code-blue">data-bui-max-size</span>=<span class="bui-code-green">"2MB"</span><span class="bui-code-pink">&gt;</span>
   <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
-  <span class="bui-code-pink">&lt;div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-12 bui-col-md-6"</span><span class="bui-code-pink">&gt;</span>
     <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-field"</span><span class="bui-code-pink">&gt;</span>Display name
       <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-input"</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"text"</span> <span class="bui-code-blue">name</span>=<span class="bui-code-green">"name"</span> <span class="bui-code-blue">value</span>=<span class="bui-code-green">"Sara Ahmed"</span><span class="bui-code-pink">&gt;</span>
     <span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
@@ -172,12 +172,12 @@
     <span class="bui-code-green">'name = '</span> + data.get(<span class="bui-code-green">'name'</span>) + <span class="bui-code-green">'\nphoto = '</span> + (photo &amp;&amp; photo.name ? photo.name + <span class="bui-code-green">' ('</span> + photo.size + <span class="bui-code-green">' bytes)'</span> : <span class="bui-code-green">'none'</span>);
 });</code></pre></div></article>
 <h3 style="margin:34px 0 14px;font-family:var(--bui-font-heading);font-size:18px;letter-spacing:-.4px">Looks and sizes</h3><article class="bui-demo-card" id="up-variants"><div class="bui-demo-title">Variants <span>dropzone · compact · button</span></div><div class="bui-demo-content">
-<div class="bui-form-grid">
-  <div>
+<div class="bui-row">
+  <div class="bui-col-12 bui-col-md-6">
     <label class="bui-upload-caption" for="up-v-drop">Dropzone (default)</label>
     <input type="file" id="up-v-drop" name="up-v-drop" data-bui-upload accept=".pdf">
   </div>
-  <div>
+  <div class="bui-col-12 bui-col-md-6">
     <label class="bui-upload-caption" for="up-v-compact">Compact</label>
     <input type="file" id="up-v-compact" name="up-v-compact" data-bui-upload accept=".pdf" data-bui-variant="compact">
   </div>
@@ -186,12 +186,12 @@
   <label class="bui-upload-caption" for="up-v-btn">Button</label>
   <input type="file" id="up-v-btn" name="up-v-btn" data-bui-upload multiple accept=".pdf,.png,.jpg" data-bui-variant="button">
 </div>
-</div><div class="bui-demo-code">All variants share the same code, checks and file list; only the look changes. The button variant hides the hint text (screen readers still read it).</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-form-grid"</span><span class="bui-code-pink">&gt;</span>
-  <span class="bui-code-pink">&lt;div</span><span class="bui-code-pink">&gt;</span>
+</div><div class="bui-demo-code">All variants share the same code, checks and file list; only the look changes. The button variant hides the hint text (screen readers still read it).</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-row"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-12 bui-col-md-6"</span><span class="bui-code-pink">&gt;</span>
     <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-upload-caption"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"up-v-drop"</span><span class="bui-code-pink">&gt;</span>Dropzone (default)<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
     <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"file"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"up-v-drop"</span> <span class="bui-code-blue">name</span>=<span class="bui-code-green">"up-v-drop"</span> <span class="bui-code-blue">data-bui-upload</span> <span class="bui-code-blue">accept</span>=<span class="bui-code-green">".pdf"</span><span class="bui-code-pink">&gt;</span>
   <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
-  <span class="bui-code-pink">&lt;div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-12 bui-col-md-6"</span><span class="bui-code-pink">&gt;</span>
     <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-upload-caption"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"up-v-compact"</span><span class="bui-code-pink">&gt;</span>Compact<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
     <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"file"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"up-v-compact"</span> <span class="bui-code-blue">name</span>=<span class="bui-code-green">"up-v-compact"</span> <span class="bui-code-blue">data-bui-upload</span> <span class="bui-code-blue">accept</span>=<span class="bui-code-green">".pdf"</span> <span class="bui-code-blue">data-bui-variant</span>=<span class="bui-code-green">"compact"</span><span class="bui-code-pink">&gt;</span>
   <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
@@ -201,22 +201,22 @@
   <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"file"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"up-v-btn"</span> <span class="bui-code-blue">name</span>=<span class="bui-code-green">"up-v-btn"</span> <span class="bui-code-blue">data-bui-upload</span> <span class="bui-code-blue">multiple</span> <span class="bui-code-blue">accept</span>=<span class="bui-code-green">".pdf,.png,.jpg"</span> <span class="bui-code-blue">data-bui-variant</span>=<span class="bui-code-green">"button"</span><span class="bui-code-pink">&gt;</span>
 <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
 <article class="bui-demo-card" id="up-sizes"><div class="bui-demo-title">Sizes <span>data-bui-size="sm | lg"</span></div><div class="bui-demo-content">
-<div class="bui-form-grid">
-  <div>
+<div class="bui-row">
+  <div class="bui-col-12 bui-col-md-6">
     <label class="bui-upload-caption" for="up-s-sm">Small</label>
     <input type="file" id="up-s-sm" name="up-s-sm" data-bui-upload accept=".pdf" data-bui-size="sm">
   </div>
-  <div>
+  <div class="bui-col-12 bui-col-md-6">
     <label class="bui-upload-caption" for="up-s-lg">Large</label>
     <input type="file" id="up-s-lg" name="up-s-lg" data-bui-upload accept=".pdf" data-bui-size="lg">
   </div>
 </div>
-</div><div class="bui-demo-code">Sizes only change the variables <code>--bui-up-pad</code>, <code>-min-h</code>, <code>-icon-size</code>, <code>-thumb</code> and the font sizes.</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-form-grid"</span><span class="bui-code-pink">&gt;</span>
-  <span class="bui-code-pink">&lt;div</span><span class="bui-code-pink">&gt;</span>
+</div><div class="bui-demo-code">Sizes only change the variables <code>--bui-up-pad</code>, <code>-min-h</code>, <code>-icon-size</code>, <code>-thumb</code> and the font sizes.</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-row"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-12 bui-col-md-6"</span><span class="bui-code-pink">&gt;</span>
     <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-upload-caption"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"up-s-sm"</span><span class="bui-code-pink">&gt;</span>Small<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
     <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"file"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"up-s-sm"</span> <span class="bui-code-blue">name</span>=<span class="bui-code-green">"up-s-sm"</span> <span class="bui-code-blue">data-bui-upload</span> <span class="bui-code-blue">accept</span>=<span class="bui-code-green">".pdf"</span> <span class="bui-code-blue">data-bui-size</span>=<span class="bui-code-green">"sm"</span><span class="bui-code-pink">&gt;</span>
   <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
-  <span class="bui-code-pink">&lt;div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-12 bui-col-md-6"</span><span class="bui-code-pink">&gt;</span>
     <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-upload-caption"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"up-s-lg"</span><span class="bui-code-pink">&gt;</span>Large<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
     <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"file"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"up-s-lg"</span> <span class="bui-code-blue">name</span>=<span class="bui-code-green">"up-s-lg"</span> <span class="bui-code-blue">data-bui-upload</span> <span class="bui-code-blue">accept</span>=<span class="bui-code-green">".pdf"</span> <span class="bui-code-blue">data-bui-size</span>=<span class="bui-code-green">"lg"</span><span class="bui-code-pink">&gt;</span>
   <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
@@ -315,22 +315,22 @@ form.addEventListener(<span class="bui-code-green">'submit'</span>, (event) =&gt
   <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"file"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"up-rtl-files"</span> <span class="bui-code-blue">name</span>=<span class="bui-code-green">"up-rtl-files"</span> <span class="bui-code-blue">data-bui-upload</span> <span class="bui-code-blue">multiple</span> <span class="bui-code-blue">accept</span>=<span class="bui-code-green">".pdf,image/*"</span> <span class="bui-code-blue">data-bui-max-size</span>=<span class="bui-code-green">"5MB"</span> <span class="bui-code-blue">data-bui-max-files</span>=<span class="bui-code-green">"4"</span> <span class="bui-code-blue">data-bui-layout</span>=<span class="bui-code-green">"grid"</span><span class="bui-code-pink">&gt;</span>
 <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
 <article class="bui-demo-card" id="up-colors"><div class="bui-demo-title">Custom colors and shape <span>--bui-up-*</span></div><div class="bui-demo-content">
-<div class="bui-form-grid">
-  <div class="bui-up-green">
+<div class="bui-row">
+  <div class="bui-col-12 bui-col-md-6 bui-up-green">
     <label class="bui-upload-caption" for="up-c-green">Green and round</label>
     <input type="file" id="up-c-green" name="up-c-green" data-bui-upload multiple accept=".pdf" data-bui-max-size="5MB">
   </div>
-  <div class="bui-up-amber">
+  <div class="bui-col-12 bui-col-md-6 bui-up-amber">
     <label class="bui-upload-caption" for="up-c-amber">Square corners</label>
     <input type="file" id="up-c-amber" name="up-c-amber" data-bui-upload multiple accept=".pdf" data-bui-max-size="5MB">
   </div>
 </div>
-</div><div class="bui-demo-code">Set the variables on any ancestor or on <code>:root</code>. The two classes used here live in <code>docs.css</code> for this page only.</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-form-grid"</span><span class="bui-code-pink">&gt;</span>
-  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-up-green"</span><span class="bui-code-pink">&gt;</span>
+</div><div class="bui-demo-code">Set the variables on any ancestor or on <code>:root</code>. The two classes used here live in <code>docs.css</code> for this page only.</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-row"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-12 bui-col-md-6 bui-up-green"</span><span class="bui-code-pink">&gt;</span>
     <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-upload-caption"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"up-c-green"</span><span class="bui-code-pink">&gt;</span>Green and round<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
     <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"file"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"up-c-green"</span> <span class="bui-code-blue">name</span>=<span class="bui-code-green">"up-c-green"</span> <span class="bui-code-blue">data-bui-upload</span> <span class="bui-code-blue">multiple</span> <span class="bui-code-blue">accept</span>=<span class="bui-code-green">".pdf"</span> <span class="bui-code-blue">data-bui-max-size</span>=<span class="bui-code-green">"5MB"</span><span class="bui-code-pink">&gt;</span>
   <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
-  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-up-amber"</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-12 bui-col-md-6 bui-up-amber"</span><span class="bui-code-pink">&gt;</span>
     <span class="bui-code-pink">&lt;label</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-upload-caption"</span> <span class="bui-code-blue">for</span>=<span class="bui-code-green">"up-c-amber"</span><span class="bui-code-pink">&gt;</span>Square corners<span class="bui-code-pink">&lt;/label</span><span class="bui-code-pink">&gt;</span>
     <span class="bui-code-pink">&lt;input</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"file"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"up-c-amber"</span> <span class="bui-code-blue">name</span>=<span class="bui-code-green">"up-c-amber"</span> <span class="bui-code-blue">data-bui-upload</span> <span class="bui-code-blue">multiple</span> <span class="bui-code-blue">accept</span>=<span class="bui-code-green">".pdf"</span> <span class="bui-code-blue">data-bui-max-size</span>=<span class="bui-code-green">"5MB"</span><span class="bui-code-pink">&gt;</span>
   <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
