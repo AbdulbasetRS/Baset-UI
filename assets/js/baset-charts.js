@@ -1,7 +1,7 @@
 /* Baset UI — Charts & Data Visualization (optional, no dependencies)
  *
  * SVG charts drawn with plain JavaScript. Needs section 20 of baset-ui.css (colors, fonts, tooltip, legend).
- *   const chart = new BasetChart('#sales', {
+ *   const chart = BUI.chart('#sales', {
  *     type: 'line',                       // line · bar · area · pie · doughnut · radar · scatter · mixed · radial · gauge
  *     data: { labels: ['Jan', 'Feb'], datasets: [{ label: 'Sales', data: [120, 190], color: '#6658e8' }] },
  *     options: { animation: true, showLegend: true, showGrid: true }
@@ -20,14 +20,16 @@
  *   emptyText, ariaLabel
  * Dataset: { label, data, color, colors (pie), type ('bar'|'line'|'area', mixed), axis ('left'|'right'), fill, smooth,
  *   points, dash, hidden }
- * JavaScript: BasetChart · BUI.chart.init(root) · BUI.chart.get(el) · chart.update(data) · chart.setOptions(o)
+ * JavaScript: BUI.chart(target, options) · BUI.chart.init(root) · BUI.chart.get(el) · chart.update(data) · chart.setOptions(o)
  *   chart.setColors([..]) · chart.toggle(i, visible?) · chart.replay() · chart.resize() · chart.destroy()
  * Events on the container: bui:chart-render · bui:chart-click
  */
 (() => {
   'use strict';
   const BUI = (window.BUI = window.BUI || {});
-  if (BUI.Chart) return;
+  if (BUI.chart) return;
+  /* BUI.chart(target, options) creates an instance (new is optional); statics such as BUI.chart.init live on the same function */
+  const make = (Cls) => { function f(...args) { return new Cls(...args); } Object.setPrototypeOf(f, Cls); Object.defineProperty(f, 'prototype', { value: Cls.prototype }); f.Class = Cls; return f; };
 
   const NS = 'http://www.w3.org/2000/svg';
   const TYPES = ['line', 'bar', 'area', 'pie', 'doughnut', 'radar', 'scatter', 'mixed', 'radial', 'gauge'];
@@ -172,7 +174,7 @@
     const d = node.dataset, out = { type: d.buiChart || undefined, data: undefined, options: {} };
     if (d.buiConfig) {
       try { const c = JSON.parse(d.buiConfig); if (isObj(c)) { out.type = c.type || out.type; out.data = c.data; out.options = isObj(c.options) ? { ...c.options } : {}; } }
-      catch { console.warn('[BasetChart] data-bui-config is not valid JSON', node); }
+      catch { console.warn('[BUI.chart] data-bui-config is not valid JSON', node); }
     }
     for (const a in ATTRS) {
       const key = 'bui' + a.replace(/(^|-)(\w)/g, (_, __, c) => c.toUpperCase());
@@ -193,7 +195,7 @@
       const node = typeof target === 'string' ? document.querySelector(target) : target;
       this.el = node instanceof Element ? node : null;
       this.destroyed = false;
-      if (!this.el) { console.error('[BasetChart] container not found:', target); this.destroyed = true; return; }
+      if (!this.el) { console.error('[BUI.chart] container not found:', target); this.destroyed = true; return; }
       const old = instances.get(this.el);
       if (old) old.destroy();
       const attr = readAttrs(this.el);
@@ -1000,9 +1002,7 @@
     root.querySelectorAll && root.querySelectorAll('[data-bui-chart]').forEach((n) => list.push(n));
     return list.filter((n) => !instances.has(n)).map((n) => new BasetChart(n));
   }
-  BUI.Chart = BasetChart;
-  BUI.chart = { init, get: (t) => instances.get(typeof t === 'string' ? document.querySelector(t) : t) || null, defaults: DEFAULTS, palette: PALETTE, types: TYPES, animations: ANIMATIONS, easings: Object.keys(EASINGS), heights: HEIGHTS };
-  window.BasetChart = BasetChart;
+  BUI.chart = Object.assign(make(BasetChart), { init, get: (t) => instances.get(typeof t === 'string' ? document.querySelector(t) : t) || null, defaults: DEFAULTS, palette: PALETTE, types: TYPES, animations: ANIMATIONS, easings: Object.keys(EASINGS), heights: HEIGHTS });
 
   const start = () => {
     init(document);

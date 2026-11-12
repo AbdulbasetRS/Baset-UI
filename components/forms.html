@@ -50,6 +50,7 @@
     </aside>
     <main class="bui-main">
       <header class="bui-topbar"><div class="bui-breadcrumb"><a href="../index.html">Documentation</a> <span>/</span> Components <span>/</span> Form controls</div><div class="bui-top-actions"><span class="bui-pill">Vanilla CSS + JS</span><button class="bui-icon-btn bui-dir-btn" id="dirToggle" type="button" aria-label="Toggle direction (RTL / LTR)" title="Toggle direction (RTL / LTR)">RTL</button><button class="bui-icon-btn" id="themeToggle" type="button" aria-label="Toggle theme">☼</button></div></header>
+      <section class="bui-section" id="customize"><div class="bui-section-heading"><div><span class="bui-eyebrow">CUSTOMIZE</span><h2>Make it yours</h2><p>Change the options, watch the form field update, then copy the code. Switch theme and direction to check light, dark, LTR and RTL.</p></div></div><div data-bui-playground="forms"></div></section>
       <section class="bui-section" id="forms"><div class="bui-section-heading"><div><span class="bui-eyebrow">02 / COMPONENTS</span><h2>Form controls</h2><p>Clear labels, comfortable spacing, accessible focus states, and floating labels with validation states.</p></div><span class="bui-step-count">44 examples</span></div>
       <div class="bui-demo-stack">
 <article class="bui-demo-card" id="text-input"><div class="bui-demo-title">Text input <span>.bui-field · .bui-input</span></div><div class="bui-demo-content"><label class="bui-field">Full name
@@ -1436,6 +1437,8 @@ form.requestSubmit();                           <span class="bui-code-muted">// 
     </main>
   </div>
   <script src="../assets/js/baset-ui.js"></script>
+  <script src="../assets/js/component-playground.js"></script>
+  <script src="../assets/js/component-playground-configs.js"></script>
   <script>
     /* Docs only: the demo forms do not send anything, and the "Run" buttons execute the code shown in their card. */
     document.addEventListener('bui:valid', function (e) { e.preventDefault(); BUI.toast.success('The form is valid. Nothing is sent in this demo.'); });

@@ -4,7 +4,7 @@
  * Keeps all state in memory; nothing is stored. */
 (() => {
   const host = document.getElementById('dpTable');
-  if (!host || !window.BasetDataTable || !window.BUIDocs) return;
+  if (!host || !window.BUI?.dataTable || !window.BUIDocs) return;
   const $ = (id) => document.getElementById(id);
   const preview = $('dpPreview');
   const users = BUIDocs.users;
@@ -213,7 +213,7 @@
       if (k === 'view') return [k, { title: v.title, render: raw('profile') }];
       return [k, v];
     });
-    lines.push('  const table = new BasetDataTable(\'#users\', ' + optionsOnly(named, '  ') + ');', '</script>');
+    lines.push('  const table = BUI.dataTable(\'#users\', ' + optionsOnly(named, '  ') + ');', '</script>');
     return lines.join('\n');
   }
   const namedOptions = (entries) => optionsOnly(entries.map(([k, v]) => {
@@ -260,7 +260,7 @@
     host.textContent = '';
     preview.dir = state.dir; preview.style.colorScheme = state.theme === 'auto' ? '' : state.theme;
     preview.classList.toggle('is-dark', state.theme === 'dark');
-    try { table = new BasetDataTable(host, liveOptions(entries)); } catch (err) { host.textContent = 'Could not build the table: ' + err.message; }
+    try { table = BUI.dataTable(host, liveOptions(entries)); } catch (err) { host.textContent = 'Could not build the table: ' + err.message; }
     window.dpTable = table;
     $('dpCode').innerHTML = highlight(state.out === 'full' ? fullCode(entries) : '// only what differs from the defaults\nconst options = ' + namedOptions(entries) + ';');
     $('dpFile').textContent = state.out === 'full' ? 'index.html' : 'options.js';

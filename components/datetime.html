@@ -49,6 +49,7 @@
     </aside>
     <main class="bui-main">
       <header class="bui-topbar"><div class="bui-breadcrumb"><a href="../index.html">Documentation</a> <span>/</span> Components <span>/</span> Date &amp; time pickers</div><div class="bui-top-actions"><span class="bui-pill">Vanilla CSS + JS</span><button class="bui-icon-btn bui-dir-btn" id="dirToggle" type="button" aria-label="Toggle direction (RTL / LTR)" title="Toggle direction (RTL / LTR)">RTL</button><button class="bui-icon-btn" id="themeToggle" type="button" aria-label="Toggle theme">☼</button></div></header>
+      <section class="bui-section" id="customize"><div class="bui-section-heading"><div><span class="bui-eyebrow">CUSTOMIZE</span><h2>Make it yours</h2><p>Change the options, watch the date and time picker update, then copy the code. Switch theme and direction to check light, dark, LTR and RTL.</p></div></div><div data-bui-playground="datetime"></div></section>
       <section class="bui-section" id="datetime"><div class="bui-section-heading"><div><span class="bui-eyebrow">04 / COMPONENTS</span><h2>Date &amp; time pickers</h2><p>One look for date, time, date and time, month and week fields. The native input stays your source of truth (value, min, max, step, validation, forms); a light, accessible popup replaces the browser's own, in light and dark, LTR and RTL.</p></div><span class="bui-step-count">14 examples</span></div>
 <div class="bui-demo-stack">
 <h3 style="margin:34px 0 14px;font-family:var(--bui-font-heading);font-size:18px;letter-spacing:-.4px">Quick start</h3><p class="bui-doc-note">Add <code>data-bui-datetime</code> to a native <code>&lt;input&gt;</code> of type <code>date</code>, <code>time</code>, <code>datetime-local</code>, <code>month</code> or <code>week</code>, and load <code>baset-datetime.js</code> after the stylesheet. The native input <b>stays in the page and stays the source of truth</b>: <code>id</code>, <code>name</code>, <code>value</code>, <code>min</code>, <code>max</code>, <code>step</code>, <code>required</code>, <code>disabled</code>, <code>readonly</code>, validation and form submit work exactly as before, and you can still type into it. The picker is the part the browser does not let CSS change: a calendar and time lists built with JavaScript. It writes the value in the native format and fires <code>input</code> and <code>change</code>. It does not need <code>baset-ui.js</code> and has no dependencies.</p>
@@ -633,6 +634,8 @@ document.getElementById(<span class="bui-code-green">'dt-api-clear'</span>).oncl
     </main>
   </div>
   <script src="../assets/js/baset-ui.js"></script>
+  <script src="../assets/js/component-playground.js"></script>
+  <script src="../assets/js/component-playground-configs.js"></script>
   <script src="../assets/js/baset-datetime.js"></script>
   <script>
     /* Documentation page only: the French words used by the "Language" example, the form output and the API demo. */

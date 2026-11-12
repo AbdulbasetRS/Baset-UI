@@ -5,20 +5,22 @@
  * card view, server-side processing, state saving, English + Arabic, light / dark, LTR / RTL.
  * Needs baset-ui.css (section 21). baset-ui.js is NOT required. Full guide: components/datatable.html
  *
- *   const dt = new BasetDataTable('#users', {
+ *   const dt = BUI.dataTable('#users', {
  *     data: [{ id: 1, name: 'Sara' }],
  *     columns: [{ data: 'id', title: 'ID' }, { data: 'name', title: 'Name' }],
  *     pageLength: 10, searching: true, buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
  *   });
  *   dt.search('sara').order([[1, 'asc']]).draw();
  *
- * Add a language:  BasetDataTable.locales.fr = { search: 'Rechercher…', … }   (missing keys fall back to English)
- * Export adapters: BasetDataTable.adapters.pdf = (exportData, options) => Blob | Promise<Blob>   (optional)
+ * Add a language:  BUI.dataTable.locales.fr = { search: 'Rechercher…', … }   (missing keys fall back to English)
+ * Export adapters: BUI.dataTable.adapters.pdf = (exportData, options) => Blob | Promise<Blob>   (optional)
  */
 (() => {
   'use strict';
   const BUI = (window.BUI = window.BUI || {});
-  if (BUI.DataTable) return;
+  if (BUI.dataTable) return;
+  /* BUI.dataTable(target, options) creates an instance (new is optional); statics such as BUI.dataTable.locales live on the same function */
+  const make = (Cls) => { function f(...args) { return new Cls(...args); } Object.setPrototypeOf(f, Cls); Object.defineProperty(f, 'prototype', { value: Cls.prototype }); f.Class = Cls; return f; };
 
   const VERSION = '1.0.0';
   const doc = document;
@@ -62,7 +64,7 @@
   const RTL_LANGS = ['ar', 'he', 'fa', 'ur', 'ps', 'sd', 'yi', 'ckb', 'dv'];
   const fill = (s, o) => String(s).replace(/\{(\w+)\}/g, (m, k) => (o && k in o ? o[k] : m));
 
-  /* ---------- Languages (flat keys; add one with BasetDataTable.locales.fr = { … }) ---------- */
+  /* ---------- Languages (flat keys; add one with BUI.dataTable.locales.fr = { … }) ---------- */
   const locales = {
     en: {
       search: 'Search…', searchLabel: 'Search the table', clear: 'Clear', length: 'Show {menu} entries', lengthLabel: 'Rows per page', all: 'All', lengthCustom: 'Custom number', selectionColumn: 'Selection column', selectRowsFirst: 'Select rows',
@@ -285,7 +287,7 @@
   class DataTable {
     constructor(target, options = {}) {
       const host = typeof target === 'string' ? doc.querySelector(target) : target;
-      if (!host) throw new Error('BasetDataTable: target not found: ' + target);
+      if (!host) throw new Error('BUI.dataTable: target not found: ' + target);
       if (instances.has(host)) return instances.get(host);
       instances.set(host, this);
       this.id = 'bdt' + ++uid; this.host = host;
@@ -1170,7 +1172,7 @@
     },
     _buildButtons() {
       const defs = this._btnDefs(); this.btnBar.textContent = ''; const mk = (spec, host) => {
-        let d = typeof spec === 'string' ? { extend: spec } : { ...spec }; const base = d.extend && d.extend !== 'collection' ? defs[d.extend] : null; if (d.extend && d.extend !== 'collection' && !base) { console.warn('BasetDataTable: unknown button "' + d.extend + '"'); return; }
+        let d = typeof spec === 'string' ? { extend: spec } : { ...spec }; const base = d.extend && d.extend !== 'collection' ? defs[d.extend] : null; if (d.extend && d.extend !== 'collection' && !base) { console.warn('BUI.dataTable: unknown button "' + d.extend + '"'); return; }
         d = { ...(base || {}), ...d, text: d.text ?? (base && base.text) ?? ''}; if (isFn(d.text)) d.text = d.text(this, d); if (base && base.enabled && !base.enabled()) return;
         const key = d.extend || d.name; const bi = this.o.buttonIcons; let icon = d.icon !== undefined ? d.icon : (bi && BTN_ICON[key]) || null; if (icon === false) icon = null; const only = !!icon && (d.iconOnly !== undefined ? d.iconOnly : bi === 'only'); const tip = d.title || (only ? d.text : null);
         const b = mkBtn(only ? '' : d.text, d.className || 'bui-btn-outline', { 'data-btn': key || 'custom', title: tip || null, 'aria-label': tip || null }); if (icon) { b.prepend(icoSpan(icon)); b.classList.toggle('bui-dtbl-btn-ico', only); }
@@ -1247,7 +1249,7 @@
         if (!blob && !DataTable.adapters.pdf && o.pdfMode !== 'text') { try { blob = await buildPdfImage(ex, eo); } catch (e) { blob = null; } }
         if (!blob) { this.toast(this.t.pdfFallback, 'info'); this.emit('exportFallback', { format, reason: 'pdf-charset' }); this._print(ex, eo); filename = null; ok = true; } else filename = this._fileName(o, 'pdf');
       } else if (format === 'print') { this._print(ex, eo); filename = null; }
-      else throw new Error('BasetDataTable: unknown export format "' + format + '"');
+      else throw new Error('BUI.dataTable: unknown export format "' + format + '"');
       if (blob) { if (!(blob instanceof Blob)) blob = new Blob([blob], { type: format === 'pdf' ? 'application/pdf' : 'application/octet-stream' }); download(blob, filename); }
       this.emit('afterExport', { format, filename, rows: ex.rows.length, blob, ok }); return blob || ex;
     },
@@ -1510,6 +1512,6 @@
   DataTable.version = VERSION; DataTable.locales = locales; DataTable.adapters = { pdf: null, excel: null }; DataTable.defaults = DEFAULTS; DataTable.get = (t) => { const n = typeof t === 'string' ? doc.querySelector(t) : t; return n ? instances.get(n) || null : null; };
   DataTable.buildXlsx = buildXlsx; DataTable.buildPdf = buildPdf; DataTable.zip = zip; DataTable.crc32 = crc32;
   DataTable.init = (root = doc) => [...root.querySelectorAll('table[data-bui-datatable]')].filter((t) => !instances.has(t)).map((t) => new DataTable(t));
-  BUI.DataTable = DataTable; window.BasetDataTable = DataTable;
+  BUI.dataTable = make(DataTable);
   if (doc.readyState === 'loading') doc.addEventListener('DOMContentLoaded', () => DataTable.init()); else DataTable.init();
 })();

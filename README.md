@@ -119,6 +119,7 @@ Use Baset UI directly from GitHub Pages without downloading or copying the libra
 - No build step or external JavaScript dependencies are required.
 - An internet connection is required to load the files.
 - Documentation styles (`docs.css`) are not needed in your project.
+- Every page in `components/` opens with a **Customize** playground (`#customize`): change the options, see the live preview in light, dark, LTR or RTL, and copy the generated HTML or JavaScript. It is documentation only (`component-playground*.js`); to add one to a new component, register a config with `BUIPlayground.add('name', { controls, html, js, mount })` and put `<div data-bui-playground="name"></div>` in the page.
 
 ## Project structure
 
@@ -177,7 +178,9 @@ baset-ui/
 │       ├── token-playground.js     # Token playground page only
 │       ├── chart-playground.js     # Chart playground page only (needs baset-charts.js)
 │       ├── layout-playground.js    # Layout playground page only (needs baset-ui.js)
-│       └── datatable-playground.js # DataTable playground page only (needs baset-datatable.js + datatable-docs.js)
+│       ├── datatable-playground.js # DataTable playground page only (needs baset-datatable.js + datatable-docs.js)
+│       ├── component-playground.js         # "Customize" section on every component page: engine (docs only, do not ship)
+│       └── component-playground-configs.js # One config per component: controls, markup and code to copy (docs only)
 ├── README.md
 ├── LICENSE
 └── .gitattributes
@@ -495,7 +498,7 @@ A WYSIWYG editor built on `contenteditable` and the Selection / Range API (forma
 A `<textarea data-bui-editor name="body">` keeps its `name`, so a normal form submit sends the HTML.
 
 - **Toolbar:** `data-bui-toolbar="full | basic | minimal | none"` or tool names, `|` starts a group: `bold italic | ul ol | link`. Tools: `bold italic underline strike subscript superscript clear fontFamily fontSize color highlight heading alignLeft alignCenter alignRight alignJustify ul ol indent outdent quote link image table hr codeBlock undo redo selectAll fullscreen source`.
-- **Attributes / options:** `data-bui-placeholder`, `-height`, `-min-height`, `-max-height`, `-resize`, `-dir`, `-locale` (`en`, `ar`), `-fonts` (`Arial|Georgia|Label=stack`), `-sizes`, `-colors`, `-maxlength`, `-counter`, `-readonly`, `-disabled`, `-name`, `-sticky`. `new BasetEditor(el, options)` overrides attributes; extra options: `value`, `sanitize`, `imageUpload(file)`, `maxImageSize`, `onChange`.
+- **Attributes / options:** `data-bui-placeholder`, `-height`, `-min-height`, `-max-height`, `-resize`, `-dir`, `-locale` (`en`, `ar`), `-fonts` (`Arial|Georgia|Label=stack`), `-sizes`, `-colors`, `-maxlength`, `-counter`, `-readonly`, `-disabled`, `-name`, `-sticky`. `BUI.editor(el, options)` overrides attributes; extra options: `value`, `sanitize`, `imageUpload(file)`, `maxImageSize`, `onChange`.
 - **JS:** `getHTML() getText() getLength() isEmpty() setHTML(html) insertHTML(html) clear() exec(name, value) undo() redo() selectAll() focus() toggleSource() toggleFullscreen() setReadonly() setDisabled() setPlaceholder() setDir() setHeight() setToolbar() on(name, fn) destroy()`; `BUI.editor.get(el) / create / init / sanitize / locales`.
 - **Events** (on the editor element): `bui:editor-change` (`detail.html`), `-ready`, `-focus`, `-blur`, `-source`, `-fullscreen`, `-error`.
 - **Safety:** content from paste, drop, `setHTML` and the source view goes through an allow-list sanitizer (no scripts, event handlers, `javascript:` links, iframes or unknown tags); Word / Google Docs markup is cleaned. Use `sanitize: false` only for content you trust, and always sanitize again on the server.
@@ -510,7 +513,7 @@ Load `assets/js/baset-charts.js` (the styles are section 20 of `baset-ui.css`; n
 <div id="sales-chart"></div>
 <script src="assets/js/baset-charts.js"></script>
 <script>
-  const chart = new BasetChart('#sales-chart', {
+  const chart = BUI.chart('#sales-chart', {
     type: 'line',   // line · bar · area · pie · doughnut · radar · scatter · mixed · radial · gauge
     data: {
       labels: ['Jan', 'Feb', 'Mar', 'Apr'],
@@ -527,7 +530,7 @@ Load `assets/js/baset-charts.js` (the styles are section 20 of `baset-ui.css`; n
 - **JS:** `chart.update(data)`, `.setOptions(options)` (may change `type`), `.setColors(array)`, `.toggle(index)`, `.replay()`, `.resize()`, `.destroy()`; `BUI.chart.init(root)` and `BUI.chart.get(element)`. Events on the container: `bui:chart-render`, `bui:chart-click`.
 - **Animations:** `animationStyle` is `grow` (default), `rise`, `fade`, `slide`, `zoom`, `reveal` or `draw`; `easing` is `ease-out` (default), `ease-in-out`, `linear`, `back`, `bounce` or `elastic`. `chart.replay()` plays the first animation again. Updates always morph from the old values. The **Chart playground** lets you pick them and copy the code.
 - **Behavior:** a tooltip on hover, a legend that hides and shows series, smooth animation (skipped with reduced motion), redraw on container resize and when the page direction changes, no errors on empty or invalid data. Negative values are supported by bar, line, area and scatter charts; pie, doughnut and radial ignore them.
-- **Tokens:** `--bui-chart-1` … `--bui-chart-8`, `--bui-chart-text`, `--bui-chart-strong`, `--bui-chart-grid`, `--bui-chart-axis`, `--bui-chart-surface`, `--bui-chart-track`, `--bui-chart-font`, `--bui-chart-font-size`, `--bui-chart-line-width`. Layout helpers: `.bui-chart-card`, `.bui-chart-kpis` / `.bui-chart-kpi`, `.bui-chart-grid-2`.
+- **Tokens:** `--bui-chart-1` … `--bui-chart-8`, `--bui-chart-text`, `--bui-chart-strong`, `--bui-chart-grid`, `--bui-chart-axis`, `--bui-chart-surface`, `--bui-chart-track`, `--bui-chart-font`, `--bui-chart-font-size`, `--bui-chart-line-width`. Layout helpers: `.bui-chart-card`, `.bui-chart-kpis` / `.bui-chart-kpi` (lay cards out with `.bui-row` + `.bui-col-*`).
 
 Full examples: `components/charts.html`.
 
@@ -541,7 +544,7 @@ An optional, dependency-free data grid. Load `assets/js/baset-datatable.js` (the
 <div id="users"></div>
 <script>
   window.addEventListener('DOMContentLoaded', () => {
-    const dt = new BasetDataTable('#users', {
+    const dt = BUI.dataTable('#users', {
       data: [{ id: 1, name: 'Sara' }],
       columns: [{ data: 'id', title: 'ID' }, { data: 'name', title: 'Name' }],
       pageLength: 10, searching: true, ordering: true, responsive: true,
@@ -557,12 +560,12 @@ An existing `<table data-bui-datatable>` upgrades itself (options as `data-*` at
 - **Data:** array of objects or arrays, an HTML table, `ajax` (load once) or `serverSide: true` (page / search / sort / filter on your API). `rowId` names the id field (default `id`).
 - **Options (most used):** `pagination`, `paginationType` (`numbers`, `full_numbers`, `simple`, `compact`, `first_last`), `pageLength`, `lengthMenu`, `pageJump`, `searching`, `searchDelay`, `searchHighlight`, `columnSearch`, `ordering`, `order`, `orderMulti`, `filters`, `filterLogic`, `searchBuilder`, `colVisibility`, `colReorder`, `colResize`, `fixedHeader`, `scrollY`, `fixedColumns`, `virtualScroll`, `rowGroup`, `select` (`single`, `multi`, `checkbox`, `cell`), `rowActions`, `rowActionsMode`, `editor`, `buttons`, `bulkActions`, `responsive`, `cardView`, `cardBreakpoint`, `stateSave`, `theme`, `variant`, `density`, `striped`, `bordered`, `language`, `export`.
 - **Columns:** `data`, `title`, `render(value, type, row, meta)`, `type`, `orderable`, `searchable`, `visible`, `hideable`, `width`, `minWidth`, `maxWidth`, `priority`, `className`, `filter`, `filterOptions`, `filterFn`, `sortFn`, `sortValue`, `nulls`, `editor`, `exportable`, `exportFormat`, `exportTitle`.
-- **Export:** Copy, CSV (UTF-8 with BOM), JSON and print need nothing. **Excel is a real `.xlsx`** (a ZIP of Office Open XML written in the browser). **PDF is a real PDF**: Latin text uses a built-in text writer (selectable text); other scripts such as Arabic are drawn with the browser's text engine and stored as page images inside the PDF (not selectable). For selectable Arabic text register `BasetDataTable.adapters.pdf = (data, options, dt) => Blob | Promise<Blob>` (for example with pdfMake and your font); `BasetDataTable.adapters.excel` can replace the workbook writer. No external library is ever loaded by default.
+- **Export:** Copy, CSV (UTF-8 with BOM), JSON and print need nothing. **Excel is a real `.xlsx`** (a ZIP of Office Open XML written in the browser). **PDF is a real PDF**: Latin text uses a built-in text writer (selectable text); other scripts such as Arabic are drawn with the browser's text engine and stored as page images inside the PDF (not selectable). For selectable Arabic text register `BUI.dataTable.adapters.pdf = (data, options, dt) => Blob | Promise<Blob>` (for example with pdfMake and your font); `BUI.dataTable.adapters.excel` can replace the workbook writer. No external library is ever loaded by default.
 - **Methods:** `search`, `order`, `page` (`page.info()`), `pageLength`, `draw`, `column(i).visible()`, `rows(selector).data() / add / update / remove / select`, `row(id)`, `clear`, `selected`, `filter`, `filterLogic`, `builder`, `addFilter`, `clearFilters`, `create`, `edit`, `delete`, `ajax.reload`, `export`, `exportData`, `cardView`, `fullscreen`, `theme`, `state`, `clearState`, `reset`, `on / one / off`, `destroy`. Setters are chainable and batch a redraw.
 - **Events** (`dt.on(name, (detail, dt) => {})`, also DOM `bui:dtbl-<name>`): `init`, `draw`, `search`, `order`, `page`, `length`, `select`, `deselect`, `rowClick`, `rowDoubleClick`, `filter`, `create`, `edit`, `delete`, `rowAction`, `beforeExport`, `afterExport`, `ajaxLoad`, `ajaxError`, `responsiveChange`, `columnVisibility`, `columnReorder`, `columnResize`, `destroy`.
 - **Editor:** no backend is built in. `editor: { mode: 'inline' | 'modal', onCreate, onUpdate, onDelete }` take promise-returning functions; throw to show a server error in the form. Validation: `required`, `min`, `max`, `minLength`, `maxLength`, `pattern`, `validate(value, row)`.
 - **Server side:** `ajax: { url, paramStyle: 'rest' | 'datatables' | 'json', method, headers, data, params, map, fetch }`. The default REST request is `?page=&per_page=&search=&sort=-name,email&filter[col]=...`; the default response is `{ "data": [...], "meta": { "total": N } }` (a Laravel controller example is in the docs).
-- **Languages:** English and Arabic built in (`language: { locale: 'ar' }` also sets RTL). Add one with `BasetDataTable.locales.fr = { ... }`; override any string in `language`.
+- **Languages:** English and Arabic built in (`language: { locale: 'ar' }` also sets RTL). Add one with `BUI.dataTable.locales.fr = { ... }`; override any string in `language`.
 - **Theming:** `--bui-dtbl-bg`, `-fg`, `-muted`, `-border`, `-header-bg`, `-header-fg`, `-hover`, `-selected`, `-stripe`, `-accent`, `-accent-fg`, `-radius`, `-px`, `-py`, `-font-size`, plus the global `--bui-*` tokens. Light / dark follows `.bui-dark`; direction follows `dir`.
 - **Toolbar, selection and export extras:** `buttonIcons: true | 'only'` (built-in SVG icons; per button `icon`, `iconOnly`), `lengthInput: true` (the page-size menu ends with a number input; `lengthMax`), `selectionToggle: true` + `dt.selectionColumn(on?)` (show / hide the checkbox column from the Columns menu; it is never exported), `bulkBar: false` (selection is visual only: no "N selected" bar). `export.rows` defaults to `'auto'`: the ticked rows if any, otherwise every row matching the current search / filters on all pages (with `serverSide` the table re-requests the full result with `per_page=0`, or use `export.fetchAll`).
 - **Option columns:** `columns[].options` (strings or `{ value, label }`) feeds the editor select, the Filters panel and the search builder (equals / does not equal show a `<select>` of the options; boolean columns show Yes / No).
@@ -579,7 +582,7 @@ CSS in section 23 of `baset-ui.css`; the component is the optional, dependency-f
 <div id="calendar"></div>
 <script src="assets/js/baset-calendar.js"></script>
 <script>
-  const calendar = new BasetCalendar('#calendar', {
+  const calendar = BUI.calendar('#calendar', {
     view: 'month',                // 'month' | 'week' | 'day'
     date: new Date(),
     events: [
@@ -610,9 +613,9 @@ CSS in section 23 of `baset-ui.css`; the component is the optional, dependency-f
 - **Events:** `{ id, title, description, start, end, allDay, color, category }`; `color` is `primary | secondary | success | danger | warning | info` or any CSS color. Times are local (no time zone). Extra properties are kept. `editable: false` on an event locks it.
 - **Editing:** the built-in dialog adds, edits and deletes (delete needs a second click; `confirmDelete: false` removes that). Click a day, click **Add event**, or drag over empty time slots to create.
 - **Drag and drop:** move between days (month) or days and times (week / day), resize by dragging the top or bottom edge, a dashed ghost shows the drop position, text is never selected, touch works (press and hold to drag; resize handles respond at once), `Esc` cancels. Keyboard: `Alt` + arrows on a focused event. Times snap to `snap` minutes (default 15).
-- **Languages and direction:** English and Arabic labels built in; add one with `BasetCalendar.locales.fr = { ... }`. `locale` also sets `direction: 'auto'` (RTL for Arabic, Hebrew, Persian, Urdu …); `direction: 'rtl' | 'ltr'` forces it. All layout uses logical CSS properties, so it mirrors fully.
+- **Languages and direction:** English and Arabic labels built in; add one with `BUI.calendar.locales.fr = { ... }`. `locale` also sets `direction: 'auto'` (RTL for Arabic, Hebrew, Persian, Urdu …); `direction: 'rtl' | 'ltr'` forces it. All layout uses logical CSS properties, so it mirrors fully.
 - **Other options:** `views`, `toolbar`, `addButton`, `categories`, `colors`, `monthMaxEvents`, `hourHeight`, `dayStart`, `dayEnd`, `snap`, `scrollTime`, `height`, `defaultDuration`, `defaultStartHour`, `hour12`, `nowIndicator`, `animate`, `labels`.
-- **More methods:** `setEvents`, `getRange`, `select`, `showEvent`, `openEditor`, `setOptions`, `refresh`, `on` / `off`, `BasetCalendar.instance(el)`. DOM events on the container: `bui:cal-eventclick`, `-eventcreate`, `-eventupdate`, `-eventdelete`, `-dateclick`, `-viewchange`, `-navigate`, `-change`.
+- **More methods:** `setEvents`, `getRange`, `select`, `showEvent`, `openEditor`, `setOptions`, `refresh`, `on` / `off`, `BUI.calendar.instance(el)`. DOM events on the container: `bui:cal-eventclick`, `-eventcreate`, `-eventupdate`, `-eventdelete`, `-dateclick`, `-viewchange`, `-navigate`, `-change`.
 - **Tokens:** `--bui-cal-today`, `--bui-cal-select`, `--bui-cal-radius`, `--bui-cal-cell-h`, `--bui-cal-hour`, `--bui-cal-body-h`, `--bui-cal-gutter`. Declarative: `<div data-bui-calendar data-bui-view="week" data-bui-locale="ar" data-bui-events='[...]'>`.
 
 ## Navbar, sidebar and footer
@@ -749,6 +752,23 @@ With `baset-ui.js`, any element with `id="themeToggle"` becomes a toggle button.
 
 ## JavaScript behaviors
 
+### One global: `BUI`
+
+Every script exposes its API on the single `BUI` object, in camelCase. Components you create from code are callable and `new` is optional; the rest are small namespaces.
+
+| Call | What it does |
+|---|---|
+| `BUI.dataTable('#users', options)` | DataTable (statics: `.locales`, `.adapters`, `.init(root)`) |
+| `BUI.chart('#sales', options)` | Chart (statics: `.init(root)`, `.get(el)`, `.defaults`, `.palette`) |
+| `BUI.calendar('#cal', options)` | Calendar (statics: `.locales`, `.instance(el)`, `.init(root)`) |
+| `BUI.editor('#body', options)` | Rich text editor (statics: `.get(el)`, `.locales`, `.sanitize(html)`) |
+| `BUI.toast()` · `BUI.notify()` | Toasts and notifications |
+| `BUI.modal.*` · `BUI.select.*` · `BUI.dropdown.*` · `BUI.float.*` · `BUI.datetime.*` · `BUI.upload.*` | Namespaces with `open / close / init ...` helpers |
+
+`instanceof BUI.dataTable` works, and the class itself is available as `BUI.dataTable.Class`.
+
+**Breaking change — removed names.** `new BasetDataTable()`, `new BasetChart()`, `new BasetCalendar()`, `new BasetEditor()` (and their `BasetX.locales` / `.adapters` / `.init` statics) and the classes `BUI.DataTable`, `BUI.Chart`, `BUI.Calendar` no longer exist. Replace `new BasetX(` with `BUI.x(` and `BasetX.` with `BUI.x.` (`x` = `dataTable`, `chart`, `calendar`, `editor`). `BUI.editor.create(t, o)` still works.
+
 | Feature | How to use |
 | --- | --- |
 | Theme toggle | Element with `id="themeToggle"` |
@@ -762,10 +782,10 @@ With `baset-ui.js`, any element with `id="themeToggle"` becomes a toggle button.
 | Select menu | Custom listbox for `select.bui-input`, `select.bui-float-input`, `select.bui-float-prefix`; `BUI.select.open/close/isOpen()`; `data-bui-native` to opt out |
 | Date & time pickers | `assets/js/baset-datetime.js` (separate file): `data-bui-datetime` on `input[type=date|time|datetime-local|month|week]`; `BUI.datetime.init/open/close/isOpen()`, `BUI.datetime.locales` |
 | File upload | `assets/js/baset-upload.js` (separate file): `data-bui-upload` on `input[type=file]`; `BUI.upload.init/configure/files/add/remove/clear/upload/retry/validate()`; events `bui:upload-*` |
-| Rich text editor | `assets/js/baset-editor.js` (separate file): `data-bui-editor` on a `div` / `textarea`, or `new BasetEditor(target, options)`; `getHTML / setHTML / exec / undo / redo / destroy`; `BUI.editor.get/create/init/sanitize/locales`; events `bui:editor-*` |
-| Charts | `assets/js/baset-charts.js` (separate file): `new BasetChart(target, { type, data, options })` or `data-bui-chart`; `update / setOptions / setColors / toggle / resize / destroy()`; `BUI.chart.init/get()`; events `bui:chart-render`, `bui:chart-click` |
-| DataTable | `assets/js/baset-datatable.js` (separate file): `new BasetDataTable(target, options)` or `data-bui-datatable` on a `<table>`; `search / order / page / pageLength / column / rows / row / draw / export / destroy`; `BasetDataTable.locales`, `.adapters` |
-| Calendar & Scheduler | `assets/js/baset-calendar.js` (separate file): `new BasetCalendar(target, options)` or `data-bui-calendar`; `addEvent / updateEvent / removeEvent / getEvents / getEventById / setEvents / setDate / setView / next / prev / today / getRange / showEvent / openEditor / setOptions / on / off / destroy()`; events `bui:cal-*` |
+| Rich text editor | `assets/js/baset-editor.js` (separate file): `data-bui-editor` on a `div` / `textarea`, or `BUI.editor(target, options)`; `getHTML / setHTML / exec / undo / redo / destroy`; `BUI.editor.get/create/init/sanitize/locales`; events `bui:editor-*` |
+| Charts | `assets/js/baset-charts.js` (separate file): `BUI.chart(target, { type, data, options })` or `data-bui-chart`; `update / setOptions / setColors / toggle / resize / destroy()`; `BUI.chart.init/get()`; events `bui:chart-render`, `bui:chart-click` |
+| DataTable | `assets/js/baset-datatable.js` (separate file): `BUI.dataTable(target, options)` or `data-bui-datatable` on a `<table>`; `search / order / page / pageLength / column / rows / row / draw / export / destroy`; `BUI.dataTable.locales`, `.adapters` |
+| Calendar & Scheduler | `assets/js/baset-calendar.js` (separate file): `BUI.calendar(target, options)` or `data-bui-calendar`; `addEvent / updateEvent / removeEvent / getEvents / getEventById / setEvents / setDate / setView / next / prev / today / getRange / showEvent / openEditor / setOptions / on / off / destroy()`; events `bui:cal-*` |
 | Floating labels | The i button toggles its message; `<form data-bui-validate>` and `BUI.float.setState/clear/open/validate/reset()` |
 | Modal | `BUI.modal.open/close/show/confirm/alert/prompt()` or `data-bui-modal-open` / `data-bui-modal-close` attributes |
 | Scroll-spy | Sidebar links like `<a class="bui-nav" href="#section">` highlight as you scroll |

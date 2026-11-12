@@ -49,6 +49,7 @@
     </aside>
     <main class="bui-main">
       <header class="bui-topbar"><div class="bui-breadcrumb"><a href="../index.html">Documentation</a> <span>/</span> Components <span>/</span> File upload</div><div class="bui-top-actions"><span class="bui-pill">Vanilla CSS + JS</span><button class="bui-icon-btn bui-dir-btn" id="dirToggle" type="button" aria-label="Toggle direction (RTL / LTR)" title="Toggle direction (RTL / LTR)">RTL</button><button class="bui-icon-btn" id="themeToggle" type="button" aria-label="Toggle theme">☼</button></div></header>
+      <section class="bui-section" id="customize"><div class="bui-section-heading"><div><span class="bui-eyebrow">CUSTOMIZE</span><h2>Make it yours</h2><p>Change the options, watch the file upload update, then copy the code. Switch theme and direction to check light, dark, LTR and RTL.</p></div></div><div data-bui-playground="upload"></div></section>
       <section class="bui-section" id="upload"><div class="bui-section-heading"><div><span class="bui-eyebrow">05 / COMPONENTS</span><h2>File upload</h2><p>A drop zone for the native file input: drag and drop, image previews, a tidy file list or grid, checks for type, size and count, and real uploads with progress and retry. The input keeps its files, so normal forms keep working.</p></div><span class="bui-step-count">19 examples</span></div>
 <div class="bui-demo-stack">
 <h3 style="margin:34px 0 14px;font-family:var(--bui-font-heading);font-size:18px;letter-spacing:-.4px">Quick start</h3><p class="bui-doc-note">Add <code>data-bui-upload</code> to a native <code>&lt;input type="file"&gt;</code> and load <code>baset-upload.js</code> after the stylesheet. The script wraps the input in a drop zone, shows the chosen files, checks them and, if you configure a server, uploads them. The <b>native input stays in the page and stays the source of truth</b>: <code>id</code>, <code>name</code>, <code>accept</code>, <code>multiple</code>, <code>required</code>, <code>disabled</code>, <code>capture</code> and <code>form</code> work as before, and the keyboard opens the file dialog. Only the files that passed the checks are in <code>input.files</code> (the script keeps it in sync with <code>DataTransfer</code>), so a normal form submit sends exactly the listed files, and a removed file is not sent. It has no dependencies and does not need <code>baset-ui.js</code>.</p>
@@ -393,6 +394,8 @@ document.getElementById(<span class="bui-code-green">'up-api-check'</span>).oncl
     </main>
   </div>
   <script src="../assets/js/baset-ui.js"></script>
+  <script src="../assets/js/component-playground.js"></script>
+  <script src="../assets/js/component-playground-configs.js"></script>
   <script src="../assets/js/baset-upload.js"></script>
   <script>
     /* Documentation page only: the simulated server of the upload demos, the form output and the API demo. */

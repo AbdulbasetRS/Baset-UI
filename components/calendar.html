@@ -49,6 +49,7 @@
     </aside>
     <main class="bui-main">
       <header class="bui-topbar"><div class="bui-breadcrumb"><a href="../index.html">Documentation</a> <span>/</span> Components <span>/</span> Date &amp; time pickers</div><div class="bui-top-actions"><span class="bui-pill">Vanilla CSS + JS</span><button class="bui-icon-btn bui-dir-btn" id="dirToggle" type="button" aria-label="Toggle direction (RTL / LTR)" title="Toggle direction (RTL / LTR)">RTL</button><button class="bui-icon-btn" id="themeToggle" type="button" aria-label="Toggle theme">☼</button></div></header>
+      <section class="bui-section" id="customize"><div class="bui-section-heading"><div><span class="bui-eyebrow">CUSTOMIZE</span><h2>Make it yours</h2><p>Change the options, watch the calendar update, then copy the code. Switch theme and direction to check light, dark, LTR and RTL.</p></div></div><div data-bui-playground="calendar"></div></section>
       <section class="bui-section" id="calendar"><div class="bui-section-heading"><div><span class="bui-eyebrow">17 / COMPONENTS</span><h2>Calendar &amp; Scheduler</h2><p>A full scheduler in plain JavaScript: month, week and day views, events you can add, edit, delete, drag and resize, overlapping events side by side, categories and colors, English and Arabic with real RTL, light and dark, keyboard and touch. Every demo below is live, and every code box is complete: copy it into a page and it runs.</p></div><span class="bui-step-count">14 examples</span></div>
 <div class="bui-demo-stack">
 <h3 style="margin:34px 0 14px;font-family:var(--bui-font-heading);font-size:18px;letter-spacing:-.4px">Quick start</h3>
@@ -62,7 +63,7 @@
 <span class="bui-code-muted">&lt;!-- before &lt;/body&gt; --&gt;</span>
 <span class="bui-code-pink">&lt;script</span> <span class="bui-code-blue">src</span>=<span class="bui-code-green">"assets/js/baset-calendar.js"</span><span class="bui-code-pink">&gt;&lt;/script&gt;</span>
 <span class="bui-code-pink">&lt;script&gt;</span>
-  <span class="bui-code-pink">const</span> calendar = <span class="bui-code-pink">new</span> BasetCalendar(<span class="bui-code-green">'#calendar'</span>, {
+  <span class="bui-code-pink">const</span> calendar = BUI.calendar(<span class="bui-code-green">'#calendar'</span>, {
     view: <span class="bui-code-green">'month'</span>,
     events: [{ title: <span class="bui-code-green">'Launch'</span>, start: <span class="bui-code-green">'2026-11-10T09:00:00'</span>, end: <span class="bui-code-green">'2026-11-10T10:30:00'</span>, color: <span class="bui-code-green">'primary'</span> }],
     onEventUpdate: (event) =&gt; console.log(<span class="bui-code-green">'saved'</span>, event),
@@ -74,7 +75,7 @@
 <h3 style="margin:34px 0 14px;font-family:var(--bui-font-heading);font-size:18px;letter-spacing:-.4px">Examples (14)</h3>
 <article class="bui-demo-card" id="ex-cal-basic"><div class="bui-demo-title">Basic calendar <span>the smallest setup</span></div><div class="bui-demo-content bui-cal-docs-stage">
 <div id="cal-basic"></div>
-</div><div class="bui-demo-code">Load <code>baset-calendar.js</code> after the stylesheet, add an empty element and call <code>new BasetCalendar(selector, options)</code>. Click a day to select it and add an event, click an event to see its details, drag events to other days, and use the toolbar to navigate and switch views.</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML + CSS + JS</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-muted">&lt;!-- 1. the library (the stylesheet, then the script) --&gt;</span>
+</div><div class="bui-demo-code">Load <code>baset-calendar.js</code> after the stylesheet, add an empty element and call <code>BUI.calendar(selector, options)</code>. Click a day to select it and add an event, click an event to see its details, drag events to other days, and use the toolbar to navigate and switch views.</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML + CSS + JS</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-muted">&lt;!-- 1. the library (the stylesheet, then the script) --&gt;</span>
 <span class="bui-code-pink">&lt;link</span> <span class="bui-code-blue">rel</span>=<span class="bui-code-green">"stylesheet"</span> <span class="bui-code-blue">href</span>=<span class="bui-code-green">"assets/css/baset-ui.css"</span><span class="bui-code-pink">&gt;</span>
 <span class="bui-code-pink">&lt;script</span> <span class="bui-code-blue">src</span>=<span class="bui-code-green">"assets/js/baset-calendar.js"</span> <span class="bui-code-blue">defer</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/script</span><span class="bui-code-pink">&gt;</span>
 
@@ -92,7 +93,7 @@
   { id: 6, title: <span class="bui-code-green">'Workshop'</span>, start: <span class="bui-code-green">'2026-11-24T10:00:00'</span>, end: <span class="bui-code-green">'2026-11-24T13:00:00'</span>, color: <span class="bui-code-green">'secondary'</span>, category: <span class="bui-code-green">'work'</span> },
 ];
 
-<span class="bui-code-pink">const</span> calendar = <span class="bui-code-pink">new</span> BasetCalendar(<span class="bui-code-green">'#cal-basic'</span>, {
+<span class="bui-code-pink">const</span> calendar = BUI.calendar(<span class="bui-code-green">'#cal-basic'</span>, {
   view: <span class="bui-code-green">'month'</span>,
   date: <span class="bui-code-green">'2026-11-04'</span>,
   events: events,
@@ -120,7 +121,7 @@
   { id: 8, title: <span class="bui-code-green">'Conference'</span>, start: <span class="bui-code-green">'2026-11-18'</span>, end: <span class="bui-code-green">'2026-11-20'</span>, allDay: <span class="bui-code-pink">true</span>, color: <span class="bui-code-green">'primary'</span> },
 ];
 
-<span class="bui-code-pink">new</span> BasetCalendar(<span class="bui-code-green">'#cal-month'</span>, {
+BUI.calendar(<span class="bui-code-green">'#cal-month'</span>, {
   view: <span class="bui-code-green">'month'</span>,
   date: <span class="bui-code-green">'2026-11-12'</span>,
   events: events,
@@ -154,7 +155,7 @@
   { id: 7, title: <span class="bui-code-green">'Night deploy'</span>, start: <span class="bui-code-green">'2026-11-05T22:30:00'</span>, end: <span class="bui-code-green">'2026-11-06T01:00:00'</span>, color: <span class="bui-code-green">'secondary'</span> },
 ];
 
-<span class="bui-code-pink">new</span> BasetCalendar(<span class="bui-code-green">'#cal-week'</span>, {
+BUI.calendar(<span class="bui-code-green">'#cal-week'</span>, {
   view: <span class="bui-code-green">'week'</span>,
   date: <span class="bui-code-green">'2026-11-04'</span>,
   events: events,
@@ -184,7 +185,7 @@
   { id: 7, title: <span class="bui-code-green">'Night deploy'</span>, start: <span class="bui-code-green">'2026-11-05T22:30:00'</span>, end: <span class="bui-code-green">'2026-11-06T01:00:00'</span>, color: <span class="bui-code-green">'secondary'</span> },
 ];
 
-<span class="bui-code-pink">new</span> BasetCalendar(<span class="bui-code-green">'#cal-day'</span>, {
+BUI.calendar(<span class="bui-code-green">'#cal-day'</span>, {
   view: <span class="bui-code-green">'day'</span>,
   date: <span class="bui-code-green">'2026-11-04'</span>,
   events: events,
@@ -218,7 +219,7 @@
 <span class="bui-code-pink">const</span> log = document.getElementById(<span class="bui-code-green">'cal-edit-log'</span>);
 <span class="bui-code-pink">const</span> say = (text) =&gt; { log.textContent = text + <span class="bui-code-green">'\n'</span> + log.textContent; };
 
-<span class="bui-code-pink">new</span> BasetCalendar(<span class="bui-code-green">'#cal-edit'</span>, {
+BUI.calendar(<span class="bui-code-green">'#cal-edit'</span>, {
   view: <span class="bui-code-green">'month'</span>,
   date: <span class="bui-code-green">'2026-11-04'</span>,
   events: events,
@@ -254,7 +255,7 @@
 ];
 
 <span class="bui-code-pink">const</span> log = document.getElementById(<span class="bui-code-green">'cal-drag-log'</span>);
-<span class="bui-code-pink">const</span> calendar = <span class="bui-code-pink">new</span> BasetCalendar(<span class="bui-code-green">'#cal-drag'</span>, {
+<span class="bui-code-pink">const</span> calendar = BUI.calendar(<span class="bui-code-green">'#cal-drag'</span>, {
   view: <span class="bui-code-green">'week'</span>,
   date: <span class="bui-code-green">'2026-11-04'</span>,
   events: events,
@@ -286,7 +287,7 @@ document.getElementById(<span class="bui-code-green">'cal-drag-week'</span>).onc
   { id: 3, title: <span class="bui-code-green">'Locked event'</span>, start: <span class="bui-code-green">'2026-11-06T09:00:00'</span>, end: <span class="bui-code-green">'2026-11-06T10:00:00'</span>, color: <span class="bui-code-green">'secondary'</span>, editable: <span class="bui-code-pink">false</span> },
 ];
 
-<span class="bui-code-pink">new</span> BasetCalendar(<span class="bui-code-green">'#cal-resize'</span>, {
+BUI.calendar(<span class="bui-code-green">'#cal-resize'</span>, {
   view: <span class="bui-code-green">'week'</span>,
   date: <span class="bui-code-green">'2026-11-04'</span>,
   events: events,
@@ -322,7 +323,7 @@ document.getElementById(<span class="bui-code-green">'cal-drag-week'</span>).onc
   { id: 6, title: <span class="bui-code-green">'Workshop'</span>, start: <span class="bui-code-green">'2026-11-24T10:00:00'</span>, end: <span class="bui-code-green">'2026-11-24T13:00:00'</span>, color: <span class="bui-code-green">'secondary'</span>, category: <span class="bui-code-green">'work'</span> },
 ];
 
-<span class="bui-code-pink">const</span> calendar = <span class="bui-code-pink">new</span> BasetCalendar(<span class="bui-code-green">'#cal-details'</span>, {
+<span class="bui-code-pink">const</span> calendar = BUI.calendar(<span class="bui-code-green">'#cal-details'</span>, {
   view: <span class="bui-code-green">'month'</span>,
   date: <span class="bui-code-green">'2026-11-04'</span>,
   events: events,
@@ -352,7 +353,7 @@ document.getElementById(<span class="bui-code-green">'cal-drag-week'</span>).onc
   { id: 5, title: <span class="bui-code-green">'موعد الطبيب'</span>, start: <span class="bui-code-green">'2026-11-15T16:00:00'</span>, end: <span class="bui-code-green">'2026-11-15T17:00:00'</span>, color: <span class="bui-code-green">'danger'</span>, category: <span class="bui-code-green">'personal'</span> },
 ];
 
-<span class="bui-code-pink">new</span> BasetCalendar(<span class="bui-code-green">'#cal-rtl'</span>, {
+BUI.calendar(<span class="bui-code-green">'#cal-rtl'</span>, {
   view: <span class="bui-code-green">'week'</span>,
   date: <span class="bui-code-green">'2026-11-04'</span>,
   events: events,
@@ -369,7 +370,7 @@ document.getElementById(<span class="bui-code-green">'cal-drag-week'</span>).onc
   <select class="bui-input" id="cal-locale-hour" aria-label="Clock"><option value="">Clock: from locale</option><option value="12">12-hour</option><option value="24">24-hour</option></select>
 </div>
 <div id="cal-locale"></div>
-</div><div class="bui-demo-code">Month and weekday names, number digits and time formats come from the browser's <code>Intl</code> API, so any locale works. Only the calendar's own buttons and dialog need words: English and Arabic are built in, add another language with <code>BasetCalendar.locales.fr = { ... }</code> (missing keys fall back to English).</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML + CSS + JS</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-muted">&lt;!-- 1. the library (the stylesheet, then the script) --&gt;</span>
+</div><div class="bui-demo-code">Month and weekday names, number digits and time formats come from the browser's <code>Intl</code> API, so any locale works. Only the calendar's own buttons and dialog need words: English and Arabic are built in, add another language with <code>BUI.calendar.locales.fr = { ... }</code> (missing keys fall back to English).</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML + CSS + JS</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-muted">&lt;!-- 1. the library (the stylesheet, then the script) --&gt;</span>
 <span class="bui-code-pink">&lt;link</span> <span class="bui-code-blue">rel</span>=<span class="bui-code-green">"stylesheet"</span> <span class="bui-code-blue">href</span>=<span class="bui-code-green">"assets/css/baset-ui.css"</span><span class="bui-code-pink">&gt;</span>
 <span class="bui-code-pink">&lt;script</span> <span class="bui-code-blue">src</span>=<span class="bui-code-green">"assets/js/baset-calendar.js"</span> <span class="bui-code-blue">defer</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/script</span><span class="bui-code-pink">&gt;</span>
 
@@ -394,9 +395,9 @@ document.getElementById(<span class="bui-code-green">'cal-drag-week'</span>).onc
 ];
 
 <span class="bui-code-muted">// Words for the buttons and the dialog in a language that is not built in (the rest comes from Intl)</span>
-BasetCalendar.locales.fr = { today: <span class="bui-code-green">"Aujourd'hui"</span>, month: <span class="bui-code-green">'Mois'</span>, week: <span class="bui-code-green">'Semaine'</span>, day: <span class="bui-code-green">'Jour'</span>, allDay: <span class="bui-code-green">'Toute la journée'</span>, add: <span class="bui-code-green">'Ajouter'</span>, newEvent: <span class="bui-code-green">'Nouvel événement'</span>, save: <span class="bui-code-green">'Enregistrer'</span>, cancel: <span class="bui-code-green">'Annuler'</span>, delete: <span class="bui-code-green">'Supprimer'</span>, edit: <span class="bui-code-green">'Modifier'</span>, close: <span class="bui-code-green">'Fermer'</span>, title: <span class="bui-code-green">'Titre'</span>, description: <span class="bui-code-green">'Description'</span>, more: <span class="bui-code-green">'+{n} autres'</span> };
+BUI.calendar.locales.fr = { today: <span class="bui-code-green">"Aujourd'hui"</span>, month: <span class="bui-code-green">'Mois'</span>, week: <span class="bui-code-green">'Semaine'</span>, day: <span class="bui-code-green">'Jour'</span>, allDay: <span class="bui-code-green">'Toute la journée'</span>, add: <span class="bui-code-green">'Ajouter'</span>, newEvent: <span class="bui-code-green">'Nouvel événement'</span>, save: <span class="bui-code-green">'Enregistrer'</span>, cancel: <span class="bui-code-green">'Annuler'</span>, delete: <span class="bui-code-green">'Supprimer'</span>, edit: <span class="bui-code-green">'Modifier'</span>, close: <span class="bui-code-green">'Fermer'</span>, title: <span class="bui-code-green">'Titre'</span>, description: <span class="bui-code-green">'Description'</span>, more: <span class="bui-code-green">'+{n} autres'</span> };
 
-<span class="bui-code-pink">const</span> calendar = <span class="bui-code-pink">new</span> BasetCalendar(<span class="bui-code-green">'#cal-locale'</span>, { view: <span class="bui-code-green">'month'</span>, date: <span class="bui-code-green">'2026-11-04'</span>, events: events, locale: <span class="bui-code-green">'en'</span> });
+<span class="bui-code-pink">const</span> calendar = BUI.calendar(<span class="bui-code-green">'#cal-locale'</span>, { view: <span class="bui-code-green">'month'</span>, date: <span class="bui-code-green">'2026-11-04'</span>, events: events, locale: <span class="bui-code-green">'en'</span> });
 <span class="bui-code-pink">const</span> apply = () =&gt; calendar.setOptions({
   locale: document.getElementById(<span class="bui-code-green">'cal-locale-lang'</span>).value,
   firstDay: document.getElementById(<span class="bui-code-green">'cal-locale-first'</span>).value === <span class="bui-code-green">''</span> ? <span class="bui-code-pink">null</span> : +document.getElementById(<span class="bui-code-green">'cal-locale-first'</span>).value,
@@ -432,7 +433,7 @@ BasetCalendar.locales.fr = { today: <span class="bui-code-green">"Aujourd'hui"</
   { id: 6, title: <span class="bui-code-green">'Workshop'</span>, start: <span class="bui-code-green">'2026-11-24T10:00:00'</span>, end: <span class="bui-code-green">'2026-11-24T13:00:00'</span>, color: <span class="bui-code-green">'secondary'</span>, category: <span class="bui-code-green">'work'</span> },
 ];
 
-<span class="bui-code-pink">new</span> BasetCalendar(<span class="bui-code-green">'#cal-theme'</span>, { view: <span class="bui-code-green">'month'</span>, date: <span class="bui-code-green">'2026-11-04'</span>, events: events });
+BUI.calendar(<span class="bui-code-green">'#cal-theme'</span>, { view: <span class="bui-code-green">'month'</span>, date: <span class="bui-code-green">'2026-11-04'</span>, events: events });
 
 <span class="bui-code-pink">const</span> box = document.getElementById(<span class="bui-code-green">'cal-theme'</span>);
 document.getElementById(<span class="bui-code-green">'cal-theme-light'</span>).onclick = () =&gt; { box.style.colorScheme = <span class="bui-code-green">'light'</span>; };
@@ -459,7 +460,7 @@ document.getElementById(<span class="bui-code-green">'cal-theme-brand'</span>).o
   { id: 6, title: <span class="bui-code-green">'Doctor'</span>, start: <span class="bui-code-green">'2026-11-10T16:00:00'</span>, end: <span class="bui-code-green">'2026-11-10T17:00:00'</span>, category: <span class="bui-code-green">'health'</span> },
 ];
 
-<span class="bui-code-pink">new</span> BasetCalendar(<span class="bui-code-green">'#cal-colors'</span>, {
+BUI.calendar(<span class="bui-code-green">'#cal-colors'</span>, {
   view: <span class="bui-code-green">'month'</span>,
   date: <span class="bui-code-green">'2026-11-04'</span>,
   events: events,
@@ -495,7 +496,7 @@ document.getElementById(<span class="bui-code-green">'cal-theme-brand'</span>).o
 <span class="bui-code-pink">const</span> log = document.getElementById(<span class="bui-code-green">'cal-callbacks-log'</span>);
 <span class="bui-code-pink">const</span> say = (text) =&gt; { log.textContent = text + <span class="bui-code-green">'\n'</span> + log.textContent.split(<span class="bui-code-green">'\n'</span>).slice(0, 7).join(<span class="bui-code-green">'\n'</span>); };
 
-<span class="bui-code-pink">const</span> calendar = <span class="bui-code-pink">new</span> BasetCalendar(<span class="bui-code-green">'#cal-callbacks'</span>, {
+<span class="bui-code-pink">const</span> calendar = BUI.calendar(<span class="bui-code-green">'#cal-callbacks'</span>, {
   view: <span class="bui-code-green">'month'</span>,
   date: <span class="bui-code-green">'2026-11-04'</span>,
   events: events,
@@ -556,7 +557,7 @@ calendar.on(<span class="bui-code-green">'change'</span>, (info) =&gt; say(<span
   { id: 6, title: <span class="bui-code-green">'Workshop'</span>, start: <span class="bui-code-green">'2026-11-24T10:00:00'</span>, end: <span class="bui-code-green">'2026-11-24T13:00:00'</span>, color: <span class="bui-code-green">'secondary'</span>, category: <span class="bui-code-green">'work'</span> },
 ];
 
-<span class="bui-code-pink">const</span> calendar = <span class="bui-code-pink">new</span> BasetCalendar(<span class="bui-code-green">'#cal-api'</span>, { view: <span class="bui-code-green">'month'</span>, date: <span class="bui-code-green">'2026-11-04'</span>, events: events });
+<span class="bui-code-pink">const</span> calendar = BUI.calendar(<span class="bui-code-green">'#cal-api'</span>, { view: <span class="bui-code-green">'month'</span>, date: <span class="bui-code-green">'2026-11-04'</span>, events: events });
 <span class="bui-code-pink">const</span> log = document.getElementById(<span class="bui-code-green">'cal-api-log'</span>);
 <span class="bui-code-pink">let</span> count = 0;
 
@@ -583,7 +584,7 @@ document.getElementById(<span class="bui-code-green">'api-get'</span>).onclick =
 <h3 style="margin:34px 0 14px;font-family:var(--bui-font-heading);font-size:18px;letter-spacing:-.4px">Options</h3>
 <div class="bui-ref-wrap"><table class="bui-ref"><thead><tr><th>Option</th><th>Default</th><th>Description</th></tr></thead><tbody><tr><td><code>view</code></td><td><code>'month'</code></td><td>Starting view: <code>month</code>, <code>week</code> or <code>day</code>.</td></tr><tr><td><code>date</code></td><td>today</td><td>The date to show: a <code>Date</code> or a string such as <code>"2026-11-04"</code>.</td></tr><tr><td><code>events</code></td><td><code>[]</code></td><td>Array of events (see the event object below).</td></tr><tr><td><code>editable</code></td><td><code>true</code></td><td>Master switch for changing events: dialog editing, creating, deleting, dragging and resizing. <code>false</code> makes a read-only calendar (the details popup still opens).</td></tr><tr><td><code>selectable</code></td><td><code>true</code></td><td>Days are selectable, and clicking a day or a slot (or dragging over slots) opens the "new event" dialog. Needs <code>editable</code>.</td></tr><tr><td><code>draggable</code></td><td><code>true</code></td><td>Allow moving events by drag and drop (and Alt + arrow keys).</td></tr><tr><td><code>resizable</code></td><td><code>true</code></td><td>Allow resizing in week and day views.</td></tr><tr><td><code>locale</code></td><td>page <code>lang</code></td><td>Any BCP-47 tag: <code>"en"</code>, <code>"ar"</code>, <code>"fr"</code>, <code>"ar-EG"</code>. Sets names, digits, time format, labels (English and Arabic built in) and, when <code>direction</code> is <code>"auto"</code>, the direction.</td></tr><tr><td><code>direction</code></td><td><code>'auto'</code></td><td><code>"rtl"</code>, <code>"ltr"</code> or <code>"auto"</code>. Auto: follows the locale when <code>locale</code> is set, otherwise the page (<code>dir</code> on an ancestor).</td></tr><tr><td><code>firstDay</code></td><td>from locale</td><td>First day of the week, 0 (Sunday) to 6 (Saturday). Default comes from the locale (Arabic: Saturday).</td></tr><tr><td><code>hour12</code></td><td><code>null</code></td><td><code>true</code> / <code>false</code> to force a 12 / 24-hour clock; <code>null</code> uses the locale.</td></tr><tr><td><code>views</code></td><td><code>['month','week','day']</code></td><td>Views shown in the toolbar switcher. One view hides the switcher.</td></tr><tr><td><code>toolbar</code></td><td><code>true</code></td><td>Show the toolbar. Hide it to build your own with the methods.</td></tr><tr><td><code>addButton</code></td><td><code>true</code></td><td>Show the "Add event" button (needs <code>editable</code> and <code>selectable</code>).</td></tr><tr><td><code>categories</code></td><td><code>null</code></td><td><code>[{ value, label, color }]</code> or strings. Adds a category select, a legend that filters, and a default color per category.</td></tr><tr><td><code>colors</code></td><td>six theme colors</td><td>Colors offered as swatches in the dialog.</td></tr><tr><td><code>monthMaxEvents</code></td><td><code>3</code></td><td>Events shown per day (month view and the all-day row) before "+N more".</td></tr><tr><td><code>hourHeight</code></td><td><code>52</code></td><td>Pixels per hour in week and day views.</td></tr><tr><td><code>dayStart</code> <code>dayEnd</code></td><td><code>0</code> <code>24</code></td><td>First and last (excluded) hour shown in week and day views.</td></tr><tr><td><code>snap</code></td><td><code>15</code></td><td>Minutes that dragging, resizing and drag-to-create snap to.</td></tr><tr><td><code>scrollTime</code></td><td><code>'07:00'</code></td><td>Time the week and day grid scrolls to on first show.</td></tr><tr><td><code>height</code></td><td><code>null</code></td><td>Height of the scrolling time grid (number of pixels or a CSS length). Or set <code>--bui-cal-body-h</code> in CSS.</td></tr><tr><td><code>defaultDuration</code></td><td><code>60</code></td><td>Minutes for a new event that has no end.</td></tr><tr><td><code>defaultStartHour</code></td><td><code>9</code></td><td>Start hour when a month day is clicked.</td></tr><tr><td><code>confirmDelete</code></td><td><code>true</code></td><td>Delete needs a second click to confirm.</td></tr><tr><td><code>nowIndicator</code></td><td><code>true</code></td><td>Red "now" line in week and day views.</td></tr><tr><td><code>animate</code></td><td><code>true</code></td><td>Slide animation when navigating (respects reduced motion).</td></tr><tr><td><code>labels</code></td><td><code>{}</code></td><td>Override any label for this calendar, for example <code>{ today: "Now" }</code>.</td></tr></tbody></table></div>
 <h3 style="margin:34px 0 14px;font-family:var(--bui-font-heading);font-size:18px;letter-spacing:-.4px">Methods</h3>
-<div class="bui-ref-wrap"><table class="bui-ref"><thead><tr><th>Method</th><th>What it does</th></tr></thead><tbody><tr><td><code>addEvent(event)</code></td><td>Adds an event (or an array) and re-renders. Returns the stored event with its <code>id</code>.</td></tr><tr><td><code>updateEvent(id, data)</code></td><td>Merges <code>data</code> into the event. If you give a new <code>start</code> but no <code>end</code>, the duration is kept. Returns the event, or <code>null</code>.</td></tr><tr><td><code>removeEvent(id)</code></td><td>Removes the event. Returns <code>true</code> if it existed.</td></tr><tr><td><code>getEvents()</code></td><td>All events as plain objects in the documented format (safe to JSON.stringify and save).</td></tr><tr><td><code>getEventById(id)</code></td><td>One event or <code>null</code>.</td></tr><tr><td><code>setEvents(list)</code></td><td>Replaces all events (for example after loading from a server).</td></tr><tr><td><code>setDate(date)</code></td><td>Show the period that contains the date. <code>getDate()</code> returns the current date.</td></tr><tr><td><code>setView(view)</code></td><td>Switch to <code>"month"</code>, <code>"week"</code> or <code>"day"</code>. <code>getView()</code> returns it.</td></tr><tr><td><code>next()</code> <code>prev()</code> <code>today()</code></td><td>Navigate by one month, week or day, or jump to today.</td></tr><tr><td><code>getRange()</code></td><td><code>{ start, end }</code> (end excluded) of the dates on screen. Use it to load only the events you need.</td></tr><tr><td><code>select(date)</code></td><td>Highlight a day (like a click, without the dialog).</td></tr><tr><td><code>showEvent(id)</code> <code>openEditor(defaults)</code></td><td>Open the details popup, or the editor: <code>openEditor()</code> new, <code>openEditor({ id })</code> edit, <code>openEditor({ start, end, allDay })</code> new with values.</td></tr><tr><td><code>setOptions(options)</code></td><td>Change options later (locale, direction, firstDay, view, height …); the calendar rebuilds and keeps its events.</td></tr><tr><td><code>refresh()</code></td><td>Render again (after changing CSS variables, for example).</td></tr><tr><td><code>on(name, fn)</code> <code>off(name, fn)</code></td><td>Add or remove a handler for any event below.</td></tr><tr><td><code>destroy()</code></td><td>Removes listeners, timers, dialogs and markup, and restores the container.</td></tr><tr><td><code>BasetCalendar.instance(el)</code></td><td>The calendar already created on an element, or <code>null</code>.</td></tr></tbody></table></div>
+<div class="bui-ref-wrap"><table class="bui-ref"><thead><tr><th>Method</th><th>What it does</th></tr></thead><tbody><tr><td><code>addEvent(event)</code></td><td>Adds an event (or an array) and re-renders. Returns the stored event with its <code>id</code>.</td></tr><tr><td><code>updateEvent(id, data)</code></td><td>Merges <code>data</code> into the event. If you give a new <code>start</code> but no <code>end</code>, the duration is kept. Returns the event, or <code>null</code>.</td></tr><tr><td><code>removeEvent(id)</code></td><td>Removes the event. Returns <code>true</code> if it existed.</td></tr><tr><td><code>getEvents()</code></td><td>All events as plain objects in the documented format (safe to JSON.stringify and save).</td></tr><tr><td><code>getEventById(id)</code></td><td>One event or <code>null</code>.</td></tr><tr><td><code>setEvents(list)</code></td><td>Replaces all events (for example after loading from a server).</td></tr><tr><td><code>setDate(date)</code></td><td>Show the period that contains the date. <code>getDate()</code> returns the current date.</td></tr><tr><td><code>setView(view)</code></td><td>Switch to <code>"month"</code>, <code>"week"</code> or <code>"day"</code>. <code>getView()</code> returns it.</td></tr><tr><td><code>next()</code> <code>prev()</code> <code>today()</code></td><td>Navigate by one month, week or day, or jump to today.</td></tr><tr><td><code>getRange()</code></td><td><code>{ start, end }</code> (end excluded) of the dates on screen. Use it to load only the events you need.</td></tr><tr><td><code>select(date)</code></td><td>Highlight a day (like a click, without the dialog).</td></tr><tr><td><code>showEvent(id)</code> <code>openEditor(defaults)</code></td><td>Open the details popup, or the editor: <code>openEditor()</code> new, <code>openEditor({ id })</code> edit, <code>openEditor({ start, end, allDay })</code> new with values.</td></tr><tr><td><code>setOptions(options)</code></td><td>Change options later (locale, direction, firstDay, view, height …); the calendar rebuilds and keeps its events.</td></tr><tr><td><code>refresh()</code></td><td>Render again (after changing CSS variables, for example).</td></tr><tr><td><code>on(name, fn)</code> <code>off(name, fn)</code></td><td>Add or remove a handler for any event below.</td></tr><tr><td><code>destroy()</code></td><td>Removes listeners, timers, dialogs and markup, and restores the container.</td></tr><tr><td><code>BUI.calendar.instance(el)</code></td><td>The calendar already created on an element, or <code>null</code>.</td></tr></tbody></table></div>
 <h3 style="margin:34px 0 14px;font-family:var(--bui-font-heading);font-size:18px;letter-spacing:-.4px">Callbacks and events</h3>
 <p class="bui-doc-note">Three ways to listen, all with the same arguments: an option callback (<code>onEventUpdate</code>), a handler (<code>calendar.on("eventUpdate", fn)</code>) and a DOM event on the container (<code>bui:cal-eventupdate</code>, with <code>event.detail.args</code>). They fire for user actions; the API methods only fire <code>change</code>.</p>
 <div class="bui-ref-wrap"><table class="bui-ref"><thead><tr><th>Option callback</th><th>on() name</th><th>DOM event</th><th>When</th></tr></thead><tbody><tr><td><code>onEventClick(event, jsEvent)</code></td><td><code>eventClick</code></td><td><code>bui:cal-eventclick</code></td><td>An event was clicked or activated with Enter / Space. <b>Return <code>false</code></b> to skip the built-in popup.</td></tr><tr><td><code>onEventCreate(event)</code></td><td><code>eventCreate</code></td><td><code>bui:cal-eventcreate</code></td><td>The dialog saved a new event. <b>Return <code>false</code></b> to refuse it (for example after server validation).</td></tr><tr><td><code>onEventUpdate(event, oldEvent, info)</code></td><td><code>eventUpdate</code></td><td><code>bui:cal-eventupdate</code></td><td>An event changed by the dialog, a drag, a resize or the keyboard. <code>info.source</code> is <code>"edit"</code>, <code>"drag"</code>, <code>"resize"</code> or <code>"keyboard"</code>. <b>Return <code>false</code></b> to put it back.</td></tr><tr><td><code>onEventDelete(event)</code></td><td><code>eventDelete</code></td><td><code>bui:cal-eventdelete</code></td><td>Delete was confirmed. <b>Return <code>false</code></b> to keep the event.</td></tr><tr><td><code>onDateClick(date, jsEvent, info)</code></td><td><code>dateClick</code></td><td><code>bui:cal-dateclick</code></td><td>A day, a day header or an empty time slot was clicked (<code>date</code> includes the slot time). <b>Return <code>false</code></b> in month view to skip the new-event dialog.</td></tr><tr><td><code>onViewChange(view, info)</code></td><td><code>viewChange</code></td><td><code>bui:cal-viewchange</code></td><td>The view changed, from the toolbar or <code>setView()</code>. <code>info</code> has <code>title</code>, <code>date</code>, <code>start</code>, <code>end</code>.</td></tr><tr><td><code>onNavigate(date, view, range)</code></td><td><code>navigate</code></td><td><code>bui:cal-navigate</code></td><td>The visible period changed (prev, next, today, <code>setDate</code>, keyboard).</td></tr><tr><td>—</td><td><code>change</code></td><td><code>bui:cal-change</code></td><td>Any change to the event list: <code>{ type: "add" | "update" | "remove" | "set", event, source }</code>. Also fired by the API methods.</td></tr></tbody></table></div>
@@ -599,6 +600,8 @@ document.getElementById(<span class="bui-code-green">'api-get'</span>).onclick =
     </main>
   </div>
   <script src="../assets/js/baset-ui.js"></script>
+  <script src="../assets/js/component-playground.js"></script>
+  <script src="../assets/js/component-playground-configs.js"></script>
   <script src="../assets/js/baset-calendar.js"></script>
   <script>
 (function () { try {
@@ -611,7 +614,7 @@ const events = [
   { id: 6, title: 'Workshop', start: '2026-11-24T10:00:00', end: '2026-11-24T13:00:00', color: 'secondary', category: 'work' },
 ];
 
-const calendar = new BasetCalendar('#cal-basic', {
+const calendar = BUI.calendar('#cal-basic', {
   view: 'month',
   date: '2026-11-04',
   events: events,
@@ -629,7 +632,7 @@ const events = [
   { id: 8, title: 'Conference', start: '2026-11-18', end: '2026-11-20', allDay: true, color: 'primary' },
 ];
 
-new BasetCalendar('#cal-month', {
+BUI.calendar('#cal-month', {
   view: 'month',
   date: '2026-11-12',
   events: events,
@@ -648,7 +651,7 @@ const events = [
   { id: 7, title: 'Night deploy', start: '2026-11-05T22:30:00', end: '2026-11-06T01:00:00', color: 'secondary' },
 ];
 
-new BasetCalendar('#cal-week', {
+BUI.calendar('#cal-week', {
   view: 'week',
   date: '2026-11-04',
   events: events,
@@ -668,7 +671,7 @@ const events = [
   { id: 7, title: 'Night deploy', start: '2026-11-05T22:30:00', end: '2026-11-06T01:00:00', color: 'secondary' },
 ];
 
-new BasetCalendar('#cal-day', {
+BUI.calendar('#cal-day', {
   view: 'day',
   date: '2026-11-04',
   events: events,
@@ -690,7 +693,7 @@ const events = [
 const log = document.getElementById('cal-edit-log');
 const say = (text) => { log.textContent = text + '\n' + log.textContent; };
 
-new BasetCalendar('#cal-edit', {
+BUI.calendar('#cal-edit', {
   view: 'month',
   date: '2026-11-04',
   events: events,
@@ -712,7 +715,7 @@ const events = [
 ];
 
 const log = document.getElementById('cal-drag-log');
-const calendar = new BasetCalendar('#cal-drag', {
+const calendar = BUI.calendar('#cal-drag', {
   view: 'week',
   date: '2026-11-04',
   events: events,
@@ -732,7 +735,7 @@ const events = [
   { id: 3, title: 'Locked event', start: '2026-11-06T09:00:00', end: '2026-11-06T10:00:00', color: 'secondary', editable: false },
 ];
 
-new BasetCalendar('#cal-resize', {
+BUI.calendar('#cal-resize', {
   view: 'week',
   date: '2026-11-04',
   events: events,
@@ -756,7 +759,7 @@ const events = [
   { id: 6, title: 'Workshop', start: '2026-11-24T10:00:00', end: '2026-11-24T13:00:00', color: 'secondary', category: 'work' },
 ];
 
-const calendar = new BasetCalendar('#cal-details', {
+const calendar = BUI.calendar('#cal-details', {
   view: 'month',
   date: '2026-11-04',
   events: events,
@@ -776,7 +779,7 @@ const events = [
   { id: 5, title: 'موعد الطبيب', start: '2026-11-15T16:00:00', end: '2026-11-15T17:00:00', color: 'danger', category: 'personal' },
 ];
 
-new BasetCalendar('#cal-rtl', {
+BUI.calendar('#cal-rtl', {
   view: 'week',
   date: '2026-11-04',
   events: events,
@@ -798,9 +801,9 @@ const events = [
 ];
 
 // Words for the buttons and the dialog in a language that is not built in (the rest comes from Intl)
-BasetCalendar.locales.fr = { today: "Aujourd'hui", month: 'Mois', week: 'Semaine', day: 'Jour', allDay: 'Toute la journée', add: 'Ajouter', newEvent: 'Nouvel événement', save: 'Enregistrer', cancel: 'Annuler', delete: 'Supprimer', edit: 'Modifier', close: 'Fermer', title: 'Titre', description: 'Description', more: '+{n} autres' };
+BUI.calendar.locales.fr = { today: "Aujourd'hui", month: 'Mois', week: 'Semaine', day: 'Jour', allDay: 'Toute la journée', add: 'Ajouter', newEvent: 'Nouvel événement', save: 'Enregistrer', cancel: 'Annuler', delete: 'Supprimer', edit: 'Modifier', close: 'Fermer', title: 'Titre', description: 'Description', more: '+{n} autres' };
 
-const calendar = new BasetCalendar('#cal-locale', { view: 'month', date: '2026-11-04', events: events, locale: 'en' });
+const calendar = BUI.calendar('#cal-locale', { view: 'month', date: '2026-11-04', events: events, locale: 'en' });
 const apply = () => calendar.setOptions({
   locale: document.getElementById('cal-locale-lang').value,
   firstDay: document.getElementById('cal-locale-first').value === '' ? null : +document.getElementById('cal-locale-first').value,
@@ -818,7 +821,7 @@ const events = [
   { id: 6, title: 'Workshop', start: '2026-11-24T10:00:00', end: '2026-11-24T13:00:00', color: 'secondary', category: 'work' },
 ];
 
-new BasetCalendar('#cal-theme', { view: 'month', date: '2026-11-04', events: events });
+BUI.calendar('#cal-theme', { view: 'month', date: '2026-11-04', events: events });
 
 const box = document.getElementById('cal-theme');
 document.getElementById('cal-theme-light').onclick = () => { box.style.colorScheme = 'light'; };
@@ -835,7 +838,7 @@ const events = [
   { id: 6, title: 'Doctor', start: '2026-11-10T16:00:00', end: '2026-11-10T17:00:00', category: 'health' },
 ];
 
-new BasetCalendar('#cal-colors', {
+BUI.calendar('#cal-colors', {
   view: 'month',
   date: '2026-11-04',
   events: events,
@@ -859,7 +862,7 @@ const events = [
 const log = document.getElementById('cal-callbacks-log');
 const say = (text) => { log.textContent = text + '\n' + log.textContent.split('\n').slice(0, 7).join('\n'); };
 
-const calendar = new BasetCalendar('#cal-callbacks', {
+const calendar = BUI.calendar('#cal-callbacks', {
   view: 'month',
   date: '2026-11-04',
   events: events,
@@ -886,7 +889,7 @@ const events = [
   { id: 6, title: 'Workshop', start: '2026-11-24T10:00:00', end: '2026-11-24T13:00:00', color: 'secondary', category: 'work' },
 ];
 
-const calendar = new BasetCalendar('#cal-api', { view: 'month', date: '2026-11-04', events: events });
+const calendar = BUI.calendar('#cal-api', { view: 'month', date: '2026-11-04', events: events });
 const log = document.getElementById('cal-api-log');
 let count = 0;
 

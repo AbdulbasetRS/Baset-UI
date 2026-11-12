@@ -50,10 +50,11 @@
     </aside>
     <main class="bui-main">
       <header class="bui-topbar"><div class="bui-breadcrumb"><a href="../index.html">Documentation</a> <span>/</span> Components <span>/</span> Charts &amp; data visualization</div><div class="bui-top-actions"><span class="bui-pill">Vanilla CSS + JS</span><button class="bui-icon-btn bui-dir-btn" id="dirToggle" type="button" aria-label="Toggle direction (RTL / LTR)" title="Toggle direction (RTL / LTR)">RTL</button><button class="bui-icon-btn" id="themeToggle" type="button" aria-label="Toggle theme">☼</button></div></header>
+      <section class="bui-section" id="customize"><div class="bui-section-heading"><div><span class="bui-eyebrow">CUSTOMIZE</span><h2>Make it yours</h2><p>Change the options, watch the chart update, then copy the code. Switch theme and direction to check light, dark, LTR and RTL.</p></div></div><div data-bui-playground="charts"></div></section>
       <section class="bui-section" id="charts"><div class="bui-section-heading"><div><span class="bui-eyebrow">14 / COMPONENTS</span><h2>Charts &amp; data visualization</h2><p>Line, bar, area, pie, doughnut, radar, scatter, mixed, radial and gauge charts drawn as SVG. No dependencies, responsive, with tooltips, a clickable legend, live updates, dark mode and RTL.</p></div><span class="bui-step-count">44 examples</span></div>
 <div class="bui-demo-stack">
 <h3 id="intro" style="margin:34px 0 14px;font-family:var(--bui-font-heading);font-size:18px;letter-spacing:-.4px">Introduction</h3>
-<p class="bui-doc-note"><code>BasetChart</code> draws charts as SVG with plain JavaScript: <b>line, bar, area, pie, doughnut, radar, scatter, mixed, radial progress and gauge</b>. It has no dependencies and does not use a CDN. Colors, text, grid lines and the tooltip come from the Baset UI tokens, so charts follow <b>dark mode</b> and <b>RTL / LTR</b> with no extra work. They resize with their container, animate smoothly (and not at all when the visitor prefers reduced motion), redraw only the chart that changed, and show a tooltip, a clickable legend and number formatting out of the box.</p>
+<p class="bui-doc-note"><code>BUI.chart</code> draws charts as SVG with plain JavaScript: <b>line, bar, area, pie, doughnut, radar, scatter, mixed, radial progress and gauge</b>. It has no dependencies and does not use a CDN. Colors, text, grid lines and the tooltip come from the Baset UI tokens, so charts follow <b>dark mode</b> and <b>RTL / LTR</b> with no extra work. They resize with their container, animate smoothly (and not at all when the visitor prefers reduced motion), redraw only the chart that changed, and show a tooltip, a clickable legend and number formatting out of the box.</p>
 <div style="overflow-x:auto"><table class="bui-dir-table"><thead><tr><th>Chart</th><th><code>type</code></th><th>Variants on this page</th></tr></thead><tbody><tr><td>Line</td><td><code>line</code></td><td>basic, multiple lines, smooth, points, area fill</td></tr><tr><td>Bar</td><td><code>bar</code></td><td>vertical, horizontal, grouped, stacked, rounded, positive and negative</td></tr><tr><td>Area</td><td><code>area</code></td><td>basic, multiple, stacked</td></tr><tr><td>Pie and doughnut</td><td><code>pie</code> · <code>doughnut</code></td><td>basic, doughnut, center text, custom colors, legend with values and percentages</td></tr><tr><td>Radar · scatter</td><td><code>radar</code> · <code>scatter</code></td><td>two series; two series with sized points</td></tr><tr><td>Mixed</td><td><code>mixed</code></td><td>bars and a line on a second axis</td></tr><tr><td>Radial progress · gauge</td><td><code>radial</code> · <code>gauge</code></td><td>one or several rings; plain and with color thresholds</td></tr></tbody></table></div>
 <h3 id="start" style="margin:34px 0 14px;font-family:var(--bui-font-heading);font-size:18px;letter-spacing:-.4px">Getting started</h3>
 <p class="bui-doc-note">Load <code>baset-ui.css</code> (the chart styles are section 20) and <code>baset-charts.js</code>. Then give a chart a container and describe it. The container needs only a width; the height is an option (default depends on the type).</p>
@@ -63,7 +64,7 @@
 <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"sales-chart"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
 
 <span class="bui-code-pink">&lt;script</span><span class="bui-code-pink">&gt;</span>
-  <span class="bui-code-pink">const</span> chart = <span class="bui-code-pink">new</span> BasetChart(<span class="bui-code-green">'#sales-chart'</span>, {
+  <span class="bui-code-pink">const</span> chart = BUI.chart(<span class="bui-code-green">'#sales-chart'</span>, {
     <span class="bui-code-blue">type</span>: <span class="bui-code-green">'line'</span>,
     <span class="bui-code-blue">data</span>: {
       <span class="bui-code-blue">labels</span>: [<span class="bui-code-green">'Jan'</span>, <span class="bui-code-green">'Feb'</span>, <span class="bui-code-green">'Mar'</span>, <span class="bui-code-green">'Apr'</span>],
@@ -77,12 +78,12 @@
 </div><div class="bui-demo-code">One series, no script. Other attributes: <code>data-bui-color</code>, <code>-height</code>, <code>-width</code>, <code>-grid</code>, <code>-legend</code>, <code>-values</code>, <code>-rounded</code>, <code>-smooth</code>, <code>-animation</code>, <code>-format</code>, <code>-locale</code>. Set <code>="false"</code> to turn a switch off.</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">data-bui-chart</span>=<span class="bui-code-green">"bar"</span> <span class="bui-code-blue">data-bui-labels</span>=<span class="bui-code-green">"Mon,Tue,Wed,Thu,Fri"</span> <span class="bui-code-blue">data-bui-data</span>=<span class="bui-code-green">"12,19,7,15,22"</span> <span class="bui-code-blue">data-bui-label</span>=<span class="bui-code-green">"Tickets"</span> <span class="bui-code-blue">data-bui-color</span>=<span class="bui-code-green">"#6658e8"</span> <span class="bui-code-blue">data-bui-height</span>=<span class="bui-code-green">"220"</span> <span class="bui-code-blue">data-bui-rounded</span> <span class="bui-code-blue">data-bui-values</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
 <article class="bui-demo-card" id="ch-attrs-json"><div class="bui-demo-title">Chart from a JSON attribute <span>data-bui-config</span></div><div class="bui-demo-content">
 <div data-bui-chart="doughnut" data-bui-height="240" data-bui-config='{"data":{"labels":["Paid","Pending","Overdue"],"datasets":[{"label":"Invoices","data":[68,22,10]}]},"options":{"centerText":{"label":"Invoices","value":"100"},"legendPosition":"bottom"}}'></div>
-</div><div class="bui-demo-code">The same object you would pass to <code>new BasetChart</code>, as JSON. Use single quotes around the attribute.</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">data-bui-chart</span>=<span class="bui-code-green">"doughnut"</span> <span class="bui-code-blue">data-bui-height</span>=<span class="bui-code-green">"240"</span> <span class="bui-code-blue">data-bui-config</span>=<span class="bui-code-green">'{"data":{"labels":["Paid","Pending","Overdue"],"datasets":[{"label":"Invoices","data":[68,22,10]}]},"options":{"centerText":{"label":"Invoices","value":"100"},"legendPosition":"bottom"}}'</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
+</div><div class="bui-demo-code">The same object you would pass to <code>BUI.chart</code>, as JSON. Use single quotes around the attribute.</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">data-bui-chart</span>=<span class="bui-code-green">"doughnut"</span> <span class="bui-code-blue">data-bui-height</span>=<span class="bui-code-green">"240"</span> <span class="bui-code-blue">data-bui-config</span>=<span class="bui-code-green">'{"data":{"labels":["Paid","Pending","Overdue"],"datasets":[{"label":"Invoices","data":[68,22,10]}]},"options":{"centerText":{"label":"Invoices","value":"100"},"legendPosition":"bottom"}}'</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
 <h3 id="line" style="margin:34px 0 14px;font-family:var(--bui-font-heading);font-size:18px;letter-spacing:-.4px">Line charts</h3><p class="bui-doc-note">A line chart shows how a value changes across an ordered scale. Gaps in the data (<code>null</code>) break the line instead of drawing a false value.</p>
 <article class="bui-demo-card" id="ch-line-basic"><div class="bui-demo-title">Basic line chart <span>type: "line"</span></div><div class="bui-demo-content">
 <div id="ch-line-basic-chart"></div>
 <script>{
-new BasetChart('#ch-line-basic-chart', {
+BUI.chart('#ch-line-basic-chart', {
   type: 'line',
   data: {
     labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
@@ -93,7 +94,7 @@ new BasetChart('#ch-line-basic-chart', {
 }</script>
 </div><div class="bui-demo-code">Website visitors per month. The vertical scale is chosen for you (round numbers, large values shortened to 5K, 10K…).</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"ch-line-basic-chart"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
 <span class="bui-code-pink">&lt;script</span><span class="bui-code-pink">&gt;</span>
-  <span class="bui-code-pink">new</span> BasetChart(<span class="bui-code-green">'#ch-line-basic-chart'</span>, {
+  BUI.chart(<span class="bui-code-green">'#ch-line-basic-chart'</span>, {
     <span class="bui-code-blue">type</span>: <span class="bui-code-green">'line'</span>,
     <span class="bui-code-blue">data</span>: {
       <span class="bui-code-blue">labels</span>: [<span class="bui-code-green">'Jan'</span>, <span class="bui-code-green">'Feb'</span>, <span class="bui-code-green">'Mar'</span>, <span class="bui-code-green">'Apr'</span>, <span class="bui-code-green">'May'</span>, <span class="bui-code-green">'Jun'</span>, <span class="bui-code-green">'Jul'</span>, <span class="bui-code-green">'Aug'</span>, <span class="bui-code-green">'Sep'</span>, <span class="bui-code-green">'Oct'</span>, <span class="bui-code-green">'Nov'</span>, <span class="bui-code-green">'Dec'</span>],
@@ -105,7 +106,7 @@ new BasetChart('#ch-line-basic-chart', {
 <article class="bui-demo-card" id="ch-line-multi"><div class="bui-demo-title">Multiple lines <span>datasets: [ … , … ]</span></div><div class="bui-demo-content">
 <div id="ch-line-multi-chart"></div>
 <script>{
-new BasetChart('#ch-line-multi-chart', {
+BUI.chart('#ch-line-multi-chart', {
   type: 'line',
   data: {
     labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
@@ -120,7 +121,7 @@ new BasetChart('#ch-line-multi-chart', {
 }</script>
 </div><div class="bui-demo-code">Traffic by channel over a week. Hover to compare all lines at once; click a legend item to hide or show a series.</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"ch-line-multi-chart"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
 <span class="bui-code-pink">&lt;script</span><span class="bui-code-pink">&gt;</span>
-  <span class="bui-code-pink">new</span> BasetChart(<span class="bui-code-green">'#ch-line-multi-chart'</span>, {
+  BUI.chart(<span class="bui-code-green">'#ch-line-multi-chart'</span>, {
     <span class="bui-code-blue">type</span>: <span class="bui-code-green">'line'</span>,
     <span class="bui-code-blue">data</span>: {
       <span class="bui-code-blue">labels</span>: [<span class="bui-code-green">'Mon'</span>, <span class="bui-code-green">'Tue'</span>, <span class="bui-code-green">'Wed'</span>, <span class="bui-code-green">'Thu'</span>, <span class="bui-code-green">'Fri'</span>, <span class="bui-code-green">'Sat'</span>, <span class="bui-code-green">'Sun'</span>],
@@ -136,7 +137,7 @@ new BasetChart('#ch-line-multi-chart', {
 <article class="bui-demo-card" id="ch-line-smooth"><div class="bui-demo-title">Smooth line <span>smooth: true</span></div><div class="bui-demo-content">
 <div id="ch-line-smooth-chart"></div>
 <script>{
-new BasetChart('#ch-line-smooth-chart', {
+BUI.chart('#ch-line-smooth-chart', {
   type: 'line',
   data: {
     labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
@@ -147,7 +148,7 @@ new BasetChart('#ch-line-smooth-chart', {
 }</script>
 </div><div class="bui-demo-code">New users per month with a curved line. The curve never overshoots the data, so a smooth line does not invent peaks.</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"ch-line-smooth-chart"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
 <span class="bui-code-pink">&lt;script</span><span class="bui-code-pink">&gt;</span>
-  <span class="bui-code-pink">new</span> BasetChart(<span class="bui-code-green">'#ch-line-smooth-chart'</span>, {
+  BUI.chart(<span class="bui-code-green">'#ch-line-smooth-chart'</span>, {
     <span class="bui-code-blue">type</span>: <span class="bui-code-green">'line'</span>,
     <span class="bui-code-blue">data</span>: {
       <span class="bui-code-blue">labels</span>: [<span class="bui-code-green">'Jan'</span>, <span class="bui-code-green">'Feb'</span>, <span class="bui-code-green">'Mar'</span>, <span class="bui-code-green">'Apr'</span>, <span class="bui-code-green">'May'</span>, <span class="bui-code-green">'Jun'</span>, <span class="bui-code-green">'Jul'</span>],
@@ -159,7 +160,7 @@ new BasetChart('#ch-line-smooth-chart', {
 <article class="bui-demo-card" id="ch-line-points"><div class="bui-demo-title">Line with points <span>points: true</span></div><div class="bui-demo-content">
 <div id="ch-line-points-chart"></div>
 <script>{
-new BasetChart('#ch-line-points-chart', {
+BUI.chart('#ch-line-points-chart', {
   type: 'line',
   data: {
     labels: ['W1', 'W2', 'W3', 'W4', 'W5', 'W6', 'W7', 'W8'],
@@ -173,7 +174,7 @@ new BasetChart('#ch-line-points-chart', {
 }</script>
 </div><div class="bui-demo-code">Weekly signups with a marker on every value. <code>points</code> can be set for the whole chart or for one dataset.</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"ch-line-points-chart"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
 <span class="bui-code-pink">&lt;script</span><span class="bui-code-pink">&gt;</span>
-  <span class="bui-code-pink">new</span> BasetChart(<span class="bui-code-green">'#ch-line-points-chart'</span>, {
+  BUI.chart(<span class="bui-code-green">'#ch-line-points-chart'</span>, {
     <span class="bui-code-blue">type</span>: <span class="bui-code-green">'line'</span>,
     <span class="bui-code-blue">data</span>: {
       <span class="bui-code-blue">labels</span>: [<span class="bui-code-green">'W1'</span>, <span class="bui-code-green">'W2'</span>, <span class="bui-code-green">'W3'</span>, <span class="bui-code-green">'W4'</span>, <span class="bui-code-green">'W5'</span>, <span class="bui-code-green">'W6'</span>, <span class="bui-code-green">'W7'</span>, <span class="bui-code-green">'W8'</span>],
@@ -188,7 +189,7 @@ new BasetChart('#ch-line-points-chart', {
 <article class="bui-demo-card" id="ch-line-fill"><div class="bui-demo-title">Line with area fill <span>fill: true</span></div><div class="bui-demo-content">
 <div id="ch-line-fill-chart"></div>
 <script>{
-new BasetChart('#ch-line-fill-chart', {
+BUI.chart('#ch-line-fill-chart', {
   type: 'line',
   data: {
     labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
@@ -199,7 +200,7 @@ new BasetChart('#ch-line-fill-chart', {
 }</script>
 </div><div class="bui-demo-code">Monthly revenue with a soft gradient under the line, formatted as currency.</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"ch-line-fill-chart"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
 <span class="bui-code-pink">&lt;script</span><span class="bui-code-pink">&gt;</span>
-  <span class="bui-code-pink">new</span> BasetChart(<span class="bui-code-green">'#ch-line-fill-chart'</span>, {
+  BUI.chart(<span class="bui-code-green">'#ch-line-fill-chart'</span>, {
     <span class="bui-code-blue">type</span>: <span class="bui-code-green">'line'</span>,
     <span class="bui-code-blue">data</span>: {
       <span class="bui-code-blue">labels</span>: [<span class="bui-code-green">'Jan'</span>, <span class="bui-code-green">'Feb'</span>, <span class="bui-code-green">'Mar'</span>, <span class="bui-code-green">'Apr'</span>, <span class="bui-code-green">'May'</span>, <span class="bui-code-green">'Jun'</span>, <span class="bui-code-green">'Jul'</span>, <span class="bui-code-green">'Aug'</span>, <span class="bui-code-green">'Sep'</span>, <span class="bui-code-green">'Oct'</span>, <span class="bui-code-green">'Nov'</span>, <span class="bui-code-green">'Dec'</span>],
@@ -212,7 +213,7 @@ new BasetChart('#ch-line-fill-chart', {
 <article class="bui-demo-card" id="ch-bar-vertical"><div class="bui-demo-title">Vertical bar chart <span>type: "bar"</span></div><div class="bui-demo-content">
 <div id="ch-bar-vertical-chart"></div>
 <script>{
-new BasetChart('#ch-bar-vertical-chart', {
+BUI.chart('#ch-bar-vertical-chart', {
   type: 'bar',
   data: {
     labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
@@ -223,7 +224,7 @@ new BasetChart('#ch-bar-vertical-chart', {
 }</script>
 </div><div class="bui-demo-code">Orders per month, with the value written above each bar.</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"ch-bar-vertical-chart"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
 <span class="bui-code-pink">&lt;script</span><span class="bui-code-pink">&gt;</span>
-  <span class="bui-code-pink">new</span> BasetChart(<span class="bui-code-green">'#ch-bar-vertical-chart'</span>, {
+  BUI.chart(<span class="bui-code-green">'#ch-bar-vertical-chart'</span>, {
     <span class="bui-code-blue">type</span>: <span class="bui-code-green">'bar'</span>,
     <span class="bui-code-blue">data</span>: {
       <span class="bui-code-blue">labels</span>: [<span class="bui-code-green">'Jan'</span>, <span class="bui-code-green">'Feb'</span>, <span class="bui-code-green">'Mar'</span>, <span class="bui-code-green">'Apr'</span>, <span class="bui-code-green">'May'</span>, <span class="bui-code-green">'Jun'</span>],
@@ -235,7 +236,7 @@ new BasetChart('#ch-bar-vertical-chart', {
 <article class="bui-demo-card" id="ch-bar-horizontal"><div class="bui-demo-title">Horizontal bar chart <span>horizontal: true</span></div><div class="bui-demo-content">
 <div id="ch-bar-horizontal-chart"></div>
 <script>{
-new BasetChart('#ch-bar-horizontal-chart', {
+BUI.chart('#ch-bar-horizontal-chart', {
   type: 'bar',
   data: {
     labels: ['Wireless headphones', 'Smart watch', 'Laptop stand', 'Mechanical keyboard', 'USB-C hub'],
@@ -246,7 +247,7 @@ new BasetChart('#ch-bar-horizontal-chart', {
 }</script>
 </div><div class="bui-demo-code">Best-selling products. Horizontal bars are the right choice for long labels, which are shortened when there is no room.</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"ch-bar-horizontal-chart"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
 <span class="bui-code-pink">&lt;script</span><span class="bui-code-pink">&gt;</span>
-  <span class="bui-code-pink">new</span> BasetChart(<span class="bui-code-green">'#ch-bar-horizontal-chart'</span>, {
+  BUI.chart(<span class="bui-code-green">'#ch-bar-horizontal-chart'</span>, {
     <span class="bui-code-blue">type</span>: <span class="bui-code-green">'bar'</span>,
     <span class="bui-code-blue">data</span>: {
       <span class="bui-code-blue">labels</span>: [<span class="bui-code-green">'Wireless headphones'</span>, <span class="bui-code-green">'Smart watch'</span>, <span class="bui-code-green">'Laptop stand'</span>, <span class="bui-code-green">'Mechanical keyboard'</span>, <span class="bui-code-green">'USB-C hub'</span>],
@@ -258,7 +259,7 @@ new BasetChart('#ch-bar-horizontal-chart', {
 <article class="bui-demo-card" id="ch-bar-grouped"><div class="bui-demo-title">Grouped bar chart <span>datasets: [ … , … ]</span></div><div class="bui-demo-content">
 <div id="ch-bar-grouped-chart"></div>
 <script>{
-new BasetChart('#ch-bar-grouped-chart', {
+BUI.chart('#ch-bar-grouped-chart', {
   type: 'bar',
   data: {
     labels: ['Q1', 'Q2', 'Q3', 'Q4'],
@@ -272,7 +273,7 @@ new BasetChart('#ch-bar-grouped-chart', {
 }</script>
 </div><div class="bui-demo-code">Revenue against expenses per quarter. The format adds a prefix and a suffix to every number (axis, tooltip and values).</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"ch-bar-grouped-chart"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
 <span class="bui-code-pink">&lt;script</span><span class="bui-code-pink">&gt;</span>
-  <span class="bui-code-pink">new</span> BasetChart(<span class="bui-code-green">'#ch-bar-grouped-chart'</span>, {
+  BUI.chart(<span class="bui-code-green">'#ch-bar-grouped-chart'</span>, {
     <span class="bui-code-blue">type</span>: <span class="bui-code-green">'bar'</span>,
     <span class="bui-code-blue">data</span>: {
       <span class="bui-code-blue">labels</span>: [<span class="bui-code-green">'Q1'</span>, <span class="bui-code-green">'Q2'</span>, <span class="bui-code-green">'Q3'</span>, <span class="bui-code-green">'Q4'</span>],
@@ -287,7 +288,7 @@ new BasetChart('#ch-bar-grouped-chart', {
 <article class="bui-demo-card" id="ch-bar-stacked"><div class="bui-demo-title">Stacked bar chart <span>stacked: true</span></div><div class="bui-demo-content">
 <div id="ch-bar-stacked-chart"></div>
 <script>{
-new BasetChart('#ch-bar-stacked-chart', {
+BUI.chart('#ch-bar-stacked-chart', {
   type: 'bar',
   data: {
     labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
@@ -302,7 +303,7 @@ new BasetChart('#ch-bar-stacked-chart', {
 }</script>
 </div><div class="bui-demo-code">Orders by status for each weekday. The tooltip adds a total. Colors can be any CSS color, including a Baset UI token.</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"ch-bar-stacked-chart"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
 <span class="bui-code-pink">&lt;script</span><span class="bui-code-pink">&gt;</span>
-  <span class="bui-code-pink">new</span> BasetChart(<span class="bui-code-green">'#ch-bar-stacked-chart'</span>, {
+  BUI.chart(<span class="bui-code-green">'#ch-bar-stacked-chart'</span>, {
     <span class="bui-code-blue">type</span>: <span class="bui-code-green">'bar'</span>,
     <span class="bui-code-blue">data</span>: {
       <span class="bui-code-blue">labels</span>: [<span class="bui-code-green">'Mon'</span>, <span class="bui-code-green">'Tue'</span>, <span class="bui-code-green">'Wed'</span>, <span class="bui-code-green">'Thu'</span>, <span class="bui-code-green">'Fri'</span>, <span class="bui-code-green">'Sat'</span>, <span class="bui-code-green">'Sun'</span>],
@@ -318,7 +319,7 @@ new BasetChart('#ch-bar-stacked-chart', {
 <article class="bui-demo-card" id="ch-bar-rounded"><div class="bui-demo-title">Rounded bars <span>rounded: true | 10</span></div><div class="bui-demo-content">
 <div id="ch-bar-rounded-chart"></div>
 <script>{
-new BasetChart('#ch-bar-rounded-chart', {
+BUI.chart('#ch-bar-rounded-chart', {
   type: 'bar',
   data: {
     labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
@@ -329,7 +330,7 @@ new BasetChart('#ch-bar-rounded-chart', {
 }</script>
 </div><div class="bui-demo-code">Rounded corners on the free end of each bar. Use a number for your own radius in pixels.</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"ch-bar-rounded-chart"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
 <span class="bui-code-pink">&lt;script</span><span class="bui-code-pink">&gt;</span>
-  <span class="bui-code-pink">new</span> BasetChart(<span class="bui-code-green">'#ch-bar-rounded-chart'</span>, {
+  BUI.chart(<span class="bui-code-green">'#ch-bar-rounded-chart'</span>, {
     <span class="bui-code-blue">type</span>: <span class="bui-code-green">'bar'</span>,
     <span class="bui-code-blue">data</span>: {
       <span class="bui-code-blue">labels</span>: [<span class="bui-code-green">'Mon'</span>, <span class="bui-code-green">'Tue'</span>, <span class="bui-code-green">'Wed'</span>, <span class="bui-code-green">'Thu'</span>, <span class="bui-code-green">'Fri'</span>, <span class="bui-code-green">'Sat'</span>, <span class="bui-code-green">'Sun'</span>],
@@ -341,7 +342,7 @@ new BasetChart('#ch-bar-rounded-chart', {
 <article class="bui-demo-card" id="ch-bar-negative"><div class="bui-demo-title">Positive and negative values <span>negative numbers</span></div><div class="bui-demo-content">
 <div id="ch-bar-negative-chart"></div>
 <script>{
-new BasetChart('#ch-bar-negative-chart', {
+BUI.chart('#ch-bar-negative-chart', {
   type: 'bar',
   data: {
     labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
@@ -355,7 +356,7 @@ new BasetChart('#ch-bar-negative-chart', {
 }</script>
 </div><div class="bui-demo-code">Profit and loss by month. The zero line is drawn darker. Two stacked datasets give profit and loss their own colors.</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"ch-bar-negative-chart"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
 <span class="bui-code-pink">&lt;script</span><span class="bui-code-pink">&gt;</span>
-  <span class="bui-code-pink">new</span> BasetChart(<span class="bui-code-green">'#ch-bar-negative-chart'</span>, {
+  BUI.chart(<span class="bui-code-green">'#ch-bar-negative-chart'</span>, {
     <span class="bui-code-blue">type</span>: <span class="bui-code-green">'bar'</span>,
     <span class="bui-code-blue">data</span>: {
       <span class="bui-code-blue">labels</span>: [<span class="bui-code-green">'Jan'</span>, <span class="bui-code-green">'Feb'</span>, <span class="bui-code-green">'Mar'</span>, <span class="bui-code-green">'Apr'</span>, <span class="bui-code-green">'May'</span>, <span class="bui-code-green">'Jun'</span>],
@@ -371,7 +372,7 @@ new BasetChart('#ch-bar-negative-chart', {
 <article class="bui-demo-card" id="ch-area-basic"><div class="bui-demo-title">Basic area chart <span>type: "area"</span></div><div class="bui-demo-content">
 <div id="ch-area-basic-chart"></div>
 <script>{
-new BasetChart('#ch-area-basic-chart', {
+BUI.chart('#ch-area-basic-chart', {
   type: 'area',
   data: {
     labels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14'],
@@ -382,7 +383,7 @@ new BasetChart('#ch-area-basic-chart', {
 }</script>
 </div><div class="bui-demo-code">Daily active users for two weeks.</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"ch-area-basic-chart"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
 <span class="bui-code-pink">&lt;script</span><span class="bui-code-pink">&gt;</span>
-  <span class="bui-code-pink">new</span> BasetChart(<span class="bui-code-green">'#ch-area-basic-chart'</span>, {
+  BUI.chart(<span class="bui-code-green">'#ch-area-basic-chart'</span>, {
     <span class="bui-code-blue">type</span>: <span class="bui-code-green">'area'</span>,
     <span class="bui-code-blue">data</span>: {
       <span class="bui-code-blue">labels</span>: [<span class="bui-code-green">'1'</span>, <span class="bui-code-green">'2'</span>, <span class="bui-code-green">'3'</span>, <span class="bui-code-green">'4'</span>, <span class="bui-code-green">'5'</span>, <span class="bui-code-green">'6'</span>, <span class="bui-code-green">'7'</span>, <span class="bui-code-green">'8'</span>, <span class="bui-code-green">'9'</span>, <span class="bui-code-green">'10'</span>, <span class="bui-code-green">'11'</span>, <span class="bui-code-green">'12'</span>, <span class="bui-code-green">'13'</span>, <span class="bui-code-green">'14'</span>],
@@ -394,7 +395,7 @@ new BasetChart('#ch-area-basic-chart', {
 <article class="bui-demo-card" id="ch-area-multi"><div class="bui-demo-title">Multiple areas <span>datasets: [ … , … ]</span></div><div class="bui-demo-content">
 <div id="ch-area-multi-chart"></div>
 <script>{
-new BasetChart('#ch-area-multi-chart', {
+BUI.chart('#ch-area-multi-chart', {
   type: 'area',
   data: {
     labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
@@ -409,7 +410,7 @@ new BasetChart('#ch-area-multi-chart', {
 }</script>
 </div><div class="bui-demo-code">Sessions by device. The areas overlap, so each one stays transparent enough to read.</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"ch-area-multi-chart"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
 <span class="bui-code-pink">&lt;script</span><span class="bui-code-pink">&gt;</span>
-  <span class="bui-code-pink">new</span> BasetChart(<span class="bui-code-green">'#ch-area-multi-chart'</span>, {
+  BUI.chart(<span class="bui-code-green">'#ch-area-multi-chart'</span>, {
     <span class="bui-code-blue">type</span>: <span class="bui-code-green">'area'</span>,
     <span class="bui-code-blue">data</span>: {
       <span class="bui-code-blue">labels</span>: [<span class="bui-code-green">'Jan'</span>, <span class="bui-code-green">'Feb'</span>, <span class="bui-code-green">'Mar'</span>, <span class="bui-code-green">'Apr'</span>, <span class="bui-code-green">'May'</span>, <span class="bui-code-green">'Jun'</span>, <span class="bui-code-green">'Jul'</span>],
@@ -425,7 +426,7 @@ new BasetChart('#ch-area-multi-chart', {
 <article class="bui-demo-card" id="ch-area-stacked"><div class="bui-demo-title">Stacked area chart <span>stacked: true</span></div><div class="bui-demo-content">
 <div id="ch-area-stacked-chart"></div>
 <script>{
-new BasetChart('#ch-area-stacked-chart', {
+BUI.chart('#ch-area-stacked-chart', {
   type: 'area',
   data: {
     labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
@@ -440,7 +441,7 @@ new BasetChart('#ch-area-stacked-chart', {
 }</script>
 </div><div class="bui-demo-code">The same sessions, added up. The top edge is the total and the tooltip shows it.</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"ch-area-stacked-chart"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
 <span class="bui-code-pink">&lt;script</span><span class="bui-code-pink">&gt;</span>
-  <span class="bui-code-pink">new</span> BasetChart(<span class="bui-code-green">'#ch-area-stacked-chart'</span>, {
+  BUI.chart(<span class="bui-code-green">'#ch-area-stacked-chart'</span>, {
     <span class="bui-code-blue">type</span>: <span class="bui-code-green">'area'</span>,
     <span class="bui-code-blue">data</span>: {
       <span class="bui-code-blue">labels</span>: [<span class="bui-code-green">'Jan'</span>, <span class="bui-code-green">'Feb'</span>, <span class="bui-code-green">'Mar'</span>, <span class="bui-code-green">'Apr'</span>, <span class="bui-code-green">'May'</span>, <span class="bui-code-green">'Jun'</span>, <span class="bui-code-green">'Jul'</span>],
@@ -457,7 +458,7 @@ new BasetChart('#ch-area-stacked-chart', {
 <article class="bui-demo-card" id="ch-pie-basic"><div class="bui-demo-title">Basic pie chart <span>type: "pie"</span></div><div class="bui-demo-content">
 <div id="ch-pie-basic-chart"></div>
 <script>{
-new BasetChart('#ch-pie-basic-chart', {
+BUI.chart('#ch-pie-basic-chart', {
   type: 'pie',
   data: {
     labels: ['Organic search', 'Direct', 'Social', 'Email', 'Referral'],
@@ -468,7 +469,7 @@ new BasetChart('#ch-pie-basic-chart', {
 }</script>
 </div><div class="bui-demo-code">Traffic sources. The legend here shows only names (<code>legendValues: false</code>).</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"ch-pie-basic-chart"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
 <span class="bui-code-pink">&lt;script</span><span class="bui-code-pink">&gt;</span>
-  <span class="bui-code-pink">new</span> BasetChart(<span class="bui-code-green">'#ch-pie-basic-chart'</span>, {
+  BUI.chart(<span class="bui-code-green">'#ch-pie-basic-chart'</span>, {
     <span class="bui-code-blue">type</span>: <span class="bui-code-green">'pie'</span>,
     <span class="bui-code-blue">data</span>: {
       <span class="bui-code-blue">labels</span>: [<span class="bui-code-green">'Organic search'</span>, <span class="bui-code-green">'Direct'</span>, <span class="bui-code-green">'Social'</span>, <span class="bui-code-green">'Email'</span>, <span class="bui-code-green">'Referral'</span>],
@@ -480,7 +481,7 @@ new BasetChart('#ch-pie-basic-chart', {
 <article class="bui-demo-card" id="ch-doughnut-basic"><div class="bui-demo-title">Doughnut chart <span>type: "doughnut"</span></div><div class="bui-demo-content">
 <div id="ch-doughnut-chart"></div>
 <script>{
-new BasetChart('#ch-doughnut-chart', {
+BUI.chart('#ch-doughnut-chart', {
   type: 'doughnut',
   data: {
     labels: ['Organic search', 'Direct', 'Social', 'Email', 'Referral'],
@@ -491,7 +492,7 @@ new BasetChart('#ch-doughnut-chart', {
 }</script>
 </div><div class="bui-demo-code">The same data as a ring. <code>cutout</code> (30–90) sets how big the hole is.</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"ch-doughnut-chart"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
 <span class="bui-code-pink">&lt;script</span><span class="bui-code-pink">&gt;</span>
-  <span class="bui-code-pink">new</span> BasetChart(<span class="bui-code-green">'#ch-doughnut-chart'</span>, {
+  BUI.chart(<span class="bui-code-green">'#ch-doughnut-chart'</span>, {
     <span class="bui-code-blue">type</span>: <span class="bui-code-green">'doughnut'</span>,
     <span class="bui-code-blue">data</span>: {
       <span class="bui-code-blue">labels</span>: [<span class="bui-code-green">'Organic search'</span>, <span class="bui-code-green">'Direct'</span>, <span class="bui-code-green">'Social'</span>, <span class="bui-code-green">'Email'</span>, <span class="bui-code-green">'Referral'</span>],
@@ -503,7 +504,7 @@ new BasetChart('#ch-doughnut-chart', {
 <article class="bui-demo-card" id="ch-doughnut-center"><div class="bui-demo-title">Doughnut with center text <span>centerText</span></div><div class="bui-demo-content">
 <div id="ch-doughnut-center-chart"></div>
 <script>{
-new BasetChart('#ch-doughnut-center-chart', {
+BUI.chart('#ch-doughnut-center-chart', {
   type: 'doughnut',
   data: {
     labels: ['Delivered', 'Shipped', 'Processing', 'Returned'],
@@ -514,7 +515,7 @@ new BasetChart('#ch-doughnut-center-chart', {
 }</script>
 </div><div class="bui-demo-code">The center shows the total of the visible slices, and the name and value of the slice under the pointer. Set <code>value</code> and <code>label</code> yourself when you want other text.</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"ch-doughnut-center-chart"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
 <span class="bui-code-pink">&lt;script</span><span class="bui-code-pink">&gt;</span>
-  <span class="bui-code-pink">new</span> BasetChart(<span class="bui-code-green">'#ch-doughnut-center-chart'</span>, {
+  BUI.chart(<span class="bui-code-green">'#ch-doughnut-center-chart'</span>, {
     <span class="bui-code-blue">type</span>: <span class="bui-code-green">'doughnut'</span>,
     <span class="bui-code-blue">data</span>: {
       <span class="bui-code-blue">labels</span>: [<span class="bui-code-green">'Delivered'</span>, <span class="bui-code-green">'Shipped'</span>, <span class="bui-code-green">'Processing'</span>, <span class="bui-code-green">'Returned'</span>],
@@ -526,7 +527,7 @@ new BasetChart('#ch-doughnut-center-chart', {
 <article class="bui-demo-card" id="ch-pie-colors"><div class="bui-demo-title">Custom colors <span>dataset.colors</span></div><div class="bui-demo-content">
 <div id="ch-pie-colors-chart"></div>
 <script>{
-new BasetChart('#ch-pie-colors-chart', {
+BUI.chart('#ch-pie-colors-chart', {
   type: 'pie',
   data: {
     labels: ['Middle East', 'Europe', 'North America', 'Asia', 'Africa'],
@@ -541,7 +542,7 @@ new BasetChart('#ch-pie-colors-chart', {
 }</script>
 </div><div class="bui-demo-code">Customer distribution by region. <code>colors</code> in the dataset sets one color per slice; <code>options.colors</code> would replace the palette for the whole chart.</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"ch-pie-colors-chart"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
 <span class="bui-code-pink">&lt;script</span><span class="bui-code-pink">&gt;</span>
-  <span class="bui-code-pink">new</span> BasetChart(<span class="bui-code-green">'#ch-pie-colors-chart'</span>, {
+  BUI.chart(<span class="bui-code-green">'#ch-pie-colors-chart'</span>, {
     <span class="bui-code-blue">type</span>: <span class="bui-code-green">'pie'</span>,
     <span class="bui-code-blue">data</span>: {
       <span class="bui-code-blue">labels</span>: [<span class="bui-code-green">'Middle East'</span>, <span class="bui-code-green">'Europe'</span>, <span class="bui-code-green">'North America'</span>, <span class="bui-code-green">'Asia'</span>, <span class="bui-code-green">'Africa'</span>],
@@ -557,7 +558,7 @@ new BasetChart('#ch-pie-colors-chart', {
 <article class="bui-demo-card" id="ch-doughnut-legend"><div class="bui-demo-title">Legend with values and percentages <span>legend · legendPosition</span></div><div class="bui-demo-content">
 <div id="ch-doughnut-legend-chart"></div>
 <script>{
-new BasetChart('#ch-doughnut-legend-chart', {
+BUI.chart('#ch-doughnut-legend-chart', {
   type: 'doughnut',
   data: {
     labels: ['Free', 'Pro', 'Team', 'Enterprise'],
@@ -568,7 +569,7 @@ new BasetChart('#ch-doughnut-legend-chart', {
 }</script>
 </div><div class="bui-demo-code">The default legend of a pie or doughnut: color, name, value and percentage. It can sit above the chart, and the center text is yours.</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"ch-doughnut-legend-chart"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
 <span class="bui-code-pink">&lt;script</span><span class="bui-code-pink">&gt;</span>
-  <span class="bui-code-pink">new</span> BasetChart(<span class="bui-code-green">'#ch-doughnut-legend-chart'</span>, {
+  BUI.chart(<span class="bui-code-green">'#ch-doughnut-legend-chart'</span>, {
     <span class="bui-code-blue">type</span>: <span class="bui-code-green">'doughnut'</span>,
     <span class="bui-code-blue">data</span>: {
       <span class="bui-code-blue">labels</span>: [<span class="bui-code-green">'Free'</span>, <span class="bui-code-green">'Pro'</span>, <span class="bui-code-green">'Team'</span>, <span class="bui-code-green">'Enterprise'</span>],
@@ -581,7 +582,7 @@ new BasetChart('#ch-doughnut-legend-chart', {
 <article class="bui-demo-card" id="ch-radar"><div class="bui-demo-title">Radar chart <span>type: "radar"</span></div><div class="bui-demo-content">
 <div id="ch-radar-chart"></div>
 <script>{
-new BasetChart('#ch-radar-chart', {
+BUI.chart('#ch-radar-chart', {
   type: 'radar',
   data: {
     labels: ['Speed', 'Reliability', 'Support', 'Security', 'Usability', 'Scalability'],
@@ -595,7 +596,7 @@ new BasetChart('#ch-radar-chart', {
 }</script>
 </div><div class="bui-demo-code">Performance metrics for two teams on the same six axes (needs at least three labels).</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"ch-radar-chart"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
 <span class="bui-code-pink">&lt;script</span><span class="bui-code-pink">&gt;</span>
-  <span class="bui-code-pink">new</span> BasetChart(<span class="bui-code-green">'#ch-radar-chart'</span>, {
+  BUI.chart(<span class="bui-code-green">'#ch-radar-chart'</span>, {
     <span class="bui-code-blue">type</span>: <span class="bui-code-green">'radar'</span>,
     <span class="bui-code-blue">data</span>: {
       <span class="bui-code-blue">labels</span>: [<span class="bui-code-green">'Speed'</span>, <span class="bui-code-green">'Reliability'</span>, <span class="bui-code-green">'Support'</span>, <span class="bui-code-green">'Security'</span>, <span class="bui-code-green">'Usability'</span>, <span class="bui-code-green">'Scalability'</span>],
@@ -610,7 +611,7 @@ new BasetChart('#ch-radar-chart', {
 <article class="bui-demo-card" id="ch-scatter"><div class="bui-demo-title">Scatter chart <span>type: "scatter"</span></div><div class="bui-demo-content">
 <div id="ch-scatter-chart"></div>
 <script>{
-new BasetChart('#ch-scatter-chart', {
+BUI.chart('#ch-scatter-chart', {
   type: 'scatter',
   data: {
     datasets: [
@@ -629,7 +630,7 @@ new BasetChart('#ch-scatter-chart', {
 }</script>
 </div><div class="bui-demo-code">Price against units sold. Points are <code>{ x, y }</code> and may add <code>r</code> to size a point. Hover near a point to read it.</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"ch-scatter-chart"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
 <span class="bui-code-pink">&lt;script</span><span class="bui-code-pink">&gt;</span>
-  <span class="bui-code-pink">new</span> BasetChart(<span class="bui-code-green">'#ch-scatter-chart'</span>, {
+  BUI.chart(<span class="bui-code-green">'#ch-scatter-chart'</span>, {
     <span class="bui-code-blue">type</span>: <span class="bui-code-green">'scatter'</span>,
     <span class="bui-code-blue">data</span>: {
       <span class="bui-code-blue">datasets</span>: [
@@ -649,7 +650,7 @@ new BasetChart('#ch-scatter-chart', {
 <article class="bui-demo-card" id="ch-mixed"><div class="bui-demo-title">Mixed chart (bar + line) <span>type: "mixed" · dataset.type · axis: "right"</span></div><div class="bui-demo-content">
 <div id="ch-mixed-chart"></div>
 <script>{
-new BasetChart('#ch-mixed-chart', {
+BUI.chart('#ch-mixed-chart', {
   type: 'mixed',
   data: {
     labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
@@ -663,7 +664,7 @@ new BasetChart('#ch-mixed-chart', {
 }</script>
 </div><div class="bui-demo-code">Revenue as bars on the left axis and the conversion rate as a line on its own right axis, each with its own format.</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"ch-mixed-chart"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
 <span class="bui-code-pink">&lt;script</span><span class="bui-code-pink">&gt;</span>
-  <span class="bui-code-pink">new</span> BasetChart(<span class="bui-code-green">'#ch-mixed-chart'</span>, {
+  BUI.chart(<span class="bui-code-green">'#ch-mixed-chart'</span>, {
     <span class="bui-code-blue">type</span>: <span class="bui-code-green">'mixed'</span>,
     <span class="bui-code-blue">data</span>: {
       <span class="bui-code-blue">labels</span>: [<span class="bui-code-green">'Jan'</span>, <span class="bui-code-green">'Feb'</span>, <span class="bui-code-green">'Mar'</span>, <span class="bui-code-green">'Apr'</span>, <span class="bui-code-green">'May'</span>, <span class="bui-code-green">'Jun'</span>],
@@ -678,7 +679,7 @@ new BasetChart('#ch-mixed-chart', {
 <article class="bui-demo-card" id="ch-radial-single"><div class="bui-demo-title">Radial progress <span>type: "radial"</span></div><div class="bui-demo-content">
 <div id="ch-radial-chart"></div>
 <script>{
-new BasetChart('#ch-radial-chart', {
+BUI.chart('#ch-radial-chart', {
   type: 'radial',
   data: { labels: ['Website redesign'], datasets: [{ label: 'Progress', data: [72], colors: ['#6658e8'] }] },
   options: { showLegend: false, height: 220 }
@@ -686,7 +687,7 @@ new BasetChart('#ch-radial-chart', {
 }</script>
 </div><div class="bui-demo-code">One ring for one value. The value is shown in the middle as a percentage of <code>max</code> (default 100).</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"ch-radial-chart"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
 <span class="bui-code-pink">&lt;script</span><span class="bui-code-pink">&gt;</span>
-  <span class="bui-code-pink">new</span> BasetChart(<span class="bui-code-green">'#ch-radial-chart'</span>, {
+  BUI.chart(<span class="bui-code-green">'#ch-radial-chart'</span>, {
     <span class="bui-code-blue">type</span>: <span class="bui-code-green">'radial'</span>,
     <span class="bui-code-blue">data</span>: { <span class="bui-code-blue">labels</span>: [<span class="bui-code-green">'Website redesign'</span>], <span class="bui-code-blue">datasets</span>: [{ <span class="bui-code-blue">label</span>: <span class="bui-code-green">'Progress'</span>, <span class="bui-code-blue">data</span>: [72], <span class="bui-code-blue">colors</span>: [<span class="bui-code-green">'#6658e8'</span>] }] },
     <span class="bui-code-blue">options</span>: { <span class="bui-code-blue">showLegend</span>: <span class="bui-code-pink">false</span>, <span class="bui-code-blue">height</span>: 220 }
@@ -695,7 +696,7 @@ new BasetChart('#ch-radial-chart', {
 <article class="bui-demo-card" id="ch-radial-multi"><div class="bui-demo-title">Radial progress with several rings <span>one dataset, several values</span></div><div class="bui-demo-content">
 <div id="ch-radial-multi-chart"></div>
 <script>{
-new BasetChart('#ch-radial-multi-chart', {
+BUI.chart('#ch-radial-multi-chart', {
   type: 'radial',
   data: {
     labels: ['Design', 'Development', 'Testing', 'Launch'],
@@ -706,7 +707,7 @@ new BasetChart('#ch-radial-multi-chart', {
 }</script>
 </div><div class="bui-demo-code">Project progress by phase: each label becomes a ring, outermost first. Hover a ring for its value.</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"ch-radial-multi-chart"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
 <span class="bui-code-pink">&lt;script</span><span class="bui-code-pink">&gt;</span>
-  <span class="bui-code-pink">new</span> BasetChart(<span class="bui-code-green">'#ch-radial-multi-chart'</span>, {
+  BUI.chart(<span class="bui-code-green">'#ch-radial-multi-chart'</span>, {
     <span class="bui-code-blue">type</span>: <span class="bui-code-green">'radial'</span>,
     <span class="bui-code-blue">data</span>: {
       <span class="bui-code-blue">labels</span>: [<span class="bui-code-green">'Design'</span>, <span class="bui-code-green">'Development'</span>, <span class="bui-code-green">'Testing'</span>, <span class="bui-code-green">'Launch'</span>],
@@ -718,7 +719,7 @@ new BasetChart('#ch-radial-multi-chart', {
 <article class="bui-demo-card" id="ch-gauge"><div class="bui-demo-title">Gauge chart <span>type: "gauge"</span></div><div class="bui-demo-content">
 <div id="ch-gauge-chart"></div>
 <script>{
-new BasetChart('#ch-gauge-chart', {
+BUI.chart('#ch-gauge-chart', {
   type: 'gauge',
   data: { labels: ['Score'], datasets: [{ label: 'Performance score', data: [78], color: '#6658e8' }] },
   options: { min: 0, max: 100, height: 210 }
@@ -726,7 +727,7 @@ new BasetChart('#ch-gauge-chart', {
 }</script>
 </div><div class="bui-demo-code">A single value on a half circle between <code>min</code> and <code>max</code>.</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"ch-gauge-chart"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
 <span class="bui-code-pink">&lt;script</span><span class="bui-code-pink">&gt;</span>
-  <span class="bui-code-pink">new</span> BasetChart(<span class="bui-code-green">'#ch-gauge-chart'</span>, {
+  BUI.chart(<span class="bui-code-green">'#ch-gauge-chart'</span>, {
     <span class="bui-code-blue">type</span>: <span class="bui-code-green">'gauge'</span>,
     <span class="bui-code-blue">data</span>: { <span class="bui-code-blue">labels</span>: [<span class="bui-code-green">'Score'</span>], <span class="bui-code-blue">datasets</span>: [{ <span class="bui-code-blue">label</span>: <span class="bui-code-green">'Performance score'</span>, <span class="bui-code-blue">data</span>: [78], <span class="bui-code-blue">color</span>: <span class="bui-code-green">'#6658e8'</span> }] },
     <span class="bui-code-blue">options</span>: { <span class="bui-code-blue">min</span>: 0, <span class="bui-code-blue">max</span>: 100, <span class="bui-code-blue">height</span>: 210 }
@@ -735,7 +736,7 @@ new BasetChart('#ch-gauge-chart', {
 <article class="bui-demo-card" id="ch-gauge-thresholds"><div class="bui-demo-title">Gauge with thresholds <span>thresholds</span></div><div class="bui-demo-content">
 <div id="ch-gauge-thresholds-chart"></div>
 <script>{
-new BasetChart('#ch-gauge-thresholds-chart', {
+BUI.chart('#ch-gauge-thresholds-chart', {
   type: 'gauge',
   data: { labels: ['CPU'], datasets: [{ label: 'CPU load', data: [64] }] },
   options: {
@@ -750,7 +751,7 @@ new BasetChart('#ch-gauge-thresholds-chart', {
 }</script>
 </div><div class="bui-demo-code">Color bands with a marker. The number takes the color of the band it is in.</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"ch-gauge-thresholds-chart"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
 <span class="bui-code-pink">&lt;script</span><span class="bui-code-pink">&gt;</span>
-  <span class="bui-code-pink">new</span> BasetChart(<span class="bui-code-green">'#ch-gauge-thresholds-chart'</span>, {
+  BUI.chart(<span class="bui-code-green">'#ch-gauge-thresholds-chart'</span>, {
     <span class="bui-code-blue">type</span>: <span class="bui-code-green">'gauge'</span>,
     <span class="bui-code-blue">data</span>: { <span class="bui-code-blue">labels</span>: [<span class="bui-code-green">'CPU'</span>], <span class="bui-code-blue">datasets</span>: [{ <span class="bui-code-blue">label</span>: <span class="bui-code-green">'CPU load'</span>, <span class="bui-code-blue">data</span>: [64] }] },
     <span class="bui-code-blue">options</span>: {
@@ -790,7 +791,7 @@ new BasetChart('#ch-gauge-thresholds-chart', {
   </div>
 </div>
 <script>{
-new BasetChart('#ch-d1-revenue', {
+BUI.chart('#ch-d1-revenue', {
   type: 'line',
   data: {
     labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
@@ -799,7 +800,7 @@ new BasetChart('#ch-d1-revenue', {
   options: { fill: true, smooth: true, format: 'currency', showLegend: false, height: 260, ariaLabel: 'Monthly revenue, last 12 months' }
 });
 
-new BasetChart('#ch-d1-vs', {
+BUI.chart('#ch-d1-vs', {
   type: 'bar',
   data: {
     labels: ['Q1', 'Q2', 'Q3', 'Q4'],
@@ -811,7 +812,7 @@ new BasetChart('#ch-d1-vs', {
   options: { rounded: true, format: { prefix: '$', suffix: 'k' }, height: 250 }
 });
 
-new BasetChart('#ch-d1-orders', {
+BUI.chart('#ch-d1-orders', {
   type: 'bar',
   data: {
     labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
@@ -824,7 +825,7 @@ new BasetChart('#ch-d1-orders', {
   options: { stacked: true, height: 250 }
 });
 
-new BasetChart('#ch-d1-traffic', {
+BUI.chart('#ch-d1-traffic', {
   type: 'doughnut',
   data: {
     labels: ['Organic search', 'Direct', 'Social', 'Email', 'Referral'],
@@ -858,7 +859,7 @@ new BasetChart('#ch-d1-traffic', {
   <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
 <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
 <span class="bui-code-pink">&lt;script</span><span class="bui-code-pink">&gt;</span>
-  <span class="bui-code-pink">new</span> BasetChart(<span class="bui-code-green">'#ch-d1-revenue'</span>, {
+  BUI.chart(<span class="bui-code-green">'#ch-d1-revenue'</span>, {
     <span class="bui-code-blue">type</span>: <span class="bui-code-green">'line'</span>,
     <span class="bui-code-blue">data</span>: {
       <span class="bui-code-blue">labels</span>: [<span class="bui-code-green">'Jan'</span>, <span class="bui-code-green">'Feb'</span>, <span class="bui-code-green">'Mar'</span>, <span class="bui-code-green">'Apr'</span>, <span class="bui-code-green">'May'</span>, <span class="bui-code-green">'Jun'</span>, <span class="bui-code-green">'Jul'</span>, <span class="bui-code-green">'Aug'</span>, <span class="bui-code-green">'Sep'</span>, <span class="bui-code-green">'Oct'</span>, <span class="bui-code-green">'Nov'</span>, <span class="bui-code-green">'Dec'</span>],
@@ -867,7 +868,7 @@ new BasetChart('#ch-d1-traffic', {
     <span class="bui-code-blue">options</span>: { <span class="bui-code-blue">fill</span>: <span class="bui-code-pink">true</span>, <span class="bui-code-blue">smooth</span>: <span class="bui-code-pink">true</span>, <span class="bui-code-blue">format</span>: <span class="bui-code-green">'currency'</span>, <span class="bui-code-blue">showLegend</span>: <span class="bui-code-pink">false</span>, <span class="bui-code-blue">height</span>: 260, <span class="bui-code-blue">ariaLabel</span>: <span class="bui-code-green">'Monthly revenue, last 12 months'</span> }
   });
 
-  <span class="bui-code-pink">new</span> BasetChart(<span class="bui-code-green">'#ch-d1-vs'</span>, {
+  BUI.chart(<span class="bui-code-green">'#ch-d1-vs'</span>, {
     <span class="bui-code-blue">type</span>: <span class="bui-code-green">'bar'</span>,
     <span class="bui-code-blue">data</span>: {
       <span class="bui-code-blue">labels</span>: [<span class="bui-code-green">'Q1'</span>, <span class="bui-code-green">'Q2'</span>, <span class="bui-code-green">'Q3'</span>, <span class="bui-code-green">'Q4'</span>],
@@ -879,7 +880,7 @@ new BasetChart('#ch-d1-traffic', {
     <span class="bui-code-blue">options</span>: { <span class="bui-code-blue">rounded</span>: <span class="bui-code-pink">true</span>, <span class="bui-code-blue">format</span>: { <span class="bui-code-blue">prefix</span>: <span class="bui-code-green">'$'</span>, <span class="bui-code-blue">suffix</span>: <span class="bui-code-green">'k'</span> }, <span class="bui-code-blue">height</span>: 250 }
   });
 
-  <span class="bui-code-pink">new</span> BasetChart(<span class="bui-code-green">'#ch-d1-orders'</span>, {
+  BUI.chart(<span class="bui-code-green">'#ch-d1-orders'</span>, {
     <span class="bui-code-blue">type</span>: <span class="bui-code-green">'bar'</span>,
     <span class="bui-code-blue">data</span>: {
       <span class="bui-code-blue">labels</span>: [<span class="bui-code-green">'Mon'</span>, <span class="bui-code-green">'Tue'</span>, <span class="bui-code-green">'Wed'</span>, <span class="bui-code-green">'Thu'</span>, <span class="bui-code-green">'Fri'</span>, <span class="bui-code-green">'Sat'</span>, <span class="bui-code-green">'Sun'</span>],
@@ -892,7 +893,7 @@ new BasetChart('#ch-d1-traffic', {
     <span class="bui-code-blue">options</span>: { <span class="bui-code-blue">stacked</span>: <span class="bui-code-pink">true</span>, <span class="bui-code-blue">height</span>: 250 }
   });
 
-  <span class="bui-code-pink">new</span> BasetChart(<span class="bui-code-green">'#ch-d1-traffic'</span>, {
+  BUI.chart(<span class="bui-code-green">'#ch-d1-traffic'</span>, {
     <span class="bui-code-blue">type</span>: <span class="bui-code-green">'doughnut'</span>,
     <span class="bui-code-blue">data</span>: {
       <span class="bui-code-blue">labels</span>: [<span class="bui-code-green">'Organic search'</span>, <span class="bui-code-green">'Direct'</span>, <span class="bui-code-green">'Social'</span>, <span class="bui-code-green">'Email'</span>, <span class="bui-code-green">'Referral'</span>],
@@ -929,7 +930,7 @@ new BasetChart('#ch-d1-traffic', {
   </div>
 </div>
 <script>{
-new BasetChart('#ch-d2-visitors', {
+BUI.chart('#ch-d2-visitors', {
   type: 'line',
   data: {
     labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
@@ -941,7 +942,7 @@ new BasetChart('#ch-d2-visitors', {
   options: { smooth: true, height: 250 }
 });
 
-new BasetChart('#ch-d2-growth', {
+BUI.chart('#ch-d2-growth', {
   type: 'area',
   data: {
     labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug'],
@@ -950,7 +951,7 @@ new BasetChart('#ch-d2-growth', {
   options: { smooth: true, showLegend: false, format: 'compact', height: 250 }
 });
 
-new BasetChart('#ch-d2-customers', {
+BUI.chart('#ch-d2-customers', {
   type: 'bar',
   data: {
     labels: ['Egypt', 'Saudi Arabia', 'UAE', 'United States', 'Germany', 'Other'],
@@ -959,7 +960,7 @@ new BasetChart('#ch-d2-customers', {
   options: { horizontal: true, rounded: true, showValues: true, showLegend: false, height: 250 }
 });
 
-new BasetChart('#ch-d2-performance', {
+BUI.chart('#ch-d2-performance', {
   type: 'radar',
   data: {
     labels: ['Speed', 'Uptime', 'Support', 'Security', 'Usability', 'Scale'],
@@ -971,7 +972,7 @@ new BasetChart('#ch-d2-performance', {
   options: { min: 0, max: 100, height: 290 }
 });
 
-new BasetChart('#ch-d2-progress', {
+BUI.chart('#ch-d2-progress', {
   type: 'radial',
   data: {
     labels: ['Design', 'Development', 'Testing', 'Launch'],
@@ -980,7 +981,7 @@ new BasetChart('#ch-d2-progress', {
   options: { height: 270, centerText: { value: '56%', label: 'Done' } }
 });
 
-new BasetChart('#ch-d2-load', {
+BUI.chart('#ch-d2-load', {
   type: 'gauge',
   data: { labels: ['CPU'], datasets: [{ label: 'CPU load', data: [41] }] },
   options: {
@@ -1016,7 +1017,7 @@ new BasetChart('#ch-d2-load', {
   <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
 <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
 <span class="bui-code-pink">&lt;script</span><span class="bui-code-pink">&gt;</span>
-  <span class="bui-code-pink">new</span> BasetChart(<span class="bui-code-green">'#ch-d2-visitors'</span>, {
+  BUI.chart(<span class="bui-code-green">'#ch-d2-visitors'</span>, {
     <span class="bui-code-blue">type</span>: <span class="bui-code-green">'line'</span>,
     <span class="bui-code-blue">data</span>: {
       <span class="bui-code-blue">labels</span>: [<span class="bui-code-green">'Mon'</span>, <span class="bui-code-green">'Tue'</span>, <span class="bui-code-green">'Wed'</span>, <span class="bui-code-green">'Thu'</span>, <span class="bui-code-green">'Fri'</span>, <span class="bui-code-green">'Sat'</span>, <span class="bui-code-green">'Sun'</span>],
@@ -1028,7 +1029,7 @@ new BasetChart('#ch-d2-load', {
     <span class="bui-code-blue">options</span>: { <span class="bui-code-blue">smooth</span>: <span class="bui-code-pink">true</span>, <span class="bui-code-blue">height</span>: 250 }
   });
 
-  <span class="bui-code-pink">new</span> BasetChart(<span class="bui-code-green">'#ch-d2-growth'</span>, {
+  BUI.chart(<span class="bui-code-green">'#ch-d2-growth'</span>, {
     <span class="bui-code-blue">type</span>: <span class="bui-code-green">'area'</span>,
     <span class="bui-code-blue">data</span>: {
       <span class="bui-code-blue">labels</span>: [<span class="bui-code-green">'Jan'</span>, <span class="bui-code-green">'Feb'</span>, <span class="bui-code-green">'Mar'</span>, <span class="bui-code-green">'Apr'</span>, <span class="bui-code-green">'May'</span>, <span class="bui-code-green">'Jun'</span>, <span class="bui-code-green">'Jul'</span>, <span class="bui-code-green">'Aug'</span>],
@@ -1037,7 +1038,7 @@ new BasetChart('#ch-d2-load', {
     <span class="bui-code-blue">options</span>: { <span class="bui-code-blue">smooth</span>: <span class="bui-code-pink">true</span>, <span class="bui-code-blue">showLegend</span>: <span class="bui-code-pink">false</span>, <span class="bui-code-blue">format</span>: <span class="bui-code-green">'compact'</span>, <span class="bui-code-blue">height</span>: 250 }
   });
 
-  <span class="bui-code-pink">new</span> BasetChart(<span class="bui-code-green">'#ch-d2-customers'</span>, {
+  BUI.chart(<span class="bui-code-green">'#ch-d2-customers'</span>, {
     <span class="bui-code-blue">type</span>: <span class="bui-code-green">'bar'</span>,
     <span class="bui-code-blue">data</span>: {
       <span class="bui-code-blue">labels</span>: [<span class="bui-code-green">'Egypt'</span>, <span class="bui-code-green">'Saudi Arabia'</span>, <span class="bui-code-green">'UAE'</span>, <span class="bui-code-green">'United States'</span>, <span class="bui-code-green">'Germany'</span>, <span class="bui-code-green">'Other'</span>],
@@ -1046,7 +1047,7 @@ new BasetChart('#ch-d2-load', {
     <span class="bui-code-blue">options</span>: { <span class="bui-code-blue">horizontal</span>: <span class="bui-code-pink">true</span>, <span class="bui-code-blue">rounded</span>: <span class="bui-code-pink">true</span>, <span class="bui-code-blue">showValues</span>: <span class="bui-code-pink">true</span>, <span class="bui-code-blue">showLegend</span>: <span class="bui-code-pink">false</span>, <span class="bui-code-blue">height</span>: 250 }
   });
 
-  <span class="bui-code-pink">new</span> BasetChart(<span class="bui-code-green">'#ch-d2-performance'</span>, {
+  BUI.chart(<span class="bui-code-green">'#ch-d2-performance'</span>, {
     <span class="bui-code-blue">type</span>: <span class="bui-code-green">'radar'</span>,
     <span class="bui-code-blue">data</span>: {
       <span class="bui-code-blue">labels</span>: [<span class="bui-code-green">'Speed'</span>, <span class="bui-code-green">'Uptime'</span>, <span class="bui-code-green">'Support'</span>, <span class="bui-code-green">'Security'</span>, <span class="bui-code-green">'Usability'</span>, <span class="bui-code-green">'Scale'</span>],
@@ -1058,7 +1059,7 @@ new BasetChart('#ch-d2-load', {
     <span class="bui-code-blue">options</span>: { <span class="bui-code-blue">min</span>: 0, <span class="bui-code-blue">max</span>: 100, <span class="bui-code-blue">height</span>: 290 }
   });
 
-  <span class="bui-code-pink">new</span> BasetChart(<span class="bui-code-green">'#ch-d2-progress'</span>, {
+  BUI.chart(<span class="bui-code-green">'#ch-d2-progress'</span>, {
     <span class="bui-code-blue">type</span>: <span class="bui-code-green">'radial'</span>,
     <span class="bui-code-blue">data</span>: {
       <span class="bui-code-blue">labels</span>: [<span class="bui-code-green">'Design'</span>, <span class="bui-code-green">'Development'</span>, <span class="bui-code-green">'Testing'</span>, <span class="bui-code-green">'Launch'</span>],
@@ -1067,7 +1068,7 @@ new BasetChart('#ch-d2-load', {
     <span class="bui-code-blue">options</span>: { <span class="bui-code-blue">height</span>: 270, <span class="bui-code-blue">centerText</span>: { <span class="bui-code-blue">value</span>: <span class="bui-code-green">'56%'</span>, <span class="bui-code-blue">label</span>: <span class="bui-code-green">'Done'</span> } }
   });
 
-  <span class="bui-code-pink">new</span> BasetChart(<span class="bui-code-green">'#ch-d2-load'</span>, {
+  BUI.chart(<span class="bui-code-green">'#ch-d2-load'</span>, {
     <span class="bui-code-blue">type</span>: <span class="bui-code-green">'gauge'</span>,
     <span class="bui-code-blue">data</span>: { <span class="bui-code-blue">labels</span>: [<span class="bui-code-green">'CPU'</span>], <span class="bui-code-blue">datasets</span>: [{ <span class="bui-code-blue">label</span>: <span class="bui-code-green">'CPU load'</span>, <span class="bui-code-blue">data</span>: [41] }] },
     <span class="bui-code-blue">options</span>: {
@@ -1097,7 +1098,7 @@ new BasetChart('#ch-d2-load', {
 </div>
 <div id="ch-pg-chart"></div>
 <script>{
-const chart = new BasetChart('#ch-pg-chart', {
+const chart = BUI.chart('#ch-pg-chart', {
   type: 'line',
   data: {
     labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
@@ -1145,7 +1146,7 @@ document.querySelectorAll('#ch-pg-opts [data-opt]').forEach((button) => {
 <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
 <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"ch-pg-chart"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
 <span class="bui-code-pink">&lt;script</span><span class="bui-code-pink">&gt;</span>
-  <span class="bui-code-pink">const</span> chart = <span class="bui-code-pink">new</span> BasetChart(<span class="bui-code-green">'#ch-pg-chart'</span>, {
+  <span class="bui-code-pink">const</span> chart = BUI.chart(<span class="bui-code-green">'#ch-pg-chart'</span>, {
     <span class="bui-code-blue">type</span>: <span class="bui-code-green">'line'</span>,
     <span class="bui-code-blue">data</span>: {
       <span class="bui-code-blue">labels</span>: [<span class="bui-code-green">'Jan'</span>, <span class="bui-code-green">'Feb'</span>, <span class="bui-code-green">'Mar'</span>, <span class="bui-code-green">'Apr'</span>, <span class="bui-code-green">'May'</span>, <span class="bui-code-green">'Jun'</span>],
@@ -1183,7 +1184,7 @@ document.querySelectorAll('#ch-pg-opts [data-opt]').forEach((button) => {
 </div>
 <div id="ch-colors-chart"></div>
 <script>{
-const chart = new BasetChart('#ch-colors-chart', {
+const chart = BUI.chart('#ch-colors-chart', {
   type: 'bar',
   data: {
     labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'],
@@ -1215,7 +1216,7 @@ document.querySelectorAll('#ch-colors-tools [data-palette]').forEach((button) =>
 <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
 <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"ch-colors-chart"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
 <span class="bui-code-pink">&lt;script</span><span class="bui-code-pink">&gt;</span>
-  <span class="bui-code-pink">const</span> chart = <span class="bui-code-pink">new</span> BasetChart(<span class="bui-code-green">'#ch-colors-chart'</span>, {
+  <span class="bui-code-pink">const</span> chart = BUI.chart(<span class="bui-code-green">'#ch-colors-chart'</span>, {
     <span class="bui-code-blue">type</span>: <span class="bui-code-green">'bar'</span>,
     <span class="bui-code-blue">data</span>: {
       <span class="bui-code-blue">labels</span>: [<span class="bui-code-green">'Mon'</span>, <span class="bui-code-green">'Tue'</span>, <span class="bui-code-green">'Wed'</span>, <span class="bui-code-green">'Thu'</span>, <span class="bui-code-green">'Fri'</span>],
@@ -1249,7 +1250,7 @@ document.querySelectorAll('#ch-colors-tools [data-palette]').forEach((button) =>
 </div>
 <div id="ch-format-chart"></div>
 <script>{
-const chart = new BasetChart('#ch-format-chart', {
+const chart = BUI.chart('#ch-format-chart', {
   type: 'bar',
   data: {
     labels: ['Q1', 'Q2', 'Q3', 'Q4'],
@@ -1282,7 +1283,7 @@ document.querySelectorAll('#ch-format-tools [data-format]').forEach((button) => 
 <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
 <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"ch-format-chart"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
 <span class="bui-code-pink">&lt;script</span><span class="bui-code-pink">&gt;</span>
-  <span class="bui-code-pink">const</span> chart = <span class="bui-code-pink">new</span> BasetChart(<span class="bui-code-green">'#ch-format-chart'</span>, {
+  <span class="bui-code-pink">const</span> chart = BUI.chart(<span class="bui-code-green">'#ch-format-chart'</span>, {
     <span class="bui-code-blue">type</span>: <span class="bui-code-green">'bar'</span>,
     <span class="bui-code-blue">data</span>: {
       <span class="bui-code-blue">labels</span>: [<span class="bui-code-green">'Q1'</span>, <span class="bui-code-green">'Q2'</span>, <span class="bui-code-green">'Q3'</span>, <span class="bui-code-green">'Q4'</span>],
@@ -1316,14 +1317,14 @@ const labels = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'];
 const data = [14, 22, 19, 28, 34, 30, 41, 38, 47, 52, 49, 58];
 
 // Short chart, grid lines in both directions, only the last 8 values
-new BasetChart('#ch-size-a', {
+BUI.chart('#ch-size-a', {
   type: 'line',
   data: { labels, datasets: [{ label: 'Sessions', data }] },
   options: { height: 160, showGridX: true, maxPoints: 8, showLegend: false }
 });
 
 // A sparkline: no grid, no labels, no legend, no tooltip
-new BasetChart('#ch-size-b', {
+BUI.chart('#ch-size-b', {
   type: 'area',
   data: { labels, datasets: [{ label: 'Sessions', data, color: '#20ad7c' }] },
   options: { height: 160, smooth: true, showGrid: false, showLabels: false, showLegend: false, showTooltip: false }
@@ -1338,14 +1339,14 @@ new BasetChart('#ch-size-b', {
   <span class="bui-code-pink">const</span> data = [14, 22, 19, 28, 34, 30, 41, 38, 47, 52, 49, 58];
 
   <span class="bui-code-muted">// Short chart, grid lines in both directions, only the last 8 values</span>
-  <span class="bui-code-pink">new</span> BasetChart(<span class="bui-code-green">'#ch-size-a'</span>, {
+  BUI.chart(<span class="bui-code-green">'#ch-size-a'</span>, {
     <span class="bui-code-blue">type</span>: <span class="bui-code-green">'line'</span>,
     <span class="bui-code-blue">data</span>: { labels, <span class="bui-code-blue">datasets</span>: [{ <span class="bui-code-blue">label</span>: <span class="bui-code-green">'Sessions'</span>, data }] },
     <span class="bui-code-blue">options</span>: { <span class="bui-code-blue">height</span>: 160, <span class="bui-code-blue">showGridX</span>: <span class="bui-code-pink">true</span>, <span class="bui-code-blue">maxPoints</span>: 8, <span class="bui-code-blue">showLegend</span>: <span class="bui-code-pink">false</span> }
   });
 
   <span class="bui-code-muted">// A sparkline: no grid, no labels, no legend, no tooltip</span>
-  <span class="bui-code-pink">new</span> BasetChart(<span class="bui-code-green">'#ch-size-b'</span>, {
+  BUI.chart(<span class="bui-code-green">'#ch-size-b'</span>, {
     <span class="bui-code-blue">type</span>: <span class="bui-code-green">'area'</span>,
     <span class="bui-code-blue">data</span>: { labels, <span class="bui-code-blue">datasets</span>: [{ <span class="bui-code-blue">label</span>: <span class="bui-code-green">'Sessions'</span>, data, <span class="bui-code-blue">color</span>: <span class="bui-code-green">'#20ad7c'</span> }] },
     <span class="bui-code-blue">options</span>: { <span class="bui-code-blue">height</span>: 160, <span class="bui-code-blue">smooth</span>: <span class="bui-code-pink">true</span>, <span class="bui-code-blue">showGrid</span>: <span class="bui-code-pink">false</span>, <span class="bui-code-blue">showLabels</span>: <span class="bui-code-pink">false</span>, <span class="bui-code-blue">showLegend</span>: <span class="bui-code-pink">false</span>, <span class="bui-code-blue">showTooltip</span>: <span class="bui-code-pink">false</span> }
@@ -1360,20 +1361,20 @@ new BasetChart('#ch-size-b', {
 </div>
 <script>{
 // 1. No data
-new BasetChart('#ch-empty-a', { type: 'bar', data: { labels: [], datasets: [] }, options: { height: 160, emptyText: 'No orders yet' } });
+BUI.chart('#ch-empty-a', { type: 'bar', data: { labels: [], datasets: [] }, options: { height: 160, emptyText: 'No orders yet' } });
 
 // 2. Invalid values: "n/a", NaN and null are ignored, the number "35" is read as 35
-new BasetChart('#ch-empty-b', {
+BUI.chart('#ch-empty-b', {
   type: 'line',
   data: { labels: ['A', 'B', 'C', 'D', 'E', 'F'], datasets: [{ label: 'Mixed input', data: [12, 'n/a', 24, NaN, '35', 30] }] },
   options: { height: 160, points: true, showLegend: false }
 });
 
 // 3. A pie where nothing can be drawn (zero and negative values)
-new BasetChart('#ch-empty-c', { type: 'pie', data: { labels: ['A', 'B'], datasets: [{ label: 'x', data: [0, -4] }] }, options: { height: 160 } });
+BUI.chart('#ch-empty-c', { type: 'pie', data: { labels: ['A', 'B'], datasets: [{ label: 'x', data: [0, -4] }] }, options: { height: 160 } });
 
 // 4. Unknown type
-new BasetChart('#ch-empty-d', { type: 'donut', data: { labels: ['A'], datasets: [{ label: 'x', data: [1] }] }, options: { height: 160 } });
+BUI.chart('#ch-empty-d', { type: 'donut', data: { labels: ['A'], datasets: [{ label: 'x', data: [1] }] }, options: { height: 160 } });
 }</script>
 </div><div class="bui-demo-code">A chart never throws on bad input. No data shows a message; values that are not numbers are skipped (the line breaks there); an unknown type says so; a missing container is reported in the console.</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-row"</span><span class="bui-code-pink">&gt;</span>
   <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-12 bui-col-lg-6"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"ch-empty-a"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
@@ -1383,20 +1384,20 @@ new BasetChart('#ch-empty-d', { type: 'donut', data: { labels: ['A'], datasets: 
 <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
 <span class="bui-code-pink">&lt;script</span><span class="bui-code-pink">&gt;</span>
   <span class="bui-code-muted">// 1. No data</span>
-  <span class="bui-code-pink">new</span> BasetChart(<span class="bui-code-green">'#ch-empty-a'</span>, { <span class="bui-code-blue">type</span>: <span class="bui-code-green">'bar'</span>, <span class="bui-code-blue">data</span>: { <span class="bui-code-blue">labels</span>: [], <span class="bui-code-blue">datasets</span>: [] }, <span class="bui-code-blue">options</span>: { <span class="bui-code-blue">height</span>: 160, <span class="bui-code-blue">emptyText</span>: <span class="bui-code-green">'No orders yet'</span> } });
+  BUI.chart(<span class="bui-code-green">'#ch-empty-a'</span>, { <span class="bui-code-blue">type</span>: <span class="bui-code-green">'bar'</span>, <span class="bui-code-blue">data</span>: { <span class="bui-code-blue">labels</span>: [], <span class="bui-code-blue">datasets</span>: [] }, <span class="bui-code-blue">options</span>: { <span class="bui-code-blue">height</span>: 160, <span class="bui-code-blue">emptyText</span>: <span class="bui-code-green">'No orders yet'</span> } });
 
   <span class="bui-code-muted">// 2. Invalid values: "n/a", NaN and null are ignored, the number "35" is read as 35</span>
-  <span class="bui-code-pink">new</span> BasetChart(<span class="bui-code-green">'#ch-empty-b'</span>, {
+  BUI.chart(<span class="bui-code-green">'#ch-empty-b'</span>, {
     <span class="bui-code-blue">type</span>: <span class="bui-code-green">'line'</span>,
     <span class="bui-code-blue">data</span>: { <span class="bui-code-blue">labels</span>: [<span class="bui-code-green">'A'</span>, <span class="bui-code-green">'B'</span>, <span class="bui-code-green">'C'</span>, <span class="bui-code-green">'D'</span>, <span class="bui-code-green">'E'</span>, <span class="bui-code-green">'F'</span>], <span class="bui-code-blue">datasets</span>: [{ <span class="bui-code-blue">label</span>: <span class="bui-code-green">'Mixed input'</span>, <span class="bui-code-blue">data</span>: [12, <span class="bui-code-green">'n/a'</span>, 24, NaN, <span class="bui-code-green">'35'</span>, 30] }] },
     <span class="bui-code-blue">options</span>: { <span class="bui-code-blue">height</span>: 160, <span class="bui-code-blue">points</span>: <span class="bui-code-pink">true</span>, <span class="bui-code-blue">showLegend</span>: <span class="bui-code-pink">false</span> }
   });
 
   <span class="bui-code-muted">// 3. A pie where nothing can be drawn (zero and negative values)</span>
-  <span class="bui-code-pink">new</span> BasetChart(<span class="bui-code-green">'#ch-empty-c'</span>, { <span class="bui-code-blue">type</span>: <span class="bui-code-green">'pie'</span>, <span class="bui-code-blue">data</span>: { <span class="bui-code-blue">labels</span>: [<span class="bui-code-green">'A'</span>, <span class="bui-code-green">'B'</span>], <span class="bui-code-blue">datasets</span>: [{ <span class="bui-code-blue">label</span>: <span class="bui-code-green">'x'</span>, <span class="bui-code-blue">data</span>: [0, -4] }] }, <span class="bui-code-blue">options</span>: { <span class="bui-code-blue">height</span>: 160 } });
+  BUI.chart(<span class="bui-code-green">'#ch-empty-c'</span>, { <span class="bui-code-blue">type</span>: <span class="bui-code-green">'pie'</span>, <span class="bui-code-blue">data</span>: { <span class="bui-code-blue">labels</span>: [<span class="bui-code-green">'A'</span>, <span class="bui-code-green">'B'</span>], <span class="bui-code-blue">datasets</span>: [{ <span class="bui-code-blue">label</span>: <span class="bui-code-green">'x'</span>, <span class="bui-code-blue">data</span>: [0, -4] }] }, <span class="bui-code-blue">options</span>: { <span class="bui-code-blue">height</span>: 160 } });
 
   <span class="bui-code-muted">// 4. Unknown type</span>
-  <span class="bui-code-pink">new</span> BasetChart(<span class="bui-code-green">'#ch-empty-d'</span>, { <span class="bui-code-blue">type</span>: <span class="bui-code-green">'donut'</span>, <span class="bui-code-blue">data</span>: { <span class="bui-code-blue">labels</span>: [<span class="bui-code-green">'A'</span>], <span class="bui-code-blue">datasets</span>: [{ <span class="bui-code-blue">label</span>: <span class="bui-code-green">'x'</span>, <span class="bui-code-blue">data</span>: [1] }] }, <span class="bui-code-blue">options</span>: { <span class="bui-code-blue">height</span>: 160 } });
+  BUI.chart(<span class="bui-code-green">'#ch-empty-d'</span>, { <span class="bui-code-blue">type</span>: <span class="bui-code-green">'donut'</span>, <span class="bui-code-blue">data</span>: { <span class="bui-code-blue">labels</span>: [<span class="bui-code-green">'A'</span>], <span class="bui-code-blue">datasets</span>: [{ <span class="bui-code-blue">label</span>: <span class="bui-code-green">'x'</span>, <span class="bui-code-blue">data</span>: [1] }] }, <span class="bui-code-blue">options</span>: { <span class="bui-code-blue">height</span>: 160 } });
 <span class="bui-code-pink">&lt;/script</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
 <h3 id="animations" style="margin:34px 0 14px;font-family:var(--bui-font-heading);font-size:18px;letter-spacing:-.4px">Animations</h3><p class="bui-doc-note">Seven drawing styles and six easings. <code>animationStyle</code> decides how the chart appears the first time (and when you call <code>replay()</code>); <code>update()</code> always morphs smoothly from the old values to the new ones. Everything is skipped for visitors who prefer reduced motion. To try styles with your own options and copy the code, use the <a href="../customize/chart-playground.html">Chart playground</a>.</p>
 <div style="overflow-x:auto"><table class="bui-dir-table"><thead><tr><th><code>animationStyle</code></th><th>What it does</th><th>Best for</th></tr></thead><tbody><tr><td><code>grow</code> (default)</td><td>Bars rise from the baseline, lines grow from it, slices and rings sweep around</td><td>Any chart</td></tr><tr><td><code>rise</code></td><td>Like grow, but item by item: left to right (right to left in RTL)</td><td>Bars and points</td></tr><tr><td><code>fade</code></td><td>The finished chart fades in</td><td>Quiet dashboards</td></tr><tr><td><code>slide</code></td><td>The finished chart slides up while it fades in</td><td>Cards that appear on load</td></tr><tr><td><code>zoom</code></td><td>The finished chart scales up from the center</td><td>Pie, doughnut and gauge</td></tr><tr><td><code>reveal</code></td><td>A wipe from the start side to the end side</td><td>Time series</td></tr><tr><td><code>draw</code></td><td>Lines are drawn along their path, then areas and points appear (bars still grow)</td><td>Line, area and mixed charts</td></tr></tbody></table></div>
@@ -1420,7 +1421,7 @@ new BasetChart('#ch-empty-d', { type: 'donut', data: { labels: ['A'], datasets: 
 </div>
 <div id="ch-at-chart"></div>
 <script>{
-const chart = new BasetChart('#ch-at-chart', {
+const chart = BUI.chart('#ch-at-chart', {
   type: 'line',
   data: {
     labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug'],
@@ -1466,7 +1467,7 @@ document.querySelector('#ch-at-replay').addEventListener('click', () => chart.re
 <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
 <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"ch-at-chart"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
 <span class="bui-code-pink">&lt;script</span><span class="bui-code-pink">&gt;</span>
-  <span class="bui-code-pink">const</span> chart = <span class="bui-code-pink">new</span> BasetChart(<span class="bui-code-green">'#ch-at-chart'</span>, {
+  <span class="bui-code-pink">const</span> chart = BUI.chart(<span class="bui-code-green">'#ch-at-chart'</span>, {
     <span class="bui-code-blue">type</span>: <span class="bui-code-green">'line'</span>,
     <span class="bui-code-blue">data</span>: {
       <span class="bui-code-blue">labels</span>: [<span class="bui-code-green">'Jan'</span>, <span class="bui-code-green">'Feb'</span>, <span class="bui-code-green">'Mar'</span>, <span class="bui-code-green">'Apr'</span>, <span class="bui-code-green">'May'</span>, <span class="bui-code-green">'Jun'</span>, <span class="bui-code-green">'Jul'</span>, <span class="bui-code-green">'Aug'</span>],
@@ -1504,7 +1505,7 @@ const charts = styles.map((style) => {
   card.className = 'bui-col-12 bui-col-lg-6 bui-chart-card';
   card.innerHTML = '<div class="bui-chart-card-head"><h4 class="bui-chart-card-title">' + style + '</h4></div><div></div>';
   grid.append(card);
-  return new BasetChart(card.lastElementChild, {
+  return BUI.chart(card.lastElementChild, {
     type: style === 'draw' ? 'line' : 'bar',    // draw needs a line
     data: { labels: ['A', 'B', 'C', 'D', 'E', 'F'], datasets: [{ label: 'Value', data: [34, 52, 41, 68, 57, 75] }] },
     options: { animation: style !== 'none', animationStyle: style, rounded: true, fill: true, showLegend: false, height: 170, duration: 1000 }
@@ -1523,7 +1524,7 @@ document.querySelector('#ch-ag-replay').addEventListener('click', () => charts.f
     card.className = <span class="bui-code-green">'bui-col-12 bui-col-lg-6 bui-chart-card'</span>;
     card.innerHTML = '<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-chart-card-head"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;h4</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-chart-card-title"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-green">' + style + '</span><span class="bui-code-pink">&lt;/h4</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;div</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>';
     grid.append(card);
-    <span class="bui-code-pink">return</span> <span class="bui-code-pink">new</span> BasetChart(card.lastElementChild, {
+    <span class="bui-code-pink">return</span> BUI.chart(card.lastElementChild, {
       <span class="bui-code-blue">type</span>: style === <span class="bui-code-green">'draw'</span> ? <span class="bui-code-green">'line'</span> : <span class="bui-code-green">'bar'</span>,    <span class="bui-code-muted">// draw needs a line</span>
       <span class="bui-code-blue">data</span>: { <span class="bui-code-blue">labels</span>: [<span class="bui-code-green">'A'</span>, <span class="bui-code-green">'B'</span>, <span class="bui-code-green">'C'</span>, <span class="bui-code-green">'D'</span>, <span class="bui-code-green">'E'</span>, <span class="bui-code-green">'F'</span>], <span class="bui-code-blue">datasets</span>: [{ <span class="bui-code-blue">label</span>: <span class="bui-code-green">'Value'</span>, <span class="bui-code-blue">data</span>: [34, 52, 41, 68, 57, 75] }] },
       <span class="bui-code-blue">options</span>: { <span class="bui-code-blue">animation</span>: style !== <span class="bui-code-green">'none'</span>, <span class="bui-code-blue">animationStyle</span>: style, <span class="bui-code-blue">rounded</span>: <span class="bui-code-pink">true</span>, <span class="bui-code-blue">fill</span>: <span class="bui-code-pink">true</span>, <span class="bui-code-blue">showLegend</span>: <span class="bui-code-pink">false</span>, <span class="bui-code-blue">height</span>: 170, <span class="bui-code-blue">duration</span>: 1000 }
@@ -1533,7 +1534,7 @@ document.querySelector('#ch-ag-replay').addEventListener('click', () => charts.f
   document.querySelector(<span class="bui-code-green">'#ch-ag-replay'</span>).addEventListener(<span class="bui-code-green">'click'</span>, () =&gt; charts.forEach((chart) =&gt; chart.replay()));
 <span class="bui-code-pink">&lt;/script</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
 <h3 id="api" style="margin:34px 0 14px;font-family:var(--bui-font-heading);font-size:18px;letter-spacing:-.4px">JavaScript API</h3><p class="bui-doc-note">The constructor takes a selector or an element. Calling it again on the same element replaces the old chart. Methods return the chart, so they can be chained.</p>
-<div style="overflow-x:auto"><table class="bui-dir-table"><thead><tr><th>Method</th><th>What it does</th></tr></thead><tbody><tr><td><code>new BasetChart(target, { type, data, options })</code></td><td>Creates a chart. <code>target</code> is a selector or an element.</td></tr><tr><td><code>chart.update(data)</code></td><td>Replaces labels and/or datasets, e.g. <code>{ labels, datasets }</code>. Only what changed is animated. Also accepts a plain array of numbers for the first dataset.</td></tr><tr><td><code>chart.setOptions(options)</code></td><td>Merges options. May include <code>type</code> to change the chart type.</td></tr><tr><td><code>chart.setColors(array | null)</code></td><td>Sets the palette. <code>null</code> returns to the default palette.</td></tr><tr><td><code>chart.toggle(index, visible?)</code></td><td>Shows or hides a series (a slice, for pie and doughnut). Without <code>visible</code> it flips the state, like clicking the legend.</td></tr><tr><td><code>chart.replay()</code></td><td>Plays the first animation again, with the current <code>animationStyle</code>, <code>easing</code> and <code>duration</code>.</td></tr><tr><td><code>chart.resize()</code></td><td>Redraws at the current size. Needed only if you resize the container in a way the browser does not report.</td></tr><tr><td><code>chart.destroy()</code></td><td>Removes the chart, its listeners and its observers. The container stays.</td></tr><tr><td><code>BUI.chart.init(root)</code> · <code>BUI.chart.get(el)</code></td><td>Creates charts for every <code>[data-bui-chart]</code> inside <code>root</code>; returns the chart of an element (or <code>null</code>).</td></tr></tbody></table></div>
+<div style="overflow-x:auto"><table class="bui-dir-table"><thead><tr><th>Method</th><th>What it does</th></tr></thead><tbody><tr><td><code>BUI.chart(target, { type, data, options })</code></td><td>Creates a chart. <code>target</code> is a selector or an element.</td></tr><tr><td><code>chart.update(data)</code></td><td>Replaces labels and/or datasets, e.g. <code>{ labels, datasets }</code>. Only what changed is animated. Also accepts a plain array of numbers for the first dataset.</td></tr><tr><td><code>chart.setOptions(options)</code></td><td>Merges options. May include <code>type</code> to change the chart type.</td></tr><tr><td><code>chart.setColors(array | null)</code></td><td>Sets the palette. <code>null</code> returns to the default palette.</td></tr><tr><td><code>chart.toggle(index, visible?)</code></td><td>Shows or hides a series (a slice, for pie and doughnut). Without <code>visible</code> it flips the state, like clicking the legend.</td></tr><tr><td><code>chart.replay()</code></td><td>Plays the first animation again, with the current <code>animationStyle</code>, <code>easing</code> and <code>duration</code>.</td></tr><tr><td><code>chart.resize()</code></td><td>Redraws at the current size. Needed only if you resize the container in a way the browser does not report.</td></tr><tr><td><code>chart.destroy()</code></td><td>Removes the chart, its listeners and its observers. The container stays.</td></tr><tr><td><code>BUI.chart.init(root)</code> · <code>BUI.chart.get(el)</code></td><td>Creates charts for every <code>[data-bui-chart]</code> inside <code>root</code>; returns the chart of an element (or <code>null</code>).</td></tr></tbody></table></div>
 <div style="overflow-x:auto"><table class="bui-dir-table"><thead><tr><th>Event (on the container)</th><th><code>detail</code></th></tr></thead><tbody><tr><td><code>bui:chart-render</code></td><td><code>{ chart }</code> — after every draw, when the animation has finished</td></tr><tr><td><code>bui:chart-click</code></td><td><code>{ chart, index, label, point }</code> — a click on a bar, point, slice or ring</td></tr></tbody></table></div>
 <article class="bui-demo-card" id="ch-api"><div class="bui-demo-title">Methods and events <span>update · setOptions · toggle · destroy · events</span></div><div class="bui-demo-content">
 <div class="bui-chart-tools" id="ch-api-tools">
@@ -1551,7 +1552,7 @@ const log = (text) => { document.querySelector('#ch-api-log').textContent = text
 let chart, smooth = false;
 
 const create = () => {
-  chart = new BasetChart(target, {
+  chart = BUI.chart(target, {
     type: 'line',
     data: {
       labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
@@ -1595,7 +1596,7 @@ document.querySelector('#ch-api-tools').addEventListener('click', (e) => {
   <span class="bui-code-pink">let</span> chart, smooth = <span class="bui-code-pink">false</span>;
 
   <span class="bui-code-pink">const</span> create = () =&gt; {
-    chart = <span class="bui-code-pink">new</span> BasetChart(target, {
+    chart = BUI.chart(target, {
       <span class="bui-code-blue">type</span>: <span class="bui-code-green">'line'</span>,
       <span class="bui-code-blue">data</span>: {
         <span class="bui-code-blue">labels</span>: [<span class="bui-code-green">'Mon'</span>, <span class="bui-code-green">'Tue'</span>, <span class="bui-code-green">'Wed'</span>, <span class="bui-code-green">'Thu'</span>, <span class="bui-code-green">'Fri'</span>, <span class="bui-code-green">'Sat'</span>, <span class="bui-code-green">'Sun'</span>],
@@ -1639,7 +1640,7 @@ const labels = Array.from({ length: 12 }, (_, i) => String(i + 1));
 const values = [118, 124, 131, 127, 139, 146, 141, 152, 148, 160, 155, 163];
 let next = 13, timer = null;
 
-const chart = new BasetChart('#ch-live-chart', {
+const chart = BUI.chart('#ch-live-chart', {
   type: 'area',
   data: { labels, datasets: [{ label: 'Requests / s', data: values }] },
   options: { smooth: true, maxPoints: 12, duration: 400, height: 240, showLegend: false }
@@ -1677,7 +1678,7 @@ document.querySelector('#ch-live-tools').addEventListener('click', (e) => {
   <span class="bui-code-pink">const</span> values = [118, 124, 131, 127, 139, 146, 141, 152, 148, 160, 155, 163];
   <span class="bui-code-pink">let</span> next = 13, timer = <span class="bui-code-pink">null</span>;
 
-  <span class="bui-code-pink">const</span> chart = <span class="bui-code-pink">new</span> BasetChart(<span class="bui-code-green">'#ch-live-chart'</span>, {
+  <span class="bui-code-pink">const</span> chart = BUI.chart(<span class="bui-code-green">'#ch-live-chart'</span>, {
     <span class="bui-code-blue">type</span>: <span class="bui-code-green">'area'</span>,
     <span class="bui-code-blue">data</span>: { labels, <span class="bui-code-blue">datasets</span>: [{ <span class="bui-code-blue">label</span>: <span class="bui-code-green">'Requests / s'</span>, <span class="bui-code-blue">data</span>: values }] },
     <span class="bui-code-blue">options</span>: { <span class="bui-code-blue">smooth</span>: <span class="bui-code-pink">true</span>, <span class="bui-code-blue">maxPoints</span>: 12, <span class="bui-code-blue">duration</span>: 400, <span class="bui-code-blue">height</span>: 240, <span class="bui-code-blue">showLegend</span>: <span class="bui-code-pink">false</span> }
@@ -1720,7 +1721,7 @@ const sets = {
            data: [11800, 12600, 12100, 13900, 14800, 14200, 15600, 16300, 15900, 17400, 18200, 19800] }
 };
 
-const chart = new BasetChart('#ch-data-chart', {
+const chart = BUI.chart('#ch-data-chart', {
   type: 'bar',
   data: { labels: sets.week.labels, datasets: [{ label: 'Sales', data: sets.week.data }] },
   options: { rounded: true, height: 260, showLegend: false }
@@ -1748,7 +1749,7 @@ document.querySelectorAll('#ch-data-tools [data-set]').forEach((button) => {
              <span class="bui-code-blue">data</span>: [11800, 12600, 12100, 13900, 14800, 14200, 15600, 16300, 15900, 17400, 18200, 19800] }
   };
 
-  <span class="bui-code-pink">const</span> chart = <span class="bui-code-pink">new</span> BasetChart(<span class="bui-code-green">'#ch-data-chart'</span>, {
+  <span class="bui-code-pink">const</span> chart = BUI.chart(<span class="bui-code-green">'#ch-data-chart'</span>, {
     <span class="bui-code-blue">type</span>: <span class="bui-code-green">'bar'</span>,
     <span class="bui-code-blue">data</span>: { <span class="bui-code-blue">labels</span>: sets.week.labels, <span class="bui-code-blue">datasets</span>: [{ <span class="bui-code-blue">label</span>: <span class="bui-code-green">'Sales'</span>, <span class="bui-code-blue">data</span>: sets.week.data }] },
     <span class="bui-code-blue">options</span>: { <span class="bui-code-blue">rounded</span>: <span class="bui-code-pink">true</span>, <span class="bui-code-blue">height</span>: 260, <span class="bui-code-blue">showLegend</span>: <span class="bui-code-pink">false</span> }
@@ -1766,7 +1767,7 @@ document.querySelectorAll('#ch-data-tools [data-set]').forEach((button) => {
 <article class="bui-demo-card" id="ch-resize"><div class="bui-demo-title">Resizable container <span>responsive: true</span></div><div class="bui-demo-content">
 <div class="bui-chart-resize"><div id="ch-resize-chart"></div></div>
 <script>{
-new BasetChart('#ch-resize-chart', {
+BUI.chart('#ch-resize-chart', {
   type: 'bar',
   data: {
     labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
@@ -1780,7 +1781,7 @@ new BasetChart('#ch-resize-chart', {
 }</script>
 </div><div class="bui-demo-code">Drag the bottom corner of the dashed frame (on a phone, the frame is already narrow).</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-chart-resize"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"ch-resize-chart"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
 <span class="bui-code-pink">&lt;script</span><span class="bui-code-pink">&gt;</span>
-  <span class="bui-code-pink">new</span> BasetChart(<span class="bui-code-green">'#ch-resize-chart'</span>, {
+  BUI.chart(<span class="bui-code-green">'#ch-resize-chart'</span>, {
     <span class="bui-code-blue">type</span>: <span class="bui-code-green">'bar'</span>,
     <span class="bui-code-blue">data</span>: {
       <span class="bui-code-blue">labels</span>: [<span class="bui-code-green">'Jan'</span>, <span class="bui-code-green">'Feb'</span>, <span class="bui-code-green">'Mar'</span>, <span class="bui-code-green">'Apr'</span>, <span class="bui-code-green">'May'</span>, <span class="bui-code-green">'Jun'</span>, <span class="bui-code-green">'Jul'</span>, <span class="bui-code-green">'Aug'</span>, <span class="bui-code-green">'Sep'</span>, <span class="bui-code-green">'Oct'</span>, <span class="bui-code-green">'Nov'</span>, <span class="bui-code-green">'Dec'</span>],
@@ -1801,25 +1802,25 @@ new BasetChart('#ch-resize-chart', {
   <div dir="rtl" class="bui-col-12 bui-col-lg-6 bui-chart-card"><div id="ch-dir-rtl2"></div></div>
 </div>
 <script>{
-new BasetChart('#ch-dir-ltr', {
+BUI.chart('#ch-dir-ltr', {
   type: 'line',
   data: { labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'], datasets: [{ label: 'Sales', data: [120, 190, 150, 250, 220, 310] }] },
   options: { fill: true, smooth: true, height: 230, showLegend: false }
 });
 
-new BasetChart('#ch-dir-rtl', {
+BUI.chart('#ch-dir-rtl', {
   type: 'line',
   data: { labels: ['يناير', 'فبراير', 'مارس', 'أبريل', 'مايو', 'يونيو'], datasets: [{ label: 'المبيعات', data: [120, 190, 150, 250, 220, 310] }] },
   options: { fill: true, smooth: true, height: 230, showLegend: false, locale: 'ar-EG' }
 });
 
-new BasetChart('#ch-dir-ltr2', {
+BUI.chart('#ch-dir-ltr2', {
   type: 'doughnut',
   data: { labels: ['Mobile', 'Desktop', 'Tablet'], datasets: [{ label: 'Visits', data: [5400, 3200, 800] }] },
   options: { height: 260, centerText: { label: 'Visits' } }
 });
 
-new BasetChart('#ch-dir-rtl2', {
+BUI.chart('#ch-dir-rtl2', {
   type: 'doughnut',
   data: { labels: ['الجوال', 'الحاسوب', 'اللوحي'], datasets: [{ label: 'الزيارات', data: [5400, 3200, 800] }] },
   options: { height: 260, locale: 'ar-EG', centerText: { label: 'الزيارات' } }
@@ -1832,25 +1833,25 @@ new BasetChart('#ch-dir-rtl2', {
   <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">dir</span>=<span class="bui-code-green">"rtl"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-12 bui-col-lg-6 bui-chart-card"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"ch-dir-rtl2"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
 <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
 <span class="bui-code-pink">&lt;script</span><span class="bui-code-pink">&gt;</span>
-  <span class="bui-code-pink">new</span> BasetChart(<span class="bui-code-green">'#ch-dir-ltr'</span>, {
+  BUI.chart(<span class="bui-code-green">'#ch-dir-ltr'</span>, {
     <span class="bui-code-blue">type</span>: <span class="bui-code-green">'line'</span>,
     <span class="bui-code-blue">data</span>: { <span class="bui-code-blue">labels</span>: [<span class="bui-code-green">'Jan'</span>, <span class="bui-code-green">'Feb'</span>, <span class="bui-code-green">'Mar'</span>, <span class="bui-code-green">'Apr'</span>, <span class="bui-code-green">'May'</span>, <span class="bui-code-green">'Jun'</span>], <span class="bui-code-blue">datasets</span>: [{ <span class="bui-code-blue">label</span>: <span class="bui-code-green">'Sales'</span>, <span class="bui-code-blue">data</span>: [120, 190, 150, 250, 220, 310] }] },
     <span class="bui-code-blue">options</span>: { <span class="bui-code-blue">fill</span>: <span class="bui-code-pink">true</span>, <span class="bui-code-blue">smooth</span>: <span class="bui-code-pink">true</span>, <span class="bui-code-blue">height</span>: 230, <span class="bui-code-blue">showLegend</span>: <span class="bui-code-pink">false</span> }
   });
 
-  <span class="bui-code-pink">new</span> BasetChart(<span class="bui-code-green">'#ch-dir-rtl'</span>, {
+  BUI.chart(<span class="bui-code-green">'#ch-dir-rtl'</span>, {
     <span class="bui-code-blue">type</span>: <span class="bui-code-green">'line'</span>,
     <span class="bui-code-blue">data</span>: { <span class="bui-code-blue">labels</span>: [<span class="bui-code-green">'يناير'</span>, <span class="bui-code-green">'فبراير'</span>, <span class="bui-code-green">'مارس'</span>, <span class="bui-code-green">'أبريل'</span>, <span class="bui-code-green">'مايو'</span>, <span class="bui-code-green">'يونيو'</span>], <span class="bui-code-blue">datasets</span>: [{ <span class="bui-code-blue">label</span>: <span class="bui-code-green">'المبيعات'</span>, <span class="bui-code-blue">data</span>: [120, 190, 150, 250, 220, 310] }] },
     <span class="bui-code-blue">options</span>: { <span class="bui-code-blue">fill</span>: <span class="bui-code-pink">true</span>, <span class="bui-code-blue">smooth</span>: <span class="bui-code-pink">true</span>, <span class="bui-code-blue">height</span>: 230, <span class="bui-code-blue">showLegend</span>: <span class="bui-code-pink">false</span>, <span class="bui-code-blue">locale</span>: <span class="bui-code-green">'ar-EG'</span> }
   });
 
-  <span class="bui-code-pink">new</span> BasetChart(<span class="bui-code-green">'#ch-dir-ltr2'</span>, {
+  BUI.chart(<span class="bui-code-green">'#ch-dir-ltr2'</span>, {
     <span class="bui-code-blue">type</span>: <span class="bui-code-green">'doughnut'</span>,
     <span class="bui-code-blue">data</span>: { <span class="bui-code-blue">labels</span>: [<span class="bui-code-green">'Mobile'</span>, <span class="bui-code-green">'Desktop'</span>, <span class="bui-code-green">'Tablet'</span>], <span class="bui-code-blue">datasets</span>: [{ <span class="bui-code-blue">label</span>: <span class="bui-code-green">'Visits'</span>, <span class="bui-code-blue">data</span>: [5400, 3200, 800] }] },
     <span class="bui-code-blue">options</span>: { <span class="bui-code-blue">height</span>: 260, <span class="bui-code-blue">centerText</span>: { <span class="bui-code-blue">label</span>: <span class="bui-code-green">'Visits'</span> } }
   });
 
-  <span class="bui-code-pink">new</span> BasetChart(<span class="bui-code-green">'#ch-dir-rtl2'</span>, {
+  BUI.chart(<span class="bui-code-green">'#ch-dir-rtl2'</span>, {
     <span class="bui-code-blue">type</span>: <span class="bui-code-green">'doughnut'</span>,
     <span class="bui-code-blue">data</span>: { <span class="bui-code-blue">labels</span>: [<span class="bui-code-green">'الجوال'</span>, <span class="bui-code-green">'الحاسوب'</span>, <span class="bui-code-green">'اللوحي'</span>], <span class="bui-code-blue">datasets</span>: [{ <span class="bui-code-blue">label</span>: <span class="bui-code-green">'الزيارات'</span>, <span class="bui-code-blue">data</span>: [5400, 3200, 800] }] },
     <span class="bui-code-blue">options</span>: { <span class="bui-code-blue">height</span>: 260, <span class="bui-code-blue">locale</span>: <span class="bui-code-green">'ar-EG'</span>, <span class="bui-code-blue">centerText</span>: { <span class="bui-code-blue">label</span>: <span class="bui-code-green">'الزيارات'</span> } }
@@ -1876,8 +1877,8 @@ const config = {
   options: { rounded: true, height: 250 }
 };
 
-new BasetChart('#ch-theme-light', config);
-new BasetChart('#ch-theme-dark', config);
+BUI.chart('#ch-theme-light', config);
+BUI.chart('#ch-theme-dark', config);
 }</script>
 </div><div class="bui-demo-code">The same chart configuration in a light and a dark panel, including the legend, tooltip and grid.</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-row"</span><span class="bui-code-pink">&gt;</span>
   <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-12 bui-col-lg-6 bui-chart-card"</span> <span class="bui-code-blue">style</span>=<span class="bui-code-green">"color-scheme:light;background:var(--bui-bg)"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-chart-card-head"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;h4</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-chart-card-title"</span><span class="bui-code-pink">&gt;</span>Light<span class="bui-code-pink">&lt;/h4</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"ch-theme-light"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
@@ -1897,15 +1898,15 @@ new BasetChart('#ch-theme-dark', config);
     <span class="bui-code-blue">options</span>: { <span class="bui-code-blue">rounded</span>: <span class="bui-code-pink">true</span>, <span class="bui-code-blue">height</span>: 250 }
   };
 
-  <span class="bui-code-pink">new</span> BasetChart(<span class="bui-code-green">'#ch-theme-light'</span>, config);
-  <span class="bui-code-pink">new</span> BasetChart(<span class="bui-code-green">'#ch-theme-dark'</span>, config);
+  BUI.chart(<span class="bui-code-green">'#ch-theme-light'</span>, config);
+  BUI.chart(<span class="bui-code-green">'#ch-theme-dark'</span>, config);
 <span class="bui-code-pink">&lt;/script</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
 <h3 id="tokens" style="margin:34px 0 14px;font-family:var(--bui-font-heading);font-size:18px;letter-spacing:-.4px">CSS variables</h3><p class="bui-doc-note">Override any of these on <code>:root</code>, on a class, or on one chart container. They are defined in section 20 of <code>baset-ui.css</code>.</p>
 <div style="overflow-x:auto"><table class="bui-dir-table"><thead><tr><th>Variable</th><th>Default</th><th>Used for</th></tr></thead><tbody><tr><td><code>--bui-chart-1</code> … <code>--bui-chart-8</code></td><td>violet, green, amber, blue, red, slate, light violet, dark green</td><td>The palette, in order</td></tr><tr><td><code>--bui-chart-text</code> · <code>--bui-chart-strong</code></td><td><code>--bui-muted</code> · <code>--bui-ink</code></td><td>Axis text; values and center text</td></tr><tr><td><code>--bui-chart-grid</code> · <code>--bui-chart-axis</code></td><td><code>--bui-line</code> · <code>--bui-input-border</code></td><td>Grid lines; axis and zero line</td></tr><tr><td><code>--bui-chart-surface</code> · <code>--bui-chart-track</code></td><td><code>--bui-surface</code> · <code>--bui-soft</code></td><td>Gaps between slices and the ring around points; empty part of rings and gauges</td></tr><tr><td><code>--bui-chart-font</code> · <code>--bui-chart-font-size</code></td><td><code>--bui-font-body</code> · <code>11px</code></td><td>Chart typography</td></tr><tr><td><code>--bui-chart-line-width</code></td><td><code>2.5px</code></td><td>Thickness of lines</td></tr></tbody></table></div>
 <article class="bui-demo-card" id="ch-tokens"><div class="bui-demo-title">Restyle with CSS only <span>--bui-chart-*</span></div><div class="bui-demo-content">
 <div id="ch-tokens-chart" style="--bui-chart-1:#0ea5e9;--bui-chart-2:#f97316;--bui-chart-grid:transparent;--bui-chart-font-size:12px;--bui-chart-line-width:3.5px"></div>
 <script>{
-new BasetChart('#ch-tokens-chart', {
+BUI.chart('#ch-tokens-chart', {
   type: 'line',
   data: {
     labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
@@ -1919,7 +1920,7 @@ new BasetChart('#ch-tokens-chart', {
 }</script>
 </div><div class="bui-demo-code">A chart with its own palette, grid and font size, set on the container. Nothing is changed in JavaScript.</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"ch-tokens-chart"</span> <span class="bui-code-blue">style</span>=<span class="bui-code-green">"--bui-chart-1:#0ea5e9;--bui-chart-2:#f97316;--bui-chart-grid:transparent;--bui-chart-font-size:12px;--bui-chart-line-width:3.5px"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
 <span class="bui-code-pink">&lt;script</span><span class="bui-code-pink">&gt;</span>
-  <span class="bui-code-pink">new</span> BasetChart(<span class="bui-code-green">'#ch-tokens-chart'</span>, {
+  BUI.chart(<span class="bui-code-green">'#ch-tokens-chart'</span>, {
     <span class="bui-code-blue">type</span>: <span class="bui-code-green">'line'</span>,
     <span class="bui-code-blue">data</span>: {
       <span class="bui-code-blue">labels</span>: [<span class="bui-code-green">'Jan'</span>, <span class="bui-code-green">'Feb'</span>, <span class="bui-code-green">'Mar'</span>, <span class="bui-code-green">'Apr'</span>, <span class="bui-code-green">'May'</span>, <span class="bui-code-green">'Jun'</span>],
@@ -1940,5 +1941,7 @@ new BasetChart('#ch-tokens-chart', {
     </main>
   </div>
   <script src="../assets/js/baset-ui.js"></script>
+  <script src="../assets/js/component-playground.js"></script>
+  <script src="../assets/js/component-playground-configs.js"></script>
 </body>
 </html>

@@ -1,7 +1,7 @@
 /* Baset UI — Calendar & Scheduler (optional, no dependencies)
  *
  *   <div id="calendar"></div>
- *   const cal = new BasetCalendar('#calendar', { view: 'month', events: [...], locale: 'ar', direction: 'rtl' });
+ *   const cal = BUI.calendar('#calendar', { view: 'month', events: [...], locale: 'ar', direction: 'rtl' });
  *
  * Month, week and day views · add / edit / delete in a dialog · all-day events · colors and categories · overlapping events
  * side by side · "+N more" · drag to move · drag an edge to resize · drag on an empty slot to create · touch (long-press) ·
@@ -31,9 +31,11 @@
 (() => {
   'use strict';
   const BUI = (window.BUI = window.BUI || {});
-  if (BUI.Calendar) return;
+  if (BUI.calendar) return;
+  /* BUI.calendar(target, options) creates an instance (new is optional); statics such as BUI.calendar.locales live on the same function */
+  const make = (Cls) => { function f(...args) { return new Cls(...args); } Object.setPrototypeOf(f, Cls); Object.defineProperty(f, 'prototype', { value: Cls.prototype }); f.Class = Cls; return f; };
 
-  /* ---------- Labels: add a language with BasetCalendar.locales.fr = { ... } (missing keys fall back to English) ---------- */
+  /* ---------- Labels: add a language with BUI.calendar.locales.fr = { ... } (missing keys fall back to English) ---------- */
   const locales = {
     en: {
       today: 'Today', month: 'Month', week: 'Week', day: 'Day', allDay: 'All day', more: '+{n} more', prev: 'Previous', next: 'Next',
@@ -116,7 +118,7 @@
   class BasetCalendar {
     constructor(target, options = {}) {
       const root = typeof target === 'string' ? document.querySelector(target) : target;
-      if (!root) throw new Error('BasetCalendar: container not found');
+      if (!root) throw new Error('BUI.calendar: container not found');
       if (instances.has(root)) instances.get(root).destroy();
       instances.set(root, this);
       this.el = root;
@@ -210,7 +212,7 @@
     _norm(raw, base) {
       const r = Object.assign({}, raw);
       const ps = parseDate(r.start);
-      if (!ps) throw new Error('BasetCalendar: an event needs a valid "start"');
+      if (!ps) throw new Error('BUI.calendar: an event needs a valid "start"');
       const dateOnly = typeof r.start === 'string' && /^\d{4}-\d\d-\d\d$/.test(r.start.trim());
       const allDay = r.allDay != null ? !!r.allDay : dateOnly;
       let start, end;
@@ -1028,11 +1030,10 @@
       if (d.buiDirection) o.direction = d.buiDirection;
       if (d.buiFirstDay) o.firstDay = +d.buiFirstDay;
       if (d.buiEditable) o.editable = d.buiEditable !== 'false';
-      if (d.buiEvents) { try { o.events = JSON.parse(d.buiEvents); } catch (e) { console.error('BasetCalendar: data-bui-events is not valid JSON'); } }
+      if (d.buiEvents) { try { o.events = JSON.parse(d.buiEvents); } catch (e) { console.error('BUI.calendar: data-bui-events is not valid JSON'); } }
       new BasetCalendar(n, o);
     });
   };
-  window.BasetCalendar = BasetCalendar;
-  BUI.Calendar = BasetCalendar;
+  BUI.calendar = make(BasetCalendar);
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', () => BasetCalendar.init()); else BasetCalendar.init();
 })();

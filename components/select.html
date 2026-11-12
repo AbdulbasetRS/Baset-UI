@@ -50,6 +50,7 @@
     </aside>
     <main class="bui-main">
       <header class="bui-topbar"><div class="bui-breadcrumb"><a href="../index.html">Documentation</a> <span>/</span> Components <span>/</span> Select &amp; dropdown</div><div class="bui-top-actions"><span class="bui-pill">Vanilla CSS + JS</span><button class="bui-icon-btn bui-dir-btn" id="dirToggle" type="button" aria-label="Toggle direction (RTL / LTR)" title="Toggle direction (RTL / LTR)">RTL</button><button class="bui-icon-btn" id="themeToggle" type="button" aria-label="Toggle theme">☼</button></div></header>
+      <section class="bui-section" id="customize"><div class="bui-section-heading"><div><span class="bui-eyebrow">CUSTOMIZE</span><h2>Make it yours</h2><p>Change the options, watch the select and dropdown menu update, then copy the code. Switch theme and direction to check light, dark, LTR and RTL.</p></div></div><div data-bui-playground="select"></div></section>
       <section class="bui-section" id="select"><div class="bui-section-heading"><div><span class="bui-eyebrow">03 / COMPONENTS</span><h2>Select &amp; dropdown</h2><p>A custom select menu with search, avatars and options loaded from an API with infinite scroll, and a dropdown menu for actions. Both open below or above automatically.</p></div><span class="bui-step-count">39 examples</span></div>
 <h3 style="margin:34px 0 14px;font-family:var(--bui-font-heading);font-size:18px;letter-spacing:-.4px">Select menu</h3><p class="bui-doc-note">Every <code>&lt;select&gt;</code> that uses <code>.bui-float-input</code>, <code>.bui-input</code> or <code>.bui-float-prefix</code> opens a <b>custom menu</b> instead of the browser one, with no extra markup. The native <code>&lt;select&gt;</code> stays in the page and stays the source of truth: its value, <code>change</code> event, <code>required</code>, <code>disabled</code>, label and form submit work as before. The menu is built from its <code>&lt;option&gt;</code> items each time it opens, so options added or changed with JavaScript are always up to date. It opens <b>below or above the field automatically</b>, depending on the free space in the window, and it needs <code>baset-ui.js</code>.</p><div class="bui-demo-stack">
 <article class="bui-demo-card" id="sel-basic"><div class="bui-demo-title">Floating select and plain select <span>no extra classes or attributes</span></div><div class="bui-demo-content"><div class="bui-row">
@@ -1195,6 +1196,8 @@ BUI.dropdown.open(toggle);               <span class="bui-code-muted">// also: B
     </main>
   </div>
   <script src="../assets/js/baset-ui.js"></script>
+  <script src="../assets/js/component-playground.js"></script>
+  <script src="../assets/js/component-playground-configs.js"></script>
   <script>
     /* Docs only. 1) "Run" buttons run the code of their card. 2) The placement buttons move an example to a fixed spot
        of the window. 3) A tiny fake server answers /mock-api/* (users.json is the database) so the API examples

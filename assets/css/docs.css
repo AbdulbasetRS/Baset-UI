@@ -387,3 +387,15 @@ h1 em { font-style: normal; color: var(--bui-primary); }
 .bui-cal-docs-stage .bui-net-log { margin-block-start: 12px; max-block-size: 190px; overflow: auto; }
 .bui-cal-docs-stage #cal-week, .bui-cal-docs-stage #cal-drag, .bui-cal-docs-stage #cal-resize, .bui-cal-docs-stage #cal-rtl { --bui-cal-body-h: 520px; }
 #cal-theme.is-green { --bui-cal-today: #1b9369; --bui-cal-select: #e0f4ed; --bui-cal-radius: 1.5rem; }
+
+/* Component playground (documentation only): the "Customize" section at the top of every component page */
+.bui-pg-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 20px; }
+.bui-pg-seg { display: flex; align-items: center; gap: 10px; }
+.bui-pg-seg .bui-gallery-tabs, .bui-pg .bui-tp-chips { margin: 0; }
+.bui-pg-bar-label { color: var(--bui-muted); font: 800 10px var(--bui-font-heading); letter-spacing: 1.2px; text-transform: uppercase; }
+.bui-pg-stage { min-width: 0; min-height: 140px; align-content: center; justify-items: start; }
+.bui-pg-stage.bui-pg-stretch { align-content: start; justify-items: stretch; }
+.bui-pg-stage > * { max-width: 100%; }
+.bui-pg [hidden] { display: none; }
+.bui-pg .bui-code-card { margin: 0; }
+@media (max-width: 1100px) { .bui-pg .bui-tp-main { order: -1; } } /* preview first, controls below, when the layout is one column */

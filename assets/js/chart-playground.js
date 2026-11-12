@@ -3,7 +3,7 @@
  * Needs baset-charts.js. Keeps all state in memory; nothing is stored. */
 (() => {
   const chartEl = document.getElementById('cpChart');
-  if (!chartEl || !window.BasetChart) return;
+  if (!chartEl || !window.BUI?.chart) return;
   const $ = (id) => document.getElementById(id);
   const panel = document.querySelector('.bui-tp-panel');
   const preview = $('cpPreview');
@@ -184,12 +184,12 @@
   }
   function fullCode() {
     const opt = optionsCode('    ');
-    return ['<div id="my-chart"></div>', '<script src="assets/js/baset-charts.js"></script>', '<script>', "  new BasetChart('#my-chart', {", `    type: ${q(state.type)},`,
+    return ['<div id="my-chart"></div>', '<script src="assets/js/baset-charts.js"></script>', '<script>', "  BUI.chart('#my-chart', {", `    type: ${q(state.type)},`,
       dataCode('    ') + (opt ? ',' : ''), ...(opt ? [opt] : []), '  });', '</script>'].join('\n');
   }
   function optionsOnly() {
     const body = optionsCode('') || 'options: {}';
-    return `// pass this as the "options" of new BasetChart(...), or to chart.setOptions({ ... })\n${body.replace(/^options: /, 'const options = ')};`;
+    return `// pass this as the "options" of BUI.chart(...), or to chart.setOptions({ ... })\n${body.replace(/^options: /, 'const options = ')};`;
   }
 
   /* ---------- Syntax colors (same classes the other pages use) ---------- */
@@ -237,7 +237,7 @@
     const data = buildData(), opts = chartOptions();
     if (mode === 'new' || !chart) {
       chart?.destroy();
-      chart = new BasetChart(chartEl, { type: state.type, data, options: opts });
+      chart = BUI.chart(chartEl, { type: state.type, data, options: opts });
     } else if (mode === 'data') { chart.setOptions(opts); chart.update(data); }
     else { chart.setOptions(opts); if (mode === 'replay') chart.replay(); }
     lastKey = dataKey();

@@ -49,11 +49,12 @@
     </aside>
     <main class="bui-main">
       <header class="bui-topbar"><div class="bui-breadcrumb"><a href="../index.html">Documentation</a> <span>/</span> Components <span>/</span> DataTable</div><div class="bui-top-actions"><span class="bui-pill">Vanilla CSS + JS</span><button class="bui-icon-btn bui-dir-btn" id="dirToggle" type="button" aria-label="Toggle direction (RTL / LTR)" title="Toggle direction (RTL / LTR)">RTL</button><button class="bui-icon-btn" id="themeToggle" type="button" aria-label="Toggle theme">☼</button></div></header>
+      <section class="bui-section" id="customize"><div class="bui-section-heading"><div><span class="bui-eyebrow">CUSTOMIZE</span><h2>Make it yours</h2><p>Change the options, watch the data table update, then copy the code. Switch theme and direction to check light, dark, LTR and RTL.</p></div></div><div data-bui-playground="datatable"></div></section>
       <section class="bui-section" id="datatable"><div class="bui-section-heading"><div><span class="bui-eyebrow">15 / COMPONENTS</span><h2>DataTable</h2><p>A complete, dependency-free data grid: pagination, instant search, multi-column sorting, filters, column tools, selection, inline and modal editing, row actions, real Excel and PDF export, responsive columns and card view, server-side processing, English and Arabic, light and dark, LTR and RTL.</p></div><span class="bui-step-count">45 examples</span></div>
 <nav class="bui-dtdoc-toc" aria-label="On this page"><a href="#intro">1. Introduction</a><a href="#install">2. Installation</a><a href="#html-table">3. Basic HTML table</a><a href="#init">4. Basic JavaScript init</a><a href="#complete">5. Complete example: with and without an API</a><a href="#data">6. Data from JavaScript</a><a href="#pagination">7. Pagination</a><a href="#search">8. Instant search</a><a href="#ordering">9. Multi-column ordering</a><a href="#colvis">10. Column visibility</a><a href="#colreorder">11. Column reordering</a><a href="#colresize">12. Column resizing</a><a href="#filters">13. Advanced filtering</a><a href="#builder">14. Search builder</a><a href="#selection">15. Row selection</a><a href="#inline">16. Inline editing</a><a href="#modal">17. Modal editing</a><a href="#actions">18. Row actions</a><a href="#buttons">19. Buttons</a><a href="#copy">20. Copy to clipboard</a><a href="#csv">21. Export CSV (and JSON)</a><a href="#excel">22. Export Excel (.xlsx)</a><a href="#pdf">23. Export PDF</a><a href="#print">24. Print</a><a href="#responsive">25. Responsive tables</a><a href="#cards">26. Mobile card view</a><a href="#ajax">27. AJAX loading</a><a href="#server">28. Server-side processing</a><a href="#laravel">29. Laravel API integration</a><a href="#state">30. State persistence</a><a href="#grouping">31. Row grouping</a><a href="#fixed">32. Fixed header and columns</a><a href="#virtual">33. Virtual scrolling</a><a href="#i18n">34. Internationalization</a><a href="#rtl">35. RTL / LTR</a><a href="#dark">36. Dark mode</a><a href="#themes">37. Custom themes</a><a href="#api">38. JavaScript API</a><a href="#events">39. Events and callbacks</a><a href="#extend">40. Custom extensions</a></nav>
 <div class="bui-demo-stack">
 <h3 id="intro" style="margin:38px 0 12px;font-family:var(--bui-font-heading);font-size:18px;letter-spacing:-.4px"><span class="bui-dtdoc-num">1</span> Introduction</h3>
-<p class="bui-doc-note"><code>BasetDataTable</code> turns an array of objects (or an HTML table, or a JSON API) into an interactive grid. Everything is plain JavaScript and CSS: no jQuery, no CDN, no build step. It follows the Baset UI tokens, so it is light, dark, LTR and RTL out of the box. Every button does what its label says: <b>Excel is a real .xlsx file</b>, <b>PDF is a real PDF file</b>, copy / CSV / JSON / print need nothing else.</p>
+<p class="bui-doc-note"><code>BUI.dataTable</code> turns an array of objects (or an HTML table, or a JSON API) into an interactive grid. Everything is plain JavaScript and CSS: no jQuery, no CDN, no build step. It follows the Baset UI tokens, so it is light, dark, LTR and RTL out of the box. Every button does what its label says: <b>Excel is a real .xlsx file</b>, <b>PDF is a real PDF file</b>, copy / CSV / JSON / print need nothing else.</p>
 <div class="bui-ref-wrap"><table class="bui-ref"><thead><tr><th>Area</th><th>What you get</th></tr></thead><tbody><tr><td>Data</td><td>JS array, HTML table, one-time AJAX, or full server-side processing</td></tr><tr><td>Navigation</td><td>Pagination (5 styles), length menu, page jump, info text, instant and debounced search, per-column search</td></tr><tr><td>Order and filter</td><td>Multi-column sorting, natural / number / date / custom sorting, text / number / date / select / multi-select / boolean filters, AND / OR, search builder</td></tr><tr><td>Columns</td><td>Show / hide, reorder (drag or Alt + arrows), resize, fixed columns and header, widths, state saving</td></tr><tr><td>Rows</td><td>Single / multiple / checkbox / cell selection, bulk actions, inline and modal editing with validation, row actions, grouping, virtual scrolling</td></tr><tr><td>Output</td><td>Copy, CSV, Excel (.xlsx), PDF, JSON, print, with column / row choice, titles, file names, formatting</td></tr><tr><td>Layout</td><td>Responsive column hiding with expandable details, mobile card view, fullscreen, compact / comfortable, striped / bordered / minimal / modern</td></tr><tr><td>Languages</td><td>English and Arabic built in, any language can be added, RTL / LTR automatic</td></tr></tbody></table></div>
 <h3 id="install" style="margin:38px 0 12px;font-family:var(--bui-font-heading);font-size:18px;letter-spacing:-.4px"><span class="bui-dtdoc-num">2</span> Installation</h3>
 <p class="bui-doc-note">Copy two files into your project: the stylesheet you already have (the DataTable styles are <b>section 21 of <code>baset-ui.css</code></b>) and <code>baset-datatable.js</code>. <code>baset-ui.js</code> is optional: the table works without it (it only lends the toast for copy messages). <code>datatable-docs.js</code> is used by this documentation page only; do not ship it.</p>
@@ -63,10 +64,10 @@
 <span class="bui-code-pink">&lt;div</span>  <span class="bui-code-blue">id</span>=<span class="bui-code-green">"users-table"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
 <span class="bui-code-pink">&lt;script</span><span class="bui-code-pink">&gt;</span>
   window.addEventListener(<span class="bui-code-green">'DOMContentLoaded'</span>, () =&gt; {
-    <span class="bui-code-pink">new</span> BasetDataTable(<span class="bui-code-green">'#users-table'</span>, { data: [{ id: 1, name: <span class="bui-code-green">'Sara'</span> }], columns: [{ data: <span class="bui-code-green">'id'</span>, title: <span class="bui-code-green">'ID'</span> }, { data: <span class="bui-code-green">'name'</span>, title: <span class="bui-code-green">'Name'</span> }] });
+    BUI.dataTable(<span class="bui-code-green">'#users-table'</span>, { data: [{ id: 1, name: <span class="bui-code-green">'Sara'</span> }], columns: [{ data: <span class="bui-code-green">'id'</span>, title: <span class="bui-code-green">'ID'</span> }, { data: <span class="bui-code-green">'name'</span>, title: <span class="bui-code-green">'Name'</span> }] });
   });
 <span class="bui-code-pink">&lt;/script</span><span class="bui-code-pink">&gt;</span></code></pre></div>
-<p class="bui-doc-note">Class prefix is <code>bui-dtbl-*</code> (the older <code>bui-dt-*</code> prefix belongs to the date pickers). Nothing is applied globally: every rule is scoped to <code>.bui-dtbl</code>. The instance is also reachable as <code>BUI.DataTable</code>, and <code>BasetDataTable.get("#users-table")</code> returns the instance of an element.</p>
+<p class="bui-doc-note">Class prefix is <code>bui-dtbl-*</code> (the older <code>bui-dt-*</code> prefix belongs to the date pickers). Nothing is applied globally: every rule is scoped to <code>.bui-dtbl</code>. The instance is also reachable as <code>BUI.DataTable</code>, and <code>BUI.dataTable.get("#users-table")</code> returns the instance of an element.</p>
 <h3 id="html-table" style="margin:38px 0 12px;font-family:var(--bui-font-heading);font-size:18px;letter-spacing:-.4px"><span class="bui-dtdoc-num">3</span> Basic HTML table</h3>
 <p class="bui-doc-note">Already have a server-rendered table? Add <code>data-bui-datatable</code> and the table upgrades itself: headers become columns, rows become data. Options can be given as <code>data-*</code> attributes (<code>data-page-length</code>, <code>data-searching</code>, <code>data-ordering</code>, <code>data-pagination</code>, <code>data-responsive</code>, <code>data-striped</code>, <code>data-bordered</code>, <code>data-select</code>, <code>data-variant</code>, <code>data-density</code>, <code>data-buttons</code>, <code>data-locale</code>) and per column on the <code>&lt;th&gt;</code> (<code>data-type</code>, <code>data-orderable</code>, <code>data-searchable</code>, <code>data-visible</code>, <code>data-priority</code>, <code>data-width</code>).</p>
 <article class="bui-demo-card" id="demo-html"><div class="bui-demo-title">Upgrade an existing table <span>data-bui-datatable</span></div><div class="bui-demo-content bui-dtdoc-demo"><table id="d-html" data-bui-datatable data-page-length="5" data-striped="true" data-buttons="csv,excel">
@@ -97,14 +98,14 @@
 <span class="bui-code-pink">&lt;script</span><span class="bui-code-pink">&gt;</span>
 <span class="bui-code-muted">// Nothing to write: the table below upgrades itself when the page loads.</span>
 <span class="bui-code-muted">// To start one yourself (for example after inserting it with JavaScript):</span>
-BasetDataTable.init(document);
+BUI.dataTable.init(document);
 <span class="bui-code-pink">&lt;/script</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
 <h3 id="init" style="margin:38px 0 12px;font-family:var(--bui-font-heading);font-size:18px;letter-spacing:-.4px"><span class="bui-dtdoc-num">4</span> Basic JavaScript init</h3>
 <p class="bui-doc-note">In every example on this page <code>users</code> is a sample array of 96 objects (<code>id, name, email, role, department, country, salary, joined, active, status</code>) and <code>BUIDocs</code> holds a few demo helpers from <code>datatable-docs.js</code>; use your own data. Pass a selector or element, plus options. <code>columns[].data</code> is a property name (dot paths such as <code>"user.name"</code> work), an array index, or a function. <code>title</code> is the header HTML. <code>render(value, type, row, meta)</code> returns the cell content: <code>type</code> is <code>display</code>, <code>filter</code>, <code>export</code> or <code>sort</code>. Text you return from <code>render</code> is inserted as HTML, so escape user data in your renderer.</p>
 <article class="bui-demo-card" id="demo-init"><div class="bui-demo-title">Minimal table <span>data · columns</span></div><div class="bui-demo-content bui-dtdoc-demo"><div id="d-init"></div></div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML + JavaScript</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span>  <span class="bui-code-blue">id</span>=<span class="bui-code-green">"d-init"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
 
 <span class="bui-code-pink">&lt;script</span><span class="bui-code-pink">&gt;</span>
-<span class="bui-code-pink">const</span> table = <span class="bui-code-pink">new</span> BasetDataTable(<span class="bui-code-green">'#d-init'</span>, {
+<span class="bui-code-pink">const</span> table = BUI.dataTable(<span class="bui-code-green">'#d-init'</span>, {
   data: users,
   columns: [
     { data: <span class="bui-code-green">'id'</span>, title: <span class="bui-code-green">'ID'</span>, width: 70 },
@@ -202,7 +203,7 @@ BasetDataTable.init(document);
   view: { title: (u) =&gt; u.name, render: profile, wide: <span class="bui-code-pink">true</span> },
 };
 
-<span class="bui-code-pink">const</span> table = <span class="bui-code-pink">new</span> BasetDataTable(<span class="bui-code-green">'#d-ex-noapi'</span>, {
+<span class="bui-code-pink">const</span> table = BUI.dataTable(<span class="bui-code-green">'#d-ex-noapi'</span>, {
   ...base,
   data: users,                             <span class="bui-code-muted">// all rows live in the browser</span>
   editor: { mode: <span class="bui-code-green">'modal'</span> },               <span class="bui-code-muted">// add / edit / delete change the local data</span>
@@ -293,7 +294,7 @@ BasetDataTable.init(document);
 
 <span class="bui-code-pink">const</span> apiRows = users.map((u) =&gt; ({ ...u }));   <span class="bui-code-muted">// pretend this is your database table</span>
 
-<span class="bui-code-pink">const</span> table = <span class="bui-code-pink">new</span> BasetDataTable(<span class="bui-code-green">'#d-ex-api'</span>, {
+<span class="bui-code-pink">const</span> table = BUI.dataTable(<span class="bui-code-green">'#d-ex-api'</span>, {
   ...base,
   serverSide: <span class="bui-code-pink">true</span>,                        <span class="bui-code-muted">// every page / search / sort / filter is a request: "Processing…" shows</span>
   ajax: {
@@ -320,7 +321,7 @@ BasetDataTable.init(document);
 <span class="bui-code-pink">&lt;div</span>  <span class="bui-code-blue">id</span>=<span class="bui-code-green">"d-data"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
 
 <span class="bui-code-pink">&lt;script</span><span class="bui-code-pink">&gt;</span>
-<span class="bui-code-pink">const</span> t = <span class="bui-code-pink">new</span> BasetDataTable(<span class="bui-code-green">'#d-data'</span>, {
+<span class="bui-code-pink">const</span> t = BUI.dataTable(<span class="bui-code-green">'#d-data'</span>, {
   data: users.slice(0, 5),
   columns: [
     { data: <span class="bui-code-green">'id'</span>, title: <span class="bui-code-green">'ID'</span>, width: 70 },
@@ -344,7 +345,7 @@ document.getElementById(<span class="bui-code-green">'data-clr'</span>).onclick 
 <article class="bui-demo-card" id="demo-pg-numbers"><div class="bui-demo-title">paginationType: "numbers" <span>numbers</span></div><div class="bui-demo-content bui-dtdoc-demo"><div id="d-pg-numbers"></div></div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML + JavaScript</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span>  <span class="bui-code-blue">id</span>=<span class="bui-code-green">"d-pg-numbers"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
 
 <span class="bui-code-pink">&lt;script</span><span class="bui-code-pink">&gt;</span>
-<span class="bui-code-pink">new</span> BasetDataTable(<span class="bui-code-green">'#d-pg-numbers'</span>, {
+BUI.dataTable(<span class="bui-code-green">'#d-pg-numbers'</span>, {
   data: users,
   columns: [
     { data: <span class="bui-code-green">'id'</span>, title: <span class="bui-code-green">'ID'</span> },
@@ -361,7 +362,7 @@ document.getElementById(<span class="bui-code-green">'data-clr'</span>).onclick 
 <article class="bui-demo-card" id="demo-pg-full_numbers"><div class="bui-demo-title">paginationType: "full_numbers" <span>full_numbers</span></div><div class="bui-demo-content bui-dtdoc-demo"><div id="d-pg-full_numbers"></div></div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML + JavaScript</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span>  <span class="bui-code-blue">id</span>=<span class="bui-code-green">"d-pg-full_numbers"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
 
 <span class="bui-code-pink">&lt;script</span><span class="bui-code-pink">&gt;</span>
-<span class="bui-code-pink">new</span> BasetDataTable(<span class="bui-code-green">'#d-pg-full_numbers'</span>, {
+BUI.dataTable(<span class="bui-code-green">'#d-pg-full_numbers'</span>, {
   data: users,
   columns: [
     { data: <span class="bui-code-green">'id'</span>, title: <span class="bui-code-green">'ID'</span> },
@@ -378,7 +379,7 @@ document.getElementById(<span class="bui-code-green">'data-clr'</span>).onclick 
 <article class="bui-demo-card" id="demo-pg-simple"><div class="bui-demo-title">paginationType: "simple" <span>simple</span></div><div class="bui-demo-content bui-dtdoc-demo"><div id="d-pg-simple"></div></div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML + JavaScript</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span>  <span class="bui-code-blue">id</span>=<span class="bui-code-green">"d-pg-simple"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
 
 <span class="bui-code-pink">&lt;script</span><span class="bui-code-pink">&gt;</span>
-<span class="bui-code-pink">new</span> BasetDataTable(<span class="bui-code-green">'#d-pg-simple'</span>, {
+BUI.dataTable(<span class="bui-code-green">'#d-pg-simple'</span>, {
   data: users,
   columns: [
     { data: <span class="bui-code-green">'id'</span>, title: <span class="bui-code-green">'ID'</span> },
@@ -395,7 +396,7 @@ document.getElementById(<span class="bui-code-green">'data-clr'</span>).onclick 
 <article class="bui-demo-card" id="demo-pg-compact"><div class="bui-demo-title">paginationType: "compact" <span>compact</span></div><div class="bui-demo-content bui-dtdoc-demo"><div id="d-pg-compact"></div></div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML + JavaScript</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span>  <span class="bui-code-blue">id</span>=<span class="bui-code-green">"d-pg-compact"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
 
 <span class="bui-code-pink">&lt;script</span><span class="bui-code-pink">&gt;</span>
-<span class="bui-code-pink">new</span> BasetDataTable(<span class="bui-code-green">'#d-pg-compact'</span>, {
+BUI.dataTable(<span class="bui-code-green">'#d-pg-compact'</span>, {
   data: users,
   columns: [
     { data: <span class="bui-code-green">'id'</span>, title: <span class="bui-code-green">'ID'</span> },
@@ -415,7 +416,7 @@ document.getElementById(<span class="bui-code-green">'data-clr'</span>).onclick 
 <span class="bui-code-pink">&lt;div</span>  <span class="bui-code-blue">id</span>=<span class="bui-code-green">"d-search"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
 
 <span class="bui-code-pink">&lt;script</span><span class="bui-code-pink">&gt;</span>
-<span class="bui-code-pink">const</span> t = <span class="bui-code-pink">new</span> BasetDataTable(<span class="bui-code-green">'#d-search'</span>, {
+<span class="bui-code-pink">const</span> t = BUI.dataTable(<span class="bui-code-green">'#d-search'</span>, {
   data: users,
   columns: [
     { data: <span class="bui-code-green">'id'</span>, title: <span class="bui-code-green">'ID'</span>, width: 70 },
@@ -439,7 +440,7 @@ t.on(<span class="bui-code-green">'search'</span>, ({ value }) =&gt; (document.g
 <span class="bui-code-pink">&lt;div</span>  <span class="bui-code-blue">id</span>=<span class="bui-code-green">"d-order"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
 
 <span class="bui-code-pink">&lt;script</span><span class="bui-code-pink">&gt;</span>
-<span class="bui-code-pink">const</span> t = <span class="bui-code-pink">new</span> BasetDataTable(<span class="bui-code-green">'#d-order'</span>, {
+<span class="bui-code-pink">const</span> t = BUI.dataTable(<span class="bui-code-green">'#d-order'</span>, {
   data: users,
   columns: [
     { data: <span class="bui-code-green">'department'</span>, title: <span class="bui-code-green">'Department'</span> },
@@ -459,7 +460,7 @@ document.getElementById(<span class="bui-code-green">'order-btn'</span>).onclick
 <article class="bui-demo-card" id="demo-colvis"><div class="bui-demo-title">Column picker <span>buttons: colvis · restoreColumns</span></div><div class="bui-demo-content bui-dtdoc-demo"><div id="d-colvis"></div></div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML + JavaScript</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span>  <span class="bui-code-blue">id</span>=<span class="bui-code-green">"d-colvis"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
 
 <span class="bui-code-pink">&lt;script</span><span class="bui-code-pink">&gt;</span>
-<span class="bui-code-pink">new</span> BasetDataTable(<span class="bui-code-green">'#d-colvis'</span>, {
+BUI.dataTable(<span class="bui-code-green">'#d-colvis'</span>, {
   data: users,
   columns: [
     { data: <span class="bui-code-green">'id'</span>, title: <span class="bui-code-green">'ID'</span> },
@@ -477,7 +478,7 @@ document.getElementById(<span class="bui-code-green">'order-btn'</span>).onclick
 <article class="bui-demo-card" id="demo-colreorder"><div class="bui-demo-title">Drag the headers <span>colReorder</span></div><div class="bui-demo-content bui-dtdoc-demo"><div id="d-colreorder"></div></div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML + JavaScript</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span>  <span class="bui-code-blue">id</span>=<span class="bui-code-green">"d-colreorder"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
 
 <span class="bui-code-pink">&lt;script</span><span class="bui-code-pink">&gt;</span>
-<span class="bui-code-pink">new</span> BasetDataTable(<span class="bui-code-green">'#d-colreorder'</span>, {
+BUI.dataTable(<span class="bui-code-green">'#d-colreorder'</span>, {
   data: users,
   columns: [
     { data: <span class="bui-code-green">'id'</span>, title: <span class="bui-code-green">'ID'</span>, width: 70 },
@@ -497,7 +498,7 @@ document.getElementById(<span class="bui-code-green">'order-btn'</span>).onclick
 <article class="bui-demo-card" id="demo-colresize"><div class="bui-demo-title">Drag the header edges <span>colResize · width · minWidth</span></div><div class="bui-demo-content bui-dtdoc-demo"><div id="d-colresize"></div></div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML + JavaScript</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span>  <span class="bui-code-blue">id</span>=<span class="bui-code-green">"d-colresize"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
 
 <span class="bui-code-pink">&lt;script</span><span class="bui-code-pink">&gt;</span>
-<span class="bui-code-pink">new</span> BasetDataTable(<span class="bui-code-green">'#d-colresize'</span>, {
+BUI.dataTable(<span class="bui-code-green">'#d-colresize'</span>, {
   data: users,
   columns: [
     { data: <span class="bui-code-green">'id'</span>, title: <span class="bui-code-green">'ID'</span>, width: 70, minWidth: 50, maxWidth: 120 },
@@ -515,7 +516,7 @@ document.getElementById(<span class="bui-code-green">'order-btn'</span>).onclick
 <article class="bui-demo-card" id="demo-filters"><div class="bui-demo-title">All filter types <span>filter: select · multiselect · number · date · boolean</span></div><div class="bui-demo-content bui-dtdoc-demo"><div id="d-filters"></div></div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML + JavaScript</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span>  <span class="bui-code-blue">id</span>=<span class="bui-code-green">"d-filters"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
 
 <span class="bui-code-pink">&lt;script</span><span class="bui-code-pink">&gt;</span>
-<span class="bui-code-pink">const</span> t = <span class="bui-code-pink">new</span> BasetDataTable(<span class="bui-code-green">'#d-filters'</span>, {
+<span class="bui-code-pink">const</span> t = BUI.dataTable(<span class="bui-code-green">'#d-filters'</span>, {
   data: users,
   columns: [
     { data: <span class="bui-code-green">'id'</span>, title: <span class="bui-code-green">'ID'</span>, width: 70 },
@@ -538,7 +539,7 @@ t.filter(<span class="bui-code-green">'role'</span>, <span class="bui-code-green
 <article class="bui-demo-card" id="demo-builder"><div class="bui-demo-title">Conditions panel <span>searchBuilder · builder()</span></div><div class="bui-demo-content bui-dtdoc-demo"><div id="d-builder"></div></div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML + JavaScript</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span>  <span class="bui-code-blue">id</span>=<span class="bui-code-green">"d-builder"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
 
 <span class="bui-code-pink">&lt;script</span><span class="bui-code-pink">&gt;</span>
-<span class="bui-code-pink">const</span> t = <span class="bui-code-pink">new</span> BasetDataTable(<span class="bui-code-green">'#d-builder'</span>, {
+<span class="bui-code-pink">const</span> t = BUI.dataTable(<span class="bui-code-green">'#d-builder'</span>, {
   data: users,
   columns: [
     { data: <span class="bui-code-green">'id'</span>, title: <span class="bui-code-green">'ID'</span>, width: 70 },
@@ -563,7 +564,7 @@ t.builder([
 <article class="bui-demo-card" id="demo-sel-checkbox"><div class="bui-demo-title">Checkboxes and bulk actions <span>select: "checkbox" · bulkActions</span></div><div class="bui-demo-content bui-dtdoc-demo"><div id="d-sel-checkbox"></div></div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML + JavaScript</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span>  <span class="bui-code-blue">id</span>=<span class="bui-code-green">"d-sel-checkbox"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
 
 <span class="bui-code-pink">&lt;script</span><span class="bui-code-pink">&gt;</span>
-<span class="bui-code-pink">const</span> t = <span class="bui-code-pink">new</span> BasetDataTable(<span class="bui-code-green">'#d-sel-checkbox'</span>, {
+<span class="bui-code-pink">const</span> t = BUI.dataTable(<span class="bui-code-green">'#d-sel-checkbox'</span>, {
   data: users,
   columns: [
     { data: <span class="bui-code-green">'id'</span>, title: <span class="bui-code-green">'ID'</span>, width: 70 },
@@ -586,13 +587,13 @@ t.builder([
 <span class="bui-code-pink">&lt;div</span>  <span class="bui-code-blue">id</span>=<span class="bui-code-green">"d-sel-cell"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
 
 <span class="bui-code-pink">&lt;script</span><span class="bui-code-pink">&gt;</span>
-<span class="bui-code-pink">const</span> a = <span class="bui-code-pink">new</span> BasetDataTable(<span class="bui-code-green">'#d-sel-single'</span>, { data: users, columns: [
+<span class="bui-code-pink">const</span> a = BUI.dataTable(<span class="bui-code-green">'#d-sel-single'</span>, { data: users, columns: [
     { data: <span class="bui-code-green">'id'</span>, title: <span class="bui-code-green">'ID'</span> },
     { data: <span class="bui-code-green">'name'</span>, title: <span class="bui-code-green">'Name'</span> },
     { data: <span class="bui-code-green">'role'</span>, title: <span class="bui-code-green">'Role'</span> },
     { data: <span class="bui-code-green">'country'</span>, title: <span class="bui-code-green">'Country'</span> },
   ], select: <span class="bui-code-green">'single'</span>, pageLength: 3, searching: <span class="bui-code-pink">false</span> });
-<span class="bui-code-pink">const</span> b = <span class="bui-code-pink">new</span> BasetDataTable(<span class="bui-code-green">'#d-sel-cell'</span>, { data: users, columns: [
+<span class="bui-code-pink">const</span> b = BUI.dataTable(<span class="bui-code-green">'#d-sel-cell'</span>, { data: users, columns: [
     { data: <span class="bui-code-green">'id'</span>, title: <span class="bui-code-green">'ID'</span> },
     { data: <span class="bui-code-green">'name'</span>, title: <span class="bui-code-green">'Name'</span> },
     { data: <span class="bui-code-green">'role'</span>, title: <span class="bui-code-green">'Role'</span> },
@@ -606,7 +607,7 @@ b.on(<span class="bui-code-green">'select deselect'</span>, (d) =&gt; (document.
 <article class="bui-demo-card" id="demo-ed-inline"><div class="bui-demo-title">Edit in the row <span>editor.mode: inline</span></div><div class="bui-demo-content bui-dtdoc-demo"><div id="d-ed-inline"></div></div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML + JavaScript</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span>  <span class="bui-code-blue">id</span>=<span class="bui-code-green">"d-ed-inline"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
 
 <span class="bui-code-pink">&lt;script</span><span class="bui-code-pink">&gt;</span>
-<span class="bui-code-pink">const</span> t = <span class="bui-code-pink">new</span> BasetDataTable(<span class="bui-code-green">'#d-ed-inline'</span>, {
+<span class="bui-code-pink">const</span> t = BUI.dataTable(<span class="bui-code-green">'#d-ed-inline'</span>, {
   data: users,
   columns: [
     { data: <span class="bui-code-green">'id'</span>, title: <span class="bui-code-green">'ID'</span>, width: 70 },
@@ -638,7 +639,7 @@ b.on(<span class="bui-code-green">'select deselect'</span>, (d) =&gt; (document.
 <article class="bui-demo-card" id="demo-ed-modal"><div class="bui-demo-title">Edit in a dialog <span>editor.mode: modal</span></div><div class="bui-demo-content bui-dtdoc-demo"><div id="d-ed-modal"></div></div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML + JavaScript</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span>  <span class="bui-code-blue">id</span>=<span class="bui-code-green">"d-ed-modal"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
 
 <span class="bui-code-pink">&lt;script</span><span class="bui-code-pink">&gt;</span>
-<span class="bui-code-pink">const</span> t = <span class="bui-code-pink">new</span> BasetDataTable(<span class="bui-code-green">'#d-ed-modal'</span>, {
+<span class="bui-code-pink">const</span> t = BUI.dataTable(<span class="bui-code-green">'#d-ed-modal'</span>, {
   data: users,
   columns: [
     { data: <span class="bui-code-green">'id'</span>, title: <span class="bui-code-green">'ID'</span>, width: 70 },
@@ -670,7 +671,7 @@ b.on(<span class="bui-code-green">'select deselect'</span>, (d) =&gt; (document.
 <span class="bui-code-pink">&lt;div</span>  <span class="bui-code-blue">id</span>=<span class="bui-code-green">"d-actions-menu"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
 
 <span class="bui-code-pink">&lt;script</span><span class="bui-code-pink">&gt;</span>
-<span class="bui-code-pink">const</span> a = <span class="bui-code-pink">new</span> BasetDataTable(<span class="bui-code-green">'#d-actions-inline'</span>, {
+<span class="bui-code-pink">const</span> a = BUI.dataTable(<span class="bui-code-green">'#d-actions-inline'</span>, {
   data: users,
   columns: [
     { data: <span class="bui-code-green">'id'</span>, title: <span class="bui-code-green">'ID'</span> },
@@ -686,7 +687,7 @@ b.on(<span class="bui-code-green">'select deselect'</span>, (d) =&gt; (document.
   pageLength: 4,
   searching: <span class="bui-code-pink">false</span>,
 });
-<span class="bui-code-pink">const</span> b = <span class="bui-code-pink">new</span> BasetDataTable(<span class="bui-code-green">'#d-actions-menu'</span>, {
+<span class="bui-code-pink">const</span> b = BUI.dataTable(<span class="bui-code-green">'#d-actions-menu'</span>, {
   data: users,
   columns: [
     { data: <span class="bui-code-green">'id'</span>, title: <span class="bui-code-green">'ID'</span> },
@@ -706,7 +707,7 @@ b.on(<span class="bui-code-green">'select deselect'</span>, (d) =&gt; (document.
 <article class="bui-demo-card" id="demo-buttons"><div class="bui-demo-title">Controls and custom buttons <span>buttons</span></div><div class="bui-demo-content bui-dtdoc-demo"><div id="d-buttons"></div></div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML + JavaScript</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span>  <span class="bui-code-blue">id</span>=<span class="bui-code-green">"d-buttons"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
 
 <span class="bui-code-pink">&lt;script</span><span class="bui-code-pink">&gt;</span>
-<span class="bui-code-pink">const</span> t = <span class="bui-code-pink">new</span> BasetDataTable(<span class="bui-code-green">'#d-buttons'</span>, {
+<span class="bui-code-pink">const</span> t = BUI.dataTable(<span class="bui-code-green">'#d-buttons'</span>, {
   data: users,
   columns: [
     { data: <span class="bui-code-green">'id'</span>, title: <span class="bui-code-green">'ID'</span>, width: 70 },
@@ -729,7 +730,7 @@ b.on(<span class="bui-code-green">'select deselect'</span>, (d) =&gt; (document.
 <article class="bui-demo-card" id="demo-copy"><div class="bui-demo-title">Copy button <span>buttons: copy</span></div><div class="bui-demo-content bui-dtdoc-demo"><div id="d-copy"></div></div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML + JavaScript</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span>  <span class="bui-code-blue">id</span>=<span class="bui-code-green">"d-copy"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
 
 <span class="bui-code-pink">&lt;script</span><span class="bui-code-pink">&gt;</span>
-<span class="bui-code-pink">new</span> BasetDataTable(<span class="bui-code-green">'#d-copy'</span>, {
+BUI.dataTable(<span class="bui-code-green">'#d-copy'</span>, {
   data: users,
   columns: [
     { data: <span class="bui-code-green">'id'</span>, title: <span class="bui-code-green">'ID'</span>, width: 70 },
@@ -749,7 +750,7 @@ b.on(<span class="bui-code-green">'select deselect'</span>, (d) =&gt; (document.
 <article class="bui-demo-card" id="demo-csv"><div class="bui-demo-title">CSV with options <span>buttons: csv</span></div><div class="bui-demo-content bui-dtdoc-demo"><div id="d-csv"></div></div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML + JavaScript</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span>  <span class="bui-code-blue">id</span>=<span class="bui-code-green">"d-csv"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
 
 <span class="bui-code-pink">&lt;script</span><span class="bui-code-pink">&gt;</span>
-<span class="bui-code-pink">new</span> BasetDataTable(<span class="bui-code-green">'#d-csv'</span>, {
+BUI.dataTable(<span class="bui-code-green">'#d-csv'</span>, {
   data: users,
   columns: [
     { data: <span class="bui-code-green">'id'</span>, title: <span class="bui-code-green">'ID'</span>, width: 70 },
@@ -770,7 +771,7 @@ b.on(<span class="bui-code-green">'select deselect'</span>, (d) =&gt; (document.
 <article class="bui-demo-card" id="demo-json"><div class="bui-demo-title">JSON button <span>buttons: json</span></div><div class="bui-demo-content bui-dtdoc-demo"><div id="d-json"></div></div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML + JavaScript</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span>  <span class="bui-code-blue">id</span>=<span class="bui-code-green">"d-json"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
 
 <span class="bui-code-pink">&lt;script</span><span class="bui-code-pink">&gt;</span>
-<span class="bui-code-pink">new</span> BasetDataTable(<span class="bui-code-green">'#d-json'</span>, {
+BUI.dataTable(<span class="bui-code-green">'#d-json'</span>, {
   data: users,
   columns: [
     { data: <span class="bui-code-green">'id'</span>, title: <span class="bui-code-green">'ID'</span>, width: 70 },
@@ -785,11 +786,11 @@ b.on(<span class="bui-code-green">'select deselect'</span>, (d) =&gt; (document.
 });
 <span class="bui-code-pink">&lt;/script</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
 <h3 id="excel" style="margin:38px 0 12px;font-family:var(--bui-font-heading);font-size:18px;letter-spacing:-.4px"><span class="bui-dtdoc-num">22</span> Export Excel (.xlsx)</h3>
-<p class="bui-doc-note">This is a <b>genuine Office Open XML workbook</b> written in the browser (a ZIP of XML parts, no libraries): numbers stay numbers, the header row is styled and frozen with a filter, columns are sized, a title row is added when you set <code>title</code>, and the sheet is right-to-left when the table is. It opens in Excel, LibreOffice, Numbers and Google Sheets. It is not a renamed CSV. To use SheetJS / ExcelJS instead, register <code>BasetDataTable.adapters.excel = async (exportData, options, dt) =&gt; Blob</code>.</p>
+<p class="bui-doc-note">This is a <b>genuine Office Open XML workbook</b> written in the browser (a ZIP of XML parts, no libraries): numbers stay numbers, the header row is styled and frozen with a filter, columns are sized, a title row is added when you set <code>title</code>, and the sheet is right-to-left when the table is. It opens in Excel, LibreOffice, Numbers and Google Sheets. It is not a renamed CSV. To use SheetJS / ExcelJS instead, register <code>BUI.dataTable.adapters.excel = async (exportData, options, dt) =&gt; Blob</code>.</p>
 <article class="bui-demo-card" id="demo-excel"><div class="bui-demo-title">Excel button <span>buttons: excel</span></div><div class="bui-demo-content bui-dtdoc-demo"><div id="d-excel"></div></div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML + JavaScript</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span>  <span class="bui-code-blue">id</span>=<span class="bui-code-green">"d-excel"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
 
 <span class="bui-code-pink">&lt;script</span><span class="bui-code-pink">&gt;</span>
-<span class="bui-code-pink">new</span> BasetDataTable(<span class="bui-code-green">'#d-excel'</span>, {
+BUI.dataTable(<span class="bui-code-green">'#d-excel'</span>, {
   data: users,
   columns: [
     { data: <span class="bui-code-green">'id'</span>, title: <span class="bui-code-green">'ID'</span>, width: 70 },
@@ -808,7 +809,7 @@ b.on(<span class="bui-code-green">'select deselect'</span>, (d) =&gt; (document.
 <span class="bui-code-pink">&lt;/script</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
 <h3 id="pdf" style="margin:38px 0 12px;font-family:var(--bui-font-heading);font-size:18px;letter-spacing:-.4px"><span class="bui-dtdoc-num">23</span> Export PDF</h3>
 <p class="bui-doc-note">The PDF is a <b>real PDF file</b> generated in the browser. <b>Latin text</b> uses the built-in text writer (PDF 1.4, Helvetica, selectable text, header row repeated on every page, page numbers, landscape for wide tables; options <code>orientation</code>, <code>fontSize</code>, <code>title</code>, <code>messageTop / Bottom</code>, <code>footerText</code>). For <b>Arabic and other scripts</b>, which PDF cannot shape without an embedded font, the table is drawn with the browser's own text engine and stored as page images inside a genuine PDF: correct shaping and RTL, but the text is <i>not selectable</i> (<code>pdfMode: "text"</code> or <code>"image"</code> forces one). When you need selectable Arabic text, register an adapter with your own font; the library calls it instead and never loads anything by itself:</p>
-<div class="bui-code-card"><div class="bui-code-head"><span><i></i> adapter (pdfMake) — needs pdfmake + an Arabic font that you load yourself</span><button class="bui-copy" type="button">Copy</button></div><pre><code>BasetDataTable.adapters.pdf = (data, options, dt) =&gt; <span class="bui-code-pink">new</span> Promise((resolve) =&gt; {
+<div class="bui-code-card"><div class="bui-code-head"><span><i></i> adapter (pdfMake) — needs pdfmake + an Arabic font that you load yourself</span><button class="bui-copy" type="button">Copy</button></div><pre><code>BUI.dataTable.adapters.pdf = (data, options, dt) =&gt; <span class="bui-code-pink">new</span> Promise((resolve) =&gt; {
   <span class="bui-code-pink">const</span> body = [data.headers, ...data.rows].map((r) =&gt; r.map((c) =&gt; String(c ?? <span class="bui-code-green">''</span>)));
   pdfMake.createPdf({
     pageOrientation: <span class="bui-code-green">'landscape'</span>,
@@ -819,7 +820,7 @@ b.on(<span class="bui-code-green">'select deselect'</span>, (d) =&gt; (document.
 <article class="bui-demo-card" id="demo-pdf"><div class="bui-demo-title">PDF button <span>buttons: pdf</span></div><div class="bui-demo-content bui-dtdoc-demo"><div id="d-pdf"></div></div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML + JavaScript</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span>  <span class="bui-code-blue">id</span>=<span class="bui-code-green">"d-pdf"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
 
 <span class="bui-code-pink">&lt;script</span><span class="bui-code-pink">&gt;</span>
-<span class="bui-code-pink">new</span> BasetDataTable(<span class="bui-code-green">'#d-pdf'</span>, {
+BUI.dataTable(<span class="bui-code-green">'#d-pdf'</span>, {
   data: users.filter((u) =&gt; !/[\u0600-\u06FF]/.test(u.name)),     <span class="bui-code-muted">// Latin-only data: selectable text</span>
   columns: [
     { data: <span class="bui-code-green">'id'</span>, title: <span class="bui-code-green">'ID'</span>, width: 70 },
@@ -840,7 +841,7 @@ b.on(<span class="bui-code-green">'select deselect'</span>, (d) =&gt; (document.
 <article class="bui-demo-card" id="demo-print"><div class="bui-demo-title">Print button <span>buttons: print</span></div><div class="bui-demo-content bui-dtdoc-demo"><div id="d-print"></div></div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML + JavaScript</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span>  <span class="bui-code-blue">id</span>=<span class="bui-code-green">"d-print"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
 
 <span class="bui-code-pink">&lt;script</span><span class="bui-code-pink">&gt;</span>
-<span class="bui-code-pink">new</span> BasetDataTable(<span class="bui-code-green">'#d-print'</span>, {
+BUI.dataTable(<span class="bui-code-green">'#d-print'</span>, {
   data: users,
   columns: [
     { data: <span class="bui-code-green">'id'</span>, title: <span class="bui-code-green">'ID'</span>, width: 70 },
@@ -864,7 +865,7 @@ b.on(<span class="bui-code-green">'select deselect'</span>, (d) =&gt; (document.
 <span class="bui-code-pink">&lt;script</span><span class="bui-code-pink">&gt;</span>document.getElementById(<span class="bui-code-green">"resp-w"</span>).oninput = (e) =&gt; { document.getElementById(<span class="bui-code-green">"resp-box"</span>).style.width = e.target.value + <span class="bui-code-green">"px"</span>; };<span class="bui-code-pink">&lt;/script</span><span class="bui-code-pink">&gt;</span>
 
 <span class="bui-code-pink">&lt;script</span><span class="bui-code-pink">&gt;</span>
-<span class="bui-code-pink">const</span> t = <span class="bui-code-pink">new</span> BasetDataTable(<span class="bui-code-green">'#d-resp'</span>, {
+<span class="bui-code-pink">const</span> t = BUI.dataTable(<span class="bui-code-green">'#d-resp'</span>, {
   data: users,
   columns: [
     { data: <span class="bui-code-green">'name'</span>, title: <span class="bui-code-green">'Name'</span>, priority: 1 },
@@ -885,7 +886,7 @@ t.cardView(<span class="bui-code-pink">null</span>);   <span class="bui-code-mut
 <article class="bui-demo-card" id="demo-cards"><div class="bui-demo-title">Cards with a toggle <span>cardView · cardBreakpoint</span></div><div class="bui-demo-content bui-dtdoc-demo"><div id="d-cards"></div></div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML + JavaScript</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span>  <span class="bui-code-blue">id</span>=<span class="bui-code-green">"d-cards"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
 
 <span class="bui-code-pink">&lt;script</span><span class="bui-code-pink">&gt;</span>
-<span class="bui-code-pink">new</span> BasetDataTable(<span class="bui-code-green">'#d-cards'</span>, {
+BUI.dataTable(<span class="bui-code-green">'#d-cards'</span>, {
   data: users,
   columns: [
     { data: <span class="bui-code-green">'id'</span>, title: <span class="bui-code-green">'ID'</span>, width: 70 },
@@ -908,7 +909,7 @@ t.cardView(<span class="bui-code-pink">null</span>);   <span class="bui-code-mut
 <article class="bui-demo-card" id="demo-ajax"><div class="bui-demo-title">Load once, work locally <span>ajax</span></div><div class="bui-demo-content bui-dtdoc-demo"><div id="d-ajax"></div></div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML + JavaScript</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span>  <span class="bui-code-blue">id</span>=<span class="bui-code-green">"d-ajax"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
 
 <span class="bui-code-pink">&lt;script</span><span class="bui-code-pink">&gt;</span>
-<span class="bui-code-pink">const</span> t = <span class="bui-code-pink">new</span> BasetDataTable(<span class="bui-code-green">'#d-ajax'</span>, {
+<span class="bui-code-pink">const</span> t = BUI.dataTable(<span class="bui-code-green">'#d-ajax'</span>, {
   columns: [
     { data: <span class="bui-code-green">'id'</span>, title: <span class="bui-code-green">'ID'</span>, width: 70 },
     { data: <span class="bui-code-green">'name'</span>, title: <span class="bui-code-green">'Name'</span> },
@@ -934,7 +935,7 @@ t.on(<span class="bui-code-green">'ajaxLoad'</span>, (d) =&gt; console.log(<span
 <span class="bui-code-pink">&lt;div</span>  <span class="bui-code-blue">id</span>=<span class="bui-code-green">"d-server"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
 
 <span class="bui-code-pink">&lt;script</span><span class="bui-code-pink">&gt;</span>
-<span class="bui-code-pink">const</span> t = <span class="bui-code-pink">new</span> BasetDataTable(<span class="bui-code-green">'#d-server'</span>, {
+<span class="bui-code-pink">const</span> t = BUI.dataTable(<span class="bui-code-green">'#d-server'</span>, {
   columns: [
     { data: <span class="bui-code-green">'id'</span>, title: <span class="bui-code-green">'ID'</span>, width: 70 },
     { data: <span class="bui-code-green">'name'</span>, title: <span class="bui-code-green">'Name'</span> },
@@ -959,7 +960,7 @@ t.on(<span class="bui-code-green">'ajaxLoad'</span>, (d) =&gt; (document.getElem
 
 <span class="bui-code-pink">&lt;script</span><span class="bui-code-pink">&gt;</span>
 <span class="bui-code-pink">let</span> fail = <span class="bui-code-pink">true</span>;
-<span class="bui-code-pink">const</span> t = <span class="bui-code-pink">new</span> BasetDataTable(<span class="bui-code-green">'#d-server-err'</span>, {
+<span class="bui-code-pink">const</span> t = BUI.dataTable(<span class="bui-code-green">'#d-server-err'</span>, {
   columns: [
     { data: <span class="bui-code-green">'id'</span>, title: <span class="bui-code-green">'ID'</span> },
     { data: <span class="bui-code-green">'name'</span>, title: <span class="bui-code-green">'Name'</span> },
@@ -1045,7 +1046,7 @@ use Illuminate\Http\Request;
   <span class="bui-code-pink">return</span> r.status === 204 ? <span class="bui-code-pink">null</span> : r.json();
 });
 
-<span class="bui-code-pink">new</span> BasetDataTable(<span class="bui-code-green">'#users'</span>, {
+BUI.dataTable(<span class="bui-code-green">'#users'</span>, {
   serverSide: <span class="bui-code-pink">true</span>,
   ajax: { url: <span class="bui-code-green">'/api/users'</span>, map: (json) =&gt; ({ data: json.data, total: json.meta.total, filtered: json.meta.filtered }) },
   columns: [ <span class="bui-code-muted">/* ... */</span> ],
@@ -1062,7 +1063,7 @@ use Illuminate\Http\Request;
 <article class="bui-demo-card" id="demo-state"><div class="bui-demo-title">Remembered settings <span>stateSave · stateKey</span></div><div class="bui-demo-content bui-dtdoc-demo"><div id="d-state"></div></div><div class="bui-demo-code">Sort, search, hide a column, then reload the page.</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML + JavaScript</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span>  <span class="bui-code-blue">id</span>=<span class="bui-code-green">"d-state"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
 
 <span class="bui-code-pink">&lt;script</span><span class="bui-code-pink">&gt;</span>
-<span class="bui-code-pink">new</span> BasetDataTable(<span class="bui-code-green">'#d-state'</span>, {
+BUI.dataTable(<span class="bui-code-green">'#d-state'</span>, {
   data: users,
   columns: [
     { data: <span class="bui-code-green">'id'</span>, title: <span class="bui-code-green">'ID'</span>, width: 70 },
@@ -1084,7 +1085,7 @@ use Illuminate\Http\Request;
 <article class="bui-demo-card" id="demo-group"><div class="bui-demo-title">Group by department <span>rowGroup</span></div><div class="bui-demo-content bui-dtdoc-demo"><div id="d-group"></div></div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML + JavaScript</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span>  <span class="bui-code-blue">id</span>=<span class="bui-code-green">"d-group"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
 
 <span class="bui-code-pink">&lt;script</span><span class="bui-code-pink">&gt;</span>
-<span class="bui-code-pink">new</span> BasetDataTable(<span class="bui-code-green">'#d-group'</span>, {
+BUI.dataTable(<span class="bui-code-green">'#d-group'</span>, {
   data: users,
   rowGroup: {
     dataSrc: <span class="bui-code-green">'department'</span>,
@@ -1104,7 +1105,7 @@ use Illuminate\Http\Request;
 <article class="bui-demo-card" id="demo-fixed"><div class="bui-demo-title">Sticky header and pinned columns <span>scrollY · fixedColumns</span></div><div class="bui-demo-content bui-dtdoc-demo"><div id="d-fixed"></div></div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML + JavaScript</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span>  <span class="bui-code-blue">id</span>=<span class="bui-code-green">"d-fixed"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
 
 <span class="bui-code-pink">&lt;script</span><span class="bui-code-pink">&gt;</span>
-<span class="bui-code-pink">new</span> BasetDataTable(<span class="bui-code-green">'#d-fixed'</span>, {
+BUI.dataTable(<span class="bui-code-green">'#d-fixed'</span>, {
   data: users,
   columns: [
     { data: <span class="bui-code-green">'name'</span>, title: <span class="bui-code-green">'Name'</span>, width: 190 }, { data: <span class="bui-code-green">'email'</span>, title: <span class="bui-code-green">'Email'</span>, width: 240 }, { data: <span class="bui-code-green">'role'</span>, title: <span class="bui-code-green">'Role'</span>, width: 200 },
@@ -1125,7 +1126,7 @@ use Illuminate\Http\Request;
 
 <span class="bui-code-pink">&lt;script</span><span class="bui-code-pink">&gt;</span>
 <span class="bui-code-pink">const</span> big = Array.from({ length: 20000 }, (_, i) =&gt; ({ id: i + 1, name: users[i % users.length].name, role: users[i % users.length].role, value: (i * 7919) % 10000 }));
-<span class="bui-code-pink">new</span> BasetDataTable(<span class="bui-code-green">'#d-virtual'</span>, {
+BUI.dataTable(<span class="bui-code-green">'#d-virtual'</span>, {
   data: big,
   columns: [{ data: <span class="bui-code-green">'id'</span>, title: <span class="bui-code-green">'ID'</span> }, { data: <span class="bui-code-green">'name'</span>, title: <span class="bui-code-green">'Name'</span> }, { data: <span class="bui-code-green">'role'</span>, title: <span class="bui-code-green">'Role'</span> }, { data: <span class="bui-code-green">'value'</span>, title: <span class="bui-code-green">'Value'</span> }],
   virtualScroll: { rowHeight: 40 },
@@ -1134,11 +1135,11 @@ use Illuminate\Http\Request;
 });
 <span class="bui-code-pink">&lt;/script</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
 <h3 id="i18n" style="margin:38px 0 12px;font-family:var(--bui-font-heading);font-size:18px;letter-spacing:-.4px"><span class="bui-dtdoc-num">34</span> Internationalization</h3>
-<p class="bui-doc-note">English and Arabic are built in. <code>language: { locale: "ar" }</code> switches every string and the direction (<code>direction</code> overrides it; <code>numerals: "native" | "arab"</code> shows Arabic-Indic digits). Any string can be overridden in <code>language</code> (<code>search, length, info, infoFiltered, empty, emptyTable, loading, processing, error, retry, first, prev, next, last, columns, copy, csv, excel, pdf, print, filters, clearFilters, selectedCount, create, save, cancel, confirmDelete, required, ...</code>; <code>{n}</code>, <code>{start}</code>, <code>{end}</code>, <code>{total}</code> are placeholders). Add a language without touching the library: <code>BasetDataTable.locales.fr = { search: "Rechercher…", ... }</code> (missing keys fall back to English; the key list is in <code>BasetDataTable.locales.en</code>).</p>
+<p class="bui-doc-note">English and Arabic are built in. <code>language: { locale: "ar" }</code> switches every string and the direction (<code>direction</code> overrides it; <code>numerals: "native" | "arab"</code> shows Arabic-Indic digits). Any string can be overridden in <code>language</code> (<code>search, length, info, infoFiltered, empty, emptyTable, loading, processing, error, retry, first, prev, next, last, columns, copy, csv, excel, pdf, print, filters, clearFilters, selectedCount, create, save, cancel, confirmDelete, required, ...</code>; <code>{n}</code>, <code>{start}</code>, <code>{end}</code>, <code>{total}</code> are placeholders). Add a language without touching the library: <code>BUI.dataTable.locales.fr = { search: "Rechercher…", ... }</code> (missing keys fall back to English; the key list is in <code>BUI.dataTable.locales.en</code>).</p>
 <article class="bui-demo-card" id="demo-i18n-ar"><div class="bui-demo-title">Arabic <span>locale: "ar"</span></div><div class="bui-demo-content bui-dtdoc-demo"><div id="d-i18n-ar"></div></div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML + JavaScript</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span>  <span class="bui-code-blue">id</span>=<span class="bui-code-green">"d-i18n-ar"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
 
 <span class="bui-code-pink">&lt;script</span><span class="bui-code-pink">&gt;</span>
-<span class="bui-code-pink">new</span> BasetDataTable(<span class="bui-code-green">'#d-i18n-ar'</span>, {
+BUI.dataTable(<span class="bui-code-green">'#d-i18n-ar'</span>, {
   data: BUIDocs.users,
   columns: [
     { data: <span class="bui-code-green">'id'</span>, title: <span class="bui-code-green">'الرقم'</span> }, { data: <span class="bui-code-green">'name'</span>, title: <span class="bui-code-green">'الاسم'</span> }, { data: <span class="bui-code-green">'role'</span>, title: <span class="bui-code-green">'الوظيفة'</span> }, { data: <span class="bui-code-green">'department'</span>, title: <span class="bui-code-green">'القسم'</span>, filter: <span class="bui-code-green">'select'</span> },
@@ -1153,11 +1154,11 @@ use Illuminate\Http\Request;
 <article class="bui-demo-card" id="demo-i18n-fr"><div class="bui-demo-title">Your own language <span>locales.fr + overrides</span></div><div class="bui-demo-content bui-dtdoc-demo"><div id="d-i18n-fr"></div></div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML + JavaScript</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span>  <span class="bui-code-blue">id</span>=<span class="bui-code-green">"d-i18n-fr"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
 
 <span class="bui-code-pink">&lt;script</span><span class="bui-code-pink">&gt;</span>
-BasetDataTable.locales.fr = {
+BUI.dataTable.locales.fr = {
   search: <span class="bui-code-green">'Rechercher…'</span>, length: <span class="bui-code-green">'Afficher {menu} lignes'</span>, info: <span class="bui-code-green">'{start} à {end} sur {total}'</span>, infoFiltered: <span class="bui-code-green">'(filtré sur {max})'</span>,
   prev: <span class="bui-code-green">'Précédent'</span>, next: <span class="bui-code-green">'Suivant'</span>, first: <span class="bui-code-green">'Premier'</span>, last: <span class="bui-code-green">'Dernier'</span>, empty: <span class="bui-code-green">'Aucun résultat'</span>, emptyTable: <span class="bui-code-green">'Aucune donnée'</span>, all: <span class="bui-code-green">'Tout'</span>,
 };
-<span class="bui-code-pink">new</span> BasetDataTable(<span class="bui-code-green">'#d-i18n-fr'</span>, { data: users, columns: [
+BUI.dataTable(<span class="bui-code-green">'#d-i18n-fr'</span>, { data: users, columns: [
     { data: <span class="bui-code-green">'id'</span>, title: <span class="bui-code-green">'ID'</span> },
     { data: <span class="bui-code-green">'name'</span>, title: <span class="bui-code-green">'Name'</span> },
     { data: <span class="bui-code-green">'role'</span>, title: <span class="bui-code-green">'Role'</span> },
@@ -1170,13 +1171,13 @@ BasetDataTable.locales.fr = {
 <span class="bui-code-pink">&lt;div</span>  <span class="bui-code-blue">id</span>=<span class="bui-code-green">"d-ltr"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
 
 <span class="bui-code-pink">&lt;script</span><span class="bui-code-pink">&gt;</span>
-<span class="bui-code-pink">new</span> BasetDataTable(<span class="bui-code-green">'#d-rtl'</span>, { data: users, columns: [
+BUI.dataTable(<span class="bui-code-green">'#d-rtl'</span>, { data: users, columns: [
     { data: <span class="bui-code-green">'id'</span>, title: <span class="bui-code-green">'ID'</span> },
     { data: <span class="bui-code-green">'name'</span>, title: <span class="bui-code-green">'Name'</span> },
     { data: <span class="bui-code-green">'role'</span>, title: <span class="bui-code-green">'Role'</span> },
     { data: <span class="bui-code-green">'country'</span>, title: <span class="bui-code-green">'Country'</span> },
   ], language: { direction: <span class="bui-code-green">'rtl'</span> }, select: <span class="bui-code-green">'checkbox'</span>, rowActions: [<span class="bui-code-green">'view'</span>], pageLength: 4 });
-<span class="bui-code-pink">new</span> BasetDataTable(<span class="bui-code-green">'#d-ltr'</span>, { data: users, columns: [
+BUI.dataTable(<span class="bui-code-green">'#d-ltr'</span>, { data: users, columns: [
     { data: <span class="bui-code-green">'id'</span>, title: <span class="bui-code-green">'ID'</span> },
     { data: <span class="bui-code-green">'name'</span>, title: <span class="bui-code-green">'Name'</span> },
     { data: <span class="bui-code-green">'role'</span>, title: <span class="bui-code-green">'Role'</span> },
@@ -1189,13 +1190,13 @@ BasetDataTable.locales.fr = {
 <span class="bui-code-pink">&lt;div</span>  <span class="bui-code-blue">id</span>=<span class="bui-code-green">"d-light"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
 
 <span class="bui-code-pink">&lt;script</span><span class="bui-code-pink">&gt;</span>
-<span class="bui-code-pink">new</span> BasetDataTable(<span class="bui-code-green">'#d-dark'</span>, { data: users, columns: [
+BUI.dataTable(<span class="bui-code-green">'#d-dark'</span>, { data: users, columns: [
     { data: <span class="bui-code-green">'id'</span>, title: <span class="bui-code-green">'ID'</span> },
     { data: <span class="bui-code-green">'name'</span>, title: <span class="bui-code-green">'Name'</span> },
     { data: <span class="bui-code-green">'role'</span>, title: <span class="bui-code-green">'Role'</span> },
     { data: <span class="bui-code-green">'country'</span>, title: <span class="bui-code-green">'Country'</span> },
   ], theme: <span class="bui-code-green">'dark'</span>, buttons: [<span class="bui-code-green">'colvis'</span>], pageLength: 3 });
-<span class="bui-code-pink">new</span> BasetDataTable(<span class="bui-code-green">'#d-light'</span>, { data: users, columns: [
+BUI.dataTable(<span class="bui-code-green">'#d-light'</span>, { data: users, columns: [
     { data: <span class="bui-code-green">'id'</span>, title: <span class="bui-code-green">'ID'</span> },
     { data: <span class="bui-code-green">'name'</span>, title: <span class="bui-code-green">'Name'</span> },
     { data: <span class="bui-code-green">'role'</span>, title: <span class="bui-code-green">'Role'</span> },
@@ -1220,13 +1221,13 @@ BasetDataTable.locales.fr = {
 css.textContent = <span class="bui-code-green">`.theme-ocean { --bui-dtbl-accent: #0891b2; --bui-dtbl-header-bg: #ecfeff; --bui-dtbl-header-fg: #155e75; --bui-dtbl-selected: #cffafe; --bui-dtbl-radius: 18px; --bui-dtbl-font-size: 14px; }
   .bui-dark .theme-ocean { --bui-dtbl-header-bg: #164e63; --bui-dtbl-header-fg: #cffafe; --bui-dtbl-selected: #155e75; }`</span>;
 document.head.append(css);
-[<span class="bui-code-green">'striped'</span>, <span class="bui-code-green">'bordered'</span>, <span class="bui-code-green">'minimal'</span>, <span class="bui-code-green">'modern'</span>].forEach((v) =&gt; <span class="bui-code-pink">new</span> BasetDataTable(<span class="bui-code-green">'#d-theme-'</span> + v, { data: users, columns: [
+[<span class="bui-code-green">'striped'</span>, <span class="bui-code-green">'bordered'</span>, <span class="bui-code-green">'minimal'</span>, <span class="bui-code-green">'modern'</span>].forEach((v) =&gt; BUI.dataTable(<span class="bui-code-green">'#d-theme-'</span> + v, { data: users, columns: [
     { data: <span class="bui-code-green">'id'</span>, title: <span class="bui-code-green">'ID'</span> },
     { data: <span class="bui-code-green">'name'</span>, title: <span class="bui-code-green">'Name'</span> },
     { data: <span class="bui-code-green">'role'</span>, title: <span class="bui-code-green">'Role'</span> },
     { data: <span class="bui-code-green">'country'</span>, title: <span class="bui-code-green">'Country'</span> },
   ], variant: v, pageLength: 3, searching: <span class="bui-code-pink">false</span>, showLength: <span class="bui-code-pink">false</span>, select: <span class="bui-code-green">'multi'</span> }));
-<span class="bui-code-pink">new</span> BasetDataTable(<span class="bui-code-green">'#d-theme-ocean'</span>, { data: users, columns: [
+BUI.dataTable(<span class="bui-code-green">'#d-theme-ocean'</span>, { data: users, columns: [
     { data: <span class="bui-code-green">'id'</span>, title: <span class="bui-code-green">'ID'</span> },
     { data: <span class="bui-code-green">'name'</span>, title: <span class="bui-code-green">'Name'</span> },
     { data: <span class="bui-code-green">'role'</span>, title: <span class="bui-code-green">'Role'</span> },
@@ -1235,7 +1236,7 @@ document.head.append(css);
 <span class="bui-code-pink">&lt;/script</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
 <h3 id="api" style="margin:38px 0 12px;font-family:var(--bui-font-heading);font-size:18px;letter-spacing:-.4px"><span class="bui-dtdoc-num">38</span> JavaScript API</h3>
 <p class="bui-doc-note">Setters change state and schedule one redraw (they are chainable and batched); call <code>draw()</code> to apply at once. Getters return the value. Selecting rows: <code>rows(selector)</code> where the selector is <code>{ selected: true }</code>, <code>{ filtered: true }</code>, <code>{ page: "current" }</code>, <code>{ id: [..] }</code>.</p>
-<div class="bui-ref-wrap"><table class="bui-ref"><thead><tr><th>Name</th><th>Description</th></tr></thead><tbody><tr><td><code>search(text?)</code></td><td>Get / set the global search. Returns the instance when setting.</td></tr><tr><td><code>order([[col, "asc" | "desc"], …])</code></td><td>Get / set the sort. <code>order([])</code> clears it. <code>col</code> is an index, a data name or a title.</td></tr><tr><td><code>page(n?)</code></td><td>Get / set the page (0-based, or <code>"first" "last" "next" "previous"</code>). <code>page.info()</code> returns <code>{ page, pages, length, start, end, recordsTotal, recordsDisplay }</code>.</td></tr><tr><td><code>pageLength(n?)</code></td><td>Get / set rows per page (<code>-1</code> = all).</td></tr><tr><td><code>draw(resetPaging?)</code></td><td>Apply changes now (client) or reload (server).</td></tr><tr><td><code>column(i)</code> / <code>columns()</code></td><td>Column API: <code>visible(bool?)</code>, <code>show()</code>, <code>hide()</code>, <code>title(text?)</code>, <code>data()</code>, <code>order(dir)</code>, <code>search(text?)</code>, <code>filter(value?)</code>, <code>width(px?)</code>, <code>header()</code>, <code>index()</code>.</td></tr><tr><td><code>rows(selector?)</code></td><td>Rows API: <code>data()</code>, <code>ids()</code>, <code>count()</code>, <code>nodes()</code>, <code>add(row | rows)</code>, <code>update(patch)</code>, <code>remove()</code>, <code>select()</code>, <code>deselect()</code>, <code>each(fn)</code>.</td></tr><tr><td><code>row(id)</code></td><td>One row: same methods; <code>data()</code> returns the object; <code>edit()</code> opens the editor.</td></tr><tr><td><code>clear()</code></td><td>Remove every row.</td></tr><tr><td><code>data()</code> / <code>selected()</code> / <code>selectedCells()</code></td><td>All row objects / selected row objects / selected cells.</td></tr><tr><td><code>selectAll(filtered = true)</code> / <code>deselectAll()</code></td><td>Selection helpers.</td></tr><tr><td><code>filter(col, value)</code> · <code>filterLogic("and" | "or")</code> · <code>builder(conds, logic)</code> · <code>columnSearch(col, text)</code> · <code>addFilter(fn)</code> · <code>clearFilters()</code></td><td>Filtering from code. <code>addFilter</code> returns a function that removes it.</td></tr><tr><td><code>create(defaults?)</code> · <code>edit(id)</code> · <code>delete(id | ids)</code></td><td>Editor actions (delete asks for confirmation unless <code>confirmDelete: false</code>; returns a promise of true / false).</td></tr><tr><td><code>ajax.reload(cb?, resetPaging?)</code> · <code>ajax.url(u?)</code> · <code>ajax.json()</code> · <code>ajax.params()</code></td><td>Reload from the server, change the URL, read the last JSON answer or the current request parameters.</td></tr><tr><td><code>export(format, options?)</code> · <code>exportData(options?)</code></td><td>Run an export (<code>copy csv excel pdf print json</code>) / get <code>{ headers, rows, rowData }</code>.</td></tr><tr><td><code>cardView(bool | null)</code> · <code>fullscreen(bool?)</code> · <code>theme(v)</code> · <code>variant(v)</code> · <code>density(v)</code></td><td>Layout switches.</td></tr><tr><td><code>state()</code> · <code>clearState()</code> · <code>reset()</code></td><td>Saved state object / clear the saved state / back to the initial configuration.</td></tr><tr><td><code>on(events, fn)</code> · <code>one()</code> · <code>off(events?, fn?)</code> · <code>emit()</code></td><td>Events (see next section).</td></tr><tr><td><code>destroy(keepDom?)</code></td><td>Remove the table and listeners (<code>keepDom</code> restores the original table element).</td></tr><tr><td><code>BasetDataTable.get(el)</code> · <code>.init(root)</code> · <code>.locales</code> · <code>.adapters</code> · <code>.defaults</code> · <code>.version</code></td><td>Static helpers.</td></tr></tbody></table></div>
+<div class="bui-ref-wrap"><table class="bui-ref"><thead><tr><th>Name</th><th>Description</th></tr></thead><tbody><tr><td><code>search(text?)</code></td><td>Get / set the global search. Returns the instance when setting.</td></tr><tr><td><code>order([[col, "asc" | "desc"], …])</code></td><td>Get / set the sort. <code>order([])</code> clears it. <code>col</code> is an index, a data name or a title.</td></tr><tr><td><code>page(n?)</code></td><td>Get / set the page (0-based, or <code>"first" "last" "next" "previous"</code>). <code>page.info()</code> returns <code>{ page, pages, length, start, end, recordsTotal, recordsDisplay }</code>.</td></tr><tr><td><code>pageLength(n?)</code></td><td>Get / set rows per page (<code>-1</code> = all).</td></tr><tr><td><code>draw(resetPaging?)</code></td><td>Apply changes now (client) or reload (server).</td></tr><tr><td><code>column(i)</code> / <code>columns()</code></td><td>Column API: <code>visible(bool?)</code>, <code>show()</code>, <code>hide()</code>, <code>title(text?)</code>, <code>data()</code>, <code>order(dir)</code>, <code>search(text?)</code>, <code>filter(value?)</code>, <code>width(px?)</code>, <code>header()</code>, <code>index()</code>.</td></tr><tr><td><code>rows(selector?)</code></td><td>Rows API: <code>data()</code>, <code>ids()</code>, <code>count()</code>, <code>nodes()</code>, <code>add(row | rows)</code>, <code>update(patch)</code>, <code>remove()</code>, <code>select()</code>, <code>deselect()</code>, <code>each(fn)</code>.</td></tr><tr><td><code>row(id)</code></td><td>One row: same methods; <code>data()</code> returns the object; <code>edit()</code> opens the editor.</td></tr><tr><td><code>clear()</code></td><td>Remove every row.</td></tr><tr><td><code>data()</code> / <code>selected()</code> / <code>selectedCells()</code></td><td>All row objects / selected row objects / selected cells.</td></tr><tr><td><code>selectAll(filtered = true)</code> / <code>deselectAll()</code></td><td>Selection helpers.</td></tr><tr><td><code>filter(col, value)</code> · <code>filterLogic("and" | "or")</code> · <code>builder(conds, logic)</code> · <code>columnSearch(col, text)</code> · <code>addFilter(fn)</code> · <code>clearFilters()</code></td><td>Filtering from code. <code>addFilter</code> returns a function that removes it.</td></tr><tr><td><code>create(defaults?)</code> · <code>edit(id)</code> · <code>delete(id | ids)</code></td><td>Editor actions (delete asks for confirmation unless <code>confirmDelete: false</code>; returns a promise of true / false).</td></tr><tr><td><code>ajax.reload(cb?, resetPaging?)</code> · <code>ajax.url(u?)</code> · <code>ajax.json()</code> · <code>ajax.params()</code></td><td>Reload from the server, change the URL, read the last JSON answer or the current request parameters.</td></tr><tr><td><code>export(format, options?)</code> · <code>exportData(options?)</code></td><td>Run an export (<code>copy csv excel pdf print json</code>) / get <code>{ headers, rows, rowData }</code>.</td></tr><tr><td><code>cardView(bool | null)</code> · <code>fullscreen(bool?)</code> · <code>theme(v)</code> · <code>variant(v)</code> · <code>density(v)</code></td><td>Layout switches.</td></tr><tr><td><code>state()</code> · <code>clearState()</code> · <code>reset()</code></td><td>Saved state object / clear the saved state / back to the initial configuration.</td></tr><tr><td><code>on(events, fn)</code> · <code>one()</code> · <code>off(events?, fn?)</code> · <code>emit()</code></td><td>Events (see next section).</td></tr><tr><td><code>destroy(keepDom?)</code></td><td>Remove the table and listeners (<code>keepDom</code> restores the original table element).</td></tr><tr><td><code>BUI.dataTable.get(el)</code> · <code>.init(root)</code> · <code>.locales</code> · <code>.adapters</code> · <code>.defaults</code> · <code>.version</code></td><td>Static helpers.</td></tr></tbody></table></div>
 <article class="bui-demo-card" id="demo-api"><div class="bui-demo-title">Try the API <span>chaining</span></div><div class="bui-demo-content bui-dtdoc-demo"><div class="bui-badge-row" style="margin-bottom:12px"><button id="api-1" class="bui-btn bui-btn-soft-primary bui-btn-sm" type="button">search("dev") + order</button><button id="api-2" class="bui-btn bui-btn-outline bui-btn-sm" type="button">page("next")</button><button id="api-3" class="bui-btn bui-btn-outline bui-btn-sm" type="button">Toggle email column</button><button id="api-4" class="bui-btn bui-btn-outline bui-btn-sm" type="button">Selected rows</button><button id="api-5" class="bui-btn bui-btn-ghost bui-btn-sm" type="button">Reset</button></div><p class="bui-doc-note" id="api-out" style="margin:0 0 10px">click a row to select it, then "Selected rows"</p><div id="d-api"></div></div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML + JavaScript</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span>  <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-badge-row"</span>  <span class="bui-code-blue">style</span>=<span class="bui-code-green">"margin-bottom:12px"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;button</span>  <span class="bui-code-blue">id</span>=<span class="bui-code-green">"api-1"</span>  <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-btn bui-btn-soft-primary bui-btn-sm"</span>  <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span><span class="bui-code-pink">&gt;</span>search("dev") + order<span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
 <span class="bui-code-pink">&lt;button</span>  <span class="bui-code-blue">id</span>=<span class="bui-code-green">"api-2"</span>  <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-btn bui-btn-outline bui-btn-sm"</span>  <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span><span class="bui-code-pink">&gt;</span>page("next")<span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
 <span class="bui-code-pink">&lt;button</span>  <span class="bui-code-blue">id</span>=<span class="bui-code-green">"api-3"</span>  <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-btn bui-btn-outline bui-btn-sm"</span>  <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span><span class="bui-code-pink">&gt;</span>Toggle email column<span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
@@ -1246,7 +1247,7 @@ document.head.append(css);
 <span class="bui-code-pink">&lt;div</span>  <span class="bui-code-blue">id</span>=<span class="bui-code-green">"d-api"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
 
 <span class="bui-code-pink">&lt;script</span><span class="bui-code-pink">&gt;</span>
-<span class="bui-code-pink">const</span> t = <span class="bui-code-pink">new</span> BasetDataTable(<span class="bui-code-green">'#d-api'</span>, { data: users, columns: [
+<span class="bui-code-pink">const</span> t = BUI.dataTable(<span class="bui-code-green">'#d-api'</span>, { data: users, columns: [
     { data: <span class="bui-code-green">'id'</span>, title: <span class="bui-code-green">'ID'</span>, width: 70 },
     { data: <span class="bui-code-green">'name'</span>, title: <span class="bui-code-green">'Name'</span> },
     { data: <span class="bui-code-green">'email'</span>, title: <span class="bui-code-green">'Email'</span> },
@@ -1270,7 +1271,7 @@ $(<span class="bui-code-green">'api-5'</span>).onclick = () =&gt; t.clearFilters
 
 <span class="bui-code-pink">&lt;script</span><span class="bui-code-pink">&gt;</span>
 <span class="bui-code-pink">const</span> log = document.getElementById(<span class="bui-code-green">'ev-log'</span>);
-<span class="bui-code-pink">const</span> t = <span class="bui-code-pink">new</span> BasetDataTable(<span class="bui-code-green">'#d-events'</span>, { data: users, columns: [
+<span class="bui-code-pink">const</span> t = BUI.dataTable(<span class="bui-code-green">'#d-events'</span>, { data: users, columns: [
     { data: <span class="bui-code-green">'id'</span>, title: <span class="bui-code-green">'ID'</span> },
     { data: <span class="bui-code-green">'name'</span>, title: <span class="bui-code-green">'Name'</span> },
     { data: <span class="bui-code-green">'role'</span>, title: <span class="bui-code-green">'Role'</span> },
@@ -1281,15 +1282,15 @@ $(<span class="bui-code-green">'api-5'</span>).onclick = () =&gt; t.clearFilters
 document.getElementById(<span class="bui-code-green">'ev-off'</span>).onclick = () =&gt; t.off(<span class="bui-code-green">'.log'</span>);         <span class="bui-code-muted">// removes every handler with the .log namespace</span>
 <span class="bui-code-pink">&lt;/script</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
 <h3 id="extend" style="margin:38px 0 12px;font-family:var(--bui-font-heading);font-size:18px;letter-spacing:-.4px"><span class="bui-dtdoc-num">40</span> Custom extensions</h3>
-<p class="bui-doc-note">Extend the table without editing the library: <b>custom buttons</b> (see Buttons), <b>custom renderers</b> (<code>render</code>), <b>custom filters</b> (<code>addFilter</code>, <code>filterFn</code>), <b>custom sorting</b> (<code>sortFn</code>), <b>export adapters</b> (<code>BasetDataTable.adapters.pdf / excel</code>), <b>languages</b> (<code>BasetDataTable.locales</code>), <b>request parameters and response mapping</b> (<code>ajax.params / ajax.map / ajax.fetch</code>), and <b>plug-ins that add methods</b> by extending the prototype once, before creating tables. The example adds a <code>sum(column)</code> method and a footer-less "Total" button.</p>
+<p class="bui-doc-note">Extend the table without editing the library: <b>custom buttons</b> (see Buttons), <b>custom renderers</b> (<code>render</code>), <b>custom filters</b> (<code>addFilter</code>, <code>filterFn</code>), <b>custom sorting</b> (<code>sortFn</code>), <b>export adapters</b> (<code>BUI.dataTable.adapters.pdf / excel</code>), <b>languages</b> (<code>BUI.dataTable.locales</code>), <b>request parameters and response mapping</b> (<code>ajax.params / ajax.map / ajax.fetch</code>), and <b>plug-ins that add methods</b> by extending the prototype once, before creating tables. The example adds a <code>sum(column)</code> method and a footer-less "Total" button.</p>
 <article class="bui-demo-card" id="demo-extend"><div class="bui-demo-title">A plug-in method and button <span>prototype · custom button</span></div><div class="bui-demo-content bui-dtdoc-demo"><div id="d-extend"></div></div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML + JavaScript</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span>  <span class="bui-code-blue">id</span>=<span class="bui-code-green">"d-extend"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
 
 <span class="bui-code-pink">&lt;script</span><span class="bui-code-pink">&gt;</span>
 <span class="bui-code-muted">// A plug-in: add a method to every table</span>
-BasetDataTable.prototype.sum = <span class="bui-code-pink">function</span> (col) {
+BUI.dataTable.prototype.sum = <span class="bui-code-pink">function</span> (col) {
   <span class="bui-code-pink">return</span> <span class="bui-code-pink">this</span>.column(col).data().reduce((s, v) =&gt; s + (Number(v) || 0), 0);
 };
-<span class="bui-code-pink">new</span> BasetDataTable(<span class="bui-code-green">'#d-extend'</span>, {
+BUI.dataTable(<span class="bui-code-green">'#d-extend'</span>, {
   data: users,
   columns: [{ data: <span class="bui-code-green">'name'</span>, title: <span class="bui-code-green">'Name'</span> }, { data: <span class="bui-code-green">'department'</span>, title: <span class="bui-code-green">'Department'</span>, filter: <span class="bui-code-green">'select'</span> }, { data: <span class="bui-code-green">'salary'</span>, title: <span class="bui-code-green">'Salary'</span>, render: (v, t) =&gt; (t === <span class="bui-code-green">'display'</span> ? BUIDocs.money(v) : v) }],
   filters: <span class="bui-code-pink">true</span>,
@@ -1303,16 +1304,18 @@ BasetDataTable.prototype.sum = <span class="bui-code-pink">function</span> (col)
     </main>
   </div>
   <script src="../assets/js/baset-ui.js"></script>
+  <script src="../assets/js/component-playground.js"></script>
+  <script src="../assets/js/component-playground-configs.js"></script>
   <script src="../assets/js/baset-datatable.js"></script>
   <script src="../assets/js/datatable-docs.js"></script>
   <script>
 (function(){ try { const users = BUIDocs.users;
 // Nothing to write: the table below upgrades itself when the page loads.
 // To start one yourself (for example after inserting it with JavaScript):
-BasetDataTable.init(document);
+BUI.dataTable.init(document);
 } catch (e) { console.error("demo html:", e); } })();
 (function(){ try { const users = BUIDocs.users;
-const table = new BasetDataTable('#d-init', {
+const table = BUI.dataTable('#d-init', {
   data: users,
   columns: [
     { data: 'id', title: 'ID', width: 70 },
@@ -1382,7 +1385,7 @@ const base = {
   view: { title: (u) => u.name, render: profile, wide: true },
 };
 
-const table = new BasetDataTable('#d-ex-noapi', {
+const table = BUI.dataTable('#d-ex-noapi', {
   ...base,
   data: users,                             // all rows live in the browser
   editor: { mode: 'modal' },               // add / edit / delete change the local data
@@ -1447,7 +1450,7 @@ const base = {
 
 const apiRows = users.map((u) => ({ ...u }));   // pretend this is your database table
 
-const table = new BasetDataTable('#d-ex-api', {
+const table = BUI.dataTable('#d-ex-api', {
   ...base,
   serverSide: true,                        // every page / search / sort / filter is a request: "Processing…" shows
   ajax: {
@@ -1464,7 +1467,7 @@ const table = new BasetDataTable('#d-ex-api', {
 });
 } catch (e) { console.error("demo ex-api:", e); } })();
 (function(){ try { const users = BUIDocs.users;
-const t = new BasetDataTable('#d-data', {
+const t = BUI.dataTable('#d-data', {
   data: users.slice(0, 5),
   columns: [
     { data: 'id', title: 'ID', width: 70 },
@@ -1484,7 +1487,7 @@ document.getElementById('data-del').onclick = () => t.row(2).remove();
 document.getElementById('data-clr').onclick = () => t.clear();
 } catch (e) { console.error("demo data:", e); } })();
 (function(){ try { const users = BUIDocs.users;
-new BasetDataTable('#d-pg-numbers', {
+BUI.dataTable('#d-pg-numbers', {
   data: users,
   columns: [
     { data: 'id', title: 'ID' },
@@ -1499,7 +1502,7 @@ new BasetDataTable('#d-pg-numbers', {
 });
 } catch (e) { console.error("demo pg-numbers:", e); } })();
 (function(){ try { const users = BUIDocs.users;
-new BasetDataTable('#d-pg-full_numbers', {
+BUI.dataTable('#d-pg-full_numbers', {
   data: users,
   columns: [
     { data: 'id', title: 'ID' },
@@ -1514,7 +1517,7 @@ new BasetDataTable('#d-pg-full_numbers', {
 });
 } catch (e) { console.error("demo pg-full_numbers:", e); } })();
 (function(){ try { const users = BUIDocs.users;
-new BasetDataTable('#d-pg-simple', {
+BUI.dataTable('#d-pg-simple', {
   data: users,
   columns: [
     { data: 'id', title: 'ID' },
@@ -1529,7 +1532,7 @@ new BasetDataTable('#d-pg-simple', {
 });
 } catch (e) { console.error("demo pg-simple:", e); } })();
 (function(){ try { const users = BUIDocs.users;
-new BasetDataTable('#d-pg-compact', {
+BUI.dataTable('#d-pg-compact', {
   data: users,
   columns: [
     { data: 'id', title: 'ID' },
@@ -1544,7 +1547,7 @@ new BasetDataTable('#d-pg-compact', {
 });
 } catch (e) { console.error("demo pg-compact:", e); } })();
 (function(){ try { const users = BUIDocs.users;
-const t = new BasetDataTable('#d-search', {
+const t = BUI.dataTable('#d-search', {
   data: users,
   columns: [
     { data: 'id', title: 'ID', width: 70 },
@@ -1562,7 +1565,7 @@ const t = new BasetDataTable('#d-search', {
 t.on('search', ({ value }) => (document.getElementById('search-log').textContent = 'search: ' + JSON.stringify(value)));
 } catch (e) { console.error("demo search:", e); } })();
 (function(){ try { const users = BUIDocs.users;
-const t = new BasetDataTable('#d-order', {
+const t = BUI.dataTable('#d-order', {
   data: users,
   columns: [
     { data: 'department', title: 'Department' },
@@ -1578,7 +1581,7 @@ const t = new BasetDataTable('#d-order', {
 document.getElementById('order-btn').onclick = () => t.order([[3, 'desc']]);
 } catch (e) { console.error("demo order:", e); } })();
 (function(){ try { const users = BUIDocs.users;
-new BasetDataTable('#d-colvis', {
+BUI.dataTable('#d-colvis', {
   data: users,
   columns: [
     { data: 'id', title: 'ID' },
@@ -1592,7 +1595,7 @@ new BasetDataTable('#d-colvis', {
 });
 } catch (e) { console.error("demo colvis:", e); } })();
 (function(){ try { const users = BUIDocs.users;
-new BasetDataTable('#d-colreorder', {
+BUI.dataTable('#d-colreorder', {
   data: users,
   columns: [
     { data: 'id', title: 'ID', width: 70 },
@@ -1608,7 +1611,7 @@ new BasetDataTable('#d-colreorder', {
 });
 } catch (e) { console.error("demo colreorder:", e); } })();
 (function(){ try { const users = BUIDocs.users;
-new BasetDataTable('#d-colresize', {
+BUI.dataTable('#d-colresize', {
   data: users,
   columns: [
     { data: 'id', title: 'ID', width: 70, minWidth: 50, maxWidth: 120 },
@@ -1622,7 +1625,7 @@ new BasetDataTable('#d-colresize', {
 });
 } catch (e) { console.error("demo colresize:", e); } })();
 (function(){ try { const users = BUIDocs.users;
-const t = new BasetDataTable('#d-filters', {
+const t = BUI.dataTable('#d-filters', {
   data: users,
   columns: [
     { data: 'id', title: 'ID', width: 70 },
@@ -1641,7 +1644,7 @@ const t = new BasetDataTable('#d-filters', {
 t.filter('role', 'QA Engineer').draw();
 } catch (e) { console.error("demo filters:", e); } })();
 (function(){ try { const users = BUIDocs.users;
-const t = new BasetDataTable('#d-builder', {
+const t = BUI.dataTable('#d-builder', {
   data: users,
   columns: [
     { data: 'id', title: 'ID', width: 70 },
@@ -1662,7 +1665,7 @@ t.builder([
 ], 'and').draw();
 } catch (e) { console.error("demo builder:", e); } })();
 (function(){ try { const users = BUIDocs.users;
-const t = new BasetDataTable('#d-sel-checkbox', {
+const t = BUI.dataTable('#d-sel-checkbox', {
   data: users,
   columns: [
     { data: 'id', title: 'ID', width: 70 },
@@ -1681,13 +1684,13 @@ const t = new BasetDataTable('#d-sel-checkbox', {
 });
 } catch (e) { console.error("demo sel-checkbox:", e); } })();
 (function(){ try { const users = BUIDocs.users;
-const a = new BasetDataTable('#d-sel-single', { data: users, columns: [
+const a = BUI.dataTable('#d-sel-single', { data: users, columns: [
     { data: 'id', title: 'ID' },
     { data: 'name', title: 'Name' },
     { data: 'role', title: 'Role' },
     { data: 'country', title: 'Country' },
   ], select: 'single', pageLength: 3, searching: false });
-const b = new BasetDataTable('#d-sel-cell', { data: users, columns: [
+const b = BUI.dataTable('#d-sel-cell', { data: users, columns: [
     { data: 'id', title: 'ID' },
     { data: 'name', title: 'Name' },
     { data: 'role', title: 'Role' },
@@ -1697,7 +1700,7 @@ a.on('select', (d) => (document.getElementById('sel-log').textContent = 'row: ' 
 b.on('select deselect', (d) => (document.getElementById('sel-log').textContent = 'cells: ' + b.selectedCells().map((c) => c.value).join(' · ')));
 } catch (e) { console.error("demo sel-single:", e); } })();
 (function(){ try { const users = BUIDocs.users;
-const t = new BasetDataTable('#d-ed-inline', {
+const t = BUI.dataTable('#d-ed-inline', {
   data: users,
   columns: [
     { data: 'id', title: 'ID', width: 70 },
@@ -1725,7 +1728,7 @@ const t = new BasetDataTable('#d-ed-inline', {
 });
 } catch (e) { console.error("demo ed-inline:", e); } })();
 (function(){ try { const users = BUIDocs.users;
-const t = new BasetDataTable('#d-ed-modal', {
+const t = BUI.dataTable('#d-ed-modal', {
   data: users,
   columns: [
     { data: 'id', title: 'ID', width: 70 },
@@ -1752,7 +1755,7 @@ const t = new BasetDataTable('#d-ed-modal', {
 });
 } catch (e) { console.error("demo ed-modal:", e); } })();
 (function(){ try { const users = BUIDocs.users;
-const a = new BasetDataTable('#d-actions-inline', {
+const a = BUI.dataTable('#d-actions-inline', {
   data: users,
   columns: [
     { data: 'id', title: 'ID' },
@@ -1768,7 +1771,7 @@ const a = new BasetDataTable('#d-actions-inline', {
   pageLength: 4,
   searching: false,
 });
-const b = new BasetDataTable('#d-actions-menu', {
+const b = BUI.dataTable('#d-actions-menu', {
   data: users,
   columns: [
     { data: 'id', title: 'ID' },
@@ -1784,7 +1787,7 @@ const b = new BasetDataTable('#d-actions-menu', {
 });
 } catch (e) { console.error("demo actions-inline:", e); } })();
 (function(){ try { const users = BUIDocs.users;
-const t = new BasetDataTable('#d-buttons', {
+const t = BUI.dataTable('#d-buttons', {
   data: users,
   columns: [
     { data: 'id', title: 'ID', width: 70 },
@@ -1803,7 +1806,7 @@ const t = new BasetDataTable('#d-buttons', {
 });
 } catch (e) { console.error("demo buttons:", e); } })();
 (function(){ try { const users = BUIDocs.users;
-new BasetDataTable('#d-copy', {
+BUI.dataTable('#d-copy', {
   data: users,
   columns: [
     { data: 'id', title: 'ID', width: 70 },
@@ -1819,7 +1822,7 @@ new BasetDataTable('#d-copy', {
 });
 } catch (e) { console.error("demo copy:", e); } })();
 (function(){ try { const users = BUIDocs.users;
-new BasetDataTable('#d-csv', {
+BUI.dataTable('#d-csv', {
   data: users,
   columns: [
     { data: 'id', title: 'ID', width: 70 },
@@ -1838,7 +1841,7 @@ new BasetDataTable('#d-csv', {
 });
 } catch (e) { console.error("demo csv:", e); } })();
 (function(){ try { const users = BUIDocs.users;
-new BasetDataTable('#d-json', {
+BUI.dataTable('#d-json', {
   data: users,
   columns: [
     { data: 'id', title: 'ID', width: 70 },
@@ -1853,7 +1856,7 @@ new BasetDataTable('#d-json', {
 });
 } catch (e) { console.error("demo json:", e); } })();
 (function(){ try { const users = BUIDocs.users;
-new BasetDataTable('#d-excel', {
+BUI.dataTable('#d-excel', {
   data: users,
   columns: [
     { data: 'id', title: 'ID', width: 70 },
@@ -1871,7 +1874,7 @@ new BasetDataTable('#d-excel', {
 });
 } catch (e) { console.error("demo excel:", e); } })();
 (function(){ try { const users = BUIDocs.users;
-new BasetDataTable('#d-pdf', {
+BUI.dataTable('#d-pdf', {
   data: users.filter((u) => !/[\u0600-\u06FF]/.test(u.name)),     // Latin-only data: selectable text
   columns: [
     { data: 'id', title: 'ID', width: 70 },
@@ -1887,7 +1890,7 @@ new BasetDataTable('#d-pdf', {
 });
 } catch (e) { console.error("demo pdf:", e); } })();
 (function(){ try { const users = BUIDocs.users;
-new BasetDataTable('#d-print', {
+BUI.dataTable('#d-print', {
   data: users,
   columns: [
     { data: 'id', title: 'ID', width: 70 },
@@ -1903,7 +1906,7 @@ new BasetDataTable('#d-print', {
 });
 } catch (e) { console.error("demo print:", e); } })();
 (function(){ try { const users = BUIDocs.users;
-const t = new BasetDataTable('#d-resp', {
+const t = BUI.dataTable('#d-resp', {
   data: users,
   columns: [
     { data: 'name', title: 'Name', priority: 1 },
@@ -1920,7 +1923,7 @@ t.on('responsiveChange', (d) => (document.getElementById('resp-log').textContent
 t.cardView(null);   // measure once more, now that the listener exists
 } catch (e) { console.error("demo resp:", e); } })();
 (function(){ try { const users = BUIDocs.users;
-new BasetDataTable('#d-cards', {
+BUI.dataTable('#d-cards', {
   data: users,
   columns: [
     { data: 'id', title: 'ID', width: 70 },
@@ -1939,7 +1942,7 @@ new BasetDataTable('#d-cards', {
 });
 } catch (e) { console.error("demo cards:", e); } })();
 (function(){ try { const users = BUIDocs.users;
-const t = new BasetDataTable('#d-ajax', {
+const t = BUI.dataTable('#d-ajax', {
   columns: [
     { data: 'id', title: 'ID', width: 70 },
     { data: 'name', title: 'Name' },
@@ -1960,7 +1963,7 @@ const t = new BasetDataTable('#d-ajax', {
 t.on('ajaxLoad', (d) => console.log('loaded', d.data.length, 'rows'));
 } catch (e) { console.error("demo ajax:", e); } })();
 (function(){ try { const users = BUIDocs.users;
-const t = new BasetDataTable('#d-server', {
+const t = BUI.dataTable('#d-server', {
   columns: [
     { data: 'id', title: 'ID', width: 70 },
     { data: 'name', title: 'Name' },
@@ -1983,7 +1986,7 @@ t.on('ajaxLoad', (d) => (document.getElementById('server-log').textContent = 'GE
 } catch (e) { console.error("demo server:", e); } })();
 (function(){ try { const users = BUIDocs.users;
 let fail = true;
-const t = new BasetDataTable('#d-server-err', {
+const t = BUI.dataTable('#d-server-err', {
   columns: [
     { data: 'id', title: 'ID' },
     { data: 'name', title: 'Name' },
@@ -2000,7 +2003,7 @@ const t = new BasetDataTable('#d-server-err', {
 t.on('ajaxError', (d) => { fail = false; console.log('failed with status', d.status, '- the next try will work'); });
 } catch (e) { console.error("demo server-err:", e); } })();
 (function(){ try { const users = BUIDocs.users;
-new BasetDataTable('#d-state', {
+BUI.dataTable('#d-state', {
   data: users,
   columns: [
     { data: 'id', title: 'ID', width: 70 },
@@ -2018,7 +2021,7 @@ new BasetDataTable('#d-state', {
 });
 } catch (e) { console.error("demo state:", e); } })();
 (function(){ try { const users = BUIDocs.users;
-new BasetDataTable('#d-group', {
+BUI.dataTable('#d-group', {
   data: users,
   rowGroup: {
     dataSrc: 'department',
@@ -2034,7 +2037,7 @@ new BasetDataTable('#d-group', {
 });
 } catch (e) { console.error("demo group:", e); } })();
 (function(){ try { const users = BUIDocs.users;
-new BasetDataTable('#d-fixed', {
+BUI.dataTable('#d-fixed', {
   data: users,
   columns: [
     { data: 'name', title: 'Name', width: 190 }, { data: 'email', title: 'Email', width: 240 }, { data: 'role', title: 'Role', width: 200 },
@@ -2051,7 +2054,7 @@ new BasetDataTable('#d-fixed', {
 } catch (e) { console.error("demo fixed:", e); } })();
 (function(){ try { const users = BUIDocs.users;
 const big = Array.from({ length: 20000 }, (_, i) => ({ id: i + 1, name: users[i % users.length].name, role: users[i % users.length].role, value: (i * 7919) % 10000 }));
-new BasetDataTable('#d-virtual', {
+BUI.dataTable('#d-virtual', {
   data: big,
   columns: [{ data: 'id', title: 'ID' }, { data: 'name', title: 'Name' }, { data: 'role', title: 'Role' }, { data: 'value', title: 'Value' }],
   virtualScroll: { rowHeight: 40 },
@@ -2060,7 +2063,7 @@ new BasetDataTable('#d-virtual', {
 });
 } catch (e) { console.error("demo virtual:", e); } })();
 (function(){ try { const users = BUIDocs.users;
-new BasetDataTable('#d-i18n-ar', {
+BUI.dataTable('#d-i18n-ar', {
   data: BUIDocs.users,
   columns: [
     { data: 'id', title: 'الرقم' }, { data: 'name', title: 'الاسم' }, { data: 'role', title: 'الوظيفة' }, { data: 'department', title: 'القسم', filter: 'select' },
@@ -2073,11 +2076,11 @@ new BasetDataTable('#d-i18n-ar', {
 });
 } catch (e) { console.error("demo i18n-ar:", e); } })();
 (function(){ try { const users = BUIDocs.users;
-BasetDataTable.locales.fr = {
+BUI.dataTable.locales.fr = {
   search: 'Rechercher…', length: 'Afficher {menu} lignes', info: '{start} à {end} sur {total}', infoFiltered: '(filtré sur {max})',
   prev: 'Précédent', next: 'Suivant', first: 'Premier', last: 'Dernier', empty: 'Aucun résultat', emptyTable: 'Aucune donnée', all: 'Tout',
 };
-new BasetDataTable('#d-i18n-fr', { data: users, columns: [
+BUI.dataTable('#d-i18n-fr', { data: users, columns: [
     { data: 'id', title: 'ID' },
     { data: 'name', title: 'Name' },
     { data: 'role', title: 'Role' },
@@ -2085,13 +2088,13 @@ new BasetDataTable('#d-i18n-fr', { data: users, columns: [
   ], language: { locale: 'fr', search: 'Chercher un collègue…' }, pageLength: 5 });
 } catch (e) { console.error("demo i18n-fr:", e); } })();
 (function(){ try { const users = BUIDocs.users;
-new BasetDataTable('#d-rtl', { data: users, columns: [
+BUI.dataTable('#d-rtl', { data: users, columns: [
     { data: 'id', title: 'ID' },
     { data: 'name', title: 'Name' },
     { data: 'role', title: 'Role' },
     { data: 'country', title: 'Country' },
   ], language: { direction: 'rtl' }, select: 'checkbox', rowActions: ['view'], pageLength: 4 });
-new BasetDataTable('#d-ltr', { data: users, columns: [
+BUI.dataTable('#d-ltr', { data: users, columns: [
     { data: 'id', title: 'ID' },
     { data: 'name', title: 'Name' },
     { data: 'role', title: 'Role' },
@@ -2099,13 +2102,13 @@ new BasetDataTable('#d-ltr', { data: users, columns: [
   ], language: { direction: 'ltr' }, select: 'checkbox', rowActions: ['view'], pageLength: 4 });
 } catch (e) { console.error("demo rtl:", e); } })();
 (function(){ try { const users = BUIDocs.users;
-new BasetDataTable('#d-dark', { data: users, columns: [
+BUI.dataTable('#d-dark', { data: users, columns: [
     { data: 'id', title: 'ID' },
     { data: 'name', title: 'Name' },
     { data: 'role', title: 'Role' },
     { data: 'country', title: 'Country' },
   ], theme: 'dark', buttons: ['colvis'], pageLength: 3 });
-new BasetDataTable('#d-light', { data: users, columns: [
+BUI.dataTable('#d-light', { data: users, columns: [
     { data: 'id', title: 'ID' },
     { data: 'name', title: 'Name' },
     { data: 'role', title: 'Role' },
@@ -2117,13 +2120,13 @@ const css = document.createElement('style');
 css.textContent = `.theme-ocean { --bui-dtbl-accent: #0891b2; --bui-dtbl-header-bg: #ecfeff; --bui-dtbl-header-fg: #155e75; --bui-dtbl-selected: #cffafe; --bui-dtbl-radius: 18px; --bui-dtbl-font-size: 14px; }
   .bui-dark .theme-ocean { --bui-dtbl-header-bg: #164e63; --bui-dtbl-header-fg: #cffafe; --bui-dtbl-selected: #155e75; }`;
 document.head.append(css);
-['striped', 'bordered', 'minimal', 'modern'].forEach((v) => new BasetDataTable('#d-theme-' + v, { data: users, columns: [
+['striped', 'bordered', 'minimal', 'modern'].forEach((v) => BUI.dataTable('#d-theme-' + v, { data: users, columns: [
     { data: 'id', title: 'ID' },
     { data: 'name', title: 'Name' },
     { data: 'role', title: 'Role' },
     { data: 'country', title: 'Country' },
   ], variant: v, pageLength: 3, searching: false, showLength: false, select: 'multi' }));
-new BasetDataTable('#d-theme-ocean', { data: users, columns: [
+BUI.dataTable('#d-theme-ocean', { data: users, columns: [
     { data: 'id', title: 'ID' },
     { data: 'name', title: 'Name' },
     { data: 'role', title: 'Role' },
@@ -2131,7 +2134,7 @@ new BasetDataTable('#d-theme-ocean', { data: users, columns: [
   ], className: 'theme-ocean', density: 'compact', select: 'multi', pageLength: 3, searching: false });
 } catch (e) { console.error("demo themes:", e); } })();
 (function(){ try { const users = BUIDocs.users;
-const t = new BasetDataTable('#d-api', { data: users, columns: [
+const t = BUI.dataTable('#d-api', { data: users, columns: [
     { data: 'id', title: 'ID', width: 70 },
     { data: 'name', title: 'Name' },
     { data: 'email', title: 'Email' },
@@ -2148,7 +2151,7 @@ $('api-5').onclick = () => t.clearFilters().order([]).pageLength(5).draw();
 } catch (e) { console.error("demo api:", e); } })();
 (function(){ try { const users = BUIDocs.users;
 const log = document.getElementById('ev-log');
-const t = new BasetDataTable('#d-events', { data: users, columns: [
+const t = BUI.dataTable('#d-events', { data: users, columns: [
     { data: 'id', title: 'ID' },
     { data: 'name', title: 'Name' },
     { data: 'role', title: 'Role' },
@@ -2160,10 +2163,10 @@ document.getElementById('ev-off').onclick = () => t.off('.log');         // remo
 } catch (e) { console.error("demo events:", e); } })();
 (function(){ try { const users = BUIDocs.users;
 // A plug-in: add a method to every table
-BasetDataTable.prototype.sum = function (col) {
+BUI.dataTable.prototype.sum = function (col) {
   return this.column(col).data().reduce((s, v) => s + (Number(v) || 0), 0);
 };
-new BasetDataTable('#d-extend', {
+BUI.dataTable('#d-extend', {
   data: users,
   columns: [{ data: 'name', title: 'Name' }, { data: 'department', title: 'Department', filter: 'select' }, { data: 'salary', title: 'Salary', render: (v, t) => (t === 'display' ? BUIDocs.money(v) : v) }],
   filters: true,

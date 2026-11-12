@@ -535,7 +535,7 @@
   class BasetEditor {
     constructor(target, options = {}) {
       const el = typeof target === 'string' ? document.querySelector(target) : target;
-      if (!el) throw new Error('BasetEditor: target not found');
+      if (!el) throw new Error('BUI.editor: target not found');
       if (el._buiEditor) return el._buiEditor;
       const o = (this.o = Object.assign({}, DEFAULTS, readAttrs(el), options));
       const isTa = el.tagName === 'TEXTAREA';
@@ -1299,12 +1299,13 @@
     list.push(...(root.querySelectorAll ? root.querySelectorAll('[data-bui-editor]') : []));
     list.forEach((el) => { if (!el._buiEditor) new BasetEditor(el); });
   };
-  BUI.editor = {
+  const make = (Cls) => { function f(...args) { return new Cls(...args); } Object.setPrototypeOf(f, Cls); Object.defineProperty(f, 'prototype', { value: Cls.prototype }); f.Class = Cls; return f; };
+  /* BUI.editor(target, options) creates an editor (new is optional); the helpers below live on the same function */
+  BUI.editor = Object.assign(make(BasetEditor), {
     version: '1.0.0', create: (t, o) => new BasetEditor(t, o), init, locales: LOCALES, defaults: DEFAULTS, presets: PRESETS,
     get: (t) => { const el = typeof t === 'string' ? document.querySelector(t) : t; return el ? el._buiEditor || (el.matches('[data-bui-editor]') ? new BasetEditor(el) : null) : null; },
     sanitize: (html, o) => sanitizeHTML(html, o),
-  };
-  window.BasetEditor = BasetEditor;
+  });
   const start = () => { init(); new MutationObserver((rs) => rs.forEach((r) => r.addedNodes.forEach((n) => { if (n.nodeType === 1) init(n); }))).observe(document.body, { childList: true, subtree: true }); };
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start); else start();
 })();
