@@ -2057,3 +2057,84 @@ html.bui-editor-lock { overflow: hidden; }
 }
 @media (prefers-reduced-motion: reduce) { .bui-editor-panel { animation: none; } .bui-editor-swatch { transition: none; } }
 @media print { .bui-editor-toolbar, .bui-editor-footer { display: none; } .bui-editor { border: 0; } }
+
+/* =========================================================
+   24. Stepper and wizard
+   .bui-stepper > .bui-stepper-list > .bui-step > .bui-step-head (> .bui-step-marker + .bui-step-text)
+   Wizard parts: .bui-stepper-panel (one per step) · .bui-stepper-actions with [data-bui-step-prev | -next | -finish]
+   States on .bui-step: .bui-step-active · .bui-step-done · .bui-step-error
+   Modifiers on .bui-stepper: .bui-stepper-vertical · .bui-stepper-sm · .bui-stepper-lg
+   JS (assets/js/baset-stepper.js): BUI.stepper(target, options) · <div class="bui-stepper" data-bui-stepper>
+   Tokens: --bui-step-size (marker diameter) · --bui-step-gap (space around the connector)
+   ========================================================= */
+.bui-stepper { --bui-step-size: 32px; --bui-step-gap: 12px; --bui-step-dir: 1; display: grid; gap: calc(var(--bui-spacer) * 1.25); min-width: 0; color: var(--bui-ink); font-size: var(--bui-font-size); }
+.bui-stepper:dir(rtl) { --bui-step-dir: -1; }
+.bui-stepper-sm { --bui-step-size: 26px; --bui-step-gap: 8px; }
+.bui-stepper-lg { --bui-step-size: 40px; --bui-step-gap: 14px; }
+.bui-stepper [hidden] { display: none; }
+
+/* Step list: markers joined by a connector line */
+.bui-stepper-list { display: flex; align-items: center; min-width: 0; margin: 0; padding: 0; list-style: none; }
+.bui-step { position: relative; display: flex; flex: 1 1 auto; align-items: center; min-width: 0; }
+.bui-step:last-child { flex: 0 1 auto; }
+.bui-step:not(:last-child)::after { content: ""; flex: 1 1 24px; min-width: 16px; height: 2px; margin-inline: var(--bui-step-gap); border-radius: 2px; background: var(--bui-input-border); transition: background .25s; }
+.bui-step-done:not(:last-child)::after { background: var(--bui-success-base); }
+
+.bui-step-head { display: inline-flex; align-items: center; gap: 10px; min-width: 0; padding: 0; border: 0; background: none; color: inherit; font: inherit; text-align: start; }
+button.bui-step-head { border-radius: var(--bui-radius-3); cursor: pointer; }
+button.bui-step-head:focus-visible { outline: 2px solid var(--bui-primary); outline-offset: 4px; }
+button.bui-step-head:disabled { cursor: not-allowed; }
+.bui-step-marker { flex: none; display: grid; place-items: center; width: var(--bui-step-size); height: var(--bui-step-size); border: 2px solid var(--bui-input-border); border-radius: 50%; background: var(--bui-surface); color: var(--bui-muted); font: 800 calc(var(--bui-step-size) * .4) / 1 var(--bui-font-heading); transition: background .2s, border-color .2s, color .2s, box-shadow .2s; }
+.bui-step-marker i { font-size: calc(var(--bui-step-size) * .5); }
+button.bui-step-head:hover:not(:disabled) .bui-step-marker { border-color: var(--bui-primary-border); color: var(--bui-primary-fg); }
+.bui-step-text { display: grid; min-width: 0; line-height: 1.3; }
+.bui-step-title { overflow: hidden; color: var(--bui-muted); font-weight: 700; text-overflow: ellipsis; white-space: nowrap; transition: color .2s; }
+.bui-step-desc { overflow: hidden; color: var(--bui-muted); font-size: .86em; text-overflow: ellipsis; white-space: nowrap; }
+
+/* Active */
+.bui-step-active .bui-step-marker { border-color: var(--bui-primary-base); background: var(--bui-primary-bg-subtle); color: var(--bui-primary-fg); box-shadow: 0 0 0 4px color-mix(in srgb, var(--bui-primary-base) 16%, transparent); }
+.bui-step-active .bui-step-title { color: var(--bui-ink); }
+
+/* Completed: the number (or icon) is replaced by a check mark */
+.bui-step-done .bui-step-marker, .bui-step-error .bui-step-marker { font-size: 0; }
+.bui-step-done .bui-step-marker::before, .bui-step-error .bui-step-marker::before { font: 800 calc(var(--bui-step-size) * .45) / 1 var(--bui-font-heading); }
+.bui-step-done .bui-step-marker { border-color: var(--bui-success-base); background: var(--bui-success-bg); color: var(--bui-success-contrast); }
+.bui-step-done .bui-step-marker::before { content: "✓"; }
+.bui-step-done .bui-step-title { color: var(--bui-ink); }
+
+/* Error: wins over active so the problem stays visible on the current step */
+.bui-step-error .bui-step-marker { border-color: var(--bui-danger-base); background: var(--bui-danger-bg); color: var(--bui-danger-contrast); box-shadow: none; }
+.bui-step-error .bui-step-marker::before { content: "!"; }
+.bui-step-error .bui-step-title { color: var(--bui-danger-fg); }
+.bui-step-error.bui-step-active .bui-step-marker { box-shadow: 0 0 0 4px color-mix(in srgb, var(--bui-danger-base) 18%, transparent); }
+
+/* Vertical: markers in a column, the connector runs down the marker's centre; a panel may sit inside its step */
+.bui-stepper-vertical .bui-stepper-list { flex-direction: column; align-items: stretch; }
+.bui-stepper-vertical .bui-step { flex: none; flex-direction: column; align-items: stretch; padding-block-end: 22px; }
+.bui-stepper-vertical .bui-step:last-child { padding-block-end: 0; }
+.bui-stepper-vertical .bui-step:not(:last-child)::after { position: absolute; inset-block: calc(var(--bui-step-size) + 6px) 6px; inset-inline-start: calc(var(--bui-step-size) / 2 - 1px); flex: none; width: 2px; min-width: 0; height: auto; margin: 0; }
+.bui-stepper-vertical .bui-step > .bui-step-head { align-self: flex-start; max-width: 100%; }
+.bui-stepper-vertical .bui-step > .bui-stepper-panel { margin-inline-start: calc(var(--bui-step-size) + 10px); padding-block-start: 12px; }
+
+/* Panels and actions */
+.bui-stepper-panel { min-width: 0; outline: none; }
+.bui-stepper-panel[hidden] { display: none; }
+.bui-stepper-panel[data-bui-motion] { animation: bui-stepper-in .26s ease both; }
+.bui-stepper-panel[data-bui-motion="back"] { --bui-step-sign: -1; }
+@keyframes bui-stepper-in { from { opacity: 0; transform: translateX(calc(var(--bui-step-dir) * var(--bui-step-sign, 1) * 16px)); } to { opacity: 1; transform: none; } }
+.bui-stepper-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.bui-stepper-actions > [data-bui-step-next], .bui-stepper-actions > [data-bui-step-finish] { margin-inline-start: auto; }
+.bui-stepper-count { color: var(--bui-muted); font-size: 12px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.bui-stepper-done { display: grid; justify-items: center; gap: 8px; padding-block: 12px; text-align: center; }
+.bui-stepper-done h3 { margin: 0; font: 800 18px var(--bui-font-heading); letter-spacing: -.3px; }
+.bui-stepper-done p { margin: 0; color: var(--bui-muted); }
+
+/* Narrow screens: a horizontal stepper keeps the markers and shows only the active step's text */
+@media (max-width: 575.98px) {
+  .bui-stepper:not(.bui-stepper-vertical) .bui-step:not(.bui-step-active) .bui-step-text { display: none; }
+  .bui-stepper:not(.bui-stepper-vertical) .bui-step:not(:last-child)::after { min-width: 8px; margin-inline: 8px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .bui-stepper-panel[data-bui-motion] { animation: none; }
+  .bui-step-marker, .bui-step-title, .bui-step:not(:last-child)::after { transition: none; }
+}

@@ -31,6 +31,7 @@ Explore the full Baset UI documentation website, including interactive component
 8. [Charts and data visualization](#charts-and-data-visualization)
 9. [DataTable](#datatable)
    - [Calendar and scheduler](#calendar-and-scheduler)
+   - [Stepper and wizard](#stepper-and-wizard)
 10. [Loaders and success icon](#loaders-and-success-icon)
 11. [Icons](#icons)
 12. [Theming (CSS variables)](#theming-css-variables)
@@ -138,6 +139,7 @@ baset-ui/
 │   ├── charts.html             # Charts: line, bar, area, pie, doughnut, radar, scatter, mixed, radial, gauge
 │   ├── datatable.html          # DataTable: 40 sections, 45 live examples
 │   ├── calendar.html           # Calendar & Scheduler: month / week / day, drag and drop, resize, Arabic RTL, 14 live examples
+│   ├── stepper.html            # Stepper & wizard: horizontal / vertical, completed / active / error, multi-step forms with validation, 8 live examples
 │   ├── cards.html
 │   ├── alerts.html
 │   ├── badges.html
@@ -173,6 +175,7 @@ baset-ui/
 │       ├── baset-charts.js     # Optional SVG charts (needs section 20 of baset-ui.css)
 │       ├── baset-datatable.js  # Optional DataTable (needs section 21 of baset-ui.css)
 │       ├── baset-calendar.js   # Optional Calendar & Scheduler (needs section 23 of baset-ui.css)
+│       ├── baset-stepper.js    # Optional Stepper & wizard (needs section 24 of baset-ui.css)
 │       ├── datatable-docs.js   # DataTable documentation page only (sample data, fake API): do not ship
 │       ├── icons-gallery.js    # Icons page only (search + details dialog)
 │       ├── token-playground.js     # Token playground page only
@@ -210,6 +213,7 @@ baset-ui/
 | Charts & data visualization | `components/charts.html` | Line (basic, multiple, smooth, points, area fill), bar (vertical, horizontal, grouped, stacked, rounded, negative values), area (basic, multiple, stacked), pie, doughnut (center text, custom colors, legend with values and percentages), radar, scatter, mixed bar + line, radial progress, gauge; animation styles and easings; sales and operations dashboards; options, number formats, empty and invalid data, JS API, live data, responsive, RTL, dark mode |
 | DataTable | `components/datatable.html` | 40 sections (incl. a complete with-API / without-API example): HTML-table and JS init, pagination, search, multi-column sort, column visibility / reorder / resize, filters and search builder, selection, inline and modal editing, row actions, buttons, copy / CSV / Excel / PDF / JSON / print, responsive and card view, AJAX and server-side, Laravel API, state, grouping, fixed columns, virtual scrolling, i18n, RTL, dark, themes, API, events, extensions |
 | Calendar & Scheduler | `components/calendar.html` | 14 live examples, each with complete HTML + CSS + JS and a Copy button: basic, month ("+N more"), week (overlapping events), day, add / edit / delete, drag and drop, resizing, details popup, Arabic RTL, languages and first day, light / dark, colors and categories, callbacks and events, JavaScript API; plus the option, method, callback and keyboard reference |
+| Stepper & wizard | `components/stepper.html` | 8 live examples with HTML (and JS where needed) and a Copy button: states, sizes, vertical, icons, multi-step form with validation, vertical wizard, free navigation, custom validation |
 
 Every example on these pages shows the live preview, the class list, and a code block with a **Copy** button (it copies exactly the code shown).
 
@@ -618,6 +622,42 @@ CSS in section 23 of `baset-ui.css`; the component is the optional, dependency-f
 - **More methods:** `setEvents`, `getRange`, `select`, `showEvent`, `openEditor`, `setOptions`, `refresh`, `on` / `off`, `BUI.calendar.instance(el)`. DOM events on the container: `bui:cal-eventclick`, `-eventcreate`, `-eventupdate`, `-eventdelete`, `-dateclick`, `-viewchange`, `-navigate`, `-change`.
 - **Tokens:** `--bui-cal-today`, `--bui-cal-select`, `--bui-cal-radius`, `--bui-cal-cell-h`, `--bui-cal-hour`, `--bui-cal-body-h`, `--bui-cal-gutter`. Declarative: `<div data-bui-calendar data-bui-view="week" data-bui-locale="ar" data-bui-events='[...]'>`.
 
+## Stepper and wizard
+
+A progress indicator that can become a multi-step form. The CSS alone draws the steps; `assets/js/baset-stepper.js` adds the Back / Next navigation and the validation before each move.
+
+```html
+<form class="bui-stepper" id="wizard" data-bui-stepper data-bui-validate novalidate>
+  <ol class="bui-stepper-list">
+    <li class="bui-step"><button type="button" class="bui-step-head">
+      <span class="bui-step-marker">1</span>
+      <span class="bui-step-text"><span class="bui-step-title">Account</span><span class="bui-step-desc">Email and password</span></span>
+    </button></li>
+    <!-- more steps -->
+  </ol>
+  <div class="bui-stepper-panel"><!-- fields of step 1 --></div>
+  <!-- one .bui-stepper-panel per step, in the same order -->
+  <div class="bui-stepper-actions">
+    <button type="button" class="bui-btn bui-btn-outline" data-bui-step-prev>Back</button>
+    <button type="button" class="bui-btn bui-btn-primary" data-bui-step-next>Next</button>
+    <button type="button" class="bui-btn bui-btn-success" data-bui-step-finish>Finish</button>
+  </div>
+</form>
+<script src="assets/js/baset-stepper.js"></script>
+```
+
+| Class | Use |
+|---|---|
+| `.bui-stepper` · `.bui-stepper-list` · `.bui-step` | Container, the `<ol>`, one step |
+| `.bui-step-head` · `.bui-step-marker` · `.bui-step-text` · `.bui-step-title` · `.bui-step-desc` | A `<button>` head makes the step clickable; a `<span>` keeps it static |
+| `.bui-step-active` · `.bui-step-done` · `.bui-step-error` | States (set by the script, or by hand for a static stepper) |
+| `.bui-stepper-vertical` · `.bui-stepper-sm` · `.bui-stepper-lg` | Direction and size (`--bui-step-size` sets the marker diameter) |
+| `.bui-stepper-panel` · `.bui-stepper-actions` · `.bui-stepper-count` · `.bui-stepper-done` | Step content, button row, "2 / 3" counter, the block shown after `complete()` |
+
+**Options** (also `data-bui-*` attributes): `start`, `linear` (jumping ahead validates every step in between), `clickable` (`true`, `'done'` or `false`), `validate` (`false`, or a function `(index, panel, stepper)` that runs after the built-in field checks and returns `true`, `false` or an error text), `beforeChange(to, from, stepper)`, `onChange`, `onInvalid`, `onFinish`, `animate`, `focus`, `enterKey`, `labels`. Put `data-bui-validate="false"` on a panel to skip its validation.
+
+Validation uses `BUI.float.validate` for floating-label fields and the browser's constraint validation for the rest; add `data-bui-validate` to the form so fields revalidate while the person types. `finish()` validates every step, fires the cancelable `bui:stepper-finish`, then submits the form with `requestSubmit()` (or calls `complete()` when there is no form).
+
 ## Navbar, sidebar and footer
 
 CSS in section 22 of `baset-ui.css`; the toggles, live clock and theme button are optional (`baset-ui.js`). Full examples: `components/navigation.html`; build your own in `customize/layout-playground.html`.
@@ -762,6 +802,7 @@ Every script exposes its API on the single `BUI` object, in camelCase. Component
 | `BUI.chart('#sales', options)` | Chart (statics: `.init(root)`, `.get(el)`, `.defaults`, `.palette`) |
 | `BUI.calendar('#cal', options)` | Calendar (statics: `.locales`, `.instance(el)`, `.init(root)`) |
 | `BUI.editor('#body', options)` | Rich text editor (statics: `.get(el)`, `.locales`, `.sanitize(html)`) |
+| `BUI.stepper('#wizard', options)` | Stepper / wizard (statics: `.get(el)`, `.init(root)`) |
 | `BUI.toast()` · `BUI.notify()` | Toasts and notifications |
 | `BUI.modal.*` · `BUI.select.*` · `BUI.dropdown.*` · `BUI.float.*` · `BUI.datetime.*` · `BUI.upload.*` | Namespaces with `open / close / init ...` helpers |
 
@@ -786,6 +827,7 @@ Every script exposes its API on the single `BUI` object, in camelCase. Component
 | Charts | `assets/js/baset-charts.js` (separate file): `BUI.chart(target, { type, data, options })` or `data-bui-chart`; `update / setOptions / setColors / toggle / resize / destroy()`; `BUI.chart.init/get()`; events `bui:chart-render`, `bui:chart-click` |
 | DataTable | `assets/js/baset-datatable.js` (separate file): `BUI.dataTable(target, options)` or `data-bui-datatable` on a `<table>`; `search / order / page / pageLength / column / rows / row / draw / export / destroy`; `BUI.dataTable.locales`, `.adapters` |
 | Calendar & Scheduler | `assets/js/baset-calendar.js` (separate file): `BUI.calendar(target, options)` or `data-bui-calendar`; `addEvent / updateEvent / removeEvent / getEvents / getEventById / setEvents / setDate / setView / next / prev / today / getRange / showEvent / openEditor / setOptions / on / off / destroy()`; events `bui:cal-*` |
+| Stepper & wizard | `assets/js/baset-stepper.js` (separate file): `BUI.stepper(target, options)` or `data-bui-stepper`; `next / prev / goTo / validate / finish / complete / reset / setState / destroy`; `BUI.stepper.get/init()`; events `bui:stepper-change`, `bui:stepper-invalid`, `bui:stepper-finish` |
 | Floating labels | The i button toggles its message; `<form data-bui-validate>` and `BUI.float.setState/clear/open/validate/reset()` |
 | Modal | `BUI.modal.open/close/show/confirm/alert/prompt()` or `data-bui-modal-open` / `data-bui-modal-close` attributes |
 | Scroll-spy | Sidebar links like `<a class="bui-nav" href="#section">` highlight as you scroll |

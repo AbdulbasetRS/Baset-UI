@@ -665,4 +665,47 @@
     },
     note: 'Load <code>assets/css/baset-icons.css</code> and keep <code>assets/fonts/</code> next to it. Browse every icon in the <a href="icons.html#gallery">gallery</a> below.',
   });
+  /* ============================= Stepper & wizard ============================= */
+  const STEPS = [['Account', 'Email and password', 'user'], ['Profile', 'Tell us about you', 'envelope'], ['Billing', 'Payment details', 'gear'], ['Preview', 'Check everything', 'bell'], ['Review', 'Last look', 'lock'], ['Finish', 'All done', 'star']];
+  PG.add('stepper', {
+    stretch: true, tab: 'html',
+    note: 'Load <code>assets/js/baset-stepper.js</code>. <strong>Next</strong> validates the fields of the current step before moving; try leaving a field empty. The same options can be passed to <code>BUI.stepper(\'#wizard\', options)</code>.',
+    controls: [
+      { k: 'orientation', t: 'tabs', label: 'Direction', group: 'Look', v: 'horizontal', opts: [['horizontal', 'Horizontal'], ['vertical', 'Vertical']] },
+      { k: 'size', t: 'tabs', label: 'Size', group: 'Look', v: '', opts: [['sm', 'Small'], ['', 'Default'], ['lg', 'Large']] },
+      { k: 'steps', t: 'range', label: 'Steps', group: 'Look', v: 3, min: 2, max: 6 },
+      { k: 'desc', t: 'check', label: 'Descriptions', group: 'Look', v: true },
+      { k: 'icons', t: 'check', label: 'Icons in the markers', group: 'Look', v: false },
+      { k: 'inside', t: 'check', label: 'Panels inside the steps', group: 'Look', v: false, show: (s) => s.orientation === 'vertical' },
+      { k: 'count', t: 'check', label: 'Step counter', group: 'Look', v: true },
+      { k: 'validate', t: 'check', label: 'Validate before moving', group: 'Behavior', v: true },
+      { k: 'linear', t: 'check', label: 'Linear (no skipping ahead)', group: 'Behavior', v: true },
+      { k: 'clickable', t: 'select', label: 'Step buttons', group: 'Behavior', v: 'true', opts: [['true', 'All clickable'], ['done', 'Completed steps only'], ['false', 'Not clickable']] },
+      { k: 'animate', t: 'check', label: 'Slide animation', group: 'Behavior', v: true },
+      { k: 'enterKey', t: 'check', label: 'Enter goes to next step', group: 'Behavior', v: true },
+    ],
+    html(s) {
+      const n = s.steps, vertical = s.orientation === 'vertical';
+      const root = cls('bui-stepper', vertical && 'bui-stepper-vertical', s.size && `bui-stepper-${s.size}`);
+      const a = { class: root, id: 'wizard', 'data-bui-stepper': true, 'data-bui-validate': true, 'data-bui-linear': !s.linear && 'false', 'data-bui-clickable': s.clickable !== 'true' && s.clickable, 'data-bui-animate': !s.animate && 'false', 'data-bui-enter-key': !s.enterKey && 'false' };
+      const head = (i) => {
+        const [t, d, ic] = STEPS[i];
+        return `<button type="button" class="bui-step-head"><span class="bui-step-marker">${s.icons ? ico(ic) : i + 1}</span><span class="bui-step-text"><span class="bui-step-title">${t}</span>${s.desc ? `<span class="bui-step-desc">${d}</span>` : ''}</span></button>`;
+      };
+      const panel = (i, ind) => {
+        const body = s.validate ? `<div class="bui-float">\n${ind}    <input class="bui-float-input" id="pg-st-${i + 1}" placeholder=" " required data-error-required="This step needs a value">\n${ind}    <label class="bui-float-label" for="pg-st-${i + 1}">${STEPS[i][0]} (required)</label>\n${ind}  </div>` : `<p>Content of step ${i + 1}: ${STEPS[i][1]}.</p>`;
+        return `<div class="bui-stepper-panel">\n${ind}  ${body}\n${ind}</div>`;
+      };
+      const items = Array.from({ length: n }, (_, i) => (vertical && s.inside
+        ? `    <li class="bui-step">\n      ${head(i)}\n      ${panel(i, '      ')}\n    </li>`
+        : `    <li class="bui-step">${head(i)}</li>`));
+      const panels = vertical && s.inside ? '' : '\n' + Array.from({ length: n }, (_, i) => `  ${panel(i, '  ')}`).join('\n') + '\n';
+      return `<div ${attrs(a)}>\n  <ol class="bui-stepper-list">\n${items.join('\n')}\n  </ol>${panels}\n  <div class="bui-stepper-actions">\n    <button type="button" class="bui-btn bui-btn-outline" data-bui-step-prev>Back</button>${s.count ? '\n    <span class="bui-stepper-count"></span>' : ''}\n    <button type="button" class="bui-btn bui-btn-primary" data-bui-step-next>Next</button>\n    <button type="button" class="bui-btn bui-btn-success" data-bui-step-finish>Finish</button>\n  </div>\n  <div class="bui-stepper-done" data-bui-stepper-done hidden>\n    <h3>All steps completed</h3>\n    <button type="button" class="bui-btn bui-btn-outline" data-bui-step-reset>Start over</button>\n  </div>\n</div>`;
+    },
+    js(s) {
+      return `const wizard = BUI.stepper('#wizard', {\n  linear: ${s.linear},\n  clickable: ${s.clickable === 'true' ? 'true' : s.clickable === 'false' ? 'false' : "'done'"},\n  validate: ${s.validate},\n  animate: ${s.animate},\n  enterKey: ${s.enterKey},\n  onChange(to, from, stepper) { console.log(\`step \${from + 1} -> \${to + 1}\`); },\n  onFinish(stepper) { /* send the data, then call stepper.complete() */ },\n});\n\nwizard.next();      // validates the current step, then moves\nwizard.goTo(0);     // jump back\nwizard.setState(1, 'error');`;
+    },
+    preview(s) { return this.html(s).replace('id="wizard"', 'id="pg-wizard"'); }, // the page has its own #wizard demo
+    mount: (stage) => window.BUI?.stepper?.init(stage),
+  });
 })();

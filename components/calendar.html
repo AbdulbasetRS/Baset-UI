@@ -36,6 +36,7 @@
       <a class="bui-nav" href="../components/datatable.html">DataTable</a>
       <a class="bui-nav" href="../components/navigation.html">Navbar, sidebar &amp; footer</a>
       <a class="bui-nav active" href="../components/calendar.html">Calendar &amp; Scheduler</a>
+      <a class="bui-nav" href="../components/stepper.html">Stepper &amp; wizard</a>
       <div class="bui-sidebar-label">CUSTOMIZE</div>
       <a class="bui-nav" href="../customize/colors.html">Default colors</a>
       <a class="bui-nav" href="../customize/typography.html">Typography and shape</a>
@@ -595,7 +596,7 @@ document.getElementById(<span class="bui-code-green">'api-get'</span>).onclick =
 <h3 style="margin:34px 0 14px;font-family:var(--bui-font-heading);font-size:18px;letter-spacing:-.4px">Arabic, RTL and dark mode</h3>
 <p class="bui-doc-note">The stylesheet uses logical properties only (<code>inset-inline-start</code>, <code>margin-inline</code>, <code>border-inline-start</code>), so a calendar inside <code>dir="rtl"</code> mirrors fully: weekday order, the toolbar and its chevrons, the hour column, event stripes and handles. Layout decisions in JavaScript (arrow keys, slide animation) read the computed direction, and names, digits and times use <code>Intl.DateTimeFormat</code> with the Gregorian calendar, so the grid and the labels always agree. Colors come from <code>--bui-*</code> tokens with <code>light-dark()</code>, so <code>class="bui-dark"</code> on <code>&lt;html&gt;</code> (or <code>color-scheme</code> on one calendar) switches the theme. On narrow containers (under 640px wide) the month grid shows colored dots instead of titles; tap a day to see its events.</p>
 </div></section>
-      <div class="bui-pager"><a class="bui-btn bui-btn-outline" href="navigation.html"><span class="bui-flip">←</span> Navbar, sidebar &amp; footer</a><span></span></div>
+      <div class="bui-pager"><a class="bui-btn bui-btn-outline" href="navigation.html"><span class="bui-flip">←</span> Navbar, sidebar &amp; footer</a><a class="bui-btn bui-btn-primary" href="stepper.html">Stepper &amp; wizard <span class="bui-flip">→</span></a></div>
       <footer class="bui-footer"><span>© 2026 Baset UI. Built for makers.</span><span>Documentation · v1.0.0</span></footer>
     </main>
   </div>
