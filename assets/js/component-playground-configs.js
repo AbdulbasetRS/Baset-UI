@@ -708,4 +708,49 @@
     preview(s) { return this.html(s).replace('id="wizard"', 'id="pg-wizard"'); }, // the page has its own #wizard demo
     mount: (stage) => window.BUI?.stepper?.init(stage),
   });
+  /* ================================ Accordion ================================ */
+  const TOPICS = [['Getting started', 'Install the files, add the classes and you are ready.', 'rocket-launch'], ['Account', 'Change your name, email and password.', 'user'], ['Notifications', 'Choose what you hear about and how.', 'bell'], ['Security', 'Two-step sign-in and active sessions.', 'shield-check'], ['Billing', 'Invoices, payment methods and plans.', 'credit-card'], ['Support', 'Open a ticket and we answer within a day.', 'chat-circle']];
+  const accOptions = (s) => {
+    const o = { multiple: s.mode === 'multiple' };
+    if (s.mode === 'single') o.collapsible = s.collapsible;
+    o.animate = s.animate;
+    o.open = s.openFirst ? [0] : [];
+    return o;
+  };
+  PG.add('accordion', {
+    stretch: true, stage: 'align-content:start', tab: 'html',
+    note: 'Load <code>assets/js/baset-accordion.js</code>. Every option here is also a <code>data-bui-*</code> attribute, so the markup alone is enough; the JavaScript tab shows the same options as a call.',
+    controls: [
+      { k: 'mode', t: 'tabs', label: 'Expand', group: 'Behavior', v: 'single', opts: [['single', 'One at a time'], ['multiple', 'Several']] },
+      { k: 'collapsible', t: 'check', label: 'The open item can be closed', group: 'Behavior', v: true, show: (s) => s.mode === 'single' },
+      { k: 'openFirst', t: 'check', label: 'First item open', group: 'Behavior', v: true },
+      { k: 'disabled', t: 'check', label: 'Disable the second item', group: 'Behavior', v: false },
+      { k: 'nested', t: 'check', label: 'Nested accordion in the first item', group: 'Behavior', v: false },
+      { k: 'items', t: 'range', label: 'Items', group: 'Look', v: 4, min: 2, max: 6 },
+      { k: 'variant', t: 'tabs', label: 'Style', group: 'Look', v: '', opts: [['', 'Connected'], ['flush', 'Flush'], ['separated', 'Separated']] },
+      { k: 'size', t: 'tabs', label: 'Size', group: 'Look', v: '', opts: [['sm', 'Small'], ['', 'Default'], ['lg', 'Large']] },
+      { k: 'indicator', t: 'tabs', label: 'Indicator', group: 'Look', v: 'chevron', opts: [['chevron', 'Chevron'], ['plus', 'Plus / minus']] },
+      { k: 'start', t: 'check', label: 'Indicator before the title', group: 'Look', v: false },
+      { k: 'icons', t: 'check', label: 'Leading icons', group: 'Look', v: true },
+      { k: 'animate', t: 'check', label: 'Animation', group: 'Motion', v: true },
+      { k: 'speed', t: 'range', label: 'Speed', group: 'Motion', v: 280, min: 100, max: 900, step: 20, unit: ' ms', show: (s) => s.animate },
+    ],
+    html(s) {
+      const root = cls('bui-accordion', s.variant && `bui-accordion-${s.variant}`, s.size && `bui-accordion-${s.size}`, s.indicator === 'plus' && 'bui-accordion-plus', s.start && 'bui-accordion-start');
+      const a = { class: root, id: 'faq', 'data-bui-accordion': true, 'data-bui-multiple': s.mode === 'multiple', 'data-bui-collapsible': s.mode === 'single' && !s.collapsible && 'false', 'data-bui-animate': !s.animate && 'false', style: s.animate && s.speed !== 280 && `--bui-acc-speed:${s.speed / 1000}s` };
+      const item = (i, ind, topic, extra) => {
+        const [t, text, icon] = topic;
+        const c = cls('bui-accordion-item', i === 0 && s.openFirst && 'bui-accordion-open', s.disabled && i === 1 && ind === '  ' && 'bui-accordion-disabled');
+        const ic = s.icons ? `\n${ind}      <span class="bui-accordion-icon">${ico(icon)}</span>` : '';
+        return `${ind}<div class="${c}">\n${ind}  <h3 class="bui-accordion-header">\n${ind}    <button type="button" class="bui-accordion-trigger">${ic}\n${ind}      <span class="bui-accordion-title">${t}</span>\n${ind}      <span class="bui-accordion-indicator"></span>\n${ind}    </button>\n${ind}  </h3>\n${ind}  <div class="bui-accordion-panel">\n${ind}    <div class="bui-accordion-body">\n${ind}      <div class="bui-accordion-content">${extra || text}</div>\n${ind}    </div>\n${ind}  </div>\n${ind}</div>`;
+      };
+      const nestedHtml = `<p>${TOPICS[0][1]}</p>\n          <div class="bui-accordion bui-accordion-flush" data-bui-accordion>\n${[['Step one', 'Download the files.', 'download'], ['Step two', 'Link the stylesheet.', 'link']].map((t, k) => item(k, '            ', t)).join('\n')}\n          </div>`;
+      const list = Array.from({ length: s.items }, (_, i) => item(i, '  ', TOPICS[i], i === 0 && s.nested ? nestedHtml : null));
+      return `<div ${attrs(a)}>\n${list.join('\n')}\n</div>`;
+    },
+    js(s) {
+      return `const accordion = BUI.accordion('#faq', {\n  multiple: ${s.mode === 'multiple'},${s.mode === 'single' ? `\n  collapsible: ${s.collapsible},` : ''}\n  animate: ${s.animate},\n  open: ${s.openFirst ? '[0]' : '[]'},\n  onToggle(index, open, accordion) { console.log(index, open); },\n});\n\naccordion.toggle(0);${s.mode === 'multiple' ? '\naccordion.openAll();' : ''}${s.disabled ? '\naccordion.enable(1);   // the second item is disabled in the markup' : ''}`;
+    },
+    mount: (stage) => window.BUI?.accordion?.init(stage),
+  });
 })();

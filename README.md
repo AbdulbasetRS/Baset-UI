@@ -32,6 +32,7 @@ Explore the full Baset UI documentation website, including interactive component
 9. [DataTable](#datatable)
    - [Calendar and scheduler](#calendar-and-scheduler)
    - [Stepper and wizard](#stepper-and-wizard)
+   - [Accordion](#accordion)
 10. [Loaders and success icon](#loaders-and-success-icon)
 11. [Icons](#icons)
 12. [Theming (CSS variables)](#theming-css-variables)
@@ -140,6 +141,7 @@ baset-ui/
 │   ├── datatable.html          # DataTable: 40 sections, 45 live examples
 │   ├── calendar.html           # Calendar & Scheduler: month / week / day, drag and drop, resize, Arabic RTL, 14 live examples
 │   ├── stepper.html            # Stepper & wizard: horizontal / vertical, completed / active / error, multi-step forms with validation, 8 live examples
+│   ├── accordion.html          # Accordion: single / multiple, nested, icons, animation, disabled items, 10 live examples
 │   ├── cards.html
 │   ├── alerts.html
 │   ├── badges.html
@@ -176,6 +178,7 @@ baset-ui/
 │       ├── baset-datatable.js  # Optional DataTable (needs section 21 of baset-ui.css)
 │       ├── baset-calendar.js   # Optional Calendar & Scheduler (needs section 23 of baset-ui.css)
 │       ├── baset-stepper.js    # Optional Stepper & wizard (needs section 24 of baset-ui.css)
+│       ├── baset-accordion.js  # Optional Accordion (needs section 25 of baset-ui.css)
 │       ├── datatable-docs.js   # DataTable documentation page only (sample data, fake API): do not ship
 │       ├── icons-gallery.js    # Icons page only (search + details dialog)
 │       ├── token-playground.js     # Token playground page only
@@ -214,6 +217,7 @@ baset-ui/
 | DataTable | `components/datatable.html` | 40 sections (incl. a complete with-API / without-API example): HTML-table and JS init, pagination, search, multi-column sort, column visibility / reorder / resize, filters and search builder, selection, inline and modal editing, row actions, buttons, copy / CSV / Excel / PDF / JSON / print, responsive and card view, AJAX and server-side, Laravel API, state, grouping, fixed columns, virtual scrolling, i18n, RTL, dark, themes, API, events, extensions |
 | Calendar & Scheduler | `components/calendar.html` | 14 live examples, each with complete HTML + CSS + JS and a Copy button: basic, month ("+N more"), week (overlapping events), day, add / edit / delete, drag and drop, resizing, details popup, Arabic RTL, languages and first day, light / dark, colors and categories, callbacks and events, JavaScript API; plus the option, method, callback and keyboard reference |
 | Stepper & wizard | `components/stepper.html` | 8 live examples with HTML (and JS where needed) and a Copy button: states, sizes, vertical, icons, multi-step form with validation, vertical wizard, free navigation, custom validation |
+| Accordion | `components/accordion.html` | 10 live examples with HTML (and JS where needed) and a Copy button: single and multiple expand, always one open, icons and indicators, flush / separated, sizes, nested, disabled items, animation, API and events |
 
 Every example on these pages shows the live preview, the class list, and a code block with a **Copy** button (it copies exactly the code shown).
 
@@ -660,6 +664,41 @@ A progress indicator that can become a multi-step form. The CSS alone draws the 
 
 Validation uses `BUI.float.validate` for floating-label fields and the browser's constraint validation for the rest; add `data-bui-validate` to the form so fields revalidate while the person types. `finish()` validates every step, fires the cancelable `bui:stepper-finish`, then submits the form with `requestSubmit()` (or calls `complete()` when there is no form).
 
+## Accordion
+
+Headings that open and close their content. The CSS draws it and animates the height (no height measuring); `assets/js/baset-accordion.js` adds single / multiple expand, disabled items, nesting and the keyboard.
+
+```html
+<div class="bui-accordion" id="faq" data-bui-accordion>
+  <div class="bui-accordion-item bui-accordion-open">
+    <h3 class="bui-accordion-header">
+      <button type="button" class="bui-accordion-trigger">
+        <span class="bui-accordion-icon"><i class="bui-icon-light bui-icon-user"></i></span>
+        <span class="bui-accordion-title">Account</span>
+        <span class="bui-accordion-indicator"></span>
+      </button>
+    </h3>
+    <div class="bui-accordion-panel">
+      <div class="bui-accordion-body">
+        <div class="bui-accordion-content">Content goes here.</div>
+      </div>
+    </div>
+  </div>
+  <!-- more .bui-accordion-item -->
+</div>
+<script src="assets/js/baset-accordion.js"></script>
+```
+
+| Class | Use |
+|---|---|
+| `.bui-accordion` · `.bui-accordion-item` · `.bui-accordion-header` · `.bui-accordion-trigger` | Container, one item, the heading, the button |
+| `.bui-accordion-icon` · `.bui-accordion-title` · `.bui-accordion-indicator` | Leading icon (optional), title, chevron or plus / minus drawn by the CSS |
+| `.bui-accordion-panel` › `-body` › `-content` | Animated panel, clipping layer, padded content (keep all three) |
+| `.bui-accordion-open` · `.bui-accordion-disabled` | State of an item |
+| `-flush` · `-separated` · `-sm` · `-lg` · `-plus` · `-start` · `-static` | Look, size, plus / minus indicator, indicator first, no motion |
+
+**Options** (also `data-bui-*` attributes): `multiple` (several items open; default one at a time), `collapsible` (`false` keeps one item open), `open` (index, array or `'all'`; default the items marked `.bui-accordion-open`), `animate`, `onToggle(index, open, accordion)`. `--bui-acc-speed` sets the open / close time. An accordion can sit inside another one's content: each only manages its own items. `[data-bui-accordion-expand="#id"]` and `[data-bui-accordion-collapse="#id"]` buttons need no JavaScript.
+
 ## Navbar, sidebar and footer
 
 CSS in section 22 of `baset-ui.css`; the toggles, live clock and theme button are optional (`baset-ui.js`). Full examples: `components/navigation.html`; build your own in `customize/layout-playground.html`.
@@ -805,6 +844,7 @@ Every script exposes its API on the single `BUI` object, in camelCase. Component
 | `BUI.calendar('#cal', options)` | Calendar (statics: `.locales`, `.instance(el)`, `.init(root)`) |
 | `BUI.editor('#body', options)` | Rich text editor (statics: `.get(el)`, `.locales`, `.sanitize(html)`) |
 | `BUI.stepper('#wizard', options)` | Stepper / wizard (statics: `.get(el)`, `.init(root)`) |
+| `BUI.accordion('#faq', options)` | Accordion (statics: `.get(el)`, `.init(root)`) |
 | `BUI.toast()` · `BUI.notify()` | Toasts and notifications |
 | `BUI.modal.*` · `BUI.select.*` · `BUI.dropdown.*` · `BUI.float.*` · `BUI.datetime.*` · `BUI.upload.*` | Namespaces with `open / close / init ...` helpers |
 
@@ -830,6 +870,7 @@ Every script exposes its API on the single `BUI` object, in camelCase. Component
 | DataTable | `assets/js/baset-datatable.js` (separate file): `BUI.dataTable(target, options)` or `data-bui-datatable` on a `<table>`; `search / order / page / pageLength / column / rows / row / draw / export / destroy`; `BUI.dataTable.locales`, `.adapters` |
 | Calendar & Scheduler | `assets/js/baset-calendar.js` (separate file): `BUI.calendar(target, options)` or `data-bui-calendar`; `addEvent / updateEvent / removeEvent / getEvents / getEventById / setEvents / setDate / setView / next / prev / today / getRange / showEvent / openEditor / setOptions / on / off / destroy()`; events `bui:cal-*` |
 | Stepper & wizard | `assets/js/baset-stepper.js` (separate file): `BUI.stepper(target, options)` or `data-bui-stepper`; `next / prev / goTo / validate / finish / complete / reset / setState / destroy`; `BUI.stepper.get/init()`; events `bui:stepper-change`, `bui:stepper-invalid`, `bui:stepper-finish` |
+| Accordion | `assets/js/baset-accordion.js` (separate file): `BUI.accordion(target, options)` or `data-bui-accordion`; `open / close / toggle / openAll / closeAll / enable / disable`; `BUI.accordion.get/init()`; event `bui:accordion-toggle`; buttons `data-bui-accordion-expand="#id"` and `-collapse` |
 | Floating labels | The i button toggles its message; `<form data-bui-validate>` and `BUI.float.setState/clear/open/validate/reset()` |
 | Modal | `BUI.modal.open/close/show/confirm/alert/prompt()` or `data-bui-modal-open` / `data-bui-modal-close` attributes |
 | Scroll-spy | Sidebar links like `<a class="bui-nav" href="#section">` highlight as you scroll |

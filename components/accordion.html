@@ -1,0 +1,1199 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Accordion — Baset UI</title>
+  <link rel="stylesheet" href="../assets/css/baset-ui.css">
+  <link rel="stylesheet" href="../assets/css/baset-icons.css">
+  <link rel="stylesheet" href="../assets/css/docs.css">
+
+  <script>try{if(localStorage.getItem('bui-theme')==='dark')document.documentElement.classList.add('bui-dark');var d=localStorage.getItem('bui-dir');if(d==='rtl'||d==='ltr')document.documentElement.dir=d}catch(e){}</script>
+</head>
+<body>
+  <div class="bui-app">
+    <aside class="bui-sidebar">
+      <a class="bui-brand" href="../index.html"><span class="bui-brand-mark">B</span><span>Baset UI<small>Component library</small></span></a>
+      <div class="bui-sidebar-label">GET STARTED</div>
+      <a class="bui-nav" href="../index.html#overview">Overview</a>
+      <a class="bui-nav" href="../index.html#installation">Installation</a>
+      <div class="bui-sidebar-label">LAYOUT</div>
+      <a class="bui-nav" href="../layout/grid.html">Grid system</a>
+      <div class="bui-sidebar-label">COMPONENTS</div>
+      <a class="bui-nav" href="../components/buttons.html">Buttons</a>
+      <a class="bui-nav" href="../components/forms.html">Form controls</a>
+      <a class="bui-nav" href="../components/select.html">Select &amp; dropdown</a>
+      <a class="bui-nav" href="../components/datetime.html">Date &amp; time pickers</a>
+      <a class="bui-nav" href="../components/upload.html">File upload</a>
+      <a class="bui-nav" href="../components/editor.html">Rich text editor</a>
+      <a class="bui-nav" href="../components/cards.html">Cards</a>
+      <a class="bui-nav" href="../components/alerts.html">Alerts</a>
+      <a class="bui-nav" href="../components/badges.html">Badges</a>
+      <a class="bui-nav" href="../components/loaders.html">Loaders</a>
+      <a class="bui-nav" href="../components/icons.html">Icons</a>
+      <a class="bui-nav" href="../components/toasts.html">Toasts &amp; notifications</a>
+      <a class="bui-nav" href="../components/modal.html">Modal</a>
+      <a class="bui-nav" href="../components/utilities.html">Utilities</a>
+      <a class="bui-nav" href="../components/charts.html">Charts &amp; data visualization</a>
+      <a class="bui-nav" href="../components/datatable.html">DataTable</a>
+      <a class="bui-nav" href="../components/navigation.html">Navbar, sidebar &amp; footer</a>
+      <a class="bui-nav" href="../components/calendar.html">Calendar &amp; Scheduler</a>
+      <a class="bui-nav" href="../components/stepper.html">Stepper &amp; wizard</a>
+      <a class="bui-nav active" href="../components/accordion.html">Accordion</a>
+      <div class="bui-sidebar-label">CUSTOMIZE</div>
+      <a class="bui-nav" href="../customize/colors.html">Default colors</a>
+      <a class="bui-nav" href="../customize/typography.html">Typography and shape</a>
+      <a class="bui-nav" href="../customize/theme.html">Theme</a>
+      <a class="bui-nav" href="../customize/token-playground.html">Token playground</a>
+      <a class="bui-nav" href="../customize/chart-playground.html">Chart playground</a>
+      <a class="bui-nav" href="../customize/datatable-playground.html">DataTable playground</a>
+      <a class="bui-nav" href="../customize/direction.html">Direction (RTL / LTR)</a>
+      <a class="bui-nav" href="../customize/layout-playground.html">Layout playground</a>
+      <div class="bui-sidebar-bottom"><span class="bui-status-dot"></span> Baset UI <span class="bui-version">v1.0.0</span></div>
+    </aside>
+    <main class="bui-main">
+      <header class="bui-topbar"><div class="bui-breadcrumb"><a href="../index.html">Documentation</a> <span>/</span> Components <span>/</span> Accordion</div><div class="bui-top-actions"><span class="bui-pill">Vanilla CSS + JS</span><button class="bui-icon-btn bui-dir-btn" id="dirToggle" type="button" aria-label="Toggle direction (RTL / LTR)" title="Toggle direction (RTL / LTR)">RTL</button><button class="bui-icon-btn" id="themeToggle" type="button" aria-label="Toggle theme"><i class="bui-icon-light bui-icon-sun"></i></button></div></header>
+      <section class="bui-section" id="customize"><div class="bui-section-heading"><div><span class="bui-eyebrow">CUSTOMIZE</span><h2>Make it yours</h2><p>Change the options, watch the accordion update, then copy the code. Switch theme and direction to check light, dark, LTR and RTL.</p></div></div><div data-bui-playground="accordion"></div></section>
+      <section class="bui-section" id="accordion"><div class="bui-section-heading"><div><span class="bui-eyebrow">20 / COMPONENTS</span><h2>Accordion</h2><p>Stack headings that open and close their content: one at a time or many, with icons, animation, disabled items and nesting.</p></div><span class="bui-step-count">10 examples</span></div>
+      <div class="bui-demo-stack">
+<article class="bui-demo-card" id="single"><div class="bui-demo-title">Single expand <span>default</span></div><div class="bui-demo-content"><div class="bui-accordion" id="acc-single" data-bui-accordion>
+  <div class="bui-accordion-item bui-accordion-open">
+    <h3 class="bui-accordion-header">
+      <button type="button" class="bui-accordion-trigger">
+        <span class="bui-accordion-title">What is Baset UI?</span>
+        <span class="bui-accordion-indicator"></span>
+      </button>
+    </h3>
+    <div class="bui-accordion-panel">
+      <div class="bui-accordion-body">
+        <div class="bui-accordion-content">A small UI library written in plain HTML, CSS and JavaScript. Copy the files you need; there is nothing to install or build.</div>
+      </div>
+    </div>
+  </div>
+  <div class="bui-accordion-item">
+    <h3 class="bui-accordion-header">
+      <button type="button" class="bui-accordion-trigger">
+        <span class="bui-accordion-title">Does it support dark mode and RTL?</span>
+        <span class="bui-accordion-indicator"></span>
+      </button>
+    </h3>
+    <div class="bui-accordion-panel">
+      <div class="bui-accordion-body">
+        <div class="bui-accordion-content">Yes. Colors come from tokens that switch with the <code>bui-dark</code> class, and every rule uses logical properties so layouts mirror in RTL.</div>
+      </div>
+    </div>
+  </div>
+  <div class="bui-accordion-item">
+    <h3 class="bui-accordion-header">
+      <button type="button" class="bui-accordion-trigger">
+        <span class="bui-accordion-title">Can I change the colors?</span>
+        <span class="bui-accordion-indicator"></span>
+      </button>
+    </h3>
+    <div class="bui-accordion-panel">
+      <div class="bui-accordion-body">
+        <div class="bui-accordion-content">Override the <code>--bui-*</code> tokens on <code>:root</code>. The customize pages show every token with a live preview.</div>
+      </div>
+    </div>
+  </div>
+  <div class="bui-accordion-item">
+    <h3 class="bui-accordion-header">
+      <button type="button" class="bui-accordion-trigger">
+        <span class="bui-accordion-title">Is it free to use?</span>
+        <span class="bui-accordion-indicator"></span>
+      </button>
+    </h3>
+    <div class="bui-accordion-panel">
+      <div class="bui-accordion-body">
+        <div class="bui-accordion-content">Yes, under the license in the repository.</div>
+      </div>
+    </div>
+  </div>
+</div></div><div class="bui-demo-code">Opening an item closes the other one. Items marked <code>.bui-accordion-open</code> in the markup start open.</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"acc-single"</span> <span class="bui-code-blue">data-bui-accordion</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-item bui-accordion-open"</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;h3</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-header"</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-trigger"</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-title"</span><span class="bui-code-pink">&gt;</span>What is Baset UI?<span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-indicator"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;/h3</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-panel"</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-body"</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-content"</span><span class="bui-code-pink">&gt;</span>A small UI library written in plain HTML, CSS and JavaScript. Copy the files you need; there is nothing to install or build.<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-item"</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;h3</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-header"</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-trigger"</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-title"</span><span class="bui-code-pink">&gt;</span>Does it support dark mode and RTL?<span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-indicator"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;/h3</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-panel"</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-body"</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-content"</span><span class="bui-code-pink">&gt;</span>Yes. Colors come from tokens that switch with the <span class="bui-code-pink">&lt;code</span><span class="bui-code-pink">&gt;</span>bui-dark<span class="bui-code-pink">&lt;/code</span><span class="bui-code-pink">&gt;</span> class, and every rule uses logical properties so layouts mirror in RTL.<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-item"</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;h3</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-header"</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-trigger"</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-title"</span><span class="bui-code-pink">&gt;</span>Can I change the colors?<span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-indicator"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;/h3</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-panel"</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-body"</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-content"</span><span class="bui-code-pink">&gt;</span>Override the <span class="bui-code-pink">&lt;code</span><span class="bui-code-pink">&gt;</span>--bui-*<span class="bui-code-pink">&lt;/code</span><span class="bui-code-pink">&gt;</span> tokens on <span class="bui-code-pink">&lt;code</span><span class="bui-code-pink">&gt;</span>:root<span class="bui-code-pink">&lt;/code</span><span class="bui-code-pink">&gt;</span>. The customize pages show every token with a live preview.<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-item"</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;h3</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-header"</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-trigger"</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-title"</span><span class="bui-code-pink">&gt;</span>Is it free to use?<span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-indicator"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;/h3</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-panel"</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-body"</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-content"</span><span class="bui-code-pink">&gt;</span>Yes, under the license in the repository.<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
+<article class="bui-demo-card" id="multiple"><div class="bui-demo-title">Multiple expand <span>data-bui-multiple</span></div><div class="bui-demo-content"><div class="bui-button-row" style="margin-bottom:14px"><button type="button" class="bui-btn bui-btn-outline bui-btn-sm" data-bui-accordion-expand="#acc-multi">Expand all</button><button type="button" class="bui-btn bui-btn-outline bui-btn-sm" data-bui-accordion-collapse="#acc-multi">Collapse all</button></div><div class="bui-accordion" id="acc-multi" data-bui-multiple data-bui-accordion>
+  <div class="bui-accordion-item bui-accordion-open">
+    <h3 class="bui-accordion-header">
+      <button type="button" class="bui-accordion-trigger">
+        <span class="bui-accordion-title">What is Baset UI?</span>
+        <span class="bui-accordion-indicator"></span>
+      </button>
+    </h3>
+    <div class="bui-accordion-panel">
+      <div class="bui-accordion-body">
+        <div class="bui-accordion-content">A small UI library written in plain HTML, CSS and JavaScript. Copy the files you need; there is nothing to install or build.</div>
+      </div>
+    </div>
+  </div>
+  <div class="bui-accordion-item bui-accordion-open">
+    <h3 class="bui-accordion-header">
+      <button type="button" class="bui-accordion-trigger">
+        <span class="bui-accordion-title">Does it support dark mode and RTL?</span>
+        <span class="bui-accordion-indicator"></span>
+      </button>
+    </h3>
+    <div class="bui-accordion-panel">
+      <div class="bui-accordion-body">
+        <div class="bui-accordion-content">Yes. Colors come from tokens that switch with the <code>bui-dark</code> class, and every rule uses logical properties so layouts mirror in RTL.</div>
+      </div>
+    </div>
+  </div>
+  <div class="bui-accordion-item">
+    <h3 class="bui-accordion-header">
+      <button type="button" class="bui-accordion-trigger">
+        <span class="bui-accordion-title">Can I change the colors?</span>
+        <span class="bui-accordion-indicator"></span>
+      </button>
+    </h3>
+    <div class="bui-accordion-panel">
+      <div class="bui-accordion-body">
+        <div class="bui-accordion-content">Override the <code>--bui-*</code> tokens on <code>:root</code>. The customize pages show every token with a live preview.</div>
+      </div>
+    </div>
+  </div>
+</div></div><div class="bui-demo-code">With <code>data-bui-multiple</code> any number of items can be open. The two buttons need no JavaScript: <code>data-bui-accordion-expand="#id"</code> and <code>data-bui-accordion-collapse="#id"</code>.</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-button-row"</span> <span class="bui-code-blue">style</span>=<span class="bui-code-green">"margin-bottom:14px"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-btn bui-btn-outline bui-btn-sm"</span> <span class="bui-code-blue">data-bui-accordion-expand</span>=<span class="bui-code-green">"#acc-multi"</span><span class="bui-code-pink">&gt;</span>Expand all<span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-btn bui-btn-outline bui-btn-sm"</span> <span class="bui-code-blue">data-bui-accordion-collapse</span>=<span class="bui-code-green">"#acc-multi"</span><span class="bui-code-pink">&gt;</span>Collapse all<span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"acc-multi"</span> <span class="bui-code-blue">data-bui-multiple</span> <span class="bui-code-blue">data-bui-accordion</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-item bui-accordion-open"</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;h3</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-header"</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-trigger"</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-title"</span><span class="bui-code-pink">&gt;</span>What is Baset UI?<span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-indicator"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;/h3</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-panel"</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-body"</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-content"</span><span class="bui-code-pink">&gt;</span>A small UI library written in plain HTML, CSS and JavaScript. Copy the files you need; there is nothing to install or build.<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-item bui-accordion-open"</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;h3</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-header"</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-trigger"</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-title"</span><span class="bui-code-pink">&gt;</span>Does it support dark mode and RTL?<span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-indicator"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;/h3</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-panel"</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-body"</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-content"</span><span class="bui-code-pink">&gt;</span>Yes. Colors come from tokens that switch with the <span class="bui-code-pink">&lt;code</span><span class="bui-code-pink">&gt;</span>bui-dark<span class="bui-code-pink">&lt;/code</span><span class="bui-code-pink">&gt;</span> class, and every rule uses logical properties so layouts mirror in RTL.<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-item"</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;h3</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-header"</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-trigger"</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-title"</span><span class="bui-code-pink">&gt;</span>Can I change the colors?<span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-indicator"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;/h3</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-panel"</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-body"</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-content"</span><span class="bui-code-pink">&gt;</span>Override the <span class="bui-code-pink">&lt;code</span><span class="bui-code-pink">&gt;</span>--bui-*<span class="bui-code-pink">&lt;/code</span><span class="bui-code-pink">&gt;</span> tokens on <span class="bui-code-pink">&lt;code</span><span class="bui-code-pink">&gt;</span>:root<span class="bui-code-pink">&lt;/code</span><span class="bui-code-pink">&gt;</span>. The customize pages show every token with a live preview.<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
+<article class="bui-demo-card" id="locked"><div class="bui-demo-title">Always one open <span>data-bui-collapsible="false"</span></div><div class="bui-demo-content"><div class="bui-accordion" id="acc-locked" data-bui-collapsible="false" data-bui-accordion>
+  <div class="bui-accordion-item bui-accordion-open">
+    <h3 class="bui-accordion-header">
+      <button type="button" class="bui-accordion-trigger">
+        <span class="bui-accordion-title">What is Baset UI?</span>
+        <span class="bui-accordion-indicator"></span>
+      </button>
+    </h3>
+    <div class="bui-accordion-panel">
+      <div class="bui-accordion-body">
+        <div class="bui-accordion-content">A small UI library written in plain HTML, CSS and JavaScript. Copy the files you need; there is nothing to install or build.</div>
+      </div>
+    </div>
+  </div>
+  <div class="bui-accordion-item">
+    <h3 class="bui-accordion-header">
+      <button type="button" class="bui-accordion-trigger">
+        <span class="bui-accordion-title">Does it support dark mode and RTL?</span>
+        <span class="bui-accordion-indicator"></span>
+      </button>
+    </h3>
+    <div class="bui-accordion-panel">
+      <div class="bui-accordion-body">
+        <div class="bui-accordion-content">Yes. Colors come from tokens that switch with the <code>bui-dark</code> class, and every rule uses logical properties so layouts mirror in RTL.</div>
+      </div>
+    </div>
+  </div>
+  <div class="bui-accordion-item">
+    <h3 class="bui-accordion-header">
+      <button type="button" class="bui-accordion-trigger">
+        <span class="bui-accordion-title">Can I change the colors?</span>
+        <span class="bui-accordion-indicator"></span>
+      </button>
+    </h3>
+    <div class="bui-accordion-panel">
+      <div class="bui-accordion-body">
+        <div class="bui-accordion-content">Override the <code>--bui-*</code> tokens on <code>:root</code>. The customize pages show every token with a live preview.</div>
+      </div>
+    </div>
+  </div>
+</div></div><div class="bui-demo-code">The open item cannot be closed by clicking it again; its button gets <code>aria-disabled="true"</code>.</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"acc-locked"</span> <span class="bui-code-blue">data-bui-collapsible</span>=<span class="bui-code-green">"false"</span> <span class="bui-code-blue">data-bui-accordion</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-item bui-accordion-open"</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;h3</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-header"</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-trigger"</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-title"</span><span class="bui-code-pink">&gt;</span>What is Baset UI?<span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-indicator"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;/h3</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-panel"</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-body"</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-content"</span><span class="bui-code-pink">&gt;</span>A small UI library written in plain HTML, CSS and JavaScript. Copy the files you need; there is nothing to install or build.<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-item"</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;h3</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-header"</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-trigger"</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-title"</span><span class="bui-code-pink">&gt;</span>Does it support dark mode and RTL?<span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-indicator"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;/h3</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-panel"</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-body"</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-content"</span><span class="bui-code-pink">&gt;</span>Yes. Colors come from tokens that switch with the <span class="bui-code-pink">&lt;code</span><span class="bui-code-pink">&gt;</span>bui-dark<span class="bui-code-pink">&lt;/code</span><span class="bui-code-pink">&gt;</span> class, and every rule uses logical properties so layouts mirror in RTL.<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-item"</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;h3</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-header"</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-trigger"</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-title"</span><span class="bui-code-pink">&gt;</span>Can I change the colors?<span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-indicator"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;/h3</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-panel"</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-body"</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-content"</span><span class="bui-code-pink">&gt;</span>Override the <span class="bui-code-pink">&lt;code</span><span class="bui-code-pink">&gt;</span>--bui-*<span class="bui-code-pink">&lt;/code</span><span class="bui-code-pink">&gt;</span> tokens on <span class="bui-code-pink">&lt;code</span><span class="bui-code-pink">&gt;</span>:root<span class="bui-code-pink">&lt;/code</span><span class="bui-code-pink">&gt;</span>. The customize pages show every token with a live preview.<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
+<article class="bui-demo-card" id="icons"><div class="bui-demo-title">Icons and indicators <span>.bui-accordion-icon · -plus · -start</span></div><div class="bui-demo-content"><div class="bui-stack bui-gutter-y-4"><div class="bui-accordion" id="acc-icons" data-bui-accordion>
+  <div class="bui-accordion-item bui-accordion-open">
+    <h3 class="bui-accordion-header">
+      <button type="button" class="bui-accordion-trigger">
+        <span class="bui-accordion-icon"><i class="bui-icon-light bui-icon-user"></i></span>
+        <span class="bui-accordion-title">Account</span>
+        <span class="bui-accordion-indicator"></span>
+      </button>
+    </h3>
+    <div class="bui-accordion-panel">
+      <div class="bui-accordion-body">
+        <div class="bui-accordion-content">Change your name, email and password.</div>
+      </div>
+    </div>
+  </div>
+  <div class="bui-accordion-item">
+    <h3 class="bui-accordion-header">
+      <button type="button" class="bui-accordion-trigger">
+        <span class="bui-accordion-icon"><i class="bui-icon-light bui-icon-bell"></i></span>
+        <span class="bui-accordion-title">Notifications</span>
+        <span class="bui-accordion-indicator"></span>
+      </button>
+    </h3>
+    <div class="bui-accordion-panel">
+      <div class="bui-accordion-body">
+        <div class="bui-accordion-content">Choose what you want to hear about and how.</div>
+      </div>
+    </div>
+  </div>
+  <div class="bui-accordion-item">
+    <h3 class="bui-accordion-header">
+      <button type="button" class="bui-accordion-trigger">
+        <span class="bui-accordion-icon"><i class="bui-icon-light bui-icon-shield-check"></i></span>
+        <span class="bui-accordion-title">Security</span>
+        <span class="bui-accordion-indicator"></span>
+      </button>
+    </h3>
+    <div class="bui-accordion-panel">
+      <div class="bui-accordion-body">
+        <div class="bui-accordion-content">Two-step sign-in and active sessions.</div>
+      </div>
+    </div>
+  </div>
+</div><div class="bui-accordion bui-accordion-plus bui-accordion-start" id="acc-plus" data-bui-accordion>
+  <div class="bui-accordion-item bui-accordion-open">
+    <h3 class="bui-accordion-header">
+      <button type="button" class="bui-accordion-trigger">
+        <span class="bui-accordion-title">Shipping</span>
+        <span class="bui-accordion-indicator"></span>
+      </button>
+    </h3>
+    <div class="bui-accordion-panel">
+      <div class="bui-accordion-body">
+        <div class="bui-accordion-content">Orders leave the warehouse within 24 hours.</div>
+      </div>
+    </div>
+  </div>
+  <div class="bui-accordion-item">
+    <h3 class="bui-accordion-header">
+      <button type="button" class="bui-accordion-trigger">
+        <span class="bui-accordion-title">Returns</span>
+        <span class="bui-accordion-indicator"></span>
+      </button>
+    </h3>
+    <div class="bui-accordion-panel">
+      <div class="bui-accordion-body">
+        <div class="bui-accordion-content">Free returns within 30 days.</div>
+      </div>
+    </div>
+  </div>
+  <div class="bui-accordion-item">
+    <h3 class="bui-accordion-header">
+      <button type="button" class="bui-accordion-trigger">
+        <span class="bui-accordion-title">Warranty</span>
+        <span class="bui-accordion-indicator"></span>
+      </button>
+    </h3>
+    <div class="bui-accordion-panel">
+      <div class="bui-accordion-body">
+        <div class="bui-accordion-content">Two years on every product.</div>
+      </div>
+    </div>
+  </div>
+</div></div></div><div class="bui-demo-code">Put an icon in <code>.bui-accordion-icon</code>. The indicator is a chevron by default; <code>.bui-accordion-plus</code> makes it a plus / minus and <code>.bui-accordion-start</code> moves it before the title.</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"acc-icons"</span> <span class="bui-code-blue">data-bui-accordion</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-item bui-accordion-open"</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;h3</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-header"</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-trigger"</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-icon"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;i</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-icon-light bui-icon-user"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/i</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-title"</span><span class="bui-code-pink">&gt;</span>Account<span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-indicator"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;/h3</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-panel"</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-body"</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-content"</span><span class="bui-code-pink">&gt;</span>Change your name, email and password.<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-item"</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;h3</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-header"</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-trigger"</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-icon"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;i</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-icon-light bui-icon-bell"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/i</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-title"</span><span class="bui-code-pink">&gt;</span>Notifications<span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-indicator"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;/h3</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-panel"</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-body"</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-content"</span><span class="bui-code-pink">&gt;</span>Choose what you want to hear about and how.<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-item"</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;h3</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-header"</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-trigger"</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-icon"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;i</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-icon-light bui-icon-shield-check"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/i</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-title"</span><span class="bui-code-pink">&gt;</span>Security<span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-indicator"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;/h3</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-panel"</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-body"</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-content"</span><span class="bui-code-pink">&gt;</span>Two-step sign-in and active sessions.<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion bui-accordion-plus bui-accordion-start"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"acc-plus"</span> <span class="bui-code-blue">data-bui-accordion</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-item bui-accordion-open"</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;h3</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-header"</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-trigger"</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-title"</span><span class="bui-code-pink">&gt;</span>Shipping<span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-indicator"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;/h3</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-panel"</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-body"</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-content"</span><span class="bui-code-pink">&gt;</span>Orders leave the warehouse within 24 hours.<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-item"</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;h3</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-header"</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-trigger"</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-title"</span><span class="bui-code-pink">&gt;</span>Returns<span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-indicator"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;/h3</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-panel"</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-body"</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-content"</span><span class="bui-code-pink">&gt;</span>Free returns within 30 days.<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-item"</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;h3</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-header"</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-trigger"</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-title"</span><span class="bui-code-pink">&gt;</span>Warranty<span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-indicator"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;/h3</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-panel"</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-body"</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-content"</span><span class="bui-code-pink">&gt;</span>Two years on every product.<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
+<article class="bui-demo-card" id="variants"><div class="bui-demo-title">Flush and separated <span>.bui-accordion-flush · -separated</span></div><div class="bui-demo-content"><div class="bui-stack bui-gutter-y-4"><div class="bui-accordion bui-accordion-flush" id="acc-flush" data-bui-accordion>
+  <div class="bui-accordion-item bui-accordion-open">
+    <h3 class="bui-accordion-header">
+      <button type="button" class="bui-accordion-trigger">
+        <span class="bui-accordion-title">What is Baset UI?</span>
+        <span class="bui-accordion-indicator"></span>
+      </button>
+    </h3>
+    <div class="bui-accordion-panel">
+      <div class="bui-accordion-body">
+        <div class="bui-accordion-content">A small UI library written in plain HTML, CSS and JavaScript. Copy the files you need; there is nothing to install or build.</div>
+      </div>
+    </div>
+  </div>
+  <div class="bui-accordion-item">
+    <h3 class="bui-accordion-header">
+      <button type="button" class="bui-accordion-trigger">
+        <span class="bui-accordion-title">Does it support dark mode and RTL?</span>
+        <span class="bui-accordion-indicator"></span>
+      </button>
+    </h3>
+    <div class="bui-accordion-panel">
+      <div class="bui-accordion-body">
+        <div class="bui-accordion-content">Yes. Colors come from tokens that switch with the <code>bui-dark</code> class, and every rule uses logical properties so layouts mirror in RTL.</div>
+      </div>
+    </div>
+  </div>
+  <div class="bui-accordion-item">
+    <h3 class="bui-accordion-header">
+      <button type="button" class="bui-accordion-trigger">
+        <span class="bui-accordion-title">Can I change the colors?</span>
+        <span class="bui-accordion-indicator"></span>
+      </button>
+    </h3>
+    <div class="bui-accordion-panel">
+      <div class="bui-accordion-body">
+        <div class="bui-accordion-content">Override the <code>--bui-*</code> tokens on <code>:root</code>. The customize pages show every token with a live preview.</div>
+      </div>
+    </div>
+  </div>
+</div><div class="bui-accordion bui-accordion-separated" id="acc-sep" data-bui-accordion>
+  <div class="bui-accordion-item bui-accordion-open">
+    <h3 class="bui-accordion-header">
+      <button type="button" class="bui-accordion-trigger">
+        <span class="bui-accordion-title">What is Baset UI?</span>
+        <span class="bui-accordion-indicator"></span>
+      </button>
+    </h3>
+    <div class="bui-accordion-panel">
+      <div class="bui-accordion-body">
+        <div class="bui-accordion-content">A small UI library written in plain HTML, CSS and JavaScript. Copy the files you need; there is nothing to install or build.</div>
+      </div>
+    </div>
+  </div>
+  <div class="bui-accordion-item">
+    <h3 class="bui-accordion-header">
+      <button type="button" class="bui-accordion-trigger">
+        <span class="bui-accordion-title">Does it support dark mode and RTL?</span>
+        <span class="bui-accordion-indicator"></span>
+      </button>
+    </h3>
+    <div class="bui-accordion-panel">
+      <div class="bui-accordion-body">
+        <div class="bui-accordion-content">Yes. Colors come from tokens that switch with the <code>bui-dark</code> class, and every rule uses logical properties so layouts mirror in RTL.</div>
+      </div>
+    </div>
+  </div>
+  <div class="bui-accordion-item">
+    <h3 class="bui-accordion-header">
+      <button type="button" class="bui-accordion-trigger">
+        <span class="bui-accordion-title">Can I change the colors?</span>
+        <span class="bui-accordion-indicator"></span>
+      </button>
+    </h3>
+    <div class="bui-accordion-panel">
+      <div class="bui-accordion-body">
+        <div class="bui-accordion-content">Override the <code>--bui-*</code> tokens on <code>:root</code>. The customize pages show every token with a live preview.</div>
+      </div>
+    </div>
+  </div>
+</div></div></div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion bui-accordion-flush"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"acc-flush"</span> <span class="bui-code-blue">data-bui-accordion</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-item bui-accordion-open"</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;h3</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-header"</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-trigger"</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-title"</span><span class="bui-code-pink">&gt;</span>What is Baset UI?<span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-indicator"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;/h3</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-panel"</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-body"</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-content"</span><span class="bui-code-pink">&gt;</span>A small UI library written in plain HTML, CSS and JavaScript. Copy the files you need; there is nothing to install or build.<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-item"</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;h3</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-header"</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-trigger"</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-title"</span><span class="bui-code-pink">&gt;</span>Does it support dark mode and RTL?<span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-indicator"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;/h3</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-panel"</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-body"</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-content"</span><span class="bui-code-pink">&gt;</span>Yes. Colors come from tokens that switch with the <span class="bui-code-pink">&lt;code</span><span class="bui-code-pink">&gt;</span>bui-dark<span class="bui-code-pink">&lt;/code</span><span class="bui-code-pink">&gt;</span> class, and every rule uses logical properties so layouts mirror in RTL.<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-item"</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;h3</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-header"</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-trigger"</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-title"</span><span class="bui-code-pink">&gt;</span>Can I change the colors?<span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-indicator"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;/h3</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-panel"</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-body"</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-content"</span><span class="bui-code-pink">&gt;</span>Override the <span class="bui-code-pink">&lt;code</span><span class="bui-code-pink">&gt;</span>--bui-*<span class="bui-code-pink">&lt;/code</span><span class="bui-code-pink">&gt;</span> tokens on <span class="bui-code-pink">&lt;code</span><span class="bui-code-pink">&gt;</span>:root<span class="bui-code-pink">&lt;/code</span><span class="bui-code-pink">&gt;</span>. The customize pages show every token with a live preview.<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion bui-accordion-separated"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"acc-sep"</span> <span class="bui-code-blue">data-bui-accordion</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-item bui-accordion-open"</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;h3</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-header"</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-trigger"</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-title"</span><span class="bui-code-pink">&gt;</span>What is Baset UI?<span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-indicator"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;/h3</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-panel"</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-body"</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-content"</span><span class="bui-code-pink">&gt;</span>A small UI library written in plain HTML, CSS and JavaScript. Copy the files you need; there is nothing to install or build.<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-item"</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;h3</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-header"</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-trigger"</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-title"</span><span class="bui-code-pink">&gt;</span>Does it support dark mode and RTL?<span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-indicator"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;/h3</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-panel"</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-body"</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-content"</span><span class="bui-code-pink">&gt;</span>Yes. Colors come from tokens that switch with the <span class="bui-code-pink">&lt;code</span><span class="bui-code-pink">&gt;</span>bui-dark<span class="bui-code-pink">&lt;/code</span><span class="bui-code-pink">&gt;</span> class, and every rule uses logical properties so layouts mirror in RTL.<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-item"</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;h3</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-header"</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-trigger"</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-title"</span><span class="bui-code-pink">&gt;</span>Can I change the colors?<span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-indicator"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;/h3</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-panel"</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-body"</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-content"</span><span class="bui-code-pink">&gt;</span>Override the <span class="bui-code-pink">&lt;code</span><span class="bui-code-pink">&gt;</span>--bui-*<span class="bui-code-pink">&lt;/code</span><span class="bui-code-pink">&gt;</span> tokens on <span class="bui-code-pink">&lt;code</span><span class="bui-code-pink">&gt;</span>:root<span class="bui-code-pink">&lt;/code</span><span class="bui-code-pink">&gt;</span>. The customize pages show every token with a live preview.<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
+<article class="bui-demo-card" id="sizes"><div class="bui-demo-title">Sizes <span>.bui-accordion-sm · -lg</span></div><div class="bui-demo-content"><div class="bui-stack bui-gutter-y-4"><div class="bui-accordion bui-accordion-sm" id="acc-sm" data-bui-accordion>
+  <div class="bui-accordion-item bui-accordion-open">
+    <h3 class="bui-accordion-header">
+      <button type="button" class="bui-accordion-trigger">
+        <span class="bui-accordion-title">Small</span>
+        <span class="bui-accordion-indicator"></span>
+      </button>
+    </h3>
+    <div class="bui-accordion-panel">
+      <div class="bui-accordion-body">
+        <div class="bui-accordion-content">Compact padding and 12px text.</div>
+      </div>
+    </div>
+  </div>
+  <div class="bui-accordion-item">
+    <h3 class="bui-accordion-header">
+      <button type="button" class="bui-accordion-trigger">
+        <span class="bui-accordion-title">Another item</span>
+        <span class="bui-accordion-indicator"></span>
+      </button>
+    </h3>
+    <div class="bui-accordion-panel">
+      <div class="bui-accordion-body">
+        <div class="bui-accordion-content">More content here.</div>
+      </div>
+    </div>
+  </div>
+</div><div class="bui-accordion bui-accordion-lg" id="acc-lg" data-bui-accordion>
+  <div class="bui-accordion-item bui-accordion-open">
+    <h3 class="bui-accordion-header">
+      <button type="button" class="bui-accordion-trigger">
+        <span class="bui-accordion-title">Large</span>
+        <span class="bui-accordion-indicator"></span>
+      </button>
+    </h3>
+    <div class="bui-accordion-panel">
+      <div class="bui-accordion-body">
+        <div class="bui-accordion-content">Roomy padding and 15px text.</div>
+      </div>
+    </div>
+  </div>
+  <div class="bui-accordion-item">
+    <h3 class="bui-accordion-header">
+      <button type="button" class="bui-accordion-trigger">
+        <span class="bui-accordion-title">Another item</span>
+        <span class="bui-accordion-indicator"></span>
+      </button>
+    </h3>
+    <div class="bui-accordion-panel">
+      <div class="bui-accordion-body">
+        <div class="bui-accordion-content">More content here.</div>
+      </div>
+    </div>
+  </div>
+</div></div></div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion bui-accordion-sm"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"acc-sm"</span> <span class="bui-code-blue">data-bui-accordion</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-item bui-accordion-open"</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;h3</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-header"</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-trigger"</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-title"</span><span class="bui-code-pink">&gt;</span>Small<span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-indicator"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;/h3</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-panel"</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-body"</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-content"</span><span class="bui-code-pink">&gt;</span>Compact padding and 12px text.<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-item"</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;h3</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-header"</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-trigger"</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-title"</span><span class="bui-code-pink">&gt;</span>Another item<span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-indicator"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;/h3</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-panel"</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-body"</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-content"</span><span class="bui-code-pink">&gt;</span>More content here.<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion bui-accordion-lg"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"acc-lg"</span> <span class="bui-code-blue">data-bui-accordion</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-item bui-accordion-open"</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;h3</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-header"</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-trigger"</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-title"</span><span class="bui-code-pink">&gt;</span>Large<span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-indicator"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;/h3</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-panel"</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-body"</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-content"</span><span class="bui-code-pink">&gt;</span>Roomy padding and 15px text.<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-item"</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;h3</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-header"</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-trigger"</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-title"</span><span class="bui-code-pink">&gt;</span>Another item<span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-indicator"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;/h3</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-panel"</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-body"</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-content"</span><span class="bui-code-pink">&gt;</span>More content here.<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
+<article class="bui-demo-card" id="nested"><div class="bui-demo-title">Nested accordion <span>inside .bui-accordion-content</span></div><div class="bui-demo-content"><div class="bui-accordion" id="acc-nested" data-bui-accordion>
+  <div class="bui-accordion-item bui-accordion-open">
+    <h3 class="bui-accordion-header">
+      <button type="button" class="bui-accordion-trigger">
+        <span class="bui-accordion-icon"><i class="bui-icon-light bui-icon-rocket-launch"></i></span>
+        <span class="bui-accordion-title">Getting started</span>
+        <span class="bui-accordion-indicator"></span>
+      </button>
+    </h3>
+    <div class="bui-accordion-panel">
+      <div class="bui-accordion-body">
+        <div class="bui-accordion-content">Install, import and you are ready.</div>
+      </div>
+    </div>
+  </div>
+  <div class="bui-accordion-item">
+    <h3 class="bui-accordion-header">
+      <button type="button" class="bui-accordion-trigger">
+        <span class="bui-accordion-icon"><i class="bui-icon-light bui-icon-chat-circle"></i></span>
+        <span class="bui-accordion-title">Support</span>
+        <span class="bui-accordion-indicator"></span>
+      </button>
+    </h3>
+    <div class="bui-accordion-panel">
+      <div class="bui-accordion-body">
+        <div class="bui-accordion-content"><p>Pick a topic:</p>
+        <div class="bui-accordion bui-accordion-flush" id="acc-inner" data-bui-accordion>
+          <div class="bui-accordion-item bui-accordion-open">
+            <h3 class="bui-accordion-header">
+              <button type="button" class="bui-accordion-trigger">
+                <span class="bui-accordion-title">Billing questions</span>
+                <span class="bui-accordion-indicator"></span>
+              </button>
+            </h3>
+            <div class="bui-accordion-panel">
+              <div class="bui-accordion-body">
+                <div class="bui-accordion-content">Invoices are sent on the first day of each month.</div>
+              </div>
+            </div>
+          </div>
+          <div class="bui-accordion-item">
+            <h3 class="bui-accordion-header">
+              <button type="button" class="bui-accordion-trigger">
+                <span class="bui-accordion-title">Technical questions</span>
+                <span class="bui-accordion-indicator"></span>
+              </button>
+            </h3>
+            <div class="bui-accordion-panel">
+              <div class="bui-accordion-body">
+                <div class="bui-accordion-content">Open a ticket and we answer within a day.</div>
+              </div>
+            </div>
+          </div>
+    </div></div>
+      </div>
+    </div>
+  </div>
+</div></div><div class="bui-demo-code">Put a whole accordion inside an item's content. Each accordion only manages its own items, so opening one in the inner list never closes anything in the outer list. Closing the outer item hides the inner ones from the keyboard too.</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"acc-nested"</span> <span class="bui-code-blue">data-bui-accordion</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-item bui-accordion-open"</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;h3</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-header"</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-trigger"</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-icon"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;i</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-icon-light bui-icon-rocket-launch"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/i</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-title"</span><span class="bui-code-pink">&gt;</span>Getting started<span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-indicator"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;/h3</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-panel"</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-body"</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-content"</span><span class="bui-code-pink">&gt;</span>Install, import and you are ready.<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-item"</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;h3</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-header"</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-trigger"</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-icon"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;i</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-icon-light bui-icon-chat-circle"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/i</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-title"</span><span class="bui-code-pink">&gt;</span>Support<span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-indicator"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;/h3</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-panel"</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-body"</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-content"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;p</span><span class="bui-code-pink">&gt;</span>Pick a topic:<span class="bui-code-pink">&lt;/p</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion bui-accordion-flush"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"acc-inner"</span> <span class="bui-code-blue">data-bui-accordion</span><span class="bui-code-pink">&gt;</span>
+          <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-item bui-accordion-open"</span><span class="bui-code-pink">&gt;</span>
+            <span class="bui-code-pink">&lt;h3</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-header"</span><span class="bui-code-pink">&gt;</span>
+              <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-trigger"</span><span class="bui-code-pink">&gt;</span>
+                <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-title"</span><span class="bui-code-pink">&gt;</span>Billing questions<span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+                <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-indicator"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+              <span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+            <span class="bui-code-pink">&lt;/h3</span><span class="bui-code-pink">&gt;</span>
+            <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-panel"</span><span class="bui-code-pink">&gt;</span>
+              <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-body"</span><span class="bui-code-pink">&gt;</span>
+                <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-content"</span><span class="bui-code-pink">&gt;</span>Invoices are sent on the first day of each month.<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+              <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+            <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+          <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+          <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-item"</span><span class="bui-code-pink">&gt;</span>
+            <span class="bui-code-pink">&lt;h3</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-header"</span><span class="bui-code-pink">&gt;</span>
+              <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-trigger"</span><span class="bui-code-pink">&gt;</span>
+                <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-title"</span><span class="bui-code-pink">&gt;</span>Technical questions<span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+                <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-indicator"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+              <span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+            <span class="bui-code-pink">&lt;/h3</span><span class="bui-code-pink">&gt;</span>
+            <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-panel"</span><span class="bui-code-pink">&gt;</span>
+              <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-body"</span><span class="bui-code-pink">&gt;</span>
+                <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-content"</span><span class="bui-code-pink">&gt;</span>Open a ticket and we answer within a day.<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+              <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+            <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+          <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
+<article class="bui-demo-card" id="disabled"><div class="bui-demo-title">Disabled items <span>.bui-accordion-disabled</span></div><div class="bui-demo-content"><div class="bui-button-row" style="margin-bottom:14px"><button type="button" class="bui-btn bui-btn-soft-primary bui-btn-sm" id="acc-toggle-disabled">Enable the disabled item</button></div><div class="bui-accordion" id="acc-disabled" data-bui-accordion>
+  <div class="bui-accordion-item bui-accordion-open">
+    <h3 class="bui-accordion-header">
+      <button type="button" class="bui-accordion-trigger">
+        <span class="bui-accordion-icon"><i class="bui-icon-light bui-icon-check-circle"></i></span>
+        <span class="bui-accordion-title">Available</span>
+        <span class="bui-accordion-indicator"></span>
+      </button>
+    </h3>
+    <div class="bui-accordion-panel">
+      <div class="bui-accordion-body">
+        <div class="bui-accordion-content">This item opens and closes normally.</div>
+      </div>
+    </div>
+  </div>
+  <div class="bui-accordion-item bui-accordion-disabled">
+    <h3 class="bui-accordion-header">
+      <button type="button" class="bui-accordion-trigger">
+        <span class="bui-accordion-icon"><i class="bui-icon-light bui-icon-lock"></i></span>
+        <span class="bui-accordion-title">Disabled</span>
+        <span class="bui-accordion-indicator"></span>
+      </button>
+    </h3>
+    <div class="bui-accordion-panel">
+      <div class="bui-accordion-body">
+        <div class="bui-accordion-content">You cannot open this one.</div>
+      </div>
+    </div>
+  </div>
+  <div class="bui-accordion-item">
+    <h3 class="bui-accordion-header">
+      <button type="button" class="bui-accordion-trigger">
+        <span class="bui-accordion-icon"><i class="bui-icon-light bui-icon-star"></i></span>
+        <span class="bui-accordion-title">Also available</span>
+        <span class="bui-accordion-indicator"></span>
+      </button>
+    </h3>
+    <div class="bui-accordion-panel">
+      <div class="bui-accordion-body">
+        <div class="bui-accordion-content">Another normal item.</div>
+      </div>
+    </div>
+  </div>
+</div></div><div class="bui-demo-code">Add <code>.bui-accordion-disabled</code> to the item (the script also sets <code>disabled</code> on its button). Keyboard navigation skips it, and <code>enable(i)</code> / <code>disable(i)</code> change it later.</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"acc-disabled"</span> <span class="bui-code-blue">data-bui-accordion</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-item bui-accordion-open"</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;h3</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-header"</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-trigger"</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-icon"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;i</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-icon-light bui-icon-check-circle"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/i</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-title"</span><span class="bui-code-pink">&gt;</span>Available<span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-indicator"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;/h3</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-panel"</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-body"</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-content"</span><span class="bui-code-pink">&gt;</span>This item opens and closes normally.<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-item bui-accordion-disabled"</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;h3</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-header"</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-trigger"</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-icon"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;i</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-icon-light bui-icon-lock"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/i</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-title"</span><span class="bui-code-pink">&gt;</span>Disabled<span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-indicator"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;/h3</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-panel"</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-body"</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-content"</span><span class="bui-code-pink">&gt;</span>You cannot open this one.<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-item"</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;h3</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-header"</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-trigger"</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-icon"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;i</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-icon-light bui-icon-star"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/i</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-title"</span><span class="bui-code-pink">&gt;</span>Also available<span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-indicator"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;/h3</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-panel"</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-body"</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-content"</span><span class="bui-code-pink">&gt;</span>Another normal item.<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span></code></pre></div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> JavaScript</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">const</span> acc = BUI.accordion(<span class="bui-code-green">'#acc-disabled'</span>);
+
+document.getElementById(<span class="bui-code-green">'acc-toggle-disabled'</span>).addEventListener(<span class="bui-code-green">'click'</span>, (e) =&gt; {
+  <span class="bui-code-pink">const</span> on = acc.isDisabled(1);
+  <span class="bui-code-pink">if</span> (on) acc.enable(1); <span class="bui-code-pink">else</span> acc.disable(1);
+  e.currentTarget.textContent = on ? <span class="bui-code-green">'Disable it again'</span> : <span class="bui-code-green">'Enable the disabled item'</span>;
+});</code></pre></div></article>
+<article class="bui-demo-card" id="motion"><div class="bui-demo-title">Animation <span>--bui-acc-speed · data-bui-animate</span></div><div class="bui-demo-content"><div class="bui-stack bui-gutter-y-4"><div class="bui-accordion" id="acc-slow" style="--bui-acc-speed:.7s" data-bui-accordion>
+  <div class="bui-accordion-item bui-accordion-open">
+    <h3 class="bui-accordion-header">
+      <button type="button" class="bui-accordion-trigger">
+        <span class="bui-accordion-icon"><i class="bui-icon-light bui-icon-clock"></i></span>
+        <span class="bui-accordion-title">Slow and smooth</span>
+        <span class="bui-accordion-indicator"></span>
+      </button>
+    </h3>
+    <div class="bui-accordion-panel">
+      <div class="bui-accordion-body">
+        <div class="bui-accordion-content">This accordion takes 0.7 seconds to open.</div>
+      </div>
+    </div>
+  </div>
+  <div class="bui-accordion-item">
+    <h3 class="bui-accordion-header">
+      <button type="button" class="bui-accordion-trigger">
+        <span class="bui-accordion-title">Another item</span>
+        <span class="bui-accordion-indicator"></span>
+      </button>
+    </h3>
+    <div class="bui-accordion-panel">
+      <div class="bui-accordion-body">
+        <div class="bui-accordion-content">Set <code>--bui-acc-speed</code> on the accordion.</div>
+      </div>
+    </div>
+  </div>
+</div><div class="bui-accordion" id="acc-still" data-bui-animate="false" data-bui-accordion>
+  <div class="bui-accordion-item bui-accordion-open">
+    <h3 class="bui-accordion-header">
+      <button type="button" class="bui-accordion-trigger">
+        <span class="bui-accordion-icon"><i class="bui-icon-light bui-icon-lightning"></i></span>
+        <span class="bui-accordion-title">No animation</span>
+        <span class="bui-accordion-indicator"></span>
+      </button>
+    </h3>
+    <div class="bui-accordion-panel">
+      <div class="bui-accordion-body">
+        <div class="bui-accordion-content">Opens instantly.</div>
+      </div>
+    </div>
+  </div>
+  <div class="bui-accordion-item">
+    <h3 class="bui-accordion-header">
+      <button type="button" class="bui-accordion-trigger">
+        <span class="bui-accordion-title">Another item</span>
+        <span class="bui-accordion-indicator"></span>
+      </button>
+    </h3>
+    <div class="bui-accordion-panel">
+      <div class="bui-accordion-body">
+        <div class="bui-accordion-content">Use <code>data-bui-animate="false"</code>.</div>
+      </div>
+    </div>
+  </div>
+</div></div></div><div class="bui-demo-code">The height grows with CSS only (<code>grid-template-rows</code> from <code>0fr</code> to <code>1fr</code>), so the panel can hold any content. Animations stop automatically for people who prefer reduced motion.</div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"acc-slow"</span> <span class="bui-code-blue">style</span>=<span class="bui-code-green">"--bui-acc-speed:.7s"</span> <span class="bui-code-blue">data-bui-accordion</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-item bui-accordion-open"</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;h3</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-header"</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-trigger"</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-icon"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;i</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-icon-light bui-icon-clock"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/i</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-title"</span><span class="bui-code-pink">&gt;</span>Slow and smooth<span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-indicator"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;/h3</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-panel"</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-body"</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-content"</span><span class="bui-code-pink">&gt;</span>This accordion takes 0.7 seconds to open.<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-item"</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;h3</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-header"</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-trigger"</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-title"</span><span class="bui-code-pink">&gt;</span>Another item<span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-indicator"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;/h3</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-panel"</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-body"</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-content"</span><span class="bui-code-pink">&gt;</span>Set <span class="bui-code-pink">&lt;code</span><span class="bui-code-pink">&gt;</span>--bui-acc-speed<span class="bui-code-pink">&lt;/code</span><span class="bui-code-pink">&gt;</span> on the accordion.<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+
+<span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"acc-still"</span> <span class="bui-code-blue">data-bui-animate</span>=<span class="bui-code-green">"false"</span> <span class="bui-code-blue">data-bui-accordion</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-item bui-accordion-open"</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;h3</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-header"</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-trigger"</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-icon"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;i</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-icon-light bui-icon-lightning"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/i</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-title"</span><span class="bui-code-pink">&gt;</span>No animation<span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-indicator"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;/h3</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-panel"</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-body"</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-content"</span><span class="bui-code-pink">&gt;</span>Opens instantly.<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-item"</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;h3</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-header"</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-trigger"</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-title"</span><span class="bui-code-pink">&gt;</span>Another item<span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-indicator"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;/h3</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-panel"</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-body"</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-content"</span><span class="bui-code-pink">&gt;</span>Use <span class="bui-code-pink">&lt;code</span><span class="bui-code-pink">&gt;</span>data-bui-animate="false"<span class="bui-code-pink">&lt;/code</span><span class="bui-code-pink">&gt;</span>.<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
+<article class="bui-demo-card" id="events"><div class="bui-demo-title">JavaScript API and events <span>BUI.accordion(target, options)</span></div><div class="bui-demo-content"><div class="bui-accordion" id="acc-events" data-bui-multiple data-bui-accordion>
+  <div class="bui-accordion-item">
+    <h3 class="bui-accordion-header">
+      <button type="button" class="bui-accordion-trigger">
+        <span class="bui-accordion-title">Open me</span>
+        <span class="bui-accordion-indicator"></span>
+      </button>
+    </h3>
+    <div class="bui-accordion-panel">
+      <div class="bui-accordion-body">
+        <div class="bui-accordion-content">Every change fires <code>bui:accordion-toggle</code> and the <code>onToggle</code> callback.</div>
+      </div>
+    </div>
+  </div>
+  <div class="bui-accordion-item">
+    <h3 class="bui-accordion-header">
+      <button type="button" class="bui-accordion-trigger">
+        <span class="bui-accordion-title">And me</span>
+        <span class="bui-accordion-indicator"></span>
+      </button>
+    </h3>
+    <div class="bui-accordion-panel">
+      <div class="bui-accordion-body">
+        <div class="bui-accordion-content">Check the log below.</div>
+      </div>
+    </div>
+  </div>
+</div><p class="bui-doc-note" id="acc-log" style="margin-top:14px" aria-live="polite">No changes yet.</p></div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion"</span> <span class="bui-code-blue">id</span>=<span class="bui-code-green">"acc-events"</span> <span class="bui-code-blue">data-bui-multiple</span> <span class="bui-code-blue">data-bui-accordion</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-item"</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;h3</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-header"</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-trigger"</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-title"</span><span class="bui-code-pink">&gt;</span>Open me<span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-indicator"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;/h3</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-panel"</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-body"</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-content"</span><span class="bui-code-pink">&gt;</span>Every change fires <span class="bui-code-pink">&lt;code</span><span class="bui-code-pink">&gt;</span>bui:accordion-toggle<span class="bui-code-pink">&lt;/code</span><span class="bui-code-pink">&gt;</span> and the <span class="bui-code-pink">&lt;code</span><span class="bui-code-pink">&gt;</span>onToggle<span class="bui-code-pink">&lt;/code</span><span class="bui-code-pink">&gt;</span> callback.<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-item"</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;h3</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-header"</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-trigger"</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-title"</span><span class="bui-code-pink">&gt;</span>And me<span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-indicator"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;/h3</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-panel"</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-body"</span><span class="bui-code-pink">&gt;</span>
+        <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-accordion-content"</span><span class="bui-code-pink">&gt;</span>Check the log below.<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+      <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
+<span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span></code></pre></div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> JavaScript</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">const</span> acc = BUI.accordion(<span class="bui-code-green">'#acc-events'</span>, {
+  onToggle(index, open) {
+    document.getElementById(<span class="bui-code-green">'acc-log'</span>).textContent =
+      <span class="bui-code-green">`Item ${index + 1} ${open ? 'opened' : 'closed'}. Open now: ${acc.openIndexes.map((i) =&gt; i + 1).join(', ') || 'none'}`</span>;
+  },
+});
+
+<span class="bui-code-muted">// or listen for the event</span>
+document.getElementById(<span class="bui-code-green">'acc-events'</span>).addEventListener(<span class="bui-code-green">'bui:accordion-toggle'</span>, (e) =&gt; {
+  console.log(e.detail.index, e.detail.open);
+});
+
+acc.open(0);       <span class="bui-code-muted">// acc.close(0) · acc.toggle(0) · acc.openAll() · acc.closeAll()</span></code></pre></div></article>
+      </div>
+<h3 style="margin:34px 0 14px;font-family:var(--bui-font-heading);font-size:18px;letter-spacing:-.4px">Markup</h3><div class="bui-ref-wrap"><table class="bui-ref"><thead><tr><th>Class / attribute</th><th>Use</th></tr></thead><tbody><tr><td><code>.bui-accordion</code></td><td>The container. Add <code>data-bui-accordion</code> to start it automatically.</td></tr><tr><td><code>.bui-accordion-item</code></td><td>One item. States: <code>.bui-accordion-open</code>, <code>.bui-accordion-disabled</code>.</td></tr><tr><td><code>.bui-accordion-header</code></td><td>A heading element (<code>&lt;h3&gt;</code>, or any level that fits the page) that holds the button.</td></tr><tr><td><code>.bui-accordion-trigger</code></td><td>The <code>&lt;button&gt;</code> that opens and closes the item.</td></tr><tr><td><code>.bui-accordion-icon</code>, <code>-title</code>, <code>-indicator</code></td><td>Optional leading icon, the title, and the chevron or plus / minus drawn by the CSS.</td></tr><tr><td><code>.bui-accordion-panel</code> › <code>-body</code> › <code>-content</code></td><td>The animated panel, its clipping layer, and the padded content. Keep all three.</td></tr><tr><td><code>-flush</code>, <code>-separated</code>, <code>-sm</code>, <code>-lg</code></td><td>Look and size modifiers on <code>.bui-accordion</code>.</td></tr><tr><td><code>-plus</code>, <code>-start</code>, <code>-static</code></td><td>Plus / minus indicator, indicator before the title, no animation.</td></tr></tbody></table></div><h3 style="margin:34px 0 14px;font-family:var(--bui-font-heading);font-size:18px;letter-spacing:-.4px">Options</h3><div class="bui-ref-wrap"><table class="bui-ref"><thead><tr><th>Option</th><th>Default</th><th>Description</th></tr></thead><tbody><tr><td><code>multiple</code></td><td><code>false</code></td><td><code>true</code> lets several items stay open; otherwise opening one closes the others.</td></tr><tr><td><code>collapsible</code></td><td><code>true</code></td><td>In single mode, <code>false</code> keeps one item open at all times.</td></tr><tr><td><code>open</code></td><td><em>markup</em></td><td>An index, an array of indexes or <code>'all'</code>. Without it, items marked <code>.bui-accordion-open</code> start open.</td></tr><tr><td><code>animate</code></td><td><code>true</code></td><td><code>false</code> opens and closes instantly.</td></tr><tr><td><code>onToggle</code></td><td><code>null</code></td><td><code>(index, open, accordion)</code>, called for every item that opens or closes.</td></tr></tbody></table></div><p class="bui-doc-note">Data attributes: <code>data-bui-multiple</code>, <code>data-bui-collapsible="false"</code>, <code>data-bui-animate="false"</code>, <code>data-bui-open="0,2"</code> or <code>"all"</code>.</p><h3 style="margin:34px 0 14px;font-family:var(--bui-font-heading);font-size:18px;letter-spacing:-.4px">Methods and events</h3><div class="bui-ref-wrap"><table class="bui-ref"><thead><tr><th>Member</th><th>What it does</th></tr></thead><tbody><tr><td><code>BUI.accordion(target, options)</code></td><td>Creates an accordion (<code>new</code> is optional) and returns it, or the existing one for that element.</td></tr><tr><td><code>BUI.accordion.get(el)</code>, <code>.init(root)</code></td><td>Find an instance; start every <code>[data-bui-accordion]</code> inside <code>root</code> (done automatically on load).</td></tr><tr><td><code>open(i)</code>, <code>close(i)</code>, <code>toggle(i)</code></td><td>Return <code>true</code> when something changed. Disabled items are skipped.</td></tr><tr><td><code>openAll()</code>, <code>closeAll()</code></td><td>Open every enabled item (multiple mode only) or close everything.</td></tr><tr><td><code>enable(i)</code>, <code>disable(i)</code>, <code>isDisabled(i)</code>, <code>isOpen(i)</code></td><td>Change or read the state of one item.</td></tr><tr><td><code>openIndexes</code>, <code>items</code>, <code>count</code></td><td>Indexes that are open, the item elements, and how many there are.</td></tr><tr><td><code>bui:accordion-toggle</code></td><td>Event from the item: <code>detail.index</code>, <code>detail.open</code>, <code>detail.accordion</code>.</td></tr><tr><td><code>[data-bui-accordion-expand="#id"]</code>, <code>[data-bui-accordion-collapse="#id"]</code></td><td>Buttons that call <code>openAll()</code> and <code>closeAll()</code>.</td></tr></tbody></table></div><h3 style="margin:34px 0 14px;font-family:var(--bui-font-heading);font-size:18px;letter-spacing:-.4px">Accessibility and keyboard</h3><p class="bui-doc-note">Each button has <code>aria-expanded</code> and <code>aria-controls</code>; each panel is a <code>region</code> labelled by its button. Closed panels are hidden with <code>visibility</code>, so their links and fields are skipped by Tab and by screen readers. <kbd>Enter</kbd> and <kbd>Space</kbd> toggle the item, <kbd>↓</kbd> <kbd>↑</kbd> move between the buttons of the same accordion, and <kbd>Home</kbd> / <kbd>End</kbd> go to the first and last. Disabled items are skipped.</p>
+      </section>
+      <div class="bui-pager"><a class="bui-btn bui-btn-outline" href="stepper.html"><span class="bui-flip"><i class="bui-icon-light bui-icon-arrow-left"></i></span> Stepper &amp; wizard</a><span></span></div>
+      <footer class="bui-footer"><span>© 2026 Baset UI. Built for makers.</span><span>Documentation · v1.0.0</span></footer>
+    </main>
+  </div>
+  <script src="../assets/js/baset-ui.js"></script>
+  <script src="../assets/js/baset-accordion.js"></script>
+  <script src="../assets/js/component-playground.js"></script>
+  <script src="../assets/js/component-playground-configs.js"></script>
+  <script>
+const accDisabled = BUI.accordion('#acc-disabled');
+
+document.getElementById('acc-toggle-disabled').addEventListener('click', (e) => {
+  const on = accDisabled.isDisabled(1);
+  if (on) accDisabled.enable(1); else accDisabled.disable(1);
+  e.currentTarget.textContent = on ? 'Disable it again' : 'Enable the disabled item';
+});
+
+const accEvents = BUI.accordion('#acc-events', {
+  onToggle(index, open) {
+    document.getElementById('acc-log').textContent =
+      `Item ${index + 1} ${open ? 'opened' : 'closed'}. Open now: ${accEvents.openIndexes.map((i) => i + 1).join(', ') || 'none'}`;
+  },
+});
+
+// or listen for the event
+document.getElementById('acc-events').addEventListener('bui:accordion-toggle', (e) => {
+  console.log(e.detail.index, e.detail.open);
+});
+
+accEvents.open(0);       // accEvents.close(0)
+  </script>
+
+</body>
+</html>
