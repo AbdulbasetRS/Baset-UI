@@ -1,0 +1,11 @@
+{
+    "meta": { "code": "en", "name": "English", "direction": "ltr" },
+    "common": {
+        "loading": "Loading...",
+        "search": "Search",
+        "close": "Close",
+        "cancel": "Cancel",
+        "confirm": "Confirm",
+        "noResults": "No results found"
+    }
+}

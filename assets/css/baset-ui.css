@@ -1,0 +1,64 @@
+/*!
+ * Baset-UI — Core Stylesheet (Foundation stage)
+ * Version: 0.0.0-foundation
+ *
+ * هذا الملف مجهز فقط بالأساسيات (Design Tokens + Base). لا يحتوي على أي Component.
+ * المسؤوليات الكاملة: instructions/CORE_ASSETS.md
+ */
+
+/* ---------- Design Tokens (Default Theme, Light) ---------- */
+:root {
+    --bui-font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans Arabic", Arial, sans-serif;
+    --bui-font-size-base: 1rem;
+    --bui-line-height-base: 1.6;
+
+    --bui-color-bg: #ffffff;
+    --bui-color-surface: #f6f7f9;
+    --bui-color-border: #dfe3e8;
+    --bui-color-text: #1c2330;
+    --bui-color-text-muted: #5b6574;
+    --bui-color-primary: #2457d6;
+    --bui-color-primary-contrast: #ffffff;
+    --bui-color-focus: #2457d6;
+
+    --bui-radius-md: 0.5rem;
+    --bui-shadow-sm: 0 1px 2px rgba(16, 24, 40, 0.08);
+
+    --bui-space-1: 0.25rem;
+    --bui-space-2: 0.5rem;
+    --bui-space-3: 1rem;
+    --bui-space-4: 1.5rem;
+    --bui-space-5: 2rem;
+
+    color-scheme: light;
+}
+
+/* ---------- Dark Mode ---------- */
+:root[data-bui-mode="dark"] {
+    --bui-color-bg: #0f141c;
+    --bui-color-surface: #171d28;
+    --bui-color-border: #2a3342;
+    --bui-color-text: #e8ecf2;
+    --bui-color-text-muted: #9aa5b6;
+    --bui-color-primary: #6b9bff;
+    --bui-color-primary-contrast: #0f141c;
+    --bui-color-focus: #6b9bff;
+    --bui-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.5);
+    color-scheme: dark;
+}
+
+/* ---------- Base ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+    margin: 0;
+    font-family: var(--bui-font-family);
+    font-size: var(--bui-font-size-base);
+    line-height: var(--bui-line-height-base);
+    color: var(--bui-color-text);
+    background: var(--bui-color-bg);
+}
+
+:focus-visible { outline: 2px solid var(--bui-color-focus); outline-offset: 2px; }

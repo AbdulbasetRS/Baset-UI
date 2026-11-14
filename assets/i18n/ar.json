@@ -1,0 +1,11 @@
+{
+    "meta": { "code": "ar", "name": "العربية", "direction": "rtl" },
+    "common": {
+        "loading": "جارٍ التحميل...",
+        "search": "بحث",
+        "close": "إغلاق",
+        "cancel": "إلغاء",
+        "confirm": "تأكيد",
+        "noResults": "لا توجد نتائج"
+    }
+}
