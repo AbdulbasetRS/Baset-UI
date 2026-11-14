@@ -12,7 +12,7 @@
   const q = (v) => String(v).replace(/&/g, '&amp;').replace(/"/g, '&quot;');
   const attrs = (o) => Object.entries(o).filter(([, v]) => v !== false && v != null && v !== '').map(([k, v]) => (v === true ? k : `${k}="${q(v)}"`)).join(' ');
   const tagOf = (name, o, inner) => `<${name}${Object.keys(o).length && attrs(o) ? ' ' + attrs(o) : ''}>${inner}</${name}>`;
-  const ico = (n, style = 'regular') => `<i class="bui-icon-${style} bui-icon-${n}"></i>`;
+  const ico = (n, style = 'light') => `<i class="bui-icon-${style} bui-icon-${n}"></i>`;
   const pad = (n) => String(n).padStart(2, '0');
   const iso = (d) => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
   const isoT = (d) => `${iso(d)}T${pad(d.getHours())}:${pad(d.getMinutes())}:00`;
@@ -107,7 +107,7 @@
       lines.push(ctl, `<label class="bui-float-label" for="${id}">${s.label}</label>`);
       if (affix && s.suffix) lines.push(`<span class="bui-float-suffix">${s.suffix}</span>`);
       if (s.type === 'password' && s.toggle) lines.push('<button type="button" class="bui-float-toggle" aria-label="Show password" aria-pressed="false"></button>');
-      if (msg) lines.push(`<button type="button" class="bui-float-info" aria-label="Show message" aria-expanded="false" aria-controls="${id}-msg">i</button>`, `<div class="bui-float-message" id="${id}-msg" role="status">${s.message}</div>`);
+      if (msg) lines.push(`<button type="button" class="bui-float-info" aria-label="Show message" aria-expanded="false" aria-controls="${id}-msg">${ico('info')}</button>`, `<div class="bui-float-message" id="${id}-msg" role="status">${s.message}</div>`);
       return `<div class="${klass}">\n  ${lines.join('\n  ')}\n</div>`;
     },
     mount(stage) {
@@ -261,9 +261,9 @@
 
   /* ================================ Cards ================================ */
   const CARDS = [
-    { label: 'Total revenue', value: '$24,580', change: '+12.8%', glyph: '↗' },
-    { label: 'Active users', value: '8,249', change: '+4.1%', glyph: '◉' },
-    { label: 'Pending tasks', value: '34', change: '', glyph: '✓' },
+    { label: 'Total revenue', value: '$24,580', change: '+12.8%', glyph: 'trend-up' },
+    { label: 'Active users', value: '8,249', change: '+4.1%', glyph: 'users' },
+    { label: 'Pending tasks', value: '34', change: '', glyph: 'check-circle' },
   ];
   PG.add('cards', {
     stretch: true,
@@ -283,14 +283,14 @@
       const cards = CARDS.slice(0, Number(s.count)).map((c, i) => {
         const label = i === 0 ? s.label : c.label, value = i === 0 ? s.value : c.value, change = i === 0 ? s.change : c.change;
         const foot = { sparkline: '<div class="bui-sparkline"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>', progress: `<div class="bui-progress"><span style="width:${s.progress}%"></span></div>`, lines: '<div class="bui-task-lines"><i></i><i></i><i></i></div>', none: '' }[s.extra];
-        return `  <article class="bui-col-12 bui-col-${s.cols} bui-stat-card">\n    <div class="bui-stat-top"><span class="bui-stat-icon bui-stat-icon-${colors[(start + i) % 3]}">${c.glyph}</span>${change ? `<span class="bui-stat-change">${change}</span>` : ''}</div>\n    <span class="bui-stat-label">${label}</span>\n    <strong>${value}</strong>${foot ? `\n    ${foot}` : ''}\n  </article>`;
+        return `  <article class="bui-col-12 bui-col-${s.cols} bui-stat-card">\n    <div class="bui-stat-top"><span class="bui-stat-icon bui-stat-icon-${colors[(start + i) % 3]}">${ico(c.glyph)}</span>${change ? `<span class="bui-stat-change">${change}</span>` : ''}</div>\n    <span class="bui-stat-label">${label}</span>\n    <strong>${value}</strong>${foot ? `\n    ${foot}` : ''}\n  </article>`;
       });
       return `<div class="${cls('bui-row', s.gutter)}">\n${cards.join('\n')}\n</div>`;
     },
   });
 
   /* ================================ Alerts ================================ */
-  const SYM = { success: '✓', info: 'i', warning: '!', danger: '×' };
+  const SYM = { success: 'check-circle', info: 'info', warning: 'warning', danger: 'x-circle' };
   PG.add('alerts', {
     stretch: true,
     controls: [
@@ -302,7 +302,7 @@
     ],
     html(s) {
       const order = ['success', 'info', 'warning', 'danger'], from = order.indexOf(s.type);
-      const one = (t, first) => `<div class="bui-alert bui-alert-${t}" role="${t === 'danger' || t === 'warning' ? 'alert' : 'status'}">\n  <span aria-hidden="true">${SYM[t]}</span>\n  <div><strong>${first ? s.title : `${t[0].toUpperCase()}${t.slice(1)} alert`}</strong>${first && !s.message ? '' : `<p>${first ? s.message : 'Another message with the same layout.'}</p>`}</div>${s.dismiss ? '\n  <button type="button" class="bui-dismiss" aria-label="Dismiss">×</button>' : ''}\n</div>`;
+      const one = (t, first) => `<div class="bui-alert bui-alert-${t}" role="${t === 'danger' || t === 'warning' ? 'alert' : 'status'}">\n  <span aria-hidden="true">${ico(SYM[t])}</span>\n  <div><strong>${first ? s.title : `${t[0].toUpperCase()}${t.slice(1)} alert`}</strong>${first && !s.message ? '' : `<p>${first ? s.message : 'Another message with the same layout.'}</p>`}</div>${s.dismiss ? `\n  <button type="button" class="bui-dismiss" aria-label="Dismiss">${ico('x')}</button>` : ''}\n</div>`;
       const list = Array.from({ length: Number(s.count) }, (_, i) => one(order[(from + i) % 4], i === 0));
       return Number(s.count) > 1 ? `<div class="bui-alert-stack">\n${list.join('\n')}\n</div>` : list[0];
     },
@@ -361,7 +361,7 @@
     if (s.kind === 'toast') o.progress = s.progress;
     o.closable = s.closable; o.pauseOnHover = s.pause;
     if (s.kind === 'notify') {
-      if (s.media === 'initials') { o.logo = 'SA'; o.round = true; } else if (s.media === 'icon') o.icon = 'bui-icon-solid bui-icon-bell';
+      if (s.media === 'initials') { o.logo = 'SA'; o.round = true; } else if (s.media === 'icon') o.icon = 'bui-icon-light bui-icon-bell';
       if (s.unread) o.unread = true;
       if (s.actions) o.actions = [{ label: 'View', variant: 'primary' }, { label: 'Dismiss', variant: 'outline' }];
     }
@@ -409,7 +409,7 @@
       { k: 'position', t: 'select', label: 'Position', group: 'Shape', v: '', opts: [['', 'Center'], ['top', 'Top'], ['bottom', 'Bottom sheet'], ['start', 'Side drawer (start)'], ['end', 'Side drawer (end)']] },
       { k: 'footer', t: 'select', label: 'Footer alignment', group: 'Shape', v: '', opts: [['', 'End'], ['start', 'Start'], ['center', 'Center'], ['between', 'Space between'], ['stretch', 'Stretch']], show: (s) => !s.icon },
       { k: 'two', t: 'check', label: 'Cancel + confirm buttons', group: 'Options', v: true },
-      { k: 'closable', t: 'check', label: 'Close (×) button', group: 'Options', v: true, show: (s) => !s.icon },
+      { k: 'closable', t: 'check', label: 'Close button', group: 'Options', v: true, show: (s) => !s.icon },
       { k: 'divided', t: 'check', label: 'Divider lines', group: 'Options', v: false, show: (s) => !s.icon },
       { k: 'scroll', t: 'check', label: 'Scrolling body', group: 'Options', v: false, show: (s) => !s.icon },
       { k: 'static', t: 'check', label: 'Static backdrop', group: 'Options', v: false },
@@ -422,9 +422,9 @@
       if (s.two) btns.push('<button type="button" class="bui-btn bui-btn-outline" data-bui-modal-close>Cancel</button>');
       btns.push(`<button type="button" class="bui-btn bui-btn-${okVariant}" data-bui-modal-close>${c ? 'Confirm' : 'Save'}</button>`);
       const long = s.scroll && !c ? '\n    <p>' + Array(8).fill('More text so the body has to scroll while the header and footer stay in place.').join(' ') + '</p>' : '';
-      const head = c ? '' : `\n  <div class="bui-modal-header">\n    <h3 class="bui-modal-title" id="${id}-title">${s.title}</h3>${s.closable ? '\n    <button type="button" class="bui-modal-close" aria-label="Close" data-bui-modal-close>×</button>' : ''}\n  </div>`;
+      const head = c ? '' : `\n  <div class="bui-modal-header">\n    <h3 class="bui-modal-title" id="${id}-title">${s.title}</h3>${s.closable ? `\n    <button type="button" class="bui-modal-close" aria-label="Close" data-bui-modal-close>${ico('x')}</button>` : ''}\n  </div>`;
       const body = c
-        ? `\n  <div class="bui-modal-body">\n    <span class="bui-modal-icon bui-modal-icon-${c}" aria-hidden="true">${c === 'success' ? '✓' : c === 'info' ? 'i' : '!'}</span>\n    <h3 class="bui-modal-title" id="${id}-title">${s.title}</h3>\n    <p id="${id}-text">${s.message}</p>\n  </div>`
+        ? `\n  <div class="bui-modal-body">\n    <span class="bui-modal-icon bui-modal-icon-${c}" aria-hidden="true">${ico({ success: 'check-circle', info: 'info', warning: 'warning', danger: 'warning-circle' }[c])}</span>\n    <h3 class="bui-modal-title" id="${id}-title">${s.title}</h3>\n    <p id="${id}-text">${s.message}</p>\n  </div>`
         : `\n  <div class="bui-modal-body">\n    <p>${s.message}</p>${long}\n  </div>`;
       const foot = `\n  <div class="${cls('bui-modal-footer', !c && s.footer && `bui-modal-footer-${s.footer}`)}">\n    ${btns.join('\n    ')}\n  </div>`;
       return `<button type="button" class="bui-btn bui-btn-primary" data-bui-modal-open="#${id}">Open modal</button>\n\n<dialog ${attrs({ id, class: klass, 'aria-labelledby': `${id}-title`, 'data-bui-static': s.static })}>${head}${body}${foot}\n</dialog>`;

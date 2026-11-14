@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Utilities — Baset UI</title>
   <link rel="stylesheet" href="../assets/css/baset-ui.css">
+  <link rel="stylesheet" href="../assets/css/baset-icons.css">
   <link rel="stylesheet" href="../assets/css/docs.css">
 
   <script>try{if(localStorage.getItem('bui-theme')==='dark')document.documentElement.classList.add('bui-dark');var d=localStorage.getItem('bui-dir');if(d==='rtl'||d==='ltr')document.documentElement.dir=d}catch(e){}</script>
@@ -50,46 +51,46 @@
       <div class="bui-sidebar-bottom"><span class="bui-status-dot"></span> Baset UI <span class="bui-version">v1.0.0</span></div>
     </aside>
     <main class="bui-main">
-      <header class="bui-topbar"><div class="bui-breadcrumb"><a href="../index.html">Documentation</a> <span>/</span> Components <span>/</span> Utilities</div><div class="bui-top-actions"><span class="bui-pill">Vanilla CSS + JS</span><button class="bui-icon-btn bui-dir-btn" id="dirToggle" type="button" aria-label="Toggle direction (RTL / LTR)" title="Toggle direction (RTL / LTR)">RTL</button><button class="bui-icon-btn" id="themeToggle" type="button" aria-label="Toggle theme">☼</button></div></header>
+      <header class="bui-topbar"><div class="bui-breadcrumb"><a href="../index.html">Documentation</a> <span>/</span> Components <span>/</span> Utilities</div><div class="bui-top-actions"><span class="bui-pill">Vanilla CSS + JS</span><button class="bui-icon-btn bui-dir-btn" id="dirToggle" type="button" aria-label="Toggle direction (RTL / LTR)" title="Toggle direction (RTL / LTR)">RTL</button><button class="bui-icon-btn" id="themeToggle" type="button" aria-label="Toggle theme"><i class="bui-icon-light bui-icon-sun"></i></button></div></header>
       <section class="bui-section" id="customize"><div class="bui-section-heading"><div><span class="bui-eyebrow">CUSTOMIZE</span><h2>Make it yours</h2><p>Change the options, watch the feature card grid update, then copy the code. Switch theme and direction to check light, dark, LTR and RTL.</p></div></div><div data-bui-playground="utilities"></div></section>
       <section class="bui-section" id="utilities"><div class="bui-section-heading"><div><span class="bui-eyebrow">13 / COMPONENTS</span><h2>Utilities</h2><p>Feature grid and helper classes. Spacing, flex and display utilities will be added here next.</p></div><span class="bui-step-count">1 example</span></div>
       <div class="bui-demo-stack">
 <article class="bui-demo-card" id="feature-grid"><div class="bui-demo-title">Feature grid <span>.bui-row · .bui-feature</span></div><div class="bui-demo-content"><div class="bui-row">
   <div class="bui-col-12 bui-col-md-4 bui-feature">
-    <span class="bui-feature-icon">⌘</span>
+    <span class="bui-feature-icon"><i class="bui-icon-light bui-icon-command"></i></span>
     <strong>Utility-first helpers</strong>
     <p>Spacing, flex, grid, display, and text helpers.</p>
   </div>
   <div class="bui-col-12 bui-col-md-4 bui-feature">
-    <span class="bui-feature-icon">▦</span>
+    <span class="bui-feature-icon"><i class="bui-icon-light bui-icon-squares-four"></i></span>
     <strong>Responsive grid</strong>
     <p>Layouts that scale from mobile to desktop.</p>
   </div>
   <div class="bui-col-12 bui-col-md-4 bui-feature">
-    <span class="bui-feature-icon">◐</span>
+    <span class="bui-feature-icon"><i class="bui-icon-light bui-icon-circle-half"></i></span>
     <strong>Theme-ready</strong>
     <p>CSS variables make colors and surfaces easy to tune.</p>
   </div>
 </div></div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-row"</span><span class="bui-code-pink">&gt;</span>
   <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-12 bui-col-md-4 bui-feature"</span><span class="bui-code-pink">&gt;</span>
-    <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-feature-icon"</span><span class="bui-code-pink">&gt;</span>⌘<span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-feature-icon"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;i</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-icon-light bui-icon-command"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/i</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
     <span class="bui-code-pink">&lt;strong</span><span class="bui-code-pink">&gt;</span>Utility-first helpers<span class="bui-code-pink">&lt;/strong</span><span class="bui-code-pink">&gt;</span>
     <span class="bui-code-pink">&lt;p</span><span class="bui-code-pink">&gt;</span>Spacing, flex, grid, display, and text helpers.<span class="bui-code-pink">&lt;/p</span><span class="bui-code-pink">&gt;</span>
   <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
   <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-12 bui-col-md-4 bui-feature"</span><span class="bui-code-pink">&gt;</span>
-    <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-feature-icon"</span><span class="bui-code-pink">&gt;</span>▦<span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-feature-icon"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;i</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-icon-light bui-icon-squares-four"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/i</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
     <span class="bui-code-pink">&lt;strong</span><span class="bui-code-pink">&gt;</span>Responsive grid<span class="bui-code-pink">&lt;/strong</span><span class="bui-code-pink">&gt;</span>
     <span class="bui-code-pink">&lt;p</span><span class="bui-code-pink">&gt;</span>Layouts that scale from mobile to desktop.<span class="bui-code-pink">&lt;/p</span><span class="bui-code-pink">&gt;</span>
   <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
   <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-col-12 bui-col-md-4 bui-feature"</span><span class="bui-code-pink">&gt;</span>
-    <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-feature-icon"</span><span class="bui-code-pink">&gt;</span>◐<span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;span</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-feature-icon"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;i</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-icon-light bui-icon-circle-half"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/i</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
     <span class="bui-code-pink">&lt;strong</span><span class="bui-code-pink">&gt;</span>Theme-ready<span class="bui-code-pink">&lt;/strong</span><span class="bui-code-pink">&gt;</span>
     <span class="bui-code-pink">&lt;p</span><span class="bui-code-pink">&gt;</span>CSS variables make colors and surfaces easy to tune.<span class="bui-code-pink">&lt;/p</span><span class="bui-code-pink">&gt;</span>
   <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
 <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
       </div>
       </section>
-      <div class="bui-pager"><a class="bui-btn bui-btn-outline" href="icons.html"><span class="bui-flip">←</span> Icons</a><a class="bui-btn bui-btn-primary" href="charts.html">Charts <span class="bui-flip">→</span></a></div>
+      <div class="bui-pager"><a class="bui-btn bui-btn-outline" href="icons.html"><span class="bui-flip"><i class="bui-icon-light bui-icon-arrow-left"></i></span> Icons</a><a class="bui-btn bui-btn-primary" href="charts.html">Charts <span class="bui-flip"><i class="bui-icon-light bui-icon-arrow-right"></i></span></a></div>
       <footer class="bui-footer"><span>© 2026 Baset UI. Built for makers.</span><span>Documentation · v1.0.0</span></footer>
     </main>
   </div>

@@ -370,6 +370,8 @@ Add `bui-success-icon-solid` for a filled circle, and `-sm` / `-lg` for sizes. I
 <i class="bui-icon-duotone bui-icon-file"></i>
 ```
 
+**Icons inside the components.** Status icons use the **light** style: alerts (`check-circle`, `info`, `warning`, `x-circle`), toasts and notifications, modal icons (`check-circle`, `info`, `warning`, `warning-circle`), close buttons (`x`), the floating-label "info" button (`info`) and the theme button (`sun` / `moon`). Load `baset-icons.css` (and keep `assets/fonts/`) for them. Elements the JavaScript builds (toasts, modals, close buttons, the theme button) fall back to a plain text symbol when the icon stylesheet is not loaded; pass your own icon with `icon: 'bui-icon-light bui-icon-bell'`. The small marks that CSS draws itself (stepper check and "!", dropdown check items, password rules, finished uploads, sidebar close) are inlined SVG, so they need no icon font.
+
 | Class | Purpose |
 | --- | --- |
 | `bui-icon-thin` · `-light` · `-regular` · `-solid` · `-bold` · `-duotone` | Style (pick one) |
@@ -395,7 +397,7 @@ Inputs whose label floats up on focus or when the field has a value, with valida
 <div class="bui-float bui-float-error">
   <input class="bui-float-input" id="email" type="email" placeholder=" " value="abdulbaset@">
   <label class="bui-float-label" for="email">Email address</label>
-  <button type="button" class="bui-float-info" aria-label="Show message" aria-expanded="false" aria-controls="email-msg">i</button>
+  <button type="button" class="bui-float-info" aria-label="Show message" aria-expanded="false" aria-controls="email-msg"><i class="bui-icon-light bui-icon-info"></i></button>
   <div class="bui-float-message" id="email-msg" role="status">Enter a valid email address.</div>
 </div>
 ```

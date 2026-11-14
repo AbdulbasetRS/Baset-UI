@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Token playground — Baset UI</title>
   <link rel="stylesheet" href="../assets/css/baset-ui.css">
+  <link rel="stylesheet" href="../assets/css/baset-icons.css">
   <link rel="stylesheet" href="../assets/css/docs.css">
 
   <script>try{if(localStorage.getItem('bui-theme')==='dark')document.documentElement.classList.add('bui-dark');var d=localStorage.getItem('bui-dir');if(d==='rtl'||d==='ltr')document.documentElement.dir=d}catch(e){}</script>
@@ -50,7 +51,7 @@
       <div class="bui-sidebar-bottom"><span class="bui-status-dot"></span> Baset UI <span class="bui-version">v1.0.0</span></div>
     </aside>
     <main class="bui-main">
-      <header class="bui-topbar"><div class="bui-breadcrumb"><a href="../index.html">Documentation</a> <span>/</span> Customize <span>/</span> Token playground</div><div class="bui-top-actions"><span class="bui-pill">Vanilla CSS + JS</span><button class="bui-icon-btn bui-dir-btn" id="dirToggle" type="button" aria-label="Toggle direction (RTL / LTR)" title="Toggle direction (RTL / LTR)">RTL</button><button class="bui-icon-btn" id="themeToggle" type="button" aria-label="Toggle theme">☼</button></div></header>
+      <header class="bui-topbar"><div class="bui-breadcrumb"><a href="../index.html">Documentation</a> <span>/</span> Customize <span>/</span> Token playground</div><div class="bui-top-actions"><span class="bui-pill">Vanilla CSS + JS</span><button class="bui-icon-btn bui-dir-btn" id="dirToggle" type="button" aria-label="Toggle direction (RTL / LTR)" title="Toggle direction (RTL / LTR)">RTL</button><button class="bui-icon-btn" id="themeToggle" type="button" aria-label="Toggle theme"><i class="bui-icon-light bui-icon-sun"></i></button></div></header>
       <section class="bui-section" id="token-playground"><div class="bui-section-heading"><div><span class="bui-eyebrow">04 / CUSTOMIZE</span><h2>Token playground</h2><p>Control every token: theme colors, neutrals (light and dark), the six radius steps, spacer, font size, fonts, shadow and chart colors. Every component updates live, then copy the generated CSS (only what you changed).</p></div></div>
       <div class="bui-tp">
         <aside class="bui-tp-panel">
@@ -86,10 +87,10 @@
   <span class="bui-badge bui-badge-primary">Primary</span><span class="bui-badge bui-badge-success">Success</span><span class="bui-badge bui-badge-warning">Pending</span><span class="bui-badge bui-badge-danger">Failed</span><span class="bui-badge bui-badge-info">New</span><span class="bui-badge bui-badge-neutral">Archived</span>
 </div>
 <div class="bui-alert-stack">
-  <div class="bui-alert bui-alert-success"><span>✓</span><div><strong>Changes saved</strong><p>Your project settings have been updated.</p></div></div>
-  <div class="bui-alert bui-alert-info"><span>i</span><div><strong>New version available</strong><p>Version 1.1 includes improvements.</p></div></div>
-  <div class="bui-alert bui-alert-warning"><span>!</span><div><strong>Storage almost full</strong><p>You are using 90% of your storage.</p></div></div>
-  <div class="bui-alert bui-alert-danger"><span>×</span><div><strong>Payment failed</strong><p>Check your card details and try again.</p></div></div>
+  <div class="bui-alert bui-alert-success"><span><i class="bui-icon-light bui-icon-check-circle"></i></span><div><strong>Changes saved</strong><p>Your project settings have been updated.</p></div></div>
+  <div class="bui-alert bui-alert-info"><span><i class="bui-icon-light bui-icon-info"></i></span><div><strong>New version available</strong><p>Version 1.1 includes improvements.</p></div></div>
+  <div class="bui-alert bui-alert-warning"><span><i class="bui-icon-light bui-icon-warning"></i></span><div><strong>Storage almost full</strong><p>You are using 90% of your storage.</p></div></div>
+  <div class="bui-alert bui-alert-danger"><span><i class="bui-icon-light bui-icon-x-circle"></i></span><div><strong>Payment failed</strong><p>Check your card details and try again.</p></div></div>
 </div>
 <div class="bui-row">
   <div class="bui-col-12 bui-col-md-6 bui-float"><input class="bui-float-input" id="tp-name" type="text" placeholder=" " value="Abdulbaset Sayed"><label class="bui-float-label" for="tp-name">Full name</label></div>
@@ -98,12 +99,12 @@
   <label class="bui-col-12 bui-col-md-6 bui-field">Department<select class="bui-input" data-bui-native><option>Engineering</option><option>Design</option></select></label>
 </div>
 <div class="bui-notification-list">
-  <div class="bui-notification bui-notification-unread"><span class="bui-notification-media bui-notification-media-info">i</span><div class="bui-notification-content"><div class="bui-notification-head"><strong class="bui-notification-title">Report ready</strong><time class="bui-notification-time">1h ago</time></div><p class="bui-notification-text">Your weekly report is ready to download.</p></div></div>
-  <div class="bui-notification"><span class="bui-notification-media bui-notification-media-success">✓</span><div class="bui-notification-content"><div class="bui-notification-head"><strong class="bui-notification-title">Backup completed</strong><time class="bui-notification-time">Yesterday</time></div><p class="bui-notification-text">All files were backed up.</p></div></div>
+  <div class="bui-notification bui-notification-unread"><span class="bui-notification-media bui-notification-media-info"><i class="bui-icon-light bui-icon-info"></i></span><div class="bui-notification-content"><div class="bui-notification-head"><strong class="bui-notification-title">Report ready</strong><time class="bui-notification-time">1h ago</time></div><p class="bui-notification-text">Your weekly report is ready to download.</p></div></div>
+  <div class="bui-notification"><span class="bui-notification-media bui-notification-media-success"><i class="bui-icon-light bui-icon-check-circle"></i></span><div class="bui-notification-content"><div class="bui-notification-head"><strong class="bui-notification-title">Backup completed</strong><time class="bui-notification-time">Yesterday</time></div><p class="bui-notification-text">All files were backed up.</p></div></div>
 </div>
 <div class="bui-row">
-  <article class="bui-col-12 bui-col-sm-6 bui-stat-card"><div class="bui-stat-top"><span class="bui-stat-icon bui-stat-icon-purple">↗</span><span class="bui-stat-change">+12.8%</span></div><span class="bui-stat-label">Total revenue</span><strong>$24,580</strong><div class="bui-sparkline"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></article>
-  <article class="bui-col-12 bui-col-sm-6 bui-stat-card"><div class="bui-stat-top"><span class="bui-stat-icon bui-stat-icon-blue">◉</span><span class="bui-stat-change">+8.2%</span></div><span class="bui-stat-label">Active users</span><strong>8,249</strong><div class="bui-progress"><span style="width:72%"></span></div></article>
+  <article class="bui-col-12 bui-col-sm-6 bui-stat-card"><div class="bui-stat-top"><span class="bui-stat-icon bui-stat-icon-purple"><i class="bui-icon-light bui-icon-trend-up"></i></span><span class="bui-stat-change">+12.8%</span></div><span class="bui-stat-label">Total revenue</span><strong>$24,580</strong><div class="bui-sparkline"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></article>
+  <article class="bui-col-12 bui-col-sm-6 bui-stat-card"><div class="bui-stat-top"><span class="bui-stat-icon bui-stat-icon-blue"><i class="bui-icon-light bui-icon-users"></i></span><span class="bui-stat-change">+8.2%</span></div><span class="bui-stat-label">Active users</span><strong>8,249</strong><div class="bui-progress"><span style="width:72%"></span></div></article>
 </div>
 <div class="bui-chart-card">
   <div class="bui-chart-card-head"><div><h4 class="bui-chart-card-title">Sessions</h4><p class="bui-chart-card-sub">Uses the chart tokens</p></div></div>
@@ -114,7 +115,7 @@
         </div>
       </div>
       </section>
-      <div class="bui-pager"><a class="bui-btn bui-btn-outline" href="theme.html"><span class="bui-flip">←</span> Theme</a><a class="bui-btn bui-btn-primary" href="chart-playground.html">Chart playground <span class="bui-flip">→</span></a></div>
+      <div class="bui-pager"><a class="bui-btn bui-btn-outline" href="theme.html"><span class="bui-flip"><i class="bui-icon-light bui-icon-arrow-left"></i></span> Theme</a><a class="bui-btn bui-btn-primary" href="chart-playground.html">Chart playground <span class="bui-flip"><i class="bui-icon-light bui-icon-arrow-right"></i></span></a></div>
       <footer class="bui-footer"><span>© 2026 Baset UI. Built for makers.</span><span>Documentation · v1.0.0</span></footer>
     </main>
   </div>

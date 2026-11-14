@@ -3,10 +3,29 @@
   const root = document.documentElement;
   const THEME_KEY = 'bui-theme';
 
+  /* ---------- Icons: the light icon font when baset-icons.css is loaded, a plain text symbol when it is not ---------- */
+  let iconFont;
+  const hasIcons = () => {
+    if (iconFont === undefined) {
+      const probe = document.createElement('i');
+      probe.className = 'bui-icon-light bui-icon-check';
+      probe.style.cssText = 'position:absolute;visibility:hidden';
+      (document.body || root).append(probe);
+      iconFont = /Baset Icons/.test(getComputedStyle(probe).fontFamily);
+      probe.remove();
+    }
+    return iconFont;
+  };
+  const iconClass = (name, text) => (hasIcons() ? `bui-icon-light bui-icon-${name}` : text); // a class string, or the fallback text
+  const setGlyph = (node, name, text) => {
+    node.textContent = '';
+    if (hasIcons()) { const i = document.createElement('i'); i.className = `bui-icon-light bui-icon-${name}`; node.append(i); } else node.textContent = text;
+  };
+
   /* ---------- Theme toggle (persisted) ---------- */
   const themeButton = document.getElementById('themeToggle');
   const isDark = () => root.classList.contains('bui-dark');
-  const syncIcon = () => { if (themeButton) themeButton.textContent = isDark() ? '☾' : '☼'; };
+  const syncIcon = () => { if (themeButton) { if (isDark()) setGlyph(themeButton, 'moon', '☾'); else setGlyph(themeButton, 'sun', '☼'); } };
 
   try { if (localStorage.getItem(THEME_KEY) === 'dark') root.classList.add('bui-dark'); } catch { /* storage blocked */ }
   syncIcon();
@@ -87,13 +106,15 @@
 
   /* ---------- Toasts and notifications: BUI.toast() / BUI.notify() ---------- */
   const BUI = (window.BUI = window.BUI || {});
+  BUI.hasIcons = hasIcons; // true when baset-icons.css is loaded (the other scripts use it to choose icon or text)
   const POSITIONS = ['top-start', 'top-center', 'top-end', 'bottom-start', 'bottom-center', 'bottom-end'];
   const baseOpts = { position: 'top-end', max: 5, closable: true, pauseOnHover: true, sound: true, soundVolume: 0.5 };
   const defaults = {
     toast: { ...baseOpts, duration: 5000, progress: true },
     notify: { ...baseOpts, duration: 8000, progress: false },
   };
-  const SYMBOLS = { success: '✓', info: 'i', warning: '!', danger: '×' };
+  const STATUS_ICONS = { success: ['check-circle', '✓'], info: ['info', 'i'], warning: ['warning', '!'], danger: ['x-circle', '×'] };
+  const statusIcon = (type) => (STATUS_ICONS[type] ? iconClass(...STATUS_ICONS[type]) : undefined);
   const boxes = {};
 
   /* ---------- Sounds (single place to change them) ----------
@@ -162,7 +183,7 @@
 
     if (kind === 'toast') {
       el.className = 'bui-toast' + (o.type ? ` bui-toast-${o.type}` : '') + (o.variant ? ` bui-toast-${o.variant}` : '');
-      const sym = o.icon === false ? null : (o.icon || SYMBOLS[o.type]);
+      const sym = o.icon === false ? null : (o.icon || statusIcon(o.type));
       if (sym) glyph(add(el, 'span', 'bui-toast-icon'), sym);
       const body = add(el, 'div', 'bui-toast-body');
       if (o.title) add(body, 'strong', null, o.title);
@@ -193,7 +214,7 @@
       }
     }
     if (o.closable) {
-      const x = add(el, 'button', kind === 'toast' ? 'bui-toast-close' : 'bui-notification-close', '×');
+      const x = add(el, 'button', kind === 'toast' ? 'bui-toast-close' : 'bui-notification-close'); glyph(x, iconClass('x', '×'));
       x.type = 'button'; x.setAttribute('aria-label', 'Close');
     }
 
@@ -253,7 +274,7 @@
   setInterval(() => document.querySelectorAll('.bui-notification-time[data-ts]').forEach((t) => { t.textContent = ago(+t.dataset.ts); }), 30000);
 
   /* ---------- Modal: <dialog class="bui-modal"> ---------- */
-  const MODAL_SYMBOLS = { success: '✓', info: 'i', warning: '!', danger: '!' };
+  const MODAL_ICONS = { success: ['check-circle', '✓'], info: ['info', 'i'], warning: ['warning', '!'], danger: ['warning-circle', '!'] };
   let modalSeq = 0;
   const getModal = (t) => (typeof t === 'string' ? document.getElementById(t.replace(/^#/, '')) : t);
   const syncLock = () => root.classList.toggle('bui-modal-open', !!document.querySelector('dialog.bui-modal[open]'));
@@ -295,12 +316,12 @@
     if (!o.icon && (o.title || closable)) {
       const head = add(d, 'div', 'bui-modal-header');
       const h = add(head, 'h3', 'bui-modal-title', o.title || ''); h.id = `${id}-title`;
-      if (closable) { const x = add(head, 'button', 'bui-modal-close', '×'); x.type = 'button'; x.setAttribute('aria-label', 'Close'); x.dataset.buiModalClose = ''; }
+      if (closable) { const x = add(head, 'button', 'bui-modal-close'); glyph(x, iconClass('x', '×')); x.type = 'button'; x.setAttribute('aria-label', 'Close'); x.dataset.buiModalClose = ''; }
     }
     const body = add(d, 'div', 'bui-modal-body');
     if (o.icon) {
       const ic = add(body, 'span', `bui-modal-icon bui-modal-icon-${o.type || o.icon}`); ic.setAttribute('aria-hidden', 'true');
-      glyph(ic, MODAL_SYMBOLS[o.icon] || o.icon);
+      glyph(ic, MODAL_ICONS[o.icon] ? iconClass(...MODAL_ICONS[o.icon]) : o.icon);
       if (o.title) { const h = add(body, 'h3', 'bui-modal-title', o.title); h.id = `${id}-title`; }
     }
     if (o.message) { const p = add(body, 'p', null, o.message); p.id = `${id}-text`; }
@@ -406,7 +427,7 @@
     if (state === 'error') input.setAttribute('aria-invalid', 'true');
     if (state && state !== 'loading' && message) {
       if (!msg) { msg = add(f, 'div', 'bui-float-message'); msg.dataset.buiAuto = ''; msg.setAttribute('role', 'status'); msg.id = `${input.id || `bui-float-${++floatSeq}`}-msg`; }
-      if (!btn) { btn = add(f, 'button', 'bui-float-info', 'i'); btn.type = 'button'; btn.dataset.buiAuto = ''; btn.setAttribute('aria-label', 'Show message'); btn.setAttribute('aria-expanded', 'false'); }
+      if (!btn) { btn = add(f, 'button', 'bui-float-info'); glyph(btn, iconClass('info', 'i')); btn.type = 'button'; btn.dataset.buiAuto = ''; btn.setAttribute('aria-label', 'Show message'); btn.setAttribute('aria-expanded', 'false'); }
       msg.textContent = message;
       btn.setAttribute('aria-controls', msg.id);
       input.setAttribute('aria-describedby', msg.id);

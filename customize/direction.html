@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Direction (RTL / LTR) — Baset UI</title>
   <link rel="stylesheet" href="../assets/css/baset-ui.css">
+  <link rel="stylesheet" href="../assets/css/baset-icons.css">
   <link rel="stylesheet" href="../assets/css/docs.css">
 
   <script>try{if(localStorage.getItem('bui-theme')==='dark')document.documentElement.classList.add('bui-dark');var d=localStorage.getItem('bui-dir');if(d==='rtl'||d==='ltr')document.documentElement.dir=d}catch(e){}</script>
@@ -50,7 +51,7 @@
       <div class="bui-sidebar-bottom"><span class="bui-status-dot"></span> Baset UI <span class="bui-version">v1.0.0</span></div>
     </aside>
     <main class="bui-main">
-      <header class="bui-topbar"><div class="bui-breadcrumb"><a href="../index.html">Documentation</a> <span>/</span> Customize <span>/</span> Direction (RTL / LTR)</div><div class="bui-top-actions"><span class="bui-pill">Vanilla CSS + JS</span><button class="bui-icon-btn bui-dir-btn" id="dirToggle" type="button" aria-label="Toggle direction (RTL / LTR)" title="Toggle direction (RTL / LTR)">RTL</button><button class="bui-icon-btn" id="themeToggle" type="button" aria-label="Toggle theme">☼</button></div></header>
+      <header class="bui-topbar"><div class="bui-breadcrumb"><a href="../index.html">Documentation</a> <span>/</span> Customize <span>/</span> Direction (RTL / LTR)</div><div class="bui-top-actions"><span class="bui-pill">Vanilla CSS + JS</span><button class="bui-icon-btn bui-dir-btn" id="dirToggle" type="button" aria-label="Toggle direction (RTL / LTR)" title="Toggle direction (RTL / LTR)">RTL</button><button class="bui-icon-btn" id="themeToggle" type="button" aria-label="Toggle theme"><i class="bui-icon-light bui-icon-sun"></i></button></div></header>
       <section class="bui-section" id="direction"><div class="bui-section-heading"><div><span class="bui-eyebrow">07 / CUSTOMIZE</span><h2>Direction (RTL / LTR)</h2><p>Baset UI follows the nearest <code>dir</code> attribute. Switch the whole documentation between right-to-left and left-to-right, and see how components mirror.</p></div></div>
       <div class="bui-dir-switch" role="group" aria-label="Page direction">
         <button class="bui-btn bui-btn-outline" type="button" data-bui-dir="ltr" aria-pressed="true">LTR · Left to right</button>
@@ -59,12 +60,12 @@
       <p class="bui-doc-note">The <b>RTL / LTR</b> button in the top bar (next to the theme toggle) and the buttons above change <code>dir</code> on the whole page (sidebar included) and remember the choice in <code>localStorage</code> (<code>bui-dir</code>). The two panels below are always shown in a fixed direction, so you can compare them side by side.</p>
       <div class="bui-dir-demo">
         <div class="bui-dir-pane" dir="ltr"><small dir="ltr">dir="ltr"</small>
-          <div class="bui-alert bui-alert-info"><span>i</span><div><strong>Changes are saved automatically.</strong></div><button class="bui-dismiss" type="button" aria-label="Dismiss">×</button></div>
+          <div class="bui-alert bui-alert-info"><span><i class="bui-icon-light bui-icon-info"></i></span><div><strong>Changes are saved automatically.</strong></div><button class="bui-dismiss" type="button" aria-label="Dismiss"><i class="bui-icon-light bui-icon-x"></i></button></div>
           <div class="bui-dir-row"><button class="bui-btn bui-btn-primary" type="button">Save</button><button class="bui-btn bui-btn-outline" type="button">Cancel</button></div>
           <div class="bui-btn-group" role="group"><button class="bui-btn bui-btn-outline" type="button">1</button><button class="bui-btn bui-btn-outline" type="button">2</button><button class="bui-btn bui-btn-outline" type="button">3</button></div>
           <label class="bui-field">Full name<input class="bui-input" type="text" placeholder="Type your name"></label></div>
         <div class="bui-dir-pane" dir="rtl"><small dir="ltr">dir="rtl"</small>
-          <div class="bui-alert bui-alert-info"><span>i</span><div><strong>يتم حفظ التغييرات تلقائيًا.</strong></div><button class="bui-dismiss" type="button" aria-label="Dismiss">×</button></div>
+          <div class="bui-alert bui-alert-info"><span><i class="bui-icon-light bui-icon-info"></i></span><div><strong>يتم حفظ التغييرات تلقائيًا.</strong></div><button class="bui-dismiss" type="button" aria-label="Dismiss"><i class="bui-icon-light bui-icon-x"></i></button></div>
           <div class="bui-dir-row"><button class="bui-btn bui-btn-primary" type="button">حفظ</button><button class="bui-btn bui-btn-outline" type="button">إلغاء</button></div>
           <div class="bui-btn-group" role="group"><button class="bui-btn bui-btn-outline" type="button">1</button><button class="bui-btn bui-btn-outline" type="button">2</button><button class="bui-btn bui-btn-outline" type="button">3</button></div>
           <label class="bui-field">الاسم الكامل<input class="bui-input" type="text" placeholder="اكتب اسمك"></label></div>
@@ -103,7 +104,7 @@
           <tr><td><code>border-top-left-radius</code></td><td><code>border-start-start-radius</code></td></tr>
         </tbody></table></div>
       </section>
-      <div class="bui-pager"><a class="bui-btn bui-btn-outline" href="datatable-playground.html"><span class="bui-flip">←</span> DataTable playground</a><a class="bui-btn bui-btn-primary" href="layout-playground.html">Layout playground <span class="bui-flip">→</span></a></div>
+      <div class="bui-pager"><a class="bui-btn bui-btn-outline" href="datatable-playground.html"><span class="bui-flip"><i class="bui-icon-light bui-icon-arrow-left"></i></span> DataTable playground</a><a class="bui-btn bui-btn-primary" href="layout-playground.html">Layout playground <span class="bui-flip"><i class="bui-icon-light bui-icon-arrow-right"></i></span></a></div>
       <footer class="bui-footer"><span>© 2026 Baset UI. Built for makers.</span><span>Documentation · v1.0.0</span></footer>
     </main>
   </div>

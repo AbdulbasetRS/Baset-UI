@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Alerts — Baset UI</title>
   <link rel="stylesheet" href="../assets/css/baset-ui.css">
+  <link rel="stylesheet" href="../assets/css/baset-icons.css">
   <link rel="stylesheet" href="../assets/css/docs.css">
 
   <script>try{if(localStorage.getItem('bui-theme')==='dark')document.documentElement.classList.add('bui-dark');var d=localStorage.getItem('bui-dir');if(d==='rtl'||d==='ltr')document.documentElement.dir=d}catch(e){}</script>
@@ -50,140 +51,140 @@
       <div class="bui-sidebar-bottom"><span class="bui-status-dot"></span> Baset UI <span class="bui-version">v1.0.0</span></div>
     </aside>
     <main class="bui-main">
-      <header class="bui-topbar"><div class="bui-breadcrumb"><a href="../index.html">Documentation</a> <span>/</span> Components <span>/</span> Alerts</div><div class="bui-top-actions"><span class="bui-pill">Vanilla CSS + JS</span><button class="bui-icon-btn bui-dir-btn" id="dirToggle" type="button" aria-label="Toggle direction (RTL / LTR)" title="Toggle direction (RTL / LTR)">RTL</button><button class="bui-icon-btn" id="themeToggle" type="button" aria-label="Toggle theme">☼</button></div></header>
+      <header class="bui-topbar"><div class="bui-breadcrumb"><a href="../index.html">Documentation</a> <span>/</span> Components <span>/</span> Alerts</div><div class="bui-top-actions"><span class="bui-pill">Vanilla CSS + JS</span><button class="bui-icon-btn bui-dir-btn" id="dirToggle" type="button" aria-label="Toggle direction (RTL / LTR)" title="Toggle direction (RTL / LTR)">RTL</button><button class="bui-icon-btn" id="themeToggle" type="button" aria-label="Toggle theme"><i class="bui-icon-light bui-icon-sun"></i></button></div></header>
       <section class="bui-section" id="customize"><div class="bui-section-heading"><div><span class="bui-eyebrow">CUSTOMIZE</span><h2>Make it yours</h2><p>Change the options, watch the alert update, then copy the code. Switch theme and direction to check light, dark, LTR and RTL.</p></div></div><div data-bui-playground="alerts"></div></section>
       <section class="bui-section" id="alerts"><div class="bui-section-heading"><div><span class="bui-eyebrow">07 / COMPONENTS</span><h2>Alerts</h2><p>Communicate status and feedback with a clear visual hierarchy.</p></div><span class="bui-step-count">5 examples</span></div>
       <div class="bui-demo-stack">
 <article class="bui-demo-card" id="success"><div class="bui-demo-title">Success <span>dismiss needs baset-ui.js</span></div><div class="bui-demo-content"><div class="bui-alert bui-alert-success">
-  <span>✓</span>
+  <span><i class="bui-icon-light bui-icon-check-circle"></i></span>
   <div>
     <strong>Changes saved successfully</strong>
     <p>Your project settings have been updated.</p>
   </div>
-  <button type="button" aria-label="Dismiss" class="bui-dismiss">×</button>
+  <button type="button" aria-label="Dismiss" class="bui-dismiss"><i class="bui-icon-light bui-icon-x"></i></button>
 </div></div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-alert bui-alert-success"</span><span class="bui-code-pink">&gt;</span>
-  <span class="bui-code-pink">&lt;span</span><span class="bui-code-pink">&gt;</span>✓<span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;span</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;i</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-icon-light bui-icon-check-circle"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/i</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
   <span class="bui-code-pink">&lt;div</span><span class="bui-code-pink">&gt;</span>
     <span class="bui-code-pink">&lt;strong</span><span class="bui-code-pink">&gt;</span>Changes saved successfully<span class="bui-code-pink">&lt;/strong</span><span class="bui-code-pink">&gt;</span>
     <span class="bui-code-pink">&lt;p</span><span class="bui-code-pink">&gt;</span>Your project settings have been updated.<span class="bui-code-pink">&lt;/p</span><span class="bui-code-pink">&gt;</span>
   <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
-  <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span> <span class="bui-code-blue">aria-label</span>=<span class="bui-code-green">"Dismiss"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-dismiss"</span><span class="bui-code-pink">&gt;</span>×<span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span> <span class="bui-code-blue">aria-label</span>=<span class="bui-code-green">"Dismiss"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-dismiss"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;i</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-icon-light bui-icon-x"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/i</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
 <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
 <article class="bui-demo-card" id="info"><div class="bui-demo-title">Info <span>dismiss needs baset-ui.js</span></div><div class="bui-demo-content"><div class="bui-alert bui-alert-info">
-  <span>i</span>
+  <span><i class="bui-icon-light bui-icon-info"></i></span>
   <div>
     <strong>New version available</strong>
     <p>Version 1.1 includes improvements and fixes.</p>
   </div>
-  <button type="button" aria-label="Dismiss" class="bui-dismiss">×</button>
+  <button type="button" aria-label="Dismiss" class="bui-dismiss"><i class="bui-icon-light bui-icon-x"></i></button>
 </div></div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-alert bui-alert-info"</span><span class="bui-code-pink">&gt;</span>
-  <span class="bui-code-pink">&lt;span</span><span class="bui-code-pink">&gt;</span>i<span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;span</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;i</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-icon-light bui-icon-info"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/i</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
   <span class="bui-code-pink">&lt;div</span><span class="bui-code-pink">&gt;</span>
     <span class="bui-code-pink">&lt;strong</span><span class="bui-code-pink">&gt;</span>New version available<span class="bui-code-pink">&lt;/strong</span><span class="bui-code-pink">&gt;</span>
     <span class="bui-code-pink">&lt;p</span><span class="bui-code-pink">&gt;</span>Version 1.1 includes improvements and fixes.<span class="bui-code-pink">&lt;/p</span><span class="bui-code-pink">&gt;</span>
   <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
-  <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span> <span class="bui-code-blue">aria-label</span>=<span class="bui-code-green">"Dismiss"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-dismiss"</span><span class="bui-code-pink">&gt;</span>×<span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span> <span class="bui-code-blue">aria-label</span>=<span class="bui-code-green">"Dismiss"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-dismiss"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;i</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-icon-light bui-icon-x"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/i</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
 <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
 <article class="bui-demo-card" id="warning"><div class="bui-demo-title">Warning <span>dismiss needs baset-ui.js</span></div><div class="bui-demo-content"><div class="bui-alert bui-alert-warning">
-  <span>!</span>
+  <span><i class="bui-icon-light bui-icon-warning"></i></span>
   <div>
     <strong>Storage almost full</strong>
     <p>You're using 90% of your available storage.</p>
   </div>
-  <button type="button" aria-label="Dismiss" class="bui-dismiss">×</button>
+  <button type="button" aria-label="Dismiss" class="bui-dismiss"><i class="bui-icon-light bui-icon-x"></i></button>
 </div></div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-alert bui-alert-warning"</span><span class="bui-code-pink">&gt;</span>
-  <span class="bui-code-pink">&lt;span</span><span class="bui-code-pink">&gt;</span>!<span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;span</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;i</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-icon-light bui-icon-warning"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/i</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
   <span class="bui-code-pink">&lt;div</span><span class="bui-code-pink">&gt;</span>
     <span class="bui-code-pink">&lt;strong</span><span class="bui-code-pink">&gt;</span>Storage almost full<span class="bui-code-pink">&lt;/strong</span><span class="bui-code-pink">&gt;</span>
     <span class="bui-code-pink">&lt;p</span><span class="bui-code-pink">&gt;</span>You're using 90% of your available storage.<span class="bui-code-pink">&lt;/p</span><span class="bui-code-pink">&gt;</span>
   <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
-  <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span> <span class="bui-code-blue">aria-label</span>=<span class="bui-code-green">"Dismiss"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-dismiss"</span><span class="bui-code-pink">&gt;</span>×<span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span> <span class="bui-code-blue">aria-label</span>=<span class="bui-code-green">"Dismiss"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-dismiss"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;i</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-icon-light bui-icon-x"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/i</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
 <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
 <article class="bui-demo-card" id="danger"><div class="bui-demo-title">Danger <span>dismiss needs baset-ui.js</span></div><div class="bui-demo-content"><div class="bui-alert bui-alert-danger">
-  <span>×</span>
+  <span><i class="bui-icon-light bui-icon-x-circle"></i></span>
   <div>
     <strong>Payment failed</strong>
     <p>Check your card details and try again.</p>
   </div>
-  <button type="button" aria-label="Dismiss" class="bui-dismiss">×</button>
+  <button type="button" aria-label="Dismiss" class="bui-dismiss"><i class="bui-icon-light bui-icon-x"></i></button>
 </div></div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-alert bui-alert-danger"</span><span class="bui-code-pink">&gt;</span>
-  <span class="bui-code-pink">&lt;span</span><span class="bui-code-pink">&gt;</span>×<span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;span</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;i</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-icon-light bui-icon-x-circle"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/i</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
   <span class="bui-code-pink">&lt;div</span><span class="bui-code-pink">&gt;</span>
     <span class="bui-code-pink">&lt;strong</span><span class="bui-code-pink">&gt;</span>Payment failed<span class="bui-code-pink">&lt;/strong</span><span class="bui-code-pink">&gt;</span>
     <span class="bui-code-pink">&lt;p</span><span class="bui-code-pink">&gt;</span>Check your card details and try again.<span class="bui-code-pink">&lt;/p</span><span class="bui-code-pink">&gt;</span>
   <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
-  <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span> <span class="bui-code-blue">aria-label</span>=<span class="bui-code-green">"Dismiss"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-dismiss"</span><span class="bui-code-pink">&gt;</span>×<span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+  <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span> <span class="bui-code-blue">aria-label</span>=<span class="bui-code-green">"Dismiss"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-dismiss"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;i</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-icon-light bui-icon-x"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/i</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
 <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
 <article class="bui-demo-card" id="alert-stack"><div class="bui-demo-title">Alert stack <span>.bui-alert-stack</span></div><div class="bui-demo-content"><div class="bui-alert-stack">
   <div class="bui-alert bui-alert-success">
-    <span>✓</span>
+    <span><i class="bui-icon-light bui-icon-check-circle"></i></span>
     <div>
       <strong>Changes saved successfully</strong>
       <p>Your project settings have been updated.</p>
     </div>
-    <button type="button" aria-label="Dismiss" class="bui-dismiss">×</button>
+    <button type="button" aria-label="Dismiss" class="bui-dismiss"><i class="bui-icon-light bui-icon-x"></i></button>
   </div>
   <div class="bui-alert bui-alert-info">
-    <span>i</span>
+    <span><i class="bui-icon-light bui-icon-info"></i></span>
     <div>
       <strong>New version available</strong>
       <p>Version 1.1 includes improvements and fixes.</p>
     </div>
-    <button type="button" aria-label="Dismiss" class="bui-dismiss">×</button>
+    <button type="button" aria-label="Dismiss" class="bui-dismiss"><i class="bui-icon-light bui-icon-x"></i></button>
   </div>
   <div class="bui-alert bui-alert-warning">
-    <span>!</span>
+    <span><i class="bui-icon-light bui-icon-warning"></i></span>
     <div>
       <strong>Storage almost full</strong>
       <p>You're using 90% of your available storage.</p>
     </div>
-    <button type="button" aria-label="Dismiss" class="bui-dismiss">×</button>
+    <button type="button" aria-label="Dismiss" class="bui-dismiss"><i class="bui-icon-light bui-icon-x"></i></button>
   </div>
   <div class="bui-alert bui-alert-danger">
-    <span>×</span>
+    <span><i class="bui-icon-light bui-icon-x-circle"></i></span>
     <div>
       <strong>Payment failed</strong>
       <p>Check your card details and try again.</p>
     </div>
-    <button type="button" aria-label="Dismiss" class="bui-dismiss">×</button>
+    <button type="button" aria-label="Dismiss" class="bui-dismiss"><i class="bui-icon-light bui-icon-x"></i></button>
   </div>
 </div></div><div class="bui-code-card"><div class="bui-code-head"><span><i></i> HTML</span><button class="bui-copy" type="button">Copy</button></div><pre><code><span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-alert-stack"</span><span class="bui-code-pink">&gt;</span>
   <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-alert bui-alert-success"</span><span class="bui-code-pink">&gt;</span>
-    <span class="bui-code-pink">&lt;span</span><span class="bui-code-pink">&gt;</span>✓<span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;span</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;i</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-icon-light bui-icon-check-circle"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/i</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
     <span class="bui-code-pink">&lt;div</span><span class="bui-code-pink">&gt;</span>
       <span class="bui-code-pink">&lt;strong</span><span class="bui-code-pink">&gt;</span>Changes saved successfully<span class="bui-code-pink">&lt;/strong</span><span class="bui-code-pink">&gt;</span>
       <span class="bui-code-pink">&lt;p</span><span class="bui-code-pink">&gt;</span>Your project settings have been updated.<span class="bui-code-pink">&lt;/p</span><span class="bui-code-pink">&gt;</span>
     <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
-    <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span> <span class="bui-code-blue">aria-label</span>=<span class="bui-code-green">"Dismiss"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-dismiss"</span><span class="bui-code-pink">&gt;</span>×<span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span> <span class="bui-code-blue">aria-label</span>=<span class="bui-code-green">"Dismiss"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-dismiss"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;i</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-icon-light bui-icon-x"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/i</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
   <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
   <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-alert bui-alert-info"</span><span class="bui-code-pink">&gt;</span>
-    <span class="bui-code-pink">&lt;span</span><span class="bui-code-pink">&gt;</span>i<span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;span</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;i</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-icon-light bui-icon-info"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/i</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
     <span class="bui-code-pink">&lt;div</span><span class="bui-code-pink">&gt;</span>
       <span class="bui-code-pink">&lt;strong</span><span class="bui-code-pink">&gt;</span>New version available<span class="bui-code-pink">&lt;/strong</span><span class="bui-code-pink">&gt;</span>
       <span class="bui-code-pink">&lt;p</span><span class="bui-code-pink">&gt;</span>Version 1.1 includes improvements and fixes.<span class="bui-code-pink">&lt;/p</span><span class="bui-code-pink">&gt;</span>
     <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
-    <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span> <span class="bui-code-blue">aria-label</span>=<span class="bui-code-green">"Dismiss"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-dismiss"</span><span class="bui-code-pink">&gt;</span>×<span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span> <span class="bui-code-blue">aria-label</span>=<span class="bui-code-green">"Dismiss"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-dismiss"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;i</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-icon-light bui-icon-x"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/i</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
   <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
   <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-alert bui-alert-warning"</span><span class="bui-code-pink">&gt;</span>
-    <span class="bui-code-pink">&lt;span</span><span class="bui-code-pink">&gt;</span>!<span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;span</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;i</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-icon-light bui-icon-warning"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/i</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
     <span class="bui-code-pink">&lt;div</span><span class="bui-code-pink">&gt;</span>
       <span class="bui-code-pink">&lt;strong</span><span class="bui-code-pink">&gt;</span>Storage almost full<span class="bui-code-pink">&lt;/strong</span><span class="bui-code-pink">&gt;</span>
       <span class="bui-code-pink">&lt;p</span><span class="bui-code-pink">&gt;</span>You're using 90% of your available storage.<span class="bui-code-pink">&lt;/p</span><span class="bui-code-pink">&gt;</span>
     <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
-    <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span> <span class="bui-code-blue">aria-label</span>=<span class="bui-code-green">"Dismiss"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-dismiss"</span><span class="bui-code-pink">&gt;</span>×<span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span> <span class="bui-code-blue">aria-label</span>=<span class="bui-code-green">"Dismiss"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-dismiss"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;i</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-icon-light bui-icon-x"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/i</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
   <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
   <span class="bui-code-pink">&lt;div</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-alert bui-alert-danger"</span><span class="bui-code-pink">&gt;</span>
-    <span class="bui-code-pink">&lt;span</span><span class="bui-code-pink">&gt;</span>×<span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;span</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;i</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-icon-light bui-icon-x-circle"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/i</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/span</span><span class="bui-code-pink">&gt;</span>
     <span class="bui-code-pink">&lt;div</span><span class="bui-code-pink">&gt;</span>
       <span class="bui-code-pink">&lt;strong</span><span class="bui-code-pink">&gt;</span>Payment failed<span class="bui-code-pink">&lt;/strong</span><span class="bui-code-pink">&gt;</span>
       <span class="bui-code-pink">&lt;p</span><span class="bui-code-pink">&gt;</span>Check your card details and try again.<span class="bui-code-pink">&lt;/p</span><span class="bui-code-pink">&gt;</span>
     <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
-    <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span> <span class="bui-code-blue">aria-label</span>=<span class="bui-code-green">"Dismiss"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-dismiss"</span><span class="bui-code-pink">&gt;</span>×<span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
+    <span class="bui-code-pink">&lt;button</span> <span class="bui-code-blue">type</span>=<span class="bui-code-green">"button"</span> <span class="bui-code-blue">aria-label</span>=<span class="bui-code-green">"Dismiss"</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-dismiss"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;i</span> <span class="bui-code-blue">class</span>=<span class="bui-code-green">"bui-icon-light bui-icon-x"</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/i</span><span class="bui-code-pink">&gt;</span><span class="bui-code-pink">&lt;/button</span><span class="bui-code-pink">&gt;</span>
   <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span>
 <span class="bui-code-pink">&lt;/div</span><span class="bui-code-pink">&gt;</span></code></pre></div></article>
       </div>
       </section>
-      <div class="bui-pager"><a class="bui-btn bui-btn-outline" href="cards.html"><span class="bui-flip">←</span> Cards</a><a class="bui-btn bui-btn-primary" href="badges.html">Badges <span class="bui-flip">→</span></a></div>
+      <div class="bui-pager"><a class="bui-btn bui-btn-outline" href="cards.html"><span class="bui-flip"><i class="bui-icon-light bui-icon-arrow-left"></i></span> Cards</a><a class="bui-btn bui-btn-primary" href="badges.html">Badges <span class="bui-flip"><i class="bui-icon-light bui-icon-arrow-right"></i></span></a></div>
       <footer class="bui-footer"><span>© 2026 Baset UI. Built for makers.</span><span>Documentation · v1.0.0</span></footer>
     </main>
   </div>

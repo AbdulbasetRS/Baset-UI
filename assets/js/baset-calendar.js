@@ -91,6 +91,7 @@
   const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
 
   /* ---------- Tiny DOM helper: text is always set as text, never as HTML ---------- */
+  const xIcon = () => (BUI.hasIcons && BUI.hasIcons() ? el('i', { class: 'bui-icon-light bui-icon-x' }) : '×'); // icon font when baset-icons.css is loaded
   const el = (tag, attrs, ...kids) => {
     const n = document.createElement(tag);
     for (const k in attrs || {}) {
@@ -569,7 +570,7 @@
       this._closeMore();
       const day = fromKey(k), list = (this._index(day, 1).get(k) || []).filter((e) => !this._hidden.has(e.category));
       const pop = el('div', { class: 'bui-cal-more', role: 'dialog', 'aria-label': this.f.dayFull.format(day) },
-        el('div', { class: 'bui-cal-more-head' }, el('strong', { text: this.f.dayFull.format(day) }), el('button', { class: 'bui-cal-x', type: 'button', 'data-act': 'close-more', 'aria-label': this.L.close, text: '×' })),
+        el('div', { class: 'bui-cal-more-head' }, el('strong', { text: this.f.dayFull.format(day) }), el('button', { class: 'bui-cal-x', type: 'button', 'data-act': 'close-more', 'aria-label': this.L.close }, xIcon())),
         el('div', { class: 'bui-cal-more-list' }, list.map((ev) => this._chip(ev, day))));
       this.el.append(pop);
       const rr = this.el.getBoundingClientRect(), br = btn.getBoundingClientRect(), w = pop.offsetWidth, h = pop.offsetHeight;
@@ -889,7 +890,7 @@
       const head = el('div', { class: 'bui-cal-dlg-head' },
         el('span', { class: 'bui-cal-dlg-bar', 'aria-hidden': 'true' }),
         el('div', { class: 'bui-cal-dlg-titlewrap' }, el('small', { text: L.details }), el('h3', { id: tid, dir: 'auto', text: ev.title || L.untitled })),
-        el('button', { class: 'bui-cal-x', type: 'button', 'aria-label': L.close, text: '×', onclick: '' }));
+        el('button', { class: 'bui-cal-x', type: 'button', 'aria-label': L.close, onclick: '' }, xIcon()));
       head.lastChild.addEventListener('click', () => this._closeDlgOnly());
       this._paint(head, this._color(ev));
       const rows = el('dl', { class: 'bui-cal-dl' },
@@ -963,7 +964,7 @@
       const form = el('form', { class: 'bui-cal-form', novalidate: true },
         el('div', { class: 'bui-cal-dlg-head' }, el('span', { class: 'bui-cal-dlg-bar', 'aria-hidden': 'true' }),
           el('div', { class: 'bui-cal-dlg-titlewrap' }, el('small', { text: editing ? L.editEvent : L.newEvent }), el('h3', { text: editing ? (base.title || L.untitled) : L.newEvent })),
-          el('button', { class: 'bui-cal-x', type: 'button', 'aria-label': L.close, text: '×', 'data-x': '' })),
+          el('button', { class: 'bui-cal-x', type: 'button', 'aria-label': L.close, 'data-x': '' }, xIcon())),
         el('div', { class: 'bui-cal-fields' },
           field(L.title, 'title', title), field(L.description, 'description', desc),
           el('label', { class: 'bui-checkline', for: id + '-allDay' }, allDay, ' ' + L.allDay),
