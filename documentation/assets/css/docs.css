@@ -198,3 +198,19 @@ a.bui-docs-nav-link:hover { background: var(--bui-color-surface); }
 
 @media (min-width: 576px) { .bui-docs-scale { grid-template-columns: repeat(5, minmax(0, 1fr)); } }
 @media (min-width: 768px) { .bui-docs-scale { grid-template-columns: repeat(10, minmax(0, 1fr)); } }
+
+/* ==========================================================================
+   Brand logo (docs shell only). Images are injected by docs.js.
+   Light/Dark file is chosen by data-bui-mode on <html>, so it follows the Dark mode button.
+   ========================================================================== */
+:root { --bui-docs-logo-mark-h: 2rem; --bui-docs-logo-full-h: 4rem; }
+
+.bui-docs-navbar__brand { display: inline-flex; align-items: center; flex: none; }
+.bui-docs-logo { display: block; width: auto; object-fit: contain; }
+.bui-docs-logo--mark { height: var(--bui-docs-logo-mark-h); }
+.bui-docs-logo--logo { height: var(--bui-docs-logo-full-h); }
+.bui-docs-logo--dark { display: none; }
+[data-bui-mode="dark"] .bui-docs-logo--light { display: none; }
+[data-bui-mode="dark"] .bui-docs-logo--dark { display: block; }
+
+.bui-docs-footer__brand { display: flex; flex: 0 0 100%; text-decoration: none; }

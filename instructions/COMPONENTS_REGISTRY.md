@@ -81,3 +81,4 @@
 | Navbar / Sidebar / Footer (`index.html`) | Completed | Task 01. اختُبر وفق قسم الاختبار في تقرير Task 01 |
 | Documentation pages: Customization (3) + Layout (5) | Completed | Task 02. `documentation/customization/` و`documentation/layout/`. لا Playground (Task 09) ولا الأقسام الثمانية الخاصة بالمكونات، لذلك لا تُسجل كـ Documented |
 | Shell: روابط Sidebar من الصفحات الفرعية (`data-docs-root`)، نسخ الكود، قراءات حية | Completed | Task 02. إصلاح `overflow-x: hidden` الذي كان يعطل `sticky` للـ Navbar |
+| Shell: الشعار (Navbar Mark، Footer Logo، Favicon) وREADME | Completed | 2026-11-15. يُحقن من `docs.js`، ملفات `documentation/assets/images/brand/`. فُحصت صياغة JS وتوازن CSS فقط؛ لم يُختبر بصرياً في متصفح (RTL/LTR، Light/Dark، Responsive) |

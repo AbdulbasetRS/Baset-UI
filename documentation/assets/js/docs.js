@@ -8,12 +8,51 @@
     var modeBtn = document.getElementById('bui-docs-mode-toggle');
     /* Relative path from the current page to the site root: "" (index.html) or "../../" (documentation/x/page.html) */
     var siteRoot = document.body.getAttribute('data-docs-root') || '';
+    /* Brand files: documentation/assets/images/brand/baset-ui-{mark|logo}-{light|dark}.svg */
+    var brandPath = siteRoot + 'documentation/assets/images/brand/baset-ui-';
 
     function el(tag, cls, text) {
         var n = document.createElement(tag);
         if (cls) n.className = cls;
         if (text) n.textContent = text;
         return n;
+    }
+
+    /* ---- Brand logo (navbar mark, footer full logo) ----
+       Two <img> per slot (light and dark file). CSS shows the one matching data-bui-mode,
+       the hidden one is display:none so screen readers only get one "Baset-UI". */
+    function logoPair(kind, width, height) {
+        var frag = document.createDocumentFragment();
+        ['light', 'dark'].forEach(function (mode) {
+            var img = el('img', 'bui-docs-logo bui-docs-logo--' + kind + ' bui-docs-logo--' + mode);
+            img.src = brandPath + kind + '-' + mode + '.svg';
+            img.alt = 'Baset-UI';
+            img.width = width;
+            img.height = height;
+            frag.appendChild(img);
+        });
+        return frag;
+    }
+    var navBrand = document.querySelector('.bui-docs-navbar__brand');
+    if (navBrand) {
+        navBrand.textContent = '';
+        navBrand.appendChild(logoPair('mark', 280, 300));
+    }
+    var footer = document.querySelector('.bui-docs-footer');
+    if (footer) {
+        var footBrand = el('a', 'bui-docs-footer__brand');
+        footBrand.setAttribute('href', siteRoot || './');
+        footBrand.appendChild(logoPair('logo', 1200, 300));
+        footer.insertBefore(footBrand, footer.firstChild);
+    }
+
+    /* Favicon follows the docs mode (the mark files are mid-tone, readable on any tab color) */
+    var favicon = document.querySelector('link[rel="icon"]');
+    if (!favicon) {
+        favicon = document.createElement('link');
+        favicon.rel = 'icon';
+        favicon.type = 'image/svg+xml';
+        document.head.appendChild(favicon);
     }
 
     /* ---- Render navigation ---- */
@@ -86,6 +125,7 @@
         var dark = root.getAttribute('data-bui-mode') === 'dark';
         modeBtn.setAttribute('aria-pressed', String(dark));
         modeBtn.textContent = dark ? 'Light mode' : 'Dark mode';
+        favicon.setAttribute('href', brandPath + 'mark-' + (dark ? 'dark' : 'light') + '.svg');
     }
     modeBtn.addEventListener('click', function () {
         var next = root.getAttribute('data-bui-mode') === 'dark' ? 'light' : 'dark';
