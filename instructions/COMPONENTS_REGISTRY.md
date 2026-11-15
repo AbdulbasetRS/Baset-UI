@@ -83,3 +83,4 @@
 | Shell: روابط Sidebar من الصفحات الفرعية (`data-docs-root`)، نسخ الكود، قراءات حية | Completed | Task 02. إصلاح `overflow-x: hidden` الذي كان يعطل `sticky` للـ Navbar |
 | Shell: الشعار (Navbar Mark، Footer Logo، Favicon) وREADME | Completed | 2026-11-15. يُحقن من `docs.js`، ملفات `documentation/assets/images/brand/`. فُحصت صياغة JS وتوازن CSS فقط؛ لم يُختبر بصرياً في متصفح (RTL/LTR، Light/Dark، Responsive) |
 | Shell: Syntax Highlighting لبلوكات الكود (Dark+) | Completed | 2026-11-15. `BUI_DOCS_CODE` في `docs.js` + `--bui-docs-syntax-*` في `docs.css`. HTML/CSS/JS/JSON/PHP. اختُبر بـ Node وjsdom (نص ثابت، Copy، idempotent). لم يُختبر في متصفح حقيقي ولا بقارئ شاشة. Playground وCode Generator غير موجودين بعد |
+| Shell: Footer بأعمدة (علامة + أقسام الروابط + شريط سفلي) | Completed | 2026-11-15. يُبنى من `docs.js`، الأعمدة من `nav.js`. اختُبر بـ jsdom (بنية DOM، الصفحة الحالية، نقل `data-docs-version`). لم يُختبر بصرياً في متصفح (Responsive وRTL وLight/Dark) |

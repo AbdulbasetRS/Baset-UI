@@ -407,12 +407,51 @@
         navBrand.textContent = '';
         navBrand.appendChild(logoPair('mark', 280, 300));
     }
+    /* ---- Footer in columns: brand + one column per Sidebar section that has real links.
+       The original footer children (copyright, version, GitHub) move into a bottom bar,
+       so data-docs-version and the no-JavaScript fallback keep working. ---- */
     var footer = document.querySelector('.bui-docs-footer');
     if (footer) {
+        var original = Array.prototype.slice.call(footer.children);
+        var grid = el('div', 'bui-docs-footer__grid');
+        var brandCol = el('div', 'bui-docs-footer__brandcol');
         var footBrand = el('a', 'bui-docs-footer__brand');
         footBrand.setAttribute('href', siteRoot || './');
         footBrand.appendChild(logoPair('logo', 1200, 300));
-        footer.insertBefore(footBrand, footer.firstChild);
+        brandCol.appendChild(footBrand);
+        brandCol.appendChild(el('p', 'bui-docs-footer__about', 'CSS and JavaScript UI library that runs directly in the browser, with no build tools.'));
+        grid.appendChild(brandCol);
+
+        var footCols = 0;
+        (window.BUI_DOCS_NAV || []).forEach(function (section, i) {
+            var linked = section.items.filter(function (item) { return item && item.href; });
+            if (!linked.length) return;
+            var titleId = 'bui-docs-footer-title-' + i;
+            var col = el('nav', 'bui-docs-footer__col');
+            col.setAttribute('aria-labelledby', titleId);
+            var title = el('h2', 'bui-docs-footer__title', section.title);
+            title.id = titleId;
+            var list = el('ul', 'bui-docs-footer__list');
+            linked.forEach(function (item) {
+                var li = document.createElement('li');
+                var a = el('a', 'bui-docs-footer__link', item.title);
+                a.setAttribute('href', siteRoot + item.href);
+                if (a.pathname === location.pathname) a.setAttribute('aria-current', 'page');
+                li.appendChild(a);
+                list.appendChild(li);
+            });
+            col.appendChild(title);
+            col.appendChild(list);
+            grid.appendChild(col);
+            footCols++;
+        });
+        grid.style.setProperty('--bui-docs-footer-cols', String(footCols));
+
+        var bottom = el('div', 'bui-docs-footer__bottom');
+        original.forEach(function (node) { bottom.appendChild(node); });
+        footer.appendChild(grid);
+        footer.appendChild(bottom);
+        footer.classList.add('has-columns');
     }
 
     /* Favicon follows the docs mode (the mark files are mid-tone, readable on any tab color) */

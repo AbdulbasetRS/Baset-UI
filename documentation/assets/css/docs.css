@@ -213,7 +213,6 @@ a.bui-docs-nav-link:hover { background: var(--bui-color-surface); }
 [data-bui-mode="dark"] .bui-docs-logo--light { display: none; }
 [data-bui-mode="dark"] .bui-docs-logo--dark { display: block; }
 
-.bui-docs-footer__brand { display: flex; flex: 0 0 100%; text-decoration: none; }
 
 /* ==========================================================================
    Code blocks: VS Code Dark+ colors (docs shell only, NOT library tokens).
@@ -269,3 +268,40 @@ a.bui-docs-nav-link:hover { background: var(--bui-color-surface); }
 .bui-docs-tok-regexp { color: var(--bui-docs-syntax-regexp); }
 .bui-docs-tok-tagpunct { color: var(--bui-docs-syntax-tagpunct); }
 .bui-docs-tok-selector { color: var(--bui-docs-syntax-selector); }
+
+/* ==========================================================================
+   Footer in columns (docs shell only). Built by docs.js; .has-columns is added
+   only when the script runs, so the plain footer stays as the no-JavaScript fallback.
+   Mobile First: 2 columns, brand on its own row; from LG: brand + one column per section.
+   ========================================================================== */
+.bui-docs-footer.has-columns {
+    flex-direction: column; flex-wrap: nowrap; align-items: stretch; justify-content: flex-start;
+    gap: var(--bui-space-5); padding: var(--bui-space-5) var(--bui-space-3) var(--bui-space-3);
+}
+.bui-docs-footer.has-columns > * { inline-size: 100%; max-inline-size: 90rem; margin-inline: auto; }
+
+.bui-docs-footer__grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--bui-space-4); }
+.bui-docs-footer__brandcol { grid-column: 1 / -1; }
+.bui-docs-footer__brand { display: inline-flex; text-decoration: none; }
+.bui-docs-footer__about { max-inline-size: 24rem; margin: var(--bui-space-2) 0 0; }
+
+.bui-docs-footer__title {
+    margin: 0 0 var(--bui-space-2); font-size: var(--bui-font-size-sm); font-weight: var(--bui-font-weight-bold);
+    line-height: var(--bui-line-height-snug); color: var(--bui-color-text);
+}
+.bui-docs-footer__list { display: flex; flex-direction: column; gap: var(--bui-space-1); margin: 0; padding: 0; list-style: none; }
+.bui-docs-footer .bui-docs-footer__link {
+    display: inline-block; padding-block: 0.3rem; color: var(--bui-color-text-muted); text-decoration: none;
+}
+.bui-docs-footer .bui-docs-footer__link:hover { color: var(--bui-color-text); text-decoration: underline; }
+.bui-docs-footer .bui-docs-footer__link[aria-current="page"] { color: var(--bui-color-text); font-weight: var(--bui-font-weight-semibold); }
+
+.bui-docs-footer__bottom {
+    display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--bui-space-2) var(--bui-space-4);
+    padding-block-start: var(--bui-space-3); border-block-start: var(--bui-border-width) solid var(--bui-color-border);
+}
+
+@media (min-width: 992px) {
+    .bui-docs-footer__grid { grid-template-columns: minmax(0, 2fr) repeat(var(--bui-docs-footer-cols, 2), minmax(0, 1fr)); }
+    .bui-docs-footer__brandcol { grid-column: auto; }
+}

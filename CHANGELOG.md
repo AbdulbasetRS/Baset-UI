@@ -5,6 +5,7 @@
 ## [Unreleased]
 
 ### Added
+- Footer التوثيق بأعمدة (`docs.js` + `docs.css`): عمود العلامة (الشعار الكامل + وصف من README)، وعمود لكل قسم في الـ Sidebar له روابط فعلية (حالياً Layout وCustomization)، وشريط سفلي يضم حقوق النشر والإصدار ورابط GitHub. الأعمدة تتولد من `nav.js` فتكبر تلقائياً مع إضافة صفحات.
 - Syntax Highlighting لكل Code Blocks في صفحات التوثيق (ألوان VS Code Dark+):
   - مكون موحد داخل `documentation/assets/js/docs.js` (`window.BUI_DOCS_CODE`: `detect`, `tokenize`, `highlight`, `enhance`) بـ Tokenizer خاص بدون أي مكتبة. اللغات: HTML (مع `<script>` و`<style>`)، CSS، JavaScript، JSON، PHP.
   - ألوان Dark+ كـ Tokens في `docs.css` (`--bui-docs-syntax-*`، `bui-docs-tok-*`). خاصة بالموقع وليست جزءاً من المكتبة.
@@ -36,6 +37,9 @@
 - Shell التوثيق: الصفحات لم تكن تعرّف أيقونة (Favicon) فكان المتصفح يطلب `/favicon.ico` ويحصل على 404؛ أُضيفت الأيقونة من `docs.js`.
 
 ### Decisions
+- Footer: الأعمدة تُبنى من `docs.js` وليس بتعديل الصفحات (نفس سبب الشعار). عناصر الـ Footer الأصلية (حقوق النشر، `data-docs-version`، GitHub) تُنقل كما هي إلى الشريط السفلي، وبدون JavaScript يبقى الـ Footer القديم. الشعار صار داخل عمود العلامة بدل صف مستقل.
+- Footer: لم تُنقل عناصر مثال الـ Footer المقترح (حالة النظام، الساعة والمنطقة الزمنية، قائمة اللغة) لأنها تعتمد على Dropdown وButton وInput والأيقونات ونظام اللغة وكلها غير منفذة، ولا توجد حالة نظام حقيقية. تُضاف في مهام تلك المكونات.
+- Footer: لا روابط GitHub إلا المستودع الرسمي (قاعدة PROJECT_OVERVIEW)، لذلك لا روابط مباشرة لـ LICENSE أو CHANGELOG.
 - Syntax Highlighting: بلوكات الكود داكنة دائماً (Dark+) في Light وDark، بقرار المالك. الألوان على `:root` ولا تتبع `data-bui-mode`.
 - Syntax Highlighting: المكون داخل `docs.js` وليس ملفاً منفصلاً، لأن ملفاً جديداً يتطلب وسم `<script>` في كل صفحة. التلوين يعمل على الـ DOM الموجود بدون تعديل الصفحات، ولا يغير النص أبداً (`textContent` ثابت)، فيبقى زر Copy كما هو. إن اختلف نص التلوين عن الأصل لأي سبب يُترك البلوك بلا تلوين مع تحذير في Console.
 - Syntax Highlighting: تطبيق المكون على Playground وCode Generator مؤجل لحين وجودهما (غير موجودين حالياً)، والواجهة العامة `BUI_DOCS_CODE.highlight/enhance` جاهزة لهما.
