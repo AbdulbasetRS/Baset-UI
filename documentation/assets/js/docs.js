@@ -407,7 +407,7 @@
         navBrand.textContent = '';
         navBrand.appendChild(logoPair('mark', 280, 300));
     }
-    /* ---- Footer in columns: brand + one column per Sidebar section that has real links.
+    /* ---- Footer in columns: brand + Documentation entry points + optional Contact.
        The original footer children (copyright, version, GitHub) move into a bottom bar,
        so data-docs-version and the no-JavaScript fallback keep working. ---- */
     var footer = document.querySelector('.bui-docs-footer');
@@ -422,21 +422,23 @@
         brandCol.appendChild(el('p', 'bui-docs-footer__about', 'CSS and JavaScript UI library that runs directly in the browser, with no build tools.'));
         grid.appendChild(brandCol);
 
+        /* Fixed-size footer: one column of section entry points (first linked page of each Sidebar
+           section, so it grows with sections, never with pages), and an optional Contact column
+           that renders only the links configured in BUI_DOCS_FOOTER (nav.js). */
         var footCols = 0;
-        (window.BUI_DOCS_NAV || []).forEach(function (section, i) {
-            var linked = section.items.filter(function (item) { return item && item.href; });
-            if (!linked.length) return;
-            var titleId = 'bui-docs-footer-title-' + i;
+        function footColumn(id, heading, links) {
+            if (!links.length) return;
             var col = el('nav', 'bui-docs-footer__col');
-            col.setAttribute('aria-labelledby', titleId);
-            var title = el('h2', 'bui-docs-footer__title', section.title);
-            title.id = titleId;
+            col.setAttribute('aria-labelledby', id);
+            var title = el('h2', 'bui-docs-footer__title', heading);
+            title.id = id;
             var list = el('ul', 'bui-docs-footer__list');
-            linked.forEach(function (item) {
+            links.forEach(function (l) {
                 var li = document.createElement('li');
-                var a = el('a', 'bui-docs-footer__link', item.title);
-                a.setAttribute('href', siteRoot + item.href);
-                if (a.pathname === location.pathname) a.setAttribute('aria-current', 'page');
+                var a = el('a', 'bui-docs-footer__link', l.title);
+                a.setAttribute('href', l.external ? l.href : siteRoot + l.href);
+                if (l.external) { a.setAttribute('rel', 'noopener'); if (/^https?:/.test(l.href)) a.setAttribute('target', '_blank'); }
+                else if (a.pathname === location.pathname) a.setAttribute('aria-current', 'page');
                 li.appendChild(a);
                 list.appendChild(li);
             });
@@ -444,7 +446,18 @@
             col.appendChild(list);
             grid.appendChild(col);
             footCols++;
+        }
+        var entryLinks = [];
+        (window.BUI_DOCS_NAV || []).forEach(function (section) {
+            if (section.footer === false) return;
+            var first = section.items.filter(function (item) { return item && item.href; })[0];
+            if (first) entryLinks.push({ title: section.title, href: first.href });
         });
+        footColumn('bui-docs-footer-docs', 'Documentation', entryLinks);
+        var cfg = window.BUI_DOCS_FOOTER || {};
+        footColumn('bui-docs-footer-contact', 'Contact', (cfg.contact || []).filter(function (l) {
+            return l && l.title && /^(https?:|mailto:)/.test(l.href || '');
+        }).map(function (l) { return { title: l.title, href: l.href, external: true }; }));
         grid.style.setProperty('--bui-docs-footer-cols', String(footCols));
 
         var bottom = el('div', 'bui-docs-footer__bottom');

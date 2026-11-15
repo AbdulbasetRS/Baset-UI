@@ -165,6 +165,23 @@ a.bui-docs-nav-link:hover { background: var(--bui-color-surface); }
     border-radius: var(--bui-radius-sm);
 }
 .bui-docs-preview :is(.bui-grid, .bui-flex) > :is(.bui-grid, .bui-flex) { background: var(--bui-color-bg); }
+/* Row and Column demos: the column itself carries the gutter as padding, so the colored box is drawn
+   as a background sized to the column minus the gutter. The copyable code stays library-only. */
+.bui-docs-preview .bui-row > * {
+    padding-block: var(--bui-space-2);
+    border-inline: var(--bui-space-2) solid transparent;
+    color: var(--bui-color-primary-on-subtle);
+    background-image: linear-gradient(var(--bui-color-primary-subtle-border), var(--bui-color-primary-subtle-border));
+    background-repeat: no-repeat;
+    background-position: center;
+    background-origin: border-box;
+    background-clip: border-box;
+    background-size: calc(100% - var(--bui-gutter-x)) 100%;
+}
+.bui-docs-preview .bui-row > * > .bui-row > * {
+    color: var(--bui-color-text);
+    background-image: linear-gradient(var(--bui-color-bg), var(--bui-color-bg));
+}
 .bui-docs-preview :is(.bui-container, .bui-container-fluid, [class*="bui-container-"]) {
     color: var(--bui-color-text); background: var(--bui-color-primary-subtle);
     border-inline: var(--bui-border-width) dashed var(--bui-color-primary);

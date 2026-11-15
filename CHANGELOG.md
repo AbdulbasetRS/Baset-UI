@@ -5,6 +5,11 @@
 ## [Unreleased]
 
 ### Added
+- Task 03 (Row and Column, بأسلوب Bootstrap):
+  - `assets/css/baset-ui.css`: نظام 12 عموداً بـ Flexbox: `bui-row`، `bui-col`، `bui-col-auto`، `bui-col-{1-12}`، `bui-row-cols-{auto|1-6}`، `bui-offset-{0-11}`، `bui-order-{first|0-5|last}`، `bui-g-{0-5}` و`bui-gx-*` و`bui-gy-*`، وكلها بنسخ Responsive لكل الـ Breakpoints السبعة (`bui-col-md-6`، `bui-offset-lg-2`...). Token جديد: `--bui-row-gutter`.
+  - `documentation/layout/grid.html`: الصفحة أعيد ترتيبها: Row and Column أولاً (جدول التسمية و12 مثالاً بالكود، RTL، Responsive، Tokens) ثم قسم CSS Grid كما هو بعناوين تبدأ بـ "CSS Grid:".
+  - `documentation/assets/css/docs.css`: تنسيق عرض أعمدة الأمثلة (خاص بالموقع).
+  - Footer التوثيق مضغوط: `docs.js` (بناء الأعمدة) و`nav.js` (`BUI_DOCS_FOOTER`).
 - Footer التوثيق بأعمدة (`docs.js` + `docs.css`): عمود العلامة (الشعار الكامل + وصف من README)، وعمود لكل قسم في الـ Sidebar له روابط فعلية (حالياً Layout وCustomization)، وشريط سفلي يضم حقوق النشر والإصدار ورابط GitHub. الأعمدة تتولد من `nav.js` فتكبر تلقائياً مع إضافة صفحات.
 - Syntax Highlighting لكل Code Blocks في صفحات التوثيق (ألوان VS Code Dark+):
   - مكون موحد داخل `documentation/assets/js/docs.js` (`window.BUI_DOCS_CODE`: `detect`, `tokenize`, `highlight`, `enhance`) بـ Tokenizer خاص بدون أي مكتبة. اللغات: HTML (مع `<script>` و`<style>`)، CSS، JavaScript، JSON، PHP.
@@ -37,6 +42,12 @@
 - Shell التوثيق: الصفحات لم تكن تعرّف أيقونة (Favicon) فكان المتصفح يطلب `/favicon.ico` ويحصل على 404؛ أُضيفت الأيقونة من `docs.js`.
 
 ### Decisions
+- Task 03: الـ Gutter بأسلوب Bootstrap: Padding على الأعمدة ومارجن سالب (`margin-inline`) على الـ Row. السبب: التوافق مع نموذج Bootstrap المطلوب وسهولة الـ Offset. شرط الاستخدام: الـ Row داخل Container، وأقصى Gutter هو الخطوة 5 (2rem) حتى لا يتجاوز نصفه Padding الـ Container (1rem) فلا يحدث Overflow أفقي.
+- Task 03: يُعاد تعريف `--bui-gutter-x/y` على كل `bui-row` من `--bui-row-gutter`، فلا يرث Row متداخل Gutter أبيه.
+- Task 03: `.bui-row-cols-*` تسبق `.bui-col-*` في الملف، فيغلب العمود المرقّم على إعداد الصف (نفس ترتيب Bootstrap).
+- Task 03: لا Gutter متجاوب (`bui-g-md-3`) في هذه المهمة؛ يُضاف عند الحاجة.
+- Task 03: التسمية متسقة مع قرار Task 02 `bui-{property}-{breakpoint}-{value}` (`bui-col-md-6`، `bui-row-cols-md-3`، `bui-offset-lg-2`). الكلاسات الأقدم `bui-grid-*` و`bui-col-span-*` (CSS Grid) باقية بلا تغيير ولا تتعارض معها.
+- Task 03 (Footer): عمود "Documentation" صار يعرض نقطة دخول واحدة لكل قسم في الـ Sidebar (أول صفحة فيه) بدل كل الصفحات، فيكبر مع الأقسام لا مع الصفحات (`footer: false` في `nav.js` يستثني قسماً). عمود "Contact" يُقرأ من `window.BUI_DOCS_FOOTER.contact` في `nav.js` ويُخفى وهو فارغ، ولا يقبل إلا روابط `http(s)` و`mailto`. أُضيف رابط LinkedIn والبريد الإلكتروني من المالك. روابط GitHub تبقى للمستودع الرسمي فقط حسب PROJECT_OVERVIEW.md.
 - Footer: الأعمدة تُبنى من `docs.js` وليس بتعديل الصفحات (نفس سبب الشعار). عناصر الـ Footer الأصلية (حقوق النشر، `data-docs-version`، GitHub) تُنقل كما هي إلى الشريط السفلي، وبدون JavaScript يبقى الـ Footer القديم. الشعار صار داخل عمود العلامة بدل صف مستقل.
 - Footer: لم تُنقل عناصر مثال الـ Footer المقترح (حالة النظام، الساعة والمنطقة الزمنية، قائمة اللغة) لأنها تعتمد على Dropdown وButton وInput والأيقونات ونظام اللغة وكلها غير منفذة، ولا توجد حالة نظام حقيقية. تُضاف في مهام تلك المكونات.
 - Footer: لا روابط GitHub إلا المستودع الرسمي (قاعدة PROJECT_OVERVIEW)، لذلك لا روابط مباشرة لـ LICENSE أو CHANGELOG.

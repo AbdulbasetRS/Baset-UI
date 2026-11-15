@@ -30,3 +30,18 @@ window.BUI_DOCS_NAV = [
     { title: 'Advanced', items: ['RTL & LTR', 'Internationalization', 'Icons'] },
     { title: 'Development', items: ['Changelog', 'Contributing'] }
 ];
+
+/*
+ * Footer configuration (documentation shell only).
+ * Documentation column: generated from the sections above (first linked page of each section).
+ * Add `footer: false` to a section to leave it out.
+ * Contact column: add real links only, e.g. { title: 'LinkedIn', href: 'https://...' } or
+ * { title: 'Email', href: 'mailto:name@example.com' }. The column is hidden while the list is empty.
+ * Note: GitHub links must follow instructions/PROJECT_OVERVIEW.md (official repository only).
+ */
+window.BUI_DOCS_FOOTER = {
+    contact: [
+        { title: 'LinkedIn', href: 'https://www.linkedin.com/in/abdulbaset-r-sayed/' },
+        { title: 'Email', href: 'mailto:abdulbasetredasayedhf@gmail.com' }
+    ]
+};
