@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-bui-theme="default" data-bui-mode="light">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Breakpoints | Baset-UI Documentation</title>
+    <meta name="description" content="Baset-UI responsive breakpoints and the mobile first approach.">
+
+    <!-- Core library stylesheet -->
+    <link rel="stylesheet" href="../../assets/css/baset-ui.css">
+    <!-- Documentation shell only (not part of the library) -->
+    <link rel="stylesheet" href="../assets/css/docs.css">
+    <script>
+        /* Apply saved mode early to avoid a flash. Documentation shell only. */
+        try {
+            var m = localStorage.getItem('bui-docs-mode');
+            if (m === 'dark' || m === 'light') document.documentElement.setAttribute('data-bui-mode', m);
+        } catch (e) {}
+    </script>
+</head>
+<body data-docs-root="../../">
+    <a class="bui-docs-skip" href="#bui-docs-main">Skip to content</a>
+
+    <header class="bui-docs-navbar" role="banner">
+        <button class="bui-docs-navbar__toggle" type="button" id="bui-docs-sidebar-toggle"
+                aria-controls="bui-docs-sidebar" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="bui-docs-burger" aria-hidden="true"></span>
+        </button>
+        <a class="bui-docs-navbar__brand" href="../../">Baset-UI</a>
+        <div class="bui-docs-navbar__search">
+            <input type="search" placeholder="Search (coming soon)" aria-label="Search documentation" disabled>
+        </div>
+        <div class="bui-docs-navbar__actions">
+            <button type="button" class="bui-docs-btn" id="bui-docs-mode-toggle" aria-pressed="false">Dark mode</button>
+            <a class="bui-docs-btn" href="https://github.com/AbdulbasetRS/Baset-UI" rel="noopener" target="_blank">GitHub</a>
+        </div>
+    </header>
+
+    <div class="bui-docs-layout">
+        <div class="bui-docs-backdrop" id="bui-docs-backdrop" hidden></div>
+        <nav class="bui-docs-sidebar" id="bui-docs-sidebar" aria-label="Documentation navigation">
+            <!-- Rendered from documentation/assets/js/nav.js -->
+            <noscript>JavaScript is required to render the navigation.</noscript>
+        </nav>
+
+        <main class="bui-docs-main" id="bui-docs-main" tabindex="-1">
+            <article class="bui-docs-article">
+                <h1>Breakpoints</h1>
+                <p class="bui-docs-lead">Seven min-width breakpoints, designed Mobile First. Everything below 480px is the base design.</p>
+
+<h2>Introduction</h2>
+<p>Every responsive rule in Baset-UI is written <strong>Mobile First</strong>: the base styles target the smallest screens and <code>min-width</code> media queries add rules as the viewport grows. There are no <code>max-width</code> queries in the library.</p>
+<p>Viewport now: <span class="bui-docs-live" data-docs-viewport>-</span>. Current breakpoint: <span class="bui-docs-live" data-docs-breakpoint>-</span>. Resize the window to watch it change.</p>
+
+<h2>Breakpoint scale</h2>
+
+<div class="bui-docs-table-wrap" role="region" aria-label="Breakpoint scale" tabindex="0">
+    <table class="bui-docs-table">
+        <thead><tr><th scope="col">Name</th><th scope="col">Min width</th><th scope="col">Token</th><th scope="col">Token value (live)</th></tr></thead>
+        <tbody>
+            <tr><th scope="row"><code>XS</code></th><td>480px</td><td><code>--bui-bp-xs</code></td><td><code data-docs-css-var="--bui-bp-xs">480px</code></td></tr>
+            <tr><th scope="row"><code>SM</code></th><td>576px</td><td><code>--bui-bp-sm</code></td><td><code data-docs-css-var="--bui-bp-sm">576px</code></td></tr>
+            <tr><th scope="row"><code>MD</code></th><td>768px</td><td><code>--bui-bp-md</code></td><td><code data-docs-css-var="--bui-bp-md">768px</code></td></tr>
+            <tr><th scope="row"><code>LG</code></th><td>992px</td><td><code>--bui-bp-lg</code></td><td><code data-docs-css-var="--bui-bp-lg">992px</code></td></tr>
+            <tr><th scope="row"><code>XL</code></th><td>1200px</td><td><code>--bui-bp-xl</code></td><td><code data-docs-css-var="--bui-bp-xl">1200px</code></td></tr>
+            <tr><th scope="row"><code>XXL</code></th><td>1600px</td><td><code>--bui-bp-xxl</code></td><td><code data-docs-css-var="--bui-bp-xxl">1600px</code></td></tr>
+            <tr><th scope="row"><code>XXXL</code></th><td>1920px</td><td><code>--bui-bp-xxxl</code></td><td><code data-docs-css-var="--bui-bp-xxxl">1920px</code></td></tr>
+            <tr><th scope="row"><code>Base</code></th><td>below 480px</td><td>-</td><td>-</td></tr>
+        </tbody>
+    </table>
+</div>
+<div class="bui-docs-note" role="note"><p><strong>Media queries cannot read CSS variables.</strong> The <code>--bui-bp-*</code> tokens exist for reading values (for example from JavaScript). In CSS, write the pixel value directly in the media query.</p></div>
+
+<h2>Usage</h2>
+<p>Write the base rule first, then widen with <code>min-width</code>. Use the same pixel values as the table above.</p>
+
+<div class="bui-docs-code bui-docs-code--solo" dir="ltr">
+    <button type="button" class="bui-docs-btn bui-docs-copy" data-docs-copy>Copy</button>
+    <pre tabindex="0" dir="ltr" aria-label="Mobile first media query example"><code>.my-panel { padding: var(--bui-space-3); }
+
+@media (min-width: 768px) {   /* MD */
+    .my-panel { padding: var(--bui-space-5); }
+}
+
+@media (min-width: 1200px) {  /* XL */
+    .my-panel { padding: var(--bui-space-6); }
+}</code></pre>
+</div>
+
+<h3>Reading a breakpoint in JavaScript</h3>
+<p>The token can be read with the standard DOM API. This is plain browser JavaScript, not a Baset-UI API. The read-out below uses this exact technique: <code data-docs-css-var="--bui-bp-md">768px</code></p>
+
+<div class="bui-docs-code bui-docs-code--solo" dir="ltr">
+    <button type="button" class="bui-docs-btn bui-docs-copy" data-docs-copy>Copy</button>
+    <pre tabindex="0" dir="ltr" aria-label="Reading a breakpoint token"><code>var md = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--bui-bp-md'));
+var isMdUp = window.matchMedia('(min-width: ' + md + 'px)').matches;</code></pre>
+</div>
+
+<h2>Responsive class variants</h2>
+<p>Layout classes accept a breakpoint infix with this shape: <code>bui-{property}-{breakpoint}-{value}</code>. The variant applies from that breakpoint upward.</p>
+
+<div class="bui-docs-table-wrap" role="region" aria-label="Responsive class variants" tabindex="0">
+    <table class="bui-docs-table">
+        <thead><tr><th scope="col">Property</th><th scope="col">Base class</th><th scope="col">Responsive variant</th><th scope="col">Page</th></tr></thead>
+        <tbody>
+            <tr><th scope="row">Grid columns</th><td><code>bui-grid-cols-2</code></td><td><code>bui-grid-cols-md-2</code></td><td><a href="grid.html">Grid</a></td></tr>
+            <tr><th scope="row">Column span</th><td><code>bui-col-span-2</code></td><td><code>bui-col-span-lg-2</code></td><td><a href="grid.html">Grid</a></td></tr>
+            <tr><th scope="row">Row span</th><td><code>bui-row-span-2</code></td><td><code>bui-row-span-lg-2</code></td><td><a href="grid.html">Grid</a></td></tr>
+            <tr><th scope="row">Flex direction</th><td><code>bui-flex-column</code></td><td><code>bui-flex-md-row</code></td><td><a href="flexbox.html">Flexbox</a></td></tr>
+            <tr><th scope="row">Flex wrap</th><td><code>bui-flex-wrap</code></td><td><code>bui-flex-md-nowrap</code></td><td><a href="flexbox.html">Flexbox</a></td></tr>
+            <tr><th scope="row">Align items</th><td><code>bui-items-start</code></td><td><code>bui-items-md-center</code></td><td><a href="flexbox.html">Flexbox</a></td></tr>
+            <tr><th scope="row">Justify content</th><td><code>bui-justify-start</code></td><td><code>bui-justify-md-between</code></td><td><a href="flexbox.html">Flexbox</a></td></tr>
+            <tr><th scope="row">Align content</th><td><code>bui-content-start</code></td><td><code>bui-content-md-center</code></td><td><a href="flexbox.html">Flexbox</a></td></tr>
+            <tr><th scope="row">Container</th><td><code>bui-container-lg</code></td><td>-</td><td><a href="container.html">Container</a></td></tr>
+        </tbody>
+    </table>
+</div>
+<p>Breakpoint infixes: <code>xs</code>, <code>sm</code>, <code>md</code>, <code>lg</code>, <code>xl</code>, <code>xxl</code>, <code>xxxl</code>.</p>
+
+<h2>Responsive behavior</h2>
+<p>The base design applies below 480px. The breakpoint table is the only source of truth: a variant such as <code>bui-grid-cols-md-2</code> has no effect below 768px, and the unprefixed class (if any) applies there.</p>
+
+<h2>RTL and LTR</h2>
+<p>Breakpoints are based on viewport width only, so they behave identically in both directions. Nothing in this system depends on <code>dir</code>.</p>
+
+<h2>Tokens used</h2>
+<p><code>--bui-bp-xs</code>, <code>--bui-bp-sm</code>, <code>--bui-bp-md</code>, <code>--bui-bp-lg</code>, <code>--bui-bp-xl</code>, <code>--bui-bp-xxl</code>, <code>--bui-bp-xxxl</code></p>
+
+                <div class="bui-docs-sr" id="bui-docs-status" role="status" aria-live="polite"></div>
+            </article>
+        </main>
+    </div>
+
+    <footer class="bui-docs-footer">
+        <span>&copy; 2026 Baset-UI</span>
+        <span>Version <span data-docs-version>0.0.0-foundation</span></span>
+        <a href="https://github.com/AbdulbasetRS/Baset-UI" rel="noopener" target="_blank">GitHub</a>
+    </footer>
+
+    <script src="../../assets/js/baset-ui.js"></script>
+    <script src="../../documentation/assets/js/nav.js"></script>
+    <script src="../../documentation/assets/js/docs.js"></script>
+</body>
+</html>

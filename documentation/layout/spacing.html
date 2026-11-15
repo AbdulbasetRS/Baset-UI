@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-bui-theme="default" data-bui-mode="light">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Spacing | Baset-UI Documentation</title>
+    <meta name="description" content="Baset-UI spacing scale tokens and gap classes.">
+
+    <!-- Core library stylesheet -->
+    <link rel="stylesheet" href="../../assets/css/baset-ui.css">
+    <!-- Documentation shell only (not part of the library) -->
+    <link rel="stylesheet" href="../assets/css/docs.css">
+    <script>
+        /* Apply saved mode early to avoid a flash. Documentation shell only. */
+        try {
+            var m = localStorage.getItem('bui-docs-mode');
+            if (m === 'dark' || m === 'light') document.documentElement.setAttribute('data-bui-mode', m);
+        } catch (e) {}
+    </script>
+</head>
+<body data-docs-root="../../">
+    <a class="bui-docs-skip" href="#bui-docs-main">Skip to content</a>
+
+    <header class="bui-docs-navbar" role="banner">
+        <button class="bui-docs-navbar__toggle" type="button" id="bui-docs-sidebar-toggle"
+                aria-controls="bui-docs-sidebar" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="bui-docs-burger" aria-hidden="true"></span>
+        </button>
+        <a class="bui-docs-navbar__brand" href="../../">Baset-UI</a>
+        <div class="bui-docs-navbar__search">
+            <input type="search" placeholder="Search (coming soon)" aria-label="Search documentation" disabled>
+        </div>
+        <div class="bui-docs-navbar__actions">
+            <button type="button" class="bui-docs-btn" id="bui-docs-mode-toggle" aria-pressed="false">Dark mode</button>
+            <a class="bui-docs-btn" href="https://github.com/AbdulbasetRS/Baset-UI" rel="noopener" target="_blank">GitHub</a>
+        </div>
+    </header>
+
+    <div class="bui-docs-layout">
+        <div class="bui-docs-backdrop" id="bui-docs-backdrop" hidden></div>
+        <nav class="bui-docs-sidebar" id="bui-docs-sidebar" aria-label="Documentation navigation">
+            <!-- Rendered from documentation/assets/js/nav.js -->
+            <noscript>JavaScript is required to render the navigation.</noscript>
+        </nav>
+
+        <main class="bui-docs-main" id="bui-docs-main" tabindex="-1">
+            <article class="bui-docs-article">
+                <h1>Spacing</h1>
+                <p class="bui-docs-lead">One spacing scale used for every margin, padding and gap in the library.</p>
+
+<h2>Introduction</h2>
+<p>The spacing scale is a set of CSS variables, <code>--bui-space-0</code> to <code>--bui-space-12</code>. Components and layout classes take their distances from it, so changing a token changes the rhythm of the whole interface. Values are in <code>rem</code>; the pixel column assumes a 16px root font size.</p>
+
+<h2>Scale</h2>
+
+<div class="bui-docs-table-wrap" role="region" aria-label="Spacing scale" tabindex="0">
+    <table class="bui-docs-table">
+        <thead><tr><th scope="col">Token</th><th scope="col">Value</th><th scope="col">Pixels</th><th scope="col">Visual</th></tr></thead>
+        <tbody>
+            <tr><th scope="row"><code>--bui-space-0</code></th><td><code data-docs-css-var="--bui-space-0">0</code></td><td>0px</td><td><span class="bui-docs-bar" style="inline-size: var(--bui-space-0); min-inline-size: 1px"></span></td></tr>
+            <tr><th scope="row"><code>--bui-space-1</code></th><td><code data-docs-css-var="--bui-space-1">0.25rem</code></td><td>4px</td><td><span class="bui-docs-bar" style="inline-size: var(--bui-space-1); min-inline-size: 1px"></span></td></tr>
+            <tr><th scope="row"><code>--bui-space-2</code></th><td><code data-docs-css-var="--bui-space-2">0.5rem</code></td><td>8px</td><td><span class="bui-docs-bar" style="inline-size: var(--bui-space-2); min-inline-size: 1px"></span></td></tr>
+            <tr><th scope="row"><code>--bui-space-3</code></th><td><code data-docs-css-var="--bui-space-3">1rem</code></td><td>16px</td><td><span class="bui-docs-bar" style="inline-size: var(--bui-space-3); min-inline-size: 1px"></span></td></tr>
+            <tr><th scope="row"><code>--bui-space-4</code></th><td><code data-docs-css-var="--bui-space-4">1.5rem</code></td><td>24px</td><td><span class="bui-docs-bar" style="inline-size: var(--bui-space-4); min-inline-size: 1px"></span></td></tr>
+            <tr><th scope="row"><code>--bui-space-5</code></th><td><code data-docs-css-var="--bui-space-5">2rem</code></td><td>32px</td><td><span class="bui-docs-bar" style="inline-size: var(--bui-space-5); min-inline-size: 1px"></span></td></tr>
+            <tr><th scope="row"><code>--bui-space-6</code></th><td><code data-docs-css-var="--bui-space-6">3rem</code></td><td>48px</td><td><span class="bui-docs-bar" style="inline-size: var(--bui-space-6); min-inline-size: 1px"></span></td></tr>
+            <tr><th scope="row"><code>--bui-space-8</code></th><td><code data-docs-css-var="--bui-space-8">4rem</code></td><td>64px</td><td><span class="bui-docs-bar" style="inline-size: var(--bui-space-8); min-inline-size: 1px"></span></td></tr>
+            <tr><th scope="row"><code>--bui-space-10</code></th><td><code data-docs-css-var="--bui-space-10">5rem</code></td><td>80px</td><td><span class="bui-docs-bar" style="inline-size: var(--bui-space-10); min-inline-size: 1px"></span></td></tr>
+            <tr><th scope="row"><code>--bui-space-12</code></th><td><code data-docs-css-var="--bui-space-12">6rem</code></td><td>96px</td><td><span class="bui-docs-bar" style="inline-size: var(--bui-space-12); min-inline-size: 1px"></span></td></tr>
+        </tbody>
+    </table>
+</div>
+<p>The scale grows in small steps first (0.25rem to 2rem for steps 1 to 5), then in 1rem steps (3rem to 6rem for steps 6 to 12).</p>
+
+<h2>Usage</h2>
+<p>Use the tokens anywhere a length is expected. Prefer logical properties (<code>padding-inline</code>, <code>margin-block</code>) so the result is correct in both directions.</p>
+
+<section class="bui-docs-example" aria-labelledby="ex-38">
+    <h3 id="ex-38">Tokens in your own CSS</h3>
+    <p>Inline styles are used here only to keep the example self-contained.</p>
+    <div class="bui-docs-preview">
+<div style="padding-block: var(--bui-space-3); padding-inline: var(--bui-space-5); border: var(--bui-border-width) solid var(--bui-color-border); border-radius: var(--bui-radius-md)">
+    <p style="margin-block-end: var(--bui-space-2)">Padding block: space-3, inline: space-5.</p>
+    <p style="margin-block-end: 0">Margin below the first line: space-2.</p>
+</div>
+    </div>
+    <div class="bui-docs-code" dir="ltr">
+        <button type="button" class="bui-docs-btn bui-docs-copy" data-docs-copy>Copy</button>
+        <pre tabindex="0" dir="ltr"><code>&lt;div style="padding-block: var(--bui-space-3); padding-inline: var(--bui-space-5); border: var(--bui-border-width) solid var(--bui-color-border); border-radius: var(--bui-radius-md)"&gt;
+    &lt;p style="margin-block-end: var(--bui-space-2)"&gt;Padding block: space-3, inline: space-5.&lt;/p&gt;
+    &lt;p style="margin-block-end: 0"&gt;Margin below the first line: space-2.&lt;/p&gt;
+&lt;/div&gt;</code></pre>
+    </div>
+</section>
+
+<h2>Gap classes</h2>
+<p>Grid and Flexbox use the scale through gap classes: <code>bui-gap-{k}</code>, <code>bui-gap-x-{k}</code> and <code>bui-gap-y-{k}</code>, with k one of 0, 1, 2, 3, 4, 5, 6, 8, 10, 12. They are shared by <a href="grid.html">Grid</a> and <a href="flexbox.html">Flexbox</a>.</p>
+
+<section class="bui-docs-example" aria-labelledby="ex-39">
+    <h3 id="ex-39">Gap scale in a flex row</h3>
+    
+    <div class="bui-docs-preview">
+<div class="bui-flex bui-gap-1">
+    <div>gap-1</div>
+    <div>gap-1</div>
+    <div>gap-1</div>
+</div>
+<div class="bui-flex bui-gap-4" style="margin-block-start: var(--bui-space-3)">
+    <div>gap-4</div>
+    <div>gap-4</div>
+    <div>gap-4</div>
+</div>
+    </div>
+    <div class="bui-docs-code" dir="ltr">
+        <button type="button" class="bui-docs-btn bui-docs-copy" data-docs-copy>Copy</button>
+        <pre tabindex="0" dir="ltr"><code>&lt;div class="bui-flex bui-gap-1"&gt;
+    &lt;div&gt;gap-1&lt;/div&gt;
+    &lt;div&gt;gap-1&lt;/div&gt;
+    &lt;div&gt;gap-1&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="bui-flex bui-gap-4" style="margin-block-start: var(--bui-space-3)"&gt;
+    &lt;div&gt;gap-4&lt;/div&gt;
+    &lt;div&gt;gap-4&lt;/div&gt;
+    &lt;div&gt;gap-4&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+    </div>
+</section>
+<div class="bui-docs-note" role="note"><p>This release provides the spacing <strong>tokens</strong> and the gap classes. Margin and padding utility classes are not included.</p></div>
+
+<h2>Responsive behavior</h2>
+<p>Spacing tokens are fixed values and do not change with the viewport. To change spacing at a breakpoint, assign a different token inside a <code>min-width</code> media query (see <a href="breakpoints.html">Breakpoints</a>).</p>
+
+<h2>RTL and LTR</h2>
+<p>Gap is direction independent. For margin and padding in your own CSS use logical properties such as <code>margin-inline-start</code> so the spacing flips with the page direction.</p>
+
+<h2>Tokens used</h2>
+<p><code>--bui-space-0</code>, <code>--bui-space-1</code>, <code>--bui-space-2</code>, <code>--bui-space-3</code>, <code>--bui-space-4</code>, <code>--bui-space-5</code>, <code>--bui-space-6</code>, <code>--bui-space-8</code>, <code>--bui-space-10</code>, <code>--bui-space-12</code></p>
+
+                <div class="bui-docs-sr" id="bui-docs-status" role="status" aria-live="polite"></div>
+            </article>
+        </main>
+    </div>
+
+    <footer class="bui-docs-footer">
+        <span>&copy; 2026 Baset-UI</span>
+        <span>Version <span data-docs-version>0.0.0-foundation</span></span>
+        <a href="https://github.com/AbdulbasetRS/Baset-UI" rel="noopener" target="_blank">GitHub</a>
+    </footer>
+
+    <script src="../../assets/js/baset-ui.js"></script>
+    <script src="../../documentation/assets/js/nav.js"></script>
+    <script src="../../documentation/assets/js/docs.js"></script>
+</body>
+</html>

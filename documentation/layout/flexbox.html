@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-bui-theme="default" data-bui-mode="light">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Flexbox | Baset-UI Documentation</title>
+    <meta name="description" content="Baset-UI Flexbox layout classes: direction, wrap, grow, alignment, gap and responsive variants.">
+
+    <!-- Core library stylesheet -->
+    <link rel="stylesheet" href="../../assets/css/baset-ui.css">
+    <!-- Documentation shell only (not part of the library) -->
+    <link rel="stylesheet" href="../assets/css/docs.css">
+    <script>
+        /* Apply saved mode early to avoid a flash. Documentation shell only. */
+        try {
+            var m = localStorage.getItem('bui-docs-mode');
+            if (m === 'dark' || m === 'light') document.documentElement.setAttribute('data-bui-mode', m);
+        } catch (e) {}
+    </script>
+</head>
+<body data-docs-root="../../">
+    <a class="bui-docs-skip" href="#bui-docs-main">Skip to content</a>
+
+    <header class="bui-docs-navbar" role="banner">
+        <button class="bui-docs-navbar__toggle" type="button" id="bui-docs-sidebar-toggle"
+                aria-controls="bui-docs-sidebar" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="bui-docs-burger" aria-hidden="true"></span>
+        </button>
+        <a class="bui-docs-navbar__brand" href="../../">Baset-UI</a>
+        <div class="bui-docs-navbar__search">
+            <input type="search" placeholder="Search (coming soon)" aria-label="Search documentation" disabled>
+        </div>
+        <div class="bui-docs-navbar__actions">
+            <button type="button" class="bui-docs-btn" id="bui-docs-mode-toggle" aria-pressed="false">Dark mode</button>
+            <a class="bui-docs-btn" href="https://github.com/AbdulbasetRS/Baset-UI" rel="noopener" target="_blank">GitHub</a>
+        </div>
+    </header>
+
+    <div class="bui-docs-layout">
+        <div class="bui-docs-backdrop" id="bui-docs-backdrop" hidden></div>
+        <nav class="bui-docs-sidebar" id="bui-docs-sidebar" aria-label="Documentation navigation">
+            <!-- Rendered from documentation/assets/js/nav.js -->
+            <noscript>JavaScript is required to render the navigation.</noscript>
+        </nav>
+
+        <main class="bui-docs-main" id="bui-docs-main" tabindex="-1">
+            <article class="bui-docs-article">
+                <h1>Flexbox</h1>
+                <p class="bui-docs-lead">Flexbox layout classes with readable names: direction, wrap, grow and shrink, alignment, gap and responsive variants.</p>
+
+<h2>Introduction</h2>
+<p>Add <code>bui-flex</code> to a container (or <code>bui-inline-flex</code> for an inline one) and combine it with the classes below. Flex follows the page direction, so a row starts on the right in RTL without any extra class.</p>
+
+<h2>Naming convention</h2>
+
+<div class="bui-docs-table-wrap" role="region" aria-label="Flexbox naming convention" tabindex="0">
+    <table class="bui-docs-table">
+        <thead><tr><th scope="col">Pattern</th><th scope="col">CSS</th><th scope="col">Values</th></tr></thead>
+        <tbody>
+            <tr><th scope="row"><code>bui-flex-{direction}</code></th><td>flex-direction</td><td>row, column, row-reverse, column-reverse</td></tr>
+            <tr><th scope="row"><code>bui-flex-{wrap}</code></th><td>flex-wrap</td><td>wrap, nowrap, wrap-reverse</td></tr>
+            <tr><th scope="row"><code>bui-flex-1</code></th><td>flex: 1 1 0%</td><td>Item grows and shrinks, ignoring its content size</td></tr>
+            <tr><th scope="row"><code>bui-flex-auto</code>, <code>bui-flex-none</code></th><td>flex: 1 1 auto, flex: none</td><td>Grow from content size, or do not flex at all</td></tr>
+            <tr><th scope="row"><code>bui-flex-grow-{0|1}</code>, <code>bui-flex-shrink-{0|1}</code></th><td>flex-grow, flex-shrink</td><td>0 or 1</td></tr>
+            <tr><th scope="row"><code>bui-items-{value}</code></th><td>align-items</td><td>start, end, center, baseline, stretch</td></tr>
+            <tr><th scope="row"><code>bui-content-{value}</code></th><td>align-content</td><td>start, end, center, between, around, evenly, stretch</td></tr>
+            <tr><th scope="row"><code>bui-justify-{value}</code></th><td>justify-content</td><td>start, end, center, between, around, evenly</td></tr>
+            <tr><th scope="row"><code>bui-gap-{k}</code>, <code>bui-gap-x-{k}</code>, <code>bui-gap-y-{k}</code></th><td>gap, column-gap, row-gap</td><td>Spacing token step: 0, 1, 2, 3, 4, 5, 6, 8, 10, 12</td></tr>
+        </tbody>
+    </table>
+</div>
+<p>Responsive form: <code>bui-{property}-{breakpoint}-{value}</code>, for example <code>bui-flex-md-row</code>, <code>bui-items-lg-center</code>, <code>bui-justify-xl-between</code>. The variants cover direction, wrap, <code>items</code>, <code>content</code> and <code>justify</code>.</p>
+
+<h2>Examples</h2>
+
+<section class="bui-docs-example" aria-labelledby="ex-26">
+    <h3 id="ex-26">Basic row</h3>
+    
+    <div class="bui-docs-preview">
+<div class="bui-flex bui-gap-3">
+    <div>One</div>
+    <div>Two</div>
+    <div>Three</div>
+</div>
+    </div>
+    <div class="bui-docs-code" dir="ltr">
+        <button type="button" class="bui-docs-btn bui-docs-copy" data-docs-copy>Copy</button>
+        <pre tabindex="0" dir="ltr"><code>&lt;div class="bui-flex bui-gap-3"&gt;
+    &lt;div&gt;One&lt;/div&gt;
+    &lt;div&gt;Two&lt;/div&gt;
+    &lt;div&gt;Three&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+    </div>
+</section>
+
+<section class="bui-docs-example" aria-labelledby="ex-27">
+    <h3 id="ex-27">Space between, centered vertically</h3>
+    
+    <div class="bui-docs-preview">
+<div class="bui-flex bui-items-center bui-justify-between">
+    <div>Start</div>
+    <div>End</div>
+</div>
+    </div>
+    <div class="bui-docs-code" dir="ltr">
+        <button type="button" class="bui-docs-btn bui-docs-copy" data-docs-copy>Copy</button>
+        <pre tabindex="0" dir="ltr"><code>&lt;div class="bui-flex bui-items-center bui-justify-between"&gt;
+    &lt;div&gt;Start&lt;/div&gt;
+    &lt;div&gt;End&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+    </div>
+</section>
+
+<section class="bui-docs-example" aria-labelledby="ex-28">
+    <h3 id="ex-28">Direction</h3>
+    <p>Column stacks items. Reverse variants change the visual order only; screen readers and keyboard focus still follow the source order, so do not use them to fake RTL.</p>
+    <div class="bui-docs-preview">
+<div class="bui-flex bui-flex-column bui-gap-2">
+    <div>Row 1</div>
+    <div>Row 2</div>
+</div>
+<p style="margin-block: var(--bui-space-3) var(--bui-space-1)"><code>bui-flex-row-reverse</code></p>
+<div class="bui-flex bui-flex-row-reverse bui-gap-2">
+    <div>First in source</div>
+    <div>Second in source</div>
+</div>
+    </div>
+    <div class="bui-docs-code" dir="ltr">
+        <button type="button" class="bui-docs-btn bui-docs-copy" data-docs-copy>Copy</button>
+        <pre tabindex="0" dir="ltr"><code>&lt;div class="bui-flex bui-flex-column bui-gap-2"&gt;
+    &lt;div&gt;Row 1&lt;/div&gt;
+    &lt;div&gt;Row 2&lt;/div&gt;
+&lt;/div&gt;
+&lt;p style="margin-block: var(--bui-space-3) var(--bui-space-1)"&gt;&lt;code&gt;bui-flex-row-reverse&lt;/code&gt;&lt;/p&gt;
+&lt;div class="bui-flex bui-flex-row-reverse bui-gap-2"&gt;
+    &lt;div&gt;First in source&lt;/div&gt;
+    &lt;div&gt;Second in source&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+    </div>
+</section>
+
+<section class="bui-docs-example" aria-labelledby="ex-29">
+    <h3 id="ex-29">Responsive direction</h3>
+    <p>Stacked on small screens, side by side from MD (768px).</p>
+    <div class="bui-docs-preview">
+<div class="bui-flex bui-flex-column bui-flex-md-row bui-gap-3">
+    <div class="bui-flex-1">Column 1</div>
+    <div class="bui-flex-1">Column 2</div>
+</div>
+    </div>
+    <div class="bui-docs-code" dir="ltr">
+        <button type="button" class="bui-docs-btn bui-docs-copy" data-docs-copy>Copy</button>
+        <pre tabindex="0" dir="ltr"><code>&lt;div class="bui-flex bui-flex-column bui-flex-md-row bui-gap-3"&gt;
+    &lt;div class="bui-flex-1"&gt;Column 1&lt;/div&gt;
+    &lt;div class="bui-flex-1"&gt;Column 2&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+    </div>
+</section>
+
+<section class="bui-docs-example" aria-labelledby="ex-30">
+    <h3 id="ex-30">Wrap</h3>
+    <p>Items move to the next line instead of shrinking.</p>
+    <div class="bui-docs-preview">
+<div class="bui-flex bui-flex-wrap bui-gap-2" style="max-inline-size: 18rem">
+    <div>Tag 1</div>
+    <div>Tag 2</div>
+    <div>Tag 3</div>
+    <div>Tag 4</div>
+    <div>Tag 5</div>
+    <div>Tag 6</div>
+    <div>Tag 7</div>
+    <div>Tag 8</div>
+</div>
+    </div>
+    <div class="bui-docs-code" dir="ltr">
+        <button type="button" class="bui-docs-btn bui-docs-copy" data-docs-copy>Copy</button>
+        <pre tabindex="0" dir="ltr"><code>&lt;div class="bui-flex bui-flex-wrap bui-gap-2" style="max-inline-size: 18rem"&gt;
+    &lt;div&gt;Tag 1&lt;/div&gt;
+    &lt;div&gt;Tag 2&lt;/div&gt;
+    &lt;div&gt;Tag 3&lt;/div&gt;
+    &lt;div&gt;Tag 4&lt;/div&gt;
+    &lt;div&gt;Tag 5&lt;/div&gt;
+    &lt;div&gt;Tag 6&lt;/div&gt;
+    &lt;div&gt;Tag 7&lt;/div&gt;
+    &lt;div&gt;Tag 8&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+    </div>
+</section>
+
+<section class="bui-docs-example" aria-labelledby="ex-31">
+    <h3 id="ex-31">Grow and shrink</h3>
+    <p><code>bui-flex-none</code> keeps the width, <code>bui-flex-1</code> takes the remaining space.</p>
+    <div class="bui-docs-preview">
+<div class="bui-flex bui-gap-3">
+    <div class="bui-flex-none" style="inline-size: 6rem">Fixed</div>
+    <div class="bui-flex-1">Fills the rest</div>
+    <div class="bui-flex-none">Auto</div>
+</div>
+<p style="margin-block: var(--bui-space-3) var(--bui-space-1)">Both items ask for 70% width: the first shrinks, the second has <code>bui-flex-shrink-0</code></p>
+<div class="bui-flex">
+    <div style="inline-size: 70%">Shrinks</div>
+    <div class="bui-flex-shrink-0" style="inline-size: 70%">Keeps 70%</div>
+</div>
+    </div>
+    <div class="bui-docs-code" dir="ltr">
+        <button type="button" class="bui-docs-btn bui-docs-copy" data-docs-copy>Copy</button>
+        <pre tabindex="0" dir="ltr"><code>&lt;div class="bui-flex bui-gap-3"&gt;
+    &lt;div class="bui-flex-none" style="inline-size: 6rem"&gt;Fixed&lt;/div&gt;
+    &lt;div class="bui-flex-1"&gt;Fills the rest&lt;/div&gt;
+    &lt;div class="bui-flex-none"&gt;Auto&lt;/div&gt;
+&lt;/div&gt;
+&lt;p style="margin-block: var(--bui-space-3) var(--bui-space-1)"&gt;Both items ask for 70% width: the first shrinks, the second has &lt;code&gt;bui-flex-shrink-0&lt;/code&gt;&lt;/p&gt;
+&lt;div class="bui-flex"&gt;
+    &lt;div style="inline-size: 70%"&gt;Shrinks&lt;/div&gt;
+    &lt;div class="bui-flex-shrink-0" style="inline-size: 70%"&gt;Keeps 70%&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+    </div>
+</section>
+
+<section class="bui-docs-example" aria-labelledby="ex-32">
+    <h3 id="ex-32">Align items</h3>
+    <p>Cross axis alignment inside a container with a set height.</p>
+    <div class="bui-docs-preview">
+<p style="margin-block: var(--bui-space-2) var(--bui-space-1)"><code>bui-items-start</code></p>
+<div class="bui-flex bui-items-start bui-gap-2" style="min-block-size: 6rem">
+    <div>Short</div>
+    <div>Tall<br>item</div>
+    <div>Short</div>
+</div>
+<p style="margin-block: var(--bui-space-2) var(--bui-space-1)"><code>bui-items-center</code></p>
+<div class="bui-flex bui-items-center bui-gap-2" style="min-block-size: 6rem">
+    <div>Short</div>
+    <div>Tall<br>item</div>
+    <div>Short</div>
+</div>
+<p style="margin-block: var(--bui-space-2) var(--bui-space-1)"><code>bui-items-end</code></p>
+<div class="bui-flex bui-items-end bui-gap-2" style="min-block-size: 6rem">
+    <div>Short</div>
+    <div>Tall<br>item</div>
+    <div>Short</div>
+</div>
+<p style="margin-block: var(--bui-space-2) var(--bui-space-1)"><code>bui-items-stretch</code></p>
+<div class="bui-flex bui-items-stretch bui-gap-2" style="min-block-size: 6rem">
+    <div>Short</div>
+    <div>Tall<br>item</div>
+    <div>Short</div>
+</div>
+<p style="margin-block: var(--bui-space-2) var(--bui-space-1)"><code>bui-items-baseline</code></p>
+<div class="bui-flex bui-items-baseline bui-gap-2" style="min-block-size: 6rem">
+    <div>Short</div>
+    <div>Tall<br>item</div>
+    <div>Short</div>
+</div>
+    </div>
+    <div class="bui-docs-code" dir="ltr">
+        <button type="button" class="bui-docs-btn bui-docs-copy" data-docs-copy>Copy</button>
+        <pre tabindex="0" dir="ltr"><code>&lt;p style="margin-block: var(--bui-space-2) var(--bui-space-1)"&gt;&lt;code&gt;bui-items-start&lt;/code&gt;&lt;/p&gt;
+&lt;div class="bui-flex bui-items-start bui-gap-2" style="min-block-size: 6rem"&gt;
+    &lt;div&gt;Short&lt;/div&gt;
+    &lt;div&gt;Tall&lt;br&gt;item&lt;/div&gt;
+    &lt;div&gt;Short&lt;/div&gt;
+&lt;/div&gt;
+&lt;p style="margin-block: var(--bui-space-2) var(--bui-space-1)"&gt;&lt;code&gt;bui-items-center&lt;/code&gt;&lt;/p&gt;
+&lt;div class="bui-flex bui-items-center bui-gap-2" style="min-block-size: 6rem"&gt;
+    &lt;div&gt;Short&lt;/div&gt;
+    &lt;div&gt;Tall&lt;br&gt;item&lt;/div&gt;
+    &lt;div&gt;Short&lt;/div&gt;
+&lt;/div&gt;
+&lt;p style="margin-block: var(--bui-space-2) var(--bui-space-1)"&gt;&lt;code&gt;bui-items-end&lt;/code&gt;&lt;/p&gt;
+&lt;div class="bui-flex bui-items-end bui-gap-2" style="min-block-size: 6rem"&gt;
+    &lt;div&gt;Short&lt;/div&gt;
+    &lt;div&gt;Tall&lt;br&gt;item&lt;/div&gt;
+    &lt;div&gt;Short&lt;/div&gt;
+&lt;/div&gt;
+&lt;p style="margin-block: var(--bui-space-2) var(--bui-space-1)"&gt;&lt;code&gt;bui-items-stretch&lt;/code&gt;&lt;/p&gt;
+&lt;div class="bui-flex bui-items-stretch bui-gap-2" style="min-block-size: 6rem"&gt;
+    &lt;div&gt;Short&lt;/div&gt;
+    &lt;div&gt;Tall&lt;br&gt;item&lt;/div&gt;
+    &lt;div&gt;Short&lt;/div&gt;
+&lt;/div&gt;
+&lt;p style="margin-block: var(--bui-space-2) var(--bui-space-1)"&gt;&lt;code&gt;bui-items-baseline&lt;/code&gt;&lt;/p&gt;
+&lt;div class="bui-flex bui-items-baseline bui-gap-2" style="min-block-size: 6rem"&gt;
+    &lt;div&gt;Short&lt;/div&gt;
+    &lt;div&gt;Tall&lt;br&gt;item&lt;/div&gt;
+    &lt;div&gt;Short&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+    </div>
+</section>
+
+<section class="bui-docs-example" aria-labelledby="ex-33">
+    <h3 id="ex-33">Justify content</h3>
+    <p>Main axis distribution.</p>
+    <div class="bui-docs-preview">
+<p style="margin-block: var(--bui-space-2) var(--bui-space-1)"><code>bui-justify-start</code></p>
+<div class="bui-flex bui-justify-start bui-gap-2">
+    <div>A</div>
+    <div>B</div>
+    <div>C</div>
+</div>
+<p style="margin-block: var(--bui-space-2) var(--bui-space-1)"><code>bui-justify-center</code></p>
+<div class="bui-flex bui-justify-center bui-gap-2">
+    <div>A</div>
+    <div>B</div>
+    <div>C</div>
+</div>
+<p style="margin-block: var(--bui-space-2) var(--bui-space-1)"><code>bui-justify-end</code></p>
+<div class="bui-flex bui-justify-end bui-gap-2">
+    <div>A</div>
+    <div>B</div>
+    <div>C</div>
+</div>
+<p style="margin-block: var(--bui-space-2) var(--bui-space-1)"><code>bui-justify-between</code></p>
+<div class="bui-flex bui-justify-between bui-gap-2">
+    <div>A</div>
+    <div>B</div>
+    <div>C</div>
+</div>
+<p style="margin-block: var(--bui-space-2) var(--bui-space-1)"><code>bui-justify-around</code></p>
+<div class="bui-flex bui-justify-around bui-gap-2">
+    <div>A</div>
+    <div>B</div>
+    <div>C</div>
+</div>
+<p style="margin-block: var(--bui-space-2) var(--bui-space-1)"><code>bui-justify-evenly</code></p>
+<div class="bui-flex bui-justify-evenly bui-gap-2">
+    <div>A</div>
+    <div>B</div>
+    <div>C</div>
+</div>
+    </div>
+    <div class="bui-docs-code" dir="ltr">
+        <button type="button" class="bui-docs-btn bui-docs-copy" data-docs-copy>Copy</button>
+        <pre tabindex="0" dir="ltr"><code>&lt;p style="margin-block: var(--bui-space-2) var(--bui-space-1)"&gt;&lt;code&gt;bui-justify-start&lt;/code&gt;&lt;/p&gt;
+&lt;div class="bui-flex bui-justify-start bui-gap-2"&gt;
+    &lt;div&gt;A&lt;/div&gt;
+    &lt;div&gt;B&lt;/div&gt;
+    &lt;div&gt;C&lt;/div&gt;
+&lt;/div&gt;
+&lt;p style="margin-block: var(--bui-space-2) var(--bui-space-1)"&gt;&lt;code&gt;bui-justify-center&lt;/code&gt;&lt;/p&gt;
+&lt;div class="bui-flex bui-justify-center bui-gap-2"&gt;
+    &lt;div&gt;A&lt;/div&gt;
+    &lt;div&gt;B&lt;/div&gt;
+    &lt;div&gt;C&lt;/div&gt;
+&lt;/div&gt;
+&lt;p style="margin-block: var(--bui-space-2) var(--bui-space-1)"&gt;&lt;code&gt;bui-justify-end&lt;/code&gt;&lt;/p&gt;
+&lt;div class="bui-flex bui-justify-end bui-gap-2"&gt;
+    &lt;div&gt;A&lt;/div&gt;
+    &lt;div&gt;B&lt;/div&gt;
+    &lt;div&gt;C&lt;/div&gt;
+&lt;/div&gt;
+&lt;p style="margin-block: var(--bui-space-2) var(--bui-space-1)"&gt;&lt;code&gt;bui-justify-between&lt;/code&gt;&lt;/p&gt;
+&lt;div class="bui-flex bui-justify-between bui-gap-2"&gt;
+    &lt;div&gt;A&lt;/div&gt;
+    &lt;div&gt;B&lt;/div&gt;
+    &lt;div&gt;C&lt;/div&gt;
+&lt;/div&gt;
+&lt;p style="margin-block: var(--bui-space-2) var(--bui-space-1)"&gt;&lt;code&gt;bui-justify-around&lt;/code&gt;&lt;/p&gt;
+&lt;div class="bui-flex bui-justify-around bui-gap-2"&gt;
+    &lt;div&gt;A&lt;/div&gt;
+    &lt;div&gt;B&lt;/div&gt;
+    &lt;div&gt;C&lt;/div&gt;
+&lt;/div&gt;
+&lt;p style="margin-block: var(--bui-space-2) var(--bui-space-1)"&gt;&lt;code&gt;bui-justify-evenly&lt;/code&gt;&lt;/p&gt;
+&lt;div class="bui-flex bui-justify-evenly bui-gap-2"&gt;
+    &lt;div&gt;A&lt;/div&gt;
+    &lt;div&gt;B&lt;/div&gt;
+    &lt;div&gt;C&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+    </div>
+</section>
+
+<section class="bui-docs-example" aria-labelledby="ex-34">
+    <h3 id="ex-34">Align content</h3>
+    <p>Distribution of wrapped lines. It needs a wrapping container taller than its content.</p>
+    <div class="bui-docs-preview">
+<div class="bui-flex bui-flex-wrap bui-content-center bui-gap-2" style="block-size: 10rem">
+    <div style="inline-size: 45%">A</div>
+    <div style="inline-size: 45%">B</div>
+    <div style="inline-size: 45%">C</div>
+    <div style="inline-size: 45%">D</div>
+</div>
+<p style="margin-block: var(--bui-space-3) var(--bui-space-1)"><code>bui-content-between</code></p>
+<div class="bui-flex bui-flex-wrap bui-content-between bui-gap-2" style="block-size: 10rem">
+    <div style="inline-size: 45%">A</div>
+    <div style="inline-size: 45%">B</div>
+    <div style="inline-size: 45%">C</div>
+    <div style="inline-size: 45%">D</div>
+</div>
+    </div>
+    <div class="bui-docs-code" dir="ltr">
+        <button type="button" class="bui-docs-btn bui-docs-copy" data-docs-copy>Copy</button>
+        <pre tabindex="0" dir="ltr"><code>&lt;div class="bui-flex bui-flex-wrap bui-content-center bui-gap-2" style="block-size: 10rem"&gt;
+    &lt;div style="inline-size: 45%"&gt;A&lt;/div&gt;
+    &lt;div style="inline-size: 45%"&gt;B&lt;/div&gt;
+    &lt;div style="inline-size: 45%"&gt;C&lt;/div&gt;
+    &lt;div style="inline-size: 45%"&gt;D&lt;/div&gt;
+&lt;/div&gt;
+&lt;p style="margin-block: var(--bui-space-3) var(--bui-space-1)"&gt;&lt;code&gt;bui-content-between&lt;/code&gt;&lt;/p&gt;
+&lt;div class="bui-flex bui-flex-wrap bui-content-between bui-gap-2" style="block-size: 10rem"&gt;
+    &lt;div style="inline-size: 45%"&gt;A&lt;/div&gt;
+    &lt;div style="inline-size: 45%"&gt;B&lt;/div&gt;
+    &lt;div style="inline-size: 45%"&gt;C&lt;/div&gt;
+    &lt;div style="inline-size: 45%"&gt;D&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+    </div>
+</section>
+
+<section class="bui-docs-example" aria-labelledby="ex-35">
+    <h3 id="ex-35">Gap</h3>
+    <p>The same gap tokens as Grid.</p>
+    <div class="bui-docs-preview">
+<div class="bui-flex bui-flex-wrap bui-gap-x-1 bui-gap-y-4" style="max-inline-size: 14rem">
+    <div>Item 1</div>
+    <div>Item 2</div>
+    <div>Item 3</div>
+    <div>Item 4</div>
+    <div>Item 5</div>
+    <div>Item 6</div>
+</div>
+    </div>
+    <div class="bui-docs-code" dir="ltr">
+        <button type="button" class="bui-docs-btn bui-docs-copy" data-docs-copy>Copy</button>
+        <pre tabindex="0" dir="ltr"><code>&lt;div class="bui-flex bui-flex-wrap bui-gap-x-1 bui-gap-y-4" style="max-inline-size: 14rem"&gt;
+    &lt;div&gt;Item 1&lt;/div&gt;
+    &lt;div&gt;Item 2&lt;/div&gt;
+    &lt;div&gt;Item 3&lt;/div&gt;
+    &lt;div&gt;Item 4&lt;/div&gt;
+    &lt;div&gt;Item 5&lt;/div&gt;
+    &lt;div&gt;Item 6&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+    </div>
+</section>
+
+<section class="bui-docs-example" aria-labelledby="ex-36">
+    <h3 id="ex-36">Responsive alignment</h3>
+    <p>Stacked and start-aligned on small screens. From MD the items sit on one row, centered vertically and pushed to opposite ends.</p>
+    <div class="bui-docs-preview">
+<div class="bui-flex bui-flex-column bui-flex-md-row bui-items-start bui-items-md-center bui-justify-md-between bui-gap-2">
+    <div>Brand</div>
+    <div>Actions</div>
+</div>
+    </div>
+    <div class="bui-docs-code" dir="ltr">
+        <button type="button" class="bui-docs-btn bui-docs-copy" data-docs-copy>Copy</button>
+        <pre tabindex="0" dir="ltr"><code>&lt;div class="bui-flex bui-flex-column bui-flex-md-row bui-items-start bui-items-md-center bui-justify-md-between bui-gap-2"&gt;
+    &lt;div&gt;Brand&lt;/div&gt;
+    &lt;div&gt;Actions&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+    </div>
+</section>
+
+<h2>Responsive behavior</h2>
+<p>Direction, wrap, <code>items</code>, <code>content</code> and <code>justify</code> have variants for <code>xs</code>, <code>sm</code>, <code>md</code>, <code>lg</code>, <code>xl</code>, <code>xxl</code>, <code>xxxl</code>, applied from that breakpoint upward. A common pattern is a column on small screens and a row from MD, as in the examples above.</p>
+
+<h2>RTL and LTR</h2>
+<p>Flex containers read the page direction. <code>bui-justify-start</code> means the start edge (right in RTL, left in LTR) and <code>bui-justify-between</code> keeps the first item at the start. Do not use the reverse classes to mirror a layout.</p>
+
+<section class="bui-docs-example" aria-labelledby="ex-37">
+    <h3 id="ex-37">Same markup in dir="rtl"</h3>
+    
+    <div class="bui-docs-preview">
+<div dir="rtl" lang="ar">
+    <div class="bui-flex bui-items-center bui-justify-between">
+        <div>البداية</div>
+        <div>النهاية</div>
+    </div>
+</div>
+    </div>
+    <div class="bui-docs-code" dir="ltr">
+        <button type="button" class="bui-docs-btn bui-docs-copy" data-docs-copy>Copy</button>
+        <pre tabindex="0" dir="ltr"><code>&lt;div dir="rtl" lang="ar"&gt;
+    &lt;div class="bui-flex bui-items-center bui-justify-between"&gt;
+        &lt;div&gt;البداية&lt;/div&gt;
+        &lt;div&gt;النهاية&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+    </div>
+</section>
+
+<h2>Tokens used</h2>
+<p><code>--bui-space-0</code>, <code>--bui-space-1</code>, <code>--bui-space-2</code>, <code>--bui-space-3</code>, <code>--bui-space-4</code>, <code>--bui-space-5</code>, <code>--bui-space-6</code>, <code>--bui-space-8</code>, <code>--bui-space-10</code>, <code>--bui-space-12</code></p>
+
+                <div class="bui-docs-sr" id="bui-docs-status" role="status" aria-live="polite"></div>
+            </article>
+        </main>
+    </div>
+
+    <footer class="bui-docs-footer">
+        <span>&copy; 2026 Baset-UI</span>
+        <span>Version <span data-docs-version>0.0.0-foundation</span></span>
+        <a href="https://github.com/AbdulbasetRS/Baset-UI" rel="noopener" target="_blank">GitHub</a>
+    </footer>
+
+    <script src="../../assets/js/baset-ui.js"></script>
+    <script src="../../documentation/assets/js/nav.js"></script>
+    <script src="../../documentation/assets/js/docs.js"></script>
+</body>
+</html>

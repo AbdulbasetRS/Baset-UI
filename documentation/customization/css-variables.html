@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-bui-theme="default" data-bui-mode="light">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>CSS Variables | Baset-UI Documentation</title>
+    <meta name="description" content="Complete reference of Baset-UI design tokens as CSS variables.">
+
+    <!-- Core library stylesheet -->
+    <link rel="stylesheet" href="../../assets/css/baset-ui.css">
+    <!-- Documentation shell only (not part of the library) -->
+    <link rel="stylesheet" href="../assets/css/docs.css">
+    <script>
+        /* Apply saved mode early to avoid a flash. Documentation shell only. */
+        try {
+            var m = localStorage.getItem('bui-docs-mode');
+            if (m === 'dark' || m === 'light') document.documentElement.setAttribute('data-bui-mode', m);
+        } catch (e) {}
+    </script>
+</head>
+<body data-docs-root="../../">
+    <a class="bui-docs-skip" href="#bui-docs-main">Skip to content</a>
+
+    <header class="bui-docs-navbar" role="banner">
+        <button class="bui-docs-navbar__toggle" type="button" id="bui-docs-sidebar-toggle"
+                aria-controls="bui-docs-sidebar" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="bui-docs-burger" aria-hidden="true"></span>
+        </button>
+        <a class="bui-docs-navbar__brand" href="../../">Baset-UI</a>
+        <div class="bui-docs-navbar__search">
+            <input type="search" placeholder="Search (coming soon)" aria-label="Search documentation" disabled>
+        </div>
+        <div class="bui-docs-navbar__actions">
+            <button type="button" class="bui-docs-btn" id="bui-docs-mode-toggle" aria-pressed="false">Dark mode</button>
+            <a class="bui-docs-btn" href="https://github.com/AbdulbasetRS/Baset-UI" rel="noopener" target="_blank">GitHub</a>
+        </div>
+    </header>
+
+    <div class="bui-docs-layout">
+        <div class="bui-docs-backdrop" id="bui-docs-backdrop" hidden></div>
+        <nav class="bui-docs-sidebar" id="bui-docs-sidebar" aria-label="Documentation navigation">
+            <!-- Rendered from documentation/assets/js/nav.js -->
+            <noscript>JavaScript is required to render the navigation.</noscript>
+        </nav>
+
+        <main class="bui-docs-main" id="bui-docs-main" tabindex="-1">
+            <article class="bui-docs-article">
+                <h1>CSS Variables</h1>
+                <p class="bui-docs-lead">Every design value in Baset-UI is a CSS variable with the bui- prefix. This is the reference for all of them.</p>
+
+<h2>Introduction</h2>
+<p>Design tokens are CSS custom properties on <code>:root</code>. Base and Layout read them, so overriding a token changes everything that uses it, with no build step. Names follow <code>--bui-{category}-{name}</code>.</p>
+
+<div class="bui-docs-table-wrap" role="region" aria-label="Token categories" tabindex="0">
+    <table class="bui-docs-table">
+        <thead><tr><th scope="col">Category</th><th scope="col">Pattern</th><th scope="col">Where documented</th></tr></thead>
+        <tbody>
+            <tr><th scope="row">Palette</th><td><code>--bui-palette-{hue}-{step}</code></td><td><a href="colors.html">Colors</a></td></tr>
+            <tr><th scope="row">Semantic colors</th><td><code>--bui-color-{name}</code></td><td><a href="colors.html">Colors</a></td></tr>
+            <tr><th scope="row">Typography</th><td><code>--bui-font-*</code>, <code>--bui-line-height-*</code>, <code>--bui-letter-spacing-*</code>, <code>--bui-heading-*</code></td><td><a href="typography.html">Typography</a></td></tr>
+            <tr><th scope="row">Spacing</th><td><code>--bui-space-{step}</code></td><td><a href="../layout/spacing.html">Spacing</a></td></tr>
+            <tr><th scope="row">Breakpoints</th><td><code>--bui-bp-{name}</code></td><td><a href="../layout/breakpoints.html">Breakpoints</a></td></tr>
+            <tr><th scope="row">Container and Grid</th><td><code>--bui-container-*</code>, <code>--bui-grid-*</code></td><td>Below</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<h2>Usage</h2>
+<p>Read a token in CSS with <code>var()</code>, optionally with a fallback.</p>
+
+<div class="bui-docs-code bui-docs-code--solo" dir="ltr">
+    <button type="button" class="bui-docs-btn bui-docs-copy" data-docs-copy>Copy</button>
+    <pre tabindex="0" dir="ltr" aria-label="Using tokens in CSS"><code>.my-card {
+    padding: var(--bui-space-4);
+    border: var(--bui-border-width) solid var(--bui-color-border);
+    border-radius: var(--bui-radius-md);
+    box-shadow: var(--bui-shadow-sm);
+    transition: box-shadow var(--bui-transition-duration-base) var(--bui-transition-timing-standard);
+}</code></pre>
+</div>
+
+<h2>Customization</h2>
+<p>Override tokens after <code>baset-ui.css</code>. On <code>:root</code> for the whole site, on a selector for a region, or inline for one element.</p>
+
+<section class="bui-docs-example" aria-labelledby="ex-10">
+    <h3 id="ex-10">Override on one element</h3>
+    
+    <div class="bui-docs-preview">
+<div style="--bui-radius-md: 1.5rem; --bui-border-width: 2px; padding: var(--bui-space-3); border: var(--bui-border-width) solid var(--bui-color-border-strong); border-radius: var(--bui-radius-md)">
+    Rounder corners and a thicker border, only here.
+</div>
+    </div>
+    <div class="bui-docs-code" dir="ltr">
+        <button type="button" class="bui-docs-btn bui-docs-copy" data-docs-copy>Copy</button>
+        <pre tabindex="0" dir="ltr"><code>&lt;div style="--bui-radius-md: 1.5rem; --bui-border-width: 2px; padding: var(--bui-space-3); border: var(--bui-border-width) solid var(--bui-color-border-strong); border-radius: var(--bui-radius-md)"&gt;
+    Rounder corners and a thicker border, only here.
+&lt;/div&gt;</code></pre>
+    </div>
+</section>
+<h3>Light and Dark values</h3>
+<p>Color and shadow tokens are declared per mode. Light values apply by default (and with <code>data-bui-mode="light"</code>), Dark values with <code>data-bui-mode="dark"</code>, on <code>&lt;html&gt;</code> or on any container. All other tokens are the same in both modes. To override a mode dependent token for Dark mode only, use <code>:root[data-bui-mode="dark"]</code> after the library file.</p>
+<div class="bui-docs-note" role="note"><p>The Value column below is read live from the page, so it shows the value in the current mode.</p></div>
+
+<h2>Reference</h2>
+<h3>Typography</h3>
+<div class="bui-docs-table-wrap" role="region" aria-label="Typography" tabindex="0">
+    <table class="bui-docs-table">
+        <thead><tr><th scope="col">Token</th><th scope="col">Value (live)</th><th scope="col">Description</th></tr></thead>
+        <tbody>
+            <tr><th scope="row"><code>--bui-font-family</code></th><td><code data-docs-css-var="--bui-font-family"></code></td><td>Font stack</td></tr>
+            <tr><th scope="row"><code>--bui-font-family-mono</code></th><td><code data-docs-css-var="--bui-font-family-mono"></code></td><td>Font stack</td></tr>
+            <tr><th scope="row"><code>--bui-font-size-xs</code></th><td><code data-docs-css-var="--bui-font-size-xs">0.75rem</code></td><td>Font size</td></tr>
+            <tr><th scope="row"><code>--bui-font-size-sm</code></th><td><code data-docs-css-var="--bui-font-size-sm">0.875rem</code></td><td>Font size</td></tr>
+            <tr><th scope="row"><code>--bui-font-size-base</code></th><td><code data-docs-css-var="--bui-font-size-base">1rem</code></td><td>Font size</td></tr>
+            <tr><th scope="row"><code>--bui-font-size-lg</code></th><td><code data-docs-css-var="--bui-font-size-lg">1.125rem</code></td><td>Font size</td></tr>
+            <tr><th scope="row"><code>--bui-font-size-xl</code></th><td><code data-docs-css-var="--bui-font-size-xl">1.25rem</code></td><td>Font size</td></tr>
+            <tr><th scope="row"><code>--bui-font-size-2xl</code></th><td><code data-docs-css-var="--bui-font-size-2xl">1.5rem</code></td><td>Font size</td></tr>
+            <tr><th scope="row"><code>--bui-font-size-3xl</code></th><td><code data-docs-css-var="--bui-font-size-3xl">1.875rem</code></td><td>Font size</td></tr>
+            <tr><th scope="row"><code>--bui-font-size-4xl</code></th><td><code data-docs-css-var="--bui-font-size-4xl">2.25rem</code></td><td>Font size</td></tr>
+            <tr><th scope="row"><code>--bui-font-weight-normal</code></th><td><code data-docs-css-var="--bui-font-weight-normal">400</code></td><td>Font weight</td></tr>
+            <tr><th scope="row"><code>--bui-font-weight-medium</code></th><td><code data-docs-css-var="--bui-font-weight-medium">500</code></td><td>Font weight</td></tr>
+            <tr><th scope="row"><code>--bui-font-weight-semibold</code></th><td><code data-docs-css-var="--bui-font-weight-semibold">600</code></td><td>Font weight</td></tr>
+            <tr><th scope="row"><code>--bui-font-weight-bold</code></th><td><code data-docs-css-var="--bui-font-weight-bold">700</code></td><td>Font weight</td></tr>
+            <tr><th scope="row"><code>--bui-line-height-tight</code></th><td><code data-docs-css-var="--bui-line-height-tight">1.25</code></td><td>Line height</td></tr>
+            <tr><th scope="row"><code>--bui-line-height-snug</code></th><td><code data-docs-css-var="--bui-line-height-snug">1.4</code></td><td>Line height</td></tr>
+            <tr><th scope="row"><code>--bui-line-height-base</code></th><td><code data-docs-css-var="--bui-line-height-base">1.6</code></td><td>Line height</td></tr>
+            <tr><th scope="row"><code>--bui-line-height-relaxed</code></th><td><code data-docs-css-var="--bui-line-height-relaxed">1.75</code></td><td>Line height</td></tr>
+            <tr><th scope="row"><code>--bui-letter-spacing-tight</code></th><td><code data-docs-css-var="--bui-letter-spacing-tight">-0.01em</code></td><td>Letter spacing</td></tr>
+            <tr><th scope="row"><code>--bui-letter-spacing-normal</code></th><td><code data-docs-css-var="--bui-letter-spacing-normal">0</code></td><td>Letter spacing</td></tr>
+            <tr><th scope="row"><code>--bui-letter-spacing-wide</code></th><td><code data-docs-css-var="--bui-letter-spacing-wide">0.025em</code></td><td>Letter spacing</td></tr>
+            <tr><th scope="row"><code>--bui-letter-spacing-wider</code></th><td><code data-docs-css-var="--bui-letter-spacing-wider">0.05em</code></td><td>Letter spacing</td></tr>
+            <tr><th scope="row"><code>--bui-heading-1-size</code></th><td><code data-docs-css-var="--bui-heading-1-size">2.25rem</code></td><td>Size of h1</td></tr>
+            <tr><th scope="row"><code>--bui-heading-2-size</code></th><td><code data-docs-css-var="--bui-heading-2-size">1.875rem</code></td><td>Size of h2</td></tr>
+            <tr><th scope="row"><code>--bui-heading-3-size</code></th><td><code data-docs-css-var="--bui-heading-3-size">1.5rem</code></td><td>Size of h3</td></tr>
+            <tr><th scope="row"><code>--bui-heading-4-size</code></th><td><code data-docs-css-var="--bui-heading-4-size">1.25rem</code></td><td>Size of h4</td></tr>
+            <tr><th scope="row"><code>--bui-heading-5-size</code></th><td><code data-docs-css-var="--bui-heading-5-size">1.125rem</code></td><td>Size of h5</td></tr>
+            <tr><th scope="row"><code>--bui-heading-6-size</code></th><td><code data-docs-css-var="--bui-heading-6-size">1rem</code></td><td>Size of h6</td></tr>
+            <tr><th scope="row"><code>--bui-heading-font-weight</code></th><td><code data-docs-css-var="--bui-heading-font-weight">600</code></td><td>Weight of all headings</td></tr>
+            <tr><th scope="row"><code>--bui-heading-line-height</code></th><td><code data-docs-css-var="--bui-heading-line-height">1.25</code></td><td>Line height of all headings</td></tr>
+            <tr><th scope="row"><code>--bui-heading-letter-spacing</code></th><td><code data-docs-css-var="--bui-heading-letter-spacing">0</code></td><td>Letter spacing of all headings</td></tr>
+        </tbody>
+    </table>
+</div>
+<h3>Spacing</h3>
+<div class="bui-docs-table-wrap" role="region" aria-label="Spacing" tabindex="0">
+    <table class="bui-docs-table">
+        <thead><tr><th scope="col">Token</th><th scope="col">Value (live)</th><th scope="col">Description</th></tr></thead>
+        <tbody>
+            <tr><th scope="row"><code>--bui-space-0</code></th><td><code data-docs-css-var="--bui-space-0">0</code></td><td>Spacing step 0</td></tr>
+            <tr><th scope="row"><code>--bui-space-1</code></th><td><code data-docs-css-var="--bui-space-1">0.25rem</code></td><td>Spacing step 1</td></tr>
+            <tr><th scope="row"><code>--bui-space-2</code></th><td><code data-docs-css-var="--bui-space-2">0.5rem</code></td><td>Spacing step 2</td></tr>
+            <tr><th scope="row"><code>--bui-space-3</code></th><td><code data-docs-css-var="--bui-space-3">1rem</code></td><td>Spacing step 3</td></tr>
+            <tr><th scope="row"><code>--bui-space-4</code></th><td><code data-docs-css-var="--bui-space-4">1.5rem</code></td><td>Spacing step 4</td></tr>
+            <tr><th scope="row"><code>--bui-space-5</code></th><td><code data-docs-css-var="--bui-space-5">2rem</code></td><td>Spacing step 5</td></tr>
+            <tr><th scope="row"><code>--bui-space-6</code></th><td><code data-docs-css-var="--bui-space-6">3rem</code></td><td>Spacing step 6</td></tr>
+            <tr><th scope="row"><code>--bui-space-8</code></th><td><code data-docs-css-var="--bui-space-8">4rem</code></td><td>Spacing step 8</td></tr>
+            <tr><th scope="row"><code>--bui-space-10</code></th><td><code data-docs-css-var="--bui-space-10">5rem</code></td><td>Spacing step 10</td></tr>
+            <tr><th scope="row"><code>--bui-space-12</code></th><td><code data-docs-css-var="--bui-space-12">6rem</code></td><td>Spacing step 12</td></tr>
+        </tbody>
+    </table>
+</div>
+<h3>Border radius</h3>
+<div class="bui-docs-table-wrap" role="region" aria-label="Border radius" tabindex="0">
+    <table class="bui-docs-table">
+        <thead><tr><th scope="col">Token</th><th scope="col">Value (live)</th><th scope="col">Description</th></tr></thead>
+        <tbody>
+            <tr><th scope="row"><code>--bui-radius-none</code></th><td><code data-docs-css-var="--bui-radius-none">0</code></td><td>Corner radius none</td></tr>
+            <tr><th scope="row"><code>--bui-radius-xs</code></th><td><code data-docs-css-var="--bui-radius-xs">0.125rem</code></td><td>Corner radius xs</td></tr>
+            <tr><th scope="row"><code>--bui-radius-sm</code></th><td><code data-docs-css-var="--bui-radius-sm">0.25rem</code></td><td>Corner radius sm</td></tr>
+            <tr><th scope="row"><code>--bui-radius-md</code></th><td><code data-docs-css-var="--bui-radius-md">0.5rem</code></td><td>Corner radius md</td></tr>
+            <tr><th scope="row"><code>--bui-radius-lg</code></th><td><code data-docs-css-var="--bui-radius-lg">0.75rem</code></td><td>Corner radius lg</td></tr>
+            <tr><th scope="row"><code>--bui-radius-xl</code></th><td><code data-docs-css-var="--bui-radius-xl">1rem</code></td><td>Corner radius xl</td></tr>
+            <tr><th scope="row"><code>--bui-radius-2xl</code></th><td><code data-docs-css-var="--bui-radius-2xl">1.5rem</code></td><td>Corner radius 2xl</td></tr>
+            <tr><th scope="row"><code>--bui-radius-full</code></th><td><code data-docs-css-var="--bui-radius-full">9999px</code></td><td>Corner radius full</td></tr>
+        </tbody>
+    </table>
+</div>
+<h3>Border width</h3>
+<div class="bui-docs-table-wrap" role="region" aria-label="Border width" tabindex="0">
+    <table class="bui-docs-table">
+        <thead><tr><th scope="col">Token</th><th scope="col">Value (live)</th><th scope="col">Description</th></tr></thead>
+        <tbody>
+            <tr><th scope="row"><code>--bui-border-width-thin</code></th><td><code data-docs-css-var="--bui-border-width-thin">1px</code></td><td>Border width thin</td></tr>
+            <tr><th scope="row"><code>--bui-border-width-medium</code></th><td><code data-docs-css-var="--bui-border-width-medium">2px</code></td><td>Border width medium</td></tr>
+            <tr><th scope="row"><code>--bui-border-width-thick</code></th><td><code data-docs-css-var="--bui-border-width-thick">4px</code></td><td>Border width thick</td></tr>
+            <tr><th scope="row"><code>--bui-border-width</code></th><td><code data-docs-css-var="--bui-border-width">1px</code></td><td>Default border width</td></tr>
+        </tbody>
+    </table>
+</div>
+<h3>Shadows</h3>
+<div class="bui-docs-table-wrap" role="region" aria-label="Shadows" tabindex="0">
+    <table class="bui-docs-table">
+        <thead><tr><th scope="col">Token</th><th scope="col">Value (live)</th><th scope="col">Description</th></tr></thead>
+        <tbody>
+            <tr><th scope="row"><code>--bui-shadow-xs</code></th><td><code data-docs-css-var="--bui-shadow-xs">0 1px 1px rgb(16 24 40 / 0.06)</code></td><td>Elevation xs (different value in Dark mode)</td></tr>
+            <tr><th scope="row"><code>--bui-shadow-sm</code></th><td><code data-docs-css-var="--bui-shadow-sm">0 1px 2px rgb(16 24 40 / 0.08)</code></td><td>Elevation sm (different value in Dark mode)</td></tr>
+            <tr><th scope="row"><code>--bui-shadow-md</code></th><td><code data-docs-css-var="--bui-shadow-md">0 4px 8px -2px rgb(16 24 40 / 0.1), 0 2px 4px -2px rgb(16 24 40 / 0.06)</code></td><td>Elevation md (different value in Dark mode)</td></tr>
+            <tr><th scope="row"><code>--bui-shadow-lg</code></th><td><code data-docs-css-var="--bui-shadow-lg">0 12px 16px -4px rgb(16 24 40 / 0.1), 0 4px 6px -2px rgb(16 24 40 / 0.05)</code></td><td>Elevation lg (different value in Dark mode)</td></tr>
+            <tr><th scope="row"><code>--bui-shadow-xl</code></th><td><code data-docs-css-var="--bui-shadow-xl">0 24px 48px -12px rgb(16 24 40 / 0.18)</code></td><td>Elevation xl (different value in Dark mode)</td></tr>
+        </tbody>
+    </table>
+</div>
+<h3>Z-index</h3>
+<div class="bui-docs-table-wrap" role="region" aria-label="Z-index" tabindex="0">
+    <table class="bui-docs-table">
+        <thead><tr><th scope="col">Token</th><th scope="col">Value (live)</th><th scope="col">Description</th></tr></thead>
+        <tbody>
+            <tr><th scope="row"><code>--bui-z-base</code></th><td><code data-docs-css-var="--bui-z-base">0</code></td><td>Stacking layer base</td></tr>
+            <tr><th scope="row"><code>--bui-z-dropdown</code></th><td><code data-docs-css-var="--bui-z-dropdown">1000</code></td><td>Stacking layer dropdown</td></tr>
+            <tr><th scope="row"><code>--bui-z-sticky</code></th><td><code data-docs-css-var="--bui-z-sticky">1020</code></td><td>Stacking layer sticky</td></tr>
+            <tr><th scope="row"><code>--bui-z-fixed</code></th><td><code data-docs-css-var="--bui-z-fixed">1030</code></td><td>Stacking layer fixed</td></tr>
+            <tr><th scope="row"><code>--bui-z-backdrop</code></th><td><code data-docs-css-var="--bui-z-backdrop">1040</code></td><td>Stacking layer backdrop</td></tr>
+            <tr><th scope="row"><code>--bui-z-modal</code></th><td><code data-docs-css-var="--bui-z-modal">1050</code></td><td>Stacking layer modal</td></tr>
+            <tr><th scope="row"><code>--bui-z-popover</code></th><td><code data-docs-css-var="--bui-z-popover">1060</code></td><td>Stacking layer popover</td></tr>
+            <tr><th scope="row"><code>--bui-z-tooltip</code></th><td><code data-docs-css-var="--bui-z-tooltip">1070</code></td><td>Stacking layer tooltip</td></tr>
+            <tr><th scope="row"><code>--bui-z-toast</code></th><td><code data-docs-css-var="--bui-z-toast">1080</code></td><td>Stacking layer toast</td></tr>
+        </tbody>
+    </table>
+</div>
+<h3>Transitions</h3>
+<div class="bui-docs-table-wrap" role="region" aria-label="Transitions" tabindex="0">
+    <table class="bui-docs-table">
+        <thead><tr><th scope="col">Token</th><th scope="col">Value (live)</th><th scope="col">Description</th></tr></thead>
+        <tbody>
+            <tr><th scope="row"><code>--bui-transition-duration-fast</code></th><td><code data-docs-css-var="--bui-transition-duration-fast">120ms</code></td><td>Duration fast (near zero when the user prefers reduced motion)</td></tr>
+            <tr><th scope="row"><code>--bui-transition-duration-base</code></th><td><code data-docs-css-var="--bui-transition-duration-base">200ms</code></td><td>Duration base (near zero when the user prefers reduced motion)</td></tr>
+            <tr><th scope="row"><code>--bui-transition-duration-slow</code></th><td><code data-docs-css-var="--bui-transition-duration-slow">320ms</code></td><td>Duration slow (near zero when the user prefers reduced motion)</td></tr>
+            <tr><th scope="row"><code>--bui-transition-timing-standard</code></th><td><code data-docs-css-var="--bui-transition-timing-standard">cubic-bezier(0.2, 0, 0, 1)</code></td><td>Easing standard</td></tr>
+            <tr><th scope="row"><code>--bui-transition-timing-in</code></th><td><code data-docs-css-var="--bui-transition-timing-in">cubic-bezier(0.4, 0, 1, 1)</code></td><td>Easing in</td></tr>
+            <tr><th scope="row"><code>--bui-transition-timing-out</code></th><td><code data-docs-css-var="--bui-transition-timing-out">cubic-bezier(0, 0, 0.2, 1)</code></td><td>Easing out</td></tr>
+            <tr><th scope="row"><code>--bui-transition-timing-in-out</code></th><td><code data-docs-css-var="--bui-transition-timing-in-out">cubic-bezier(0.4, 0, 0.2, 1)</code></td><td>Easing in-out</td></tr>
+        </tbody>
+    </table>
+</div>
+<h3>Breakpoints</h3>
+<div class="bui-docs-table-wrap" role="region" aria-label="Breakpoints" tabindex="0">
+    <table class="bui-docs-table">
+        <thead><tr><th scope="col">Token</th><th scope="col">Value (live)</th><th scope="col">Description</th></tr></thead>
+        <tbody>
+            <tr><th scope="row"><code>--bui-bp-xs</code></th><td><code data-docs-css-var="--bui-bp-xs">480px</code></td><td>Reference value; media queries use the pixel value directly</td></tr>
+            <tr><th scope="row"><code>--bui-bp-sm</code></th><td><code data-docs-css-var="--bui-bp-sm">576px</code></td><td>Reference value; media queries use the pixel value directly</td></tr>
+            <tr><th scope="row"><code>--bui-bp-md</code></th><td><code data-docs-css-var="--bui-bp-md">768px</code></td><td>Reference value; media queries use the pixel value directly</td></tr>
+            <tr><th scope="row"><code>--bui-bp-lg</code></th><td><code data-docs-css-var="--bui-bp-lg">992px</code></td><td>Reference value; media queries use the pixel value directly</td></tr>
+            <tr><th scope="row"><code>--bui-bp-xl</code></th><td><code data-docs-css-var="--bui-bp-xl">1200px</code></td><td>Reference value; media queries use the pixel value directly</td></tr>
+            <tr><th scope="row"><code>--bui-bp-xxl</code></th><td><code data-docs-css-var="--bui-bp-xxl">1600px</code></td><td>Reference value; media queries use the pixel value directly</td></tr>
+            <tr><th scope="row"><code>--bui-bp-xxxl</code></th><td><code data-docs-css-var="--bui-bp-xxxl">1920px</code></td><td>Reference value; media queries use the pixel value directly</td></tr>
+        </tbody>
+    </table>
+</div>
+<h3>Container and Grid</h3>
+<div class="bui-docs-table-wrap" role="region" aria-label="Container and Grid" tabindex="0">
+    <table class="bui-docs-table">
+        <thead><tr><th scope="col">Token</th><th scope="col">Value (live)</th><th scope="col">Description</th></tr></thead>
+        <tbody>
+            <tr><th scope="row"><code>--bui-container-xs</code></th><td><code data-docs-css-var="--bui-container-xs">28rem</code></td><td>Container max width from XS</td></tr>
+            <tr><th scope="row"><code>--bui-container-sm</code></th><td><code data-docs-css-var="--bui-container-sm">33.75rem</code></td><td>Container max width from SM</td></tr>
+            <tr><th scope="row"><code>--bui-container-md</code></th><td><code data-docs-css-var="--bui-container-md">45rem</code></td><td>Container max width from MD</td></tr>
+            <tr><th scope="row"><code>--bui-container-lg</code></th><td><code data-docs-css-var="--bui-container-lg">60rem</code></td><td>Container max width from LG</td></tr>
+            <tr><th scope="row"><code>--bui-container-xl</code></th><td><code data-docs-css-var="--bui-container-xl">71.25rem</code></td><td>Container max width from XL</td></tr>
+            <tr><th scope="row"><code>--bui-container-xxl</code></th><td><code data-docs-css-var="--bui-container-xxl">90rem</code></td><td>Container max width from XXL</td></tr>
+            <tr><th scope="row"><code>--bui-container-xxxl</code></th><td><code data-docs-css-var="--bui-container-xxxl">105rem</code></td><td>Container max width from XXXL</td></tr>
+            <tr><th scope="row"><code>--bui-container-padding</code></th><td><code data-docs-css-var="--bui-container-padding">1rem</code></td><td>Container inline padding</td></tr>
+            <tr><th scope="row"><code>--bui-grid-gap</code></th><td><code data-docs-css-var="--bui-grid-gap">1.5rem</code></td><td>Default grid gap</td></tr>
+            <tr><th scope="row"><code>--bui-grid-min</code></th><td><code data-docs-css-var="--bui-grid-min">12rem</code></td><td>Minimum column width for auto-fit and auto-fill grids</td></tr>
+        </tbody>
+    </table>
+</div>
+<h3>Focus ring</h3>
+<div class="bui-docs-table-wrap" role="region" aria-label="Focus ring" tabindex="0">
+    <table class="bui-docs-table">
+        <thead><tr><th scope="col">Token</th><th scope="col">Value (live)</th><th scope="col">Description</th></tr></thead>
+        <tbody>
+            <tr><th scope="row"><code>--bui-focus-ring-width</code></th><td><code data-docs-css-var="--bui-focus-ring-width">2px</code></td><td>Outline width of :focus-visible</td></tr>
+            <tr><th scope="row"><code>--bui-focus-ring-offset</code></th><td><code data-docs-css-var="--bui-focus-ring-offset">2px</code></td><td>Outline offset of :focus-visible</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<h2>Responsive behavior</h2>
+<p>Tokens are constant across viewport widths. Breakpoint tokens are values for reference; CSS variables cannot be used inside media queries.</p>
+
+<h2>RTL and LTR</h2>
+<p>No token encodes a direction. Use logical properties (<code>margin-inline-start</code>, <code>padding-inline</code>, <code>inset-inline-end</code>) with the spacing tokens so layouts flip with <code>dir</code>.</p>
+
+                <div class="bui-docs-sr" id="bui-docs-status" role="status" aria-live="polite"></div>
+            </article>
+        </main>
+    </div>
+
+    <footer class="bui-docs-footer">
+        <span>&copy; 2026 Baset-UI</span>
+        <span>Version <span data-docs-version>0.0.0-foundation</span></span>
+        <a href="https://github.com/AbdulbasetRS/Baset-UI" rel="noopener" target="_blank">GitHub</a>
+    </footer>
+
+    <script src="../../assets/js/baset-ui.js"></script>
+    <script src="../../documentation/assets/js/nav.js"></script>
+    <script src="../../documentation/assets/js/docs.js"></script>
+</body>
+</html>

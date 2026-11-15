@@ -6,7 +6,8 @@
  */
 :root { --bui-docs-navbar-h: 3.5rem; --bui-docs-sidebar-w: 16rem; }
 
-html, body { overflow-x: hidden; }
+/* clip (not hidden): hidden would turn body into a scroll container and break the sticky navbar */
+html, body { overflow-x: clip; }
 body { min-height: 100vh; display: flex; flex-direction: column; }
 
 .bui-docs-skip {
@@ -57,7 +58,7 @@ body { min-height: 100vh; display: flex; flex-direction: column; }
 }
 [dir="rtl"] .bui-docs-sidebar { transform: translateX(100%); }
 .bui-docs-sidebar.is-open { transform: none; visibility: visible; }
-.bui-docs-backdrop { position: fixed; inset: var(--bui-docs-navbar-h) 0 0 0; z-index: 110; background: rgba(0, 0, 0, 0.45); }
+.bui-docs-backdrop { position: fixed; inset: var(--bui-docs-navbar-h) 0 0 0; z-index: 110; background: var(--bui-color-overlay); }
 .bui-docs-backdrop[hidden] { display: none; }
 
 .bui-docs-nav-section + .bui-docs-nav-section { margin-block-start: var(--bui-space-1); }
@@ -103,7 +104,97 @@ a.bui-docs-nav-link:hover { background: var(--bui-color-surface); }
     }
     .bui-docs-main { padding: var(--bui-space-5); }
 }
-@media (max-width: 575.98px) {
-    .bui-docs-navbar__actions .bui-docs-btn:last-child { display: none; }
+/* Mobile First: the GitHub link is hidden below SM (576px) to save navbar space */
+.bui-docs-navbar__actions .bui-docs-btn:last-child { display: none; }
+@media (min-width: 576px) {
+    .bui-docs-navbar__actions .bui-docs-btn:last-child { display: inline-block; }
 }
 @media (prefers-reduced-motion: reduce) { .bui-docs-sidebar { transition: none; } }
+
+/* ==========================================================================
+   Documentation page building blocks (Task 02). Docs shell only, not library API.
+   ========================================================================== */
+.bui-docs-sr {
+    position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden;
+    clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+.bui-docs-article { max-width: 62rem; }
+.bui-docs-article > h1 { margin-block-end: var(--bui-space-2); }
+.bui-docs-lead { font-size: var(--bui-font-size-lg); color: var(--bui-color-text-muted); }
+.bui-docs-article h2 { margin-block-start: var(--bui-space-6); padding-block-start: var(--bui-space-3); border-block-start: var(--bui-border-width) solid var(--bui-color-border); }
+.bui-docs-article h3 { margin-block-start: var(--bui-space-5); font-size: var(--bui-font-size-xl); }
+.bui-docs-article :not(pre) > code, .bui-docs-article kbd {
+    padding: 0.1em 0.35em; font-size: 0.875em; background: var(--bui-color-surface);
+    border: var(--bui-border-width) solid var(--bui-color-border); border-radius: var(--bui-radius-sm);
+}
+.bui-docs-article td code, .bui-docs-article th code { overflow-wrap: anywhere; }
+
+.bui-docs-note {
+    margin-block: var(--bui-space-3); padding: var(--bui-space-2) var(--bui-space-3);
+    border-inline-start: var(--bui-border-width-thick) solid var(--bui-color-info);
+    background: var(--bui-color-info-subtle); color: var(--bui-color-info-on-subtle);
+    border-start-end-radius: var(--bui-radius-md); border-end-end-radius: var(--bui-radius-md);
+}
+.bui-docs-note > :last-child { margin-block-end: 0; }
+.bui-docs-note a { color: inherit; }
+
+/* Live example: preview + copyable code */
+.bui-docs-example { margin-block: var(--bui-space-3) var(--bui-space-5); }
+.bui-docs-preview {
+    padding: var(--bui-space-3); overflow-x: auto; color: var(--bui-color-text); background: var(--bui-color-bg);
+    border: var(--bui-border-width) solid var(--bui-color-border);
+    border-start-start-radius: var(--bui-radius-md); border-start-end-radius: var(--bui-radius-md);
+}
+.bui-docs-preview[data-docs-pad="none"] { padding: 0; }
+.bui-docs-preview > :last-child { margin-block-end: 0; }
+.bui-docs-code { position: relative; }
+.bui-docs-code pre {
+    margin: 0; padding: var(--bui-space-3); padding-inline-end: 5rem; font-size: 0.8125rem; line-height: 1.5;
+    color: var(--bui-color-text); background: var(--bui-color-surface);
+    border: var(--bui-border-width) solid var(--bui-color-border); border-block-start: 0;
+    border-end-start-radius: var(--bui-radius-md); border-end-end-radius: var(--bui-radius-md);
+}
+.bui-docs-code .bui-docs-copy { position: absolute; inset-block-start: 0.5rem; inset-inline-end: 0.5rem; padding: 0.2rem 0.6rem; font-size: 0.75rem; background: var(--bui-color-bg); }
+.bui-docs-code--solo pre { border-block-start: var(--bui-border-width) solid var(--bui-color-border); border-start-start-radius: var(--bui-radius-md); border-start-end-radius: var(--bui-radius-md); }
+
+/* Demo boxes: children of layout demos are styled from here so the copyable code stays library-only */
+.bui-docs-preview :is(.bui-grid, .bui-flex, .bui-inline-flex) > *,
+.bui-docs-preview .bui-docs-box {
+    padding: var(--bui-space-2) var(--bui-space-3); color: var(--bui-color-primary-on-subtle);
+    background: var(--bui-color-primary-subtle); border: var(--bui-border-width) solid var(--bui-color-primary-subtle-border);
+    border-radius: var(--bui-radius-sm);
+}
+.bui-docs-preview :is(.bui-grid, .bui-flex) > :is(.bui-grid, .bui-flex) { background: var(--bui-color-bg); }
+.bui-docs-preview :is(.bui-container, .bui-container-fluid, [class*="bui-container-"]) {
+    color: var(--bui-color-text); background: var(--bui-color-primary-subtle);
+    border-inline: var(--bui-border-width) dashed var(--bui-color-primary);
+    padding-block: var(--bui-space-2);
+}
+.bui-docs-preview .bui-docs-measure-row { display: flex; flex-wrap: wrap; gap: var(--bui-space-1) var(--bui-space-3); font-size: var(--bui-font-size-sm); }
+
+/* Tables */
+.bui-docs-table-wrap { margin-block: var(--bui-space-3); overflow-x: auto; border: var(--bui-border-width) solid var(--bui-color-border); border-radius: var(--bui-radius-md); }
+.bui-docs-table { width: 100%; margin: 0; font-size: var(--bui-font-size-sm); }
+.bui-docs-table th, .bui-docs-table td { padding: var(--bui-space-2) var(--bui-space-3); vertical-align: top; border-block-end: var(--bui-border-width) solid var(--bui-color-border); }
+.bui-docs-table thead th { background: var(--bui-color-surface); white-space: nowrap; }
+.bui-docs-table tbody tr:last-child > * { border-block-end: 0; }
+.bui-docs-table td:first-child code { white-space: nowrap; }
+
+/* Swatches */
+.bui-docs-swatch { display: inline-block; width: 1.25rem; height: 1.25rem; vertical-align: middle; border: var(--bui-border-width) solid var(--bui-color-border-strong); border-radius: var(--bui-radius-sm); }
+.bui-docs-scale { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--bui-space-1); margin: 0 0 var(--bui-space-4); padding: 0; list-style: none; }
+.bui-docs-scale li { display: flex; flex-direction: column; gap: 0.15rem; padding: var(--bui-space-2); font-size: var(--bui-font-size-xs); border: var(--bui-border-width) solid var(--bui-color-border); border-radius: var(--bui-radius-sm); }
+.bui-docs-scale .bui-docs-swatch { width: 100%; height: 2rem; }
+.bui-docs-scale code { font-size: 0.6875rem; overflow-wrap: anywhere; }
+.bui-docs-mode-panel { margin-block: var(--bui-space-3); padding: var(--bui-space-3); border: var(--bui-border-width) solid var(--bui-color-border); border-radius: var(--bui-radius-md); }
+.bui-docs-mode-panel > h3 { margin-block-start: 0; }
+
+/* Spacing / radius / shadow visual samples */
+.bui-docs-bar { display: block; height: 1rem; background: var(--bui-color-primary); border-radius: var(--bui-radius-sm); }
+.bui-docs-sample { display: inline-flex; align-items: center; justify-content: center; inline-size: 4rem; block-size: 4rem; font-size: var(--bui-font-size-xs); background: var(--bui-color-surface-elevated); border: var(--bui-border-width) solid var(--bui-color-border); }
+
+/* Live indicator (breakpoints page) */
+.bui-docs-live { display: inline-block; padding: 0.15rem 0.6rem; font-weight: var(--bui-font-weight-semibold); color: var(--bui-color-primary-contrast); background: var(--bui-color-primary); border-radius: var(--bui-radius-full); }
+
+@media (min-width: 576px) { .bui-docs-scale { grid-template-columns: repeat(5, minmax(0, 1fr)); } }
+@media (min-width: 768px) { .bui-docs-scale { grid-template-columns: repeat(10, minmax(0, 1fr)); } }

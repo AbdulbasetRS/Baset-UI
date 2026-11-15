@@ -17,7 +17,7 @@
 ## الأعمدة
 `Type`: Core | Extension. `JS`: Yes | No. `Docs`: مسار الصفحة أو `-`.
 
-> **الوضع الحالي (Task 01): كل المكونات Planned. لا يوجد أي مكون منفذ.** الروابط في Sidebar Placeholders فقط.
+> **الوضع الحالي (Task 02): كل المكونات Planned. لا يوجد أي مكون منفذ.** المنفذ حالياً أنظمة الأساس فقط (جدول Systems). روابط المكونات في Sidebar Placeholders.
 
 ### Components
 | Component | Status | Type | JS | Docs | Updated | Notes |
@@ -62,7 +62,13 @@
 ### Systems (مستقبلية)
 | System | Status | Notes |
 |---|---|---|
-| Layout (Container/Grid/Flex/Spacing) | Planned | |
+| Design Tokens (Colors, Typography, Spacing, Radius, Border, Shadow, Z-Index, Transition, Container) | Completed | Task 02، 2026-11-15. Light/Dark عبر `data-bui-mode` (على `html` أو أي حاوية). لم يُختبر بقارئ شاشة |
+| Base (Reset, Typography, Links, Images, Forms Reset, Focus, Selection, Reduced Motion) | Completed | Task 02، 2026-11-15 |
+| Breakpoints | Completed | Task 02. قيم مرجعية `--bui-bp-*` + Media Queries في القسم 7 من `baset-ui.css` |
+| Container | Completed | Task 02. `bui-container`, `bui-container-fluid`, `bui-container-{bp}` |
+| Grid | Completed | Task 02. التسمية: `bui-{property}-{breakpoint}-{value}` |
+| Flexbox | Completed | Task 02. `bui-items-*`, `bui-justify-*`, `bui-content-*`, `bui-gap-*` مشتركة مع Grid. لا تُعاد تعريفها في Task 03 |
+| Spacing | Completed | Task 02: Tokens + `bui-gap-*` فقط. كلاسات Margin/Padding ضمن Task 03 |
 | Utilities | Planned | |
 | Theme Manager | Planned | [RTL_LTR_AND_THEMES.md](RTL_LTR_AND_THEMES.md) |
 | Locale Manager | Planned | [INTERNATIONALIZATION.md](INTERNATIONALIZATION.md) |
@@ -73,3 +79,5 @@
 | Item | Status | Notes |
 |---|---|---|
 | Navbar / Sidebar / Footer (`index.html`) | Completed | Task 01. اختُبر وفق قسم الاختبار في تقرير Task 01 |
+| Documentation pages: Customization (3) + Layout (5) | Completed | Task 02. `documentation/customization/` و`documentation/layout/`. لا Playground (Task 09) ولا الأقسام الثمانية الخاصة بالمكونات، لذلك لا تُسجل كـ Documented |
+| Shell: روابط Sidebar من الصفحات الفرعية (`data-docs-root`)، نسخ الكود، قراءات حية | Completed | Task 02. إصلاح `overflow-x: hidden` الذي كان يعطل `sticky` للـ Navbar |
