@@ -5,6 +5,10 @@
 ## [Unreleased]
 
 ### Added
+- Syntax Highlighting لكل Code Blocks في صفحات التوثيق (ألوان VS Code Dark+):
+  - مكون موحد داخل `documentation/assets/js/docs.js` (`window.BUI_DOCS_CODE`: `detect`, `tokenize`, `highlight`, `enhance`) بـ Tokenizer خاص بدون أي مكتبة. اللغات: HTML (مع `<script>` و`<style>`)، CSS، JavaScript، JSON، PHP.
+  - ألوان Dark+ كـ Tokens في `docs.css` (`--bui-docs-syntax-*`، `bui-docs-tok-*`). خاصة بالموقع وليست جزءاً من المكتبة.
+  - اللغة تُكتشف تلقائياً، ويمكن فرضها بسمة `data-docs-lang` على `.bui-docs-code` أو `pre` أو `code` (`plain` تعطل التلوين).
 - شعار Baset-UI (`documentation/assets/images/brand/`) في موقع التوثيق وREADME:
   - Navbar: الـ Mark (نسختا light وdark) بدل نص الاسم.
   - Footer: الشعار الكامل (نسختا light وdark).
@@ -32,6 +36,10 @@
 - Shell التوثيق: الصفحات لم تكن تعرّف أيقونة (Favicon) فكان المتصفح يطلب `/favicon.ico` ويحصل على 404؛ أُضيفت الأيقونة من `docs.js`.
 
 ### Decisions
+- Syntax Highlighting: بلوكات الكود داكنة دائماً (Dark+) في Light وDark، بقرار المالك. الألوان على `:root` ولا تتبع `data-bui-mode`.
+- Syntax Highlighting: المكون داخل `docs.js` وليس ملفاً منفصلاً، لأن ملفاً جديداً يتطلب وسم `<script>` في كل صفحة. التلوين يعمل على الـ DOM الموجود بدون تعديل الصفحات، ولا يغير النص أبداً (`textContent` ثابت)، فيبقى زر Copy كما هو. إن اختلف نص التلوين عن الأصل لأي سبب يُترك البلوك بلا تلوين مع تحذير في Console.
+- Syntax Highlighting: تطبيق المكون على Playground وCode Generator مؤجل لحين وجودهما (غير موجودين حالياً)، والواجهة العامة `BUI_DOCS_CODE.highlight/enhance` جاهزة لهما.
+- Syntax Highlighting: الاستثناء من التباين: لون أقواس الوسوم `#808080` في Dark+ نسبته 4.22:1 على `#1e1e1e` (أقل من 4.5:1 لنص عادي). أُبقي كما في Dark+ لأن المهمة اشترطت الألوان الأصلية، وهو يتحكم فيه `--bui-docs-syntax-tagpunct`.
 - الشعار: يُحقن من `documentation/assets/js/docs.js` (Navbar وFooter وFavicon) بدل تكرار الوسوم في 9 صفحات HTML، ليبقى تغيير الشعار مستقبلاً في مكان واحد (نفس فكرة رسم الـ Sidebar من `nav.js`). نص "Baset-UI" الأصلي في الـ Navbar يُستبدل بالصورة (الاسم يبقى عبر `alt`)، وبدون JavaScript يظهر النص الأصلي.
 - الشعار: النسخة المعروضة تتبع `data-bui-mode` على `<html>` (زر Dark mode في الموقع) وليس إعداد نظام التشغيل، لتتسق مع باقي الموقع. في README (GitHub) يُستخدم `prefers-color-scheme` لأن GitHub لا يعرف زر الموقع.
 - الشعار: الـ Mark في الـ Navbar (كل العروض) والشعار الكامل في الـ Footer، لأن السطر الوصفي في الشعار الكامل لا يُقرأ في ارتفاع الـ Navbar. الأحجام عبر `--bui-docs-logo-mark-h` و`--bui-docs-logo-full-h` (خاصة بالموقع وليست Tokens للمكتبة).

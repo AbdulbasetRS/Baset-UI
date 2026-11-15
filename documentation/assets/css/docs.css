@@ -214,3 +214,58 @@ a.bui-docs-nav-link:hover { background: var(--bui-color-surface); }
 [data-bui-mode="dark"] .bui-docs-logo--dark { display: block; }
 
 .bui-docs-footer__brand { display: flex; flex: 0 0 100%; text-decoration: none; }
+
+/* ==========================================================================
+   Code blocks: VS Code Dark+ colors (docs shell only, NOT library tokens).
+   Always dark, in Light and Dark mode, so the tokens live on :root and do not
+   depend on data-bui-mode. Token classes are produced by the code block
+   component in docs.js (bui-docs-tok-*).
+   ========================================================================== */
+:root {
+    --bui-docs-syntax-bg: #1e1e1e;
+    --bui-docs-syntax-bg-raised: #252526;
+    --bui-docs-syntax-bg-hover: #2a2d2e;
+    --bui-docs-syntax-border: #3c3c3c;
+    --bui-docs-syntax-fg: #d4d4d4;
+    --bui-docs-syntax-selection: #264f78;
+    --bui-docs-syntax-focus: #75beff;
+    --bui-docs-syntax-comment: #6a9955;
+    --bui-docs-syntax-string: #ce9178;
+    --bui-docs-syntax-number: #b5cea8;
+    --bui-docs-syntax-keyword: #569cd6;
+    --bui-docs-syntax-control: #c586c0;
+    --bui-docs-syntax-function: #dcdcaa;
+    --bui-docs-syntax-variable: #9cdcfe;
+    --bui-docs-syntax-type: #4ec9b0;
+    --bui-docs-syntax-regexp: #d16969;
+    --bui-docs-syntax-tagpunct: #808080;
+    --bui-docs-syntax-selector: #d7ba7d;
+}
+
+.bui-docs-code pre {
+    color: var(--bui-docs-syntax-fg);
+    background: var(--bui-docs-syntax-bg);
+    border-color: var(--bui-docs-syntax-border);
+    tab-size: 4;
+}
+.bui-docs-code pre:focus-visible { outline-color: var(--bui-docs-syntax-focus); outline-offset: -2px; }
+.bui-docs-code ::selection { color: var(--bui-docs-syntax-fg); background: var(--bui-docs-syntax-selection); }
+.bui-docs-code .bui-docs-copy {
+    color: var(--bui-docs-syntax-fg);
+    background: var(--bui-docs-syntax-bg-raised);
+    border-color: var(--bui-docs-syntax-border);
+}
+.bui-docs-code .bui-docs-copy:hover { background: var(--bui-docs-syntax-bg-hover); }
+.bui-docs-code .bui-docs-copy:focus-visible { outline-color: var(--bui-docs-syntax-focus); }
+
+.bui-docs-tok-comment { color: var(--bui-docs-syntax-comment); }
+.bui-docs-tok-string { color: var(--bui-docs-syntax-string); }
+.bui-docs-tok-number { color: var(--bui-docs-syntax-number); }
+.bui-docs-tok-keyword { color: var(--bui-docs-syntax-keyword); }
+.bui-docs-tok-control { color: var(--bui-docs-syntax-control); }
+.bui-docs-tok-function { color: var(--bui-docs-syntax-function); }
+.bui-docs-tok-variable { color: var(--bui-docs-syntax-variable); }
+.bui-docs-tok-type { color: var(--bui-docs-syntax-type); }
+.bui-docs-tok-regexp { color: var(--bui-docs-syntax-regexp); }
+.bui-docs-tok-tagpunct { color: var(--bui-docs-syntax-tagpunct); }
+.bui-docs-tok-selector { color: var(--bui-docs-syntax-selector); }
