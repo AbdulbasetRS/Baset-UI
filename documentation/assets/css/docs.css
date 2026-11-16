@@ -322,3 +322,21 @@ a.bui-docs-nav-link:hover { background: var(--bui-color-surface); }
     .bui-docs-footer__grid { grid-template-columns: minmax(0, 2fr) repeat(var(--bui-docs-footer-cols, 2), minmax(0, 1fr)); }
     .bui-docs-footer__brandcol { grid-column: auto; }
 }
+
+/* ==========================================================================
+   Utilities demos (Task 04). Docs shell only, not library API.
+   Boxes the elements of Display / Position / Overflow / Visibility demos so the copyable
+   code stays library-only. Elements that carry a border or radius utility are never boxed
+   (the :not() parts), so the border under test always comes from the utility classes.
+   ========================================================================== */
+.bui-docs-preview :is([class*="bui-d-"], [class*="bui-position-"], [class*="bui-overflow-"], [class*="bui-visibility-"], [class*="bui-z-"]):not([class*="bui-border"], [class*="bui-rounded"]),
+.bui-docs-preview :is(.bui-d-flex, .bui-d-inline-flex, .bui-d-grid, .bui-d-inline-grid) > :not([class*="bui-border"], [class*="bui-rounded"]) {
+    padding: var(--bui-space-2) var(--bui-space-3); color: var(--bui-color-primary-on-subtle);
+    background: var(--bui-color-primary-subtle);
+    border: var(--bui-border-width) solid var(--bui-color-primary-subtle-border);
+}
+/* Elements with a border or radius utility: only spacing */
+.bui-docs-preview :is([class*="bui-border"], [class*="bui-rounded"]) { padding: var(--bui-space-2) var(--bui-space-3); }
+.bui-docs-preview [data-bui-mode] > :is([class*="bui-border"], [class*="bui-rounded"]) { background: var(--bui-color-surface); }
+.bui-docs-preview table { inline-size: 100%; }
+.bui-docs-preview table :is(th, td) { padding: var(--bui-space-1) var(--bui-space-2); border-block-end: var(--bui-border-width) solid var(--bui-color-border); text-align: start; }

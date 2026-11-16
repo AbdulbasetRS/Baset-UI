@@ -5,6 +5,12 @@
 ## [Unreleased]
 
 ### Added
+- Task 04 (Utilities System):
+  - `assets/css/baset-ui.css` (القسم 5): Display `bui-d-{none|inline|inline-block|block|grid|inline-grid|flex|inline-flex}`؛ Position `bui-position-{static|relative|absolute|fixed|sticky}`؛ Inset منطقي `bui-inset-*` و`bui-inset-{block|inline}-*` و`bui-inset-{block|inline}-{start|end}-*` بالخطوات 0 إلى 3؛ Z-index `bui-z-{base|dropdown|sticky|fixed|backdrop|modal|popover|tooltip|toast}`؛ Overflow `bui-overflow-*` و`-x-*` و`-y-*` (auto, hidden, visible, scroll, clip)؛ Visibility `bui-visibility-{visible|hidden|collapse}`؛ Borders: `bui-border` و`bui-border-{solid|dashed|dotted|double|none}` و`bui-border-width-{0|1|2|4}` و`bui-border-color-{default|primary|secondary|success|danger|warning|info}` و`bui-border-{block|inline}-{start|end}` و`bui-rounded` و`bui-rounded-{none|xs|sm|md|lg|xl|2xl|full}`.
+  - `assets/css/baset-ui.css` (القسم 7): `bui-d-{breakpoint}-{value}` للـ Breakpoints السبعة.
+  - 5 صفحات توثيق: `documentation/utilities/{display,position,overflow,visibility,borders}.html`، وتفعيل روابطها في `nav.js`.
+  - `documentation/assets/css/docs.css`: تنسيق صناديق أمثلة Utilities (خاص بالموقع).
+
 - Task 03 (Row and Column, بأسلوب Bootstrap):
   - `assets/css/baset-ui.css`: نظام 12 عموداً بـ Flexbox: `bui-row`، `bui-col`، `bui-col-auto`، `bui-col-{1-12}`، `bui-row-cols-{auto|1-6}`، `bui-offset-{0-11}`، `bui-order-{first|0-5|last}`، `bui-g-{0-5}` و`bui-gx-*` و`bui-gy-*`، وكلها بنسخ Responsive لكل الـ Breakpoints السبعة (`bui-col-md-6`، `bui-offset-lg-2`...). Token جديد: `--bui-row-gutter`.
   - `documentation/layout/grid.html`: الصفحة أعيد ترتيبها: Row and Column أولاً (جدول التسمية و12 مثالاً بالكود، RTL، Responsive، Tokens) ثم قسم CSS Grid كما هو بعناوين تبدأ بـ "CSS Grid:".
@@ -42,6 +48,12 @@
 - Shell التوثيق: الصفحات لم تكن تعرّف أيقونة (Favicon) فكان المتصفح يطلب `/favicon.ico` ويحصل على 404؛ أُضيفت الأيقونة من `docs.js`.
 
 ### Decisions
+- Task 04: لا `!important`. كلاسات Display تستخدم `:not([hidden])` كما في `bui-flex` و`bui-grid`، فتبقى سمة `hidden` أقوى منها، ولكل كلاسات Display (الأساسية والمتجاوبة) نفس الـ Specificity فيحسم ترتيب الملف التعارض. كلاسات Display الأساسية لا يجوز جمع اثنين منها على عنصر واحد (موثق).
+- Task 04: Border Width: الأرقام هي البكسل المقابل لـ Token (`1` = thin، `2` = medium، `4` = thick) و`0` قيمة صفرية. `bui-rounded` بلا لاحقة = `md`.
+- Task 04: كلاسات Border Style (و`bui-border`) ترسم الجوانب الأربعة بالعرض واللون الافتراضيين، والكلاسات الاتجاهية ترسم جانباً واحداً بنمط solid دائماً. ترتيب القواعد: style ثم directional ثم width ثم color ثم radius. لذلك لا يُجمع Style غير solid مع كلاس اتجاهي (موثق). السبب: تجنب متغيرات CSS مسجلة (`@property`) وتعقيد غير مطلوب.
+- Task 04: Inset بالخطوات 0 إلى 3 من Spacing Tokens فقط، مع `inset-block` و`inset-inline` المختصرين. لا قيم سالبة ولا نسب مئوية.
+- Task 04: Position وOverflow وVisibility وBorders بلا نسخ Responsive في هذه المهمة (Display فقط كما طُلب).
+- Task 04: `visibility: collapse` مختبر على صف جدول في Chromium فقط، وموثق أن سلوكه خارج الجداول يختلف بين المتصفحات.
 - Task 03: الـ Gutter بأسلوب Bootstrap: Padding على الأعمدة ومارجن سالب (`margin-inline`) على الـ Row. السبب: التوافق مع نموذج Bootstrap المطلوب وسهولة الـ Offset. شرط الاستخدام: الـ Row داخل Container، وأقصى Gutter هو الخطوة 5 (2rem) حتى لا يتجاوز نصفه Padding الـ Container (1rem) فلا يحدث Overflow أفقي.
 - Task 03: يُعاد تعريف `--bui-gutter-x/y` على كل `bui-row` من `--bui-row-gutter`، فلا يرث Row متداخل Gutter أبيه.
 - Task 03: `.bui-row-cols-*` تسبق `.bui-col-*` في الملف، فيغلب العمود المرقّم على إعداد الصف (نفس ترتيب Bootstrap).

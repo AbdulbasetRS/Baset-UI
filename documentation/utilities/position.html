@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-bui-theme="default" data-bui-mode="light">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Position | Baset-UI Documentation</title>
+    <meta name="description" content="Baset-UI position utilities: static, relative, absolute, fixed, sticky, logical inset and z-index classes.">
+
+    <!-- Core library stylesheet -->
+    <link rel="stylesheet" href="../../assets/css/baset-ui.css">
+    <!-- Documentation shell only (not part of the library) -->
+    <link rel="stylesheet" href="../assets/css/docs.css">
+    <script>
+        /* Apply saved mode early to avoid a flash. Documentation shell only. */
+        try {
+            var m = localStorage.getItem('bui-docs-mode');
+            if (m === 'dark' || m === 'light') document.documentElement.setAttribute('data-bui-mode', m);
+        } catch (e) {}
+    </script>
+</head>
+<body data-docs-root="../../">
+    <a class="bui-docs-skip" href="#bui-docs-main">Skip to content</a>
+
+    <header class="bui-docs-navbar" role="banner">
+        <button class="bui-docs-navbar__toggle" type="button" id="bui-docs-sidebar-toggle"
+                aria-controls="bui-docs-sidebar" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="bui-docs-burger" aria-hidden="true"></span>
+        </button>
+        <a class="bui-docs-navbar__brand" href="../../">Baset-UI</a>
+        <div class="bui-docs-navbar__search">
+            <input type="search" placeholder="Search (coming soon)" aria-label="Search documentation" disabled>
+        </div>
+        <div class="bui-docs-navbar__actions">
+            <button type="button" class="bui-docs-btn" id="bui-docs-mode-toggle" aria-pressed="false">Dark mode</button>
+            <a class="bui-docs-btn" href="https://github.com/AbdulbasetRS/Baset-UI" rel="noopener" target="_blank">GitHub</a>
+        </div>
+    </header>
+
+    <div class="bui-docs-layout">
+        <div class="bui-docs-backdrop" id="bui-docs-backdrop" hidden></div>
+        <nav class="bui-docs-sidebar" id="bui-docs-sidebar" aria-label="Documentation navigation">
+            <!-- Rendered from documentation/assets/js/nav.js -->
+            <noscript>JavaScript is required to render the navigation.</noscript>
+        </nav>
+
+        <main class="bui-docs-main" id="bui-docs-main" tabindex="-1">
+            <article class="bui-docs-article">
+                <h1>Position</h1>
+                <p class="bui-docs-lead">Set the positioning scheme of an element, place it with logical offsets, and stack it with the z-index tokens.</p>
+
+<h2>Introduction</h2>
+
+<p>Position utilities have three parts: the position scheme (<code>bui-position-{value}</code>), the offsets (<code>bui-inset-*</code>) and the stacking order (<code>bui-z-{level}</code>). Offsets use logical properties, so an element placed at the inline start stays on the correct side in RTL and LTR. Position classes have no breakpoint variants in this release.</p>
+
+<h2>Position classes</h2>
+
+<div class="bui-docs-table-wrap" role="region" aria-label="Position classes" tabindex="0">
+    <table class="bui-docs-table">
+        <thead><tr><th scope="col">Class</th><th scope="col">CSS</th><th scope="col">Description</th></tr></thead>
+        <tbody>
+            <tr><th scope="row"><code>bui-position-static</code></th><td><code>position: static</code></td><td>The default. In normal flow. Offsets and z-index have no effect.</td></tr>
+            <tr><th scope="row"><code>bui-position-relative</code></th><td><code>position: relative</code></td><td>In normal flow, can be nudged with offsets, and becomes the reference box for absolute children.</td></tr>
+            <tr><th scope="row"><code>bui-position-absolute</code></th><td><code>position: absolute</code></td><td>Removed from the flow and placed against the nearest positioned ancestor (any value except static).</td></tr>
+            <tr><th scope="row"><code>bui-position-fixed</code></th><td><code>position: fixed</code></td><td>Removed from the flow and placed against the viewport, so it stays in place while the page scrolls.</td></tr>
+            <tr><th scope="row"><code>bui-position-sticky</code></th><td><code>position: sticky</code></td><td>In normal flow until the offset is reached while scrolling, then it sticks. Needs an offset, for example <code>bui-inset-block-start-0</code>.</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<h2>Inset classes</h2>
+
+<p>Pattern: <code>bui-{property}-{step}</code>. Steps map to the spacing tokens: 0 is <code>--bui-space-0</code>, 1 is <code>--bui-space-1</code> (0.25rem), 2 is <code>--bui-space-2</code> (0.5rem), 3 is <code>--bui-space-3</code> (1rem). Offsets only work on an element that is not <code>static</code>.</p>
+
+<div class="bui-docs-table-wrap" role="region" aria-label="Inset classes" tabindex="0">
+    <table class="bui-docs-table">
+        <thead><tr><th scope="col">Class</th><th scope="col">CSS</th><th scope="col">Description</th></tr></thead>
+        <tbody>
+            <tr><th scope="row"><code>bui-inset-{0-3}</code></th><td><code>inset</code></td><td>All four sides</td></tr>
+            <tr><th scope="row"><code>bui-inset-block-{0-3}</code></th><td><code>inset-block</code></td><td>Block start and block end (top and bottom in horizontal writing)</td></tr>
+            <tr><th scope="row"><code>bui-inset-inline-{0-3}</code></th><td><code>inset-inline</code></td><td>Inline start and inline end (left and right in LTR, flipped in RTL)</td></tr>
+            <tr><th scope="row"><code>bui-inset-block-start-{0-3}</code></th><td><code>inset-block-start</code></td><td>Block start side only</td></tr>
+            <tr><th scope="row"><code>bui-inset-block-end-{0-3}</code></th><td><code>inset-block-end</code></td><td>Block end side only</td></tr>
+            <tr><th scope="row"><code>bui-inset-inline-start-{0-3}</code></th><td><code>inset-inline-start</code></td><td>Inline start side only</td></tr>
+            <tr><th scope="row"><code>bui-inset-inline-end-{0-3}</code></th><td><code>inset-inline-end</code></td><td>Inline end side only</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<p>The shorthand classes are defined before the single-side classes, so <code>bui-inset-0 bui-inset-block-start-3</code> gives 0 on three sides and 1rem on the block start side.</p>
+
+<h2>Z-index classes</h2>
+
+<p>One class per z-index token, named after the token: <code>bui-z-{level}</code>. Z-index only works on a positioned element (not <code>static</code>), or on a flex or grid item.</p>
+
+<div class="bui-docs-table-wrap" role="region" aria-label="Z-index classes" tabindex="0">
+    <table class="bui-docs-table">
+        <thead><tr><th scope="col">Class</th><th scope="col">Token</th><th scope="col">Value (live)</th></tr></thead>
+        <tbody>
+            <tr><th scope="row"><code>bui-z-base</code></th><td><code>--bui-z-base</code></td><td><code data-docs-css-var="--bui-z-base">0</code></td></tr>
+            <tr><th scope="row"><code>bui-z-dropdown</code></th><td><code>--bui-z-dropdown</code></td><td><code data-docs-css-var="--bui-z-dropdown">1000</code></td></tr>
+            <tr><th scope="row"><code>bui-z-sticky</code></th><td><code>--bui-z-sticky</code></td><td><code data-docs-css-var="--bui-z-sticky">1020</code></td></tr>
+            <tr><th scope="row"><code>bui-z-fixed</code></th><td><code>--bui-z-fixed</code></td><td><code data-docs-css-var="--bui-z-fixed">1030</code></td></tr>
+            <tr><th scope="row"><code>bui-z-backdrop</code></th><td><code>--bui-z-backdrop</code></td><td><code data-docs-css-var="--bui-z-backdrop">1040</code></td></tr>
+            <tr><th scope="row"><code>bui-z-modal</code></th><td><code>--bui-z-modal</code></td><td><code data-docs-css-var="--bui-z-modal">1050</code></td></tr>
+            <tr><th scope="row"><code>bui-z-popover</code></th><td><code>--bui-z-popover</code></td><td><code data-docs-css-var="--bui-z-popover">1060</code></td></tr>
+            <tr><th scope="row"><code>bui-z-tooltip</code></th><td><code>--bui-z-tooltip</code></td><td><code data-docs-css-var="--bui-z-tooltip">1070</code></td></tr>
+            <tr><th scope="row"><code>bui-z-toast</code></th><td><code>--bui-z-toast</code></td><td><code data-docs-css-var="--bui-z-toast">1080</code></td></tr>
+        </tbody>
+    </table>
+</div>
+
+<h2>Choosing a position</h2>
+
+<div class="bui-docs-table-wrap" role="region" aria-label="Position comparison" tabindex="0">
+    <table class="bui-docs-table">
+        <thead><tr><th scope="col">Value</th><th scope="col">Takes space in the flow</th><th scope="col">Placed against</th><th scope="col">Scrolls with the page</th></tr></thead>
+        <tbody>
+            <tr><th scope="row"><code>static</code></th><td>Yes</td><td>Normal flow</td><td>Yes</td></tr>
+            <tr><th scope="row"><code>relative</code></th><td>Yes (at its original place)</td><td>Its own original place</td><td>Yes</td></tr>
+            <tr><th scope="row"><code>absolute</code></th><td>No</td><td>Nearest positioned ancestor, or the page if none</td><td>With that ancestor</td></tr>
+            <tr><th scope="row"><code>fixed</code></th><td>No</td><td>The viewport</td><td>No</td></tr>
+            <tr><th scope="row"><code>sticky</code></th><td>Yes</td><td>Its nearest scroll container, after it reaches the offset</td><td>Until it sticks</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="bui-docs-note" role="note"><p><strong>Parents and scroll containers matter.</strong> An absolute element is placed against the nearest ancestor that is not static, so add <code>bui-position-relative</code> to the parent you want as the reference. A sticky element sticks inside its nearest scrolling ancestor (any ancestor with <code>overflow</code> other than visible, see <a href="overflow.html">Overflow</a>) and never leaves its parent box. If an ancestor has <code>overflow: hidden</code> but does not scroll, the sticky element never sticks. A fixed element is normally placed against the viewport, but an ancestor with <code>transform</code>, <code>filter</code> or <code>perspective</code> becomes its reference instead.</p></div>
+
+<h2>Examples</h2>
+
+<section class="bui-docs-example" aria-labelledby="ex-p-1">
+    <h3 id="ex-p-1">Badge in a corner</h3>
+    <p>The parent is relative, the badge is absolute at the block start and inline end corner. In RTL the badge moves to the left corner with no class change.</p>
+    <div class="bui-docs-preview">
+<div class="bui-position-relative" style="min-block-size: 5rem">
+    Card content
+    <span class="bui-position-absolute bui-inset-block-start-0 bui-inset-inline-end-0">New</span>
+</div>
+    </div>
+    <div class="bui-docs-code" dir="ltr">
+        <button type="button" class="bui-docs-btn bui-docs-copy" data-docs-copy>Copy</button>
+        <pre tabindex="0" dir="ltr"><code>&lt;div class="bui-position-relative" style="min-block-size: 5rem"&gt;
+    Card content
+    &lt;span class="bui-position-absolute bui-inset-block-start-0 bui-inset-inline-end-0"&gt;New&lt;/span&gt;
+&lt;/div&gt;</code></pre>
+    </div>
+</section>
+
+<section class="bui-docs-example" aria-labelledby="ex-p-2">
+    <h3 id="ex-p-2">Fill the parent</h3>
+    <p><code>bui-inset-0</code> stretches an absolute child over the whole relative parent, for example an overlay.</p>
+    <div class="bui-docs-preview">
+<div class="bui-position-relative" style="min-block-size: 6rem">
+    Parent
+    <div class="bui-position-absolute bui-inset-0" style="background: var(--bui-color-overlay); color: var(--bui-palette-white)">Overlay</div>
+</div>
+    </div>
+    <div class="bui-docs-code" dir="ltr">
+        <button type="button" class="bui-docs-btn bui-docs-copy" data-docs-copy>Copy</button>
+        <pre tabindex="0" dir="ltr"><code>&lt;div class="bui-position-relative" style="min-block-size: 6rem"&gt;
+    Parent
+    &lt;div class="bui-position-absolute bui-inset-0" style="background: var(--bui-color-overlay); color: var(--bui-palette-white)"&gt;Overlay&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+    </div>
+</section>
+
+<section class="bui-docs-example" aria-labelledby="ex-p-3">
+    <h3 id="ex-p-3">Sticky inside a scroll container</h3>
+    <p>Scroll the box. The header stays at the block start because the container scrolls and the header has an offset of 0.</p>
+    <div class="bui-docs-preview">
+<div class="bui-overflow-y-auto" style="block-size: 9rem" tabindex="0" role="region" aria-label="Scrollable example">
+    <div class="bui-position-sticky bui-inset-block-start-0">Sticky header</div>
+    <p>Line 1</p>
+    <p>Line 2</p>
+    <p>Line 3</p>
+    <p>Line 4</p>
+    <p>Line 5</p>
+    <p>Line 6</p>
+    <p>Line 7</p>
+    <p>Line 8</p>
+</div>
+    </div>
+    <div class="bui-docs-code" dir="ltr">
+        <button type="button" class="bui-docs-btn bui-docs-copy" data-docs-copy>Copy</button>
+        <pre tabindex="0" dir="ltr"><code>&lt;div class="bui-overflow-y-auto" style="block-size: 9rem" tabindex="0" role="region" aria-label="Scrollable example"&gt;
+    &lt;div class="bui-position-sticky bui-inset-block-start-0"&gt;Sticky header&lt;/div&gt;
+    &lt;p&gt;Line 1&lt;/p&gt;
+    &lt;p&gt;Line 2&lt;/p&gt;
+    &lt;p&gt;Line 3&lt;/p&gt;
+    &lt;p&gt;Line 4&lt;/p&gt;
+    &lt;p&gt;Line 5&lt;/p&gt;
+    &lt;p&gt;Line 6&lt;/p&gt;
+    &lt;p&gt;Line 7&lt;/p&gt;
+    &lt;p&gt;Line 8&lt;/p&gt;
+&lt;/div&gt;</code></pre>
+    </div>
+</section>
+
+<section class="bui-docs-example" aria-labelledby="ex-p-4">
+    <h3 id="ex-p-4">Z-index</h3>
+    <p>The two boxes overlap. In the markup the Dropdown box comes second, but the first box has a higher z-index token (modal 1050 against dropdown 1000), so it is drawn on top.</p>
+    <div class="bui-docs-preview">
+<div class="bui-position-relative" style="min-block-size: 7rem">
+    <div class="bui-position-absolute bui-inset-block-start-0 bui-inset-inline-start-0 bui-z-modal" style="inline-size: 10rem">z-modal</div>
+    <div class="bui-position-absolute bui-inset-block-start-3 bui-inset-inline-start-3 bui-z-dropdown" style="inline-size: 10rem">z-dropdown</div>
+</div>
+    </div>
+    <div class="bui-docs-code" dir="ltr">
+        <button type="button" class="bui-docs-btn bui-docs-copy" data-docs-copy>Copy</button>
+        <pre tabindex="0" dir="ltr"><code>&lt;div class="bui-position-relative" style="min-block-size: 7rem"&gt;
+    &lt;div class="bui-position-absolute bui-inset-block-start-0 bui-inset-inline-start-0 bui-z-modal" style="inline-size: 10rem"&gt;z-modal&lt;/div&gt;
+    &lt;div class="bui-position-absolute bui-inset-block-start-3 bui-inset-inline-start-3 bui-z-dropdown" style="inline-size: 10rem"&gt;z-dropdown&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+    </div>
+</section>
+
+<p>A fixed element is not previewed here, because it would stay on top of this page. It is placed against the viewport:</p>
+
+<div class="bui-docs-code bui-docs-code--solo" dir="ltr" data-docs-lang="html">
+    <button type="button" class="bui-docs-btn bui-docs-copy" data-docs-copy>Copy</button>
+    <pre tabindex="0" dir="ltr" aria-label="Fixed example"><code>&lt;div class="bui-position-fixed bui-inset-block-end-0 bui-inset-inline-end-0 bui-z-fixed"&gt;
+    Stays at the bottom corner of the viewport
+&lt;/div&gt;</code></pre>
+</div>
+
+<h2>Responsive behavior</h2>
+
+<p>Position, inset and z-index classes have no breakpoint variants in this release; they apply at every width. Use them on elements whose size is limited (a badge, an overlay) so that offsets in <code>rem</code> never push content outside a 320px screen.</p>
+
+<h2>RTL and LTR</h2>
+
+<p>Inset classes use logical properties: <code>bui-inset-inline-start-*</code> is the left side in LTR and the right side in RTL, and the same for the end. No class named after a physical side exists. The reference box of an absolute element does not depend on direction.</p>
+
+<section class="bui-docs-example" aria-labelledby="ex-p-5">
+    <h3 id="ex-p-5">Same markup in dir="rtl"</h3>
+    <p>The badge is on the left because it is at the inline end.</p>
+    <div class="bui-docs-preview">
+<div dir="rtl" lang="ar">
+    <div class="bui-position-relative" style="min-block-size: 4rem">
+        محتوى البطاقة
+        <span class="bui-position-absolute bui-inset-block-start-0 bui-inset-inline-end-0">جديد</span>
+    </div>
+</div>
+    </div>
+    <div class="bui-docs-code" dir="ltr">
+        <button type="button" class="bui-docs-btn bui-docs-copy" data-docs-copy>Copy</button>
+        <pre tabindex="0" dir="ltr"><code>&lt;div dir="rtl" lang="ar"&gt;
+    &lt;div class="bui-position-relative" style="min-block-size: 4rem"&gt;
+        محتوى البطاقة
+        &lt;span class="bui-position-absolute bui-inset-block-start-0 bui-inset-inline-end-0"&gt;جديد&lt;/span&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+    </div>
+</section>
+
+<h2>Accessibility</h2>
+
+<p>Position changes where an element is drawn, not where it is in the reading and focus order, which follows the markup. Keep a moved element in a sensible place in the source. A sticky or fixed element can cover other content or the focused element: leave room for it, and make sure it does not hide focus. A scrollable container needs <code>tabindex="0"</code> and a label so that keyboard users can scroll it, as in the sticky example.</p>
+
+<h2>Tokens used</h2>
+
+<p><code>--bui-space-0</code>, <code>--bui-space-1</code>, <code>--bui-space-2</code>, <code>--bui-space-3</code>, <code>--bui-z-base</code>, <code>--bui-z-dropdown</code>, <code>--bui-z-sticky</code>, <code>--bui-z-fixed</code>, <code>--bui-z-backdrop</code>, <code>--bui-z-modal</code>, <code>--bui-z-popover</code>, <code>--bui-z-tooltip</code>, <code>--bui-z-toast</code></p>
+                <div class="bui-docs-sr" id="bui-docs-status" role="status" aria-live="polite"></div>
+            </article>
+        </main>
+    </div>
+
+    <footer class="bui-docs-footer">
+        <span>&copy; 2026 Baset-UI</span>
+        <span>Version <span data-docs-version>0.0.0-foundation</span></span>
+        <a href="https://github.com/AbdulbasetRS/Baset-UI" rel="noopener" target="_blank">GitHub</a>
+    </footer>
+
+    <script src="../../assets/js/baset-ui.js"></script>
+    <script src="../../documentation/assets/js/nav.js"></script>
+    <script src="../../documentation/assets/js/docs.js"></script>
+</body>
+</html>

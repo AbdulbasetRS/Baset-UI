@@ -70,7 +70,7 @@
 | Row and Column (`bui-row`, `bui-col`) | Completed | Task 03، 2026-11-15. نظام 12 عموداً بـ Flexbox بأسلوب Bootstrap (Col، Row-cols، Offset، Order، Gutters، متغيرات Responsive). اختُبر في Chromium (انظر تقرير Task 03): عرض الأعمدة، Wrapping، عدم وجود Overflow على مستوى الصفحة من 320 إلى 1920، ترتيب RTL. لم يُختبر بقارئ شاشة ولا بـ Firefox/Safari |
 | Flexbox | Completed | Task 02. `bui-items-*`, `bui-justify-*`, `bui-content-*`, `bui-gap-*` مشتركة مع Grid. لا تُعاد تعريفها في Task 03 |
 | Spacing | Completed | Task 02: Tokens + `bui-gap-*` فقط. كلاسات Margin/Padding ضمن Task 03 |
-| Utilities | Planned | |
+| Utilities: Display, Position, Overflow, Visibility, Borders | Completed | Task 04، 2026-11-16. CSS فقط داخل `baset-ui.css` (القسم 5، وكلاسات Display المتجاوبة في القسم 7). اختُبر في Chromium: القيم المحسوبة لكل كلاس، Display عند كل Breakpoint، Sticky/Fixed/Z-index، Overflow على المحورين، Visibility، Borders (RTL/LTR وLight/Dark). لم يُختبر في Firefox/Safari ولا بقارئ شاشة. باقي Utilities (Margin/Padding/Width/Height/Text/Background) غير منفذة |
 | Theme Manager | Planned | [RTL_LTR_AND_THEMES.md](RTL_LTR_AND_THEMES.md) |
 | Locale Manager | Planned | [INTERNATIONALIZATION.md](INTERNATIONALIZATION.md) |
 | Toast Manager / Modal Manager | Planned | Toast/Modal غير مدرجين في Sidebar بعد |
@@ -80,6 +80,7 @@
 | Item | Status | Notes |
 |---|---|---|
 | Navbar / Sidebar / Footer (`index.html`) | Completed | Task 01. اختُبر وفق قسم الاختبار في تقرير Task 01 |
+| Documentation pages: Utilities (5) | Completed | Task 04. `documentation/utilities/{display,position,overflow,visibility,borders}.html`، روابطها مفعلة في `nav.js`. لا Playground ولا الأقسام الثمانية الخاصة بالمكونات، لذلك لا تُسجل كـ Documented |
 | Documentation pages: Customization (3) + Layout (5) | Completed | Task 02 (Task 03: صفحة Grid توسعت لتشمل Row and Column). `documentation/customization/` و`documentation/layout/`. لا Playground (Task 09) ولا الأقسام الثمانية الخاصة بالمكونات، لذلك لا تُسجل كـ Documented |
 | Shell: روابط Sidebar من الصفحات الفرعية (`data-docs-root`)، نسخ الكود، قراءات حية | Completed | Task 02. إصلاح `overflow-x: hidden` الذي كان يعطل `sticky` للـ Navbar |
 | Shell: الشعار (Navbar Mark، Footer Logo، Favicon) وREADME | Completed | 2026-11-15. يُحقن من `docs.js`، ملفات `documentation/assets/images/brand/`. فُحصت صياغة JS وتوازن CSS فقط؛ لم يُختبر بصرياً في متصفح (RTL/LTR، Light/Dark، Responsive) |

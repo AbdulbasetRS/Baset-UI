@@ -2,8 +2,8 @@
  * Baset-UI — Core Stylesheet
  * Version: 0.0.0-foundation
  *
- * Contents (Task 02): Design Tokens, Dark Mode tokens, Base, Layout (Container, Grid, Row and Column, Flexbox),
- * Responsive variants and Print / Reduced Motion. No Components yet.
+ * Contents (Task 02 to 04): Design Tokens, Dark Mode tokens, Base, Layout (Container, Grid, Row and Column, Flexbox),
+ * Utilities (Display, Position, Overflow, Visibility, Borders), Responsive variants and Print / Reduced Motion. No Components yet.
  * Section order is mandatory: instructions/CORE_ASSETS.md
  */
 
@@ -740,8 +740,131 @@ legend { padding: 0; }
 
 /* ==========================================================================
    5. Utilities
-   Reserved for Task 03 (Utilities System). Intentionally empty.
+   Task 04: Display, Position, Overflow, Visibility, Borders.
+   Display variants for breakpoints live in section 7 (all @media rules stay there).
+   No !important: Display uses :not([hidden]) like bui-flex / bui-grid, so the hidden attribute
+   still wins and every display class has the same specificity (the later rule in the file wins).
+   Logical properties only (no left/right). Values come from tokens.
    ========================================================================== */
+
+/* ---- Display ---- */
+.bui-d-none:not([hidden]) { display: none; }
+.bui-d-inline:not([hidden]) { display: inline; }
+.bui-d-inline-block:not([hidden]) { display: inline-block; }
+.bui-d-block:not([hidden]) { display: block; }
+.bui-d-grid:not([hidden]) { display: grid; }
+.bui-d-inline-grid:not([hidden]) { display: inline-grid; }
+.bui-d-flex:not([hidden]) { display: flex; }
+.bui-d-inline-flex:not([hidden]) { display: inline-flex; }
+
+/* ---- Position ---- */
+.bui-position-static { position: static; }
+.bui-position-relative { position: relative; }
+.bui-position-absolute { position: absolute; }
+.bui-position-fixed { position: fixed; }
+.bui-position-sticky { position: sticky; }
+
+/* Inset (logical). The shorthand comes first so the single-side classes override it. */
+.bui-inset-0 { inset: var(--bui-space-0); }
+.bui-inset-1 { inset: var(--bui-space-1); }
+.bui-inset-2 { inset: var(--bui-space-2); }
+.bui-inset-3 { inset: var(--bui-space-3); }
+.bui-inset-block-0 { inset-block: var(--bui-space-0); }
+.bui-inset-block-1 { inset-block: var(--bui-space-1); }
+.bui-inset-block-2 { inset-block: var(--bui-space-2); }
+.bui-inset-block-3 { inset-block: var(--bui-space-3); }
+.bui-inset-inline-0 { inset-inline: var(--bui-space-0); }
+.bui-inset-inline-1 { inset-inline: var(--bui-space-1); }
+.bui-inset-inline-2 { inset-inline: var(--bui-space-2); }
+.bui-inset-inline-3 { inset-inline: var(--bui-space-3); }
+.bui-inset-block-start-0 { inset-block-start: var(--bui-space-0); }
+.bui-inset-block-start-1 { inset-block-start: var(--bui-space-1); }
+.bui-inset-block-start-2 { inset-block-start: var(--bui-space-2); }
+.bui-inset-block-start-3 { inset-block-start: var(--bui-space-3); }
+.bui-inset-block-end-0 { inset-block-end: var(--bui-space-0); }
+.bui-inset-block-end-1 { inset-block-end: var(--bui-space-1); }
+.bui-inset-block-end-2 { inset-block-end: var(--bui-space-2); }
+.bui-inset-block-end-3 { inset-block-end: var(--bui-space-3); }
+.bui-inset-inline-start-0 { inset-inline-start: var(--bui-space-0); }
+.bui-inset-inline-start-1 { inset-inline-start: var(--bui-space-1); }
+.bui-inset-inline-start-2 { inset-inline-start: var(--bui-space-2); }
+.bui-inset-inline-start-3 { inset-inline-start: var(--bui-space-3); }
+.bui-inset-inline-end-0 { inset-inline-end: var(--bui-space-0); }
+.bui-inset-inline-end-1 { inset-inline-end: var(--bui-space-1); }
+.bui-inset-inline-end-2 { inset-inline-end: var(--bui-space-2); }
+.bui-inset-inline-end-3 { inset-inline-end: var(--bui-space-3); }
+
+/* Z-index: one class per z-index token */
+.bui-z-base { z-index: var(--bui-z-base); }
+.bui-z-dropdown { z-index: var(--bui-z-dropdown); }
+.bui-z-sticky { z-index: var(--bui-z-sticky); }
+.bui-z-fixed { z-index: var(--bui-z-fixed); }
+.bui-z-backdrop { z-index: var(--bui-z-backdrop); }
+.bui-z-modal { z-index: var(--bui-z-modal); }
+.bui-z-popover { z-index: var(--bui-z-popover); }
+.bui-z-tooltip { z-index: var(--bui-z-tooltip); }
+.bui-z-toast { z-index: var(--bui-z-toast); }
+
+/* ---- Overflow (the axis classes come after the general ones so they win) ---- */
+.bui-overflow-auto { overflow: auto; }
+.bui-overflow-hidden { overflow: hidden; }
+.bui-overflow-visible { overflow: visible; }
+.bui-overflow-scroll { overflow: scroll; }
+.bui-overflow-clip { overflow: clip; }
+.bui-overflow-x-auto { overflow-x: auto; }
+.bui-overflow-x-hidden { overflow-x: hidden; }
+.bui-overflow-x-visible { overflow-x: visible; }
+.bui-overflow-x-scroll { overflow-x: scroll; }
+.bui-overflow-x-clip { overflow-x: clip; }
+.bui-overflow-y-auto { overflow-y: auto; }
+.bui-overflow-y-hidden { overflow-y: hidden; }
+.bui-overflow-y-visible { overflow-y: visible; }
+.bui-overflow-y-scroll { overflow-y: scroll; }
+.bui-overflow-y-clip { overflow-y: clip; }
+
+/* ---- Visibility ---- */
+.bui-visibility-visible { visibility: visible; }
+.bui-visibility-hidden { visibility: hidden; }
+.bui-visibility-collapse { visibility: collapse; }
+
+/* ---- Borders ----
+   Order matters: style classes, then directional, then width, then color, then radius.
+   A style class (and bui-border) draws all four sides with the default width and color tokens.
+   A directional class draws one side, always solid. Width and color classes apply to every side,
+   but only sides that have a style are visible. */
+.bui-border,
+.bui-border-solid { border: var(--bui-border-width) solid var(--bui-color-border); }
+.bui-border-dashed { border: var(--bui-border-width) dashed var(--bui-color-border); }
+.bui-border-dotted { border: var(--bui-border-width) dotted var(--bui-color-border); }
+.bui-border-double { border: var(--bui-border-width) double var(--bui-color-border); }
+.bui-border-none { border-style: none; }
+.bui-border-block-start { border-block-start: var(--bui-border-width) solid var(--bui-color-border); }
+.bui-border-block-end { border-block-end: var(--bui-border-width) solid var(--bui-color-border); }
+.bui-border-inline-start { border-inline-start: var(--bui-border-width) solid var(--bui-color-border); }
+.bui-border-inline-end { border-inline-end: var(--bui-border-width) solid var(--bui-color-border); }
+/* Width scale: 0 plus the numeric pixel value of each border width token (1 thin, 2 medium, 4 thick) */
+.bui-border-width-0 { border-width: 0; }
+.bui-border-width-1 { border-width: var(--bui-border-width-thin); }
+.bui-border-width-2 { border-width: var(--bui-border-width-medium); }
+.bui-border-width-4 { border-width: var(--bui-border-width-thick); }
+.bui-border-color-default { border-color: var(--bui-color-border); }
+.bui-border-color-primary { border-color: var(--bui-color-primary); }
+.bui-border-color-secondary { border-color: var(--bui-color-secondary); }
+.bui-border-color-success { border-color: var(--bui-color-success); }
+.bui-border-color-danger { border-color: var(--bui-color-danger); }
+.bui-border-color-warning { border-color: var(--bui-color-warning); }
+.bui-border-color-info { border-color: var(--bui-color-info); }
+/* Radius: bui-rounded is the md step */
+.bui-rounded { border-radius: var(--bui-radius-md); }
+.bui-rounded-none { border-radius: var(--bui-radius-none); }
+.bui-rounded-xs { border-radius: var(--bui-radius-xs); }
+.bui-rounded-sm { border-radius: var(--bui-radius-sm); }
+.bui-rounded-md { border-radius: var(--bui-radius-md); }
+.bui-rounded-lg { border-radius: var(--bui-radius-lg); }
+.bui-rounded-xl { border-radius: var(--bui-radius-xl); }
+.bui-rounded-2xl { border-radius: var(--bui-radius-2xl); }
+.bui-rounded-full { border-radius: var(--bui-radius-full); }
+
 
 /* ==========================================================================
    6. Components
@@ -861,6 +984,16 @@ legend { padding: 0; }
     .bui-order-xs-4 { order: 4; }
     .bui-order-xs-5 { order: 5; }
     .bui-order-xs-last { order: 6; }
+
+    /* Display */
+    .bui-d-xs-none:not([hidden]) { display: none; }
+    .bui-d-xs-inline:not([hidden]) { display: inline; }
+    .bui-d-xs-inline-block:not([hidden]) { display: inline-block; }
+    .bui-d-xs-block:not([hidden]) { display: block; }
+    .bui-d-xs-grid:not([hidden]) { display: grid; }
+    .bui-d-xs-inline-grid:not([hidden]) { display: inline-grid; }
+    .bui-d-xs-flex:not([hidden]) { display: flex; }
+    .bui-d-xs-inline-flex:not([hidden]) { display: inline-flex; }
 }
 
 /* SM: min-width 576px */
@@ -970,6 +1103,16 @@ legend { padding: 0; }
     .bui-order-sm-4 { order: 4; }
     .bui-order-sm-5 { order: 5; }
     .bui-order-sm-last { order: 6; }
+
+    /* Display */
+    .bui-d-sm-none:not([hidden]) { display: none; }
+    .bui-d-sm-inline:not([hidden]) { display: inline; }
+    .bui-d-sm-inline-block:not([hidden]) { display: inline-block; }
+    .bui-d-sm-block:not([hidden]) { display: block; }
+    .bui-d-sm-grid:not([hidden]) { display: grid; }
+    .bui-d-sm-inline-grid:not([hidden]) { display: inline-grid; }
+    .bui-d-sm-flex:not([hidden]) { display: flex; }
+    .bui-d-sm-inline-flex:not([hidden]) { display: inline-flex; }
 }
 
 /* MD: min-width 768px */
@@ -1080,6 +1223,16 @@ legend { padding: 0; }
     .bui-order-md-4 { order: 4; }
     .bui-order-md-5 { order: 5; }
     .bui-order-md-last { order: 6; }
+
+    /* Display */
+    .bui-d-md-none:not([hidden]) { display: none; }
+    .bui-d-md-inline:not([hidden]) { display: inline; }
+    .bui-d-md-inline-block:not([hidden]) { display: inline-block; }
+    .bui-d-md-block:not([hidden]) { display: block; }
+    .bui-d-md-grid:not([hidden]) { display: grid; }
+    .bui-d-md-inline-grid:not([hidden]) { display: inline-grid; }
+    .bui-d-md-flex:not([hidden]) { display: flex; }
+    .bui-d-md-inline-flex:not([hidden]) { display: inline-flex; }
 }
 
 /* LG: min-width 992px */
@@ -1191,6 +1344,16 @@ legend { padding: 0; }
     .bui-order-lg-4 { order: 4; }
     .bui-order-lg-5 { order: 5; }
     .bui-order-lg-last { order: 6; }
+
+    /* Display */
+    .bui-d-lg-none:not([hidden]) { display: none; }
+    .bui-d-lg-inline:not([hidden]) { display: inline; }
+    .bui-d-lg-inline-block:not([hidden]) { display: inline-block; }
+    .bui-d-lg-block:not([hidden]) { display: block; }
+    .bui-d-lg-grid:not([hidden]) { display: grid; }
+    .bui-d-lg-inline-grid:not([hidden]) { display: inline-grid; }
+    .bui-d-lg-flex:not([hidden]) { display: flex; }
+    .bui-d-lg-inline-flex:not([hidden]) { display: inline-flex; }
 }
 
 /* XL: min-width 1200px */
@@ -1303,6 +1466,16 @@ legend { padding: 0; }
     .bui-order-xl-4 { order: 4; }
     .bui-order-xl-5 { order: 5; }
     .bui-order-xl-last { order: 6; }
+
+    /* Display */
+    .bui-d-xl-none:not([hidden]) { display: none; }
+    .bui-d-xl-inline:not([hidden]) { display: inline; }
+    .bui-d-xl-inline-block:not([hidden]) { display: inline-block; }
+    .bui-d-xl-block:not([hidden]) { display: block; }
+    .bui-d-xl-grid:not([hidden]) { display: grid; }
+    .bui-d-xl-inline-grid:not([hidden]) { display: inline-grid; }
+    .bui-d-xl-flex:not([hidden]) { display: flex; }
+    .bui-d-xl-inline-flex:not([hidden]) { display: inline-flex; }
 }
 
 /* XXL: min-width 1600px */
@@ -1416,6 +1589,16 @@ legend { padding: 0; }
     .bui-order-xxl-4 { order: 4; }
     .bui-order-xxl-5 { order: 5; }
     .bui-order-xxl-last { order: 6; }
+
+    /* Display */
+    .bui-d-xxl-none:not([hidden]) { display: none; }
+    .bui-d-xxl-inline:not([hidden]) { display: inline; }
+    .bui-d-xxl-inline-block:not([hidden]) { display: inline-block; }
+    .bui-d-xxl-block:not([hidden]) { display: block; }
+    .bui-d-xxl-grid:not([hidden]) { display: grid; }
+    .bui-d-xxl-inline-grid:not([hidden]) { display: inline-grid; }
+    .bui-d-xxl-flex:not([hidden]) { display: flex; }
+    .bui-d-xxl-inline-flex:not([hidden]) { display: inline-flex; }
 }
 
 /* XXXL: min-width 1920px */
@@ -1530,6 +1713,16 @@ legend { padding: 0; }
     .bui-order-xxxl-4 { order: 4; }
     .bui-order-xxxl-5 { order: 5; }
     .bui-order-xxxl-last { order: 6; }
+
+    /* Display */
+    .bui-d-xxxl-none:not([hidden]) { display: none; }
+    .bui-d-xxxl-inline:not([hidden]) { display: inline; }
+    .bui-d-xxxl-inline-block:not([hidden]) { display: inline-block; }
+    .bui-d-xxxl-block:not([hidden]) { display: block; }
+    .bui-d-xxxl-grid:not([hidden]) { display: grid; }
+    .bui-d-xxxl-inline-grid:not([hidden]) { display: inline-grid; }
+    .bui-d-xxxl-flex:not([hidden]) { display: flex; }
+    .bui-d-xxxl-inline-flex:not([hidden]) { display: inline-flex; }
 }
 
 /* ==========================================================================

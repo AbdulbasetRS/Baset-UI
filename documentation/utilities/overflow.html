@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-bui-theme="default" data-bui-mode="light">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Overflow | Baset-UI Documentation</title>
+    <meta name="description" content="Baset-UI overflow utilities: auto, hidden, visible, scroll, clip, with separate X and Y axis classes.">
+
+    <!-- Core library stylesheet -->
+    <link rel="stylesheet" href="../../assets/css/baset-ui.css">
+    <!-- Documentation shell only (not part of the library) -->
+    <link rel="stylesheet" href="../assets/css/docs.css">
+    <script>
+        /* Apply saved mode early to avoid a flash. Documentation shell only. */
+        try {
+            var m = localStorage.getItem('bui-docs-mode');
+            if (m === 'dark' || m === 'light') document.documentElement.setAttribute('data-bui-mode', m);
+        } catch (e) {}
+    </script>
+</head>
+<body data-docs-root="../../">
+    <a class="bui-docs-skip" href="#bui-docs-main">Skip to content</a>
+
+    <header class="bui-docs-navbar" role="banner">
+        <button class="bui-docs-navbar__toggle" type="button" id="bui-docs-sidebar-toggle"
+                aria-controls="bui-docs-sidebar" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="bui-docs-burger" aria-hidden="true"></span>
+        </button>
+        <a class="bui-docs-navbar__brand" href="../../">Baset-UI</a>
+        <div class="bui-docs-navbar__search">
+            <input type="search" placeholder="Search (coming soon)" aria-label="Search documentation" disabled>
+        </div>
+        <div class="bui-docs-navbar__actions">
+            <button type="button" class="bui-docs-btn" id="bui-docs-mode-toggle" aria-pressed="false">Dark mode</button>
+            <a class="bui-docs-btn" href="https://github.com/AbdulbasetRS/Baset-UI" rel="noopener" target="_blank">GitHub</a>
+        </div>
+    </header>
+
+    <div class="bui-docs-layout">
+        <div class="bui-docs-backdrop" id="bui-docs-backdrop" hidden></div>
+        <nav class="bui-docs-sidebar" id="bui-docs-sidebar" aria-label="Documentation navigation">
+            <!-- Rendered from documentation/assets/js/nav.js -->
+            <noscript>JavaScript is required to render the navigation.</noscript>
+        </nav>
+
+        <main class="bui-docs-main" id="bui-docs-main" tabindex="-1">
+            <article class="bui-docs-article">
+                <h1>Overflow</h1>
+                <p class="bui-docs-lead">Decide what happens to content that is larger than its box: scroll it, clip it, or let it spill out.</p>
+
+<h2>Introduction</h2>
+
+<p>Overflow utilities set the CSS <code>overflow</code> properties. Use the general classes for both axes, or the axis classes to control horizontal and vertical overflow separately. Pattern: <code>bui-overflow-{value}</code>, <code>bui-overflow-x-{value}</code>, <code>bui-overflow-y-{value}</code>.</p>
+
+<h2>Classes</h2>
+
+<div class="bui-docs-table-wrap" role="region" aria-label="Overflow classes" tabindex="0">
+    <table class="bui-docs-table">
+        <thead><tr><th scope="col">Class</th><th scope="col">CSS</th><th scope="col">Description</th></tr></thead>
+        <tbody>
+            <tr><th scope="row"><code>bui-overflow-visible</code></th><td><code>overflow: visible</code></td><td>The default. Content that does not fit is drawn outside the box.</td></tr>
+            <tr><th scope="row"><code>bui-overflow-hidden</code></th><td><code>overflow: hidden</code></td><td>Content outside the box is cut. The box is still a scroll container (it can be scrolled by code or by focus), but has no scrollbar.</td></tr>
+            <tr><th scope="row"><code>bui-overflow-clip</code></th><td><code>overflow: clip</code></td><td>Like hidden, but the box never becomes a scroll container. Not scrollable at all, even by code.</td></tr>
+            <tr><th scope="row"><code>bui-overflow-auto</code></th><td><code>overflow: auto</code></td><td>Scrollbars appear only on the axis where the content does not fit.</td></tr>
+            <tr><th scope="row"><code>bui-overflow-scroll</code></th><td><code>overflow: scroll</code></td><td>Scrollbars are always present on both axes, even when nothing overflows (on systems with classic scrollbars).</td></tr>
+            <tr><th scope="row"><code>bui-overflow-x-{value}</code></th><td><code>overflow-x</code></td><td>Same five values (visible, hidden, clip, auto, scroll), horizontal axis only.</td></tr>
+            <tr><th scope="row"><code>bui-overflow-y-{value}</code></th><td><code>overflow-y</code></td><td>Same five values, vertical axis only.</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<p>The axis classes are defined after the general ones, so <code>bui-overflow-hidden bui-overflow-y-auto</code> hides horizontal overflow and scrolls vertically.</p>
+
+<div class="bui-docs-table-wrap" role="region" aria-label="Auto, scroll, hidden" tabindex="0">
+    <table class="bui-docs-table">
+        <thead><tr><th scope="col">Value</th><th scope="col">Scrollbar</th><th scope="col">User can scroll</th><th scope="col">Use for</th></tr></thead>
+        <tbody>
+            <tr><th scope="row"><code>auto</code></th><td>Only when needed</td><td>Yes</td><td>Scrollable containers. The usual choice.</td></tr>
+            <tr><th scope="row"><code>scroll</code></th><td>Always</td><td>Yes</td><td>When a stable layout matters, so the content does not shift when a scrollbar appears.</td></tr>
+            <tr><th scope="row"><code>hidden</code></th><td>Never</td><td>Not with mouse or touch</td><td>Clipping rounded corners, cropping media, containing floats.</td></tr>
+            <tr><th scope="row"><code>clip</code></th><td>Never</td><td>No</td><td>Clipping without a scroll container (keeps sticky children working against an outer scroller).</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="bui-docs-note" role="note"><p><strong>Mixing values.</strong> <code>visible</code> on one axis combined with <code>hidden</code>, <code>auto</code> or <code>scroll</code> on the other is computed by the browser as <code>auto</code> on the visible axis. If you need to clip one axis and leave the other visible, use <code>clip</code> (<code>bui-overflow-x-clip</code> with <code>bui-overflow-y-visible</code>).</p></div>
+
+<h2>Examples</h2>
+
+<section class="bui-docs-example" aria-labelledby="ex-o-1">
+    <h3 id="ex-o-1">Vertical scroll container</h3>
+    <p>Give the box a height and <code>bui-overflow-y-auto</code>. It scrolls only when the content is taller. The container is focusable and labeled so keyboard users can scroll it.</p>
+    <div class="bui-docs-preview">
+<div class="bui-overflow-y-auto" style="block-size: 8rem" tabindex="0" role="region" aria-label="Vertical scroll example">
+    <p>Line 1</p>
+    <p>Line 2</p>
+    <p>Line 3</p>
+    <p>Line 4</p>
+    <p>Line 5</p>
+    <p>Line 6</p>
+    <p>Line 7</p>
+    <p>Line 8</p>
+</div>
+    </div>
+    <div class="bui-docs-code" dir="ltr">
+        <button type="button" class="bui-docs-btn bui-docs-copy" data-docs-copy>Copy</button>
+        <pre tabindex="0" dir="ltr"><code>&lt;div class="bui-overflow-y-auto" style="block-size: 8rem" tabindex="0" role="region" aria-label="Vertical scroll example"&gt;
+    &lt;p&gt;Line 1&lt;/p&gt;
+    &lt;p&gt;Line 2&lt;/p&gt;
+    &lt;p&gt;Line 3&lt;/p&gt;
+    &lt;p&gt;Line 4&lt;/p&gt;
+    &lt;p&gt;Line 5&lt;/p&gt;
+    &lt;p&gt;Line 6&lt;/p&gt;
+    &lt;p&gt;Line 7&lt;/p&gt;
+    &lt;p&gt;Line 8&lt;/p&gt;
+&lt;/div&gt;</code></pre>
+    </div>
+</section>
+
+<section class="bui-docs-example" aria-labelledby="ex-o-2">
+    <h3 id="ex-o-2">Horizontal scroll container</h3>
+    <p>Wide content such as a table or code scrolls inside its own box, so the page never scrolls sideways.</p>
+    <div class="bui-docs-preview">
+<div class="bui-overflow-x-auto" tabindex="0" role="region" aria-label="Horizontal scroll example">
+    <div style="inline-size: 60rem">Wide content, 60rem wide</div>
+</div>
+    </div>
+    <div class="bui-docs-code" dir="ltr">
+        <button type="button" class="bui-docs-btn bui-docs-copy" data-docs-copy>Copy</button>
+        <pre tabindex="0" dir="ltr"><code>&lt;div class="bui-overflow-x-auto" tabindex="0" role="region" aria-label="Horizontal scroll example"&gt;
+    &lt;div style="inline-size: 60rem"&gt;Wide content, 60rem wide&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+    </div>
+</section>
+
+<section class="bui-docs-example" aria-labelledby="ex-o-3">
+    <h3 id="ex-o-3">Both axes</h3>
+    <p>Scrollbars appear on the axes that need them.</p>
+    <div class="bui-docs-preview">
+<div class="bui-overflow-auto" style="block-size: 7rem; max-inline-size: 20rem" tabindex="0" role="region" aria-label="Two axis scroll example">
+    <div style="inline-size: 40rem; block-size: 14rem">Content larger than the box in both directions</div>
+</div>
+    </div>
+    <div class="bui-docs-code" dir="ltr">
+        <button type="button" class="bui-docs-btn bui-docs-copy" data-docs-copy>Copy</button>
+        <pre tabindex="0" dir="ltr"><code>&lt;div class="bui-overflow-auto" style="block-size: 7rem; max-inline-size: 20rem" tabindex="0" role="region" aria-label="Two axis scroll example"&gt;
+    &lt;div style="inline-size: 40rem; block-size: 14rem"&gt;Content larger than the box in both directions&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+    </div>
+</section>
+
+<section class="bui-docs-example" aria-labelledby="ex-o-4">
+    <h3 id="ex-o-4">Auto, scroll and hidden</h3>
+    <p>The same short content in three boxes. Scroll always shows its scrollbars (visible on systems with classic scrollbars), auto shows none because nothing overflows, hidden cuts the long line.</p>
+    <div class="bui-docs-preview">
+<div class="bui-d-grid bui-grid-cols-1 bui-grid-cols-md-3 bui-gap-3">
+    <div class="bui-overflow-auto" style="block-size: 5rem">bui-overflow-auto</div>
+    <div class="bui-overflow-scroll" style="block-size: 5rem">bui-overflow-scroll</div>
+    <div class="bui-overflow-hidden" style="block-size: 5rem; white-space: nowrap">bui-overflow-hidden: this long line is cut at the edge of the box</div>
+</div>
+    </div>
+    <div class="bui-docs-code" dir="ltr">
+        <button type="button" class="bui-docs-btn bui-docs-copy" data-docs-copy>Copy</button>
+        <pre tabindex="0" dir="ltr"><code>&lt;div class="bui-d-grid bui-grid-cols-1 bui-grid-cols-md-3 bui-gap-3"&gt;
+    &lt;div class="bui-overflow-auto" style="block-size: 5rem"&gt;bui-overflow-auto&lt;/div&gt;
+    &lt;div class="bui-overflow-scroll" style="block-size: 5rem"&gt;bui-overflow-scroll&lt;/div&gt;
+    &lt;div class="bui-overflow-hidden" style="block-size: 5rem; white-space: nowrap"&gt;bui-overflow-hidden: this long line is cut at the edge of the box&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+    </div>
+</section>
+
+<section class="bui-docs-example" aria-labelledby="ex-o-5">
+    <h3 id="ex-o-5">Clip rounded corners</h3>
+    <p>Overflow hidden on a rounded parent keeps a child with its own background inside the corners.</p>
+    <div class="bui-docs-preview">
+<div class="bui-overflow-hidden bui-rounded-lg bui-border-solid" style="padding: 0">
+    <div style="padding: var(--bui-space-3); background: var(--bui-color-primary); color: var(--bui-color-primary-contrast)">Header with its own background</div>
+    <div style="padding: var(--bui-space-3)">Body</div>
+</div>
+    </div>
+    <div class="bui-docs-code" dir="ltr">
+        <button type="button" class="bui-docs-btn bui-docs-copy" data-docs-copy>Copy</button>
+        <pre tabindex="0" dir="ltr"><code>&lt;div class="bui-overflow-hidden bui-rounded-lg bui-border-solid" style="padding: 0"&gt;
+    &lt;div style="padding: var(--bui-space-3); background: var(--bui-color-primary); color: var(--bui-color-primary-contrast)"&gt;Header with its own background&lt;/div&gt;
+    &lt;div style="padding: var(--bui-space-3)"&gt;Body&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+    </div>
+</section>
+
+<h2>Overflow and sticky</h2>
+
+<p>An element with <code>position: sticky</code> sticks against its nearest ancestor that has an overflow value other than <code>visible</code>. That ancestor is the scroll container, even if it does not scroll.</p>
+
+<p>A scrolling ancestor (<code>bui-overflow-auto</code> with a height) is the reference, and the sticky element sticks inside it. This is the sticky example on the <a href="position.html">Position</a> page. A non scrolling ancestor with <code>bui-overflow-hidden</code> is also treated as the scroll container, so a sticky child never sticks to the page and seems not to work. To clip an ancestor and keep sticky working against the page, use <code>bui-overflow-clip</code>, which does not create a scroll container.</p>
+
+<div class="bui-docs-code bui-docs-code--solo" dir="ltr" data-docs-lang="html">
+    <button type="button" class="bui-docs-btn bui-docs-copy" data-docs-copy>Copy</button>
+    <pre tabindex="0" dir="ltr" aria-label="Sticky and overflow"><code>&lt;!-- Sticks to the scrolling box --&gt;
+&lt;div class="bui-overflow-y-auto" style="block-size: 20rem"&gt;
+    &lt;div class="bui-position-sticky bui-inset-block-start-0"&gt;Header&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- Does NOT stick to the page: the hidden ancestor is the scroll container --&gt;
+&lt;div class="bui-overflow-hidden"&gt;
+    &lt;div class="bui-position-sticky bui-inset-block-start-0"&gt;Header&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- Sticks to the page: clip does not create a scroll container --&gt;
+&lt;div class="bui-overflow-clip"&gt;
+    &lt;div class="bui-position-sticky bui-inset-block-start-0"&gt;Header&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+</div>
+
+<h2>Responsive behavior</h2>
+
+<p>Overflow classes have no breakpoint variants in this release. To avoid unintended horizontal overflow on narrow screens, put wide content (tables, code, long strings) in a <code>bui-overflow-x-auto</code> container, as the documentation tables on this site do.</p>
+
+<h2>RTL and LTR</h2>
+
+<p>Overflow itself is direction independent. The horizontal scroll origin follows the page direction: a scroll container starts at the right edge in RTL and the content extends to the left.</p>
+
+<section class="bui-docs-example" aria-labelledby="ex-o-6">
+    <h3 id="ex-o-6">Same markup in dir="rtl"</h3>
+    <p>The scroll starts at the right edge.</p>
+    <div class="bui-docs-preview">
+<div dir="rtl" lang="ar">
+    <div class="bui-overflow-x-auto" tabindex="0" role="region" aria-label="مثال تمرير أفقي">
+        <div style="inline-size: 60rem">محتوى عريض يبدأ من اليمين</div>
+    </div>
+</div>
+    </div>
+    <div class="bui-docs-code" dir="ltr">
+        <button type="button" class="bui-docs-btn bui-docs-copy" data-docs-copy>Copy</button>
+        <pre tabindex="0" dir="ltr"><code>&lt;div dir="rtl" lang="ar"&gt;
+    &lt;div class="bui-overflow-x-auto" tabindex="0" role="region" aria-label="مثال تمرير أفقي"&gt;
+        &lt;div style="inline-size: 60rem"&gt;محتوى عريض يبدأ من اليمين&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+    </div>
+</section>
+
+<h2>Accessibility</h2>
+
+<p>A box that scrolls must be reachable with the keyboard. Browsers make scrollable regions focusable in some cases, but not reliably, so add <code>tabindex="0"</code>, a <code>role="region"</code> and an <code>aria-label</code> that says what scrolls, as in the examples. Content clipped by <code>hidden</code> or <code>clip</code> is still in the accessibility tree, so screen readers read it even though it is not visible. Never clip content that users need to see.</p>
+
+<h2>Tokens used</h2>
+
+<p>None for the overflow classes. The clipping example also uses <code>--bui-radius-lg</code> and the border tokens through the Borders utilities.</p>
+                <div class="bui-docs-sr" id="bui-docs-status" role="status" aria-live="polite"></div>
+            </article>
+        </main>
+    </div>
+
+    <footer class="bui-docs-footer">
+        <span>&copy; 2026 Baset-UI</span>
+        <span>Version <span data-docs-version>0.0.0-foundation</span></span>
+        <a href="https://github.com/AbdulbasetRS/Baset-UI" rel="noopener" target="_blank">GitHub</a>
+    </footer>
+
+    <script src="../../assets/js/baset-ui.js"></script>
+    <script src="../../documentation/assets/js/nav.js"></script>
+    <script src="../../documentation/assets/js/docs.js"></script>
+</body>
+</html>
