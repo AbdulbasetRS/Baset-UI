@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-bui-theme="default" data-bui-mode="light" data-root="../../">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Breakpoints - Baset-UI Documentation</title>
+    <meta name="description" content="The seven breakpoints, their tokens and the class infix used by every responsive class.">
+    <link rel="icon" href="data:,">
+
+    <link rel="stylesheet" href="../../assets/css/baset-ui.css">
+    <link rel="stylesheet" href="../../documentation/assets/css/docs.css">
+    <script>
+        /* Apply saved mode early to avoid a flash. Documentation shell only. */
+        try {
+            var m = localStorage.getItem('bui-docs-mode');
+            if (m === 'dark' || m === 'light') document.documentElement.setAttribute('data-bui-mode', m);
+        } catch (e) {}
+    </script>
+</head>
+<body>
+    <main class="bui-docs-main" id="bui-docs-main" tabindex="-1">
+        <div class="bui-docs-page">
+            <div class="bui-docs-page__body">
+
+                <header class="bui-docs-page-header">
+                    <nav class="bui-docs-breadcrumb" aria-label="Breadcrumb" data-docs-breadcrumb hidden></nav>
+                    <h1>Breakpoints</h1>
+                    <p class="bui-docs-lead">Seven breakpoints on top of a mobile-first base, readable from CSS and JavaScript.</p>
+                </header>
+
+                <div class="bui-docs-content">
+
+<section class="bui-docs-section" aria-labelledby="overview">
+<h2 id="overview">Overview</h2>
+<p>Baset-UI has one base state (below 480px) and seven breakpoints. Every responsive class uses the same infix, for example <code>bui-col-md-6</code>, <code>bui-ms-lg-3</code> and <code>bui-flex-xl-row</code>. A class with an infix applies from that breakpoint upward.</p>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Breakpoints, tokens and class infixes</caption>
+<thead><tr><th scope="col">Name</th><th scope="col">Range</th><th scope="col">Token</th><th scope="col">Class infix</th><th scope="col">Container max-width</th><th scope="col">Token value (live)</th></tr></thead>
+<tbody>
+<tr><td>Base</td><td>0 to 479px</td><td>-</td><td>(none)</td><td>100% (fluid)</td><td>-</td></tr>
+<tr><td>XS</td><td>480px and up</td><td><code>--bui-bp-xs</code></td><td><code>xs</code></td><td>100% (fluid)</td><td><span data-docs-token="--bui-bp-xs" data-docs-mode="light"></span></td></tr>
+<tr><td>SM</td><td>576px and up</td><td><code>--bui-bp-sm</code></td><td><code>sm</code></td><td>540px</td><td><span data-docs-token="--bui-bp-sm" data-docs-mode="light"></span></td></tr>
+<tr><td>MD</td><td>768px and up</td><td><code>--bui-bp-md</code></td><td><code>md</code></td><td>720px</td><td><span data-docs-token="--bui-bp-md" data-docs-mode="light"></span></td></tr>
+<tr><td>LG</td><td>992px and up</td><td><code>--bui-bp-lg</code></td><td><code>lg</code></td><td>960px</td><td><span data-docs-token="--bui-bp-lg" data-docs-mode="light"></span></td></tr>
+<tr><td>XL</td><td>1200px and up</td><td><code>--bui-bp-xl</code></td><td><code>xl</code></td><td>1140px</td><td><span data-docs-token="--bui-bp-xl" data-docs-mode="light"></span></td></tr>
+<tr><td>XXL</td><td>1600px and up</td><td><code>--bui-bp-xxl</code></td><td><code>xxl</code></td><td>1440px</td><td><span data-docs-token="--bui-bp-xxl" data-docs-mode="light"></span></td></tr>
+<tr><td>XXXL</td><td>1920px and up</td><td><code>--bui-bp-xxxl</code></td><td><code>xxxl</code></td><td>1760px</td><td><span data-docs-token="--bui-bp-xxxl" data-docs-mode="light"></span></td></tr>
+</tbody>
+</table>
+</section>
+
+<section class="bui-docs-section" aria-labelledby="mobile-first">
+<h2 id="mobile-first">Mobile first</h2>
+<p>Styles are written for the smallest screen first and widened with <code>min-width</code> media queries. The library does not use <code>max-width</code> queries.</p>
+<div class="bui-docs-callout bui-docs-callout--note" role="note">
+<p class="bui-docs-callout__title">Note</p>
+<p>CSS variables do not work inside <code>@media</code>. The media queries in <code>baset-ui.css</code> contain the pixel values literally, and the <code>--bui-bp-*</code> tokens exist so JavaScript can read the same numbers. Both lists must change together.</p>
+</div><pre class="bui-docs-code" data-lang="css"><code>/* Base (below 480px): one column */
+.my-card { padding: var(--bui-space-3); }
+
+/* From MD (768px) upward */
+@media (min-width: 768px) {
+    .my-card { padding: var(--bui-space-4); }
+}</code></pre><h3>Reading the tokens from JavaScript</h3>
+<p>This is a plain CSS property read. It is not a BUI JavaScript API (none exists yet).</p>
+<pre class="bui-docs-code" data-lang="javascript"><code>const md = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--bui-bp-md'), 10);
+const isMdUp = window.matchMedia('(min-width: ' + md + 'px)').matches;</code></pre>
+</section>
+
+<section class="bui-docs-section" aria-labelledby="examples">
+<h2 id="examples">Examples</h2>
+<p>Resize the window to see the active breakpoint. The value is computed from the tokens above.</p>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<p class="bui-docs-current-bp" data-docs-current-bp></p>
+</div>
+<pre class="bui-docs-code" data-lang="javascript"><code>const names = ['xs', 'sm', 'md', 'lg', 'xl', 'xxl', 'xxxl'];
+const style = getComputedStyle(document.documentElement);
+let current = 'base';
+names.forEach(function (n) {
+    const px = parseInt(style.getPropertyValue('--bui-bp-' + n), 10);
+    if (window.innerWidth &gt;= px) current = n;
+});</code></pre>
+</div>
+</section>
+
+<section class="bui-docs-section" aria-labelledby="responsive-behavior">
+<h2 id="responsive-behavior">Responsive behavior</h2>
+<p>Test layouts at 320, 480, 576, 768, 992, 1200, 1600 and 1920 pixels. Content must not scroll sideways at any width of 320px or more. Wide content (tables, code) scrolls inside its own container.</p>
+</section>
+
+<section class="bui-docs-section" aria-labelledby="accessibility">
+<h2 id="accessibility">Accessibility</h2>
+<p>Layout must reflow without two-dimensional scrolling at a 320 CSS pixel width (WCAG 1.4.10). Because breakpoints are expressed in CSS pixels, browser zoom to 400% on a 1280px window reaches the 320px layout, so the base state is the one that zoomed users see. Do not hide essential content only at one breakpoint, and do not rely on <code>:hover</code> at any breakpoint.</p>
+</section>
+
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="../../assets/js/baset-ui.js"></script>
+    <script src="../../documentation/assets/js/nav.js"></script>
+    <script src="../../documentation/assets/js/docs.js"></script>
+</body>
+</html>

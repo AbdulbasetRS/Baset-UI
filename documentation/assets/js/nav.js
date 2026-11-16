@@ -25,8 +25,8 @@
  */
 window.BUI_DOCS_NAV = [
     { title: 'Get Started', items: ['Introduction', 'Installation', 'Quick Start', 'Download', 'Browser Support'] },
-    { title: 'Layout', items: ['Breakpoints', 'Container', 'Grid', 'Flexbox', 'Spacing'] },
-    { title: 'Customization', items: ['Colors', 'Typography', 'CSS Variables', 'Themes', 'Dark Mode'] },
+    { title: 'Layout', items: [{ title: 'Breakpoints', href: 'documentation/layout/breakpoints.html' }, { title: 'Container', href: 'documentation/layout/container.html' }, { title: 'Grid', href: 'documentation/layout/grid.html' }, { title: 'Flexbox', href: 'documentation/layout/flexbox.html' }, { title: 'Spacing', href: 'documentation/layout/spacing.html' }] },
+    { title: 'Customization', items: [{ title: 'Colors', href: 'documentation/customization/colors.html' }, { title: 'Typography', href: 'documentation/customization/typography.html' }, { title: 'CSS Variables', href: 'documentation/customization/css-variables.html' }, 'Themes', 'Dark Mode'] },
     { title: 'Components', items: ['Accordion', 'Alert', 'Avatar', 'Badge', 'Button', 'Button Group', 'Card', 'Carousel', 'Close Button', 'Dialog', 'Drawer', 'Menu', 'Pagination', 'Popover', 'Progress', 'List Group'] },
     { title: 'Forms', items: ['Form Controls', 'Input', 'Select', 'Checkbox', 'Radio', 'Switch', 'Date Picker', 'Time Picker'] },
     { title: 'Data Display', items: ['DataTable', 'Charts', 'Calendar', 'Maps'] },

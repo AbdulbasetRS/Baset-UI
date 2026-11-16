@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-bui-theme="default" data-bui-mode="light" data-root="../../">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Grid - Baset-UI Documentation</title>
+    <meta name="description" content="A 12 column responsive flexbox grid with gutters, offsets, order and row columns.">
+    <link rel="icon" href="data:,">
+
+    <link rel="stylesheet" href="../../assets/css/baset-ui.css">
+    <link rel="stylesheet" href="../../documentation/assets/css/docs.css">
+    <script>
+        /* Apply saved mode early to avoid a flash. Documentation shell only. */
+        try {
+            var m = localStorage.getItem('bui-docs-mode');
+            if (m === 'dark' || m === 'light') document.documentElement.setAttribute('data-bui-mode', m);
+        } catch (e) {}
+    </script>
+</head>
+<body>
+    <main class="bui-docs-main" id="bui-docs-main" tabindex="-1">
+        <div class="bui-docs-page">
+            <div class="bui-docs-page__body">
+
+                <header class="bui-docs-page-header">
+                    <nav class="bui-docs-breadcrumb" aria-label="Breadcrumb" data-docs-breadcrumb hidden></nav>
+                    <h1>Grid</h1>
+                    <p class="bui-docs-lead">A 12 column flexbox grid that mirrors automatically in RTL.</p>
+                </header>
+
+                <div class="bui-docs-content">
+
+<section class="bui-docs-section" aria-labelledby="overview">
+<h2 id="overview">Overview</h2>
+<p>A 12 column grid built on flexbox. Put columns inside a <code>bui-row</code>. The row and its columns create the gutters, so the row may sit directly in a <code>bui-container</code>. Columns use logical properties and flexbox, so the same markup mirrors in RTL with no extra classes.</p><div class="bui-docs-callout bui-docs-callout--note" role="note">
+<p class="bui-docs-callout__title">Note</p>
+<p>Classes that start with <code>bui-docs-</code> in the live previews belong to this documentation site (demo boxes and frames). They are not part of the library.</p>
+</div>
+</section>
+
+<section class="bui-docs-section" aria-labelledby="equal-width">
+<h2 id="equal-width">Equal-width columns</h2>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<div class="bui-row">
+    <div class="bui-col"><div class="bui-docs-demo-box">1</div></div>
+    <div class="bui-col"><div class="bui-docs-demo-box">2</div></div>
+    <div class="bui-col"><div class="bui-docs-demo-box">3</div></div>
+</div>
+</div>
+</div>
+</section>
+
+<section class="bui-docs-section" aria-labelledby="column-sizes">
+<h2 id="column-sizes">Column sizes</h2>
+<p><code>bui-col-1</code> to <code>bui-col-12</code> take that many twelfths. Columns that do not fit wrap to a new line.</p>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<div class="bui-row bui-gy-2">
+    <div class="bui-col-8"><div class="bui-docs-demo-box">bui-col-8</div></div>
+    <div class="bui-col-4"><div class="bui-docs-demo-box">bui-col-4</div></div>
+    <div class="bui-col-3"><div class="bui-docs-demo-box">bui-col-3</div></div>
+    <div class="bui-col"><div class="bui-docs-demo-box">bui-col (the rest)</div></div>
+</div>
+</div>
+</div><h3>Auto width</h3>
+<p><code>bui-col-auto</code> sizes to its content.</p>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<div class="bui-row">
+    <div class="bui-col-auto"><div class="bui-docs-demo-box">auto width</div></div>
+    <div class="bui-col"><div class="bui-docs-demo-box">bui-col</div></div>
+    <div class="bui-col-auto"><div class="bui-docs-demo-box">auto</div></div>
+</div>
+</div>
+</div>
+</section>
+
+<section class="bui-docs-section" aria-labelledby="responsive-columns">
+<h2 id="responsive-columns">Responsive columns</h2>
+<p>Add the breakpoint infix: <code>bui-col-{bp}-{n}</code>. The example is one column below SM, two columns from SM, and four columns from LG.</p>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<div class="bui-row bui-gy-2">
+    <div class="bui-col-12 bui-col-sm-6 bui-col-lg-3"><div class="bui-docs-demo-box">1</div></div>
+    <div class="bui-col-12 bui-col-sm-6 bui-col-lg-3"><div class="bui-docs-demo-box">2</div></div>
+    <div class="bui-col-12 bui-col-sm-6 bui-col-lg-3"><div class="bui-docs-demo-box">3</div></div>
+    <div class="bui-col-12 bui-col-sm-6 bui-col-lg-3"><div class="bui-docs-demo-box">4</div></div>
+</div>
+</div>
+</div>
+</section>
+
+<section class="bui-docs-section" aria-labelledby="row-cols">
+<h2 id="row-cols">Row columns</h2>
+<p><code>bui-row-cols-{1..6}</code> and <code>bui-row-cols-auto</code> size every direct child at once, so the children need no column class.</p>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<div class="bui-row bui-row-cols-2 bui-row-cols-md-3 bui-gy-2">
+    <div><div class="bui-docs-demo-box">1</div></div>
+    <div><div class="bui-docs-demo-box">2</div></div>
+    <div><div class="bui-docs-demo-box">3</div></div>
+    <div><div class="bui-docs-demo-box">4</div></div>
+    <div><div class="bui-docs-demo-box">5</div></div>
+    <div><div class="bui-docs-demo-box">6</div></div>
+</div>
+</div>
+</div>
+</section>
+
+<section class="bui-docs-section" aria-labelledby="gutters">
+<h2 id="gutters">Gutters</h2>
+<p>The default gutter is <code>--bui-grid-gutter</code>. Override it for one row with <code>bui-g-{0..5}</code> (both axes), <code>bui-gx-{0..5}</code> (horizontal) or <code>bui-gy-{0..5}</code> (vertical). Gutter classes are not generated per breakpoint.</p>
+<div class="bui-docs-callout bui-docs-callout--warning" role="note">
+<p class="bui-docs-callout__title">Warning</p>
+<p>A row has a negative inline margin of half the horizontal gutter. Keep the gutter at or below twice <code>--bui-container-padding-x</code> when the row sits directly in a container, or the page scrolls sideways. That is why the gutter classes stop at 5.</p>
+</div><div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<div class="bui-row bui-g-0 bui-docs-demo-gap">
+    <div class="bui-col"><div class="bui-docs-demo-box">bui-g-0</div></div>
+    <div class="bui-col"><div class="bui-docs-demo-box">bui-g-0</div></div>
+</div>
+<div class="bui-row bui-gx-5 bui-gy-2">
+    <div class="bui-col"><div class="bui-docs-demo-box">bui-gx-5</div></div>
+    <div class="bui-col"><div class="bui-docs-demo-box">bui-gx-5</div></div>
+</div>
+</div>
+</div>
+</section>
+
+<section class="bui-docs-section" aria-labelledby="offset-order">
+<h2 id="offset-order">Offset and order</h2>
+<p><code>bui-offset-{0..11}</code> adds that many twelfths of space at the inline start (the right in LTR, the left in RTL). <code>bui-order-first</code>, <code>bui-order-{0..5}</code> and <code>bui-order-last</code> change the visual order.</p>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<div class="bui-row bui-gy-2">
+    <div class="bui-col-4"><div class="bui-docs-demo-box">bui-col-4</div></div>
+    <div class="bui-col-4 bui-offset-4"><div class="bui-docs-demo-box">bui-offset-4</div></div>
+    <div class="bui-col-4 bui-order-first"><div class="bui-docs-demo-box bui-docs-demo-box--alt">bui-order-first (third in the source)</div></div>
+</div>
+</div>
+</div>
+</section>
+
+<section class="bui-docs-section" aria-labelledby="rtl">
+<h2 id="rtl">RTL</h2>
+<p>Set <code>dir="rtl"</code> on <code>&lt;html&gt;</code> or on a wrapper. Nothing else changes: column 1 starts at the right.</p>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<div dir="rtl">
+    <div class="bui-row">
+        <div class="bui-col-4"><div class="bui-docs-demo-box">1</div></div>
+        <div class="bui-col-4 bui-offset-2"><div class="bui-docs-demo-box">2 (offset-2)</div></div>
+    </div>
+</div>
+</div>
+</div>
+</section>
+
+<section class="bui-docs-section" aria-labelledby="reference">
+<h2 id="reference">Class reference</h2>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Grid classes</caption>
+<thead><tr><th scope="col">Class</th><th scope="col">Description</th></tr></thead>
+<tbody>
+<tr><td><code>bui-row</code></td><td>Flex row. Defines the gutters.</td></tr>
+<tr><td><code>bui-col</code></td><td>Equal-width column (<code>flex: 1 0 0%</code>).</td></tr>
+<tr><td><code>bui-col-auto</code></td><td>Width of the content.</td></tr>
+<tr><td><code>bui-col-{1..12}</code></td><td>Width in twelfths.</td></tr>
+<tr><td><code>bui-offset-{0..11}</code></td><td>Inline-start margin in twelfths.</td></tr>
+<tr><td><code>bui-order-{first, 0..5, last}</code></td><td>Visual order.</td></tr>
+<tr><td><code>bui-row-cols-{1..6, auto}</code></td><td>Column width for all direct children.</td></tr>
+<tr><td><code>bui-g-{0..5}</code>, <code>bui-gx-*</code>, <code>bui-gy-*</code></td><td>Gutter size (no breakpoint variants).</td></tr>
+</tbody>
+</table><p>Every class except the gutter classes has a breakpoint variant: <code>bui-col-md-6</code>, <code>bui-offset-lg-2</code>, <code>bui-order-xl-last</code>, <code>bui-row-cols-sm-3</code>. Variants exist for XS, SM, MD, LG, XL, XXL and XXXL.</p>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Grid tokens</caption>
+<thead><tr><th scope="col">Token</th><th scope="col">Default</th><th scope="col">Description</th></tr></thead>
+<tbody>
+<tr><td><code>--bui-grid-gutter</code></td><td><span data-docs-token="--bui-grid-gutter" data-docs-mode="light"></span></td><td>Default gutter (both axes read from it on <code>bui-row</code>).</td></tr>
+<tr><td><code>--bui-grid-gutter-x</code>, <code>--bui-grid-gutter-y</code></td><td>set by <code>bui-row</code></td><td>Set per row by the gutter classes. Do not set them on ancestors: <code>bui-row</code> redefines them.</td></tr>
+</tbody>
+</table>
+</section>
+
+<section class="bui-docs-section" aria-labelledby="responsive-behavior">
+<h2 id="responsive-behavior">Responsive behavior</h2>
+<p>Without an infix a column rule applies at every width. With an infix it applies from that breakpoint upward, so list the smallest width first (<code>bui-col-12 bui-col-md-6</code>). Columns that have no width class below their breakpoint are 100% wide.</p>
+</section>
+
+<section class="bui-docs-section" aria-labelledby="accessibility">
+<h2 id="accessibility">Accessibility</h2>
+<p><code>bui-order-*</code> changes only the visual order. Keyboard focus and screen readers follow the DOM order, so a mismatch breaks WCAG 1.3.2 (Meaningful Sequence) and 2.4.3 (Focus Order). Use order only where the DOM order is still logical. The grid adds no roles. If the content is tabular, use a real table. Do not use gutters as the only separation between pieces of information.</p>
+</section>
+
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="../../assets/js/baset-ui.js"></script>
+    <script src="../../documentation/assets/js/nav.js"></script>
+    <script src="../../documentation/assets/js/docs.js"></script>
+</body>
+</html>

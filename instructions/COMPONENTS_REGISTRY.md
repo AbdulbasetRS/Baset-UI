@@ -17,7 +17,7 @@
 ## الأعمدة
 `Type`: Core | Extension. `JS`: Yes | No. `Docs`: مسار الصفحة أو `-`.
 
-> **الوضع الحالي (Task 01): كل المكونات Planned. لا يوجد أي مكون منفذ.** الروابط في Sidebar Placeholders فقط.
+> **الوضع الحالي (بعد Task 03): كل المكونات Planned. لا يوجد أي Component منفذ.** المنفذ: Design Tokens وLayout (Container/Grid/Flexbox/Spacing) كأنظمة أساسية، وأدوات Flexbox وSpacing فقط من Utilities. روابط Sidebar للمكونات Placeholders.
 
 ### Components
 | Component | Status | Type | JS | Docs | Updated | Notes |
@@ -62,8 +62,9 @@
 ### Systems (مستقبلية)
 | System | Status | Notes |
 |---|---|---|
-| Layout (Container/Grid/Flex/Spacing) | Planned | |
-| Utilities | Planned | |
+| Design Tokens (Colors, Typography, Spacing, Borders, Radius, Shadows, Motion, Z-index, Focus, Breakpoints) | Documented | Task 03. اختُبر آلياً في Chromium فقط (انظر تقرير Task 03). صفحات: Colors, Typography, CSS Variables, Spacing. تحقق التباين: 40 ثنائية في كل وضع، محسوبة حياً في صفحة Colors. لم يُختبر بقارئ شاشة ولا Safari/Firefox ولا أجهزة لمس |
+| Layout (Container/Grid/Flexbox/Spacing) | Documented | Task 03. صفحات Breakpoints, Container, Grid, Flexbox, Spacing. التوثيق بروح المعيار (استثناء الأقسام الثمانية موثق في [COMPONENT_DOCUMENTATION.md](COMPONENT_DOCUMENTATION.md)). حجم `baset-ui.css`: انظر CHANGELOG. Chromium فقط |
+| Utilities | Planned | Task 03 نفّذ منها Flexbox وSpacing (الأخيرة داخل صفحة Layout). Display/Position/Overflow/Visibility/Borders في Task 04 |
 | Theme Manager | Planned | [RTL_LTR_AND_THEMES.md](RTL_LTR_AND_THEMES.md) |
 | Locale Manager | Planned | [INTERNATIONALIZATION.md](INTERNATIONALIZATION.md) |
 | Toast Manager / Modal Manager | Planned | Toast/Modal غير مدرجين في Sidebar بعد |
@@ -76,3 +77,5 @@
 | Docs page template (`templates/DOC_PAGE_TEMPLATE.html`) | Completed | Task 02. بنيته نفسها منفذة ومختبرة آلياً (Chromium فقط). لا توجد صفحة توثيق حقيقية بعد |
 | Docs page widgets (Breadcrumb, On this page, Previous/Next, Example, Code + Copy, Callouts, Tables) | Completed | Task 02. اختُبرت بصفحات مؤقتة خارج المشروع، ولم تُختبر بقارئ شاشة أو أجهزة لمس أو Safari/Firefox |
 | Sidebar للصفحات المتداخلة (active + فتح القسم + تمرير) | Completed | Task 02. المسارات عبر `data-root` ([ARCHITECTURE.md](ARCHITECTURE.md)) |
+| Live token widgets (`data-docs-token`, `tr[data-docs-contrast]`, `data-docs-current-bp`) | Completed | Task 03. في `docs.js`. اختُبرت في Chromium فقط |
+| صفحات التوثيق الثمانية (Layout x5, Customization x3) | Completed | Task 03. مفعلة في `nav.js` |

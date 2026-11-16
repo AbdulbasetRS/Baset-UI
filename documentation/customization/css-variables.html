@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-bui-theme="default" data-bui-mode="light" data-root="../../">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>CSS Variables - Baset-UI Documentation</title>
+    <meta name="description" content="The layers, scopes, derivation rules and full catalog of Baset-UI design tokens.">
+    <link rel="icon" href="data:,">
+
+    <link rel="stylesheet" href="../../assets/css/baset-ui.css">
+    <link rel="stylesheet" href="../../documentation/assets/css/docs.css">
+    <script>
+        /* Apply saved mode early to avoid a flash. Documentation shell only. */
+        try {
+            var m = localStorage.getItem('bui-docs-mode');
+            if (m === 'dark' || m === 'light') document.documentElement.setAttribute('data-bui-mode', m);
+        } catch (e) {}
+    </script>
+</head>
+<body>
+    <main class="bui-docs-main" id="bui-docs-main" tabindex="-1">
+        <div class="bui-docs-page">
+            <div class="bui-docs-page__body">
+
+                <header class="bui-docs-page-header">
+                    <nav class="bui-docs-breadcrumb" aria-label="Breadcrumb" data-docs-breadcrumb hidden></nav>
+                    <h1>CSS Variables</h1>
+                    <p class="bui-docs-lead">Every token, how the layers derive from each other, and how to override them on any element.</p>
+                </header>
+
+                <div class="bui-docs-content">
+
+<section class="bui-docs-section" aria-labelledby="overview">
+<h2 id="overview">Overview</h2>
+<p>All tokens are CSS custom properties with the <code>--bui-</code> prefix. They are public, documented and stable within a major version. Properties that start with <code>--bui-docs-</code> belong to this documentation site and are not part of the library.</p>
+</section>
+
+<section class="bui-docs-section" aria-labelledby="layers">
+<h2 id="layers">Layers and scopes</h2>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Token layers</caption>
+<thead><tr><th scope="col">Layer</th><th scope="col">Selector in baset-ui.css</th><th scope="col">Contents</th><th scope="col">Rule</th></tr></thead>
+<tbody>
+<tr><td>1. Raw, mode-dependent</td><td><code>:root, [data-bui-mode="light"]</code> and <code>[data-bui-mode="dark"]</code></td><td>Neutral scale, semantic colors, shadows, overlay</td><td>Literal values only. A Theme overrides these.</td></tr>
+<tr><td>2. Static global</td><td><code>:root</code></td><td>Typography, spacing, radius, borders, motion, z-index, breakpoints, container widths</td><td>Identical in both modes. Inherited by every element.</td></tr>
+<tr><td>3. Aliases and Component tokens</td><td><code>:root, [data-bui-mode], [data-bui-theme]</code></td><td><code>--bui-color-text</code>, <code>--bui-color-link</code>, <code>--bui-grid-gutter</code>, <code>--bui-heading-1-size</code> and similar</td><td>Defined with <code>var()</code> only. Components read this layer.</td></tr>
+</tbody>
+</table>
+</section>
+
+<section class="bui-docs-section" aria-labelledby="derivation">
+<h2 id="derivation">Derivation rules</h2>
+<ol>
+<li>Layer 3 tokens are derived from Layer 1 or 2 with <code>var()</code>. They never contain a literal color or length.</li>
+<li>Layer 3 is declared on <code>:root</code> <em>and</em> on <code>[data-bui-mode]</code> and <code>[data-bui-theme]</code>. A custom property that refers to another is resolved where it is declared, so an inherited alias would keep the page value. Re-declaring it on the scope element makes it follow that scope.</li>
+<li>Component tokens are named <code>--bui-{component}-{property}</code> and default to a global token (for example <code>--bui-grid-gutter: var(--bui-space-4)</code>). Components read Component tokens and never read Layer 1 directly.</li>
+<li>To restyle one component, override its Component token. To restyle a whole Theme, override Layer 1 or 2 on the Theme scope.</li>
+<li>Do not use <code>!important</code> on tokens.</li>
+<li>Dark mode must define every Layer 1 token. A token with no Dark value is a defect.</li>
+</ol>
+</section>
+
+<section class="bui-docs-section" aria-labelledby="scopes">
+<h2 id="scopes">Overriding on any element</h2>
+<p>Set a token on any element and everything inside follows. The attribute <code>data-bui-theme</code> marks the element as a scope so Layer 3 tokens are recalculated there (the value is only a name; no Theme Manager exists yet). Here <code>--bui-color-primary</code> is pointed at the success color, and the link and focus tokens follow.</p>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<div class="bui-docs-panel" data-bui-theme="example" style="--bui-color-primary: var(--bui-color-success)">
+    <p>Link color inside this scope: <span style="color: var(--bui-color-link)">--bui-color-link</span>. Press Tab to a focusable element to see the focus color.</p>
+    <p><a href="#scopes">A focusable link</a></p>
+</div>
+</div>
+</div>
+</section>
+
+<section class="bui-docs-section" aria-labelledby="catalog">
+<h2 id="catalog">Token catalog</h2>
+<p>Colors are in <a href="colors.html">Colors</a>, typography in <a href="typography.html">Typography</a> and the spacing scale in <a href="../layout/spacing.html">Spacing</a>. The rest:</p>
+<h3>Borders and radius</h3>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Border and radius tokens</caption>
+<thead><tr><th scope="col">Token</th><th scope="col">Value (live)</th></tr></thead>
+<tbody>
+<tr><td><code>--bui-border-width</code></td><td><span data-docs-token="--bui-border-width" data-docs-mode="light"></span></td></tr>
+<tr><td><code>--bui-border-width-thick</code></td><td><span data-docs-token="--bui-border-width-thick" data-docs-mode="light"></span></td></tr>
+<tr><td><code>--bui-border-color</code></td><td><span data-docs-token="--bui-border-color" data-docs-mode="light"></span></td></tr>
+<tr><td><code>--bui-radius-none</code></td><td><span data-docs-token="--bui-radius-none" data-docs-mode="light"></span></td></tr>
+<tr><td><code>--bui-radius-sm</code></td><td><span data-docs-token="--bui-radius-sm" data-docs-mode="light"></span></td></tr>
+<tr><td><code>--bui-radius-md</code></td><td><span data-docs-token="--bui-radius-md" data-docs-mode="light"></span></td></tr>
+<tr><td><code>--bui-radius-lg</code></td><td><span data-docs-token="--bui-radius-lg" data-docs-mode="light"></span></td></tr>
+<tr><td><code>--bui-radius-xl</code></td><td><span data-docs-token="--bui-radius-xl" data-docs-mode="light"></span></td></tr>
+<tr><td><code>--bui-radius-full</code></td><td><span data-docs-token="--bui-radius-full" data-docs-mode="light"></span></td></tr>
+</tbody>
+</table><div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<div class="bui-flex bui-flex-wrap bui-gap-3">
+    <div class="bui-docs-demo-box" style="border-radius: var(--bui-radius-none); min-width: 5rem">none</div>
+    <div class="bui-docs-demo-box" style="border-radius: var(--bui-radius-sm); min-width: 5rem">sm</div>
+    <div class="bui-docs-demo-box" style="border-radius: var(--bui-radius-md); min-width: 5rem">md</div>
+    <div class="bui-docs-demo-box" style="border-radius: var(--bui-radius-lg); min-width: 5rem">lg</div>
+    <div class="bui-docs-demo-box" style="border-radius: var(--bui-radius-xl); min-width: 5rem">xl</div>
+    <div class="bui-docs-demo-box" style="border-radius: var(--bui-radius-full); min-width: 5rem">full</div>
+</div>
+</div>
+</div><h3>Shadows</h3>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Shadow tokens</caption>
+<thead><tr><th scope="col">Token</th><th scope="col">Light</th><th scope="col">Dark</th></tr></thead>
+<tbody>
+<tr><td><code>--bui-shadow-sm</code></td><td><span data-docs-token="--bui-shadow-sm" data-docs-mode="light"></span></td><td><span data-docs-token="--bui-shadow-sm" data-docs-mode="dark"></span></td></tr>
+<tr><td><code>--bui-shadow-md</code></td><td><span data-docs-token="--bui-shadow-md" data-docs-mode="light"></span></td><td><span data-docs-token="--bui-shadow-md" data-docs-mode="dark"></span></td></tr>
+<tr><td><code>--bui-shadow-lg</code></td><td><span data-docs-token="--bui-shadow-lg" data-docs-mode="light"></span></td><td><span data-docs-token="--bui-shadow-lg" data-docs-mode="dark"></span></td></tr>
+<tr><td><code>--bui-shadow-xl</code></td><td><span data-docs-token="--bui-shadow-xl" data-docs-mode="light"></span></td><td><span data-docs-token="--bui-shadow-xl" data-docs-mode="dark"></span></td></tr>
+</tbody>
+</table><div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<div class="bui-flex bui-flex-wrap bui-gap-4">
+    <div class="bui-docs-demo-box" style="box-shadow: var(--bui-shadow-sm); background: var(--bui-color-bg); min-width: 5rem">sm</div>
+    <div class="bui-docs-demo-box" style="box-shadow: var(--bui-shadow-md); background: var(--bui-color-bg); min-width: 5rem">md</div>
+    <div class="bui-docs-demo-box" style="box-shadow: var(--bui-shadow-lg); background: var(--bui-color-bg); min-width: 5rem">lg</div>
+    <div class="bui-docs-demo-box" style="box-shadow: var(--bui-shadow-xl); background: var(--bui-color-bg); min-width: 5rem">xl</div>
+</div>
+</div>
+</div><h3>Motion</h3>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Motion tokens</caption>
+<thead><tr><th scope="col">Token</th><th scope="col">Value (live)</th></tr></thead>
+<tbody>
+<tr><td><code>--bui-duration-fast</code></td><td><span data-docs-token="--bui-duration-fast" data-docs-mode="light"></span></td></tr>
+<tr><td><code>--bui-duration-base</code></td><td><span data-docs-token="--bui-duration-base" data-docs-mode="light"></span></td></tr>
+<tr><td><code>--bui-duration-slow</code></td><td><span data-docs-token="--bui-duration-slow" data-docs-mode="light"></span></td></tr>
+<tr><td><code>--bui-easing-standard</code></td><td><span data-docs-token="--bui-easing-standard" data-docs-mode="light"></span></td></tr>
+</tbody>
+</table><p>Under <code>prefers-reduced-motion: reduce</code> the three duration tokens become <code>0.01ms</code>. Future components must take their durations from these tokens so they stop animating.</p>
+<h3>Z-index</h3>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Z-index tokens</caption>
+<thead><tr><th scope="col">Token</th><th scope="col">Value (live)</th></tr></thead>
+<tbody>
+<tr><td><code>--bui-z-dropdown</code></td><td><span data-docs-token="--bui-z-dropdown" data-docs-mode="light"></span></td></tr>
+<tr><td><code>--bui-z-sticky</code></td><td><span data-docs-token="--bui-z-sticky" data-docs-mode="light"></span></td></tr>
+<tr><td><code>--bui-z-fixed</code></td><td><span data-docs-token="--bui-z-fixed" data-docs-mode="light"></span></td></tr>
+<tr><td><code>--bui-z-backdrop</code></td><td><span data-docs-token="--bui-z-backdrop" data-docs-mode="light"></span></td></tr>
+<tr><td><code>--bui-z-modal</code></td><td><span data-docs-token="--bui-z-modal" data-docs-mode="light"></span></td></tr>
+<tr><td><code>--bui-z-popover</code></td><td><span data-docs-token="--bui-z-popover" data-docs-mode="light"></span></td></tr>
+<tr><td><code>--bui-z-toast</code></td><td><span data-docs-token="--bui-z-toast" data-docs-mode="light"></span></td></tr>
+<tr><td><code>--bui-z-tooltip</code></td><td><span data-docs-token="--bui-z-tooltip" data-docs-mode="light"></span></td></tr>
+</tbody>
+</table><p>Reserved for overlays and other layered components that arrive in later tasks. The documentation shell still uses its own values.</p>
+<h3>Focus ring</h3>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Focus ring tokens</caption>
+<thead><tr><th scope="col">Token</th><th scope="col">Value (live)</th></tr></thead>
+<tbody>
+<tr><td><code>--bui-focus-ring-width</code></td><td><span data-docs-token="--bui-focus-ring-width" data-docs-mode="light"></span></td></tr>
+<tr><td><code>--bui-focus-ring-offset</code></td><td><span data-docs-token="--bui-focus-ring-offset" data-docs-mode="light"></span></td></tr>
+<tr><td><code>--bui-focus-ring-color</code></td><td><span data-docs-token="--bui-focus-ring-color" data-docs-mode="light"></span></td></tr>
+</tbody>
+</table><h3>Breakpoints and layout</h3>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Breakpoint and layout tokens</caption>
+<thead><tr><th scope="col">Token</th><th scope="col">Value (live)</th></tr></thead>
+<tbody>
+<tr><td><code>--bui-bp-xs</code></td><td><span data-docs-token="--bui-bp-xs" data-docs-mode="light"></span></td></tr>
+<tr><td><code>--bui-bp-sm</code></td><td><span data-docs-token="--bui-bp-sm" data-docs-mode="light"></span></td></tr>
+<tr><td><code>--bui-bp-md</code></td><td><span data-docs-token="--bui-bp-md" data-docs-mode="light"></span></td></tr>
+<tr><td><code>--bui-bp-lg</code></td><td><span data-docs-token="--bui-bp-lg" data-docs-mode="light"></span></td></tr>
+<tr><td><code>--bui-bp-xl</code></td><td><span data-docs-token="--bui-bp-xl" data-docs-mode="light"></span></td></tr>
+<tr><td><code>--bui-bp-xxl</code></td><td><span data-docs-token="--bui-bp-xxl" data-docs-mode="light"></span></td></tr>
+<tr><td><code>--bui-bp-xxxl</code></td><td><span data-docs-token="--bui-bp-xxxl" data-docs-mode="light"></span></td></tr>
+<tr><td><code>--bui-container-max-sm</code></td><td><span data-docs-token="--bui-container-max-sm" data-docs-mode="light"></span></td></tr>
+<tr><td><code>--bui-container-max-md</code></td><td><span data-docs-token="--bui-container-max-md" data-docs-mode="light"></span></td></tr>
+<tr><td><code>--bui-container-max-lg</code></td><td><span data-docs-token="--bui-container-max-lg" data-docs-mode="light"></span></td></tr>
+<tr><td><code>--bui-container-max-xl</code></td><td><span data-docs-token="--bui-container-max-xl" data-docs-mode="light"></span></td></tr>
+<tr><td><code>--bui-container-max-xxl</code></td><td><span data-docs-token="--bui-container-max-xxl" data-docs-mode="light"></span></td></tr>
+<tr><td><code>--bui-container-max-xxxl</code></td><td><span data-docs-token="--bui-container-max-xxxl" data-docs-mode="light"></span></td></tr>
+<tr><td><code>--bui-container-padding-x</code></td><td><span data-docs-token="--bui-container-padding-x" data-docs-mode="light"></span></td></tr>
+<tr><td><code>--bui-grid-gutter</code></td><td><span data-docs-token="--bui-grid-gutter" data-docs-mode="light"></span></td></tr>
+</tbody>
+</table>
+</section>
+
+<section class="bui-docs-section" aria-labelledby="naming">
+<h2 id="naming">Naming</h2>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Token naming</caption>
+<thead><tr><th scope="col">Kind</th><th scope="col">Pattern</th><th scope="col">Example</th></tr></thead>
+<tbody>
+<tr><td>Global</td><td><code>--bui-{category}-{name}</code></td><td><code>--bui-radius-md</code></td></tr>
+<tr><td>Scale step</td><td><code>--bui-{category}-{step}</code></td><td><code>--bui-space-3</code>, <code>--bui-color-neutral-500</code></td></tr>
+<tr><td>Semantic form</td><td><code>--bui-color-{name}-{form}</code></td><td><code>--bui-color-danger-subtle</code></td></tr>
+<tr><td>Component</td><td><code>--bui-{component}-{property}</code></td><td><code>--bui-grid-gutter</code></td></tr>
+</tbody>
+</table>
+</section>
+
+<section class="bui-docs-section" aria-labelledby="responsive-behavior">
+<h2 id="responsive-behavior">Responsive behavior</h2>
+<p>Tokens are not responsive by themselves. To change a token at a breakpoint, set it inside a <code>min-width</code> media query on the element or scope that needs it.</p>
+<pre class="bui-docs-code" data-lang="css"><code>@media (min-width: 768px) {
+    .my-section { --bui-grid-gutter: var(--bui-space-5); }
+}</code></pre>
+</section>
+
+<section class="bui-docs-section" aria-labelledby="accessibility">
+<h2 id="accessibility">Accessibility</h2>
+<p>Changing color tokens can break contrast. After overriding colors, check the pairs listed on the <a href="colors.html#contrast">Colors</a> page again. Keep <code>--bui-focus-ring-width</code> at 2px or more and keep the ring color at 3:1 against the surrounding background (WCAG 1.4.11, 2.4.11). Do not set durations to non-zero values in a reduced-motion context.</p>
+</section>
+
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="../../assets/js/baset-ui.js"></script>
+    <script src="../../documentation/assets/js/nav.js"></script>
+    <script src="../../documentation/assets/js/docs.js"></script>
+</body>
+</html>

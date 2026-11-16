@@ -12,6 +12,11 @@
  *      with scroll spy, Previous/Next links, Example blocks, Code blocks (Copy + light
  *      highlighting without external libraries), and scrollable regions for wide content.
  *
+ *   5. Live token widgets (Task 03): [data-docs-token] cells show the RESOLVED value of a token
+ *      read from hidden light/dark probe elements; tr[data-docs-contrast] rows compute WCAG
+ *      contrast ratios from those same values; [data-docs-current-bp] shows the active breakpoint.
+ *      Values are never typed into the pages, so the docs cannot drift from baset-ui.css.
+ *
  * Docs UI strings are English on purpose: the documentation site language is English
  * until a multilingual docs system is decided (COMPONENT_DOCUMENTATION.md).
  */
@@ -745,6 +750,90 @@
     window.addEventListener('load', requestScrollables);
     if (doc.fonts && doc.fonts.ready) doc.fonts.ready.then(requestScrollables);
     updateScrollables();
+
+
+    /* ---- Live token values, contrast checks, current breakpoint (docs-only) ---- */
+    /* Hidden probes carry data-bui-mode, so tokens are read for BOTH modes whatever the page mode is. */
+    function probe(mode) {
+        var p = doc.querySelector('[data-docs-probe="' + mode + '"]');
+        if (!p) {
+            p = doc.createElement('div');
+            p.setAttribute('data-bui-mode', mode);
+            p.setAttribute('data-docs-probe', mode);
+            p.hidden = true;
+            doc.body.appendChild(p);
+        }
+        return p;
+    }
+
+    function tokenValue(name, mode) {
+        return window.getComputedStyle(probe(mode || 'light')).getPropertyValue(name).trim();
+    }
+
+    function parseColor(v) {
+        var m = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(v);
+        if (m) {
+            var h = m[1].length === 3 ? m[1].replace(/./g, '$&$&') : m[1];
+            return [parseInt(h.slice(0, 2), 16), parseInt(h.slice(2, 4), 16), parseInt(h.slice(4, 6), 16)];
+        }
+        m = /^rgba?\(\s*(\d+)[\s,]+(\d+)[\s,]+(\d+)/i.exec(v);
+        return m ? [+m[1], +m[2], +m[3]] : null;
+    }
+
+    function luminance(c) {
+        var l = c.map(function (x) {
+            x /= 255;
+            return x <= 0.03928 ? x / 12.92 : Math.pow((x + 0.055) / 1.055, 2.4);
+        });
+        return 0.2126 * l[0] + 0.7152 * l[1] + 0.0722 * l[2];
+    }
+
+    function contrastRatio(a, b) {
+        var la = luminance(a);
+        var lb = luminance(b);
+        return (Math.max(la, lb) + 0.05) / (Math.min(la, lb) + 0.05);
+    }
+
+    Array.prototype.forEach.call(main.querySelectorAll('[data-docs-token]'), function (cell) {
+        cell.textContent = tokenValue(cell.getAttribute('data-docs-token'), cell.getAttribute('data-docs-mode')) || 'not defined';
+    });
+
+    var contrastStats = { light: [0, 0], dark: [0, 0] };
+    Array.prototype.forEach.call(main.querySelectorAll('tr[data-docs-contrast]'), function (row) {
+        var min = parseFloat(row.getAttribute('data-min'));
+        ['light', 'dark'].forEach(function (mode) {
+            var cell = row.querySelector('[data-docs-cell="' + mode + '"]');
+            if (!cell) return;
+            var fg = parseColor(tokenValue(row.getAttribute('data-fg'), mode));
+            var bg = parseColor(tokenValue(row.getAttribute('data-bg'), mode));
+            if (!fg || !bg) { cell.textContent = 'not computable'; return; }
+            var r = contrastRatio(fg, bg);
+            var ok = r >= min;
+            cell.textContent = (Math.floor(r * 100) / 100).toFixed(2) + ':1 ' + (ok ? 'Pass' : 'Fail');
+            contrastStats[mode][1] += 1;
+            if (ok) contrastStats[mode][0] += 1;
+        });
+    });
+    Array.prototype.forEach.call(main.querySelectorAll('[data-docs-contrast-summary]'), function (n) {
+        n.textContent = 'Light: ' + contrastStats.light[0] + ' of ' + contrastStats.light[1] + ' checks pass. Dark: ' +
+            contrastStats.dark[0] + ' of ' + contrastStats.dark[1] + ' checks pass.';
+    });
+
+    var bpOut = main.querySelector('[data-docs-current-bp]');
+    var BP_NAMES = ['xs', 'sm', 'md', 'lg', 'xl', 'xxl', 'xxxl'];
+    function updateBp() {
+        var w = window.innerWidth;
+        var cur = 'Base (below 480px)';
+        BP_NAMES.forEach(function (n) {
+            var px = parseInt(tokenValue('--bui-bp-' + n), 10);
+            if (px && w >= px) cur = n.toUpperCase() + ' (from ' + px + 'px)';
+        });
+        bpOut.textContent = cur + ', viewport ' + w + 'px';
+    }
+    if (bpOut) {
+        window.addEventListener('resize', updateBp);
+        updateBp();
+    }
 
     /* ---- Initial hash: headings got their ids after load, so scroll again ---- */
     if (location.hash.length > 1) {

@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-bui-theme="default" data-bui-mode="light" data-root="../../">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Colors - Baset-UI Documentation</title>
+    <meta name="description" content="Neutral scale, six semantic palettes, aliases, Dark mode and contrast results.">
+    <link rel="icon" href="data:,">
+
+    <link rel="stylesheet" href="../../assets/css/baset-ui.css">
+    <link rel="stylesheet" href="../../documentation/assets/css/docs.css">
+    <script>
+        /* Apply saved mode early to avoid a flash. Documentation shell only. */
+        try {
+            var m = localStorage.getItem('bui-docs-mode');
+            if (m === 'dark' || m === 'light') document.documentElement.setAttribute('data-bui-mode', m);
+        } catch (e) {}
+    </script>
+</head>
+<body>
+    <main class="bui-docs-main" id="bui-docs-main" tabindex="-1">
+        <div class="bui-docs-page">
+            <div class="bui-docs-page__body">
+
+                <header class="bui-docs-page-header">
+                    <nav class="bui-docs-breadcrumb" aria-label="Breadcrumb" data-docs-breadcrumb hidden></nav>
+                    <h1>Colors</h1>
+                    <p class="bui-docs-lead">A neutral scale, six semantic palettes and aliases, each with Light and Dark values.</p>
+                </header>
+
+                <div class="bui-docs-content">
+
+<section class="bui-docs-section" aria-labelledby="overview">
+<h2 id="overview">Overview</h2>
+<p>Colors are tokens named <code>--bui-color-{name}[-{form}]</code>. There are three groups: a <strong>neutral scale</strong>, six <strong>semantic palettes</strong> (primary, secondary, success, warning, danger, info) and <strong>aliases</strong> for text, backgrounds and borders. Every color token has a Light and a Dark value. Values in the tables on this page are read live from <code>baset-ui.css</code>.</p>
+</section>
+
+<section class="bui-docs-section" aria-labelledby="neutral">
+<h2 id="neutral">Neutral scale</h2>
+<p>Twelve steps from <code>0</code> to <code>950</code>. In Dark mode the scale is reversed, so step 0 is always the page background and step 900 the body text. Use the aliases below rather than a fixed step where one exists.</p>
+<div class="bui-docs-modes">
+<div class="bui-docs-panel" data-bui-mode="light"><p class="bui-docs-panel__title">Light</p>
+<ul class="bui-docs-swatches"><li><span class="bui-docs-swatch" style="--bui-docs-sw: var(--bui-color-neutral-0)"></span><code>neutral-0</code></li><li><span class="bui-docs-swatch" style="--bui-docs-sw: var(--bui-color-neutral-50)"></span><code>neutral-50</code></li><li><span class="bui-docs-swatch" style="--bui-docs-sw: var(--bui-color-neutral-100)"></span><code>neutral-100</code></li><li><span class="bui-docs-swatch" style="--bui-docs-sw: var(--bui-color-neutral-200)"></span><code>neutral-200</code></li><li><span class="bui-docs-swatch" style="--bui-docs-sw: var(--bui-color-neutral-300)"></span><code>neutral-300</code></li><li><span class="bui-docs-swatch" style="--bui-docs-sw: var(--bui-color-neutral-400)"></span><code>neutral-400</code></li><li><span class="bui-docs-swatch" style="--bui-docs-sw: var(--bui-color-neutral-500)"></span><code>neutral-500</code></li><li><span class="bui-docs-swatch" style="--bui-docs-sw: var(--bui-color-neutral-600)"></span><code>neutral-600</code></li><li><span class="bui-docs-swatch" style="--bui-docs-sw: var(--bui-color-neutral-700)"></span><code>neutral-700</code></li><li><span class="bui-docs-swatch" style="--bui-docs-sw: var(--bui-color-neutral-800)"></span><code>neutral-800</code></li><li><span class="bui-docs-swatch" style="--bui-docs-sw: var(--bui-color-neutral-900)"></span><code>neutral-900</code></li><li><span class="bui-docs-swatch" style="--bui-docs-sw: var(--bui-color-neutral-950)"></span><code>neutral-950</code></li></ul>
+</div>
+<div class="bui-docs-panel" data-bui-mode="dark"><p class="bui-docs-panel__title">Dark</p>
+<ul class="bui-docs-swatches"><li><span class="bui-docs-swatch" style="--bui-docs-sw: var(--bui-color-neutral-0)"></span><code>neutral-0</code></li><li><span class="bui-docs-swatch" style="--bui-docs-sw: var(--bui-color-neutral-50)"></span><code>neutral-50</code></li><li><span class="bui-docs-swatch" style="--bui-docs-sw: var(--bui-color-neutral-100)"></span><code>neutral-100</code></li><li><span class="bui-docs-swatch" style="--bui-docs-sw: var(--bui-color-neutral-200)"></span><code>neutral-200</code></li><li><span class="bui-docs-swatch" style="--bui-docs-sw: var(--bui-color-neutral-300)"></span><code>neutral-300</code></li><li><span class="bui-docs-swatch" style="--bui-docs-sw: var(--bui-color-neutral-400)"></span><code>neutral-400</code></li><li><span class="bui-docs-swatch" style="--bui-docs-sw: var(--bui-color-neutral-500)"></span><code>neutral-500</code></li><li><span class="bui-docs-swatch" style="--bui-docs-sw: var(--bui-color-neutral-600)"></span><code>neutral-600</code></li><li><span class="bui-docs-swatch" style="--bui-docs-sw: var(--bui-color-neutral-700)"></span><code>neutral-700</code></li><li><span class="bui-docs-swatch" style="--bui-docs-sw: var(--bui-color-neutral-800)"></span><code>neutral-800</code></li><li><span class="bui-docs-swatch" style="--bui-docs-sw: var(--bui-color-neutral-900)"></span><code>neutral-900</code></li><li><span class="bui-docs-swatch" style="--bui-docs-sw: var(--bui-color-neutral-950)"></span><code>neutral-950</code></li></ul>
+</div>
+</div>
+</section>
+
+<section class="bui-docs-section" aria-labelledby="semantic">
+<h2 id="semantic">Semantic palettes</h2>
+<p>Each semantic color has six forms. The base form has no suffix (<code>--bui-color-primary</code>).</p>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Semantic color forms</caption>
+<thead><tr><th scope="col">Form</th><th scope="col">Token</th><th scope="col">Use</th></tr></thead>
+<tbody>
+<tr><td>base</td><td><code>--bui-color-{name}</code></td><td>Fills, icons, and text on the page background (3:1 or more against it)</td></tr>
+<tr><td>hover</td><td><code>--bui-color-{name}-hover</code></td><td>Hover state of a filled element</td></tr>
+<tr><td>active</td><td><code>--bui-color-{name}-active</code></td><td>Pressed state of a filled element</td></tr>
+<tr><td>subtle</td><td><code>--bui-color-{name}-subtle</code></td><td>Tinted background (alerts, badges). Body text stays readable on it</td></tr>
+<tr><td>contrast</td><td><code>--bui-color-{name}-contrast</code></td><td>Text and icons placed on base, hover and active</td></tr>
+<tr><td>border</td><td><code>--bui-color-{name}-border</code></td><td>Decorative border next to a subtle background (not a control boundary)</td></tr>
+</tbody>
+</table><h3>Primary</h3>
+<div class="bui-docs-modes">
+<div class="bui-docs-panel" data-bui-mode="light"><p class="bui-docs-panel__title">Light</p>
+<ul class="bui-docs-swatches"><li><span class="bui-docs-swatch" style="--bui-docs-sw: var(--bui-color-primary)"></span><code>primary</code></li><li><span class="bui-docs-swatch" style="--bui-docs-sw: var(--bui-color-primary-hover)"></span><code>primary-hover</code></li><li><span class="bui-docs-swatch" style="--bui-docs-sw: var(--bui-color-primary-active)"></span><code>primary-active</code></li><li><span class="bui-docs-swatch" style="--bui-docs-sw: var(--bui-color-primary-subtle)"></span><code>primary-subtle</code></li><li><span class="bui-docs-swatch" style="--bui-docs-sw: var(--bui-color-primary-contrast)"></span><code>primary-contrast</code></li><li><span class="bui-docs-swatch" style="--bui-docs-sw: var(--bui-color-primary-border)"></span><code>primary-border</code></li></ul>
+</div>
+<div class="bui-docs-panel" data-bui-mode="dark"><p class="bui-docs-panel__title">Dark</p>
+<ul class="bui-docs-swatches"><li><span class="bui-docs-swatch" style="--bui-docs-sw: var(--bui-color-primary)"></span><code>primary</code></li><li><span class="bui-docs-swatch" style="--bui-docs-sw: var(--bui-color-primary-hover)"></span><code>primary-hover</code></li><li><span class="bui-docs-swatch" style="--bui-docs-sw: var(--bui-color-primary-active)"></span><code>primary-active</code></li><li><span class="bui-docs-swatch" style="--bui-docs-sw: var(--bui-color-primary-subtle)"></span><code>primary-subtle</code></li><li><span class="bui-docs-swatch" style="--bui-docs-sw: var(--bui-color-primary-contrast)"></span><code>primary-contrast</code></li><li><span class="bui-docs-swatch" style="--bui-docs-sw: var(--bui-color-primary-border)"></span><code>primary-border</code></li></ul>
+</div>
+</div><h3>Secondary</h3>
+<div class="bui-docs-modes">
+<div class="bui-docs-panel" data-bui-mode="light"><p class="bui-docs-panel__title">Light</p>
+<ul class="bui-docs-swatches"><li><span class="bui-docs-swatch" style="--bui-docs-sw: var(--bui-color-secondary)"></span><code>secondary</code></li><li><span class="bui-docs-swatch" style="--bui-docs-sw: var(--bui-color-secondary-hover)"></span><code>secondary-hover</code></li><li><span class="bui-docs-swatch" style="--bui-docs-sw: var(--bui-color-secondary-active)"></span><code>secondary-active</code></li><li><span class="bui-docs-swatch" style="--bui-docs-sw: var(--bui-color-secondary-subtle)"></span><code>secondary-subtle</code></li><li><span class="bui-docs-swatch" style="--bui-docs-sw: var(--bui-color-secondary-contrast)"></span><code>secondary-contrast</code></li><li><span class="bui-docs-swatch" style="--bui-docs-sw: var(--bui-color-secondary-border)"></span><code>secondary-border</code></li></ul>
+</div>
+<div class="bui-docs-panel" data-bui-mode="dark"><p class="bui-docs-panel__title">Dark</p>
+<ul class="bui-docs-swatches"><li><span class="bui-docs-swatch" style="--bui-docs-sw: var(--bui-color-secondary)"></span><code>secondary</code></li><li><span class="bui-docs-swatch" style="--bui-docs-sw: var(--bui-color-secondary-hover)"></span><code>secondary-hover</code></li><li><span class="bui-docs-swatch" style="--bui-docs-sw: var(--bui-color-secondary-active)"></span><code>secondary-active</code></li><li><span class="bui-docs-swatch" style="--bui-docs-sw: var(--bui-color-secondary-subtle)"></span><code>secondary-subtle</code></li><li><span class="bui-docs-swatch" style="--bui-docs-sw: var(--bui-color-secondary-contrast)"></span><code>secondary-contrast</code></li><li><span class="bui-docs-swatch" style="--bui-docs-sw: var(--bui-color-secondary-border)"></span><code>secondary-border</code></li></ul>
+</div>
+</div><h3>Success</h3>
+<div class="bui-docs-modes">
+<div class="bui-docs-panel" data-bui-mode="light"><p class="bui-docs-panel__title">Light</p>
+<ul class="bui-docs-swatches"><li><span class="bui-docs-swatch" style="--bui-docs-sw: var(--bui-color-success)"></span><code>success</code></li><li><span class="bui-docs-swatch" style="--bui-docs-sw: var(--bui-color-success-hover)"></span><code>success-hover</code></li><li><span class="bui-docs-swatch" style="--bui-docs-sw: var(--bui-color-success-active)"></span><code>success-active</code></li><li><span class="bui-docs-swatch" style="--bui-docs-sw: var(--bui-color-success-subtle)"></span><code>success-subtle</code></li><li><span class="bui-docs-swatch" style="--bui-docs-sw: var(--bui-color-success-contrast)"></span><code>success-contrast</code></li><li><span class="bui-docs-swatch" style="--bui-docs-sw: var(--bui-color-success-border)"></span><code>success-border</code></li></ul>
+</div>
+<div class="bui-docs-panel" data-bui-mode="dark"><p class="bui-docs-panel__title">Dark</p>
+<ul class="bui-docs-swatches"><li><span class="bui-docs-swatch" style="--bui-docs-sw: var(--bui-color-success)"></span><code>success</code></li><li><span class="bui-docs-swatch" style="--bui-docs-sw: var(--bui-color-success-hover)"></span><code>success-hover</code></li><li><span class="bui-docs-swatch" style="--bui-docs-sw: var(--bui-color-success-active)"></span><code>success-active</code></li><li><span class="bui-docs-swatch" style="--bui-docs-sw: var(--bui-color-success-subtle)"></span><code>success-subtle</code></li><li><span class="bui-docs-swatch" style="--bui-docs-sw: var(--bui-color-success-contrast)"></span><code>success-contrast</code></li><li><span class="bui-docs-swatch" style="--bui-docs-sw: var(--bui-color-success-border)"></span><code>success-border</code></li></ul>
+</div>
+</div><h3>Warning</h3>
+<div class="bui-docs-modes">
+<div class="bui-docs-panel" data-bui-mode="light"><p class="bui-docs-panel__title">Light</p>
+<ul class="bui-docs-swatches"><li><span class="bui-docs-swatch" style="--bui-docs-sw: var(--bui-color-warning)"></span><code>warning</code></li><li><span class="bui-docs-swatch" style="--bui-docs-sw: var(--bui-color-warning-hover)"></span><code>warning-hover</code></li><li><span class="bui-docs-swatch" style="--bui-docs-sw: var(--bui-color-warning-active)"></span><code>warning-active</code></li><li><span class="bui-docs-swatch" style="--bui-docs-sw: var(--bui-color-warning-subtle)"></span><code>warning-subtle</code></li><li><span class="bui-docs-swatch" style="--bui-docs-sw: var(--bui-color-warning-contrast)"></span><code>warning-contrast</code></li><li><span class="bui-docs-swatch" style="--bui-docs-sw: var(--bui-color-warning-border)"></span><code>warning-border</code></li></ul>
+</div>
+<div class="bui-docs-panel" data-bui-mode="dark"><p class="bui-docs-panel__title">Dark</p>
+<ul class="bui-docs-swatches"><li><span class="bui-docs-swatch" style="--bui-docs-sw: var(--bui-color-warning)"></span><code>warning</code></li><li><span class="bui-docs-swatch" style="--bui-docs-sw: var(--bui-color-warning-hover)"></span><code>warning-hover</code></li><li><span class="bui-docs-swatch" style="--bui-docs-sw: var(--bui-color-warning-active)"></span><code>warning-active</code></li><li><span class="bui-docs-swatch" style="--bui-docs-sw: var(--bui-color-warning-subtle)"></span><code>warning-subtle</code></li><li><span class="bui-docs-swatch" style="--bui-docs-sw: var(--bui-color-warning-contrast)"></span><code>warning-contrast</code></li><li><span class="bui-docs-swatch" style="--bui-docs-sw: var(--bui-color-warning-border)"></span><code>warning-border</code></li></ul>
+</div>
+</div><h3>Danger</h3>
+<div class="bui-docs-modes">
+<div class="bui-docs-panel" data-bui-mode="light"><p class="bui-docs-panel__title">Light</p>
+<ul class="bui-docs-swatches"><li><span class="bui-docs-swatch" style="--bui-docs-sw: var(--bui-color-danger)"></span><code>danger</code></li><li><span class="bui-docs-swatch" style="--bui-docs-sw: var(--bui-color-danger-hover)"></span><code>danger-hover</code></li><li><span class="bui-docs-swatch" style="--bui-docs-sw: var(--bui-color-danger-active)"></span><code>danger-active</code></li><li><span class="bui-docs-swatch" style="--bui-docs-sw: var(--bui-color-danger-subtle)"></span><code>danger-subtle</code></li><li><span class="bui-docs-swatch" style="--bui-docs-sw: var(--bui-color-danger-contrast)"></span><code>danger-contrast</code></li><li><span class="bui-docs-swatch" style="--bui-docs-sw: var(--bui-color-danger-border)"></span><code>danger-border</code></li></ul>
+</div>
+<div class="bui-docs-panel" data-bui-mode="dark"><p class="bui-docs-panel__title">Dark</p>
+<ul class="bui-docs-swatches"><li><span class="bui-docs-swatch" style="--bui-docs-sw: var(--bui-color-danger)"></span><code>danger</code></li><li><span class="bui-docs-swatch" style="--bui-docs-sw: var(--bui-color-danger-hover)"></span><code>danger-hover</code></li><li><span class="bui-docs-swatch" style="--bui-docs-sw: var(--bui-color-danger-active)"></span><code>danger-active</code></li><li><span class="bui-docs-swatch" style="--bui-docs-sw: var(--bui-color-danger-subtle)"></span><code>danger-subtle</code></li><li><span class="bui-docs-swatch" style="--bui-docs-sw: var(--bui-color-danger-contrast)"></span><code>danger-contrast</code></li><li><span class="bui-docs-swatch" style="--bui-docs-sw: var(--bui-color-danger-border)"></span><code>danger-border</code></li></ul>
+</div>
+</div><h3>Info</h3>
+<div class="bui-docs-modes">
+<div class="bui-docs-panel" data-bui-mode="light"><p class="bui-docs-panel__title">Light</p>
+<ul class="bui-docs-swatches"><li><span class="bui-docs-swatch" style="--bui-docs-sw: var(--bui-color-info)"></span><code>info</code></li><li><span class="bui-docs-swatch" style="--bui-docs-sw: var(--bui-color-info-hover)"></span><code>info-hover</code></li><li><span class="bui-docs-swatch" style="--bui-docs-sw: var(--bui-color-info-active)"></span><code>info-active</code></li><li><span class="bui-docs-swatch" style="--bui-docs-sw: var(--bui-color-info-subtle)"></span><code>info-subtle</code></li><li><span class="bui-docs-swatch" style="--bui-docs-sw: var(--bui-color-info-contrast)"></span><code>info-contrast</code></li><li><span class="bui-docs-swatch" style="--bui-docs-sw: var(--bui-color-info-border)"></span><code>info-border</code></li></ul>
+</div>
+<div class="bui-docs-panel" data-bui-mode="dark"><p class="bui-docs-panel__title">Dark</p>
+<ul class="bui-docs-swatches"><li><span class="bui-docs-swatch" style="--bui-docs-sw: var(--bui-color-info)"></span><code>info</code></li><li><span class="bui-docs-swatch" style="--bui-docs-sw: var(--bui-color-info-hover)"></span><code>info-hover</code></li><li><span class="bui-docs-swatch" style="--bui-docs-sw: var(--bui-color-info-active)"></span><code>info-active</code></li><li><span class="bui-docs-swatch" style="--bui-docs-sw: var(--bui-color-info-subtle)"></span><code>info-subtle</code></li><li><span class="bui-docs-swatch" style="--bui-docs-sw: var(--bui-color-info-contrast)"></span><code>info-contrast</code></li><li><span class="bui-docs-swatch" style="--bui-docs-sw: var(--bui-color-info-border)"></span><code>info-border</code></li></ul>
+</div>
+</div>
+</section>
+
+<section class="bui-docs-section" aria-labelledby="aliases">
+<h2 id="aliases">Text, background and border aliases</h2>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Alias tokens</caption>
+<thead><tr><th scope="col">Token</th><th scope="col">Use</th><th scope="col">Light</th><th scope="col">Dark</th></tr></thead>
+<tbody>
+<tr><td><code>--bui-color-bg</code></td><td>Page background</td><td><span data-docs-token="--bui-color-bg" data-docs-mode="light"></span></td><td><span data-docs-token="--bui-color-bg" data-docs-mode="dark"></span></td></tr>
+<tr><td><code>--bui-color-surface</code></td><td>Raised or secondary surfaces</td><td><span data-docs-token="--bui-color-surface" data-docs-mode="light"></span></td><td><span data-docs-token="--bui-color-surface" data-docs-mode="dark"></span></td></tr>
+<tr><td><code>--bui-color-border</code></td><td>Decorative borders and dividers</td><td><span data-docs-token="--bui-color-border" data-docs-mode="light"></span></td><td><span data-docs-token="--bui-color-border" data-docs-mode="dark"></span></td></tr>
+<tr><td><code>--bui-color-border-strong</code></td><td>Borders that identify a control (3:1 against the background)</td><td><span data-docs-token="--bui-color-border-strong" data-docs-mode="light"></span></td><td><span data-docs-token="--bui-color-border-strong" data-docs-mode="dark"></span></td></tr>
+<tr><td><code>--bui-color-text</code></td><td>Body text</td><td><span data-docs-token="--bui-color-text" data-docs-mode="light"></span></td><td><span data-docs-token="--bui-color-text" data-docs-mode="dark"></span></td></tr>
+<tr><td><code>--bui-color-text-muted</code></td><td>Secondary text</td><td><span data-docs-token="--bui-color-text-muted" data-docs-mode="light"></span></td><td><span data-docs-token="--bui-color-text-muted" data-docs-mode="dark"></span></td></tr>
+<tr><td><code>--bui-color-text-inverse</code></td><td>Text on filled neutral backgrounds</td><td><span data-docs-token="--bui-color-text-inverse" data-docs-mode="light"></span></td><td><span data-docs-token="--bui-color-text-inverse" data-docs-mode="dark"></span></td></tr>
+<tr><td><code>--bui-color-link</code></td><td>Link color</td><td><span data-docs-token="--bui-color-link" data-docs-mode="light"></span></td><td><span data-docs-token="--bui-color-link" data-docs-mode="dark"></span></td></tr>
+<tr><td><code>--bui-color-link-hover</code></td><td>Link hover color</td><td><span data-docs-token="--bui-color-link-hover" data-docs-mode="light"></span></td><td><span data-docs-token="--bui-color-link-hover" data-docs-mode="dark"></span></td></tr>
+<tr><td><code>--bui-color-focus</code></td><td>Focus ring color</td><td><span data-docs-token="--bui-color-focus" data-docs-mode="light"></span></td><td><span data-docs-token="--bui-color-focus" data-docs-mode="dark"></span></td></tr>
+</tbody>
+</table>
+</section>
+
+<section class="bui-docs-section" aria-labelledby="values">
+<h2 id="values">All color token values</h2>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Neutral scale values</caption>
+<thead><tr><th scope="col">Token</th><th scope="col">Light</th><th scope="col">Dark</th></tr></thead>
+<tbody>
+<tr><td><code>--bui-color-neutral-0</code></td><td><span data-docs-token="--bui-color-neutral-0" data-docs-mode="light"></span></td><td><span data-docs-token="--bui-color-neutral-0" data-docs-mode="dark"></span></td></tr>
+<tr><td><code>--bui-color-neutral-50</code></td><td><span data-docs-token="--bui-color-neutral-50" data-docs-mode="light"></span></td><td><span data-docs-token="--bui-color-neutral-50" data-docs-mode="dark"></span></td></tr>
+<tr><td><code>--bui-color-neutral-100</code></td><td><span data-docs-token="--bui-color-neutral-100" data-docs-mode="light"></span></td><td><span data-docs-token="--bui-color-neutral-100" data-docs-mode="dark"></span></td></tr>
+<tr><td><code>--bui-color-neutral-200</code></td><td><span data-docs-token="--bui-color-neutral-200" data-docs-mode="light"></span></td><td><span data-docs-token="--bui-color-neutral-200" data-docs-mode="dark"></span></td></tr>
+<tr><td><code>--bui-color-neutral-300</code></td><td><span data-docs-token="--bui-color-neutral-300" data-docs-mode="light"></span></td><td><span data-docs-token="--bui-color-neutral-300" data-docs-mode="dark"></span></td></tr>
+<tr><td><code>--bui-color-neutral-400</code></td><td><span data-docs-token="--bui-color-neutral-400" data-docs-mode="light"></span></td><td><span data-docs-token="--bui-color-neutral-400" data-docs-mode="dark"></span></td></tr>
+<tr><td><code>--bui-color-neutral-500</code></td><td><span data-docs-token="--bui-color-neutral-500" data-docs-mode="light"></span></td><td><span data-docs-token="--bui-color-neutral-500" data-docs-mode="dark"></span></td></tr>
+<tr><td><code>--bui-color-neutral-600</code></td><td><span data-docs-token="--bui-color-neutral-600" data-docs-mode="light"></span></td><td><span data-docs-token="--bui-color-neutral-600" data-docs-mode="dark"></span></td></tr>
+<tr><td><code>--bui-color-neutral-700</code></td><td><span data-docs-token="--bui-color-neutral-700" data-docs-mode="light"></span></td><td><span data-docs-token="--bui-color-neutral-700" data-docs-mode="dark"></span></td></tr>
+<tr><td><code>--bui-color-neutral-800</code></td><td><span data-docs-token="--bui-color-neutral-800" data-docs-mode="light"></span></td><td><span data-docs-token="--bui-color-neutral-800" data-docs-mode="dark"></span></td></tr>
+<tr><td><code>--bui-color-neutral-900</code></td><td><span data-docs-token="--bui-color-neutral-900" data-docs-mode="light"></span></td><td><span data-docs-token="--bui-color-neutral-900" data-docs-mode="dark"></span></td></tr>
+<tr><td><code>--bui-color-neutral-950</code></td><td><span data-docs-token="--bui-color-neutral-950" data-docs-mode="light"></span></td><td><span data-docs-token="--bui-color-neutral-950" data-docs-mode="dark"></span></td></tr>
+</tbody>
+</table><table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Semantic color values</caption>
+<thead><tr><th scope="col">Token</th><th scope="col">Light</th><th scope="col">Dark</th></tr></thead>
+<tbody>
+<tr><td><code>--bui-color-primary</code></td><td><span data-docs-token="--bui-color-primary" data-docs-mode="light"></span></td><td><span data-docs-token="--bui-color-primary" data-docs-mode="dark"></span></td></tr>
+<tr><td><code>--bui-color-primary-hover</code></td><td><span data-docs-token="--bui-color-primary-hover" data-docs-mode="light"></span></td><td><span data-docs-token="--bui-color-primary-hover" data-docs-mode="dark"></span></td></tr>
+<tr><td><code>--bui-color-primary-active</code></td><td><span data-docs-token="--bui-color-primary-active" data-docs-mode="light"></span></td><td><span data-docs-token="--bui-color-primary-active" data-docs-mode="dark"></span></td></tr>
+<tr><td><code>--bui-color-primary-subtle</code></td><td><span data-docs-token="--bui-color-primary-subtle" data-docs-mode="light"></span></td><td><span data-docs-token="--bui-color-primary-subtle" data-docs-mode="dark"></span></td></tr>
+<tr><td><code>--bui-color-primary-contrast</code></td><td><span data-docs-token="--bui-color-primary-contrast" data-docs-mode="light"></span></td><td><span data-docs-token="--bui-color-primary-contrast" data-docs-mode="dark"></span></td></tr>
+<tr><td><code>--bui-color-primary-border</code></td><td><span data-docs-token="--bui-color-primary-border" data-docs-mode="light"></span></td><td><span data-docs-token="--bui-color-primary-border" data-docs-mode="dark"></span></td></tr>
+<tr><td><code>--bui-color-secondary</code></td><td><span data-docs-token="--bui-color-secondary" data-docs-mode="light"></span></td><td><span data-docs-token="--bui-color-secondary" data-docs-mode="dark"></span></td></tr>
+<tr><td><code>--bui-color-secondary-hover</code></td><td><span data-docs-token="--bui-color-secondary-hover" data-docs-mode="light"></span></td><td><span data-docs-token="--bui-color-secondary-hover" data-docs-mode="dark"></span></td></tr>
+<tr><td><code>--bui-color-secondary-active</code></td><td><span data-docs-token="--bui-color-secondary-active" data-docs-mode="light"></span></td><td><span data-docs-token="--bui-color-secondary-active" data-docs-mode="dark"></span></td></tr>
+<tr><td><code>--bui-color-secondary-subtle</code></td><td><span data-docs-token="--bui-color-secondary-subtle" data-docs-mode="light"></span></td><td><span data-docs-token="--bui-color-secondary-subtle" data-docs-mode="dark"></span></td></tr>
+<tr><td><code>--bui-color-secondary-contrast</code></td><td><span data-docs-token="--bui-color-secondary-contrast" data-docs-mode="light"></span></td><td><span data-docs-token="--bui-color-secondary-contrast" data-docs-mode="dark"></span></td></tr>
+<tr><td><code>--bui-color-secondary-border</code></td><td><span data-docs-token="--bui-color-secondary-border" data-docs-mode="light"></span></td><td><span data-docs-token="--bui-color-secondary-border" data-docs-mode="dark"></span></td></tr>
+<tr><td><code>--bui-color-success</code></td><td><span data-docs-token="--bui-color-success" data-docs-mode="light"></span></td><td><span data-docs-token="--bui-color-success" data-docs-mode="dark"></span></td></tr>
+<tr><td><code>--bui-color-success-hover</code></td><td><span data-docs-token="--bui-color-success-hover" data-docs-mode="light"></span></td><td><span data-docs-token="--bui-color-success-hover" data-docs-mode="dark"></span></td></tr>
+<tr><td><code>--bui-color-success-active</code></td><td><span data-docs-token="--bui-color-success-active" data-docs-mode="light"></span></td><td><span data-docs-token="--bui-color-success-active" data-docs-mode="dark"></span></td></tr>
+<tr><td><code>--bui-color-success-subtle</code></td><td><span data-docs-token="--bui-color-success-subtle" data-docs-mode="light"></span></td><td><span data-docs-token="--bui-color-success-subtle" data-docs-mode="dark"></span></td></tr>
+<tr><td><code>--bui-color-success-contrast</code></td><td><span data-docs-token="--bui-color-success-contrast" data-docs-mode="light"></span></td><td><span data-docs-token="--bui-color-success-contrast" data-docs-mode="dark"></span></td></tr>
+<tr><td><code>--bui-color-success-border</code></td><td><span data-docs-token="--bui-color-success-border" data-docs-mode="light"></span></td><td><span data-docs-token="--bui-color-success-border" data-docs-mode="dark"></span></td></tr>
+<tr><td><code>--bui-color-warning</code></td><td><span data-docs-token="--bui-color-warning" data-docs-mode="light"></span></td><td><span data-docs-token="--bui-color-warning" data-docs-mode="dark"></span></td></tr>
+<tr><td><code>--bui-color-warning-hover</code></td><td><span data-docs-token="--bui-color-warning-hover" data-docs-mode="light"></span></td><td><span data-docs-token="--bui-color-warning-hover" data-docs-mode="dark"></span></td></tr>
+<tr><td><code>--bui-color-warning-active</code></td><td><span data-docs-token="--bui-color-warning-active" data-docs-mode="light"></span></td><td><span data-docs-token="--bui-color-warning-active" data-docs-mode="dark"></span></td></tr>
+<tr><td><code>--bui-color-warning-subtle</code></td><td><span data-docs-token="--bui-color-warning-subtle" data-docs-mode="light"></span></td><td><span data-docs-token="--bui-color-warning-subtle" data-docs-mode="dark"></span></td></tr>
+<tr><td><code>--bui-color-warning-contrast</code></td><td><span data-docs-token="--bui-color-warning-contrast" data-docs-mode="light"></span></td><td><span data-docs-token="--bui-color-warning-contrast" data-docs-mode="dark"></span></td></tr>
+<tr><td><code>--bui-color-warning-border</code></td><td><span data-docs-token="--bui-color-warning-border" data-docs-mode="light"></span></td><td><span data-docs-token="--bui-color-warning-border" data-docs-mode="dark"></span></td></tr>
+<tr><td><code>--bui-color-danger</code></td><td><span data-docs-token="--bui-color-danger" data-docs-mode="light"></span></td><td><span data-docs-token="--bui-color-danger" data-docs-mode="dark"></span></td></tr>
+<tr><td><code>--bui-color-danger-hover</code></td><td><span data-docs-token="--bui-color-danger-hover" data-docs-mode="light"></span></td><td><span data-docs-token="--bui-color-danger-hover" data-docs-mode="dark"></span></td></tr>
+<tr><td><code>--bui-color-danger-active</code></td><td><span data-docs-token="--bui-color-danger-active" data-docs-mode="light"></span></td><td><span data-docs-token="--bui-color-danger-active" data-docs-mode="dark"></span></td></tr>
+<tr><td><code>--bui-color-danger-subtle</code></td><td><span data-docs-token="--bui-color-danger-subtle" data-docs-mode="light"></span></td><td><span data-docs-token="--bui-color-danger-subtle" data-docs-mode="dark"></span></td></tr>
+<tr><td><code>--bui-color-danger-contrast</code></td><td><span data-docs-token="--bui-color-danger-contrast" data-docs-mode="light"></span></td><td><span data-docs-token="--bui-color-danger-contrast" data-docs-mode="dark"></span></td></tr>
+<tr><td><code>--bui-color-danger-border</code></td><td><span data-docs-token="--bui-color-danger-border" data-docs-mode="light"></span></td><td><span data-docs-token="--bui-color-danger-border" data-docs-mode="dark"></span></td></tr>
+<tr><td><code>--bui-color-info</code></td><td><span data-docs-token="--bui-color-info" data-docs-mode="light"></span></td><td><span data-docs-token="--bui-color-info" data-docs-mode="dark"></span></td></tr>
+<tr><td><code>--bui-color-info-hover</code></td><td><span data-docs-token="--bui-color-info-hover" data-docs-mode="light"></span></td><td><span data-docs-token="--bui-color-info-hover" data-docs-mode="dark"></span></td></tr>
+<tr><td><code>--bui-color-info-active</code></td><td><span data-docs-token="--bui-color-info-active" data-docs-mode="light"></span></td><td><span data-docs-token="--bui-color-info-active" data-docs-mode="dark"></span></td></tr>
+<tr><td><code>--bui-color-info-subtle</code></td><td><span data-docs-token="--bui-color-info-subtle" data-docs-mode="light"></span></td><td><span data-docs-token="--bui-color-info-subtle" data-docs-mode="dark"></span></td></tr>
+<tr><td><code>--bui-color-info-contrast</code></td><td><span data-docs-token="--bui-color-info-contrast" data-docs-mode="light"></span></td><td><span data-docs-token="--bui-color-info-contrast" data-docs-mode="dark"></span></td></tr>
+<tr><td><code>--bui-color-info-border</code></td><td><span data-docs-token="--bui-color-info-border" data-docs-mode="light"></span></td><td><span data-docs-token="--bui-color-info-border" data-docs-mode="dark"></span></td></tr>
+</tbody>
+</table><table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Other color tokens</caption>
+<thead><tr><th scope="col">Token</th><th scope="col">Light</th><th scope="col">Dark</th></tr></thead>
+<tbody>
+<tr><td><code>--bui-color-overlay</code></td><td><span data-docs-token="--bui-color-overlay" data-docs-mode="light"></span></td><td><span data-docs-token="--bui-color-overlay" data-docs-mode="dark"></span></td></tr>
+</tbody>
+</table>
+</section>
+
+<section class="bui-docs-section" aria-labelledby="dark-mode">
+<h2 id="dark-mode">Dark mode on any element</h2>
+<p>Dark mode is selected with <code>data-bui-mode="dark"</code> on <code>&lt;html&gt;</code> or on any element. The element paints its own background and text color, so a dark block can sit inside a light page and the reverse. The panels above use exactly this.</p>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<div class="bui-docs-panel" data-bui-mode="dark">
+    <p>This block is dark inside a page that may be light.</p>
+    <p><span class="bui-docs-demo-box">Tokens resolve here</span></p>
+</div>
+</div>
+</div><p>The documentation toggle in the navbar sets <code>data-bui-mode</code> on <code>&lt;html&gt;</code> for the whole page. A <code>color-scheme</code> declaration is set with each mode so native controls follow.</p>
+</section>
+
+<section class="bui-docs-section" aria-labelledby="contrast">
+<h2 id="contrast">Contrast (WCAG 2.2 AA)</h2>
+<p>Every approved text and background pair is checked here. The ratios are computed in your browser from the live token values, using the WCAG relative luminance formula. Text pairs need 4.5:1; UI component and focus pairs need 3:1.</p>
+<p data-docs-contrast-summary role="status"></p>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Contrast ratios for approved color pairs</caption>
+<thead><tr><th scope="col">Pair</th><th scope="col">Used for</th><th scope="col">Required</th><th scope="col">Light</th><th scope="col">Dark</th></tr></thead>
+<tbody>
+<tr data-docs-contrast data-fg="--bui-color-text" data-bg="--bui-color-bg" data-min="4.5"><td><code>text</code> on <code>bg</code></td><td>Body text on background</td><td>4.5:1</td><td data-docs-cell="light"></td><td data-docs-cell="dark"></td></tr>
+<tr data-docs-contrast data-fg="--bui-color-text" data-bg="--bui-color-surface" data-min="4.5"><td><code>text</code> on <code>surface</code></td><td>Body text on surface</td><td>4.5:1</td><td data-docs-cell="light"></td><td data-docs-cell="dark"></td></tr>
+<tr data-docs-contrast data-fg="--bui-color-text-muted" data-bg="--bui-color-bg" data-min="4.5"><td><code>text-muted</code> on <code>bg</code></td><td>Secondary text on background</td><td>4.5:1</td><td data-docs-cell="light"></td><td data-docs-cell="dark"></td></tr>
+<tr data-docs-contrast data-fg="--bui-color-text-muted" data-bg="--bui-color-surface" data-min="4.5"><td><code>text-muted</code> on <code>surface</code></td><td>Secondary text on surface</td><td>4.5:1</td><td data-docs-cell="light"></td><td data-docs-cell="dark"></td></tr>
+<tr data-docs-contrast data-fg="--bui-color-link" data-bg="--bui-color-bg" data-min="4.5"><td><code>link</code> on <code>bg</code></td><td>Link on background</td><td>4.5:1</td><td data-docs-cell="light"></td><td data-docs-cell="dark"></td></tr>
+<tr data-docs-contrast data-fg="--bui-color-link" data-bg="--bui-color-surface" data-min="4.5"><td><code>link</code> on <code>surface</code></td><td>Link on surface</td><td>4.5:1</td><td data-docs-cell="light"></td><td data-docs-cell="dark"></td></tr>
+<tr data-docs-contrast data-fg="--bui-color-link-hover" data-bg="--bui-color-bg" data-min="4.5"><td><code>link-hover</code> on <code>bg</code></td><td>Link (hover) on background</td><td>4.5:1</td><td data-docs-cell="light"></td><td data-docs-cell="dark"></td></tr>
+<tr data-docs-contrast data-fg="--bui-color-primary-contrast" data-bg="--bui-color-primary" data-min="4.5"><td><code>primary-contrast</code> on <code>primary</code></td><td>Primary contrast on Primary base</td><td>4.5:1</td><td data-docs-cell="light"></td><td data-docs-cell="dark"></td></tr>
+<tr data-docs-contrast data-fg="--bui-color-primary-contrast" data-bg="--bui-color-primary-hover" data-min="4.5"><td><code>primary-contrast</code> on <code>primary-hover</code></td><td>Primary contrast on Primary hover</td><td>4.5:1</td><td data-docs-cell="light"></td><td data-docs-cell="dark"></td></tr>
+<tr data-docs-contrast data-fg="--bui-color-primary-contrast" data-bg="--bui-color-primary-active" data-min="4.5"><td><code>primary-contrast</code> on <code>primary-active</code></td><td>Primary contrast on Primary active</td><td>4.5:1</td><td data-docs-cell="light"></td><td data-docs-cell="dark"></td></tr>
+<tr data-docs-contrast data-fg="--bui-color-text" data-bg="--bui-color-primary-subtle" data-min="4.5"><td><code>text</code> on <code>primary-subtle</code></td><td>Body text on Primary subtle</td><td>4.5:1</td><td data-docs-cell="light"></td><td data-docs-cell="dark"></td></tr>
+<tr data-docs-contrast data-fg="--bui-color-primary" data-bg="--bui-color-bg" data-min="3.0"><td><code>primary</code> on <code>bg</code></td><td>Primary base on background</td><td>3.0:1</td><td data-docs-cell="light"></td><td data-docs-cell="dark"></td></tr>
+<tr data-docs-contrast data-fg="--bui-color-secondary-contrast" data-bg="--bui-color-secondary" data-min="4.5"><td><code>secondary-contrast</code> on <code>secondary</code></td><td>Secondary contrast on Secondary base</td><td>4.5:1</td><td data-docs-cell="light"></td><td data-docs-cell="dark"></td></tr>
+<tr data-docs-contrast data-fg="--bui-color-secondary-contrast" data-bg="--bui-color-secondary-hover" data-min="4.5"><td><code>secondary-contrast</code> on <code>secondary-hover</code></td><td>Secondary contrast on Secondary hover</td><td>4.5:1</td><td data-docs-cell="light"></td><td data-docs-cell="dark"></td></tr>
+<tr data-docs-contrast data-fg="--bui-color-secondary-contrast" data-bg="--bui-color-secondary-active" data-min="4.5"><td><code>secondary-contrast</code> on <code>secondary-active</code></td><td>Secondary contrast on Secondary active</td><td>4.5:1</td><td data-docs-cell="light"></td><td data-docs-cell="dark"></td></tr>
+<tr data-docs-contrast data-fg="--bui-color-text" data-bg="--bui-color-secondary-subtle" data-min="4.5"><td><code>text</code> on <code>secondary-subtle</code></td><td>Body text on Secondary subtle</td><td>4.5:1</td><td data-docs-cell="light"></td><td data-docs-cell="dark"></td></tr>
+<tr data-docs-contrast data-fg="--bui-color-secondary" data-bg="--bui-color-bg" data-min="3.0"><td><code>secondary</code> on <code>bg</code></td><td>Secondary base on background</td><td>3.0:1</td><td data-docs-cell="light"></td><td data-docs-cell="dark"></td></tr>
+<tr data-docs-contrast data-fg="--bui-color-success-contrast" data-bg="--bui-color-success" data-min="4.5"><td><code>success-contrast</code> on <code>success</code></td><td>Success contrast on Success base</td><td>4.5:1</td><td data-docs-cell="light"></td><td data-docs-cell="dark"></td></tr>
+<tr data-docs-contrast data-fg="--bui-color-success-contrast" data-bg="--bui-color-success-hover" data-min="4.5"><td><code>success-contrast</code> on <code>success-hover</code></td><td>Success contrast on Success hover</td><td>4.5:1</td><td data-docs-cell="light"></td><td data-docs-cell="dark"></td></tr>
+<tr data-docs-contrast data-fg="--bui-color-success-contrast" data-bg="--bui-color-success-active" data-min="4.5"><td><code>success-contrast</code> on <code>success-active</code></td><td>Success contrast on Success active</td><td>4.5:1</td><td data-docs-cell="light"></td><td data-docs-cell="dark"></td></tr>
+<tr data-docs-contrast data-fg="--bui-color-text" data-bg="--bui-color-success-subtle" data-min="4.5"><td><code>text</code> on <code>success-subtle</code></td><td>Body text on Success subtle</td><td>4.5:1</td><td data-docs-cell="light"></td><td data-docs-cell="dark"></td></tr>
+<tr data-docs-contrast data-fg="--bui-color-success" data-bg="--bui-color-bg" data-min="3.0"><td><code>success</code> on <code>bg</code></td><td>Success base on background</td><td>3.0:1</td><td data-docs-cell="light"></td><td data-docs-cell="dark"></td></tr>
+<tr data-docs-contrast data-fg="--bui-color-warning-contrast" data-bg="--bui-color-warning" data-min="4.5"><td><code>warning-contrast</code> on <code>warning</code></td><td>Warning contrast on Warning base</td><td>4.5:1</td><td data-docs-cell="light"></td><td data-docs-cell="dark"></td></tr>
+<tr data-docs-contrast data-fg="--bui-color-warning-contrast" data-bg="--bui-color-warning-hover" data-min="4.5"><td><code>warning-contrast</code> on <code>warning-hover</code></td><td>Warning contrast on Warning hover</td><td>4.5:1</td><td data-docs-cell="light"></td><td data-docs-cell="dark"></td></tr>
+<tr data-docs-contrast data-fg="--bui-color-warning-contrast" data-bg="--bui-color-warning-active" data-min="4.5"><td><code>warning-contrast</code> on <code>warning-active</code></td><td>Warning contrast on Warning active</td><td>4.5:1</td><td data-docs-cell="light"></td><td data-docs-cell="dark"></td></tr>
+<tr data-docs-contrast data-fg="--bui-color-text" data-bg="--bui-color-warning-subtle" data-min="4.5"><td><code>text</code> on <code>warning-subtle</code></td><td>Body text on Warning subtle</td><td>4.5:1</td><td data-docs-cell="light"></td><td data-docs-cell="dark"></td></tr>
+<tr data-docs-contrast data-fg="--bui-color-warning" data-bg="--bui-color-bg" data-min="3.0"><td><code>warning</code> on <code>bg</code></td><td>Warning base on background</td><td>3.0:1</td><td data-docs-cell="light"></td><td data-docs-cell="dark"></td></tr>
+<tr data-docs-contrast data-fg="--bui-color-danger-contrast" data-bg="--bui-color-danger" data-min="4.5"><td><code>danger-contrast</code> on <code>danger</code></td><td>Danger contrast on Danger base</td><td>4.5:1</td><td data-docs-cell="light"></td><td data-docs-cell="dark"></td></tr>
+<tr data-docs-contrast data-fg="--bui-color-danger-contrast" data-bg="--bui-color-danger-hover" data-min="4.5"><td><code>danger-contrast</code> on <code>danger-hover</code></td><td>Danger contrast on Danger hover</td><td>4.5:1</td><td data-docs-cell="light"></td><td data-docs-cell="dark"></td></tr>
+<tr data-docs-contrast data-fg="--bui-color-danger-contrast" data-bg="--bui-color-danger-active" data-min="4.5"><td><code>danger-contrast</code> on <code>danger-active</code></td><td>Danger contrast on Danger active</td><td>4.5:1</td><td data-docs-cell="light"></td><td data-docs-cell="dark"></td></tr>
+<tr data-docs-contrast data-fg="--bui-color-text" data-bg="--bui-color-danger-subtle" data-min="4.5"><td><code>text</code> on <code>danger-subtle</code></td><td>Body text on Danger subtle</td><td>4.5:1</td><td data-docs-cell="light"></td><td data-docs-cell="dark"></td></tr>
+<tr data-docs-contrast data-fg="--bui-color-danger" data-bg="--bui-color-bg" data-min="3.0"><td><code>danger</code> on <code>bg</code></td><td>Danger base on background</td><td>3.0:1</td><td data-docs-cell="light"></td><td data-docs-cell="dark"></td></tr>
+<tr data-docs-contrast data-fg="--bui-color-info-contrast" data-bg="--bui-color-info" data-min="4.5"><td><code>info-contrast</code> on <code>info</code></td><td>Info contrast on Info base</td><td>4.5:1</td><td data-docs-cell="light"></td><td data-docs-cell="dark"></td></tr>
+<tr data-docs-contrast data-fg="--bui-color-info-contrast" data-bg="--bui-color-info-hover" data-min="4.5"><td><code>info-contrast</code> on <code>info-hover</code></td><td>Info contrast on Info hover</td><td>4.5:1</td><td data-docs-cell="light"></td><td data-docs-cell="dark"></td></tr>
+<tr data-docs-contrast data-fg="--bui-color-info-contrast" data-bg="--bui-color-info-active" data-min="4.5"><td><code>info-contrast</code> on <code>info-active</code></td><td>Info contrast on Info active</td><td>4.5:1</td><td data-docs-cell="light"></td><td data-docs-cell="dark"></td></tr>
+<tr data-docs-contrast data-fg="--bui-color-text" data-bg="--bui-color-info-subtle" data-min="4.5"><td><code>text</code> on <code>info-subtle</code></td><td>Body text on Info subtle</td><td>4.5:1</td><td data-docs-cell="light"></td><td data-docs-cell="dark"></td></tr>
+<tr data-docs-contrast data-fg="--bui-color-info" data-bg="--bui-color-bg" data-min="3.0"><td><code>info</code> on <code>bg</code></td><td>Info base on background</td><td>3.0:1</td><td data-docs-cell="light"></td><td data-docs-cell="dark"></td></tr>
+<tr data-docs-contrast data-fg="--bui-color-focus" data-bg="--bui-color-bg" data-min="3.0"><td><code>focus</code> on <code>bg</code></td><td>Focus ring on background</td><td>3.0:1</td><td data-docs-cell="light"></td><td data-docs-cell="dark"></td></tr>
+<tr data-docs-contrast data-fg="--bui-color-focus" data-bg="--bui-color-surface" data-min="3.0"><td><code>focus</code> on <code>surface</code></td><td>Focus ring on surface</td><td>3.0:1</td><td data-docs-cell="light"></td><td data-docs-cell="dark"></td></tr>
+<tr data-docs-contrast data-fg="--bui-color-border-strong" data-bg="--bui-color-bg" data-min="3.0"><td><code>border-strong</code> on <code>bg</code></td><td>Control border on background</td><td>3.0:1</td><td data-docs-cell="light"></td><td data-docs-cell="dark"></td></tr>
+</tbody>
+</table>
+<div class="bui-docs-callout bui-docs-callout--note" role="note">
+<p class="bui-docs-callout__title">Note</p>
+<p>Only the pairs in this table are approved. A pair that is not listed (for example <code>text-muted</code> on a semantic subtle background, or a semantic base color on a semantic subtle background) has not been checked. Colors with alpha (<code>overlay</code>, shadows) are not covered.</p>
+</div>
+</section>
+
+<section class="bui-docs-section" aria-labelledby="responsive-behavior">
+<h2 id="responsive-behavior">Responsive behavior</h2>
+<p>Color tokens do not change with the viewport width.</p>
+</section>
+
+<section class="bui-docs-section" aria-labelledby="accessibility">
+<h2 id="accessibility">Accessibility</h2>
+<p>Meaning must not depend on color alone (WCAG 1.4.1): pair a semantic color with text, an icon or a pattern. Focus uses <code>--bui-color-focus</code>, which is checked at 3:1 against both the background and the surface. In forced-colors mode the browser replaces these values; this has not been tested yet. Color-blindness simulation was not performed.</p>
+</section>
+
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="../../assets/js/baset-ui.js"></script>
+    <script src="../../documentation/assets/js/nav.js"></script>
+    <script src="../../documentation/assets/js/docs.js"></script>
+</body>
+</html>

@@ -7,11 +7,13 @@
 - Layout: Containers, Grid, Flex Utilities, Responsive Utilities.
 - المكونات الأساسية الصغيرة والمشتركة (Buttons, Forms, Modals, Alerts, Toasts, Cards...).
 
-**الحالة الحالية:** يحتوي Tokens افتراضية (Light/Dark) وBase فقط. لا Components.
+**الحالة الحالية (Task 03):** Tokens كاملة (Light/Dark)، Base، Layout (Container/Grid)، Utilities (Flexbox وSpacing)، وكل نسخ الـ Breakpoints. لا Components.
 
 ### ترتيب الأقسام داخل الملف (إلزامي)
 1. Tokens  2. Dark Mode  3. Base  4. Layout  5. Utilities  6. Components (أبجدياً)  7. Responsive Utilities  8. Print/Reduced-motion.
 كل قسم بتعليق ترويسة واضح.
+
+**ملاحظات تنفيذ (Task 03):** القسم 7 يضم نسخ الـ Breakpoints لكل من القسمين 4 و5 (مرتبة تصاعدياً بعد القواعد الأساسية)، لأن Mobile First يتطلب أن تأتي نسخ `min-width` بعد الأساس. Utilities تستخدم `!important` (هذا هو الاستثناء المسموح)، لأنها تسبق Components في الترتيب. قواعد Tokens والاشتقاق في [RTL_LTR_AND_THEMES.md](RTL_LTR_AND_THEMES.md).
 
 ### قواعد
 - لا ملف CSS مستقل لكل Component صغير.

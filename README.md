@@ -2,7 +2,7 @@
 
 مكتبة واجهات (CSS + JavaScript) تعمل مباشرة في المتصفح بدون Build Tools، مع موقع Documentation.
 
-**الحالة: مرحلة التأسيس (`0.0.0-foundation`).** لا توجد مكونات أو JavaScript API أو Themes أو نظام ترجمة منفذة بعد. الموجود: الهيكل المعماري، مجلد التعليمات، وواجهة التوثيق الأساسية (Navbar, Sidebar, Footer).
+**الحالة: مرحلة التأسيس (`0.0.0-foundation`).** لا توجد مكونات أو JavaScript API أو Theme Manager أو نظام ترجمة منفذة بعد. الموجود: الهيكل المعماري، مجلد التعليمات، واجهة التوثيق، Design Tokens (Light/Dark)، ونظام Layout (Container وGrid وFlexbox وSpacing) مع صفحات توثيقها.
 
 ## الروابط
 - المستودع (المصدر الأساسي): https://github.com/AbdulbasetRS/Baset-UI

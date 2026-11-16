@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-bui-theme="default" data-bui-mode="light" data-root="../../">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Typography - Baset-UI Documentation</title>
+    <meta name="description" content="Font families with Arabic fallbacks, the size, weight and line height scales, and base element styles.">
+    <link rel="icon" href="data:,">
+
+    <link rel="stylesheet" href="../../assets/css/baset-ui.css">
+    <link rel="stylesheet" href="../../documentation/assets/css/docs.css">
+    <script>
+        /* Apply saved mode early to avoid a flash. Documentation shell only. */
+        try {
+            var m = localStorage.getItem('bui-docs-mode');
+            if (m === 'dark' || m === 'light') document.documentElement.setAttribute('data-bui-mode', m);
+        } catch (e) {}
+    </script>
+</head>
+<body>
+    <main class="bui-docs-main" id="bui-docs-main" tabindex="-1">
+        <div class="bui-docs-page">
+            <div class="bui-docs-page__body">
+
+                <header class="bui-docs-page-header">
+                    <nav class="bui-docs-breadcrumb" aria-label="Breadcrumb" data-docs-breadcrumb hidden></nav>
+                    <h1>Typography</h1>
+                    <p class="bui-docs-lead">Font families, a rem-based scale and base styles for headings, body, small and code.</p>
+                </header>
+
+                <div class="bui-docs-content">
+
+<section class="bui-docs-section" aria-labelledby="overview">
+<h2 id="overview">Overview</h2>
+<p>Typography tokens cover font families, a size scale, weights and line heights, plus per-element tokens for headings, body text, small text and code. Base styles apply them to <code>h1</code> to <code>h6</code>, <code>p</code>, <code>small</code>, <code>code</code>, <code>kbd</code>, <code>samp</code> and <code>pre</code>. Values in the tables are read live from <code>baset-ui.css</code>.</p>
+</section>
+
+<section class="bui-docs-section" aria-labelledby="families">
+<h2 id="families">Font families</h2>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Font family tokens</caption>
+<thead><tr><th scope="col">Token</th><th scope="col">Value (live)</th></tr></thead>
+<tbody>
+<tr><td><code>--bui-font-family</code></td><td><span data-docs-token="--bui-font-family" data-docs-mode="light"></span></td></tr>
+<tr><td><code>--bui-font-family-mono</code></td><td><span data-docs-token="--bui-font-family-mono" data-docs-mode="light"></span></td></tr>
+</tbody>
+</table><div class="bui-docs-callout bui-docs-callout--note" role="note">
+<p class="bui-docs-callout__title">Note</p>
+<p>No web font is loaded, because adding fonts is a dependency that needs approval. The sans family falls back to system fonts, including Arabic-capable ones (Noto Sans Arabic, Geeza Pro, Tahoma). If none is installed the browser chooses its own Arabic font.</p>
+</div><div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<div class="bui-docs-sample-stack">
+    <p>The quick brown fox jumps over the lazy dog.</p>
+    <p dir="rtl" lang="ar">مكتبة واجهات تعمل مباشرة في المتصفح</p>
+</div>
+</div>
+</div>
+</section>
+
+<section class="bui-docs-section" aria-labelledby="scale">
+<h2 id="scale">Size scale</h2>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Font size scale</caption>
+<thead><tr><th scope="col">Token</th><th scope="col">Value (live)</th><th scope="col">Pixels at 16px root</th><th scope="col">Specimen</th></tr></thead>
+<tbody>
+<tr><td><code>--bui-font-size-xs</code></td><td><span data-docs-token="--bui-font-size-xs" data-docs-mode="light"></span></td><td>12px</td><td><span style="font-size: var(--bui-font-size-xs)">Aa Bb</span></td></tr>
+<tr><td><code>--bui-font-size-sm</code></td><td><span data-docs-token="--bui-font-size-sm" data-docs-mode="light"></span></td><td>14px</td><td><span style="font-size: var(--bui-font-size-sm)">Aa Bb</span></td></tr>
+<tr><td><code>--bui-font-size-base</code></td><td><span data-docs-token="--bui-font-size-base" data-docs-mode="light"></span></td><td>16px</td><td><span style="font-size: var(--bui-font-size-base)">Aa Bb</span></td></tr>
+<tr><td><code>--bui-font-size-lg</code></td><td><span data-docs-token="--bui-font-size-lg" data-docs-mode="light"></span></td><td>18px</td><td><span style="font-size: var(--bui-font-size-lg)">Aa Bb</span></td></tr>
+<tr><td><code>--bui-font-size-xl</code></td><td><span data-docs-token="--bui-font-size-xl" data-docs-mode="light"></span></td><td>20px</td><td><span style="font-size: var(--bui-font-size-xl)">Aa Bb</span></td></tr>
+<tr><td><code>--bui-font-size-2xl</code></td><td><span data-docs-token="--bui-font-size-2xl" data-docs-mode="light"></span></td><td>24px</td><td><span style="font-size: var(--bui-font-size-2xl)">Aa Bb</span></td></tr>
+<tr><td><code>--bui-font-size-3xl</code></td><td><span data-docs-token="--bui-font-size-3xl" data-docs-mode="light"></span></td><td>30px</td><td><span style="font-size: var(--bui-font-size-3xl)">Aa Bb</span></td></tr>
+<tr><td><code>--bui-font-size-4xl</code></td><td><span data-docs-token="--bui-font-size-4xl" data-docs-mode="light"></span></td><td>36px</td><td><span style="font-size: var(--bui-font-size-4xl)">Aa Bb</span></td></tr>
+<tr><td><code>--bui-font-size-5xl</code></td><td><span data-docs-token="--bui-font-size-5xl" data-docs-mode="light"></span></td><td>48px</td><td><span style="font-size: var(--bui-font-size-5xl)">Aa Bb</span></td></tr>
+</tbody>
+</table><p>Sizes are in <code>rem</code>, so they follow the browser font size setting. There is no fluid (<code>clamp</code>) type: sizes are identical at every breakpoint.</p>
+</section>
+
+<section class="bui-docs-section" aria-labelledby="weights">
+<h2 id="weights">Weights and line heights</h2>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Font weight and line height tokens</caption>
+<thead><tr><th scope="col">Token</th><th scope="col">Value (live)</th><th scope="col">Specimen</th></tr></thead>
+<tbody>
+<tr><td><code>--bui-font-weight-regular</code></td><td><span data-docs-token="--bui-font-weight-regular" data-docs-mode="light"></span></td><td><span style="font-weight: var(--bui-font-weight-regular)">Weight regular</span></td></tr>
+<tr><td><code>--bui-font-weight-medium</code></td><td><span data-docs-token="--bui-font-weight-medium" data-docs-mode="light"></span></td><td><span style="font-weight: var(--bui-font-weight-medium)">Weight medium</span></td></tr>
+<tr><td><code>--bui-font-weight-semibold</code></td><td><span data-docs-token="--bui-font-weight-semibold" data-docs-mode="light"></span></td><td><span style="font-weight: var(--bui-font-weight-semibold)">Weight semibold</span></td></tr>
+<tr><td><code>--bui-font-weight-bold</code></td><td><span data-docs-token="--bui-font-weight-bold" data-docs-mode="light"></span></td><td><span style="font-weight: var(--bui-font-weight-bold)">Weight bold</span></td></tr>
+<tr><td><code>--bui-line-height-tight</code></td><td><span data-docs-token="--bui-line-height-tight" data-docs-mode="light"></span></td><td>-</td></tr>
+<tr><td><code>--bui-line-height-snug</code></td><td><span data-docs-token="--bui-line-height-snug" data-docs-mode="light"></span></td><td>-</td></tr>
+<tr><td><code>--bui-line-height-base</code></td><td><span data-docs-token="--bui-line-height-base" data-docs-mode="light"></span></td><td>-</td></tr>
+<tr><td><code>--bui-line-height-relaxed</code></td><td><span data-docs-token="--bui-line-height-relaxed" data-docs-mode="light"></span></td><td>-</td></tr>
+</tbody>
+</table><p>Weight tokens are plain numbers. System fonts may not have a distinct face for every weight, so neighboring weights can look identical.</p>
+</section>
+
+<section class="bui-docs-section" aria-labelledby="elements">
+<h2 id="elements">Headings, body, small and code</h2>
+<p>Elements use the base styles with no classes. The heading specimen is hidden from assistive technology so this page keeps a single <code>h1</code> and a correct outline.</p>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<div aria-hidden="true">
+    <h1>Heading 1</h1>
+    <h2>Heading 2</h2>
+    <h3>Heading 3</h3>
+    <h4>Heading 4</h4>
+    <h5>Heading 5</h5>
+    <h6>Heading 6</h6>
+</div>
+<p>Body text uses <code>--bui-body-font-size</code> and <code>--bui-line-height-base</code>.</p>
+<p><small>Small text uses --bui-small-font-size.</small></p>
+<pre>const a = 1;</pre>
+</div>
+</div><table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Element tokens</caption>
+<thead><tr><th scope="col">Token</th><th scope="col">Value (live)</th></tr></thead>
+<tbody>
+<tr><td><code>--bui-heading-color</code></td><td><span data-docs-token="--bui-heading-color" data-docs-mode="light"></span></td></tr>
+<tr><td><code>--bui-heading-font-weight</code></td><td><span data-docs-token="--bui-heading-font-weight" data-docs-mode="light"></span></td></tr>
+<tr><td><code>--bui-heading-line-height</code></td><td><span data-docs-token="--bui-heading-line-height" data-docs-mode="light"></span></td></tr>
+<tr><td><code>--bui-heading-1-size</code></td><td><span data-docs-token="--bui-heading-1-size" data-docs-mode="light"></span></td></tr>
+<tr><td><code>--bui-heading-2-size</code></td><td><span data-docs-token="--bui-heading-2-size" data-docs-mode="light"></span></td></tr>
+<tr><td><code>--bui-heading-3-size</code></td><td><span data-docs-token="--bui-heading-3-size" data-docs-mode="light"></span></td></tr>
+<tr><td><code>--bui-heading-4-size</code></td><td><span data-docs-token="--bui-heading-4-size" data-docs-mode="light"></span></td></tr>
+<tr><td><code>--bui-heading-5-size</code></td><td><span data-docs-token="--bui-heading-5-size" data-docs-mode="light"></span></td></tr>
+<tr><td><code>--bui-heading-6-size</code></td><td><span data-docs-token="--bui-heading-6-size" data-docs-mode="light"></span></td></tr>
+<tr><td><code>--bui-body-font-size</code></td><td><span data-docs-token="--bui-body-font-size" data-docs-mode="light"></span></td></tr>
+<tr><td><code>--bui-small-font-size</code></td><td><span data-docs-token="--bui-small-font-size" data-docs-mode="light"></span></td></tr>
+<tr><td><code>--bui-code-font-family</code></td><td><span data-docs-token="--bui-code-font-family" data-docs-mode="light"></span></td></tr>
+<tr><td><code>--bui-code-font-size</code></td><td><span data-docs-token="--bui-code-font-size" data-docs-mode="light"></span></td></tr>
+<tr><td><code>--bui-code-color</code></td><td><span data-docs-token="--bui-code-color" data-docs-mode="light"></span></td></tr>
+<tr><td><code>--bui-code-bg</code></td><td><span data-docs-token="--bui-code-bg" data-docs-mode="light"></span></td></tr>
+</tbody>
+</table><p>Heading sizes map to the scale: h1 is 4xl, h2 3xl, h3 2xl, h4 xl, h5 lg, h6 base. The documentation site overrides some heading styles inside its own content, but not inside the live previews.</p>
+</section>
+
+<section class="bui-docs-section" aria-labelledby="responsive-behavior">
+<h2 id="responsive-behavior">Responsive behavior</h2>
+<p>Type sizes do not change with the breakpoint. Long words in headings should be allowed to wrap by the component that uses them.</p>
+</section>
+
+<section class="bui-docs-section" aria-labelledby="accessibility">
+<h2 id="accessibility">Accessibility</h2>
+<p>Sizes in <code>rem</code> support text resizing up to 200% (WCAG 1.4.4). The body line height is 1.6, which meets the 1.5 guidance of WCAG 1.4.12 (Text Spacing). Set <code>lang</code> on content in another language (as in the Arabic sample) so screen readers pick the right voice. Use heading levels for structure, not for size: the size tokens exist for visual choices.</p>
+</section>
+
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="../../assets/js/baset-ui.js"></script>
+    <script src="../../documentation/assets/js/nav.js"></script>
+    <script src="../../documentation/assets/js/docs.js"></script>
+</body>
+</html>

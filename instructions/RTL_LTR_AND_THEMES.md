@@ -1,6 +1,6 @@
 # الاتجاهات (RTL/LTR) والـ Themes
 
-> الحالة: لا Theme فعلي منفذ سوى Tokens الافتراضية (Light/Dark) في `baset-ui.css`. نظام Theme Manager **مستقبلي**.
+> الحالة: لا Theme فعلي منفذ سوى Tokens الافتراضية (Light/Dark) في `baset-ui.css` (Task 03: كاملة وتعمل على أي عنصر). نظام Theme Manager **مستقبلي**.
 
 ## RTL / LTR (إلزامي)
 - الاتجاه يُحدد بـ `dir` على `<html>` (أو على حاوية لمعاينات محلية).
@@ -29,16 +29,23 @@ Theme = ملف CSS يعيد تعريف Tokens (وأحياناً Component Tokens
 
 ### طبقات Tokens
 1. **Global Tokens:** `--bui-color-*`, `--bui-font-*`, `--bui-radius-*`, `--bui-shadow-*`, `--bui-space-*`.
-2. **Component Tokens:** `--bui-button-bg` وتشتق افتراضياً من Global.
+2. **Component Tokens:** `--bui-grid-gutter`, `--bui-container-padding-x` (والمستقبلي `--bui-button-bg`) وتشتق افتراضياً من Global.
 المكونات تقرأ Component Tokens فقط (مع Fallback إلى Global)، فيستطيع الـ Theme التحكم بكل مكون دون كتابة Selectors له.
+
+**التنفيذ في `baset-ui.css` (Task 03) وقواعد الاشتقاق:**
+- الطبقة 1 (قيم خام تتبع الوضع): `:root, [data-bui-mode="light"]` و`[data-bui-mode="dark"]` (يأتي بعده).
+- الطبقة 2 (قيم ثابتة): `:root` فقط.
+- الطبقة 3 (Aliases وComponent Tokens): `:root, [data-bui-mode], [data-bui-theme]`، بـ `var()` فقط. تُعاد على كل Scope لأن قيمة `var()` تُحسب عند التصريح، فالموروث من `:root` يبقى بقيمة الصفحة.
+- **محددات Theme** تُكتب على أي عنصر: `[data-bui-theme="ocean"]` و`[data-bui-theme="ocean"][data-bui-mode="dark"]` (بدل `:root[...]`). قيود: Dark الخاص بـ Theme يلزم أن يكون الوسمان على نفس العنصر.
+- العنصر ذو `data-bui-mode` يرسم خلفيته ولونه بنفسه، فيعمل Dark داخل صفحة Light.
 
 ### ما يجب أن يتحكم فيه Theme
 Backgrounds، Colors، Typography، Buttons، Alerts، Cards، Forms، Modals، Toasts، Borders، Shadows، Component States (hover/focus/active/disabled).
 
 ### إنشاء Theme جديد (خطوات إلزامية)
 1. أنشئ `assets/css/themes/{name}.css`.
-2. عرّف Tokens تحت `:root[data-bui-theme="{name}"]` للوضع Light.
-3. عرّف نسخة Dark تحت `:root[data-bui-theme="{name}"][data-bui-mode="dark"]`.
+2. عرّف Tokens تحت `[data-bui-theme="{name}"]` للوضع Light (بدون `:root` ليعمل على أي عنصر).
+3. عرّف نسخة Dark تحت `[data-bui-theme="{name}"][data-bui-mode="dark"]`.
 4. لا تستخدم `!important` ولا Selectors للمكونات.
 5. تحقق من التباين (انظر [ACCESSIBILITY.md](ACCESSIBILITY.md)) وجرّب كل المكونات المسجلة.
 6. وثّقه في صفحة Themes (مستقبلي).

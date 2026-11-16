@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-bui-theme="default" data-bui-mode="light" data-root="../../">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Spacing - Baset-UI Documentation</title>
+    <meta name="description" content="The spacing scale and the margin, padding and gap utilities (logical properties only).">
+    <link rel="icon" href="data:,">
+
+    <link rel="stylesheet" href="../../assets/css/baset-ui.css">
+    <link rel="stylesheet" href="../../documentation/assets/css/docs.css">
+    <script>
+        /* Apply saved mode early to avoid a flash. Documentation shell only. */
+        try {
+            var m = localStorage.getItem('bui-docs-mode');
+            if (m === 'dark' || m === 'light') document.documentElement.setAttribute('data-bui-mode', m);
+        } catch (e) {}
+    </script>
+</head>
+<body>
+    <main class="bui-docs-main" id="bui-docs-main" tabindex="-1">
+        <div class="bui-docs-page">
+            <div class="bui-docs-page__body">
+
+                <header class="bui-docs-page-header">
+                    <nav class="bui-docs-breadcrumb" aria-label="Breadcrumb" data-docs-breadcrumb hidden></nav>
+                    <h1>Spacing</h1>
+                    <p class="bui-docs-lead">One scale, logical properties only, with a variant for every breakpoint.</p>
+                </header>
+
+                <div class="bui-docs-content">
+
+<section class="bui-docs-section" aria-labelledby="overview">
+<h2 id="overview">Overview</h2>
+<p>One spacing scale (<code>--bui-space-0</code> to <code>--bui-space-6</code>) drives margin, padding and gap utilities. All of them use logical properties: there are no <code>left</code> and <code>right</code> classes, so spacing flips in RTL by itself.</p><div class="bui-docs-callout bui-docs-callout--note" role="note">
+<p class="bui-docs-callout__title">Note</p>
+<p>Classes that start with <code>bui-docs-</code> in the live previews belong to this documentation site (demo boxes and frames). They are not part of the library.</p>
+</div>
+</section>
+
+<section class="bui-docs-section" aria-labelledby="scale">
+<h2 id="scale">Scale</h2>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Spacing scale</caption>
+<thead><tr><th scope="col">Token</th><th scope="col">Value (live)</th><th scope="col">Pixels at 16px root</th><th scope="col">Preview</th></tr></thead>
+<tbody>
+<tr><td><code>--bui-space-0</code></td><td><span data-docs-token="--bui-space-0" data-docs-mode="light"></span></td><td>0px</td><td><span class="bui-docs-space-bar" style="--bui-docs-w: var(--bui-space-0)"></span></td></tr>
+<tr><td><code>--bui-space-1</code></td><td><span data-docs-token="--bui-space-1" data-docs-mode="light"></span></td><td>4px</td><td><span class="bui-docs-space-bar" style="--bui-docs-w: var(--bui-space-1)"></span></td></tr>
+<tr><td><code>--bui-space-2</code></td><td><span data-docs-token="--bui-space-2" data-docs-mode="light"></span></td><td>8px</td><td><span class="bui-docs-space-bar" style="--bui-docs-w: var(--bui-space-2)"></span></td></tr>
+<tr><td><code>--bui-space-3</code></td><td><span data-docs-token="--bui-space-3" data-docs-mode="light"></span></td><td>16px</td><td><span class="bui-docs-space-bar" style="--bui-docs-w: var(--bui-space-3)"></span></td></tr>
+<tr><td><code>--bui-space-4</code></td><td><span data-docs-token="--bui-space-4" data-docs-mode="light"></span></td><td>24px</td><td><span class="bui-docs-space-bar" style="--bui-docs-w: var(--bui-space-4)"></span></td></tr>
+<tr><td><code>--bui-space-5</code></td><td><span data-docs-token="--bui-space-5" data-docs-mode="light"></span></td><td>32px</td><td><span class="bui-docs-space-bar" style="--bui-docs-w: var(--bui-space-5)"></span></td></tr>
+<tr><td><code>--bui-space-6</code></td><td><span data-docs-token="--bui-space-6" data-docs-mode="light"></span></td><td>48px</td><td><span class="bui-docs-space-bar" style="--bui-docs-w: var(--bui-space-6)"></span></td></tr>
+</tbody>
+</table><p>The pixel column assumes the default 16px root font size. Utility classes <code>0</code> to <code>6</code> map to these steps.</p>
+</section>
+
+<section class="bui-docs-section" aria-labelledby="naming">
+<h2 id="naming">Naming</h2>
+<p>Pattern: <code>bui-{property}[-{bp}]-{size}</code>, for example <code>bui-ms-3</code>, <code>bui-px-md-4</code>, <code>bui-mx-auto</code>.</p>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Spacing properties</caption>
+<thead><tr><th scope="col">Class</th><th scope="col">CSS property</th><th scope="col">Notes</th></tr></thead>
+<tbody>
+<tr><td><code>m</code> / <code>p</code></td><td><code>margin</code> / <code>padding</code></td><td>All sides</td></tr>
+<tr><td><code>mx</code> / <code>px</code></td><td><code>margin-inline</code> / <code>padding-inline</code></td><td>Start and end of the inline axis</td></tr>
+<tr><td><code>my</code> / <code>py</code></td><td><code>margin-block</code> / <code>padding-block</code></td><td>Start and end of the block axis</td></tr>
+<tr><td><code>mt</code> / <code>pt</code></td><td><code>margin-block-start</code> / <code>padding-block-start</code></td><td>t = block start (top in horizontal writing)</td></tr>
+<tr><td><code>mb</code> / <code>pb</code></td><td><code>margin-block-end</code> / <code>padding-block-end</code></td><td>b = block end</td></tr>
+<tr><td><code>ms</code> / <code>ps</code></td><td><code>margin-inline-start</code> / <code>padding-inline-start</code></td><td>s = inline start (left in LTR, right in RTL)</td></tr>
+<tr><td><code>me</code> / <code>pe</code></td><td><code>margin-inline-end</code> / <code>padding-inline-end</code></td><td>e = inline end</td></tr>
+<tr><td><code>gap</code>, <code>gap-x</code>, <code>gap-y</code></td><td><code>gap</code>, <code>column-gap</code>, <code>row-gap</code></td><td>Flex and grid containers</td></tr>
+</tbody>
+</table><p>Sizes: <code>0</code> to <code>6</code>. Margin classes also accept <code>auto</code> (<code>bui-mx-auto</code>). Negative margins are not provided. Every class has breakpoint variants for XS to XXXL.</p>
+</section>
+
+<section class="bui-docs-section" aria-labelledby="examples">
+<h2 id="examples">Examples</h2>
+<h3>Margin and padding</h3>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<div class="bui-docs-demo-frame">
+    <div class="bui-docs-demo-box bui-p-4 bui-mb-3">bui-p-4 and bui-mb-3</div>
+    <div class="bui-docs-demo-box bui-ms-5">bui-ms-5 (margin at the inline start)</div>
+</div>
+</div>
+</div><h3>Centering with auto margins</h3>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<div class="bui-docs-demo-frame">
+    <div class="bui-docs-demo-box bui-mx-auto" style="max-width: 12rem">bui-mx-auto</div>
+</div>
+</div>
+</div><h3 id="gap">Gap</h3>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<div class="bui-flex bui-flex-wrap bui-gap-3 bui-docs-demo-frame">
+    <div class="bui-docs-demo-box">1</div>
+    <div class="bui-docs-demo-box">2</div>
+    <div class="bui-docs-demo-box">3</div>
+    <div class="bui-docs-demo-box">4</div>
+</div>
+</div>
+</div><h3>Responsive</h3>
+<p>Small padding on narrow screens, larger from MD.</p>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<div class="bui-docs-demo-frame">
+    <div class="bui-docs-demo-box bui-p-1 bui-p-md-5">bui-p-1 bui-p-md-5</div>
+</div>
+</div>
+</div><h3>RTL</h3>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<div dir="rtl" class="bui-docs-demo-frame">
+    <div class="bui-docs-demo-box bui-ms-5">bui-ms-5 moves away from the right edge</div>
+</div>
+</div>
+</div>
+</section>
+
+<section class="bui-docs-section" aria-labelledby="responsive-behavior">
+<h2 id="responsive-behavior">Responsive behavior</h2>
+<p>Without an infix a class applies at every width. With an infix it applies from that breakpoint upward and overrides the base class. All spacing utilities use <code>!important</code>, so they also override future component styles; they are the one place the library allows it.</p>
+</section>
+
+<section class="bui-docs-section" aria-labelledby="accessibility">
+<h2 id="accessibility">Accessibility</h2>
+<p>Use spacing to keep interactive targets apart: WCAG 2.2 requires targets of at least 24 by 24 CSS pixels (or enough spacing around smaller ones), and this library aims for 44 pixels (2.5.8). Do not use margins or padding to fake structure that needs real elements, such as empty paragraphs. Text spacing set by users (WCAG 1.4.12) must not clip, so avoid fixed heights.</p>
+</section>
+
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="../../assets/js/baset-ui.js"></script>
+    <script src="../../documentation/assets/js/nav.js"></script>
+    <script src="../../documentation/assets/js/docs.js"></script>
+</body>
+</html>

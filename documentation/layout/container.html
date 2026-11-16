@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-bui-theme="default" data-bui-mode="light" data-root="../../">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Container - Baset-UI Documentation</title>
+    <meta name="description" content="Fixed and fluid containers that center and pad page content.">
+    <link rel="icon" href="data:,">
+
+    <link rel="stylesheet" href="../../assets/css/baset-ui.css">
+    <link rel="stylesheet" href="../../documentation/assets/css/docs.css">
+    <script>
+        /* Apply saved mode early to avoid a flash. Documentation shell only. */
+        try {
+            var m = localStorage.getItem('bui-docs-mode');
+            if (m === 'dark' || m === 'light') document.documentElement.setAttribute('data-bui-mode', m);
+        } catch (e) {}
+    </script>
+</head>
+<body>
+    <main class="bui-docs-main" id="bui-docs-main" tabindex="-1">
+        <div class="bui-docs-page">
+            <div class="bui-docs-page__body">
+
+                <header class="bui-docs-page-header">
+                    <nav class="bui-docs-breadcrumb" aria-label="Breadcrumb" data-docs-breadcrumb hidden></nav>
+                    <h1>Container</h1>
+                    <p class="bui-docs-lead">Center and pad page content, with a maximum width per breakpoint.</p>
+                </header>
+
+                <div class="bui-docs-content">
+
+<section class="bui-docs-section" aria-labelledby="overview">
+<h2 id="overview">Overview</h2>
+<p>A container centers page content and gives it inline padding. <code>bui-container</code> is fixed: it is fluid below SM and gets a maximum width from SM upward. <code>bui-container-fluid</code> is always 100% wide.</p>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Container classes</caption>
+<thead><tr><th scope="col">Class</th><th scope="col">Behavior</th></tr></thead>
+<tbody>
+<tr><td><code>bui-container</code></td><td>Width 100% below SM. From SM upward <code>max-width</code> follows the table below.</td></tr>
+<tr><td><code>bui-container-fluid</code></td><td>Width 100% at every breakpoint.</td></tr>
+</tbody>
+</table><div class="bui-docs-callout bui-docs-callout--note" role="note">
+<p class="bui-docs-callout__title">Note</p>
+<p>Classes that start with <code>bui-docs-</code> in the live previews belong to this documentation site (demo boxes and frames). They are not part of the library.</p>
+</div>
+</section>
+
+<section class="bui-docs-section" aria-labelledby="max-widths">
+<h2 id="max-widths">Maximum widths</h2>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Fixed container maximum widths</caption>
+<thead><tr><th scope="col">Breakpoint</th><th scope="col">Applies</th><th scope="col">Token</th><th scope="col">Value (live)</th></tr></thead>
+<tbody>
+<tr><td>SM</td><td>576px and up</td><td><code>--bui-container-max-sm</code></td><td><span data-docs-token="--bui-container-max-sm" data-docs-mode="light"></span></td></tr>
+<tr><td>MD</td><td>768px and up</td><td><code>--bui-container-max-md</code></td><td><span data-docs-token="--bui-container-max-md" data-docs-mode="light"></span></td></tr>
+<tr><td>LG</td><td>992px and up</td><td><code>--bui-container-max-lg</code></td><td><span data-docs-token="--bui-container-max-lg" data-docs-mode="light"></span></td></tr>
+<tr><td>XL</td><td>1200px and up</td><td><code>--bui-container-max-xl</code></td><td><span data-docs-token="--bui-container-max-xl" data-docs-mode="light"></span></td></tr>
+<tr><td>XXL</td><td>1600px and up</td><td><code>--bui-container-max-xxl</code></td><td><span data-docs-token="--bui-container-max-xxl" data-docs-mode="light"></span></td></tr>
+<tr><td>XXXL</td><td>1920px and up</td><td><code>--bui-container-max-xxxl</code></td><td><span data-docs-token="--bui-container-max-xxxl" data-docs-mode="light"></span></td></tr>
+</tbody>
+</table><p>XS (480px) has no maximum width: the container stays fluid until SM.</p>
+</section>
+
+<section class="bui-docs-section" aria-labelledby="examples">
+<h2 id="examples">Examples</h2>
+<h3>Fixed and fluid</h3>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<div class="bui-container bui-docs-demo-frame bui-mb-3">
+    <div class="bui-docs-demo-box">.bui-container</div>
+</div>
+<div class="bui-container-fluid bui-docs-demo-frame">
+    <div class="bui-docs-demo-box">.bui-container-fluid</div>
+</div>
+</div>
+</div><p>The preview is narrower than the container maximums, so both look alike here. Open this page on a wide window to see the fixed container stop growing.</p>
+<h3>Custom padding</h3>
+<p>Set the component token on the element or on any ancestor.</p>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<div class="bui-container bui-docs-demo-frame" style="--bui-container-padding-x: var(--bui-space-5)">
+    <div class="bui-docs-demo-box">--bui-container-padding-x: var(--bui-space-5)</div>
+</div>
+</div>
+</div>
+</section>
+
+<section class="bui-docs-section" aria-labelledby="customization">
+<h2 id="customization">Customization</h2>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Container tokens</caption>
+<thead><tr><th scope="col">Token</th><th scope="col">Default</th><th scope="col">Description</th></tr></thead>
+<tbody>
+<tr><td><code>--bui-container-padding-x</code></td><td><span data-docs-token="--bui-container-padding-x" data-docs-mode="light"></span></td><td>Inline padding of both container classes.</td></tr>
+<tr><td><code>--bui-container-max-{bp}</code></td><td>see table above</td><td>Maximum width of <code>bui-container</code> from that breakpoint upward.</td></tr>
+</tbody>
+</table>
+</section>
+
+<section class="bui-docs-section" aria-labelledby="responsive-behavior">
+<h2 id="responsive-behavior">Responsive behavior</h2>
+<p>Below SM the container is fluid. At SM and above the width steps up at each breakpoint and never shrinks. Padding uses <code>padding-inline</code>, so it mirrors correctly in RTL.</p>
+</section>
+
+<section class="bui-docs-section" aria-labelledby="accessibility">
+<h2 id="accessibility">Accessibility</h2>
+<p>A container has no role and no ARIA. Maximum widths are in pixels but content inside should use relative units, so text can grow with browser zoom without clipping (WCAG 1.4.4, 1.4.10).</p>
+</section>
+
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="../../assets/js/baset-ui.js"></script>
+    <script src="../../documentation/assets/js/nav.js"></script>
+    <script src="../../documentation/assets/js/docs.js"></script>
+</body>
+</html>

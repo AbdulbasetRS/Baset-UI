@@ -21,6 +21,15 @@
 - الأمثلة تعمل في RTL وLTR وLight وDark.
 - النصوص العامة في صفحات التوثيق بالإنجليزية (لغة الموقع الافتراضية)، إلى أن يُقرر نظام توثيق متعدد اللغات (مستقبلي).
 
+## استثناء: صفحات غير Components (Task 03)
+صفحات Layout وCustomization (Breakpoints, Container, Grid, Flexbox, Spacing, Colors, Typography, CSS Variables) ليست Components، فالأقسام الثمانية غير مطلوبة لها. تُبنى بنفس قالب الصفحة وتتبع روح المعيار: Overview وجداول مرجعية وExamples حية بكود مولَّد، ثم Responsive Behavior وAccessibility حيثما ينطبق. حُذفت الأقسام غير المنطبقة (Installation, Customize Playground, JavaScript API) عمداً.
+
+### عناصر قيم حية (Docs-only)
+- `<span data-docs-token="--bui-x" data-docs-mode="light|dark">`: يملأه `docs.js` بالقيمة المحسوبة للـ Token من عنصر Probe مخفي بالوضع المحدد (الافتراضي light). ممنوع كتابة قيم Tokens يدوياً في الصفحات.
+- `<tr data-docs-contrast data-fg="--bui-color-a" data-bg="--bui-color-b" data-min="4.5">` مع خليتين `data-docs-cell="light"` و`data-docs-cell="dark"`: يحسب `docs.js` نسبة التباين (WCAG) ويكتب النتيجة والنص Pass/Fail. `[data-docs-contrast-summary]` يلخصها.
+- `[data-docs-current-bp]`: يعرض Breakpoint الحالي من Tokens `--bui-bp-*`.
+- أصناف العرض `bui-docs-demo-*` وSwatches في `docs.css` خاصة بالموقع.
+
 ## إجراءات إضافة صفحة
 1. انسخ [templates/DOC_PAGE_TEMPLATE.html](templates/DOC_PAGE_TEMPLATE.html) إلى `documentation/{folder}/{kebab-name}.html` (المجلد والاسم: [ARCHITECTURE.md](ARCHITECTURE.md)، قسم "صفحات التوثيق")، واملأ المحتوى حسب [templates/COMPONENT_DOCUMENTATION_TEMPLATE.md](templates/COMPONENT_DOCUMENTATION_TEMPLATE.md). لا تغيّر `data-root` ولا روابط CSS/JS ما دامت الصفحة بعمق مجلدين.
 2. فعّل الرابط في `documentation/assets/js/nav.js` فقط: استبدل `'Button'` بـ `{ title: 'Button', href: 'documentation/components/button.html' }` (الصيغة الكاملة في رأس `nav.js`).
