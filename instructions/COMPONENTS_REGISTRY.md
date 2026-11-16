@@ -17,7 +17,7 @@
 ## الأعمدة
 `Type`: Core | Extension. `JS`: Yes | No. `Docs`: مسار الصفحة أو `-`.
 
-> **الوضع الحالي (Task 02): كل المكونات Planned. لا يوجد أي مكون منفذ.** المنفذ حالياً أنظمة الأساس فقط (جدول Systems). روابط المكونات في Sidebar Placeholders.
+> **الوضع الحالي (Task 01): كل المكونات Planned. لا يوجد أي مكون منفذ.** الروابط في Sidebar Placeholders فقط.
 
 ### Components
 | Component | Status | Type | JS | Docs | Updated | Notes |
@@ -62,15 +62,8 @@
 ### Systems (مستقبلية)
 | System | Status | Notes |
 |---|---|---|
-| Design Tokens (Colors, Typography, Spacing, Radius, Border, Shadow, Z-Index, Transition, Container) | Completed | Task 02، 2026-11-15. Light/Dark عبر `data-bui-mode` (على `html` أو أي حاوية). لم يُختبر بقارئ شاشة |
-| Base (Reset, Typography, Links, Images, Forms Reset, Focus, Selection, Reduced Motion) | Completed | Task 02، 2026-11-15 |
-| Breakpoints | Completed | Task 02. قيم مرجعية `--bui-bp-*` + Media Queries في القسم 7 من `baset-ui.css` |
-| Container | Completed | Task 02. `bui-container`, `bui-container-fluid`, `bui-container-{bp}` |
-| Grid | Completed | Task 02. التسمية: `bui-{property}-{breakpoint}-{value}` |
-| Row and Column (`bui-row`, `bui-col`) | Completed | Task 03، 2026-11-15. نظام 12 عموداً بـ Flexbox بأسلوب Bootstrap (Col، Row-cols، Offset، Order، Gutters، متغيرات Responsive). اختُبر في Chromium (انظر تقرير Task 03): عرض الأعمدة، Wrapping، عدم وجود Overflow على مستوى الصفحة من 320 إلى 1920، ترتيب RTL. لم يُختبر بقارئ شاشة ولا بـ Firefox/Safari |
-| Flexbox | Completed | Task 02. `bui-items-*`, `bui-justify-*`, `bui-content-*`, `bui-gap-*` مشتركة مع Grid. لا تُعاد تعريفها في Task 03 |
-| Spacing | Completed | Task 02: Tokens + `bui-gap-*` فقط. كلاسات Margin/Padding ضمن Task 03 |
-| Utilities: Display, Position, Overflow, Visibility, Borders | Completed | Task 04، 2026-11-16. CSS فقط داخل `baset-ui.css` (القسم 5، وكلاسات Display المتجاوبة في القسم 7). اختُبر في Chromium: القيم المحسوبة لكل كلاس، Display عند كل Breakpoint، Sticky/Fixed/Z-index، Overflow على المحورين، Visibility، Borders (RTL/LTR وLight/Dark). لم يُختبر في Firefox/Safari ولا بقارئ شاشة. باقي Utilities (Margin/Padding/Width/Height/Text/Background) غير منفذة |
+| Layout (Container/Grid/Flex/Spacing) | Planned | |
+| Utilities | Planned | |
 | Theme Manager | Planned | [RTL_LTR_AND_THEMES.md](RTL_LTR_AND_THEMES.md) |
 | Locale Manager | Planned | [INTERNATIONALIZATION.md](INTERNATIONALIZATION.md) |
 | Toast Manager / Modal Manager | Planned | Toast/Modal غير مدرجين في Sidebar بعد |
@@ -80,10 +73,3 @@
 | Item | Status | Notes |
 |---|---|---|
 | Navbar / Sidebar / Footer (`index.html`) | Completed | Task 01. اختُبر وفق قسم الاختبار في تقرير Task 01 |
-| Documentation pages: Utilities (5) | Completed | Task 04. `documentation/utilities/{display,position,overflow,visibility,borders}.html`، روابطها مفعلة في `nav.js`. لا Playground ولا الأقسام الثمانية الخاصة بالمكونات، لذلك لا تُسجل كـ Documented |
-| Documentation pages: Customization (3) + Layout (5) | Completed | Task 02 (Task 03: صفحة Grid توسعت لتشمل Row and Column). `documentation/customization/` و`documentation/layout/`. لا Playground (Task 09) ولا الأقسام الثمانية الخاصة بالمكونات، لذلك لا تُسجل كـ Documented |
-| Shell: روابط Sidebar من الصفحات الفرعية (`data-docs-root`)، نسخ الكود، قراءات حية | Completed | Task 02. إصلاح `overflow-x: hidden` الذي كان يعطل `sticky` للـ Navbar |
-| Shell: الشعار (Navbar Mark، Footer Logo، Favicon) وREADME | Completed | 2026-11-15. يُحقن من `docs.js`، ملفات `documentation/assets/images/brand/`. فُحصت صياغة JS وتوازن CSS فقط؛ لم يُختبر بصرياً في متصفح (RTL/LTR، Light/Dark، Responsive) |
-| Shell: Syntax Highlighting لبلوكات الكود (Dark+) | Completed | 2026-11-15. `BUI_DOCS_CODE` في `docs.js` + `--bui-docs-syntax-*` في `docs.css`. HTML/CSS/JS/JSON/PHP. اختُبر بـ Node وjsdom (نص ثابت، Copy، idempotent). لم يُختبر في متصفح حقيقي ولا بقارئ شاشة. Playground وCode Generator غير موجودين بعد |
-| Shell: Footer بأعمدة (علامة + أقسام الروابط + شريط سفلي) | Completed | 2026-11-15. يُبنى من `docs.js`، الأعمدة من `nav.js`. اختُبر بـ jsdom (بنية DOM، الصفحة الحالية، نقل `data-docs-version`). لم يُختبر بصرياً في متصفح (Responsive وRTL وLight/Dark) |
-| Shell: Footer مضغوط (مداخل الأقسام + عمود Contact اختياري من `BUI_DOCS_FOOTER`) | Completed | Task 03، 2026-11-15. اختُبر في Chromium عند 360 و1200 (الأعمدة، الروابط، لا Overflow، لا أخطاء Console). عمود Contact (LinkedIn وEmail) اختُبر في Chromium: ظهور الروابط وسمات `target`/`rel` |

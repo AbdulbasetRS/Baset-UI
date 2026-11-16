@@ -38,14 +38,7 @@ Baset-UI/
 الجذر هو مصدر النشر. المسارات **نسبية** دائماً (`assets/...`) وليست مطلقة (`/assets/...`) لأن الموقع قد يُخدَّم من مسار فرعي. ملف `.nojekyll` موجود لتعطيل Jekyll.
 
 ## صفحات التوثيق
-- صفحات `documentation/**/*.html` تعتمد نفس الـ Shell (Navbar/Sidebar/Footer) وتحسب المسارات النسبية للجذر.
-- **قالب الصفحة (محدد في Task 02):** لا ملف قالب منفصل (لا Build). تُنسخ بنية أي صفحة قائمة، والمرجع `documentation/layout/container.html`. المتطلبات:
-  - `<body data-docs-root="../../">`: المسار النسبي من الصفحة إلى الجذر (`../../` لصفحات `documentation/{section}/`). يستخدمه `docs.js` لروابط Sidebar.
-  - ترتيب التحميل: `{root}assets/css/baset-ui.css` ثم `../assets/css/docs.css`، والسكربتات: `baset-ui.js` ثم `nav.js` ثم `docs.js`.
-  - المحتوى داخل `<main id="bui-docs-main"><article class="bui-docs-article">` وفيه `h1` واحد وعناوين `h2`/`h3` بلا قفز في المستويات.
-  - مكونات العرض (Docs فقط، البادئة `bui-docs-*`): `bui-docs-example` (معاينة + كود)، `bui-docs-preview`، `bui-docs-code` مع زر `data-docs-copy`، `bui-docs-table-wrap`/`bui-docs-table`، `bui-docs-note`. الكود المعروض يجب أن يطابق المعاينة حرفياً ولا يحتوي كلاسات `bui-docs-*`.
-  - قراءات حية اختيارية: `data-docs-viewport`، `data-docs-breakpoint`، `data-docs-width-of="#id"`، `data-docs-css-var="--bui-x"`.
-  - عنصر `role="status"` بالمعرف `bui-docs-status` لإعلان نتيجة النسخ.
+- صفحات `documentation/**/*.html` تُنشأ مستقبلاً وتعتمد نفس الـ Shell (Navbar/Sidebar/Footer) وتحسب المسارات النسبية للجذر. (مستقبلي: قالب مشترك يُحدد في أول مهمة تنشئ صفحة).
 - تفعيل رابط في Sidebar: تعديل `documentation/assets/js/nav.js` وإضافة `href` للعنصر، وهي الطريقة المعتمدة لإضافة روابط جديدة.
 - Sidebar الحالي يُرسم من `nav.js`؛ العناصر بدون `href` تظهر معطلة (Placeholder).
 

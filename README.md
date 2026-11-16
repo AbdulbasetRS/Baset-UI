@@ -1,10 +1,3 @@
-<p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="documentation/assets/images/brand/baset-ui-logo-dark.svg">
-    <img src="documentation/assets/images/brand/baset-ui-logo-light.svg" alt="Baset-UI" width="420">
-  </picture>
-</p>
-
 # Baset-UI
 
 مكتبة واجهات (CSS + JavaScript) تعمل مباشرة في المتصفح بدون Build Tools، مع موقع Documentation.
