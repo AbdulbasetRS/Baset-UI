@@ -15,9 +15,10 @@ Baset-UI/
 │   ├── i18n/               ملفات الترجمة JSON
 │   ├── icons/  fonts/  images/  sounds/
 ├── documentation/          صفحات التوثيق وملفات موقع التوثيق فقط
-│   ├── getting-started/ customization/ layout/ components/ utilities/ extensions/ examples/
+│   ├── getting-started/ layout/ customization/ components/ utilities/
+│   ├── javascript/ extensions/ accessibility/ advanced/ development/ examples/
 │   └── assets/{css,js,images}   ملفات واجهة التوثيق (ليست جزءاً من المكتبة)
-├── instructions/           المرجع الأساسي للتطوير
+├── instructions/           المرجع الأساسي للتطوير (templates/ تضم قوالب المهام وقالب صفحة التوثيق)
 ├── tests/                  الاختبارات
 └── examples/               أمثلة تطبيقية مستقلة
 ```
@@ -38,9 +39,43 @@ Baset-UI/
 الجذر هو مصدر النشر. المسارات **نسبية** دائماً (`assets/...`) وليست مطلقة (`/assets/...`) لأن الموقع قد يُخدَّم من مسار فرعي. ملف `.nojekyll` موجود لتعطيل Jekyll.
 
 ## صفحات التوثيق
-- صفحات `documentation/**/*.html` تُنشأ مستقبلاً وتعتمد نفس الـ Shell (Navbar/Sidebar/Footer) وتحسب المسارات النسبية للجذر. (مستقبلي: قالب مشترك يُحدد في أول مهمة تنشئ صفحة).
-- تفعيل رابط في Sidebar: تعديل `documentation/assets/js/nav.js` وإضافة `href` للعنصر، وهي الطريقة المعتمدة لإضافة روابط جديدة.
-- Sidebar الحالي يُرسم من `nav.js`؛ العناصر بدون `href` تظهر معطلة (Placeholder).
+القالب الرسمي: [templates/DOC_PAGE_TEMPLATE.html](templates/DOC_PAGE_TEMPLATE.html). عقد العناصر (Example/Code/Callout/Tables/Anchors) في [COMPONENT_DOCUMENTATION.md](COMPONENT_DOCUMENTATION.md).
+
+### مكان كل قسم من الـ Sidebar
+المجلد يطابق قسم الـ Sidebar، واسم الملف هو عنوان العنصر بصيغة kebab-case (`Button Group` ← `button-group.html`، `Date Picker` ← `date-picker.html`).
+
+| قسم الـ Sidebar | المجلد |
+|---|---|
+| Get Started | `documentation/getting-started/` |
+| Layout | `documentation/layout/` |
+| Customization | `documentation/customization/` |
+| Components | `documentation/components/` |
+| Forms | `documentation/components/` |
+| Data Display | `documentation/components/` |
+| Utilities | `documentation/utilities/` |
+| JavaScript | `documentation/javascript/` |
+| Extensions | `documentation/extensions/` |
+| Accessibility | `documentation/accessibility/` |
+| Advanced | `documentation/advanced/` |
+| Development | `documentation/development/` |
+
+- **Forms وData Display داخل `components/`** لأنها مكونات من نفس النوع (نفس الأقسام الثمانية)، فلا يلزم مجلد لكل قسم، وتبقى المجلدات قليلة. التمييز بين الأقسام يتم في `nav.js` فقط.
+- **المجلدات الأربعة الجديدة** (`javascript/`, `accessibility/`, `advanced/`, `development/`) أُضيفت لأن هذه الأقسام موجودة في الـ Sidebar ولم يكن لها مكان؛ وكل مجلد يحتوي `.gitkeep` حتى أول صفحة (القاعدة 5). `examples/` لا قسم له في الـ Sidebar وبقي كما هو.
+- **عمق كل صفحة ثابت (2):** `documentation/{folder}/{name}.html`، لذلك قيمة `data-root` لكل صفحة توثيق هي دائماً `../../`. تُسمح أعماق أخرى (مثلاً `../../../`) بتغيير `data-root` وروابط الملفات معاً فقط.
+
+### قرار المسارات في الصفحات المتداخلة
+- كل صفحة تضع `data-root="../../"` على `<html>`: المسار **من الصفحة نفسها** إلى جذر الموقع (مجلد `index.html`). يُقرأ في `docs.js` ويُبنى عليه كل رابط (Sidebar، Breadcrumb، Previous/Next، رابط الشعار).
+- إن غابت السمة يستنتج `docs.js` الجذر من مسار سكربت `docs.js` نفسه (دائماً ثلاثة مستويات تحت الجذر)، فتبقى الصفحة تعمل. السمة هي المصدر الأساسي لأنها صريحة ولا تعتمد على موضع السكربت.
+- **السبب:** لا مسارات مطلقة (`/assets/...`) لأن الموقع يُخدَّم من `/Baset-UI/` على GitHub Pages، ولا Build Tools لتوليد المسارات، ويجب أن تعمل الصفحات من `file://` ومن خادم محلي. الروابط في `<head>` (CSS) وآخر `<body>` (JS) تُكتب في الصفحة نفسها بنفس بادئة `data-root` لأنها تُحمَّل قبل تشغيل أي JavaScript.
+- مقارنة الصفحة الحالية بعناصر `nav.js` تتم على المسار النسبي للجذر بعد حذف `.html` و`/index`، فيستمر التمييز النشط حتى لو قُدِّمت الصفحة بدون الامتداد (GitHub Pages يفعل ذلك).
+
+### ما يُكرَّر وما لا يُكرَّر في كل صفحة
+- لا يُكتب Navbar ولا Sidebar ولا Footer ولا Skip Link في الصفحات: يبنيها `docs.js` حول `<main id="bui-docs-main">`. المكرَّر في كل صفحة هو فقط: `<head>` (3 روابط/سكربتات ثابتة + سكربت الوضع المبكر) و`<main>` ومحتواه وسطر سكربتات الـ body.
+- `index.html` يحتفظ بـ Shell ثابت من Task 01 ويعمل كما هو؛ `docs.js` يتجاوز البناء عند وجوده. (اقتراح مستقبلي: ترحيل `index.html` إلى نفس الصيغة المختصرة لإلغاء ازدواج تعريف الـ Navbar بين `index.html` و`docs.js`.)
+- ترتيب الـ Sidebar وBreadcrumb وPrevious/Next مصدره الوحيد `nav.js` (صيغته موثقة في رأس الملف).
+
+### تفعيل رابط في الـ Sidebar
+تعديل `documentation/assets/js/nav.js` فقط: استبدال النص بكائن `{ title, href }` حيث `href` نسبي لجذر الموقع (بدون `/` في البداية ولا `../`). العناصر بدون `href` تظهر معطلة (Placeholder). قيمة `href` غير الصالحة تُرفض مع تحذير `[BUI docs]` في Console.
 
 ## تعديل المعمارية
 أي تعديل على هذا الهيكل يتطلب: سبب مكتوب هنا، وإدخال في CHANGELOG، وموافقة المالك إذا كان يغير مسارات عامة.

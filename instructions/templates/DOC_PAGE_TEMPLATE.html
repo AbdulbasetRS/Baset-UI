@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<!--
+    Baset-UI documentation page template (component page layout).
+
+    HOW TO USE
+    1. Copy this file to documentation/<section-folder>/<kebab-name>.html
+       (folders and names: instructions/ARCHITECTURE.md, "Documentation pages layout").
+    2. Replace every {placeholder}. Keep the eight sections of a component page, in this order,
+       with these exact ids. For a non-component page (Layout, Colors, ...) delete the
+       <section> blocks and write your own <section class="bui-docs-section"> with <h2> headings.
+    3. Activate the page: edit documentation/assets/js/nav.js ONLY (see the header of that file).
+    4. Markup contract of the page elements: instructions/COMPONENT_DOCUMENTATION.md.
+
+    PATHS
+    data-root is the path from THIS file to the site root (the folder that has index.html).
+    Pages at documentation/<folder>/<name>.html always use "../../". It must end with "/"
+    and the three asset links below must use the same prefix. Absolute paths ("/assets/...")
+    are forbidden because GitHub Pages serves the site from the /Baset-UI/ sub-path.
+    This file itself also works when opened from instructions/templates/ (same depth).
+
+    Navbar, Sidebar and Footer are NOT written here: docs.js builds them around <main>.
+-->
+<html lang="en" dir="ltr" data-bui-theme="default" data-bui-mode="light" data-root="../../">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{Page Title} - Baset-UI Documentation</title>
+    <meta name="description" content="{One sentence describing the page.}">
+    <!-- Empty icon: avoids a /favicon.ico 404 until the project has a real icon. -->
+    <link rel="icon" href="data:,">
+
+    <link rel="stylesheet" href="../../assets/css/baset-ui.css">
+    <link rel="stylesheet" href="../../documentation/assets/css/docs.css">
+    <script>
+        /* Apply saved mode early to avoid a flash. Documentation shell only. */
+        try {
+            var m = localStorage.getItem('bui-docs-mode');
+            if (m === 'dark' || m === 'light') document.documentElement.setAttribute('data-bui-mode', m);
+        } catch (e) {}
+    </script>
+</head>
+<body>
+    <main class="bui-docs-main" id="bui-docs-main" tabindex="-1">
+        <div class="bui-docs-page">
+            <div class="bui-docs-page__body">
+
+                <header class="bui-docs-page-header">
+                    <nav class="bui-docs-breadcrumb" aria-label="Breadcrumb" data-docs-breadcrumb hidden></nav>
+                    <h1>{Component Name}</h1>
+                    <p class="bui-docs-lead">{One-sentence description.}</p>
+                </header>
+
+                <div class="bui-docs-content">
+
+                    <section class="bui-docs-section" aria-labelledby="installation-include">
+                        <h2 id="installation-include">01. Installation &amp; Include</h2>
+                        <p>{Required files and load order (Core, then Extension, then optional Theme).}</p>
+<pre class="bui-docs-code" data-lang="html"><code>{Complete copy-ready include example. Escape "&lt;" as &amp;lt; inside code.}</code></pre>
+                    </section>
+
+                    <section class="bui-docs-section" aria-labelledby="customize">
+                        <h2 id="customize">02. Customize</h2>
+                        <p>{Component-specific Playground (CUSTOMIZATION_AND_PLAYGROUND.md). If it does not exist yet, keep this section and state why.}</p>
+                    </section>
+
+                    <section class="bui-docs-section" aria-labelledby="default">
+                        <h2 id="default">03. Default</h2>
+                        <div class="bui-docs-example">
+                            <div class="bui-docs-example__preview">
+                                {Live markup with the minimum options. The code block below is generated from it.}
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="bui-docs-section" aria-labelledby="variants-options">
+                        <h2 id="variants-options">04. Variants &amp; Options</h2>
+                        <h3>Variants and sizes</h3>
+                        <table class="bui-docs-table">
+                            <caption class="bui-docs-sr-only">{Variants, sizes and states}</caption>
+                            <thead><tr><th scope="col">Name</th><th scope="col">Class</th><th scope="col">Description</th></tr></thead>
+                            <tbody><tr><td><code>{name}</code></td><td><code>{bui-class}</code></td><td>{description}</td></tr></tbody>
+                        </table>
+                        <h3>Options</h3>
+                        <table class="bui-docs-table">
+                            <caption class="bui-docs-sr-only">{Component options}</caption>
+                            <thead><tr><th scope="col">Name</th><th scope="col">Type</th><th scope="col">Default</th><th scope="col">HTML attribute</th><th scope="col">Description</th></tr></thead>
+                            <tbody><tr><td><code>{option}</code></td><td>{type}</td><td>{default}</td><td><code>{data-bui-option}</code></td><td>{description}</td></tr></tbody>
+                        </table>
+                    </section>
+
+                    <section class="bui-docs-section" aria-labelledby="examples">
+                        <h2 id="examples">05. Examples</h2>
+                        <div class="bui-docs-example">
+                            <div class="bui-docs-example__preview">
+                                {Realistic live example.}
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="bui-docs-section" aria-labelledby="javascript-api">
+                        <h2 id="javascript-api">06. JavaScript API</h2>
+                        <p>{Initialization (HTML and JS). If the component is CSS only, write: "CSS only, no JavaScript API."}</p>
+                        <h3>Methods</h3>
+                        <table class="bui-docs-table">
+                            <caption class="bui-docs-sr-only">{Methods}</caption>
+                            <thead><tr><th scope="col">Name</th><th scope="col">Type</th><th scope="col">Default</th><th scope="col">Description</th></tr></thead>
+                            <tbody><tr><td><code>{method()}</code></td><td>{type}</td><td>{default}</td><td>{description}</td></tr></tbody>
+                        </table>
+                        <h3>Events</h3>
+                        <table class="bui-docs-table">
+                            <caption class="bui-docs-sr-only">{Events}</caption>
+                            <thead><tr><th scope="col">Name</th><th scope="col">Type</th><th scope="col">Default</th><th scope="col">Description</th></tr></thead>
+                            <tbody><tr><td><code>{bui:component:event}</code></td><td>{type}</td><td>{default}</td><td>{description}</td></tr></tbody>
+                        </table>
+                    </section>
+
+                    <section class="bui-docs-section" aria-labelledby="responsive-behavior">
+                        <h2 id="responsive-behavior">07. Responsive Behavior</h2>
+                        <p>{Behavior per Breakpoint (RESPONSIVE_DESIGN.md).}</p>
+                    </section>
+
+                    <section class="bui-docs-section" aria-labelledby="accessibility">
+                        <h2 id="accessibility">08. Accessibility</h2>
+                        <h3>Keyboard</h3>
+                        <p>{Keys and behavior.}</p>
+                        <h3>ARIA</h3>
+                        <p>{Roles, states and properties.}</p>
+                        <h3>Screen reader</h3>
+                        <p>{What is announced and what was tested.}</p>
+                    </section>
+
+                </div>
+                <!-- Previous / Next links are appended here by docs.js from the order in nav.js. -->
+            </div>
+            <!-- "On this page" is appended here by docs.js (visible from the XL breakpoint). -->
+        </div>
+    </main>
+
+    <script src="../../assets/js/baset-ui.js"></script>
+    <script src="../../documentation/assets/js/nav.js"></script>
+    <script src="../../documentation/assets/js/docs.js"></script>
+</body>
+</html>

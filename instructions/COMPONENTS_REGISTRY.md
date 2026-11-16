@@ -72,4 +72,7 @@
 ### Documentation Shell
 | Item | Status | Notes |
 |---|---|---|
-| Navbar / Sidebar / Footer (`index.html`) | Completed | Task 01. اختُبر وفق قسم الاختبار في تقرير Task 01 |
+| Navbar / Sidebar / Footer (`index.html`) | Completed | Task 01. اختُبر وفق قسم الاختبار في تقرير Task 01. Task 02: أُصلح تثبيت (sticky) الـ Navbar/Sidebar في `docs.css` |
+| Docs page template (`templates/DOC_PAGE_TEMPLATE.html`) | Completed | Task 02. بنيته نفسها منفذة ومختبرة آلياً (Chromium فقط). لا توجد صفحة توثيق حقيقية بعد |
+| Docs page widgets (Breadcrumb, On this page, Previous/Next, Example, Code + Copy, Callouts, Tables) | Completed | Task 02. اختُبرت بصفحات مؤقتة خارج المشروع، ولم تُختبر بقارئ شاشة أو أجهزة لمس أو Safari/Firefox |
+| Sidebar للصفحات المتداخلة (active + فتح القسم + تمرير) | Completed | Task 02. المسارات عبر `data-root` ([ARCHITECTURE.md](ARCHITECTURE.md)) |
