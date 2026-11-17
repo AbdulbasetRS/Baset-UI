@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-bui-theme="default" data-bui-mode="light" data-root="../../">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Introduction - Baset-UI Documentation</title>
+    <meta name="description" content="What the Baset-UI core script provides and how to load and configure it.">
+    <link rel="icon" href="data:,">
+
+    <link rel="stylesheet" href="../../assets/css/baset-ui.css">
+    <link rel="stylesheet" href="../../documentation/assets/css/docs.css">
+    <script>
+        /* Apply saved mode early to avoid a flash. Documentation shell only. */
+        try {
+            var m = localStorage.getItem('bui-docs-mode');
+            if (m === 'dark' || m === 'light') document.documentElement.setAttribute('data-bui-mode', m);
+        } catch (e) {}
+    </script>
+</head>
+<body>
+    <main class="bui-docs-main" id="bui-docs-main" tabindex="-1">
+        <div class="bui-docs-page">
+            <div class="bui-docs-page__body">
+
+                <header class="bui-docs-page-header">
+                    <nav class="bui-docs-breadcrumb" aria-label="Breadcrumb" data-docs-breadcrumb hidden></nav>
+                    <h1>Introduction</h1>
+                    <p class="bui-docs-lead">The BUI namespace: registry, init, events, helpers and logger, with no build step.</p>
+                </header>
+
+                <div class="bui-docs-content">
+
+<section class="bui-docs-section" aria-labelledby="overview">
+<h2 id="overview">Overview</h2>
+<p>The core script <code>assets/js/baset-ui.js</code> creates one global, <code>window.BUI</code>. It gives components a shared base: a registry, automatic and manual initialization, instance tracking, an options parser, DOM events, small helpers and a logger. It needs no build step and has no dependencies.</p><p>The core contains no component and no Theme, Locale, Icon, Toast or Dialog system. Those arrive in later tasks and build on this page set.</p><div class="bui-docs-callout bui-docs-callout--note" role="note">
+<p class="bui-docs-callout__title">Note</p>
+<p>The script targets evergreen browsers. It uses <code>WeakMap</code>, <code>WeakRef</code>, <code>MutationObserver</code> and <code>CustomEvent</code>. It has been tested in Chromium only.</p>
+</div>
+
+</section>
+
+<section class="bui-docs-section" aria-labelledby="installation-include">
+<h2 id="installation-include">Installation and include</h2>
+<p>Load the Core stylesheet and then the Core script. Extensions, when they exist, load after the Core script.</p><pre class="bui-docs-code" data-lang="html"><code>&lt;link rel="stylesheet" href="assets/css/baset-ui.css"&gt;
+&lt;script src="assets/js/baset-ui.js"&gt;&lt;/script&gt;</code></pre>
+<p>Place the script at the end of <code>&lt;body&gt;</code> or load it with <code>defer</code>. If the script is loaded twice, the second copy logs a warning and does nothing.</p><pre class="bui-docs-code" data-lang="javascript"><code>console.log(BUI.version); // "0.0.0-foundation"</code></pre>
+
+</section>
+
+<section class="bui-docs-section" aria-labelledby="configuration">
+<h2 id="configuration">Configuration</h2>
+<p><code>BUI.config(options)</code> changes the global settings and returns a copy of the current settings. <code>BUI.config()</code> without arguments only reads them. Unknown keys, non-boolean values for the boolean keys and invalid log levels are rejected with a warning, and the current value is kept.</p><table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Global options</caption>
+<thead><tr><th scope="col">Name</th><th scope="col">Type</th><th scope="col">Default</th><th scope="col">Description</th></tr></thead>
+<tbody>
+<tr><td><code>autoInit</code></td><td>boolean</td><td><code>true</code></td><td>Run <code>BUI.init(document)</code> once the document is ready.</td></tr>
+<tr><td><code>observe</code></td><td>boolean</td><td><code>false</code></td><td>Initialize elements added to the page later. See <a href="initialization.html#observer">Initialization</a>.</td></tr>
+<tr><td><code>logLevel</code></td><td>string</td><td><code>"warn"</code></td><td>One of <code>silent</code>, <code>error</code>, <code>warn</code>, <code>info</code>, <code>debug</code>.</td></tr>
+</tbody>
+</table>
+<pre class="bui-docs-code" data-lang="javascript"><code>BUI.config({ autoInit: false });          // write it right after the script tag
+BUI.config({ logLevel: 'debug' });
+const settings = BUI.config();            // { autoInit, observe, logLevel }</code></pre>
+<p>Settings other than these three do not exist yet. Later systems (Theme, Locale) will add their own when they are implemented.</p>
+</section>
+
+<section class="bui-docs-section" aria-labelledby="what-is-included">
+<h2 id="what-is-included">What is included</h2>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Core areas</caption>
+<thead><tr><th scope="col">Area</th><th scope="col">API</th><th scope="col">Documented in</th></tr></thead>
+<tbody>
+<tr><td>Registry and init</td><td><code>register</code>, <code>init</code>, <code>getInstance</code>, <code>destroy</code>, <code>destroyAll</code></td><td><a href="initialization.html">Initialization</a></td></tr>
+<tr><td>Events</td><td><code>trigger</code>, <code>on</code>, <code>off</code>, <code>emit</code></td><td><a href="events.html">Events</a></td></tr>
+<tr><td>Options parser</td><td><code>BUI.options</code></td><td><a href="api-reference.html#options">API Reference</a></td></tr>
+<tr><td>DOM helpers</td><td><code>BUI.dom</code></td><td><a href="api-reference.html#dom">API Reference</a></td></tr>
+<tr><td>Utilities</td><td><code>BUI.utils</code></td><td><a href="api-reference.html#utils">API Reference</a></td></tr>
+<tr><td>Logger</td><td><code>BUI.log</code></td><td><a href="api-reference.html#logger">API Reference</a></td></tr>
+</tbody>
+</table>
+
+</section>
+
+<section class="bui-docs-section" aria-labelledby="examples">
+<h2 id="examples">Examples</h2>
+<div class="bui-docs-callout bui-docs-callout--note" role="note">
+<p class="bui-docs-callout__title">Note</p>
+<p>The core ships no component. The examples use <code>my-widget</code> as a placeholder name for a component that you register yourself. The snippets are not live demos. A runnable check of every behavior described here is <code>tests/manual/core.html</code> in the repository.</p>
+</div>
+<p>The smallest complete flow: register a component, mark an element in HTML, and let the core initialize it.</p><pre class="bui-docs-code" data-lang="html"><code>&lt;div id="demo" data-bui-my-widget data-bui-size="4"&gt;&lt;/div&gt;
+
+&lt;script src="assets/js/baset-ui.js"&gt;&lt;/script&gt;
+&lt;script&gt;
+    BUI.register('my-widget', {
+        defaults: { size: 1 },
+        create(element, options, context) {
+            element.textContent = 'size ' + options.size;
+            return { destroy() { element.textContent = ''; } };
+        }
+    });
+&lt;/script&gt;</code></pre>
+<p>Register before the document finishes loading so automatic init finds the element. Registering later works too: call <code>BUI.init()</code> afterwards.</p>
+</section>
+
+<section class="bui-docs-section" aria-labelledby="responsive-behavior">
+<h2 id="responsive-behavior">Responsive behavior</h2>
+<p>The core has no layout and no behavior that depends on the viewport. A component that must react to width uses <code>matchMedia</code> and removes the listener in its <code>destroy()</code> (see RESPONSIVE_DESIGN.md).</p>
+</section>
+
+<section class="bui-docs-section" aria-labelledby="accessibility">
+<h2 id="accessibility">Accessibility</h2>
+<p>The core adds no ARIA attributes, moves no focus and creates no visible elements. Keyboard support, ARIA and screen reader behavior are the job of each component and are documented on its page. Log messages go to the browser console only and are not announced to users.</p>
+</section>
+
+
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="../../assets/js/baset-ui.js"></script>
+    <script src="../../documentation/assets/js/nav.js"></script>
+    <script src="../../documentation/assets/js/docs.js"></script>
+</body>
+</html>

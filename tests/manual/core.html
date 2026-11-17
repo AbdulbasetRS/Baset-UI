@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<!--
+    Manual + self-running test page for the BUI core (Task 05).
+    Open it in a browser (file:// or a static server). It runs every check and prints the result.
+    The test components are registered INSIDE this page only. They are not part of the library.
+    Add ?autoinit=0 to the URL to test BUI.config({ autoInit: false }).
+-->
+<html lang="en" dir="ltr" data-bui-theme="default" data-bui-mode="light">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>BUI core tests</title>
+    <link rel="icon" href="data:,">
+    <link rel="stylesheet" href="../../assets/css/baset-ui.css">
+    <style>
+        /* Test page only. */
+        .t-result { width: 100%; border-collapse: collapse; }
+        .t-result th, .t-result td { padding: .4rem .6rem; text-align: start; vertical-align: top; border-block-end: 1px solid var(--bui-color-border); overflow-wrap: anywhere; }
+        .t-pass { color: var(--bui-color-success); font-weight: 700; }
+        .t-fail { color: var(--bui-color-danger); font-weight: 700; }
+        .t-skip { color: var(--bui-color-text-muted); font-weight: 700; }
+        .t-bar { display: flex; flex-wrap: wrap; gap: .5rem; margin-block: 1rem; }
+        .t-bar button { padding: .4rem .8rem; font: inherit; cursor: pointer; color: var(--bui-color-text); background: var(--bui-color-surface); border: 1px solid var(--bui-color-border-strong); border-radius: var(--bui-radius-md); }
+        .t-scroll { overflow-x: auto; }
+    </style>
+    <script>
+        /* Snapshot of window properties BEFORE the library loads (stored in the DOM, not in a global). */
+        document.documentElement.setAttribute('data-test-prekeys', JSON.stringify(Object.getOwnPropertyNames(window)));
+    </script>
+</head>
+<body>
+    <main class="bui-container bui-py-4">
+        <h1>BUI core tests</h1>
+        <p id="summary" role="status" aria-live="polite">Running...</p>
+        <div class="t-bar">
+            <button type="button" id="t-rerun">Run again</button>
+            <button type="button" id="t-dir">Toggle RTL / LTR</button>
+            <button type="button" id="t-mode">Toggle Light / Dark</button>
+        </div>
+        <div class="t-scroll">
+            <table class="t-result">
+                <caption class="bui-visually-hidden">Test results</caption>
+                <thead><tr><th scope="col">#</th><th scope="col">Result</th><th scope="col">Test</th><th scope="col">Detail</th></tr></thead>
+                <tbody id="results"></tbody>
+            </table>
+        </div>
+        <!-- Auto-init fixture: initialized by the page-level component "auto-probe" registered below. -->
+        <div id="auto-probe-el" data-bui-auto-probe data-bui-size="7" hidden></div>
+        <div id="fixtures" aria-hidden="true"></div>
+    </main>
+
+    <script src="../../assets/js/baset-ui.js"></script>
+    <script>
+    (function () {
+        'use strict';
+        var params = new URLSearchParams(location.search);
+        var autoInitOff = params.get('autoinit') === '0';
+        if (autoInitOff) BUI.config({ autoInit: false });
+
+        /* Registered synchronously, before DOMContentLoaded, so automatic init can reach it. */
+        var autoProbeCreated = 0;
+        BUI.register('auto-probe', {
+            defaults: { size: 1 },
+            create: function (el, o) { autoProbeCreated += 1; return { options: o, destroy: function () {} }; }
+        });
+
+        var runId = 0;
+        var firstRun = true;
+        var tbody = document.getElementById('results');
+        var fixtures = document.getElementById('fixtures');
+
+        /* ---------- helpers ---------- */
+        function assert(cond, msg) { if (!cond) throw new Error(msg || 'assertion failed'); }
+        function eq(a, b, msg) {
+            var x = JSON.stringify(a), y = JSON.stringify(b);
+            if (x !== y) throw new Error((msg || 'not equal') + ': got ' + x + ', expected ' + y);
+        }
+        function sleep(ms) { return new Promise(function (r) { setTimeout(r, ms); }); }
+        function fx(html) {
+            var box = document.createElement('div');
+            box.innerHTML = html || '';
+            fixtures.appendChild(box);
+            return box;
+        }
+        /* Captures BUI log output (console.*) while fn runs, so expected warnings do not reach the real console. */
+        function capture(fn) {
+            var out = [];
+            var saved = {};
+            ['error', 'warn', 'info', 'debug'].forEach(function (k) {
+                saved[k] = console[k];
+                console[k] = function () { out.push(k + '|' + Array.prototype.join.call(arguments, ' ')); };
+            });
+            var finish = function () { Object.keys(saved).forEach(function (k) { console[k] = saved[k]; }); return out; };
+            try {
+                var r = fn();
+                if (r && typeof r.then === 'function') return r.then(finish, function (e) { finish(); throw e; });
+                return finish();
+            } catch (e) { finish(); throw e; }
+        }
+        function has(msgs, kind, text) {
+            return msgs.some(function (m) { return m.indexOf(kind + '|[BUI] ') === 0 && m.indexOf(text) > -1; });
+        }
+        function make(label, extra) {
+            var name = 'tw' + runId + '-' + label;
+            var stats = { created: 0, destroyed: 0, listeners: 0, clicks: 0, last: null };
+            var def = {
+                defaults: { size: 3, label: 'x', active: false, items: [], nested: { a: 1, b: 2 }, extra: null },
+                create: function (el, o, ctx) {
+                    stats.created += 1;
+                    var onClick = function () { stats.clicks += 1; };
+                    el.addEventListener('click', onClick);
+                    stats.listeners += 1;
+                    var inst = { el: el, options: o, ctx: ctx, destroy: function () { el.removeEventListener('click', onClick); stats.listeners -= 1; stats.destroyed += 1; } };
+                    stats.last = inst;
+                    return inst;
+                }
+            };
+            Object.keys(extra || {}).forEach(function (k) { def[k] = extra[k]; });
+            var factory = BUI.register(name, def);
+            return { name: name, camel: BUI.utils.kebabToCamel(name), factory: factory, stats: stats };
+        }
+
+        /* ---------- tests ---------- */
+        var tests = [];
+        function test(name, fn) { tests.push({ name: name, fn: fn }); }
+
+        test('window gains no global except BUI', function () {
+            var pre = JSON.parse(document.documentElement.getAttribute('data-test-prekeys'));
+            var added = Object.getOwnPropertyNames(window).filter(function (k) { return pre.indexOf(k) === -1; });
+            eq(added, ['BUI']);
+        });
+
+        test('public surface exists', function () {
+            ['config', 'register', 'init', 'getInstance', 'destroy', 'destroyAll', 'on', 'off', 'emit', 'trigger'].forEach(function (k) { assert(typeof BUI[k] === 'function', 'BUI.' + k); });
+            ['options', 'dom', 'utils', 'log'].forEach(function (k) { assert(BUI[k] && typeof BUI[k] === 'object', 'BUI.' + k); });
+            eq(BUI.version, '0.0.0-foundation');
+        });
+
+        test('automatic init follows autoInit', function () {
+            if (!firstRun) return 'skip';
+            var el = document.getElementById('auto-probe-el');
+            if (autoInitOff) {
+                eq(autoProbeCreated, 0, 'created with autoInit false');
+                assert(BUI.getInstance(el, 'auto-probe') === null, 'instance exists with autoInit false');
+                assert(BUI.init().length === 1, 'manual init');
+            } else {
+                eq(autoProbeCreated, 1, 'created once');
+                eq(BUI.getInstance(el, 'auto-probe').options.size, 7, 'HTML option');
+            }
+            BUI.getInstance(el, 'auto-probe').destroy(); /* leave no page-level instance behind for the count-based tests */
+        });
+
+        test('loading the script twice is ignored with a warning', function () {
+            var before = window.BUI;
+            var msgs = [];
+            var saved = console.warn;
+            console.warn = function () { msgs.push(Array.prototype.join.call(arguments, ' ')); };
+            return new Promise(function (resolve, reject) {
+                var s = document.createElement('script');
+                s.src = '../../assets/js/baset-ui.js';
+                s.onload = function () { console.warn = saved; s.remove(); try { assert(window.BUI === before, 'namespace replaced'); assert(msgs.some(function (m) { return m.indexOf('[BUI] Core:') === 0; }), 'no warning'); resolve(); } catch (e) { reject(e); } };
+                s.onerror = function () { console.warn = saved; reject(new Error('script failed to load')); };
+                document.head.appendChild(s);
+            });
+        });
+
+        test('register rejects invalid input', function () {
+            var msgs = capture(function () {
+                assert(BUI.register('Bad Name', { create: function () {} }) === null, 'bad name');
+                assert(BUI.register('init', { create: function () {} }) === null, 'reserved name');
+                assert(BUI.register('dom', { create: function () {} }) === null, 'reserved name dom');
+                assert(BUI.register('tw' + runId + '-nocreate', {}) === null, 'no create');
+                assert(BUI.register('tw' + runId + '-baddef', { create: function () {}, defaults: [] }) === null, 'bad defaults');
+                assert(BUI.register('tw' + runId + '-theme', { create: function () {}, defaults: { theme: 'x' } }) === null, 'reserved option');
+                assert(BUI.register('tw' + runId + '-badvar', { create: function () {}, variants: ['Bad'] }) === null, 'bad variant');
+                assert(BUI.register('tw' + runId + '-vcol', { create: function () {}, variants: ['name'] }) === null, 'variant colliding with Function.name');
+            });
+            assert(msgs.length === 8 && msgs.every(function (m) { return m.indexOf('error|[BUI] ') === 0; }), 'expected 8 error logs, got ' + msgs.length);
+            var c = make('dup');
+            var dup = capture(function () { assert(BUI.register(c.name, { create: function () {} }) === null, 'duplicate'); });
+            assert(has(dup, 'error', 'already registered'), 'duplicate not logged');
+        });
+
+        test('register exposes a camelCase factory and emits "register"', function () {
+            var seen = [];
+            var off = BUI.on('register', function (d) { seen.push(d.name); });
+            var c = make('reg');
+            off();
+            assert(typeof BUI[c.camel] === 'function' && BUI[c.camel] === c.factory, 'factory');
+            eq(seen, [c.name]);
+        });
+
+        test('factory is idempotent and returns the same instance', function () {
+            var c = make('idem');
+            var box = fx('<div id="a" data-bui-' + c.name + '></div>');
+            var a = box.querySelector('#a');
+            var i1 = c.factory(a);
+            var i2 = c.factory('#a');
+            assert(i1 === i2 && i1 !== null, 'different instances');
+            eq(c.stats.created, 1, 'create calls');
+            assert(BUI.getInstance(a, c.name) === i1, 'getInstance');
+        });
+
+        test('BUI.init twice does not create twice', function () {
+            var c = make('init2');
+            var box = fx('<div data-bui-' + c.name + '></div><div data-bui-' + c.name + '></div>');
+            eq(BUI.init(box).length, 2, 'first init');
+            eq(BUI.init(box).length, 0, 'second init');
+            eq(c.stats.created, 2, 'create calls');
+        });
+
+        test('BUI.init accepts root element, selector and root matching itself', function () {
+            var c = make('roots');
+            var box = fx('<div id="r1" data-bui-' + c.name + '><span data-bui-' + c.name + '></span></div>');
+            eq(BUI.init('#r1').length, 2, 'selector root including itself');
+            capture(function () { eq(BUI.init('#nope').length, 0, 'missing root'); });
+            capture(function () { eq(BUI.init(42).length, 0, 'bad root'); });
+            assert(box, 'box');
+        });
+
+        test('option priority: defaults < HTML < JS', function () {
+            var c = make('prio');
+            var box = fx('<div id="p" data-bui-' + c.name + ' data-bui-size="5" data-bui-label="html"></div>');
+            var i = c.factory('#p', { size: 9 });
+            eq(i.options.size, 9, 'JS wins over HTML');
+            eq(i.options.label, 'html', 'HTML wins over default');
+            eq(i.options.nested, { a: 1, b: 2 }, 'default kept');
+            assert(box, 'box');
+        });
+
+        test('HTML option conversion (kebab to camel, boolean, number, JSON)', function () {
+            var c = make('conv', { defaults: { perPage: 10, noResults: 'none', open: false, items: [], nested: { a: 1 }, free: null, other: null, third: null } });
+            fx('<div id="c" data-bui-' + c.name + ' data-bui-per-page="25" data-bui-no-results="Nothing" data-bui-open data-bui-items="[1,2,3]" data-bui-nested=\'{"b":2}\' data-bui-free="true" data-bui-other="3.5" data-bui-third=\'{"k":1}\'></div>');
+            var o = c.factory('#c').options;
+            eq(o.perPage, 25); eq(o.noResults, 'Nothing'); eq(o.open, true); eq(o.items, [1, 2, 3]);
+            eq(o.nested, { a: 1, b: 2 }, 'object attribute merges with default'); eq(o.free, true, 'inferred boolean'); eq(o.other, 3.5, 'inferred number'); eq(o.third, { k: 1 }, 'inferred JSON');
+        });
+
+        test('boolean attribute values', function () {
+            var c = make('bool', { defaults: { a: true, b: false, c: true } });
+            fx('<div id="b" data-bui-' + c.name + ' data-bui-a="false" data-bui-b="true" data-bui-c></div>');
+            var o = c.factory('#b').options;
+            eq([o.a, o.b, o.c], [false, true, true]);
+        });
+
+        test('invalid HTML values fall back to the default with a warning', function () {
+            var c = make('badhtml', { defaults: { n: 4, flag: false, list: [], obj: {}, fn: null } });
+            fx('<div id="h" data-bui-' + c.name + ' data-bui-n="abc" data-bui-flag="maybe" data-bui-list="{}" data-bui-obj="[1]"></div>');
+            var o;
+            var msgs = capture(function () { o = c.factory('#h').options; });
+            eq([o.n, o.flag, o.list, o.obj], [4, false, [], {}]);
+            assert(msgs.length === 4 && msgs.every(function (m) { return m.indexOf('warn|[BUI] ' + c.name + ': Invalid value') === 0; }), 'expected 4 warnings, got ' + JSON.stringify(msgs));
+        });
+
+        test('invalid JS option types fall back; unknown options warn but pass through', function () {
+            var c = make('badjs');
+            fx('<div id="j"></div>');
+            var o;
+            var msgs = capture(function () { o = c.factory('#j', { size: 'big', active: 1, typo: 5, label: 'ok' }).options; });
+            eq(o.size, 3); eq(o.active, false); eq(o.label, 'ok'); eq(o.typo, 5);
+            assert(has(msgs, 'warn', 'Invalid value for option "size"') && has(msgs, 'warn', 'Unknown option "typo"'), JSON.stringify(msgs));
+            var m2 = capture(function () { c.factory('#j', 'oops'); });
+            assert(m2.length === 0, 'second call must be idempotent without re-validating');
+        });
+
+        test('options is a non-object value is ignored with a warning', function () {
+            var c = make('optnotobj');
+            fx('<div id="n"></div>');
+            var o;
+            var msgs = capture(function () { o = c.factory('#n', 'oops').options; });
+            eq(o.size, 3);
+            assert(has(msgs, 'warn', 'Options must be a plain object'));
+        });
+
+        test('options defaults are not shared or mutated between instances', function () {
+            var c = make('shared');
+            fx('<div id="s1"></div><div id="s2"></div>');
+            var a = c.factory('#s1'), b = c.factory('#s2');
+            a.options.nested.a = 99; a.options.items.push(1);
+            eq(b.options.nested, { a: 1, b: 2 }); eq(b.options.items, []);
+        });
+
+        test('BUI.options.fromElement and resolve', function () {
+            var box = fx('<div id="o" data-bui-per-page="5" data-bui-theme="dark"></div>');
+            var el = box.firstChild;
+            eq(BUI.options.fromElement(el, { perPage: 1, theme: 'x' }), { perPage: 5, theme: 'dark' }, 'fromElement reads declared keys');
+            eq(BUI.options.resolve(el, { perPage: 1 }, { perPage: 7 }), { perPage: 7 });
+            eq(BUI.options.fromElement(null, { a: 1 }), {});
+        });
+
+        test('variants: factory functions and attribute value', function () {
+            var c = make('var', { variants: ['remote', 'multi-select'] });
+            assert(typeof c.factory.remote === 'function' && typeof c.factory.multiSelect === 'function', 'variant fns');
+            fx('<div id="v1"></div><div id="v2" data-bui-' + c.name + '="remote"></div><div id="v3" data-bui-' + c.name + '="nope"></div>');
+            eq(c.factory.multiSelect('#v1').ctx.variant, 'multi-select');
+            BUI.init('#v2'); eq(BUI.getInstance('#v2', c.name).ctx.variant, 'remote');
+            var msgs = capture(function () { BUI.init('#v3'); });
+            eq(BUI.getInstance('#v3', c.name).ctx.variant, null);
+            assert(has(msgs, 'warn', 'Unknown variant "nope"'));
+        });
+
+        test('create() that throws returns null and logs an error', function () {
+            var c = make('throws', { create: function () { throw new Error('boom'); } });
+            fx('<div id="t1" data-bui-' + c.name + '></div><div id="t2"></div>');
+            var r1, r2;
+            var msgs = capture(function () { r1 = c.factory('#t2'); r2 = BUI.init('#t1'); });
+            assert(r1 === null && r2.length === 0, 'null/empty');
+            assert(has(msgs, 'error', 'Initialization failed: boom'));
+            assert(BUI.getInstance('#t2', c.name) === null, 'nothing stored');
+        });
+
+        test('create() without destroy() is rejected', function () {
+            var c = make('nodestroy', { create: function () { return {}; } });
+            fx('<div id="nd"></div>');
+            var r;
+            var msgs = capture(function () { r = c.factory('#nd'); });
+            assert(r === null && has(msgs, 'error', 'must return an instance that has a destroy()'));
+        });
+
+        test('missing target warns and returns null', function () {
+            var c = make('missing');
+            var r;
+            var msgs = capture(function () { r = c.factory('#does-not-exist'); });
+            assert(r === null && has(msgs, 'warn', 'Target not found'));
+            msgs = capture(function () { assert(c.factory(null) === null); assert(BUI.getInstance('#does-not-exist', c.name) === null); });
+            assert(msgs.length === 2);
+        });
+
+        test('instance.destroy() removes the registry entry and allows re-init', function () {
+            var c = make('own');
+            fx('<div id="d"></div>');
+            var i1 = c.factory('#d');
+            i1.destroy(); i1.destroy();
+            eq(c.stats.destroyed, 1, 'destroy ran once');
+            assert(BUI.getInstance('#d', c.name) === null, 'registry entry');
+            var i2 = c.factory('#d');
+            assert(i2 !== i1, 'new instance');
+            eq(c.stats.created, 2);
+        });
+
+        test('BUI.destroy(root) is scoped; destroyAll reaches detached elements', function () {
+            var c = make('scope');
+            var box = fx('<div id="in1"></div><div id="in2"></div>');
+            var other = fx('<div id="out1"></div>');
+            c.factory('#in1'); c.factory('#in2'); c.factory('#out1');
+            var detached = document.createElement('div');
+            c.factory(detached);
+            eq(BUI.destroy(box), 2, 'inside root');
+            assert(BUI.getInstance('#out1', c.name) !== null, 'outside root untouched');
+            eq(BUI.destroy(), 1, 'document scope skips the detached element');
+            assert(BUI.getInstance(detached, c.name) !== null, 'detached still alive');
+            eq(BUI.destroyAll(), 1, 'destroyAll includes detached');
+            eq(c.stats.listeners, 0, 'no listeners left');
+            eq(BUI.destroyAll(), 0, 'nothing left');
+            assert(other, 'other');
+        });
+
+        test('destroy removes listeners (no leak)', function () {
+            var c = make('leak');
+            var box = fx('<div id="l1" data-bui-' + c.name + '></div><div id="l2" data-bui-' + c.name + '></div>');
+            BUI.init(box);
+            var a = box.querySelector('#l1');
+            a.click(); eq(c.stats.clicks, 1);
+            eq(c.stats.listeners, 2);
+            eq(BUI.destroy(box), 2);
+            a.click(); eq(c.stats.clicks, 1, 'click after destroy');
+            eq(c.stats.listeners, 0);
+            for (var n = 0; n < 20; n++) { var i = c.factory(a); i.destroy(); }
+            eq(c.stats.listeners, 0, 'after 20 create/destroy cycles');
+            a.click(); eq(c.stats.clicks, 1, 'still no stray listeners');
+        });
+
+        test('destroy that throws is logged and the registry is still cleaned', function () {
+            var c = make('dthrows', { create: function () { return { destroy: function () { throw new Error('bad destroy'); } }; } });
+            fx('<div id="dt"></div>');
+            c.factory('#dt');
+            var n;
+            var msgs = capture(function () { n = BUI.destroyAll(); });
+            eq(n, 1); assert(has(msgs, 'error', 'destroy() threw: bad destroy')); assert(BUI.getInstance('#dt', c.name) === null);
+        });
+
+        test('frozen instance: warns, still destroyable through BUI.destroy', function () {
+            var d = 0;
+            var c = make('frozen', { create: function () { return Object.freeze({ destroy: function () { d += 1; } }); } });
+            fx('<div id="fz"></div>');
+            var msgs = capture(function () { c.factory('#fz'); });
+            assert(has(msgs, 'warn', 'frozen'));
+            assert(BUI.getInstance('#fz', c.name) !== null);
+            eq(BUI.destroy('#fz'), 1); eq(d, 1); assert(BUI.getInstance('#fz', c.name) === null);
+        });
+
+        test('two components on one element', function () {
+            var a = make('multia'), b = make('multib');
+            var box = fx('<div id="m" data-bui-' + a.name + ' data-bui-' + b.name + '></div>');
+            eq(BUI.init(box).length, 2);
+            assert(BUI.getInstance('#m', a.name) !== BUI.getInstance('#m', b.name));
+            BUI.getInstance('#m', a.name).destroy();
+            assert(BUI.getInstance('#m', a.name) === null && BUI.getInstance('#m', b.name) !== null, 'independent');
+        });
+
+        test('getInstance with an unknown component warns', function () {
+            var r;
+            var msgs = capture(function () { r = BUI.getInstance(document.body, 'not-registered'); });
+            assert(r === null && has(msgs, 'warn', 'not a registered component'));
+        });
+
+        test('DOM events: bubbling, detail, cancelable before-* events', function () {
+            var box = fx('<div id="ev-parent"><button id="ev-child"></button></div>');
+            var parent = box.querySelector('#ev-parent'), child = box.querySelector('#ev-child');
+            var got = null;
+            parent.addEventListener('bui:modal:open', function (e) { got = e; });
+            assert(BUI.trigger(child, 'modal', 'open', { id: 1 }) === true, 'plain trigger');
+            assert(got && got.bubbles && got.detail.id === 1 && got.target === child && !got.cancelable, 'event props');
+            child.addEventListener('bui:modal:before-open', function (e) { e.preventDefault(); });
+            assert(BUI.trigger(child, 'modal', 'before-open', null, { cancelable: true }) === false, 'canceled');
+            assert(BUI.trigger(child, 'modal', 'before-open', null) === true, 'preventDefault ignored when not cancelable');
+            child.addEventListener('bui:modal:close', function (e) { got = e; });
+            BUI.trigger(child, 'modal', 'close', undefined, { bubbles: false });
+            assert(got.detail === null && got.bubbles === false, 'defaults and bubbles:false');
+        });
+
+        test('trigger rejects invalid arguments', function () {
+            var msgs = capture(function () {
+                assert(BUI.trigger(null, 'a', 'b') === false);
+                assert(BUI.trigger(document.body, 'Bad', 'b') === false);
+                assert(BUI.trigger(document.body, 'a', 'beforeOpen') === false);
+            });
+            eq(msgs.length, 3);
+        });
+
+        test('ctx.trigger dispatches on the component element', function () {
+            var c = make('ctx');
+            var box = fx('<div id="cx"></div>');
+            var i = c.factory('#cx');
+            var n = 0;
+            box.addEventListener('bui:' + c.name + ':before-close', function (e) { n += 1; e.preventDefault(); });
+            assert(i.ctx.trigger('before-close', { a: 1 }, { cancelable: true }) === false);
+            eq(n, 1);
+            assert(typeof i.ctx.log.warn === 'function' && i.ctx.name === c.name);
+        });
+
+        test('global bus: on/off/emit, unsubscribe, duplicates, throwing handlers', function () {
+            var calls = [];
+            function h1(d, n) { calls.push(['h1', d, n]); }
+            function h2() { throw new Error('handler failure'); }
+            function h3(d) { calls.push(['h3', d]); }
+            var un = BUI.on('t:evt', h1);
+            BUI.on('t:evt', h1);
+            BUI.on('t:evt', h2);
+            BUI.on('t:evt', h3);
+            var n;
+            var msgs = capture(function () { n = BUI.emit('t:evt', { x: 1 }); });
+            eq(n, 3, 'handlers called');
+            eq(calls, [['h1', { x: 1 }, 't:evt'], ['h3', { x: 1 }]]);
+            assert(has(msgs, 'error', 'A handler of "t:evt" threw'));
+            un(); BUI.off('t:evt', h2);
+            calls.length = 0;
+            capture(function () { eq(BUI.emit('t:evt', 1), 1); });
+            eq(calls, [['h3', 1]]);
+            BUI.off('t:evt');
+            eq(BUI.emit('t:evt', 1), 0, 'off(name) removes all');
+            capture(function () { BUI.on('', function () {}); BUI.on('x'); });
+        });
+
+        test('global bus events: init and destroy', function () {
+            var c = make('busev');
+            var seen = [];
+            var u1 = BUI.on('init', function (d) { seen.push('init:' + d.count); });
+            var u2 = BUI.on('destroy', function (d) { seen.push('destroy:' + d.count); });
+            var box = fx('<div data-bui-' + c.name + '></div>');
+            BUI.init(box); BUI.init(box); BUI.destroy(box);
+            u1(); u2();
+            eq(seen, ['init:1', 'destroy:1']);
+        });
+
+        test('observer: off by default, initializes added nodes when enabled', function () {
+            eq(BUI.config().observe, false);
+            var c = make('obs');
+            var box = fx('');
+            return sleep(10).then(function () {
+                box.insertAdjacentHTML('beforeend', '<div id="ob0" data-bui-' + c.name + '></div>');
+                return sleep(40);
+            }).then(function () {
+                assert(BUI.getInstance('#ob0', c.name) === null, 'initialized while observer is off');
+                BUI.config({ observe: true });
+                box.insertAdjacentHTML('beforeend', '<section><div id="ob1" data-bui-' + c.name + '></div></section>');
+                return sleep(60);
+            }).then(function () {
+                assert(BUI.getInstance('#ob1', c.name) !== null, 'nested added node not initialized');
+                BUI.config({ observe: false });
+                box.insertAdjacentHTML('beforeend', '<div id="ob2" data-bui-' + c.name + '></div>');
+                return sleep(40);
+            }).then(function () {
+                assert(BUI.getInstance('#ob2', c.name) === null, 'initialized after observer disabled');
+            });
+        });
+
+        test('config: validation and copy semantics', function () {
+            var cfg = BUI.config();
+            cfg.autoInit = 'mutated';
+            eq(BUI.config().autoInit, !autoInitOff, 'returned object is a copy');
+            var msgs = capture(function () {
+                BUI.config({ observe: 'yes', nope: 1, logLevel: 'loud' });
+                BUI.config('x');
+            });
+            assert(has(msgs, 'warn', 'must be a boolean') && has(msgs, 'warn', 'Unknown config option') && has(msgs, 'warn', 'Invalid log level') && has(msgs, 'warn', 'needs a plain object'), JSON.stringify(msgs));
+            eq(BUI.config().observe, false); eq(BUI.config().logLevel, 'warn');
+        });
+
+        test('logger: format and levels', function () {
+            var msgs = capture(function () {
+                BUI.log.error('Comp', 'e'); BUI.log.warn('Comp', 'w'); BUI.log.info('Comp', 'i'); BUI.log.debug('Comp', 'd');
+            });
+            eq(msgs, ['error|[BUI] Comp: e', 'warn|[BUI] Comp: w']);
+            msgs = capture(function () {
+                BUI.config({ logLevel: 'debug' });
+                BUI.log.info('Comp', 'i'); BUI.log.debug('Comp', 'd', 5);
+                BUI.config({ logLevel: 'silent' });
+                BUI.log.error('Comp', 'hidden');
+                BUI.config({ logLevel: 'warn' });
+            });
+            eq(msgs, ['info|[BUI] Comp: i', 'debug|[BUI] Comp: d 5']);
+            eq(BUI.log.getLevel(), 'warn');
+        });
+
+        test('DOM helpers', function () {
+            var box = fx('<div id="dh" class="a" data-bui-x="1"><p class="k">t</p></div>');
+            var el = box.querySelector('#dh'), p = box.querySelector('.k');
+            assert(BUI.dom.select('.k', box) === p && BUI.dom.select('.zzz', box) === null, 'select');
+            eq(BUI.dom.selectAll('#dh, .k', box).length, 2); assert(Array.isArray(BUI.dom.selectAll('.k', box)), 'selectAll array');
+            assert(BUI.dom.closest(p, '#dh') === el && BUI.dom.closest(null, 'x') === null, 'closest');
+            assert(BUI.dom.matches(el, '.a') && !BUI.dom.matches(el, '.b') && !BUI.dom.matches(null, '.a'), 'matches');
+            eq(BUI.dom.getData(el, 'x'), '1'); assert(BUI.dom.hasData(el, 'x') && !BUI.dom.hasData(el, 'y'), 'hasData');
+            BUI.dom.setData(el, 'y', 2); eq(el.getAttribute('data-bui-y'), '2'); BUI.dom.removeData(el, 'y'); assert(!el.hasAttribute('data-bui-y'), 'removeData');
+            BUI.dom.addClass(el, 'b', 'c'); assert(BUI.dom.hasClass(el, 'b') && BUI.dom.hasClass(el, 'c'), 'addClass');
+            BUI.dom.removeClass(el, 'b'); assert(!BUI.dom.hasClass(el, 'b'), 'removeClass');
+            assert(BUI.dom.toggleClass(el, 'z') === true && BUI.dom.toggleClass(el, 'z') === false && BUI.dom.toggleClass(el, 'z', true) === true, 'toggleClass');
+            var msgs = capture(function () { assert(BUI.dom.select('[[', box) === null); assert(BUI.dom.selectAll('[[', box).length === 0); });
+            eq(msgs.length, 2);
+        });
+
+        test('isRTL reads the computed direction (LTR and RTL, inherited)', function () {
+            var box = fx('<div dir="rtl"><span id="rt"><b id="rt2"></b></span></div><div dir="ltr"><span id="lt"></span></div>');
+            assert(BUI.dom.isRTL(box.querySelector('#rt')) === true, 'rtl');
+            assert(BUI.dom.isRTL(box.querySelector('#rt2')) === true, 'inherited rtl');
+            assert(BUI.dom.isRTL(box.querySelector('#lt')) === false, 'ltr');
+            assert(BUI.dom.isRTL() === (getComputedStyle(document.documentElement).direction === 'rtl'), 'document direction');
+            assert(BUI.dom.isRTL(document.createElement('div')) === false, 'detached');
+        });
+
+        test('utils: uid avoids existing ids', function () {
+            var a = BUI.utils.uid('zz');
+            var n = parseInt(a.split('-')[1], 10);
+            var taken = fx('<i id="zz-' + (n + 1) + '"></i>');
+            var b = BUI.utils.uid('zz');
+            assert(a !== b && b !== 'zz-' + (n + 1) && b === 'zz-' + (n + 2), 'got ' + b);
+            assert(/^bui-\d+$/.test(BUI.utils.uid()), 'default prefix');
+            assert(taken, 'fixture');
+        });
+
+        test('utils: deepMerge is non-mutating, replaces arrays and blocks prototype pollution', function () {
+            var base = { a: 1, n: { x: 1, y: 2 }, arr: [1, 2] };
+            var out = BUI.utils.deepMerge(base, { n: { y: 3 }, arr: [9], z: undefined }, null, { b: 2 });
+            eq(out, { a: 1, n: { x: 1, y: 3 }, arr: [9], b: 2 });
+            eq(base, { a: 1, n: { x: 1, y: 2 }, arr: [1, 2] }, 'base untouched');
+            out.n.x = 5; eq(base.n.x, 1, 'nested cloned');
+            BUI.utils.deepMerge({}, JSON.parse('{"__proto__":{"polluted":true},"n":{"__proto__":{"polluted2":true}},"constructor":{"prototype":{"polluted3":true}}}'));
+            assert(({}).polluted === undefined && ({}).polluted2 === undefined && ({}).polluted3 === undefined, 'Object.prototype polluted');
+        });
+
+        test('utils: kebabToCamel, camelToKebab, isPlainObject', function () {
+            eq([BUI.utils.kebabToCamel('per-page'), BUI.utils.kebabToCamel('i18n-key'), BUI.utils.camelToKebab('perPage'), BUI.utils.camelToKebab('i18nKey')], ['perPage', 'i18nKey', 'per-page', 'i18n-key']);
+            assert(BUI.utils.isPlainObject({}) && BUI.utils.isPlainObject(Object.create(null)) && !BUI.utils.isPlainObject([]) && !BUI.utils.isPlainObject(null) && !BUI.utils.isPlainObject(new Date()), 'isPlainObject');
+        });
+
+        test('utils: debounce (trailing, cancel)', function () {
+            var calls = [];
+            var d = BUI.utils.debounce(function (v) { calls.push(v); }, 40);
+            d(1); d(2); d(3);
+            return sleep(15).then(function () { eq(calls, [], 'not yet'); return sleep(60); }).then(function () {
+                eq(calls, [3]);
+                d(4); d.cancel();
+                return sleep(70);
+            }).then(function () {
+                eq(calls, [3], 'canceled');
+                var threw = false; try { BUI.utils.debounce('x'); } catch (e) { threw = true; }
+                assert(threw, 'non-function');
+            });
+        });
+
+        test('utils: throttle (leading and trailing, cancel)', function () {
+            var calls = [];
+            var t = BUI.utils.throttle(function (v) { calls.push(v); }, 60);
+            t(1); t(2); t(3);
+            eq(calls, [1], 'leading only');
+            return sleep(100).then(function () {
+                eq(calls, [1, 3], 'trailing with latest args');
+                return sleep(80);
+            }).then(function () {
+                t(4); t(5); t.cancel();
+                eq(calls, [1, 3, 4], 'leading call after the wait');
+                return sleep(100);
+            }).then(function () {
+                eq(calls, [1, 3, 4], 'cancel dropped the trailing call');
+            });
+        });
+
+        /* ---------- runner ---------- */
+        function row(i, status, name, detail) {
+            var tr = document.createElement('tr');
+            [String(i), status.toUpperCase(), name, detail || ''].forEach(function (text, idx) {
+                var td = document.createElement(idx === 0 ? 'th' : 'td');
+                if (idx === 0) td.setAttribute('scope', 'row');
+                if (idx === 1) td.className = 't-' + status;
+                td.textContent = text;
+                tr.appendChild(td);
+            });
+            tbody.appendChild(tr);
+        }
+
+        function cleanup() {
+            BUI.destroy(fixtures); /* the page-level "auto-probe" element is outside the fixtures */
+            fixtures.textContent = '';
+        }
+
+        function runAll() {
+            runId += 1;
+            tbody.textContent = '';
+            var summary = document.getElementById('summary');
+            summary.removeAttribute('data-done');
+            summary.textContent = 'Running...';
+            var pass = 0, fail = 0, skip = 0;
+            var chain = Promise.resolve();
+            tests.forEach(function (t, i) {
+                chain = chain.then(function () {
+                    return Promise.resolve().then(t.fn).then(function (r) {
+                        if (r === 'skip') { skip += 1; row(i + 1, 'skip', t.name, 'not applicable on this run'); } else { pass += 1; row(i + 1, 'pass', t.name); }
+                    }, function (e) {
+                        fail += 1; row(i + 1, 'fail', t.name, e && e.message ? e.message : String(e));
+                    }).then(function () { try { cleanup(); } catch (e) { /* ignore */ } });
+                });
+            });
+            return chain.then(function () {
+                firstRun = false;
+                summary.textContent = pass + ' passed, ' + fail + ' failed, ' + skip + ' skipped (' + (autoInitOff ? 'autoInit off' : 'autoInit on') + ', dir ' + document.documentElement.dir + ', mode ' + document.documentElement.getAttribute('data-bui-mode') + ').';
+                summary.setAttribute('data-pass', String(pass));
+                summary.setAttribute('data-fail', String(fail));
+                summary.setAttribute('data-skip', String(skip));
+                summary.setAttribute('data-done', 'true');
+            });
+        }
+
+        document.getElementById('t-rerun').addEventListener('click', runAll);
+        document.getElementById('t-dir').addEventListener('click', function () {
+            var h = document.documentElement;
+            h.setAttribute('dir', h.getAttribute('dir') === 'rtl' ? 'ltr' : 'rtl');
+            runAll();
+        });
+        document.getElementById('t-mode').addEventListener('click', function () {
+            var h = document.documentElement;
+            h.setAttribute('data-bui-mode', h.getAttribute('data-bui-mode') === 'dark' ? 'light' : 'dark');
+            runAll();
+        });
+
+        window.addEventListener('load', function () { setTimeout(runAll, 0); });
+    })();
+    </script>
+</body>
+</html>

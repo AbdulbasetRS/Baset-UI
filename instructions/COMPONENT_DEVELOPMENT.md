@@ -18,7 +18,7 @@
 ```javascript
 const select = BUI.select.remote('#users', { perPage: 10 });
 ```
-لا يُفرض أسلوب واحد على كل المكونات. المكون الذي لا معنى لـ JS فيه (مثل Badge) يبقى CSS فقط. التهيئة التلقائية من HTML تتم عبر `BUI.init()` (مستقبلي).
+لا يُفرض أسلوب واحد على كل المكونات. المكون الذي لا معنى لـ JS فيه (مثل Badge) يبقى CSS فقط. التهيئة التلقائية من HTML تتم عبر `BUI.init()` (منفذ في Task 05، انظر [JAVASCRIPT_API.md](JAVASCRIPT_API.md)). المكون يسجل نفسه بـ `BUI.register(name, definition)`.
 
 ## Lifecycle (إلزامي للمكونات ذات JS)
 1. **Create/Init:** قراءة الخيارات بالترتيب: Defaults < HTML Attributes < JS Options. التهيئة مرة واحدة فقط لكل عنصر (تكرار الاستدعاء يُرجع النسخة الموجودة).
@@ -35,7 +35,7 @@ const select = BUI.select.remote('#users', { perPage: 10 });
 - نفس الأحداث تتاح عبر callbacks اختيارية `onOpen` إلخ (اقتراح).
 
 ## Methods
-واجهة موحدة حيثما انطبقت: `open/close/toggle`، `show/hide`، `update`، `destroy`، `getInstance` (مستقبلي). التسمية في [JAVASCRIPT_API.md](JAVASCRIPT_API.md).
+واجهة موحدة حيثما انطبقت: `open/close/toggle`، `show/hide`، `update`، `destroy`، `getInstance` (منفذ في الـ Core: `BUI.getInstance(el, name)`). التسمية في [JAVASCRIPT_API.md](JAVASCRIPT_API.md).
 
 ## Error Handling
 - لا Exceptions تكسر الصفحة بسبب عنصر واحد خاطئ. سجّل `console.warn` برسالة واضحة تبدأ بـ `[BUI]` واذكر المكون والسبب.

@@ -4,6 +4,32 @@
 
 ## [Unreleased]
 
+### Added (Task 05: Core JavaScript)
+- `assets/js/baset-ui.js`: نواة `BUI` (33,628 بايت خام، 7,806 gzip): `version`, `config`, `register`, `init`, `getInstance`, `destroy`, `destroyAll`, `on/off/emit`, `trigger`, `options` (Parser)، `dom`, `utils`, `log`، وObserver اختياري. Global واحد فقط: `BUI`.
+- `tests/manual/core.html`: 43 فحصاً ذاتي التشغيل (مكونات تجريبية داخل الصفحة فقط)، يدعم `?autoinit=0`.
+- صفحات التوثيق: `documentation/javascript/` (introduction, initialization, events, api-reference) مفعلة في `nav.js`.
+- `CORE_ASSETS.md`: قسم آلية تسجيل Extensions.
+
+### Changed (Task 05)
+- `JAVASCRIPT_API.md` أُعيد كتابته: الواجهة المنفذة مفصلة، وما بقي "مستقبلي" محدد صراحة.
+- `COMPONENT_DEVELOPMENT.md` (وسما `BUI.init()` وgetInstance لم يعودا مستقبليين)، `ARCHITECTURE.md` (tests/manual وصفحات JavaScript)، `TESTING.md` (سطر الحالة)، `COMPONENTS_REGISTRY.md`، `README.md` و`PROJECT_OVERVIEW.md` (سطر الحالة فقط).
+
+### Decisions (Task 05)
+- اسم المكون kebab-case عند `register`؛ Factory بـ camelCase (`BUI.datePicker`)؛ السمة `data-bui-<name>`؛ قيمة السمة تختار الـ Variant.
+- أسماء أحداث DOM kebab-case (`before-open`). `BUI.trigger` يرجع `false` عند الإلغاء أو عند وسيط غير صالح.
+- `create()` يجب أن يرجع نسخة بها `destroy()`، والـ Core يغلّفه ليزيل النسخة من السجل. أنواع الخيارات تُستنتج من القيم الافتراضية.
+- `BUI.config` يقبل `autoInit` و`observe` و`logLevel` فقط؛ مفتاح غير معروف يُرفض بتحذير (الأنظمة اللاحقة تضيف مفاتيحها بنفسها).
+- `WeakMap` للنسخ و`WeakRef` لتمكين `destroyAll()` دون مراجع قوية.
+- الـ Observer يهيئ فقط ولا يهدم عند الإزالة (قد يعاد إدراج العنصر).
+
+### Fixed (Task 05)
+- أثناء الاختبار: حارس التلوث بـ `__proto__` في `deepMerge` كان يقارن `FORBIDDEN_KEYS[key] === 1` فيُرجع `Object.prototype` للمفتاح `__proto__` ولا يحجبه (تلويث فعلي). استُبدل بمقارنة مباشرة بالمفاتيح، وأُضيف اختبار لذلك.
+
+### Tested (Task 05, Chromium 153 عبر Playwright فقط)
+- `tests/manual/core.html`: 43/43 ناجح (autoInit تشغيل وإيقاف)، وعبر `file://`، ومع إعادة التشغيل بـ RTL وDark. صفحة بيضاء بالمكتبة فقط: Global جديد واحد هو `BUI`. `node --check` ناجح.
+- 8 صفحات (4 جديدة و4 سابقة) x LTR/RTL x Light/Dark x 8 عروض (320-1920): بلا Overflow أفقي ولا أخطاء Console ولا 404.
+- لم يُختبر: Safari/Firefox، أجهزة اللمس، قارئات الشاشة، Component حقيقي فوق الـ Core.
+
 ### Added (Task 04: Utilities)
 - `baset-ui.css`: Display (`bui-d-{none,block,inline,inline-block,flex,inline-flex,grid}` + نسخ لكل Breakpoint)، Position (النوع بنسخ Breakpoint، Offsets منطقية `top/bottom/start/end` بقيم 0/50/100، translate-middle وx وy، Z-index من Tokens)، Overflow (كل المحاور + نسخ Breakpoint، `bui-text-truncate`، `bui-line-clamp-1..5`)، Visibility (`visible`, `invisible`, `visually-hidden`, `visually-hidden-focusable`)، Borders (عرض/نمط/لون من Tokens، جوانب منطقية t/b/s/e وإزالتها، Radius بالمقياس مع زوايا منطقية ss/se/es/ee، Shadows).
 - حجم `baset-ui.css`: 140,405 بايت خام (+24,308 عن Task 03)، 14,419 بايت gzip. مولَّد بسكريبت لمرة واحدة غير مُسلَّم، كل قاعدة تُصرَّح مرة واحدة.

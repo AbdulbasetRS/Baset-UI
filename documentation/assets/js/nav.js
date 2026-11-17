@@ -31,7 +31,7 @@ window.BUI_DOCS_NAV = [
     { title: 'Forms', items: ['Form Controls', 'Input', 'Select', 'Checkbox', 'Radio', 'Switch', 'Date Picker', 'Time Picker'] },
     { title: 'Data Display', items: ['DataTable', 'Charts', 'Calendar', 'Maps'] },
     { title: 'Utilities', items: [{ title: 'Display', href: 'documentation/utilities/display.html' }, { title: 'Position', href: 'documentation/utilities/position.html' }, { title: 'Overflow', href: 'documentation/utilities/overflow.html' }, { title: 'Visibility', href: 'documentation/utilities/visibility.html' }, { title: 'Borders', href: 'documentation/utilities/borders.html' }] },
-    { title: 'JavaScript', items: ['Introduction', 'Initialization', 'Events', 'API Reference'] },
+    { title: 'JavaScript', items: [{ title: 'Introduction', href: 'documentation/javascript/introduction.html' }, { title: 'Initialization', href: 'documentation/javascript/initialization.html' }, { title: 'Events', href: 'documentation/javascript/events.html' }, { title: 'API Reference', href: 'documentation/javascript/api-reference.html' }] },
     { title: 'Extensions', items: ['Overview'] },
     { title: 'Accessibility', items: ['Guidelines', 'Keyboard Navigation'] },
     { title: 'Advanced', items: ['RTL & LTR', 'Internationalization', 'Icons'] },

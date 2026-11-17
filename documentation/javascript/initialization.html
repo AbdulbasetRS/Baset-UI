@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-bui-theme="default" data-bui-mode="light" data-root="../../">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Initialization - Baset-UI Documentation</title>
+    <meta name="description" content="Registering components, reading options and creating, finding and destroying instances.">
+    <link rel="icon" href="data:,">
+
+    <link rel="stylesheet" href="../../assets/css/baset-ui.css">
+    <link rel="stylesheet" href="../../documentation/assets/css/docs.css">
+    <script>
+        /* Apply saved mode early to avoid a flash. Documentation shell only. */
+        try {
+            var m = localStorage.getItem('bui-docs-mode');
+            if (m === 'dark' || m === 'light') document.documentElement.setAttribute('data-bui-mode', m);
+        } catch (e) {}
+    </script>
+</head>
+<body>
+    <main class="bui-docs-main" id="bui-docs-main" tabindex="-1">
+        <div class="bui-docs-page">
+            <div class="bui-docs-page__body">
+
+                <header class="bui-docs-page-header">
+                    <nav class="bui-docs-breadcrumb" aria-label="Breadcrumb" data-docs-breadcrumb hidden></nav>
+                    <h1>Initialization</h1>
+                    <p class="bui-docs-lead">How components are registered, initialized from HTML or JavaScript, and destroyed.</p>
+                </header>
+
+                <div class="bui-docs-content">
+
+<section class="bui-docs-section" aria-labelledby="overview">
+<h2 id="overview">Overview</h2>
+<p>Every component with JavaScript follows the same lifecycle. The core owns the parts that are identical for all components: finding the element, reading and validating options, creating the instance once, remembering it, and removing it on destroy.</p><table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Lifecycle</caption>
+<thead><tr><th scope="col">Step</th><th scope="col">Who does it</th><th scope="col">What happens</th></tr></thead>
+<tbody>
+<tr><td>Create / Init</td><td>Core</td><td>Options are resolved (Defaults, then HTML attributes, then JS options). <code>create()</code> runs once per element and component.</td></tr>
+<tr><td>Mount</td><td>Component</td><td>Inside <code>create()</code>: ARIA, listeners, initial state.</td></tr>
+<tr><td>Update</td><td>Component</td><td>Methods such as <code>update()</code> and <code>refresh()</code> on the instance.</td></tr>
+<tr><td>Destroy</td><td>Component and core</td><td>The component removes everything it added. The core removes the instance from its registry.</td></tr>
+</tbody>
+</table>
+<div class="bui-docs-callout bui-docs-callout--note" role="note">
+<p class="bui-docs-callout__title">Note</p>
+<p>The core ships no component. The examples use <code>my-widget</code> as a placeholder name for a component that you register yourself. The snippets are not live demos. A runnable check of every behavior described here is <code>tests/manual/core.html</code> in the repository.</p>
+</div>
+
+</section>
+
+<section class="bui-docs-section" aria-labelledby="register">
+<h2 id="register">Registering a component</h2>
+<p><code>BUI.register(name, definition)</code> registers a component from the core or from an Extension, without editing the core. It returns the factory function (see below) or <code>null</code> when the registration is invalid. Invalid registrations log an error and change nothing.</p><pre class="bui-docs-code" data-lang="javascript"><code>BUI.register('my-widget', {
+    defaults: { size: 3, label: 'Widget', open: false, items: [] },
+    variants: ['remote', 'multi-select'],       // optional
+    create(element, options, context) {
+        const onClick = () =&gt; context.trigger('click-count', { size: options.size });
+        element.addEventListener('click', onClick);
+        return {
+            update(next) { /* ... */ },
+            destroy() { element.removeEventListener('click', onClick); }
+        };
+    }
+});</code></pre>
+<h3>Name rules</h3><p>The name is kebab-case: lower-case letters, digits and hyphens, starting with a letter (<code>date-picker</code>). The name is used for the attribute <code>data-bui-date-picker</code>, the DOM events <code>bui:date-picker:*</code> and the factory <code>BUI.datePicker</code>. A name that is already registered, or that equals a core member such as <code>init</code> or <code>dom</code>, is rejected.</p><h3>Definition</h3><table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Definition properties</caption>
+<thead><tr><th scope="col">Property</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Description</th></tr></thead>
+<tbody>
+<tr><td><code>create</code></td><td>function</td><td>yes</td><td><code>create(element, options, context)</code>. Must return an instance object with a <code>destroy()</code> method.</td></tr>
+<tr><td><code>defaults</code></td><td>object</td><td>no</td><td>Default options in camelCase. Their types drive HTML conversion and validation. Copied at registration, never shared between instances.</td></tr>
+<tr><td><code>variants</code></td><td>array of strings</td><td>no</td><td>Kebab-case variant names. Each one adds a factory such as <code>BUI.myWidget.multiSelect()</code> and is accepted as the value of <code>data-bui-my-widget</code>.</td></tr>
+</tbody>
+</table>
+<p>A default option may not use a name whose attribute is reserved: <code>theme</code>, <code>mode</code>, <code>i18n</code> and <code>i18n-attr</code>, or the component name itself.</p><h3>The create function</h3><table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Arguments of create()</caption>
+<thead><tr><th scope="col">Argument</th><th scope="col">Description</th></tr></thead>
+<tbody>
+<tr><td><code>element</code></td><td>The target element.</td></tr>
+<tr><td><code>options</code></td><td>The resolved options object. It is a fresh object for this instance, so the component may change it.</td></tr>
+<tr><td><code>context.name</code></td><td>The registered component name.</td></tr>
+<tr><td><code>context.variant</code></td><td>The variant name, or <code>null</code>.</td></tr>
+<tr><td><code>context.log</code></td><td><code>error</code>, <code>warn</code>, <code>info</code> and <code>debug</code>, each taking <code>(message, extra?)</code>, already prefixed with the component name.</td></tr>
+<tr><td><code>context.trigger(event, detail?, options?)</code></td><td>Dispatches <code>bui:{name}:{event}</code> on the element. See <a href="events.html">Events</a>.</td></tr>
+</tbody>
+</table>
+<p>If <code>create()</code> throws, or returns something without a <code>destroy()</code> function, the core logs an error, stores nothing and the factory returns <code>null</code>. One broken element never stops the initialization of the others.</p><p>The core wraps <code>instance.destroy()</code>. Calling it directly removes the instance from the registry before your code runs, and a second call does nothing. If the instance object is frozen the wrapping is not possible: a warning is logged and the instance is cleaned up only by <code>BUI.destroy()</code>.</p>
+</section>
+
+<section class="bui-docs-section" aria-labelledby="html-init">
+<h2 id="html-init">Initialization from HTML</h2>
+<p>Put <code>data-bui-{name}</code> on the element. <code>BUI.init()</code> finds it. The attribute value selects a variant when the component declares any; an empty value means no variant. An unknown variant logs a warning and no variant is used.</p><pre class="bui-docs-code" data-lang="html"><code>&lt;div data-bui-my-widget&gt;&lt;/div&gt;
+&lt;div data-bui-my-widget="remote" data-bui-per-page="25" data-bui-open data-bui-items='["a","b"]'&gt;&lt;/div&gt;</code></pre>
+<p>Options are read from <code>data-bui-{option-in-kebab-case}</code>, and only for options that exist in <code>defaults</code>. The default value decides how the text is converted:</p><table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Attribute conversion</caption>
+<thead><tr><th scope="col">Default value is</th><th scope="col">Attribute text</th><th scope="col">Result</th></tr></thead>
+<tbody>
+<tr><td>boolean</td><td>empty, or <code>true</code> / <code>false</code></td><td><code>true</code> / <code>true</code> / <code>false</code>. Anything else is invalid.</td></tr>
+<tr><td>number</td><td>a finite number</td><td>a number. Anything else is invalid.</td></tr>
+<tr><td>string</td><td>any text</td><td>the text</td></tr>
+<tr><td>array</td><td>a JSON array</td><td>the parsed array. Anything else is invalid.</td></tr>
+<tr><td>object</td><td>a JSON object</td><td>the parsed object, merged deeply with the default object.</td></tr>
+<tr><td>function</td><td>-</td><td>cannot be set from HTML (invalid).</td></tr>
+<tr><td><code>null</code></td><td>any text</td><td>inferred: <code>true</code> / <code>false</code>, a number, parsed JSON when it starts with <code>{</code> or <code>[</code>, otherwise the text.</td></tr>
+</tbody>
+</table>
+<p>An invalid attribute value logs a warning and the default is used.</p>
+</section>
+
+<section class="bui-docs-section" aria-labelledby="js-init">
+<h2 id="js-init">Initialization from JavaScript</h2>
+<p>Registering a component creates a factory on the namespace: <code>BUI.myWidget(target, options)</code>. <code>target</code> is an element or a selector (the first match is used). A target that does not exist logs a warning and returns <code>null</code>.</p><pre class="bui-docs-code" data-lang="javascript"><code>const widget = BUI.myWidget('#demo', { size: 9 });
+const remote = BUI.myWidget.remote('#other', { open: true });   // variant factory
+widget === BUI.myWidget('#demo');                                // true</code></pre>
+<p>Initialization is idempotent: calling a factory again on the same element and component returns the existing instance. Options passed the second time are ignored.</p><h3 id="option-priority">Option priority and validation</h3><p>Priority from lowest to highest: <code>defaults</code>, HTML attributes, JS options. Plain objects merge deeply; arrays and other values replace. A JS option whose type differs from the default logs a warning and is dropped. An option that is not in <code>defaults</code> logs a warning but is still passed to <code>create()</code>. A default of <code>null</code> accepts any type.</p>
+</section>
+
+<section class="bui-docs-section" aria-labelledby="auto-init">
+<h2 id="auto-init">Automatic init and BUI.init</h2>
+<p><code>BUI.init(root?)</code> initializes every registered component found on <code>root</code> and inside it. <code>root</code> is an element, a selector, <code>document</code> or a fragment (default <code>document</code>). It returns an array of the instances it <em>created</em>; elements that were already initialized are skipped. Components are processed in registration order, then in document order.</p><p>With <code>autoInit</code> on (the default) the core calls <code>BUI.init(document)</code> on <code>DOMContentLoaded</code>. If the script is loaded after that point, the call runs in the next task, so <code>BUI.config({ autoInit: false })</code> written right after the script tag still takes effect.</p><pre class="bui-docs-code" data-lang="javascript"><code>BUI.config({ autoInit: false });
+// later, for example after inserting server-rendered HTML:
+const created = BUI.init('#content');</code></pre>
+
+</section>
+
+<section class="bui-docs-section" aria-labelledby="observer">
+<h2 id="observer">Observer</h2>
+<p>With <code>BUI.config({ observe: true })</code> the core watches the document with a <code>MutationObserver</code> and calls <code>BUI.init(node)</code> for every element that is added. It starts only after the document is ready and after the first automatic init. It is off by default.</p><div class="bui-docs-callout bui-docs-callout--warning" role="note">
+<p class="bui-docs-callout__title">Warning</p>
+<p>The observer only initializes. Removing an element does not destroy its instance, because a removed element may be inserted again. Call <code>BUI.destroy(element)</code> or <code>instance.destroy()</code> before removing a component, or its listeners and timers stay alive.</p>
+</div>
+
+</section>
+
+<section class="bui-docs-section" aria-labelledby="instances">
+<h2 id="instances">Instances and destroy</h2>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Instance functions</caption>
+<thead><tr><th scope="col">Function</th><th scope="col">Description</th></tr></thead>
+<tbody>
+<tr><td><code>BUI.getInstance(target, name)</code></td><td>Returns the instance of component <code>name</code> on the element, or <code>null</code>. An unknown component name or a missing element logs a warning.</td></tr>
+<tr><td><code>BUI.destroy(root?)</code></td><td>Calls <code>destroy()</code> on every instance on <code>root</code> and inside it, and returns how many. With no argument it covers instances on elements that are in the document.</td></tr>
+<tr><td><code>BUI.destroyAll()</code></td><td>Destroys every instance, including those on elements that are not in the document. Returns the count.</td></tr>
+</tbody>
+</table>
+<p>Instances are stored in a <code>WeakMap</code> keyed by element. The core keeps only weak references to enumerate them, so an element that is dropped without being destroyed can still be garbage collected.</p>
+</section>
+
+<section class="bui-docs-section" aria-labelledby="examples">
+<h2 id="examples">Examples</h2>
+<div class="bui-docs-callout bui-docs-callout--note" role="note">
+<p class="bui-docs-callout__title">Note</p>
+<p>The core ships no component. The examples use <code>my-widget</code> as a placeholder name for a component that you register yourself. The snippets are not live demos. A runnable check of every behavior described here is <code>tests/manual/core.html</code> in the repository.</p>
+</div>
+<h3>Reading and replacing an instance</h3><pre class="bui-docs-code" data-lang="javascript"><code>const first = BUI.getInstance('#demo', 'my-widget');
+first.destroy();                              // removes it from the registry
+const second = BUI.myWidget('#demo');         // a new instance
+first === second;                             // false</code></pre>
+<h3>Listening for registrations</h3><pre class="bui-docs-code" data-lang="javascript"><code>const stop = BUI.on('init', ({ root, count }) =&gt; console.log(count, 'created on', root));
+BUI.init(document.body);
+stop();</code></pre>
+<h3>Writing a component that cleans up</h3><pre class="bui-docs-code" data-lang="javascript"><code>BUI.register('my-widget', {
+    create(element, options, context) {
+        const onResize = BUI.utils.debounce(() =&gt; { /* ... */ }, 100);
+        window.addEventListener('resize', onResize);
+        return {
+            destroy() {
+                window.removeEventListener('resize', onResize);
+                onResize.cancel();
+            }
+        };
+    }
+});</code></pre>
+
+</section>
+
+<section class="bui-docs-section" aria-labelledby="responsive-behavior">
+<h2 id="responsive-behavior">Responsive behavior</h2>
+<p>Initialization does not depend on the viewport width. Components that change behavior by breakpoint use <code>matchMedia</code> and must remove the listener in <code>destroy()</code>.</p>
+</section>
+
+<section class="bui-docs-section" aria-labelledby="accessibility">
+<h2 id="accessibility">Accessibility</h2>
+<p>The core does not add roles, labels or focus handling. A component adds its ARIA attributes while mounting, inside <code>create()</code>, and removes them in <code>destroy()</code> so the element returns to its original state. When an initialization fails the element is left untouched and remains usable as plain HTML.</p>
+</section>
+
+
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="../../assets/js/baset-ui.js"></script>
+    <script src="../../documentation/assets/js/nav.js"></script>
+    <script src="../../documentation/assets/js/docs.js"></script>
+</body>
+</html>

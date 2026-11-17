@@ -19,7 +19,7 @@ Baset-UI/
 │   ├── javascript/ extensions/ accessibility/ advanced/ development/ examples/
 │   └── assets/{css,js,images}   ملفات واجهة التوثيق (ليست جزءاً من المكتبة)
 ├── instructions/           المرجع الأساسي للتطوير (templates/ تضم قوالب المهام وقالب صفحة التوثيق)
-├── tests/                  الاختبارات
+├── tests/                  الاختبارات (manual/{component}.html: صفحات اختبار يدوي تعمل بلا Build)
 └── examples/               أمثلة تطبيقية مستقلة
 ```
 
@@ -62,6 +62,10 @@ Baset-UI/
 - **Forms وData Display داخل `components/`** لأنها مكونات من نفس النوع (نفس الأقسام الثمانية)، فلا يلزم مجلد لكل قسم، وتبقى المجلدات قليلة. التمييز بين الأقسام يتم في `nav.js` فقط.
 - **المجلدات الأربعة الجديدة** (`javascript/`, `accessibility/`, `advanced/`, `development/`) أُضيفت لأن هذه الأقسام موجودة في الـ Sidebar ولم يكن لها مكان؛ وكل مجلد يحتوي `.gitkeep` حتى أول صفحة (القاعدة 5). `examples/` لا قسم له في الـ Sidebar وبقي كما هو.
 - **عمق كل صفحة ثابت (2):** `documentation/{folder}/{name}.html`، لذلك قيمة `data-root` لكل صفحة توثيق هي دائماً `../../`. تُسمح أعماق أخرى (مثلاً `../../../`) بتغيير `data-root` وروابط الملفات معاً فقط.
+
+### صفحات JavaScript واختبار Core (Task 05)
+- `documentation/javascript/{introduction,initialization,events,api-reference}.html`: قسم JavaScript في الـ Sidebar، بالقالب نفسه وبعمق مجلدين (`data-root="../../"`).
+- `tests/manual/core.html`: صفحة اختبار ذاتية التشغيل للـ Core (تُنشئ مكونات تجريبية داخل الصفحة فقط ولا تُشحن مع المكتبة). السبب: `TESTING.md` يحدد `tests/manual/{component}.html` للاختبار اليدوي دون أداة أو Dependency.
 
 ### قرار المسارات في الصفحات المتداخلة
 - كل صفحة تضع `data-root="../../"` على `<html>`: المسار **من الصفحة نفسها** إلى جذر الموقع (مجلد `index.html`). يُقرأ في `docs.js` ويُبنى عليه كل رابط (Sidebar، Breadcrumb، Previous/Next، رابط الشعار).

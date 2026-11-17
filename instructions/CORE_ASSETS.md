@@ -24,7 +24,7 @@
 ## `assets/js/baset-ui.js`
 **المسؤولية (إلزامي):** Core Initialization، Global Config، Theme Manager، Locale Manager، Toast Manager، Modal Manager، Shared Utilities، DOM Helpers، Component Initialization، Event Management.
 
-**الحالة الحالية:** ملف تعليقات فقط، لا تنفيذ. (مستقبلي: كل ما سبق.)
+**الحالة الحالية (Task 05):** منفذ: Namespace `BUI`، Global Config (`BUI.config`)، Registry (`BUI.register`)، Init وInstances، Events، DOM Helpers، Utilities، Options Parser، Logger، وObserver اختياري. **غير منفذ (مستقبلي):** Theme Manager وLocale Manager وToast Manager وModal Manager. الواجهة في [JAVASCRIPT_API.md](JAVASCRIPT_API.md).
 
 قواعد: IIFE أو UMD بدون Modules كشرط، يعرّض `window.BUI` فقط، لا متغيرات Global أخرى. التفاصيل في [JAVASCRIPT_API.md](JAVASCRIPT_API.md).
 
@@ -36,6 +36,23 @@
 4. يحتاج ملفات إضافية خاصة به (خطوط، بيانات، Workers).
 
 أمثلة مرشحة (مستقبلي): Charts, DataTable, Calendar, Rich Text Editor, Maps.
+
+### آلية تسجيل Extensions (Task 05)
+Extension سكربت مستقل يُحمَّل بعد `baset-ui.js` ويسجل مكوناته عبر الواجهة العامة فقط، دون تعديل Core ودون أي Global جديد:
+```javascript
+(function () {
+    'use strict';
+    if (!window.BUI) { console.warn('[BUI] DataTable: load baset-ui.js first.'); return; }
+    BUI.register('data-table', {
+        defaults: { perPage: 10 },
+        create: function (element, options, context) { /* ... */ return { destroy: function () { /* ... */ } }; }
+    });
+})();
+```
+- يُحمَّل قبل `DOMContentLoaded` ليلتقطه الـ Init التلقائي، أو يستدعي `BUI.init()` بعد التسجيل.
+- يفشل `register` (خطأ في Console ويرجع `null`) إن كان الاسم مسجلاً أو محجوزاً أو التعريف غير صالح؛ الـ Core لا يعرف أسماء الـ Extensions مسبقاً.
+- الاسم kebab-case، ويُنشئ `BUI.dataTable` وسمة `data-bui-data-table` والأحداث `bui:data-table:*`. تعريف `create/defaults/variants` في [JAVASCRIPT_API.md](JAVASCRIPT_API.md).
+- يلتزم بـ `destroy()` الذي يزيل كل ما أضافه.
 
 ### قواعد الـ Extension
 - ملفاته: `assets/css/extensions/baset-ui-{name}.css` و`assets/js/extensions/baset-ui-{name}.js`.
