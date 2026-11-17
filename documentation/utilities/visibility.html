@@ -47,10 +47,6 @@
 <p class="bui-docs-callout__title">Note</p>
 <p>All utilities use <code>!important</code>, the one place the library allows it (CORE_ASSETS.md). There are no breakpoint variants: whether content is meaningful to assistive technology does not depend on the screen width.</p>
 </div>
-<div class="bui-docs-callout bui-docs-callout--note" role="note">
-<p class="bui-docs-callout__title">Note</p>
-<p>Classes that start with <code>bui-docs-</code> in the live previews belong to this documentation site (demo boxes and frames). They are not part of the library.</p>
-</div>
 </section>
 
 <section class="bui-docs-section" aria-labelledby="classes">
@@ -73,10 +69,10 @@
 <p>The middle box is invisible but still takes its space.</p>
 <div class="bui-docs-example">
 <div class="bui-docs-example__preview">
-<div class="bui-d-flex bui-gap-2 bui-docs-demo-frame">
-    <div class="bui-docs-demo-box">First</div>
-    <div class="bui-docs-demo-box bui-invisible">Invisible</div>
-    <div class="bui-docs-demo-box">Last</div>
+<div class="bui-d-flex bui-gap-2 bui-border bui-border-dashed bui-border-strong bui-py-2">
+    <div class="bui-border bui-border-primary bui-rounded-sm bui-p-2">First</div>
+    <div class="bui-border bui-border-primary bui-rounded-sm bui-p-2 bui-invisible">Invisible</div>
+    <div class="bui-border bui-border-primary bui-rounded-sm bui-p-2">Last</div>
 </div>
 </div>
 </div>
@@ -91,9 +87,9 @@
 <p>Click this paragraph and press Tab: the link appears while it has focus and hides again when focus leaves.</p>
 <div class="bui-docs-example">
 <div class="bui-docs-example__preview">
-<div class="bui-position-relative bui-docs-demo-frame">
+<div class="bui-position-relative bui-border bui-border-dashed bui-border-strong bui-py-2">
     <p class="bui-m-0">Click here, then press Tab.</p>
-    <a class="bui-visually-hidden-focusable bui-docs-demo-box" href="#visually-hidden">Skip to the visually hidden example</a>
+    <a class="bui-visually-hidden-focusable" href="#visually-hidden">Skip to the visually hidden example</a>
 </div>
 </div>
 </div>

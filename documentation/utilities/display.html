@@ -37,10 +37,6 @@
 <p class="bui-docs-callout__title">Note</p>
 <p>All utilities in the library use <code>!important</code>. This is the single place the library allows it (see CORE_ASSETS.md): utilities are declared before components, so without it a component style would win over a utility class. Only utilities may do this.</p>
 </div>
-<div class="bui-docs-callout bui-docs-callout--note" role="note">
-<p class="bui-docs-callout__title">Note</p>
-<p>Classes that start with <code>bui-docs-</code> in the live previews belong to this documentation site (demo boxes and frames). They are not part of the library.</p>
-</div>
 </section>
 
 <section class="bui-docs-section" aria-labelledby="classes">
@@ -67,11 +63,11 @@
 <h3>Inline, block and inline-block</h3>
 <div class="bui-docs-example">
 <div class="bui-docs-example__preview">
-<div class="bui-docs-demo-frame">
-    <span class="bui-d-inline bui-docs-demo-box">bui-d-inline</span>
-    <span class="bui-d-inline bui-docs-demo-box">bui-d-inline</span>
-    <span class="bui-d-block bui-docs-demo-box bui-my-2">bui-d-block</span>
-    <span class="bui-d-inline-block bui-docs-demo-box" style="width: 9rem">bui-d-inline-block with a width</span>
+<div class="bui-border bui-border-dashed bui-border-strong bui-py-2">
+    <span class="bui-d-inline bui-border bui-border-primary bui-rounded-sm bui-p-2">bui-d-inline</span>
+    <span class="bui-d-inline bui-border bui-border-primary bui-rounded-sm bui-p-2">bui-d-inline</span>
+    <span class="bui-d-block bui-border bui-border-primary bui-rounded-sm bui-p-2 bui-my-2">bui-d-block</span>
+    <span class="bui-d-inline-block bui-border bui-border-primary bui-rounded-sm bui-p-2" style="width: 9rem">bui-d-inline-block with a width</span>
 </div>
 </div>
 </div>
@@ -79,10 +75,10 @@
 <p>The column template has no utility class here, so the example sets it inline.</p>
 <div class="bui-docs-example">
 <div class="bui-docs-example__preview">
-<div class="bui-d-grid bui-gap-2 bui-docs-demo-frame" style="grid-template-columns: repeat(3, minmax(0, 1fr))">
-    <div class="bui-docs-demo-box">1</div>
-    <div class="bui-docs-demo-box">2</div>
-    <div class="bui-docs-demo-box">3</div>
+<div class="bui-d-grid bui-gap-2 bui-border bui-border-dashed bui-border-strong bui-py-2" style="grid-template-columns: repeat(3, minmax(0, 1fr))">
+    <div class="bui-border bui-border-primary bui-rounded-sm bui-p-2">1</div>
+    <div class="bui-border bui-border-primary bui-rounded-sm bui-p-2">2</div>
+    <div class="bui-border bui-border-primary bui-rounded-sm bui-p-2">3</div>
 </div>
 </div>
 </div>
@@ -90,19 +86,19 @@
 <p>Resize the window across 768px (MD). The first box shows below MD, the second from MD upward.</p>
 <div class="bui-docs-example">
 <div class="bui-docs-example__preview">
-<div class="bui-docs-demo-frame">
-    <div class="bui-d-block bui-d-md-none bui-docs-demo-box">Visible below MD</div>
-    <div class="bui-d-none bui-d-md-block bui-docs-demo-box bui-docs-demo-box--alt">Visible from MD</div>
+<div class="bui-border bui-border-dashed bui-border-strong bui-py-2">
+    <div class="bui-d-block bui-d-md-none bui-border bui-border-primary bui-rounded-sm bui-p-2">Visible below MD</div>
+    <div class="bui-d-none bui-d-md-block bui-border bui-border-primary bui-rounded-sm bui-p-2">Visible from MD</div>
 </div>
 </div>
 </div>
 <h3>Change the layout by breakpoint</h3>
 <div class="bui-docs-example">
 <div class="bui-docs-example__preview">
-<div class="bui-d-block bui-d-md-flex bui-gap-2 bui-docs-demo-frame">
-    <div class="bui-docs-demo-box bui-flex-fill">1</div>
-    <div class="bui-docs-demo-box bui-flex-fill">2</div>
-    <div class="bui-docs-demo-box bui-flex-fill">3</div>
+<div class="bui-d-block bui-d-md-flex bui-gap-2 bui-border bui-border-dashed bui-border-strong bui-py-2">
+    <div class="bui-border bui-border-primary bui-rounded-sm bui-p-2 bui-flex-fill">1</div>
+    <div class="bui-border bui-border-primary bui-rounded-sm bui-p-2 bui-flex-fill">2</div>
+    <div class="bui-border bui-border-primary bui-rounded-sm bui-p-2 bui-flex-fill">3</div>
 </div>
 </div>
 </div>
@@ -110,10 +106,10 @@
 <p>Display does not depend on direction. In RTL inline content and flex rows simply start at the right.</p>
 <div class="bui-docs-example">
 <div class="bui-docs-example__preview">
-<div dir="rtl" class="bui-d-flex bui-gap-2 bui-docs-demo-frame">
-    <div class="bui-docs-demo-box">1</div>
-    <div class="bui-docs-demo-box">2</div>
-    <div class="bui-docs-demo-box">3</div>
+<div dir="rtl" class="bui-d-flex bui-gap-2 bui-border bui-border-dashed bui-border-strong bui-py-2">
+    <div class="bui-border bui-border-primary bui-rounded-sm bui-p-2">1</div>
+    <div class="bui-border bui-border-primary bui-rounded-sm bui-p-2">2</div>
+    <div class="bui-border bui-border-primary bui-rounded-sm bui-p-2">3</div>
 </div>
 </div>
 </div>

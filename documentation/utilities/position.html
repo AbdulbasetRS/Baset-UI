@@ -37,10 +37,6 @@
 <p class="bui-docs-callout__title">Note</p>
 <p>All utilities use <code>!important</code>, the one place the library allows it (CORE_ASSETS.md). Only the position type has breakpoint variants. Offsets, translate and z-index do not, because changing them by breakpoint is rare and would add a large number of rules.</p>
 </div>
-<div class="bui-docs-callout bui-docs-callout--note" role="note">
-<p class="bui-docs-callout__title">Note</p>
-<p>Classes that start with <code>bui-docs-</code> in the live previews belong to this documentation site (demo boxes and frames). They are not part of the library.</p>
-</div>
 </section>
 
 <section class="bui-docs-section" aria-labelledby="types">
@@ -113,19 +109,19 @@
 <h3>Corners</h3>
 <div class="bui-docs-example">
 <div class="bui-docs-example__preview">
-<div class="bui-position-relative bui-docs-demo-frame" style="height: 8rem">
-    <div class="bui-position-absolute bui-top-0 bui-start-0 bui-docs-demo-box">top start</div>
-    <div class="bui-position-absolute bui-top-0 bui-end-0 bui-docs-demo-box">top end</div>
-    <div class="bui-position-absolute bui-bottom-0 bui-start-0 bui-docs-demo-box">bottom start</div>
-    <div class="bui-position-absolute bui-bottom-0 bui-end-0 bui-docs-demo-box">bottom end</div>
+<div class="bui-position-relative bui-border bui-border-dashed bui-border-strong bui-py-2" style="height: 8rem">
+    <div class="bui-position-absolute bui-top-0 bui-start-0 bui-border bui-border-primary bui-rounded-sm bui-p-2">top start</div>
+    <div class="bui-position-absolute bui-top-0 bui-end-0 bui-border bui-border-primary bui-rounded-sm bui-p-2">top end</div>
+    <div class="bui-position-absolute bui-bottom-0 bui-start-0 bui-border bui-border-primary bui-rounded-sm bui-p-2">bottom start</div>
+    <div class="bui-position-absolute bui-bottom-0 bui-end-0 bui-border bui-border-primary bui-rounded-sm bui-p-2">bottom end</div>
 </div>
 </div>
 </div>
 <h3>Centered</h3>
 <div class="bui-docs-example">
 <div class="bui-docs-example__preview">
-<div class="bui-position-relative bui-docs-demo-frame" style="height: 8rem">
-    <div class="bui-position-absolute bui-top-50 bui-start-50 bui-translate-middle bui-docs-demo-box">Centered</div>
+<div class="bui-position-relative bui-border bui-border-dashed bui-border-strong bui-py-2" style="height: 8rem">
+    <div class="bui-position-absolute bui-top-50 bui-start-50 bui-translate-middle bui-border bui-border-primary bui-rounded-sm bui-p-2">Centered</div>
 </div>
 </div>
 </div>
@@ -133,10 +129,10 @@
 <p>The same classes in a <code>dir="rtl"</code> container: "start" is the right edge, and the centered box is still centered.</p>
 <div class="bui-docs-example">
 <div class="bui-docs-example__preview">
-<div dir="rtl" class="bui-position-relative bui-docs-demo-frame" style="height: 8rem">
-    <div class="bui-position-absolute bui-top-0 bui-start-0 bui-docs-demo-box">start</div>
-    <div class="bui-position-absolute bui-top-0 bui-end-0 bui-docs-demo-box">end</div>
-    <div class="bui-position-absolute bui-bottom-0 bui-start-50 bui-translate-middle-x bui-docs-demo-box">centered</div>
+<div dir="rtl" class="bui-position-relative bui-border bui-border-dashed bui-border-strong bui-py-2" style="height: 8rem">
+    <div class="bui-position-absolute bui-top-0 bui-start-0 bui-border bui-border-primary bui-rounded-sm bui-p-2">start</div>
+    <div class="bui-position-absolute bui-top-0 bui-end-0 bui-border bui-border-primary bui-rounded-sm bui-p-2">end</div>
+    <div class="bui-position-absolute bui-bottom-0 bui-start-50 bui-translate-middle-x bui-border bui-border-primary bui-rounded-sm bui-p-2">centered</div>
 </div>
 </div>
 </div>
@@ -144,8 +140,8 @@
 <p>The sticky header stays at the top of its scrolling box. Focus the box and scroll with the arrow keys.</p>
 <div class="bui-docs-example">
 <div class="bui-docs-example__preview">
-<div class="bui-overflow-y-auto bui-docs-demo-frame" style="height: 8rem" tabindex="0" role="region" aria-label="Sticky example, scrollable">
-    <div class="bui-position-sticky bui-top-0 bui-docs-demo-box">Sticky header (bui-position-sticky bui-top-0)</div>
+<div class="bui-overflow-y-auto bui-border bui-border-dashed bui-border-strong bui-py-2" style="height: 8rem" tabindex="0" role="region" aria-label="Sticky example, scrollable">
+    <div class="bui-position-sticky bui-top-0 bui-border bui-border-primary bui-rounded-sm bui-p-2">Sticky header (bui-position-sticky bui-top-0)</div>
     <p class="bui-mt-2">First paragraph of the scrolling content.</p>
     <p>Second paragraph of the scrolling content.</p>
     <p>Third paragraph of the scrolling content.</p>

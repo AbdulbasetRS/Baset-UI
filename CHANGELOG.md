@@ -18,7 +18,8 @@
 - translate-middle يقلب الإزاحة الأفقية في RTL بـ `:dir(rtl)`؛ يتطلب متصفحاً حديثاً.
 - عرض/نمط الحد كخصائص `--bui-util-border-*` معرّفة بـ `@property` (`inherits:false`) كي لا تتسرب من أب إلى أبناء.
 - الـ Borders والـ Visibility والـ z-index والـ Offsets وtruncate/line-clamp بلا نسخ Breakpoint لأنها لا تغيّر البنية، وأضيف ذلك للتوثيق.
-- العرض التوضيحي يستخدم Styles مضمنة (`grid-template-columns`, `height`, `width`) بدل تعديل `docs.css` (خارج الملفات المتوقعة).
+- أمثلة صفحات Utilities الخمس تستخدم أدوات المكتبة نفسها فقط (`bui-border` و`bui-border-primary` و`bui-rounded-sm` و`bui-p-2` وغيرها) بلا أي صنف `bui-docs-demo-*`، فيكون الكود المنسوخ نظيفاً. لا توجد أدوات للخلفية ولا لمحاذاة النص ولا للأبعاد، لذا تُستخدم Styles مضمنة (`grid-template-columns`, `height`, `width`) حين يلزم، بدل تعديل `docs.css`.
+- صفحات Layout وCustomization من Task 03 لم تُعدَّل وما زالت تستخدم `bui-docs-demo-*`.
 
 ### Tested (Task 04, Chromium 153 عبر Playwright فقط)
 - 5 صفحات x LTR/RTL x Light/Dark x 8 عروض (320/480/576/768/992/1200/1600/1920): بلا Overflow أفقي، بلا أخطاء/تحذيرات Console، بلا 404. 14 صفحة في المشروع تعمل بلا أخطاء (تراجع).

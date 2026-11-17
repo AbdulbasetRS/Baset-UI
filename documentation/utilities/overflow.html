@@ -37,10 +37,6 @@
 <p class="bui-docs-callout__title">Note</p>
 <p>All utilities use <code>!important</code>, the one place the library allows it (CORE_ASSETS.md). Truncate and line-clamp have no breakpoint variants.</p>
 </div>
-<div class="bui-docs-callout bui-docs-callout--note" role="note">
-<p class="bui-docs-callout__title">Note</p>
-<p>Classes that start with <code>bui-docs-</code> in the live previews belong to this documentation site (demo boxes and frames). They are not part of the library.</p>
-</div>
 </section>
 
 <section class="bui-docs-section" aria-labelledby="classes">
@@ -65,7 +61,7 @@
 <p>The scrolling box is focusable so keyboard users can scroll it.</p>
 <div class="bui-docs-example">
 <div class="bui-docs-example__preview">
-<div class="bui-overflow-y-auto bui-docs-demo-frame" style="height: 6rem" tabindex="0" role="region" aria-label="Vertical scroll example">
+<div class="bui-overflow-y-auto bui-border bui-border-dashed bui-border-strong bui-py-2" style="height: 6rem" tabindex="0" role="region" aria-label="Vertical scroll example">
     <p>Line one of the content.</p>
     <p>Line two of the content.</p>
     <p>Line three of the content.</p>
@@ -77,8 +73,8 @@
 <h3>Horizontal scrolling</h3>
 <div class="bui-docs-example">
 <div class="bui-docs-example__preview">
-<div class="bui-overflow-x-auto bui-docs-demo-frame" tabindex="0" role="region" aria-label="Horizontal scroll example">
-    <div class="bui-docs-demo-box" style="width: 48rem">A box wider than its container (48rem)</div>
+<div class="bui-overflow-x-auto bui-border bui-border-dashed bui-border-strong bui-py-2" tabindex="0" role="region" aria-label="Horizontal scroll example">
+    <div class="bui-border bui-border-primary bui-rounded-sm bui-p-2" style="width: 48rem">A box wider than its container (48rem)</div>
 </div>
 </div>
 </div>
@@ -86,22 +82,22 @@
 <p>The content is clipped at the edge of the box. Clipped content cannot be read by sighted users, so do not use it for information they need.</p>
 <div class="bui-docs-example">
 <div class="bui-docs-example__preview">
-<div class="bui-overflow-hidden bui-docs-demo-frame" style="height: 3rem">
-    <div class="bui-docs-demo-box" style="height: 6rem">This box is taller than its parent and is clipped.</div>
+<div class="bui-overflow-hidden bui-border bui-border-dashed bui-border-strong bui-py-2" style="height: 3rem">
+    <div class="bui-border bui-border-primary bui-rounded-sm bui-p-2" style="height: 6rem">This box is taller than its parent and is clipped.</div>
 </div>
 </div>
 </div>
 <h3>Truncate</h3>
 <div class="bui-docs-example">
 <div class="bui-docs-example__preview">
-<div class="bui-text-truncate bui-docs-demo-frame" style="width: 14rem; max-width: 100%">A long line of text that does not fit in its box.</div>
+<div class="bui-text-truncate bui-border bui-border-dashed bui-border-strong bui-py-2" style="width: 14rem; max-width: 100%">A long line of text that does not fit in its box.</div>
 </div>
 </div>
 <p>Inside a flex item, add <code>style="min-width: 0"</code> to the item (there is no utility for it), otherwise the item grows with its text and never truncates.</p>
 <h3>Line clamp</h3>
 <div class="bui-docs-example">
 <div class="bui-docs-example__preview">
-<p class="bui-line-clamp-2 bui-docs-demo-frame" style="max-width: 24rem">This paragraph is longer than two lines when it is shown in a narrow box. It is cut after the second line and ends with an ellipsis, while the rest of the text stays in the page.</p>
+<p class="bui-line-clamp-2 bui-border bui-border-dashed bui-border-strong bui-py-2" style="max-width: 24rem">This paragraph is longer than two lines when it is shown in a narrow box. It is cut after the second line and ends with an ellipsis, while the rest of the text stays in the page.</p>
 </div>
 </div>
 <p>Do not combine <code>bui-line-clamp-*</code> with a <code>bui-d-*</code> class on one element: the clamp needs <code>display: -webkit-box</code> and the later rule in <code>baset-ui.css</code> would win.</p>
@@ -109,15 +105,15 @@
 <p>The ellipsis is placed at the end of the line, which is the left side in RTL.</p>
 <div class="bui-docs-example">
 <div class="bui-docs-example__preview">
-<div dir="rtl" lang="ar" class="bui-text-truncate bui-docs-demo-frame" style="width: 14rem; max-width: 100%">سطر طويل من النص لا يتسع داخل الصندوق الذي يحتويه.</div>
+<div dir="rtl" lang="ar" class="bui-text-truncate bui-border bui-border-dashed bui-border-strong bui-py-2" style="width: 14rem; max-width: 100%">سطر طويل من النص لا يتسع داخل الصندوق الذي يحتويه.</div>
 </div>
 </div>
 <h3>Responsive</h3>
 <p>Clipped below MD, scrollable from MD upward.</p>
 <div class="bui-docs-example">
 <div class="bui-docs-example__preview">
-<div class="bui-overflow-hidden bui-overflow-md-auto bui-docs-demo-frame" style="height: 3rem">
-    <div class="bui-docs-demo-box" style="height: 6rem">bui-overflow-hidden bui-overflow-md-auto</div>
+<div class="bui-overflow-hidden bui-overflow-md-auto bui-border bui-border-dashed bui-border-strong bui-py-2" style="height: 3rem">
+    <div class="bui-border bui-border-primary bui-rounded-sm bui-p-2" style="height: 6rem">bui-overflow-hidden bui-overflow-md-auto</div>
 </div>
 </div>
 </div>
