@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-bui-theme="default" data-bui-mode="light" data-root="../../">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Visibility - Baset-UI Documentation</title>
+    <meta name="description" content="Visible, invisible and visually hidden utilities, including the focusable variant.">
+    <link rel="icon" href="data:,">
+
+    <link rel="stylesheet" href="../../assets/css/baset-ui.css">
+    <link rel="stylesheet" href="../../documentation/assets/css/docs.css">
+    <script>
+        /* Apply saved mode early to avoid a flash. Documentation shell only. */
+        try {
+            var m = localStorage.getItem('bui-docs-mode');
+            if (m === 'dark' || m === 'light') document.documentElement.setAttribute('data-bui-mode', m);
+        } catch (e) {}
+    </script>
+</head>
+<body>
+    <main class="bui-docs-main" id="bui-docs-main" tabindex="-1">
+        <div class="bui-docs-page">
+            <div class="bui-docs-page__body">
+
+                <header class="bui-docs-page-header">
+                    <nav class="bui-docs-breadcrumb" aria-label="Breadcrumb" data-docs-breadcrumb hidden></nav>
+                    <h1>Visibility</h1>
+                    <p class="bui-docs-lead">Hide content visually, from everyone, or only until it receives focus.</p>
+                </header>
+
+                <div class="bui-docs-content">
+
+<section class="bui-docs-section" aria-labelledby="overview">
+<h2 id="overview">Overview</h2>
+<p>There are three ways to hide an element, and they differ in who still gets the content. Pick by the audience, not by the look.</p>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Hiding methods compared</caption>
+<thead><tr><th scope="col">Class</th><th scope="col">Takes space</th><th scope="col">Seen by sighted users</th><th scope="col">Read by screen readers</th><th scope="col">Keyboard focusable</th></tr></thead>
+<tbody>
+<tr><td><code>bui-d-none</code> (see <a href="display.html">Display</a>)</td><td>No</td><td>No</td><td>No</td><td>No</td></tr>
+<tr><td><code>bui-invisible</code></td><td>Yes</td><td>No</td><td>No</td><td>No</td></tr>
+<tr><td><code>bui-visually-hidden</code></td><td>No</td><td>No</td><td>Yes</td><td>Yes, if it is a focusable element</td></tr>
+<tr><td><code>bui-visually-hidden-focusable</code></td><td>No until focused</td><td>Only while focused</td><td>Yes</td><td>Yes</td></tr>
+</tbody>
+</table>
+<div class="bui-docs-callout bui-docs-callout--note" role="note">
+<p class="bui-docs-callout__title">Note</p>
+<p>All utilities use <code>!important</code>, the one place the library allows it (CORE_ASSETS.md). There are no breakpoint variants: whether content is meaningful to assistive technology does not depend on the screen width.</p>
+</div>
+<div class="bui-docs-callout bui-docs-callout--note" role="note">
+<p class="bui-docs-callout__title">Note</p>
+<p>Classes that start with <code>bui-docs-</code> in the live previews belong to this documentation site (demo boxes and frames). They are not part of the library.</p>
+</div>
+</section>
+
+<section class="bui-docs-section" aria-labelledby="classes">
+<h2 id="classes">Classes</h2>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Visibility classes</caption>
+<thead><tr><th scope="col">Class</th><th scope="col">Description</th></tr></thead>
+<tbody>
+<tr><td><code>bui-visible</code></td><td><code>visibility: visible</code>. Shows a child inside a parent that has <code>bui-invisible</code>.</td></tr>
+<tr><td><code>bui-invisible</code></td><td><code>visibility: hidden</code>. The element keeps its space.</td></tr>
+<tr><td><code>bui-visually-hidden</code></td><td>Removes the element from view (1px, clipped, absolutely positioned) but keeps it in the accessibility tree.</td></tr>
+<tr><td><code>bui-visually-hidden-focusable</code></td><td>Same, but undone while the element or a descendant has focus. Meant for skip links.</td></tr>
+</tbody>
+</table>
+</section>
+
+<section class="bui-docs-section" aria-labelledby="examples">
+<h2 id="examples">Examples</h2>
+<h3>Invisible</h3>
+<p>The middle box is invisible but still takes its space.</p>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<div class="bui-d-flex bui-gap-2 bui-docs-demo-frame">
+    <div class="bui-docs-demo-box">First</div>
+    <div class="bui-docs-demo-box bui-invisible">Invisible</div>
+    <div class="bui-docs-demo-box">Last</div>
+</div>
+</div>
+</div>
+<h3 id="visually-hidden">Visually hidden</h3>
+<p>The link below reads as "Read more about visibility" to a screen reader, and shows only "Read more". The extra text is in the page for assistive technology.</p>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<p class="bui-position-relative"><a href="#visually-hidden">Read more<span class="bui-visually-hidden"> about visibility</span></a></p>
+</div>
+</div>
+<h3>Visually hidden, focusable</h3>
+<p>Click this paragraph and press Tab: the link appears while it has focus and hides again when focus leaves.</p>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<div class="bui-position-relative bui-docs-demo-frame">
+    <p class="bui-m-0">Click here, then press Tab.</p>
+    <a class="bui-visually-hidden-focusable bui-docs-demo-box" href="#visually-hidden">Skip to the visually hidden example</a>
+</div>
+</div>
+</div>
+<h3>RTL</h3>
+<p>Visibility classes do not depend on direction. Hidden text is hidden the same way and is read in the direction of its language.</p>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<p dir="rtl" lang="ar" class="bui-position-relative"><a href="#visually-hidden">اقرأ المزيد<span class="bui-visually-hidden"> عن الظهور</span></a></p>
+</div>
+</div>
+</section>
+
+<section class="bui-docs-section" aria-labelledby="responsive-behavior">
+<h2 id="responsive-behavior">Responsive behavior</h2>
+<p>These classes have no breakpoint variants. To show or hide content by width, use the <a href="display.html">Display</a> utilities, and make sure the content hidden at one width is still reachable another way. <code>bui-visually-hidden</code> is positioned absolutely, so give a nearby ancestor <code>bui-position-relative</code> to keep the clipped box from affecting page scrolling in unusual layouts.</p>
+</section>
+
+<section class="bui-docs-section" aria-labelledby="accessibility">
+<h2 id="accessibility">Accessibility</h2>
+<p>Use <code>bui-visually-hidden</code> for text that gives a control or a result its accessible name or context but would be redundant visually, such as the end of a link text or a label next to an icon. Do not hide meaningful content that sighted keyboard users need. Do not put <code>bui-visually-hidden</code> on an element that can receive focus unless it uses the focusable variant: a keyboard user would land on something they cannot see (WCAG 2.4.7). <code>bui-invisible</code> and <code>bui-d-none</code> remove the content for assistive technology as well, which is the right choice for content that is truly not relevant.</p>
+<h3>Screen reader testing</h3>
+<p>The accessibility behavior of these classes follows the documented behavior of the technique. It has not been verified with NVDA, JAWS or VoiceOver for this release.</p>
+</section>
+
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="../../assets/js/baset-ui.js"></script>
+    <script src="../../documentation/assets/js/nav.js"></script>
+    <script src="../../documentation/assets/js/docs.js"></script>
+</body>
+</html>

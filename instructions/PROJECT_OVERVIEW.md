@@ -25,7 +25,7 @@
 - لا مكتبات خارجية كجزء من المكتبة دون قرار موثق وموافقة.
 
 ## حالة المشروع الحالية
-مرحلة **التأسيس** (Task 01 إلى Task 03): الهيكل، التعليمات، واجهة التوثيق وقالب الصفحات، Design Tokens (Light/Dark)، ونظام Layout (Container/Grid/Flexbox/Spacing) مع صفحات توثيقها. **لا يوجد أي Component أو JavaScript API أو Theme Manager أو نظام ترجمة منفذ.** ملفا `en.json` و`ar.json` يحتويان على مفاتيح أولية للهيكل فقط. راجع [COMPONENTS_REGISTRY.md](COMPONENTS_REGISTRY.md) و[ROADMAP.md](ROADMAP.md).
+مرحلة **التأسيس** (Task 01 إلى Task 04): الهيكل، التعليمات، واجهة التوثيق وقالب الصفحات، Design Tokens (Light/Dark)، ونظام Layout (Container/Grid/Flexbox/Spacing) مع صفحات توثيقها. **لا يوجد أي Component أو JavaScript API أو Theme Manager أو نظام ترجمة منفذ.** ملفا `en.json` و`ar.json` يحتويان على مفاتيح أولية للهيكل فقط. راجع [COMPONENTS_REGISTRY.md](COMPONENTS_REGISTRY.md) و[ROADMAP.md](ROADMAP.md).
 
 ## القرارات المعمارية المعتمدة
 | القرار | السبب |

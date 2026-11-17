@@ -1,6 +1,6 @@
 # الاتجاهات (RTL/LTR) والـ Themes
 
-> الحالة: لا Theme فعلي منفذ سوى Tokens الافتراضية (Light/Dark) في `baset-ui.css` (Task 03: كاملة وتعمل على أي عنصر). نظام Theme Manager **مستقبلي**.
+> الحالة: لا Theme فعلي منفذ سوى Tokens الافتراضية (Light/Dark) في `baset-ui.css` (Task 03: كاملة وتعمل على أي عنصر). نظام Theme Manager **مستقبلي**. Task 04: أدوات Borders تقرأ Tokens فتتبع الوضع تلقائياً، وtranslate-middle يعتمد `:dir(rtl)` لعكس الإزاحة الأفقية في RTL.
 
 ## RTL / LTR (إلزامي)
 - الاتجاه يُحدد بـ `dir` على `<html>` (أو على حاوية لمعاينات محلية).

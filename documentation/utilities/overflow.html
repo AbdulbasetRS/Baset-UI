@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-bui-theme="default" data-bui-mode="light" data-root="../../">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Overflow - Baset-UI Documentation</title>
+    <meta name="description" content="Overflow utilities for each axis, single-line truncation and multi-line clamping.">
+    <link rel="icon" href="data:,">
+
+    <link rel="stylesheet" href="../../assets/css/baset-ui.css">
+    <link rel="stylesheet" href="../../documentation/assets/css/docs.css">
+    <script>
+        /* Apply saved mode early to avoid a flash. Documentation shell only. */
+        try {
+            var m = localStorage.getItem('bui-docs-mode');
+            if (m === 'dark' || m === 'light') document.documentElement.setAttribute('data-bui-mode', m);
+        } catch (e) {}
+    </script>
+</head>
+<body>
+    <main class="bui-docs-main" id="bui-docs-main" tabindex="-1">
+        <div class="bui-docs-page">
+            <div class="bui-docs-page__body">
+
+                <header class="bui-docs-page-header">
+                    <nav class="bui-docs-breadcrumb" aria-label="Breadcrumb" data-docs-breadcrumb hidden></nav>
+                    <h1>Overflow</h1>
+                    <p class="bui-docs-lead">Control what happens to content that does not fit, and truncate or clamp text.</p>
+                </header>
+
+                <div class="bui-docs-content">
+
+<section class="bui-docs-section" aria-labelledby="overview">
+<h2 id="overview">Overview</h2>
+<p>Overflow utilities set <code>overflow</code> on both axes or on one axis, with a variant for every breakpoint. Two text helpers shorten long text: <code>bui-text-truncate</code> for one line and <code>bui-line-clamp-{1..5}</code> for several lines.</p>
+<div class="bui-docs-callout bui-docs-callout--note" role="note">
+<p class="bui-docs-callout__title">Note</p>
+<p>All utilities use <code>!important</code>, the one place the library allows it (CORE_ASSETS.md). Truncate and line-clamp have no breakpoint variants.</p>
+</div>
+<div class="bui-docs-callout bui-docs-callout--note" role="note">
+<p class="bui-docs-callout__title">Note</p>
+<p>Classes that start with <code>bui-docs-</code> in the live previews belong to this documentation site (demo boxes and frames). They are not part of the library.</p>
+</div>
+</section>
+
+<section class="bui-docs-section" aria-labelledby="classes">
+<h2 id="classes">Classes</h2>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Overflow classes</caption>
+<thead><tr><th scope="col">Class</th><th scope="col">CSS</th></tr></thead>
+<tbody>
+<tr><td><code>bui-overflow-{auto, hidden, scroll, visible}</code></td><td><code>overflow</code></td></tr>
+<tr><td><code>bui-overflow-x-{auto, hidden, scroll, visible}</code></td><td><code>overflow-x</code></td></tr>
+<tr><td><code>bui-overflow-y-{auto, hidden, scroll, visible}</code></td><td><code>overflow-y</code></td></tr>
+<tr><td><code>bui-text-truncate</code></td><td><code>overflow: hidden; text-overflow: ellipsis; white-space: nowrap</code></td></tr>
+<tr><td><code>bui-line-clamp-{1, 2, 3, 4, 5}</code></td><td><code>-webkit-line-clamp</code> and <code>line-clamp</code> with <code>overflow: hidden</code></td></tr>
+</tbody>
+</table>
+<p>Breakpoint variants: <code>bui-overflow-md-auto</code>, <code>bui-overflow-x-lg-hidden</code>, <code>bui-overflow-y-xl-scroll</code> and so on, for XS to XXXL. Setting one axis to <code>visible</code> while the other is not <code>visible</code> makes the browser compute <code>visible</code> as <code>auto</code>; that is standard CSS behavior.</p>
+</section>
+
+<section class="bui-docs-section" aria-labelledby="examples">
+<h2 id="examples">Examples</h2>
+<h3>Vertical scrolling</h3>
+<p>The scrolling box is focusable so keyboard users can scroll it.</p>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<div class="bui-overflow-y-auto bui-docs-demo-frame" style="height: 6rem" tabindex="0" role="region" aria-label="Vertical scroll example">
+    <p>Line one of the content.</p>
+    <p>Line two of the content.</p>
+    <p>Line three of the content.</p>
+    <p>Line four of the content.</p>
+    <p>Line five of the content.</p>
+</div>
+</div>
+</div>
+<h3>Horizontal scrolling</h3>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<div class="bui-overflow-x-auto bui-docs-demo-frame" tabindex="0" role="region" aria-label="Horizontal scroll example">
+    <div class="bui-docs-demo-box" style="width: 48rem">A box wider than its container (48rem)</div>
+</div>
+</div>
+</div>
+<h3>Hidden</h3>
+<p>The content is clipped at the edge of the box. Clipped content cannot be read by sighted users, so do not use it for information they need.</p>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<div class="bui-overflow-hidden bui-docs-demo-frame" style="height: 3rem">
+    <div class="bui-docs-demo-box" style="height: 6rem">This box is taller than its parent and is clipped.</div>
+</div>
+</div>
+</div>
+<h3>Truncate</h3>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<div class="bui-text-truncate bui-docs-demo-frame" style="width: 14rem; max-width: 100%">A long line of text that does not fit in its box.</div>
+</div>
+</div>
+<p>Inside a flex item, add <code>style="min-width: 0"</code> to the item (there is no utility for it), otherwise the item grows with its text and never truncates.</p>
+<h3>Line clamp</h3>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<p class="bui-line-clamp-2 bui-docs-demo-frame" style="max-width: 24rem">This paragraph is longer than two lines when it is shown in a narrow box. It is cut after the second line and ends with an ellipsis, while the rest of the text stays in the page.</p>
+</div>
+</div>
+<p>Do not combine <code>bui-line-clamp-*</code> with a <code>bui-d-*</code> class on one element: the clamp needs <code>display: -webkit-box</code> and the later rule in <code>baset-ui.css</code> would win.</p>
+<h3>RTL</h3>
+<p>The ellipsis is placed at the end of the line, which is the left side in RTL.</p>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<div dir="rtl" lang="ar" class="bui-text-truncate bui-docs-demo-frame" style="width: 14rem; max-width: 100%">سطر طويل من النص لا يتسع داخل الصندوق الذي يحتويه.</div>
+</div>
+</div>
+<h3>Responsive</h3>
+<p>Clipped below MD, scrollable from MD upward.</p>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<div class="bui-overflow-hidden bui-overflow-md-auto bui-docs-demo-frame" style="height: 3rem">
+    <div class="bui-docs-demo-box" style="height: 6rem">bui-overflow-hidden bui-overflow-md-auto</div>
+</div>
+</div>
+</div>
+</section>
+
+<section class="bui-docs-section" aria-labelledby="responsive-behavior">
+<h2 id="responsive-behavior">Responsive behavior</h2>
+<p>Overflow classes without an infix apply at every width; with an infix they apply from that breakpoint upward and override the base class. A container that must not make the page scroll sideways at a 320px width should use <code>bui-overflow-x-auto</code> so wide content scrolls inside it (WCAG 1.4.10).</p>
+</section>
+
+<section class="bui-docs-section" aria-labelledby="accessibility">
+<h2 id="accessibility">Accessibility</h2>
+<p>A region that scrolls must be reachable with the keyboard (WCAG 2.1.1). Browsers differ on whether a scroll container is focusable by default, so give it <code>tabindex="0"</code>, a <code>role="region"</code> and an accessible name, as the examples above do. Do not put this on a container that has focusable children, because those already allow scrolling by focus. Truncated and clamped text loses content for everyone: the full text is still in the DOM and screen readers read it, but sighted users cannot, so do not truncate text they need to read to act, and show it fully elsewhere (for example in a dialog or detail view). The <code>title</code> attribute is not a reliable way to show it. Do not hide a scroll bar visually unless another way to scroll is clear.</p>
+</section>
+
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="../../assets/js/baset-ui.js"></script>
+    <script src="../../documentation/assets/js/nav.js"></script>
+    <script src="../../documentation/assets/js/docs.js"></script>
+</body>
+</html>

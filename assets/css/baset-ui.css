@@ -563,6 +563,177 @@ pre { margin-block: 0 var(--bui-space-3); overflow: auto; }
 .bui-gap-y-5 { row-gap: var(--bui-space-5) !important; }
 .bui-gap-y-6 { row-gap: var(--bui-space-6) !important; }
 
+/* ---- Display (Task 04). Pattern: bui-d-{value} and bui-d-{bp}-{value}. ---- */
+.bui-d-none { display: none !important; }
+.bui-d-block { display: block !important; }
+.bui-d-inline { display: inline !important; }
+.bui-d-inline-block { display: inline-block !important; }
+.bui-d-flex { display: flex !important; }
+.bui-d-inline-flex { display: inline-flex !important; }
+.bui-d-grid { display: grid !important; }
+
+/* ---- Position (Task 04). Offsets are logical (start/end). Only the position type has breakpoint variants. ---- */
+.bui-position-static { position: static !important; }
+.bui-position-relative { position: relative !important; }
+.bui-position-absolute { position: absolute !important; }
+.bui-position-fixed { position: fixed !important; }
+.bui-position-sticky { position: sticky !important; }
+.bui-top-0 { inset-block-start: 0 !important; }
+.bui-top-50 { inset-block-start: 50% !important; }
+.bui-top-100 { inset-block-start: 100% !important; }
+.bui-bottom-0 { inset-block-end: 0 !important; }
+.bui-bottom-50 { inset-block-end: 50% !important; }
+.bui-bottom-100 { inset-block-end: 100% !important; }
+.bui-start-0 { inset-inline-start: 0 !important; }
+.bui-start-50 { inset-inline-start: 50% !important; }
+.bui-start-100 { inset-inline-start: 100% !important; }
+.bui-end-0 { inset-inline-end: 0 !important; }
+.bui-end-50 { inset-inline-end: 50% !important; }
+.bui-end-100 { inset-inline-end: 100% !important; }
+.bui-translate-middle { transform: translate(-50%, -50%) !important; }
+.bui-translate-middle-x { transform: translateX(-50%) !important; }
+.bui-translate-middle-y { transform: translateY(-50%) !important; }
+/* transform has no logical form: in RTL the horizontal part flips so bui-start-50 still centers. */
+.bui-translate-middle:dir(rtl) { transform: translate(50%, -50%) !important; }
+.bui-translate-middle-x:dir(rtl) { transform: translateX(50%) !important; }
+.bui-z-auto { z-index: auto !important; }
+.bui-z-dropdown { z-index: var(--bui-z-dropdown) !important; }
+.bui-z-sticky { z-index: var(--bui-z-sticky) !important; }
+.bui-z-fixed { z-index: var(--bui-z-fixed) !important; }
+.bui-z-backdrop { z-index: var(--bui-z-backdrop) !important; }
+.bui-z-modal { z-index: var(--bui-z-modal) !important; }
+.bui-z-popover { z-index: var(--bui-z-popover) !important; }
+.bui-z-toast { z-index: var(--bui-z-toast) !important; }
+.bui-z-tooltip { z-index: var(--bui-z-tooltip) !important; }
+
+/* ---- Overflow (Task 04). Pattern: bui-overflow[-x|-y][-{bp}]-{value}. Truncate and line-clamp have no breakpoint variants. ---- */
+.bui-overflow-auto { overflow: auto !important; }
+.bui-overflow-hidden { overflow: hidden !important; }
+.bui-overflow-scroll { overflow: scroll !important; }
+.bui-overflow-visible { overflow: visible !important; }
+.bui-overflow-x-auto { overflow-x: auto !important; }
+.bui-overflow-x-hidden { overflow-x: hidden !important; }
+.bui-overflow-x-scroll { overflow-x: scroll !important; }
+.bui-overflow-x-visible { overflow-x: visible !important; }
+.bui-overflow-y-auto { overflow-y: auto !important; }
+.bui-overflow-y-hidden { overflow-y: hidden !important; }
+.bui-overflow-y-scroll { overflow-y: scroll !important; }
+.bui-overflow-y-visible { overflow-y: visible !important; }
+.bui-text-truncate { overflow: hidden !important; text-overflow: ellipsis !important; white-space: nowrap !important; }
+.bui-line-clamp-1 { display: -webkit-box !important; -webkit-box-orient: vertical !important; -webkit-line-clamp: 1 !important; line-clamp: 1 !important; overflow: hidden !important; }
+.bui-line-clamp-2 { display: -webkit-box !important; -webkit-box-orient: vertical !important; -webkit-line-clamp: 2 !important; line-clamp: 2 !important; overflow: hidden !important; }
+.bui-line-clamp-3 { display: -webkit-box !important; -webkit-box-orient: vertical !important; -webkit-line-clamp: 3 !important; line-clamp: 3 !important; overflow: hidden !important; }
+.bui-line-clamp-4 { display: -webkit-box !important; -webkit-box-orient: vertical !important; -webkit-line-clamp: 4 !important; line-clamp: 4 !important; overflow: hidden !important; }
+.bui-line-clamp-5 { display: -webkit-box !important; -webkit-box-orient: vertical !important; -webkit-line-clamp: 5 !important; line-clamp: 5 !important; overflow: hidden !important; }
+
+/* ---- Visibility (Task 04) ---- */
+.bui-visible { visibility: visible !important; }
+.bui-invisible { visibility: hidden !important; }
+/* Hidden visually, still read by assistive technology. The focusable variant shows again while it or a descendant has focus. */
+.bui-visually-hidden,
+.bui-visually-hidden-focusable:not(:focus):not(:focus-within) {
+    position: absolute !important; width: 1px !important; height: 1px !important; margin: -1px !important;
+    padding: 0 !important; overflow: hidden !important; clip-path: inset(50%) !important;
+    white-space: nowrap !important; border: 0 !important;
+}
+
+/* ---- Borders (Task 04). Width and style travel through the internal --bui-util-border-* properties (see @property below). ---- */
+/* Registered without an initial value and with inheritance off, so a width or style class on a parent never reaches bordered children. */
+@property --bui-util-border-width { syntax: "*"; inherits: false; }
+@property --bui-util-border-style { syntax: "*"; inherits: false; }
+.bui-border-0 { border: 0 !important; }
+.bui-border { border: var(--bui-util-border-width, var(--bui-border-width)) var(--bui-util-border-style, solid) var(--bui-border-color) !important; }
+.bui-border-t { border-block-start: var(--bui-util-border-width, var(--bui-border-width)) var(--bui-util-border-style, solid) var(--bui-border-color) !important; }
+.bui-border-b { border-block-end: var(--bui-util-border-width, var(--bui-border-width)) var(--bui-util-border-style, solid) var(--bui-border-color) !important; }
+.bui-border-s { border-inline-start: var(--bui-util-border-width, var(--bui-border-width)) var(--bui-util-border-style, solid) var(--bui-border-color) !important; }
+.bui-border-e { border-inline-end: var(--bui-util-border-width, var(--bui-border-width)) var(--bui-util-border-style, solid) var(--bui-border-color) !important; }
+.bui-border-t-0 { border-block-start: 0 !important; }
+.bui-border-b-0 { border-block-end: 0 !important; }
+.bui-border-s-0 { border-inline-start: 0 !important; }
+.bui-border-e-0 { border-inline-end: 0 !important; }
+.bui-border-width-base { --bui-util-border-width: var(--bui-border-width); }
+.bui-border-width-thick { --bui-util-border-width: var(--bui-border-width-thick); }
+.bui-border-solid { --bui-util-border-style: solid; }
+.bui-border-dashed { --bui-util-border-style: dashed; }
+.bui-border-dotted { --bui-util-border-style: dotted; }
+.bui-border-default { border-color: var(--bui-color-border) !important; }
+.bui-border-strong { border-color: var(--bui-color-border-strong) !important; }
+.bui-border-primary { border-color: var(--bui-color-primary) !important; }
+.bui-border-secondary { border-color: var(--bui-color-secondary) !important; }
+.bui-border-success { border-color: var(--bui-color-success) !important; }
+.bui-border-warning { border-color: var(--bui-color-warning) !important; }
+.bui-border-danger { border-color: var(--bui-color-danger) !important; }
+.bui-border-info { border-color: var(--bui-color-info) !important; }
+.bui-border-primary-subtle { border-color: var(--bui-color-primary-border) !important; }
+.bui-border-secondary-subtle { border-color: var(--bui-color-secondary-border) !important; }
+.bui-border-success-subtle { border-color: var(--bui-color-success-border) !important; }
+.bui-border-warning-subtle { border-color: var(--bui-color-warning-border) !important; }
+.bui-border-danger-subtle { border-color: var(--bui-color-danger-border) !important; }
+.bui-border-info-subtle { border-color: var(--bui-color-info-border) !important; }
+
+/* Radius: all corners, then sides, then single corners (later wins). Corner names follow the CSS logical corner properties: ss = start-start, se = start-end, es = end-start, ee = end-end. */
+.bui-rounded-none { border-radius: var(--bui-radius-none) !important; }
+.bui-rounded-sm { border-radius: var(--bui-radius-sm) !important; }
+.bui-rounded-md { border-radius: var(--bui-radius-md) !important; }
+.bui-rounded-lg { border-radius: var(--bui-radius-lg) !important; }
+.bui-rounded-xl { border-radius: var(--bui-radius-xl) !important; }
+.bui-rounded-full { border-radius: var(--bui-radius-full) !important; }
+.bui-rounded-t-none { border-start-start-radius: var(--bui-radius-none) !important; border-start-end-radius: var(--bui-radius-none) !important; }
+.bui-rounded-t-sm { border-start-start-radius: var(--bui-radius-sm) !important; border-start-end-radius: var(--bui-radius-sm) !important; }
+.bui-rounded-t-md { border-start-start-radius: var(--bui-radius-md) !important; border-start-end-radius: var(--bui-radius-md) !important; }
+.bui-rounded-t-lg { border-start-start-radius: var(--bui-radius-lg) !important; border-start-end-radius: var(--bui-radius-lg) !important; }
+.bui-rounded-t-xl { border-start-start-radius: var(--bui-radius-xl) !important; border-start-end-radius: var(--bui-radius-xl) !important; }
+.bui-rounded-t-full { border-start-start-radius: var(--bui-radius-full) !important; border-start-end-radius: var(--bui-radius-full) !important; }
+.bui-rounded-b-none { border-end-start-radius: var(--bui-radius-none) !important; border-end-end-radius: var(--bui-radius-none) !important; }
+.bui-rounded-b-sm { border-end-start-radius: var(--bui-radius-sm) !important; border-end-end-radius: var(--bui-radius-sm) !important; }
+.bui-rounded-b-md { border-end-start-radius: var(--bui-radius-md) !important; border-end-end-radius: var(--bui-radius-md) !important; }
+.bui-rounded-b-lg { border-end-start-radius: var(--bui-radius-lg) !important; border-end-end-radius: var(--bui-radius-lg) !important; }
+.bui-rounded-b-xl { border-end-start-radius: var(--bui-radius-xl) !important; border-end-end-radius: var(--bui-radius-xl) !important; }
+.bui-rounded-b-full { border-end-start-radius: var(--bui-radius-full) !important; border-end-end-radius: var(--bui-radius-full) !important; }
+.bui-rounded-s-none { border-start-start-radius: var(--bui-radius-none) !important; border-end-start-radius: var(--bui-radius-none) !important; }
+.bui-rounded-s-sm { border-start-start-radius: var(--bui-radius-sm) !important; border-end-start-radius: var(--bui-radius-sm) !important; }
+.bui-rounded-s-md { border-start-start-radius: var(--bui-radius-md) !important; border-end-start-radius: var(--bui-radius-md) !important; }
+.bui-rounded-s-lg { border-start-start-radius: var(--bui-radius-lg) !important; border-end-start-radius: var(--bui-radius-lg) !important; }
+.bui-rounded-s-xl { border-start-start-radius: var(--bui-radius-xl) !important; border-end-start-radius: var(--bui-radius-xl) !important; }
+.bui-rounded-s-full { border-start-start-radius: var(--bui-radius-full) !important; border-end-start-radius: var(--bui-radius-full) !important; }
+.bui-rounded-e-none { border-start-end-radius: var(--bui-radius-none) !important; border-end-end-radius: var(--bui-radius-none) !important; }
+.bui-rounded-e-sm { border-start-end-radius: var(--bui-radius-sm) !important; border-end-end-radius: var(--bui-radius-sm) !important; }
+.bui-rounded-e-md { border-start-end-radius: var(--bui-radius-md) !important; border-end-end-radius: var(--bui-radius-md) !important; }
+.bui-rounded-e-lg { border-start-end-radius: var(--bui-radius-lg) !important; border-end-end-radius: var(--bui-radius-lg) !important; }
+.bui-rounded-e-xl { border-start-end-radius: var(--bui-radius-xl) !important; border-end-end-radius: var(--bui-radius-xl) !important; }
+.bui-rounded-e-full { border-start-end-radius: var(--bui-radius-full) !important; border-end-end-radius: var(--bui-radius-full) !important; }
+.bui-rounded-ss-none { border-start-start-radius: var(--bui-radius-none) !important; }
+.bui-rounded-ss-sm { border-start-start-radius: var(--bui-radius-sm) !important; }
+.bui-rounded-ss-md { border-start-start-radius: var(--bui-radius-md) !important; }
+.bui-rounded-ss-lg { border-start-start-radius: var(--bui-radius-lg) !important; }
+.bui-rounded-ss-xl { border-start-start-radius: var(--bui-radius-xl) !important; }
+.bui-rounded-ss-full { border-start-start-radius: var(--bui-radius-full) !important; }
+.bui-rounded-se-none { border-start-end-radius: var(--bui-radius-none) !important; }
+.bui-rounded-se-sm { border-start-end-radius: var(--bui-radius-sm) !important; }
+.bui-rounded-se-md { border-start-end-radius: var(--bui-radius-md) !important; }
+.bui-rounded-se-lg { border-start-end-radius: var(--bui-radius-lg) !important; }
+.bui-rounded-se-xl { border-start-end-radius: var(--bui-radius-xl) !important; }
+.bui-rounded-se-full { border-start-end-radius: var(--bui-radius-full) !important; }
+.bui-rounded-es-none { border-end-start-radius: var(--bui-radius-none) !important; }
+.bui-rounded-es-sm { border-end-start-radius: var(--bui-radius-sm) !important; }
+.bui-rounded-es-md { border-end-start-radius: var(--bui-radius-md) !important; }
+.bui-rounded-es-lg { border-end-start-radius: var(--bui-radius-lg) !important; }
+.bui-rounded-es-xl { border-end-start-radius: var(--bui-radius-xl) !important; }
+.bui-rounded-es-full { border-end-start-radius: var(--bui-radius-full) !important; }
+.bui-rounded-ee-none { border-end-end-radius: var(--bui-radius-none) !important; }
+.bui-rounded-ee-sm { border-end-end-radius: var(--bui-radius-sm) !important; }
+.bui-rounded-ee-md { border-end-end-radius: var(--bui-radius-md) !important; }
+.bui-rounded-ee-lg { border-end-end-radius: var(--bui-radius-lg) !important; }
+.bui-rounded-ee-xl { border-end-end-radius: var(--bui-radius-xl) !important; }
+.bui-rounded-ee-full { border-end-end-radius: var(--bui-radius-full) !important; }
+
+/* Shadows (tokens, so they follow Light and Dark) */
+.bui-shadow-none { box-shadow: none !important; }
+.bui-shadow-sm { box-shadow: var(--bui-shadow-sm) !important; }
+.bui-shadow-md { box-shadow: var(--bui-shadow-md) !important; }
+.bui-shadow-lg { box-shadow: var(--bui-shadow-lg) !important; }
+.bui-shadow-xl { box-shadow: var(--bui-shadow-xl) !important; }
+
 /* =====================================================================
  * 6. COMPONENTS (alphabetical). None yet.
  * ===================================================================== */
@@ -777,6 +948,30 @@ pre { margin-block: 0 var(--bui-space-3); overflow: auto; }
     .bui-gap-y-xs-4 { row-gap: var(--bui-space-4) !important; }
     .bui-gap-y-xs-5 { row-gap: var(--bui-space-5) !important; }
     .bui-gap-y-xs-6 { row-gap: var(--bui-space-6) !important; }
+    .bui-d-xs-none { display: none !important; }
+    .bui-d-xs-block { display: block !important; }
+    .bui-d-xs-inline { display: inline !important; }
+    .bui-d-xs-inline-block { display: inline-block !important; }
+    .bui-d-xs-flex { display: flex !important; }
+    .bui-d-xs-inline-flex { display: inline-flex !important; }
+    .bui-d-xs-grid { display: grid !important; }
+    .bui-position-xs-static { position: static !important; }
+    .bui-position-xs-relative { position: relative !important; }
+    .bui-position-xs-absolute { position: absolute !important; }
+    .bui-position-xs-fixed { position: fixed !important; }
+    .bui-position-xs-sticky { position: sticky !important; }
+    .bui-overflow-xs-auto { overflow: auto !important; }
+    .bui-overflow-xs-hidden { overflow: hidden !important; }
+    .bui-overflow-xs-scroll { overflow: scroll !important; }
+    .bui-overflow-xs-visible { overflow: visible !important; }
+    .bui-overflow-x-xs-auto { overflow-x: auto !important; }
+    .bui-overflow-x-xs-hidden { overflow-x: hidden !important; }
+    .bui-overflow-x-xs-scroll { overflow-x: scroll !important; }
+    .bui-overflow-x-xs-visible { overflow-x: visible !important; }
+    .bui-overflow-y-xs-auto { overflow-y: auto !important; }
+    .bui-overflow-y-xs-hidden { overflow-y: hidden !important; }
+    .bui-overflow-y-xs-scroll { overflow-y: scroll !important; }
+    .bui-overflow-y-xs-visible { overflow-y: visible !important; }
 }
 
 /* SM: min-width 576px */
@@ -984,6 +1179,30 @@ pre { margin-block: 0 var(--bui-space-3); overflow: auto; }
     .bui-gap-y-sm-4 { row-gap: var(--bui-space-4) !important; }
     .bui-gap-y-sm-5 { row-gap: var(--bui-space-5) !important; }
     .bui-gap-y-sm-6 { row-gap: var(--bui-space-6) !important; }
+    .bui-d-sm-none { display: none !important; }
+    .bui-d-sm-block { display: block !important; }
+    .bui-d-sm-inline { display: inline !important; }
+    .bui-d-sm-inline-block { display: inline-block !important; }
+    .bui-d-sm-flex { display: flex !important; }
+    .bui-d-sm-inline-flex { display: inline-flex !important; }
+    .bui-d-sm-grid { display: grid !important; }
+    .bui-position-sm-static { position: static !important; }
+    .bui-position-sm-relative { position: relative !important; }
+    .bui-position-sm-absolute { position: absolute !important; }
+    .bui-position-sm-fixed { position: fixed !important; }
+    .bui-position-sm-sticky { position: sticky !important; }
+    .bui-overflow-sm-auto { overflow: auto !important; }
+    .bui-overflow-sm-hidden { overflow: hidden !important; }
+    .bui-overflow-sm-scroll { overflow: scroll !important; }
+    .bui-overflow-sm-visible { overflow: visible !important; }
+    .bui-overflow-x-sm-auto { overflow-x: auto !important; }
+    .bui-overflow-x-sm-hidden { overflow-x: hidden !important; }
+    .bui-overflow-x-sm-scroll { overflow-x: scroll !important; }
+    .bui-overflow-x-sm-visible { overflow-x: visible !important; }
+    .bui-overflow-y-sm-auto { overflow-y: auto !important; }
+    .bui-overflow-y-sm-hidden { overflow-y: hidden !important; }
+    .bui-overflow-y-sm-scroll { overflow-y: scroll !important; }
+    .bui-overflow-y-sm-visible { overflow-y: visible !important; }
 }
 
 /* MD: min-width 768px */
@@ -1191,6 +1410,30 @@ pre { margin-block: 0 var(--bui-space-3); overflow: auto; }
     .bui-gap-y-md-4 { row-gap: var(--bui-space-4) !important; }
     .bui-gap-y-md-5 { row-gap: var(--bui-space-5) !important; }
     .bui-gap-y-md-6 { row-gap: var(--bui-space-6) !important; }
+    .bui-d-md-none { display: none !important; }
+    .bui-d-md-block { display: block !important; }
+    .bui-d-md-inline { display: inline !important; }
+    .bui-d-md-inline-block { display: inline-block !important; }
+    .bui-d-md-flex { display: flex !important; }
+    .bui-d-md-inline-flex { display: inline-flex !important; }
+    .bui-d-md-grid { display: grid !important; }
+    .bui-position-md-static { position: static !important; }
+    .bui-position-md-relative { position: relative !important; }
+    .bui-position-md-absolute { position: absolute !important; }
+    .bui-position-md-fixed { position: fixed !important; }
+    .bui-position-md-sticky { position: sticky !important; }
+    .bui-overflow-md-auto { overflow: auto !important; }
+    .bui-overflow-md-hidden { overflow: hidden !important; }
+    .bui-overflow-md-scroll { overflow: scroll !important; }
+    .bui-overflow-md-visible { overflow: visible !important; }
+    .bui-overflow-x-md-auto { overflow-x: auto !important; }
+    .bui-overflow-x-md-hidden { overflow-x: hidden !important; }
+    .bui-overflow-x-md-scroll { overflow-x: scroll !important; }
+    .bui-overflow-x-md-visible { overflow-x: visible !important; }
+    .bui-overflow-y-md-auto { overflow-y: auto !important; }
+    .bui-overflow-y-md-hidden { overflow-y: hidden !important; }
+    .bui-overflow-y-md-scroll { overflow-y: scroll !important; }
+    .bui-overflow-y-md-visible { overflow-y: visible !important; }
 }
 
 /* LG: min-width 992px */
@@ -1398,6 +1641,30 @@ pre { margin-block: 0 var(--bui-space-3); overflow: auto; }
     .bui-gap-y-lg-4 { row-gap: var(--bui-space-4) !important; }
     .bui-gap-y-lg-5 { row-gap: var(--bui-space-5) !important; }
     .bui-gap-y-lg-6 { row-gap: var(--bui-space-6) !important; }
+    .bui-d-lg-none { display: none !important; }
+    .bui-d-lg-block { display: block !important; }
+    .bui-d-lg-inline { display: inline !important; }
+    .bui-d-lg-inline-block { display: inline-block !important; }
+    .bui-d-lg-flex { display: flex !important; }
+    .bui-d-lg-inline-flex { display: inline-flex !important; }
+    .bui-d-lg-grid { display: grid !important; }
+    .bui-position-lg-static { position: static !important; }
+    .bui-position-lg-relative { position: relative !important; }
+    .bui-position-lg-absolute { position: absolute !important; }
+    .bui-position-lg-fixed { position: fixed !important; }
+    .bui-position-lg-sticky { position: sticky !important; }
+    .bui-overflow-lg-auto { overflow: auto !important; }
+    .bui-overflow-lg-hidden { overflow: hidden !important; }
+    .bui-overflow-lg-scroll { overflow: scroll !important; }
+    .bui-overflow-lg-visible { overflow: visible !important; }
+    .bui-overflow-x-lg-auto { overflow-x: auto !important; }
+    .bui-overflow-x-lg-hidden { overflow-x: hidden !important; }
+    .bui-overflow-x-lg-scroll { overflow-x: scroll !important; }
+    .bui-overflow-x-lg-visible { overflow-x: visible !important; }
+    .bui-overflow-y-lg-auto { overflow-y: auto !important; }
+    .bui-overflow-y-lg-hidden { overflow-y: hidden !important; }
+    .bui-overflow-y-lg-scroll { overflow-y: scroll !important; }
+    .bui-overflow-y-lg-visible { overflow-y: visible !important; }
 }
 
 /* XL: min-width 1200px */
@@ -1605,6 +1872,30 @@ pre { margin-block: 0 var(--bui-space-3); overflow: auto; }
     .bui-gap-y-xl-4 { row-gap: var(--bui-space-4) !important; }
     .bui-gap-y-xl-5 { row-gap: var(--bui-space-5) !important; }
     .bui-gap-y-xl-6 { row-gap: var(--bui-space-6) !important; }
+    .bui-d-xl-none { display: none !important; }
+    .bui-d-xl-block { display: block !important; }
+    .bui-d-xl-inline { display: inline !important; }
+    .bui-d-xl-inline-block { display: inline-block !important; }
+    .bui-d-xl-flex { display: flex !important; }
+    .bui-d-xl-inline-flex { display: inline-flex !important; }
+    .bui-d-xl-grid { display: grid !important; }
+    .bui-position-xl-static { position: static !important; }
+    .bui-position-xl-relative { position: relative !important; }
+    .bui-position-xl-absolute { position: absolute !important; }
+    .bui-position-xl-fixed { position: fixed !important; }
+    .bui-position-xl-sticky { position: sticky !important; }
+    .bui-overflow-xl-auto { overflow: auto !important; }
+    .bui-overflow-xl-hidden { overflow: hidden !important; }
+    .bui-overflow-xl-scroll { overflow: scroll !important; }
+    .bui-overflow-xl-visible { overflow: visible !important; }
+    .bui-overflow-x-xl-auto { overflow-x: auto !important; }
+    .bui-overflow-x-xl-hidden { overflow-x: hidden !important; }
+    .bui-overflow-x-xl-scroll { overflow-x: scroll !important; }
+    .bui-overflow-x-xl-visible { overflow-x: visible !important; }
+    .bui-overflow-y-xl-auto { overflow-y: auto !important; }
+    .bui-overflow-y-xl-hidden { overflow-y: hidden !important; }
+    .bui-overflow-y-xl-scroll { overflow-y: scroll !important; }
+    .bui-overflow-y-xl-visible { overflow-y: visible !important; }
 }
 
 /* XXL: min-width 1600px */
@@ -1812,6 +2103,30 @@ pre { margin-block: 0 var(--bui-space-3); overflow: auto; }
     .bui-gap-y-xxl-4 { row-gap: var(--bui-space-4) !important; }
     .bui-gap-y-xxl-5 { row-gap: var(--bui-space-5) !important; }
     .bui-gap-y-xxl-6 { row-gap: var(--bui-space-6) !important; }
+    .bui-d-xxl-none { display: none !important; }
+    .bui-d-xxl-block { display: block !important; }
+    .bui-d-xxl-inline { display: inline !important; }
+    .bui-d-xxl-inline-block { display: inline-block !important; }
+    .bui-d-xxl-flex { display: flex !important; }
+    .bui-d-xxl-inline-flex { display: inline-flex !important; }
+    .bui-d-xxl-grid { display: grid !important; }
+    .bui-position-xxl-static { position: static !important; }
+    .bui-position-xxl-relative { position: relative !important; }
+    .bui-position-xxl-absolute { position: absolute !important; }
+    .bui-position-xxl-fixed { position: fixed !important; }
+    .bui-position-xxl-sticky { position: sticky !important; }
+    .bui-overflow-xxl-auto { overflow: auto !important; }
+    .bui-overflow-xxl-hidden { overflow: hidden !important; }
+    .bui-overflow-xxl-scroll { overflow: scroll !important; }
+    .bui-overflow-xxl-visible { overflow: visible !important; }
+    .bui-overflow-x-xxl-auto { overflow-x: auto !important; }
+    .bui-overflow-x-xxl-hidden { overflow-x: hidden !important; }
+    .bui-overflow-x-xxl-scroll { overflow-x: scroll !important; }
+    .bui-overflow-x-xxl-visible { overflow-x: visible !important; }
+    .bui-overflow-y-xxl-auto { overflow-y: auto !important; }
+    .bui-overflow-y-xxl-hidden { overflow-y: hidden !important; }
+    .bui-overflow-y-xxl-scroll { overflow-y: scroll !important; }
+    .bui-overflow-y-xxl-visible { overflow-y: visible !important; }
 }
 
 /* XXXL: min-width 1920px */
@@ -2019,6 +2334,30 @@ pre { margin-block: 0 var(--bui-space-3); overflow: auto; }
     .bui-gap-y-xxxl-4 { row-gap: var(--bui-space-4) !important; }
     .bui-gap-y-xxxl-5 { row-gap: var(--bui-space-5) !important; }
     .bui-gap-y-xxxl-6 { row-gap: var(--bui-space-6) !important; }
+    .bui-d-xxxl-none { display: none !important; }
+    .bui-d-xxxl-block { display: block !important; }
+    .bui-d-xxxl-inline { display: inline !important; }
+    .bui-d-xxxl-inline-block { display: inline-block !important; }
+    .bui-d-xxxl-flex { display: flex !important; }
+    .bui-d-xxxl-inline-flex { display: inline-flex !important; }
+    .bui-d-xxxl-grid { display: grid !important; }
+    .bui-position-xxxl-static { position: static !important; }
+    .bui-position-xxxl-relative { position: relative !important; }
+    .bui-position-xxxl-absolute { position: absolute !important; }
+    .bui-position-xxxl-fixed { position: fixed !important; }
+    .bui-position-xxxl-sticky { position: sticky !important; }
+    .bui-overflow-xxxl-auto { overflow: auto !important; }
+    .bui-overflow-xxxl-hidden { overflow: hidden !important; }
+    .bui-overflow-xxxl-scroll { overflow: scroll !important; }
+    .bui-overflow-xxxl-visible { overflow: visible !important; }
+    .bui-overflow-x-xxxl-auto { overflow-x: auto !important; }
+    .bui-overflow-x-xxxl-hidden { overflow-x: hidden !important; }
+    .bui-overflow-x-xxxl-scroll { overflow-x: scroll !important; }
+    .bui-overflow-x-xxxl-visible { overflow-x: visible !important; }
+    .bui-overflow-y-xxxl-auto { overflow-y: auto !important; }
+    .bui-overflow-y-xxxl-hidden { overflow-y: hidden !important; }
+    .bui-overflow-y-xxxl-scroll { overflow-y: scroll !important; }
+    .bui-overflow-y-xxxl-visible { overflow-y: visible !important; }
 }
 
 /* =====================================================================

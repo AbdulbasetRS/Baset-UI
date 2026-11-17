@@ -30,7 +30,7 @@ window.BUI_DOCS_NAV = [
     { title: 'Components', items: ['Accordion', 'Alert', 'Avatar', 'Badge', 'Button', 'Button Group', 'Card', 'Carousel', 'Close Button', 'Dialog', 'Drawer', 'Menu', 'Pagination', 'Popover', 'Progress', 'List Group'] },
     { title: 'Forms', items: ['Form Controls', 'Input', 'Select', 'Checkbox', 'Radio', 'Switch', 'Date Picker', 'Time Picker'] },
     { title: 'Data Display', items: ['DataTable', 'Charts', 'Calendar', 'Maps'] },
-    { title: 'Utilities', items: ['Display', 'Position', 'Overflow', 'Visibility', 'Borders'] },
+    { title: 'Utilities', items: [{ title: 'Display', href: 'documentation/utilities/display.html' }, { title: 'Position', href: 'documentation/utilities/position.html' }, { title: 'Overflow', href: 'documentation/utilities/overflow.html' }, { title: 'Visibility', href: 'documentation/utilities/visibility.html' }, { title: 'Borders', href: 'documentation/utilities/borders.html' }] },
     { title: 'JavaScript', items: ['Introduction', 'Initialization', 'Events', 'API Reference'] },
     { title: 'Extensions', items: ['Overview'] },
     { title: 'Accessibility', items: ['Guidelines', 'Keyboard Navigation'] },

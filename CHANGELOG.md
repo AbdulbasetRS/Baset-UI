@@ -4,6 +4,27 @@
 
 ## [Unreleased]
 
+### Added (Task 04: Utilities)
+- `baset-ui.css`: Display (`bui-d-{none,block,inline,inline-block,flex,inline-flex,grid}` + نسخ لكل Breakpoint)، Position (النوع بنسخ Breakpoint، Offsets منطقية `top/bottom/start/end` بقيم 0/50/100، translate-middle وx وy، Z-index من Tokens)، Overflow (كل المحاور + نسخ Breakpoint، `bui-text-truncate`، `bui-line-clamp-1..5`)، Visibility (`visible`, `invisible`, `visually-hidden`, `visually-hidden-focusable`)، Borders (عرض/نمط/لون من Tokens، جوانب منطقية t/b/s/e وإزالتها، Radius بالمقياس مع زوايا منطقية ss/se/es/ee، Shadows).
+- حجم `baset-ui.css`: 140,405 بايت خام (+24,308 عن Task 03)، 14,419 بايت gzip. مولَّد بسكريبت لمرة واحدة غير مُسلَّم، كل قاعدة تُصرَّح مرة واحدة.
+- صفحات التوثيق: `documentation/utilities/` (display, position, overflow, visibility, borders) مفعلة في `nav.js`.
+
+### Changed (Task 04)
+- `COMPONENTS_REGISTRY.md` (Utilities: Documented، وصفحات Utilities الخمس) و`CORE_ASSETS.md` و`PROJECT_OVERVIEW.md` و`RTL_LTR_AND_THEMES.md`: تحديث الحالة والملاحظات.
+
+### Decisions (Task 04)
+- كل أدوات Task 04 بـ `!important` (الاستثناء المسموح) وموثق في كل صفحة.
+- `bui-flex` و`bui-inline-flex` (Task 03) أُبقيا للتوافق، و`bui-d-flex` و`bui-d-inline-flex` هما الشكل ذو النسخ المتجاوبة.
+- translate-middle يقلب الإزاحة الأفقية في RTL بـ `:dir(rtl)`؛ يتطلب متصفحاً حديثاً.
+- عرض/نمط الحد كخصائص `--bui-util-border-*` معرّفة بـ `@property` (`inherits:false`) كي لا تتسرب من أب إلى أبناء.
+- الـ Borders والـ Visibility والـ z-index والـ Offsets وtruncate/line-clamp بلا نسخ Breakpoint لأنها لا تغيّر البنية، وأضيف ذلك للتوثيق.
+- العرض التوضيحي يستخدم Styles مضمنة (`grid-template-columns`, `height`, `width`) بدل تعديل `docs.css` (خارج الملفات المتوقعة).
+
+### Tested (Task 04, Chromium 153 عبر Playwright فقط)
+- 5 صفحات x LTR/RTL x Light/Dark x 8 عروض (320/480/576/768/992/1200/1600/1920): بلا Overflow أفقي، بلا أخطاء/تحذيرات Console، بلا 404. 14 صفحة في المشروع تعمل بلا أخطاء (تراجع).
+- Computed Style: Display المتجاوب، جوانب Border وزواياه منطقياً في LTR/RTL، عدم تسرب العرض/النمط، translate-middle بالاتجاهين، line-clamp، Visually-hidden (التركيز بـ Tab يُظهره)، Z-index.
+- لم يُختبر: قارئ شاشة، Safari/Firefox، Forced Colors، أجهزة لمس، Print.
+
 ### Added (Task 03: Design Tokens + Layout)
 - `baset-ui.css`: Tokens كاملة (Neutral Scale، 6 ألوان Semantic x 6 أشكال، Aliases، Typography، Spacing 0-6، Borders، Radius، Shadows، Motion، Z-index، Focus Ring، Breakpoints، Container) بوضعي Light وDark.
 - `baset-ui.css`: Layout (`bui-container`, `bui-container-fluid`, Grid 12 عمود مع Gutters وOffset وOrder وRow Cols) وUtilities (Flexbox وSpacing بـ Logical Properties) بنسخ متجاوبة لكل Breakpoint.

@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-bui-theme="default" data-bui-mode="light" data-root="../../">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Borders - Baset-UI Documentation</title>
+    <meta name="description" content="Border width, style, color and logical sides, the radius scale with logical corners, and shadows.">
+    <link rel="icon" href="data:,">
+
+    <link rel="stylesheet" href="../../assets/css/baset-ui.css">
+    <link rel="stylesheet" href="../../documentation/assets/css/docs.css">
+    <script>
+        /* Apply saved mode early to avoid a flash. Documentation shell only. */
+        try {
+            var m = localStorage.getItem('bui-docs-mode');
+            if (m === 'dark' || m === 'light') document.documentElement.setAttribute('data-bui-mode', m);
+        } catch (e) {}
+    </script>
+</head>
+<body>
+    <main class="bui-docs-main" id="bui-docs-main" tabindex="-1">
+        <div class="bui-docs-page">
+            <div class="bui-docs-page__body">
+
+                <header class="bui-docs-page-header">
+                    <nav class="bui-docs-breadcrumb" aria-label="Breadcrumb" data-docs-breadcrumb hidden></nav>
+                    <h1>Borders</h1>
+                    <p class="bui-docs-lead">Borders, logical sides, a radius scale with logical corners, and shadows, all from tokens.</p>
+                </header>
+
+                <div class="bui-docs-content">
+
+<section class="bui-docs-section" aria-labelledby="overview">
+<h2 id="overview">Overview</h2>
+<p>Border utilities draw a border with the width, style and color tokens, on all sides or on one logical side. Radius and shadow utilities use the radius and shadow scales. Everything reads tokens, so it follows Light and Dark mode and any scope that overrides the tokens. There are no <code>left</code> and <code>right</code> classes: <code>s</code> is the inline start and <code>e</code> the inline end, which flip in RTL.</p>
+<div class="bui-docs-callout bui-docs-callout--note" role="note">
+<p class="bui-docs-callout__title">Note</p>
+<p>All utilities use <code>!important</code>, the one place the library allows it (CORE_ASSETS.md). Borders have no breakpoint variants.</p>
+</div>
+<div class="bui-docs-callout bui-docs-callout--note" role="note">
+<p class="bui-docs-callout__title">Note</p>
+<p>Classes that start with <code>bui-docs-</code> in the live previews belong to this documentation site (demo boxes and frames). They are not part of the library.</p>
+</div>
+</section>
+
+<section class="bui-docs-section" aria-labelledby="border">
+<h2 id="border">Border and sides</h2>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Border classes</caption>
+<thead><tr><th scope="col">Class</th><th scope="col">Description</th></tr></thead>
+<tbody>
+<tr><td><code>bui-border</code></td><td>Border on all sides (width, solid, default color).</td></tr>
+<tr><td><code>bui-border-t</code></td><td>Border at the block start (top).</td></tr>
+<tr><td><code>bui-border-b</code></td><td>Border at the block end (bottom).</td></tr>
+<tr><td><code>bui-border-s</code></td><td>Border at the inline start (left in LTR, right in RTL).</td></tr>
+<tr><td><code>bui-border-e</code></td><td>Border at the inline end (right in LTR, left in RTL).</td></tr>
+<tr><td><code>bui-border-0</code></td><td>No border on any side.</td></tr>
+<tr><td><code>bui-border-t-0</code>, <code>-b-0</code>, <code>-s-0</code>, <code>-e-0</code></td><td>Remove one side, for example from <code>bui-border</code>.</td></tr>
+</tbody>
+</table>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<div class="bui-d-flex bui-flex-wrap bui-gap-3">
+    <div class="bui-border bui-p-3">bui-border</div>
+    <div class="bui-border-t bui-p-3">bui-border-t</div>
+    <div class="bui-border-b bui-p-3">bui-border-b</div>
+    <div class="bui-border-s bui-p-3">bui-border-s</div>
+    <div class="bui-border-e bui-p-3">bui-border-e</div>
+    <div class="bui-border bui-border-s-0 bui-p-3">bui-border bui-border-s-0</div>
+</div>
+</div>
+</div>
+<h3>RTL</h3>
+<p>The same <code>bui-border-s</code> and <code>bui-border-e</code> in a <code>dir="rtl"</code> container: the start border is now on the right.</p>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<div dir="rtl" class="bui-d-flex bui-flex-wrap bui-gap-3">
+    <div class="bui-border-s bui-border-primary bui-border-width-thick bui-p-3">bui-border-s</div>
+    <div class="bui-border-e bui-border-danger bui-border-width-thick bui-p-3">bui-border-e</div>
+</div>
+</div>
+</div>
+</section>
+
+<section class="bui-docs-section" aria-labelledby="width-style">
+<h2 id="width-style">Width and style</h2>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Border width and style classes</caption>
+<thead><tr><th scope="col">Class</th><th scope="col">Token or value</th><th scope="col">Value (live)</th></tr></thead>
+<tbody>
+<tr><td><code>bui-border-width-base</code></td><td><code>--bui-border-width</code></td><td><span data-docs-token="--bui-border-width" data-docs-mode="light"></span></td></tr>
+<tr><td><code>bui-border-width-thick</code></td><td><code>--bui-border-width-thick</code></td><td><span data-docs-token="--bui-border-width-thick" data-docs-mode="light"></span></td></tr>
+<tr><td><code>bui-border-solid</code></td><td><code>solid</code> (the default)</td><td>-</td></tr>
+<tr><td><code>bui-border-dashed</code></td><td><code>dashed</code></td><td>-</td></tr>
+<tr><td><code>bui-border-dotted</code></td><td><code>dotted</code></td><td>-</td></tr>
+</tbody>
+</table>
+<p>Width and style classes are modifiers of the <code>bui-border</code>, <code>bui-border-t</code>, <code>-b</code>, <code>-s</code> and <code>-e</code> classes: they change those borders and nothing else, and they work on one side as well as on all sides. They do not change borders that a component or your own CSS draws. A width or style class on a parent does not affect bordered children, because the internal <code>--bui-util-border-*</code> properties are registered as non-inherited (in a browser without <code>@property</code> support they would be inherited).</p>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<div class="bui-d-flex bui-flex-wrap bui-gap-3">
+    <div class="bui-border bui-border-width-thick bui-p-3">thick</div>
+    <div class="bui-border bui-border-dashed bui-p-3">dashed</div>
+    <div class="bui-border bui-border-dotted bui-border-width-thick bui-p-3">dotted, thick</div>
+    <div class="bui-border-b bui-border-dashed bui-p-3">bottom only, dashed</div>
+</div>
+</div>
+</div>
+</section>
+
+<section class="bui-docs-section" aria-labelledby="color">
+<h2 id="color">Color</h2>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Border color classes</caption>
+<thead><tr><th scope="col">Class</th><th scope="col">Token</th><th scope="col">Use</th></tr></thead>
+<tbody>
+<tr><td><code>bui-border-default</code></td><td><code>--bui-color-border</code></td><td>Decorative dividers and card edges. Not a control boundary.</td></tr>
+<tr><td><code>bui-border-strong</code></td><td><code>--bui-color-border-strong</code></td><td>Edges that identify a control. Checked at 3:1 against the background.</td></tr>
+<tr><td><code>bui-border-{name}</code></td><td><code>--bui-color-{name}</code></td><td>Semantic color (3:1 against the background).</td></tr>
+<tr><td><code>bui-border-{name}-subtle</code></td><td><code>--bui-color-{name}-border</code></td><td>Decorative border next to a subtle background.</td></tr>
+</tbody>
+</table>
+<p><code>{name}</code> is one of <code>primary</code>, <code>secondary</code>, <code>success</code>, <code>warning</code>, <code>danger</code> or <code>info</code>.</p>
+<p>Color classes set <code>border-color</code> directly, so they also work on borders drawn by a component. <code>bui-border</code> without a color class uses <code>--bui-border-color</code>, which is the <code>default</code> color.</p>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<div class="bui-row bui-row-cols-2 bui-row-cols-md-4 bui-gy-2">
+    <div><div class="bui-border bui-border-default bui-p-2">default</div></div>
+    <div><div class="bui-border bui-border-strong bui-p-2">strong</div></div>
+    <div><div class="bui-border bui-border-primary bui-p-2">primary</div></div>
+    <div><div class="bui-border bui-border-secondary bui-p-2">secondary</div></div>
+    <div><div class="bui-border bui-border-success bui-p-2">success</div></div>
+    <div><div class="bui-border bui-border-warning bui-p-2">warning</div></div>
+    <div><div class="bui-border bui-border-danger bui-p-2">danger</div></div>
+    <div><div class="bui-border bui-border-info bui-p-2">info</div></div>
+    <div><div class="bui-border bui-border-primary-subtle bui-p-2">primary-subtle</div></div>
+    <div><div class="bui-border bui-border-success-subtle bui-p-2">success-subtle</div></div>
+</div>
+</div>
+</div>
+<h3>Dark mode</h3>
+<p>The tokens change with <code>data-bui-mode</code>, so the same classes follow it on any element.</p>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<div class="bui-docs-panel" data-bui-mode="dark">
+    <div class="bui-d-flex bui-flex-wrap bui-gap-3">
+        <div class="bui-border bui-border-default bui-p-2">default</div>
+        <div class="bui-border bui-border-strong bui-p-2">strong</div>
+        <div class="bui-border bui-border-primary bui-p-2">primary</div>
+        <div class="bui-border bui-border-danger bui-rounded-md bui-shadow-md bui-p-2">danger, shadow</div>
+    </div>
+</div>
+</div>
+</div>
+</section>
+
+<section class="bui-docs-section" aria-labelledby="radius">
+<h2 id="radius">Radius</h2>
+<p>Sizes follow the radius scale: <code>none</code>, <code>sm</code>, <code>md</code>, <code>lg</code>, <code>xl</code> and <code>full</code>.</p>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Radius classes</caption>
+<thead><tr><th scope="col">Class</th><th scope="col">Corners</th></tr></thead>
+<tbody>
+<tr><td><code>bui-rounded-{size}</code></td><td>All four corners</td></tr>
+<tr><td><code>bui-rounded-t-{size}</code></td><td>Both block-start corners (top)</td></tr>
+<tr><td><code>bui-rounded-b-{size}</code></td><td>Both block-end corners (bottom)</td></tr>
+<tr><td><code>bui-rounded-s-{size}</code></td><td>Both inline-start corners (left in LTR, right in RTL)</td></tr>
+<tr><td><code>bui-rounded-e-{size}</code></td><td>Both inline-end corners</td></tr>
+<tr><td><code>bui-rounded-ss-{size}</code></td><td>Start-start corner (top left in LTR)</td></tr>
+<tr><td><code>bui-rounded-se-{size}</code></td><td>Start-end corner (top right in LTR)</td></tr>
+<tr><td><code>bui-rounded-es-{size}</code></td><td>End-start corner (bottom left in LTR)</td></tr>
+<tr><td><code>bui-rounded-ee-{size}</code></td><td>End-end corner (bottom right in LTR)</td></tr>
+</tbody>
+</table>
+<p>The three groups are declared in this order: all corners, sides, single corners. When classes of two groups meet on one element, the later group wins, so <code>bui-rounded-lg bui-rounded-t-none</code> squares only the top corners.</p>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Radius tokens</caption>
+<thead><tr><th scope="col">Size</th><th scope="col">Token</th><th scope="col">Value (live)</th></tr></thead>
+<tbody>
+<tr><td><code>none</code></td><td><code>--bui-radius-none</code></td><td><span data-docs-token="--bui-radius-none" data-docs-mode="light"></span></td></tr>
+<tr><td><code>sm</code></td><td><code>--bui-radius-sm</code></td><td><span data-docs-token="--bui-radius-sm" data-docs-mode="light"></span></td></tr>
+<tr><td><code>md</code></td><td><code>--bui-radius-md</code></td><td><span data-docs-token="--bui-radius-md" data-docs-mode="light"></span></td></tr>
+<tr><td><code>lg</code></td><td><code>--bui-radius-lg</code></td><td><span data-docs-token="--bui-radius-lg" data-docs-mode="light"></span></td></tr>
+<tr><td><code>xl</code></td><td><code>--bui-radius-xl</code></td><td><span data-docs-token="--bui-radius-xl" data-docs-mode="light"></span></td></tr>
+<tr><td><code>full</code></td><td><code>--bui-radius-full</code></td><td><span data-docs-token="--bui-radius-full" data-docs-mode="light"></span></td></tr>
+</tbody>
+</table>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<div class="bui-d-flex bui-flex-wrap bui-gap-3">
+    <div class="bui-border bui-rounded-none bui-p-3">none</div>
+    <div class="bui-border bui-rounded-sm bui-p-3">sm</div>
+    <div class="bui-border bui-rounded-md bui-p-3">md</div>
+    <div class="bui-border bui-rounded-lg bui-p-3">lg</div>
+    <div class="bui-border bui-rounded-xl bui-p-3">xl</div>
+    <div class="bui-border bui-rounded-full bui-p-3">full</div>
+</div>
+</div>
+</div>
+<h3>Logical sides and corners, LTR and RTL</h3>
+<p>Both rows use the same classes. Rounded at the start side and at the end-end corner:</p>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<div class="bui-d-flex bui-flex-wrap bui-gap-3 bui-mb-3">
+    <div class="bui-border bui-rounded-s-xl bui-p-3">rounded-s-xl (LTR)</div>
+    <div class="bui-border bui-rounded-ee-xl bui-p-3">rounded-ee-xl (LTR)</div>
+</div>
+<div dir="rtl" class="bui-d-flex bui-flex-wrap bui-gap-3">
+    <div class="bui-border bui-rounded-s-xl bui-p-3">rounded-s-xl (RTL)</div>
+    <div class="bui-border bui-rounded-ee-xl bui-p-3">rounded-ee-xl (RTL)</div>
+</div>
+</div>
+</div>
+</section>
+
+<section class="bui-docs-section" aria-labelledby="shadows">
+<h2 id="shadows">Shadows</h2>
+<p>Shadow classes map one to one to the shadow tokens: <code>bui-shadow-none</code>, <code>bui-shadow-sm</code>, <code>bui-shadow-md</code>, <code>bui-shadow-lg</code> and <code>bui-shadow-xl</code> (<code>--bui-shadow-sm</code> and so on, see <a href="../customization/css-variables.html#catalog">CSS Variables</a>). The tokens have separate Light and Dark values.</p>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<div class="bui-d-flex bui-flex-wrap bui-gap-4">
+    <div class="bui-shadow-none bui-border bui-rounded-md bui-p-3">none</div>
+    <div class="bui-shadow-sm bui-rounded-md bui-p-3">sm</div>
+    <div class="bui-shadow-md bui-rounded-md bui-p-3">md</div>
+    <div class="bui-shadow-lg bui-rounded-md bui-p-3">lg</div>
+    <div class="bui-shadow-xl bui-rounded-md bui-p-3">xl</div>
+</div>
+</div>
+</div>
+</section>
+
+<section class="bui-docs-section" aria-labelledby="responsive-behavior">
+<h2 id="responsive-behavior">Responsive behavior</h2>
+<p>Border, radius and shadow classes have no breakpoint variants because they do not change the layout. To change one at a breakpoint, set the matching token in a <code>min-width</code> media query (see the CSS Variables page). Borders add to the size of an element only when it is not using <code>box-sizing: border-box</code>; the library base sets <code>border-box</code> on every element.</p>
+</section>
+
+<section class="bui-docs-section" aria-labelledby="accessibility">
+<h2 id="accessibility">Accessibility</h2>
+<p>A border that marks the edge of an input, a button or another control must have a contrast of at least 3:1 against the background (WCAG 1.4.11). Use <code>bui-border-strong</code> or a semantic color for those, not <code>bui-border-default</code>, which is meant for decoration. Do not rely on a border color alone to give meaning, such as an error state (WCAG 1.4.1): add text or an icon. The <code>-subtle</code> border colors and shadows are decorative and have not been checked for contrast. Dashed and dotted styles are not an alternative to text. In forced-colors mode the browser replaces border colors with system colors and removes shadows; this has not been tested yet.</p>
+</section>
+
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="../../assets/js/baset-ui.js"></script>
+    <script src="../../documentation/assets/js/nav.js"></script>
+    <script src="../../documentation/assets/js/docs.js"></script>
+</body>
+</html>

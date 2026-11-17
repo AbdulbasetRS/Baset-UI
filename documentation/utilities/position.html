@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-bui-theme="default" data-bui-mode="light" data-root="../../">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Position - Baset-UI Documentation</title>
+    <meta name="description" content="Position types, logical offsets, centering with translate and z-index tokens.">
+    <link rel="icon" href="data:,">
+
+    <link rel="stylesheet" href="../../assets/css/baset-ui.css">
+    <link rel="stylesheet" href="../../documentation/assets/css/docs.css">
+    <script>
+        /* Apply saved mode early to avoid a flash. Documentation shell only. */
+        try {
+            var m = localStorage.getItem('bui-docs-mode');
+            if (m === 'dark' || m === 'light') document.documentElement.setAttribute('data-bui-mode', m);
+        } catch (e) {}
+    </script>
+</head>
+<body>
+    <main class="bui-docs-main" id="bui-docs-main" tabindex="-1">
+        <div class="bui-docs-page">
+            <div class="bui-docs-page__body">
+
+                <header class="bui-docs-page-header">
+                    <nav class="bui-docs-breadcrumb" aria-label="Breadcrumb" data-docs-breadcrumb hidden></nav>
+                    <h1>Position</h1>
+                    <p class="bui-docs-lead">Position types and logical offsets that mirror in RTL, plus z-index tokens.</p>
+                </header>
+
+                <div class="bui-docs-content">
+
+<section class="bui-docs-section" aria-labelledby="overview">
+<h2 id="overview">Overview</h2>
+<p>Position utilities set the <code>position</code> type, place an element with offsets, center it with a translate, and choose a z-index from the library scale. Offsets are logical: <code>start</code> and <code>end</code> follow the text direction, so <code>bui-start-0</code> is the left edge in LTR and the right edge in RTL. There are no <code>left</code> and <code>right</code> classes.</p>
+<div class="bui-docs-callout bui-docs-callout--note" role="note">
+<p class="bui-docs-callout__title">Note</p>
+<p>All utilities use <code>!important</code>, the one place the library allows it (CORE_ASSETS.md). Only the position type has breakpoint variants. Offsets, translate and z-index do not, because changing them by breakpoint is rare and would add a large number of rules.</p>
+</div>
+<div class="bui-docs-callout bui-docs-callout--note" role="note">
+<p class="bui-docs-callout__title">Note</p>
+<p>Classes that start with <code>bui-docs-</code> in the live previews belong to this documentation site (demo boxes and frames). They are not part of the library.</p>
+</div>
+</section>
+
+<section class="bui-docs-section" aria-labelledby="types">
+<h2 id="types">Position types</h2>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Position type classes</caption>
+<thead><tr><th scope="col">Class</th><th scope="col">CSS</th></tr></thead>
+<tbody>
+<tr><td><code>bui-position-static</code></td><td><code>position: static</code></td></tr>
+<tr><td><code>bui-position-relative</code></td><td><code>position: relative</code></td></tr>
+<tr><td><code>bui-position-absolute</code></td><td><code>position: absolute</code></td></tr>
+<tr><td><code>bui-position-fixed</code></td><td><code>position: fixed</code></td></tr>
+<tr><td><code>bui-position-sticky</code></td><td><code>position: sticky</code></td></tr>
+</tbody>
+</table>
+<p>Breakpoint variants: <code>bui-position-md-relative</code>, <code>bui-position-lg-sticky</code> and so on, for XS to XXXL.</p>
+</section>
+
+<section class="bui-docs-section" aria-labelledby="offsets">
+<h2 id="offsets">Offsets</h2>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Offset classes</caption>
+<thead><tr><th scope="col">Class</th><th scope="col">CSS property</th><th scope="col">Side</th></tr></thead>
+<tbody>
+<tr><td><code>bui-top-{0, 50, 100}</code></td><td><code>inset-block-start</code></td><td>Top in horizontal writing modes</td></tr>
+<tr><td><code>bui-bottom-{0, 50, 100}</code></td><td><code>inset-block-end</code></td><td>Bottom</td></tr>
+<tr><td><code>bui-start-{0, 50, 100}</code></td><td><code>inset-inline-start</code></td><td>Left in LTR, right in RTL</td></tr>
+<tr><td><code>bui-end-{0, 50, 100}</code></td><td><code>inset-inline-end</code></td><td>Right in LTR, left in RTL</td></tr>
+</tbody>
+</table>
+<p><code>0</code> is <code>0</code>; <code>50</code> and <code>100</code> are <code>50%</code> and <code>100%</code> of the containing block. Offsets only take effect on a positioned element (any type except static).</p>
+</section>
+
+<section class="bui-docs-section" aria-labelledby="centering">
+<h2 id="centering">Centering with translate</h2>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Translate classes</caption>
+<thead><tr><th scope="col">Class</th><th scope="col">LTR</th><th scope="col">RTL</th></tr></thead>
+<tbody>
+<tr><td><code>bui-translate-middle</code></td><td><code>translate(-50%, -50%)</code></td><td><code>translate(50%, -50%)</code></td></tr>
+<tr><td><code>bui-translate-middle-x</code></td><td><code>translateX(-50%)</code></td><td><code>translateX(50%)</code></td></tr>
+<tr><td><code>bui-translate-middle-y</code></td><td><code>translateY(-50%)</code></td><td>same as LTR</td></tr>
+</tbody>
+</table>
+<p><code>transform</code> has no logical form. With <code>bui-start-50</code> the element starts at the right in RTL, so the horizontal part of the translate flips with the direction (the <code>:dir(rtl)</code> pseudo-class), and the element stays centered in both directions. This needs a browser that supports <code>:dir()</code> (all current evergreen browsers). Use <code>bui-start-50</code> with these classes, not <code>bui-end-50</code>.</p>
+</section>
+
+<section class="bui-docs-section" aria-labelledby="z-index">
+<h2 id="z-index">Z-index</h2>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Z-index classes</caption>
+<thead><tr><th scope="col">Class</th><th scope="col">Token</th><th scope="col">Value (live)</th></tr></thead>
+<tbody>
+<tr><td><code>bui-z-auto</code></td><td>-</td><td><code>auto</code></td></tr>
+<tr><td><code>bui-z-dropdown</code></td><td><code>--bui-z-dropdown</code></td><td><span data-docs-token="--bui-z-dropdown" data-docs-mode="light"></span></td></tr>
+<tr><td><code>bui-z-sticky</code></td><td><code>--bui-z-sticky</code></td><td><span data-docs-token="--bui-z-sticky" data-docs-mode="light"></span></td></tr>
+<tr><td><code>bui-z-fixed</code></td><td><code>--bui-z-fixed</code></td><td><span data-docs-token="--bui-z-fixed" data-docs-mode="light"></span></td></tr>
+<tr><td><code>bui-z-backdrop</code></td><td><code>--bui-z-backdrop</code></td><td><span data-docs-token="--bui-z-backdrop" data-docs-mode="light"></span></td></tr>
+<tr><td><code>bui-z-modal</code></td><td><code>--bui-z-modal</code></td><td><span data-docs-token="--bui-z-modal" data-docs-mode="light"></span></td></tr>
+<tr><td><code>bui-z-popover</code></td><td><code>--bui-z-popover</code></td><td><span data-docs-token="--bui-z-popover" data-docs-mode="light"></span></td></tr>
+<tr><td><code>bui-z-toast</code></td><td><code>--bui-z-toast</code></td><td><span data-docs-token="--bui-z-toast" data-docs-mode="light"></span></td></tr>
+<tr><td><code>bui-z-tooltip</code></td><td><code>--bui-z-tooltip</code></td><td><span data-docs-token="--bui-z-tooltip" data-docs-mode="light"></span></td></tr>
+</tbody>
+</table>
+<p>Z-index only applies to a positioned element, or to a flex or grid item. Use the scale instead of numbers of your own so layered elements stay in a predictable order.</p>
+</section>
+
+<section class="bui-docs-section" aria-labelledby="examples">
+<h2 id="examples">Examples</h2>
+<h3>Corners</h3>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<div class="bui-position-relative bui-docs-demo-frame" style="height: 8rem">
+    <div class="bui-position-absolute bui-top-0 bui-start-0 bui-docs-demo-box">top start</div>
+    <div class="bui-position-absolute bui-top-0 bui-end-0 bui-docs-demo-box">top end</div>
+    <div class="bui-position-absolute bui-bottom-0 bui-start-0 bui-docs-demo-box">bottom start</div>
+    <div class="bui-position-absolute bui-bottom-0 bui-end-0 bui-docs-demo-box">bottom end</div>
+</div>
+</div>
+</div>
+<h3>Centered</h3>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<div class="bui-position-relative bui-docs-demo-frame" style="height: 8rem">
+    <div class="bui-position-absolute bui-top-50 bui-start-50 bui-translate-middle bui-docs-demo-box">Centered</div>
+</div>
+</div>
+</div>
+<h3>RTL</h3>
+<p>The same classes in a <code>dir="rtl"</code> container: "start" is the right edge, and the centered box is still centered.</p>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<div dir="rtl" class="bui-position-relative bui-docs-demo-frame" style="height: 8rem">
+    <div class="bui-position-absolute bui-top-0 bui-start-0 bui-docs-demo-box">start</div>
+    <div class="bui-position-absolute bui-top-0 bui-end-0 bui-docs-demo-box">end</div>
+    <div class="bui-position-absolute bui-bottom-0 bui-start-50 bui-translate-middle-x bui-docs-demo-box">centered</div>
+</div>
+</div>
+</div>
+<h3>Sticky</h3>
+<p>The sticky header stays at the top of its scrolling box. Focus the box and scroll with the arrow keys.</p>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<div class="bui-overflow-y-auto bui-docs-demo-frame" style="height: 8rem" tabindex="0" role="region" aria-label="Sticky example, scrollable">
+    <div class="bui-position-sticky bui-top-0 bui-docs-demo-box">Sticky header (bui-position-sticky bui-top-0)</div>
+    <p class="bui-mt-2">First paragraph of the scrolling content.</p>
+    <p>Second paragraph of the scrolling content.</p>
+    <p>Third paragraph of the scrolling content.</p>
+    <p>Fourth paragraph of the scrolling content.</p>
+    <p>Fifth paragraph of the scrolling content.</p>
+</div>
+</div>
+</div>
+<h3>Fixed</h3>
+<p>A fixed element is positioned against the viewport, so it is not shown live here. It would cover this page. The markup for a fixed element at the bottom end of the screen:</p>
+<pre class="bui-docs-code" data-lang="html"><code>&lt;div class="bui-position-fixed bui-bottom-0 bui-end-0 bui-z-fixed"&gt;
+    ...
+&lt;/div&gt;</code></pre>
+</section>
+
+<section class="bui-docs-section" aria-labelledby="responsive-behavior">
+<h2 id="responsive-behavior">Responsive behavior</h2>
+<p>The position type has a variant for every breakpoint, for example <code>bui-position-relative bui-position-md-static</code> makes an element relative below MD and static from MD upward. Variants apply from their breakpoint upward and override the base class. Offsets, translate and z-index are not responsive. Fixed and sticky elements must not hide content at a 320px width or when the page is zoomed to 400% (WCAG 1.4.10).</p>
+</section>
+
+<section class="bui-docs-section" aria-labelledby="accessibility">
+<h2 id="accessibility">Accessibility</h2>
+<p>Positioning changes only the visual place of an element, not its place in the DOM order that keyboard focus and screen readers use (WCAG 1.3.2, 2.4.3). Keep the DOM order logical. A fixed or sticky element can cover a focused element: a focused control must not be completely hidden behind it (WCAG 2.4.11). Scrolling regions such as the sticky example need to be reachable with the keyboard, so they carry <code>tabindex="0"</code>, a <code>role</code> and a label. Position utilities add no roles or ARIA.</p>
+</section>
+
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="../../assets/js/baset-ui.js"></script>
+    <script src="../../documentation/assets/js/nav.js"></script>
+    <script src="../../documentation/assets/js/docs.js"></script>
+</body>
+</html>

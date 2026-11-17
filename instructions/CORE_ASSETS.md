@@ -7,7 +7,7 @@
 - Layout: Containers, Grid, Flex Utilities, Responsive Utilities.
 - المكونات الأساسية الصغيرة والمشتركة (Buttons, Forms, Modals, Alerts, Toasts, Cards...).
 
-**الحالة الحالية (Task 03):** Tokens كاملة (Light/Dark)، Base، Layout (Container/Grid)، Utilities (Flexbox وSpacing)، وكل نسخ الـ Breakpoints. لا Components.
+**الحالة الحالية (Task 04):** Tokens كاملة (Light/Dark)، Base، Layout (Container/Grid)، Utilities (Flexbox وSpacing وDisplay وPosition وOverflow وVisibility وBorders)، وكل نسخ الـ Breakpoints. لا Components. نسخ الـ Breakpoints موجودة لـ Display وPosition (النوع فقط) وOverflow؛ لا نسخ لـ Visibility وBorders وz-index وOffsets وtruncate/line-clamp.
 
 ### ترتيب الأقسام داخل الملف (إلزامي)
 1. Tokens  2. Dark Mode  3. Base  4. Layout  5. Utilities  6. Components (أبجدياً)  7. Responsive Utilities  8. Print/Reduced-motion.
