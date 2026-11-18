@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-bui-theme="default" data-bui-mode="light" data-root="../../">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Dark Mode - Baset-UI Documentation</title>
+    <meta name="description" content="Light and dark mode with BUI.theme: runtime switching, saved preference, system setting and no flash on load.">
+    <link rel="icon" href="data:,">
+
+    <link rel="stylesheet" href="../../assets/css/baset-ui.css">
+    <link rel="stylesheet" href="../../assets/css/themes/ocean.css">
+    <link rel="stylesheet" href="../../documentation/assets/css/docs.css">
+    <script>
+        /* Prevents a flash of the wrong theme or mode. Same keys as BUI.theme (bui-theme, bui-mode). */
+        (function () {
+            var d = document.documentElement, t = null, m = null, r = null;
+            try { t = localStorage.getItem('bui-theme'); m = localStorage.getItem('bui-mode'); r = localStorage.getItem('bui-docs-dir'); } catch (e) {}
+            if (t && /^[a-z][a-z0-9]*(-[a-z0-9]+)*$/.test(t)) d.setAttribute('data-bui-theme', t);
+            if (m !== 'light' && m !== 'dark') m = window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+            d.setAttribute('data-bui-mode', m);
+            /* Documentation shell only: the saved direction of the RTL/LTR switcher. */
+            if (r === 'rtl' || r === 'ltr') d.setAttribute('dir', r);
+        })();
+    </script>
+</head>
+<body>
+    <main class="bui-docs-main" id="bui-docs-main" tabindex="-1">
+        <div class="bui-docs-page">
+            <div class="bui-docs-page__body">
+
+                <header class="bui-docs-page-header">
+                    <nav class="bui-docs-breadcrumb" aria-label="Breadcrumb" data-docs-breadcrumb hidden></nav>
+                    <h1>Dark Mode</h1>
+                    <p class="bui-docs-lead">Dark mode is a token set chosen by one attribute, on the page or on any element.</p>
+                </header>
+
+                <div class="bui-docs-content">
+
+<section class="bui-docs-section" aria-labelledby="overview">
+<h2 id="overview">Overview</h2>
+<p>Dark mode is a set of token values selected by <code>data-bui-mode="dark"</code>. Components and utilities read tokens, so nothing else changes. The attribute works on <code>&lt;html&gt;</code> or on any element, and the element paints its own background and text color, so a dark panel can sit inside a light page. Core also sets <code>color-scheme</code> to <code>dark</code> (or <code>light</code>) on the element, which makes native scrollbars and form controls follow.</p>
+</section>
+
+<section class="bui-docs-section" aria-labelledby="scoped">
+<h2 id="scoped">Scoped dark mode</h2>
+<p>Both panels use the same markup; only <code>data-bui-mode</code> differs. The attribute is on the panel itself.</p>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<div class="bui-docs-modes">
+<div class="bui-docs-panel" data-bui-mode="light">
+<p class="bui-docs-panel__title">Light</p>
+<h3>Sample heading</h3>
+<p>Body text with <a href="#overview">a link</a> and a <span class="bui-docs-demo-fill bui-rounded-sm bui-px-2">primary fill</span>.</p>
+</div>
+<div class="bui-docs-panel" data-bui-mode="dark">
+<p class="bui-docs-panel__title">Dark</p>
+<h3>Sample heading</h3>
+<p>Body text with <a href="#overview">a link</a> and a <span class="bui-docs-demo-fill bui-rounded-sm bui-px-2">primary fill</span>.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<section class="bui-docs-section" aria-labelledby="switch-mode">
+<h2 id="switch-mode">Switch at runtime</h2>
+<p>The buttons below use <code>BUI.theme</code>; the page changes immediately and the choice is saved. The Navbar Dark mode button does the same.</p>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<div class="bui-d-flex bui-flex-wrap bui-gap-2 bui-items-center">
+<button type="button" class="bui-docs-btn" data-mode-set="light">Light</button>
+<button type="button" class="bui-docs-btn" data-mode-set="dark">Dark</button>
+<button type="button" class="bui-docs-btn" data-mode-toggle>Toggle</button>
+<span role="status" data-mode-readout></span>
+</div>
+</div>
+<pre class="bui-docs-code" data-lang="javascript"><code>BUI.theme.setMode('dark');
+BUI.theme.toggleMode();   // returns the new mode
+BUI.theme.getMode();      // 'light' | 'dark' </code></pre>
+</div>
+<p>The buttons are <code>bui-docs-btn</code>, a docs-only class: the library has no Button component yet.</p>
+</section>
+
+<section class="bui-docs-section" aria-labelledby="preference">
+<h2 id="preference">Saved preference and system setting</h2>
+<p>On load, <code>BUI.theme</code> chooses the mode in this order:</p>
+<ol>
+<li>The mode saved in <code>localStorage</code> (<code>bui-mode</code>), written by <code>setMode()</code> or <code>toggleMode()</code>.</li>
+<li>Otherwise the operating system setting, <code>prefers-color-scheme</code>.</li>
+<li>Without <code>matchMedia</code>, the <code>data-bui-mode</code> written in the markup, then <code>light</code>.</li>
+</ol>
+<p>When the user has not chosen a mode, the page follows the operating system live: if the system switches between light and dark, the mode changes and <code>bui:theme:change</code> fires with <code>source: "system"</code>. After an explicit choice the page stops following the system, even when saving failed.</p><div class="bui-docs-callout bui-docs-callout--warning" role="note">
+<p class="bui-docs-callout__title">Warning</p>
+<p>The saved preference and the system setting both win over <code>data-bui-mode</code> written in the markup. That attribute is only the value before scripts run and the fallback without <code>matchMedia</code>. To start every visitor in dark mode, call <code>BUI.theme.setMode("dark")</code>; it is then saved like any other choice.</p>
+</div>
+</section>
+
+<section class="bui-docs-section" aria-labelledby="no-flash">
+<h2 id="no-flash">Avoid the flash of the wrong mode</h2>
+<p>Core runs at the end of the page, so a saved dark mode would first paint light. Put this small script in <code>&lt;head&gt;</code>, after the stylesheets and before <code>&lt;body&gt;</code>. It uses the same keys and rules as <code>BUI.theme</code>, and every storage access is guarded so it never throws.</p>
+<pre class="bui-docs-code" data-lang="html"><code>&lt;script&gt;
+    (function () {
+        var d = document.documentElement, t = null, m = null;
+        try { t = localStorage.getItem('bui-theme'); m = localStorage.getItem('bui-mode'); } catch (e) {}
+        if (t &amp;&amp; /^[a-z][a-z0-9]*(-[a-z0-9]+)*$/.test(t)) d.setAttribute('data-bui-theme', t);
+        if (m !== 'light' &amp;&amp; m !== 'dark') m = window.matchMedia &amp;&amp; matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        d.setAttribute('data-bui-mode', m);
+    })();
+&lt;/script&gt;</code></pre>
+<p>This is the script used in the head of every page of this site (plus one extra line for the docs-only direction switcher). A saved theme other than <code>default</code> needs its stylesheet linked in the page, otherwise only the attribute is set.</p>
+</section>
+
+<section class="bui-docs-section" aria-labelledby="storage">
+<h2 id="storage">Storage</h2>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Keys saved by BUI.theme</caption>
+<thead><tr><th scope="col">Key</th><th scope="col">Values</th><th scope="col">Written by</th></tr></thead>
+<tbody>
+<tr><td><code>bui-theme</code></td><td>a kebab-case theme name</td><td><code>BUI.theme.set()</code></td></tr>
+<tr><td><code>bui-mode</code></td><td><code>light</code> or <code>dark</code></td><td><code>BUI.theme.setMode()</code>, <code>BUI.theme.toggleMode()</code></td></tr>
+</tbody>
+</table>
+<p>When <code>localStorage</code> is unavailable (blocked, private mode, a sandboxed frame), reading and writing fail silently: nothing is thrown, the mode still changes for the current page, and only a debug message is logged. Nothing is saved for the next visit.</p>
+</section>
+
+<section class="bui-docs-section" aria-labelledby="javascript-api">
+<h2 id="javascript-api">JavaScript API</h2>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Mode methods</caption>
+<thead><tr><th scope="col">Name</th><th scope="col">Returns</th><th scope="col">Description</th></tr></thead>
+<tbody>
+<tr><td><code>BUI.theme.setMode(mode)</code></td><td>string or <code>null</code></td><td><code>"light"</code> or <code>"dark"</code>. Sets <code>data-bui-mode</code> on <code>&lt;html&gt;</code>, saves <code>bui-mode</code> and stops following the system. Any other value logs a warning and returns <code>null</code>.</td></tr>
+<tr><td><code>BUI.theme.toggleMode()</code></td><td>string</td><td>Switches to the other mode and returns it.</td></tr>
+<tr><td><code>BUI.theme.getMode()</code></td><td>string</td><td>The active mode.</td></tr>
+</tbody>
+</table>
+<p>The change event <code>bui:theme:change</code> and the theme methods are documented on the <a href="themes.html#javascript-api">Themes</a> page.</p>
+</section>
+
+<section class="bui-docs-section" aria-labelledby="accessibility">
+<h2 id="accessibility">Accessibility</h2>
+<p>Light and Dark are both checked against the contrast table on the <a href="colors.html">Colors</a> page (40 pairs per mode), and the same method is applied to Ocean on the <a href="themes.html#contrast">Themes</a> page. <code>color-scheme</code> keeps native controls readable. Respecting <code>prefers-color-scheme</code> serves users who set a system-wide preference. The Navbar mode button is a toggle button with <code>aria-pressed</code>. Screen reader behavior was not tested.</p>
+</section>
+
+                </div>
+                <!-- Previous / Next links are appended here by docs.js from the order in nav.js. -->
+            </div>
+            <!-- "On this page" is appended here by docs.js (visible from the XL breakpoint). -->
+        </div>
+    </main>
+
+    <script src="../../assets/js/baset-ui.js"></script>
+    <script src="../../documentation/assets/js/nav.js"></script>
+    <script src="../../documentation/assets/js/docs.js"></script>
+    <script>
+        /* Demo for the "Switch at runtime" example (docs page only). */
+        (function () {
+            var out = document.querySelector('[data-mode-readout]');
+            function show() { out.textContent = 'Mode: ' + BUI.theme.getMode(); }
+            document.querySelectorAll('[data-mode-set]').forEach(function (button) {
+                button.addEventListener('click', function () { BUI.theme.setMode(button.getAttribute('data-mode-set')); });
+            });
+            document.querySelector('[data-mode-toggle]').addEventListener('click', function () { BUI.theme.toggleMode(); });
+            document.documentElement.addEventListener('bui:theme:change', show);
+            show();
+        })();
+    </script>
+</body>
+</html>

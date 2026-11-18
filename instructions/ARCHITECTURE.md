@@ -67,6 +67,13 @@ Baset-UI/
 - `documentation/javascript/{introduction,initialization,events,api-reference}.html`: قسم JavaScript في الـ Sidebar، بالقالب نفسه وبعمق مجلدين (`data-root="../../"`).
 - `tests/manual/core.html`: صفحة اختبار ذاتية التشغيل للـ Core (تُنشئ مكونات تجريبية داخل الصفحة فقط ولا تُشحن مع المكتبة). السبب: `TESTING.md` يحدد `tests/manual/{component}.html` للاختبار اليدوي دون أداة أو Dependency.
 
+### الثيمات واللغات واختبار المفاتيح (Task 06)
+- `assets/css/themes/ocean.css`، و`assets/i18n/fr.json`: داخل مجلدين موجودين في الهيكل (`css/themes/` و`i18n/`)، وأُزيل `.gitkeep` من `css/themes/` لأنه لم يعد فارغاً.
+- `tests/i18n-keys.js`: سكريبت Node بلا Dependencies (`node tests/i18n-keys.js`). السبب: `TESTING.md` يطلب اختبار تطابق i18n، و`tests/` هو مكان الاختبارات الآلية، والمهمة سمّت `tests/i18n-keys.*` صراحة. ملف واحد مستقل، لا يحمّل شيئاً من المكتبة.
+- صفحات التوثيق الأربع: `documentation/customization/{themes,dark-mode}.html` و`documentation/advanced/{rtl-ltr,internationalization}.html`، وأُزيل `.gitkeep` من `advanced/` لأنه لم يعد فارغاً. اسم `rtl-ltr.html` من قاعدة kebab-case لعنصر Sidebar `RTL & LTR`.
+- **كل صفحة توثيق (وقالبها و`index.html`) تربط `assets/css/themes/ocean.css` وتحمل Snippet منع الوميض بمفتاحي `bui-theme` و`bui-mode`** (بدل `bui-docs-mode` القديم). السبب: مبدّل الثيم/الوضع في Navbar صار يعتمد على `BUI.theme`، فلو بقي Snippet القديم لقرأ مفتاحاً لم يعد يُكتب وعاد الوميض. المفتاح `bui-docs-dir` (اتجاه Navbar) docs-only ويقرؤه نفس Snippet.
+- `docs.js`: عناصر القيم الحية (`data-docs-token` وصفوف التباين) تقرأ الآن من Probes تحمل `data-bui-mode` و`data-bui-theme` معاً، وتُعاد عند `bui:theme:change`، وتقبل `data-docs-theme` لثيم صريح.
+
 ### قرار المسارات في الصفحات المتداخلة
 - كل صفحة تضع `data-root="../../"` على `<html>`: المسار **من الصفحة نفسها** إلى جذر الموقع (مجلد `index.html`). يُقرأ في `docs.js` ويُبنى عليه كل رابط (Sidebar، Breadcrumb، Previous/Next، رابط الشعار).
 - إن غابت السمة يستنتج `docs.js` الجذر من مسار سكربت `docs.js` نفسه (دائماً ثلاثة مستويات تحت الجذر)، فتبقى الصفحة تعمل. السمة هي المصدر الأساسي لأنها صريحة ولا تعتمد على موضع السكربت.

@@ -17,8 +17,14 @@
  *      contrast ratios from those same values; [data-docs-current-bp] shows the active breakpoint.
  *      Values are never typed into the pages, so the docs cannot drift from baset-ui.css.
  *
+ *   6. Shell controls (Task 06): the mode button and the theme select call BUI.theme (keys bui-theme and
+ *      bui-mode are saved by the library). The RTL/LTR button sets <html dir> directly and saves the
+ *      docs-only key bui-docs-dir. The controls follow the state through the bui:theme:change event and
+ *      a MutationObserver on the dir attribute, so BUI.theme and BUI.locale stay the source of truth.
+ *
  * Docs UI strings are English on purpose: the documentation site language is English
- * until a multilingual docs system is decided (COMPONENT_DOCUMENTATION.md).
+ * until a multilingual docs system is decided (COMPONENT_DOCUMENTATION.md). The shell is not translated
+ * with BUI.locale (no data-bui-i18n attributes in it); the Internationalization page demonstrates BUI.locale.
  */
 (function () {
     'use strict';
@@ -26,6 +32,8 @@
     /* Keep in sync with CHANGELOG.md and the headers of baset-ui.css / baset-ui.js. */
     var DOCS_VERSION = '0.0.0-foundation';
     var GITHUB_URL = 'https://github.com/AbdulbasetRS/Baset-UI';
+    /* Themes offered by the shell's theme select. Each one needs its stylesheet linked in every page head. */
+    var THEMES = [{ name: 'default', label: 'Default' }, { name: 'ocean', label: 'Ocean' }];
 
     var doc = document;
     var root = doc.documentElement;
@@ -164,14 +172,32 @@
         searchWrap.appendChild(search);
 
         var actions = el('div', 'bui-docs-navbar__actions');
-        var modeBtn = el('button', 'bui-docs-btn', 'Dark mode');
+        var themeSelect = el('select', 'bui-docs-select');
+        themeSelect.id = 'bui-docs-theme-select';
+        themeSelect.setAttribute('aria-label', 'Theme');
+        THEMES.forEach(function (t) {
+            var option = el('option', '', t.label);
+            option.value = t.name;
+            themeSelect.appendChild(option);
+        });
+        var dirBtn = el('button', 'bui-docs-btn', 'RTL');
+        dirBtn.type = 'button';
+        dirBtn.id = 'bui-docs-dir-toggle';
+        dirBtn.setAttribute('aria-label', 'Right-to-left layout');
+        dirBtn.setAttribute('aria-pressed', 'false');
+        var modeBtn = el('button', 'bui-docs-btn');
         modeBtn.type = 'button';
         modeBtn.id = 'bui-docs-mode-toggle';
+        modeBtn.setAttribute('aria-label', 'Dark mode');
         modeBtn.setAttribute('aria-pressed', 'false');
+        modeBtn.appendChild(doc.createTextNode('Dark'));
+        modeBtn.appendChild(el('span', 'bui-docs-btn__extra', ' mode'));
         var gh = el('a', 'bui-docs-btn', 'GitHub');
         gh.href = GITHUB_URL;
         gh.rel = 'noopener';
         gh.target = '_blank';
+        actions.appendChild(themeSelect);
+        actions.appendChild(dirBtn);
         actions.appendChild(modeBtn);
         actions.appendChild(gh);
 
@@ -215,8 +241,10 @@
     var toggle = doc.getElementById('bui-docs-sidebar-toggle');
     var backdrop = doc.getElementById('bui-docs-backdrop');
     var modeBtn = doc.getElementById('bui-docs-mode-toggle');
+    var dirBtn = doc.getElementById('bui-docs-dir-toggle');
+    var themeSelect = doc.getElementById('bui-docs-theme-select');
     var navbar = doc.querySelector('.bui-docs-navbar');
-    if (!sidebar || !toggle || !backdrop || !modeBtn) {
+    if (!sidebar || !toggle || !backdrop || !modeBtn || !dirBtn || !themeSelect) {
         if (window.console) console.warn('[BUI docs] Shell elements are missing: add <main id="bui-docs-main"> (see DOC_PAGE_TEMPLATE.html).');
         return;
     }
@@ -312,19 +340,31 @@
     });
     revealActiveLink();
 
-    /* ---- Light / Dark toggle (docs shell only) ---- */
-    function syncMode() {
-        var dark = root.getAttribute('data-bui-mode') === 'dark';
-        modeBtn.setAttribute('aria-pressed', String(dark));
-        modeBtn.textContent = dark ? 'Light mode' : 'Dark mode';
+    /* ---- Mode, theme and direction controls (docs shell only; the state lives in BUI.theme and <html dir>) ---- */
+    var BUI = window.BUI;
+    if (BUI && BUI.theme) {
+        var syncTheme = function () {
+            modeBtn.setAttribute('aria-pressed', String(BUI.theme.getMode() === 'dark'));
+            themeSelect.value = BUI.theme.get();
+        };
+        modeBtn.addEventListener('click', function () { BUI.theme.toggleMode(); });
+        themeSelect.addEventListener('change', function () { BUI.theme.set(themeSelect.value); });
+        root.addEventListener('bui:theme:change', syncTheme);
+        syncTheme();
+    } else {
+        modeBtn.disabled = true;
+        themeSelect.disabled = true;
+        if (window.console) console.warn('[BUI docs] BUI.theme is missing: load assets/js/baset-ui.js before docs.js.');
     }
-    modeBtn.addEventListener('click', function () {
-        var next = root.getAttribute('data-bui-mode') === 'dark' ? 'light' : 'dark';
-        root.setAttribute('data-bui-mode', next);
-        try { localStorage.setItem('bui-docs-mode', next); } catch (e) {}
-        syncMode();
+
+    var syncDir = function () { dirBtn.setAttribute('aria-pressed', String(root.getAttribute('dir') === 'rtl')); };
+    dirBtn.addEventListener('click', function () {
+        var next = root.getAttribute('dir') === 'rtl' ? 'ltr' : 'rtl';
+        root.setAttribute('dir', next);
+        try { localStorage.setItem('bui-docs-dir', next); } catch (e) { /* storage is optional */ }
     });
-    syncMode();
+    if (window.MutationObserver) new MutationObserver(syncDir).observe(root, { attributes: true, attributeFilter: ['dir'] });
+    syncDir();
 
     /* ------------------------------------------------------------------ */
     /* 4. Page widgets                                                     */
@@ -753,21 +793,31 @@
 
 
     /* ---- Live token values, contrast checks, current breakpoint (docs-only) ---- */
-    /* Hidden probes carry data-bui-mode, so tokens are read for BOTH modes whatever the page mode is. */
-    function probe(mode) {
-        var p = doc.querySelector('[data-docs-probe="' + mode + '"]');
+    /*
+     * Hidden probes carry data-bui-mode AND data-bui-theme on the same element (a theme's Dark block needs both),
+     * so tokens are read for BOTH modes whatever the page mode is. The theme is the page's current theme unless
+     * the cell sets data-docs-theme.
+     */
+    function probe(mode, theme) {
+        var key = mode + '|' + theme;
+        var p = null;
+        Array.prototype.forEach.call(doc.querySelectorAll('[data-docs-probe]'), function (n) {
+            if (n.getAttribute('data-docs-probe') === key) p = n;
+        });
         if (!p) {
             p = doc.createElement('div');
             p.setAttribute('data-bui-mode', mode);
-            p.setAttribute('data-docs-probe', mode);
+            p.setAttribute('data-bui-theme', theme);
+            p.setAttribute('data-docs-probe', key);
             p.hidden = true;
             doc.body.appendChild(p);
         }
         return p;
     }
 
-    function tokenValue(name, mode) {
-        return window.getComputedStyle(probe(mode || 'light')).getPropertyValue(name).trim();
+    function tokenValue(name, mode, theme) {
+        var t = theme || root.getAttribute('data-bui-theme') || 'default';
+        return window.getComputedStyle(probe(mode || 'light', t)).getPropertyValue(name).trim();
     }
 
     function parseColor(v) {
@@ -794,30 +844,36 @@
         return (Math.max(la, lb) + 0.05) / (Math.min(la, lb) + 0.05);
     }
 
-    Array.prototype.forEach.call(main.querySelectorAll('[data-docs-token]'), function (cell) {
-        cell.textContent = tokenValue(cell.getAttribute('data-docs-token'), cell.getAttribute('data-docs-mode')) || 'not defined';
-    });
-
-    var contrastStats = { light: [0, 0], dark: [0, 0] };
-    Array.prototype.forEach.call(main.querySelectorAll('tr[data-docs-contrast]'), function (row) {
-        var min = parseFloat(row.getAttribute('data-min'));
-        ['light', 'dark'].forEach(function (mode) {
-            var cell = row.querySelector('[data-docs-cell="' + mode + '"]');
-            if (!cell) return;
-            var fg = parseColor(tokenValue(row.getAttribute('data-fg'), mode));
-            var bg = parseColor(tokenValue(row.getAttribute('data-bg'), mode));
-            if (!fg || !bg) { cell.textContent = 'not computable'; return; }
-            var r = contrastRatio(fg, bg);
-            var ok = r >= min;
-            cell.textContent = (Math.floor(r * 100) / 100).toFixed(2) + ':1 ' + (ok ? 'Pass' : 'Fail');
-            contrastStats[mode][1] += 1;
-            if (ok) contrastStats[mode][0] += 1;
+    /* Fills token cells and contrast rows. Runs again on bui:theme:change so the values follow the active theme. */
+    function renderLive() {
+        Array.prototype.forEach.call(main.querySelectorAll('[data-docs-token]'), function (cell) {
+            cell.textContent = tokenValue(cell.getAttribute('data-docs-token'), cell.getAttribute('data-docs-mode'), cell.getAttribute('data-docs-theme')) || 'not defined';
         });
-    });
-    Array.prototype.forEach.call(main.querySelectorAll('[data-docs-contrast-summary]'), function (n) {
-        n.textContent = 'Light: ' + contrastStats.light[0] + ' of ' + contrastStats.light[1] + ' checks pass. Dark: ' +
-            contrastStats.dark[0] + ' of ' + contrastStats.dark[1] + ' checks pass.';
-    });
+
+        var contrastStats = { light: [0, 0], dark: [0, 0] };
+        Array.prototype.forEach.call(main.querySelectorAll('tr[data-docs-contrast]'), function (row) {
+            var min = parseFloat(row.getAttribute('data-min'));
+            ['light', 'dark'].forEach(function (mode) {
+                var cell = row.querySelector('[data-docs-cell="' + mode + '"]');
+                if (!cell) return;
+                var theme = row.getAttribute('data-docs-theme');
+                var fg = parseColor(tokenValue(row.getAttribute('data-fg'), mode, theme));
+                var bg = parseColor(tokenValue(row.getAttribute('data-bg'), mode, theme));
+                if (!fg || !bg) { cell.textContent = 'not computable'; return; }
+                var r = contrastRatio(fg, bg);
+                var ok = r >= min;
+                cell.textContent = (Math.floor(r * 100) / 100).toFixed(2) + ':1 ' + (ok ? 'Pass' : 'Fail');
+                contrastStats[mode][1] += 1;
+                if (ok) contrastStats[mode][0] += 1;
+            });
+        });
+        Array.prototype.forEach.call(main.querySelectorAll('[data-docs-contrast-summary]'), function (n) {
+            n.textContent = 'Light: ' + contrastStats.light[0] + ' of ' + contrastStats.light[1] + ' checks pass. Dark: ' +
+                contrastStats.dark[0] + ' of ' + contrastStats.dark[1] + ' checks pass.';
+        });
+    }
+    renderLive();
+    root.addEventListener('bui:theme:change', renderLive);
 
     var bpOut = main.querySelector('[data-docs-current-bp]');
     var BP_NAMES = ['xs', 'sm', 'md', 'lg', 'xl', 'xxl', 'xxxl'];

@@ -27,6 +27,7 @@
 ### عناصر قيم حية (Docs-only)
 - `<span data-docs-token="--bui-x" data-docs-mode="light|dark">`: يملأه `docs.js` بالقيمة المحسوبة للـ Token من عنصر Probe مخفي بالوضع المحدد (الافتراضي light). ممنوع كتابة قيم Tokens يدوياً في الصفحات.
 - `<tr data-docs-contrast data-fg="--bui-color-a" data-bg="--bui-color-b" data-min="4.5">` مع خليتين `data-docs-cell="light"` و`data-docs-cell="dark"`: يحسب `docs.js` نسبة التباين (WCAG) ويكتب النتيجة والنص Pass/Fail. `[data-docs-contrast-summary]` يلخصها.
+- `data-docs-theme="ocean"` (اختياري، على خلية القيمة أو صف التباين): يقرأ القيمة لثيم محدد بدل ثيم الصفحة الحالي (Task 06). بدونه تُقرأ القيم لثيم الصفحة وتُحدَّث عند `bui:theme:change`.
 - `[data-docs-current-bp]`: يعرض Breakpoint الحالي من Tokens `--bui-bp-*`.
 - أصناف العرض `bui-docs-demo-*` وSwatches في `docs.css` خاصة بالموقع.
 

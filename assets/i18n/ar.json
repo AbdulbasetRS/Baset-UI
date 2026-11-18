@@ -6,6 +6,15 @@
         "close": "إغلاق",
         "cancel": "إلغاء",
         "confirm": "تأكيد",
-        "noResults": "لا توجد نتائج"
+        "noResults": "لا توجد نتائج",
+        "showing": "عرض {from} إلى {to} من أصل {total}",
+        "items": {
+            "zero": "لا توجد عناصر",
+            "one": "عنصر واحد",
+            "two": "عنصران",
+            "few": "{count} عناصر",
+            "many": "{count} عنصرًا",
+            "other": "{count} عنصر"
+        }
     }
 }

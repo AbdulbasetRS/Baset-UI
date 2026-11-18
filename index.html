@@ -8,14 +8,20 @@
 
     <!-- Core library stylesheet (design tokens + base) -->
     <link rel="stylesheet" href="assets/css/baset-ui.css">
+    <link rel="stylesheet" href="assets/css/themes/ocean.css">
     <!-- Documentation shell only (not part of the library) -->
     <link rel="stylesheet" href="documentation/assets/css/docs.css">
     <script>
-        /* Apply saved mode early to avoid a flash. Documentation shell only. */
-        try {
-            var m = localStorage.getItem('bui-docs-mode');
-            if (m === 'dark' || m === 'light') document.documentElement.setAttribute('data-bui-mode', m);
-        } catch (e) {}
+        /* Prevents a flash of the wrong theme or mode. Same keys as BUI.theme (bui-theme, bui-mode). */
+        (function () {
+            var d = document.documentElement, t = null, m = null, r = null;
+            try { t = localStorage.getItem('bui-theme'); m = localStorage.getItem('bui-mode'); r = localStorage.getItem('bui-docs-dir'); } catch (e) {}
+            if (t && /^[a-z][a-z0-9]*(-[a-z0-9]+)*$/.test(t)) d.setAttribute('data-bui-theme', t);
+            if (m !== 'light' && m !== 'dark') m = window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+            d.setAttribute('data-bui-mode', m);
+            /* Documentation shell only: the saved direction of the RTL/LTR switcher. */
+            if (r === 'rtl' || r === 'ltr') d.setAttribute('dir', r);
+        })();
     </script>
 </head>
 <body>
@@ -31,7 +37,12 @@
             <input type="search" placeholder="Search (coming soon)" aria-label="Search documentation" disabled>
         </div>
         <div class="bui-docs-navbar__actions">
-            <button type="button" class="bui-docs-btn" id="bui-docs-mode-toggle" aria-pressed="false">Dark mode</button>
+            <select class="bui-docs-select" id="bui-docs-theme-select" aria-label="Theme">
+                <option value="default">Default</option>
+                <option value="ocean">Ocean</option>
+            </select>
+            <button type="button" class="bui-docs-btn" id="bui-docs-dir-toggle" aria-label="Right-to-left layout" aria-pressed="false">RTL</button>
+            <button type="button" class="bui-docs-btn" id="bui-docs-mode-toggle" aria-label="Dark mode" aria-pressed="false">Dark<span class="bui-docs-btn__extra"> mode</span></button>
             <a class="bui-docs-btn" href="https://github.com/AbdulbasetRS/Baset-UI" rel="noopener" target="_blank">GitHub</a>
         </div>
     </header>

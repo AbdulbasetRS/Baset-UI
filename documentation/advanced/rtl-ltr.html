@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-bui-theme="default" data-bui-mode="light" data-root="../../">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>RTL & LTR - Baset-UI Documentation</title>
+    <meta name="description" content="Right-to-left and left-to-right layouts with logical properties, the dir attribute and BUI helpers.">
+    <link rel="icon" href="data:,">
+
+    <link rel="stylesheet" href="../../assets/css/baset-ui.css">
+    <link rel="stylesheet" href="../../assets/css/themes/ocean.css">
+    <link rel="stylesheet" href="../../documentation/assets/css/docs.css">
+    <script>
+        /* Prevents a flash of the wrong theme or mode. Same keys as BUI.theme (bui-theme, bui-mode). */
+        (function () {
+            var d = document.documentElement, t = null, m = null, r = null;
+            try { t = localStorage.getItem('bui-theme'); m = localStorage.getItem('bui-mode'); r = localStorage.getItem('bui-docs-dir'); } catch (e) {}
+            if (t && /^[a-z][a-z0-9]*(-[a-z0-9]+)*$/.test(t)) d.setAttribute('data-bui-theme', t);
+            if (m !== 'light' && m !== 'dark') m = window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+            d.setAttribute('data-bui-mode', m);
+            /* Documentation shell only: the saved direction of the RTL/LTR switcher. */
+            if (r === 'rtl' || r === 'ltr') d.setAttribute('dir', r);
+        })();
+    </script>
+</head>
+<body>
+    <main class="bui-docs-main" id="bui-docs-main" tabindex="-1">
+        <div class="bui-docs-page">
+            <div class="bui-docs-page__body">
+
+                <header class="bui-docs-page-header">
+                    <nav class="bui-docs-breadcrumb" aria-label="Breadcrumb" data-docs-breadcrumb hidden></nav>
+                    <h1>RTL &amp; LTR</h1>
+                    <p class="bui-docs-lead">Logical properties make every layout and utility flip with the dir attribute.</p>
+                </header>
+
+                <div class="bui-docs-content">
+
+<section class="bui-docs-section" aria-labelledby="overview">
+<h2 id="overview">Overview</h2>
+<p>Direction is set with the <code>dir</code> attribute on <code>&lt;html&gt;</code>, or on any container for a local preview. The library is written with logical properties (<code>margin-inline-start</code>, <code>padding-inline</code>, <code>inset-inline-start</code>, <code>border-start-start-radius</code>, <code>text-align: start</code>) and never with physical <code>left</code>/<code>right</code>, so Flex and Grid layouts and every utility flip by themselves. No <code>row-reverse</code> is used to fake a direction.</p>
+</section>
+
+<section class="bui-docs-section" aria-labelledby="live">
+<h2 id="live">Live: the same markup in both directions</h2>
+<p>Each panel has its own <code>dir</code>. Nothing else differs.</p>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<div class="bui-docs-modes">
+<div class="bui-docs-panel" dir="ltr">
+<p class="bui-docs-panel__title">LTR panel</p>
+<div class="bui-d-flex bui-items-center bui-gap-2 bui-docs-demo-gap">
+<span class="bui-docs-demo-fill bui-rounded-md bui-px-2 bui-flex-shrink-0">First</span>
+<span class="bui-docs-demo-box bui-ms-auto">Pushed to the end</span>
+</div>
+<div class="bui-border-s bui-border-width-thick bui-border-solid bui-border-primary bui-ps-3 bui-docs-demo-gap">Start border and start padding</div>
+<div class="bui-docs-demo-box bui-rounded-s-xl bui-rounded-ee-none">Rounded on the start side only</div>
+</div>
+<div class="bui-docs-panel" dir="rtl">
+<p class="bui-docs-panel__title">RTL panel</p>
+<div class="bui-d-flex bui-items-center bui-gap-2 bui-docs-demo-gap">
+<span class="bui-docs-demo-fill bui-rounded-md bui-px-2 bui-flex-shrink-0">First</span>
+<span class="bui-docs-demo-box bui-ms-auto">Pushed to the end</span>
+</div>
+<div class="bui-border-s bui-border-width-thick bui-border-solid bui-border-primary bui-ps-3 bui-docs-demo-gap">Start border and start padding</div>
+<div class="bui-docs-demo-box bui-rounded-s-xl bui-rounded-ee-none">Rounded on the start side only</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<section class="bui-docs-section" aria-labelledby="switch">
+<h2 id="switch">Switch the page direction</h2>
+<p>The RTL button in the Navbar sets <code>dir</code> on <code>&lt;html&gt;</code> and remembers it (docs-only key <code>bui-docs-dir</code>), so you can review any page in both directions. In your own site, set the attribute yourself or let <a href="internationalization.html">BUI.locale</a> do it: loading a locale sets <code>dir</code> and <code>lang</code> from its <code>meta.direction</code>.</p>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<div class="bui-d-flex bui-flex-wrap bui-gap-2 bui-items-center">
+<button type="button" class="bui-docs-btn" data-dir-set="ltr">LTR</button>
+<button type="button" class="bui-docs-btn" data-dir-set="rtl">RTL</button>
+<span role="status" data-dir-readout></span>
+</div>
+</div>
+<pre class="bui-docs-code" data-lang="javascript"><code>document.documentElement.dir = 'rtl';
+BUI.dom.isRTL();                 // true: reads the computed direction
+BUI.locale.getDirection();       // direction of the active locale</code></pre>
+</div>
+<p>The buttons are <code>bui-docs-btn</code>, a docs-only class: the library has no Button component yet. Unlike the Navbar button, these buttons do not save the choice.</p>
+</section>
+
+<section class="bui-docs-section" aria-labelledby="logical">
+<h2 id="logical">Logical utilities</h2>
+<p>Use the logical names in markup. The physical equivalent shown for LTR is for orientation only; do not write it.</p><table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Logical utilities and what they mean</caption>
+<thead><tr><th scope="col">Utility family</th><th scope="col">Examples</th><th scope="col">LTR / RTL meaning</th></tr></thead>
+<tbody>
+<tr><td>Margin</td><td><code>bui-ms-*</code>, <code>bui-me-*</code></td><td>start side / end side: left / right in LTR, right / left in RTL</td></tr>
+<tr><td>Padding</td><td><code>bui-ps-*</code>, <code>bui-pe-*</code></td><td>start / end padding</td></tr>
+<tr><td>Border</td><td><code>bui-border-s</code>, <code>bui-border-e</code></td><td>start / end border</td></tr>
+<tr><td>Radius</td><td><code>bui-rounded-s-*</code>, <code>bui-rounded-e-*</code>, <code>bui-rounded-ss-*</code>, <code>bui-rounded-ee-*</code></td><td>start / end side, or one logical corner</td></tr>
+<tr><td>Position</td><td><code>bui-start-0</code>, <code>bui-end-0</code>, <code>bui-translate-middle</code></td><td>inset on the start / end side; <code>translate-middle</code> flips its horizontal shift with <code>:dir(rtl)</code></td></tr>
+<tr><td>Flex and Grid</td><td><code>bui-flex-row</code>, <code>bui-justify-start</code></td><td>the main axis follows the direction</td></tr>
+</tbody>
+</table>
+<p>The details of each family are on the <a href="../layout/spacing.html">Spacing</a>, <a href="../utilities/borders.html">Borders</a> and <a href="../utilities/position.html">Position</a> pages.</p>
+</section>
+
+<section class="bui-docs-section" aria-labelledby="rules">
+<h2 id="rules">Rules for your own CSS</h2>
+<ul>
+<li>Write <code>margin-inline-start</code>, <code>padding-inline</code>, <code>inset-inline-start</code>, <code>text-align: start</code>, <code>float: inline-start</code>. A physical <code>left</code>/<code>right</code> needs a documented reason (for example a drawn shape that must not mirror).</li>
+<li>Read the direction from <code>document.documentElement.dir</code> or <code>BUI.dom.isRTL(element)</code> and react when it changes.</li>
+<li>Directional icons (arrows, previous and next) must mirror in RTL. The icon system is not implemented yet.</li>
+<li>Horizontal arrow keys are reversed in RTL for composite widgets. No such component is implemented yet.</li>
+<li>Test every component in both directions.</li>
+</ul>
+</section>
+
+<section class="bui-docs-section" aria-labelledby="javascript-api">
+<h2 id="javascript-api">JavaScript API</h2>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Direction helpers</caption>
+<thead><tr><th scope="col">Name</th><th scope="col">Returns</th><th scope="col">Description</th></tr></thead>
+<tbody>
+<tr><td><code>BUI.dom.isRTL(element?)</code></td><td>boolean</td><td>Computed direction of the element (default <code>&lt;html&gt;</code>). A detached element returns <code>false</code>.</td></tr>
+<tr><td><code>BUI.locale.getDirection()</code></td><td><code>"ltr"</code> or <code>"rtl"</code></td><td>Direction of the active locale; before any locale is active, the current <code>dir</code> of <code>&lt;html&gt;</code>.</td></tr>
+</tbody>
+</table>
+<p>There is no event for a direct change of the <code>dir</code> attribute. Components that need to know observe the attribute (a <code>MutationObserver</code> on <code>&lt;html&gt;</code>), as the Navbar button of this site does. A locale change fires <code>bui:locale:change</code>.</p>
+</section>
+
+<section class="bui-docs-section" aria-labelledby="accessibility">
+<h2 id="accessibility">Accessibility</h2>
+<p><code>lang</code> and <code>dir</code> on <code>&lt;html&gt;</code> tell assistive technology which language and direction to use, which is why <code>BUI.locale.use()</code> updates both. Code blocks in this documentation stay left to right in RTL pages because code is not mirrored. Screen reader behavior in RTL was not tested.</p>
+</section>
+
+                </div>
+                <!-- Previous / Next links are appended here by docs.js from the order in nav.js. -->
+            </div>
+            <!-- "On this page" is appended here by docs.js (visible from the XL breakpoint). -->
+        </div>
+    </main>
+
+    <script src="../../assets/js/baset-ui.js"></script>
+    <script src="../../documentation/assets/js/nav.js"></script>
+    <script src="../../documentation/assets/js/docs.js"></script>
+    <script>
+        /* Demo for the "Switch the page direction" example (docs page only). */
+        (function () {
+            var out = document.querySelector('[data-dir-readout]');
+            var root = document.documentElement;
+            function show() { out.textContent = 'dir: ' + root.getAttribute('dir') + ', isRTL: ' + BUI.dom.isRTL(); }
+            document.querySelectorAll('[data-dir-set]').forEach(function (button) {
+                button.addEventListener('click', function () { root.setAttribute('dir', button.getAttribute('data-dir-set')); });
+            });
+            new MutationObserver(show).observe(root, { attributes: true, attributeFilter: ['dir'] });
+            show();
+        })();
+    </script>
+</body>
+</html>

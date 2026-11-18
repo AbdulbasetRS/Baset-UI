@@ -26,7 +26,7 @@
 window.BUI_DOCS_NAV = [
     { title: 'Get Started', items: ['Introduction', 'Installation', 'Quick Start', 'Download', 'Browser Support'] },
     { title: 'Layout', items: [{ title: 'Breakpoints', href: 'documentation/layout/breakpoints.html' }, { title: 'Container', href: 'documentation/layout/container.html' }, { title: 'Grid', href: 'documentation/layout/grid.html' }, { title: 'Flexbox', href: 'documentation/layout/flexbox.html' }, { title: 'Spacing', href: 'documentation/layout/spacing.html' }] },
-    { title: 'Customization', items: [{ title: 'Colors', href: 'documentation/customization/colors.html' }, { title: 'Typography', href: 'documentation/customization/typography.html' }, { title: 'CSS Variables', href: 'documentation/customization/css-variables.html' }, 'Themes', 'Dark Mode'] },
+    { title: 'Customization', items: [{ title: 'Colors', href: 'documentation/customization/colors.html' }, { title: 'Typography', href: 'documentation/customization/typography.html' }, { title: 'CSS Variables', href: 'documentation/customization/css-variables.html' }, { title: 'Themes', href: 'documentation/customization/themes.html' }, { title: 'Dark Mode', href: 'documentation/customization/dark-mode.html' }] },
     { title: 'Components', items: ['Accordion', 'Alert', 'Avatar', 'Badge', 'Button', 'Button Group', 'Card', 'Carousel', 'Close Button', 'Dialog', 'Drawer', 'Menu', 'Pagination', 'Popover', 'Progress', 'List Group'] },
     { title: 'Forms', items: ['Form Controls', 'Input', 'Select', 'Checkbox', 'Radio', 'Switch', 'Date Picker', 'Time Picker'] },
     { title: 'Data Display', items: ['DataTable', 'Charts', 'Calendar', 'Maps'] },
@@ -34,6 +34,6 @@ window.BUI_DOCS_NAV = [
     { title: 'JavaScript', items: [{ title: 'Introduction', href: 'documentation/javascript/introduction.html' }, { title: 'Initialization', href: 'documentation/javascript/initialization.html' }, { title: 'Events', href: 'documentation/javascript/events.html' }, { title: 'API Reference', href: 'documentation/javascript/api-reference.html' }] },
     { title: 'Extensions', items: ['Overview'] },
     { title: 'Accessibility', items: ['Guidelines', 'Keyboard Navigation'] },
-    { title: 'Advanced', items: ['RTL & LTR', 'Internationalization', 'Icons'] },
+    { title: 'Advanced', items: [{ title: 'RTL & LTR', href: 'documentation/advanced/rtl-ltr.html' }, { title: 'Internationalization', href: 'documentation/advanced/internationalization.html' }, 'Icons'] },
     { title: 'Development', items: ['Changelog', 'Contributing'] }
 ];

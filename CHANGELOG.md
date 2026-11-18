@@ -4,6 +4,39 @@
 
 ## [Unreleased]
 
+### Added (Task 06: Theme Manager + Locale Manager)
+- `assets/js/baset-ui.js` (52,004 بايت خام، 12,143 gzip، +18,376 عن Task 05): `BUI.theme` (`set`, `setMode`, `toggleMode`, `get`, `getMode`, `load`) و`BUI.locale` (`use`, `t`, `get`, `getDirection`, `register`, `apply`). الأحداث `bui:theme:change` و`bui:locale:change`. ما زال الـ Global الوحيد `BUI`.
+- `assets/css/themes/ocean.css` (5,405 بايت): ثيم Light وDark يعيد تعريف الألوان والخط والـ Radius والظلال وعرض الحد السميك وسماكة Focus دون لمس Core. تباين 40/40 في Light وDark.
+- `assets/i18n/fr.json` بنفس مفاتيح `en` و`ar`. مفاتيح جديدة لكل اللغات: `common.showing` و`common.items` (جمع).
+- `tests/i18n-keys.js`: اختبار تطابق المفاتيح والمتغيرات والبنية بلا Dependencies.
+- صفحات التوثيق: Themes وDark Mode (`documentation/customization/`)، RTL & LTR وInternationalization (`documentation/advanced/`)، مفعلة في `nav.js`.
+- Navbar التوثيق: مبدّل ثيم (Default/Ocean) ومبدّل RTL/LTR، وزر الوضع مربوط بـ `BUI.theme`.
+
+### Changed (Task 06)
+- كل صفحات التوثيق و`index.html` وقالب الصفحة: Snippet `<head>` بمفتاحي `bui-theme` و`bui-mode` (بدل `bui-docs-mode`) ورابط `ocean.css`. أُزيل `bui-docs-mode`، فتفضيل الوضع المحفوظ سابقاً في المتصفحات لن يُقرأ مرة واحدة.
+- `docs.js`: القيم الحية والتباين تتبع ثيم الصفحة وتُحدَّث عند تغيره، مع `data-docs-theme` اختيارياً. زر الوضع في Navbar تسميته ثابتة (`Dark mode`) مع `aria-pressed`، بدل تبديل النص. في العرض الضيق (أقل من 576px) يُخفى مربع البحث (معطل أصلاً) وتختصر الأزرار لتتسع عند 320px.
+- `docs.css`: أصناف `bui-docs-select` و`bui-docs-input` و`bui-docs-demo-fill`، وإعادة ترتيب Navbar للعرض الضيق.
+- التعليمات: `INTERNATIONALIZATION.md`, `RTL_LTR_AND_THEMES.md`, `JAVASCRIPT_API.md`, `CORE_ASSETS.md`, `ARCHITECTURE.md`, `TESTING.md`, `COMPONENT_DOCUMENTATION.md`, `COMPONENTS_REGISTRY.md`, `PROJECT_OVERVIEW.md`، وقالب `templates/DOC_PAGE_TEMPLATE.html`، و`README.md` (سطر الحالة).
+- حذف `.gitkeep` من `assets/css/themes/` و`documentation/advanced/` (لم يعودا فارغين).
+
+### Decisions (Task 06)
+- ترتيب تحديد الوضع: المحفوظ ثم `prefers-color-scheme` ثم `data-bui-mode` في الـ HTML. تفضيل النظام يتفوق على سمة الـ HTML، وإلا لما احترم نظام لقوالب تكتب `light` دائماً.
+- اختيار الوضع صراحة يوقف تتبع النظام حتى لو فشل الحفظ. `set()` لا يتحقق من وجود ملف الثيم. `load()` لا يفعّل الثيم.
+- جمع الترجمة: كائن بفئات CLDR مع `other` إلزامي؛ اختبار التطابق يعامله كمفتاح واحد (لأن العربية ست فئات والإنجليزية اثنتان) ويقارن أسماء المتغيرات.
+- `use()` يضبط `lang` و`dir` دائماً، ويطلق `bui:locale:change` عند تغير الرمز فقط. آخر استدعاء `use()` هو الذي يُطبَّق. فشل `fallback` تحذير؛ فشل اللغة الرئيسية رفض للوعد دون تغيير.
+- `url` الافتراضي `../i18n/{code}.json` نسبةً إلى `baset-ui.js`. خيار `fallbackUrl` أُضيف لأن الـ Fallback يحتاج مساره. `BUI.locale.apply(root)` أُضيف لعناصر تُضاف بعد التحميل. لا خيار `locale` في `BUI.config`.
+- HTML Binding: `data-bui-i18n-attr` يقبل أزواجاً `attr:key` تفصلها `;`، وسمات `on*` مرفوضة.
+- مبدّل اتجاه التوثيق يضبط `<html dir>` ويحفظه بـ `bui-docs-dir` (docs فقط). لا حدث لتغيير `dir` مباشرة.
+- ocean: خطوط نظام فقط (لا خطوط خارجية)، ولا يعيد تعريف success/warning/danger/info.
+
+### Tested (Task 06, Chromium عبر Playwright فقط، خادم http محلي)
+- `node tests/i18n-keys.js`: ناجح (3 ملفات، 8 مفاتيح)، وفشل مقصود في نسخة معدلة (مفتاح ناقص، متغير مختلف، مفتاح غير camelCase). `node --check` ناجح للـ JS.
+- 26 فحصاً للثيم والتخزين: تبديل الثيم والوضع دون إعادة تحميل، الأحداث وتفاصيلها، الحفظ والاسترجاع بعد إعادة التحميل، `load()`، `localStorage` محجوبة (`get` يرمي) و`setItem` يرمي: بلا أخطاء، `prefers-color-scheme` (بدء، تتبع حي، التوقف بعد اختيار صريح، المحفوظ يتفوق).
+- 18 فحصاً للغة: ar/fr/en بالواجهة (lang وdir وBinding والمتغيرات والجمع العربي لست فئات والفرنسي)، انقلاب الـ Shell (الـ Sidebar يمين)، مفتاح مفقود (يرجع المفتاح ويحذر مرة)، `register`، سباق `use()`، `fallback:false`، `apply`، رفض `on*`، وفشل `file://` برسالة واضحة.
+- Snippet منع الوميض: السمات والأنماط مطبقة قبل تحميل Core المؤخر 1.5 ثانية. Keyboard: Tab/Enter/Space/الأسهم على عناصر Navbar الجديدة.
+- 648 تركيبة (9 صفحات x 9 عروض 320-1920 x ثيمين x وضعين x اتجاهين): بلا Overflow أفقي ولا أخطاء Console ولا 404. تباين 40 ثنائية: Default وOcean، Light وDark: 40/40. `tests/manual/core.html`: 43/43 (http وfile، autoInit تشغيل وإيقاف). مقطع "استبدال Default" في صفحة Themes اختُبر فعلاً في Light وDark.
+- لم يُختبر: Safari/Firefox، أجهزة اللمس، قارئات الشاشة، Forced Colors، تأثير الثيم أو اللغة على مكونات (لا مكون منفذ)، `file://` للتحميل (غير مدعوم عمداً).
+
 ### Added (Task 05: Core JavaScript)
 - `assets/js/baset-ui.js`: نواة `BUI` (33,628 بايت خام، 7,806 gzip): `version`, `config`, `register`, `init`, `getInstance`, `destroy`, `destroyAll`, `on/off/emit`, `trigger`, `options` (Parser)، `dom`, `utils`, `log`، وObserver اختياري. Global واحد فقط: `BUI`.
 - `tests/manual/core.html`: 43 فحصاً ذاتي التشغيل (مكونات تجريبية داخل الصفحة فقط)، يدعم `?autoinit=0`.

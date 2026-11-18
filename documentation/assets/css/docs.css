@@ -34,13 +34,34 @@ body { min-height: 100vh; display: flex; flex-direction: column; }
     color: var(--bui-color-text); background: var(--bui-color-surface);
     border: 1px solid var(--bui-color-border); border-radius: var(--bui-radius-md);
 }
-.bui-docs-navbar__actions { display: flex; gap: var(--bui-space-2); }
+.bui-docs-navbar__actions { display: flex; gap: var(--bui-space-1); flex: none; }
+/* Mobile First: the search box and the long button labels appear from SM (576px) up, so the controls fit at 320px. */
+.bui-docs-navbar { gap: var(--bui-space-2); padding-inline: var(--bui-space-2); }
+.bui-docs-navbar__brand { white-space: nowrap; }
+.bui-docs-navbar__search { display: none; }
+.bui-docs-navbar__brand { flex: 1; min-width: 0; }
+.bui-docs-btn__extra { display: none; }
+.bui-docs-navbar__actions .bui-docs-btn, .bui-docs-navbar__actions .bui-docs-select { padding-inline: 0.45rem; font-size: 0.8rem; }
+@media (min-width: 576px) {
+    .bui-docs-navbar { gap: var(--bui-space-3); padding-inline: var(--bui-space-3); }
+    .bui-docs-navbar__search { display: block; }
+    .bui-docs-navbar__brand { flex: none; }
+    .bui-docs-btn__extra { display: inline; }
+    .bui-docs-navbar__actions { gap: var(--bui-space-2); }
+    .bui-docs-navbar__actions .bui-docs-btn, .bui-docs-navbar__actions .bui-docs-select { padding-inline: 0.75rem; font-size: 0.875rem; }
+}
 .bui-docs-btn {
     padding: 0.35rem 0.75rem; font: inherit; font-size: 0.875rem; cursor: pointer; text-decoration: none;
     color: var(--bui-color-text); background: transparent;
     border: 1px solid var(--bui-color-border); border-radius: var(--bui-radius-md); white-space: nowrap;
 }
 .bui-docs-btn:hover { background: var(--bui-color-surface); }
+.bui-docs-btn[aria-pressed="true"] { background: var(--bui-color-primary-subtle); border-color: var(--bui-color-primary-border); }
+.bui-docs-select, .bui-docs-input {
+    padding: 0.35rem 0.5rem; font: inherit; font-size: 0.875rem; cursor: pointer;
+    color: var(--bui-color-text); background: var(--bui-color-bg);
+    border: 1px solid var(--bui-color-border); border-radius: var(--bui-radius-md);
+}
 .bui-docs-navbar__toggle { padding: 0.5rem; background: none; border: 0; cursor: pointer; color: var(--bui-color-text); }
 .bui-docs-burger, .bui-docs-burger::before, .bui-docs-burger::after {
     display: block; width: 1.25rem; height: 2px; background: currentColor; content: ""; position: relative;
@@ -327,6 +348,10 @@ pre.bui-docs-code code { font: inherit; }
 .bui-docs-demo-box--tall { min-height: 5rem; }
 .bui-docs-demo-frame { padding-block: var(--bui-space-2); background: var(--bui-color-surface); border: 1px dashed var(--bui-color-border-strong); }
 .bui-docs-demo-gap { margin-block-end: var(--bui-space-2); }
+.bui-docs-demo-fill {
+    padding: var(--bui-space-2); font-size: 0.875rem; text-align: center; overflow-wrap: anywhere;
+    color: var(--bui-color-primary-contrast); background: var(--bui-color-primary);
+}
 
 .bui-docs-modes { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--bui-space-3); margin-block: var(--bui-space-3); }
 .bui-docs-panel { padding: var(--bui-space-3); border: 1px solid var(--bui-color-border); border-radius: var(--bui-radius-md); }

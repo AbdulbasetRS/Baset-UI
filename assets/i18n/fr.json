@@ -1,0 +1,17 @@
+{
+    "meta": { "code": "fr", "name": "Français", "direction": "ltr" },
+    "common": {
+        "loading": "Chargement...",
+        "search": "Rechercher",
+        "close": "Fermer",
+        "cancel": "Annuler",
+        "confirm": "Confirmer",
+        "noResults": "Aucun résultat trouvé",
+        "showing": "Affichage de {from} à {to} sur {total}",
+        "items": {
+            "one": "{count} élément",
+            "many": "{count} d'éléments",
+            "other": "{count} éléments"
+        }
+    }
+}

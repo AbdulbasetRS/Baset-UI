@@ -24,7 +24,7 @@
 ## `assets/js/baset-ui.js`
 **المسؤولية (إلزامي):** Core Initialization، Global Config، Theme Manager، Locale Manager، Toast Manager، Modal Manager، Shared Utilities، DOM Helpers، Component Initialization، Event Management.
 
-**الحالة الحالية (Task 05):** منفذ: Namespace `BUI`، Global Config (`BUI.config`)، Registry (`BUI.register`)، Init وInstances، Events، DOM Helpers، Utilities، Options Parser، Logger، وObserver اختياري. **غير منفذ (مستقبلي):** Theme Manager وLocale Manager وToast Manager وModal Manager. الواجهة في [JAVASCRIPT_API.md](JAVASCRIPT_API.md).
+**الحالة الحالية (Task 06):** منفذ: Theme Manager (`BUI.theme`) وLocale Manager (`BUI.locale`) إضافة إلى ما يلي من Task 05: Namespace `BUI`، Global Config (`BUI.config`)، Registry (`BUI.register`)، Init وInstances، Events، DOM Helpers، Utilities، Options Parser، Logger، وObserver اختياري. **غير منفذ (مستقبلي):** Toast Manager وModal Manager. الواجهة في [JAVASCRIPT_API.md](JAVASCRIPT_API.md).
 
 قواعد: IIFE أو UMD بدون Modules كشرط، يعرّض `window.BUI` فقط، لا متغيرات Global أخرى. التفاصيل في [JAVASCRIPT_API.md](JAVASCRIPT_API.md).
 

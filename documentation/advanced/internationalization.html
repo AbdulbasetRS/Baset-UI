@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-bui-theme="default" data-bui-mode="light" data-root="../../">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Internationalization - Baset-UI Documentation</title>
+    <meta name="description" content="Translate your interface with BUI.locale: JSON language files, parameters, plurals, HTML binding and lang and dir handling.">
+    <link rel="icon" href="data:,">
+
+    <link rel="stylesheet" href="../../assets/css/baset-ui.css">
+    <link rel="stylesheet" href="../../assets/css/themes/ocean.css">
+    <link rel="stylesheet" href="../../documentation/assets/css/docs.css">
+    <script>
+        /* Prevents a flash of the wrong theme or mode. Same keys as BUI.theme (bui-theme, bui-mode). */
+        (function () {
+            var d = document.documentElement, t = null, m = null, r = null;
+            try { t = localStorage.getItem('bui-theme'); m = localStorage.getItem('bui-mode'); r = localStorage.getItem('bui-docs-dir'); } catch (e) {}
+            if (t && /^[a-z][a-z0-9]*(-[a-z0-9]+)*$/.test(t)) d.setAttribute('data-bui-theme', t);
+            if (m !== 'light' && m !== 'dark') m = window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+            d.setAttribute('data-bui-mode', m);
+            /* Documentation shell only: the saved direction of the RTL/LTR switcher. */
+            if (r === 'rtl' || r === 'ltr') d.setAttribute('dir', r);
+        })();
+    </script>
+</head>
+<body>
+    <main class="bui-docs-main" id="bui-docs-main" tabindex="-1">
+        <div class="bui-docs-page">
+            <div class="bui-docs-page__body">
+
+                <header class="bui-docs-page-header">
+                    <nav class="bui-docs-breadcrumb" aria-label="Breadcrumb" data-docs-breadcrumb hidden></nav>
+                    <h1>Internationalization</h1>
+                    <p class="bui-docs-lead">Language files, parameters, plurals and direction handled by BUI.locale. A new language is one JSON file.</p>
+                </header>
+
+                <div class="bui-docs-content">
+
+<section class="bui-docs-section" aria-labelledby="overview">
+<h2 id="overview">Overview</h2>
+<p><code>BUI.locale</code> loads translation files (JSON), translates keys with parameters and plurals, keeps <code>lang</code> and <code>dir</code> on <code>&lt;html&gt;</code> in sync with the active language and can translate HTML through attributes. Adding a language means adding one JSON file: no JavaScript or CSS changes.</p>
+<p>Three languages ship: English (<code>en</code>), Arabic (<code>ar</code>) and French (<code>fr</code>), in <code>assets/i18n/</code>. The documentation shell itself (Navbar, Sidebar, Footer) stays in English: it does not use <code>data-bui-i18n</code>. The live examples below show the library.</p>
+</section>
+
+<section class="bui-docs-section" aria-labelledby="files">
+<h2 id="files">Language files</h2>
+<p>One file per language, <code>assets/i18n/{code}.json</code>, with this structure:</p>
+<pre class="bui-docs-code" data-lang="json"><code>{
+    "meta": { "code": "fr", "name": "Français", "direction": "ltr" },
+    "common": {
+        "close": "Fermer",
+        "showing": "Affichage de {from} à {to} sur {total}",
+        "items": { "one": "{count} élément", "many": "{count} d'éléments", "other": "{count} éléments" }
+    }
+}</code></pre>
+<ul>
+<li><code>meta.code</code>, <code>meta.name</code> (in its own language) and <code>meta.direction</code> (<code>ltr</code> or <code>rtl</code>) are required.</li>
+<li>Keys are camelCase, nested at most 3 levels, grouped under the component name (<code>common</code> now; <code>modal.close</code> later).</li>
+<li>Every file has exactly the same keys. <code>node tests/i18n-keys.js</code> checks it (see below).</li>
+<li>A message may use <code>{name}</code> parameters. The parameter names must match across languages.</li>
+<li>A <strong>plural</strong> message is an object whose keys are CLDR plural categories (<code>zero</code>, <code>one</code>, <code>two</code>, <code>few</code>, <code>many</code>, <code>other</code>) and must have <code>other</code>. Arabic needs six forms and English two, so the test treats a plural object as one key and does not compare its categories.</li>
+</ul>
+</section>
+
+<section class="bui-docs-section" aria-labelledby="use">
+<h2 id="use">Load and use a language</h2>
+<p><code>use()</code> loads the file (once; it is cached), sets <code>lang</code> and <code>dir</code> on <code>&lt;html&gt;</code>, updates the HTML bindings and fires <code>bui:locale:change</code>.</p>
+<pre class="bui-docs-code" data-lang="javascript"><code>await BUI.locale.use('ar', { url: 'assets/i18n/ar.json', fallback: 'en' });
+
+BUI.locale.t('common.close');                                        // 'إغلاق'
+BUI.locale.t('common.showing', { from: 1, to: 10, total: 95 });
+BUI.locale.t('common.items', { count: 3 });                          // plural
+BUI.locale.get();                                                    // 'ar'
+BUI.locale.getDirection();                                           // 'rtl' </code></pre>
+<p>Without <code>url</code>, the file is looked up next to the script, at <code>../i18n/{code}.json</code> relative to <code>baset-ui.js</code>.</p><div class="bui-docs-callout bui-docs-callout--warning" role="note">
+<p class="bui-docs-callout__title">Warning</p>
+<p><code>use()</code> reads the file with <code>fetch</code>, so the page must be served over http or https (a local server or GitHub Pages). Browsers block <code>fetch</code> of local files opened with <code>file://</code>; the call then rejects, an error is logged and the active language does not change. Use <code>BUI.locale.register()</code> to provide messages without a request.</p>
+</div>
+</section>
+
+<section class="bui-docs-section" aria-labelledby="live">
+<h2 id="live">Live example</h2>
+<p>Choose a language: the whole page changes <code>lang</code> and <code>dir</code> (the Navbar and Sidebar flip in Arabic), and the elements below are translated from the real files. Choose English to return.</p>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<div class="bui-d-flex bui-flex-wrap bui-gap-2 bui-items-center bui-docs-demo-gap">
+<button type="button" class="bui-docs-btn" data-locale-set="en">English</button>
+<button type="button" class="bui-docs-btn" data-locale-set="ar">العربية</button>
+<button type="button" class="bui-docs-btn" data-locale-set="fr">Français</button>
+</div>
+<div class="bui-docs-sample-stack">
+<div><strong data-bui-i18n="common.loading"></strong> / <strong data-bui-i18n="common.noResults"></strong></div>
+<div><button type="button" class="bui-docs-btn" data-bui-i18n="common.close" data-bui-i18n-attr="aria-label:common.close; title:common.close"></button></div>
+<div><span data-locale-showing></span></div>
+<div><label>Count <input type="number" min="0" value="1" class="bui-docs-input" data-locale-count></label> <span data-locale-plural></span></div>
+</div>
+<p role="status" data-locale-readout></p>
+</div>
+<pre class="bui-docs-code" data-lang="html"><code>&lt;strong data-bui-i18n="common.loading"&gt;&lt;/strong&gt;
+&lt;button type="button" data-bui-i18n="common.close"
+        data-bui-i18n-attr="aria-label:common.close; title:common.close"&gt;&lt;/button&gt;</code></pre><pre class="bui-docs-code" data-lang="javascript"><code>document.querySelectorAll('[data-locale-set]').forEach((button) =&gt; {
+    button.addEventListener('click', () =&gt; {
+        const code = button.dataset.localeSet;
+        BUI.locale.use(code, { url: '../../assets/i18n/' + code + '.json' });
+    });
+});
+const render = () =&gt; {
+    showing.textContent = BUI.locale.t('common.showing', { from: 1, to: 10, total: 95 });
+    plural.textContent = BUI.locale.t('common.items', { count: Number(count.value) });
+};
+document.documentElement.addEventListener('bui:locale:change', render);</code></pre>
+</div>
+<p>The example uses <code>bui-docs-btn</code> and <code>bui-docs-input</code>, docs-only classes (no Button or Input component yet). The languages are loaded from the three real files of this repository: no sample data is typed into this page.</p>
+</section>
+
+<section class="bui-docs-section" aria-labelledby="params-plurals">
+<h2 id="params-plurals">Parameters, plurals and missing keys</h2>
+<ul>
+<li><strong>Parameters:</strong> <code>{name}</code> is replaced by <code>params.name</code>. A parameter that is not passed stays as <code>{name}</code>. Values are inserted as text, never as HTML.</li>
+<li><strong>Plurals:</strong> when the message is a plural object and <code>params.count</code> is a number, the form is chosen with <code>Intl.PluralRules</code> of the language that provided the message; if that category is missing, <code>other</code> is used. <code>{count}</code> can be used inside the text.</li>
+<li><strong>Fallback:</strong> a key is looked up in the active language, then in the fallback language (default <code>en</code>), then the key itself is returned and <code>[BUI] Locale: Missing key "..."</code> is logged once per key and language.</li>
+</ul><pre class="bui-docs-code" data-lang="javascript"><code>BUI.locale.t('common.unknown');   // returns 'common.unknown' and logs one warning</code></pre>
+</section>
+
+<section class="bui-docs-section" aria-labelledby="html-binding">
+<h2 id="html-binding">HTML binding</h2>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Binding attributes</caption>
+<thead><tr><th scope="col">Attribute</th><th scope="col">Example</th><th scope="col">Description</th></tr></thead>
+<tbody>
+<tr><td><code>data-bui-i18n</code></td><td><code>data-bui-i18n="common.close"</code></td><td>Replaces the element text (<code>textContent</code>, so any children are replaced). Use it on elements that contain only text.</td></tr>
+<tr><td><code>data-bui-i18n-attr</code></td><td><code>data-bui-i18n-attr="aria-label:common.close; title:common.close"</code></td><td>Sets attributes from keys: <code>attribute:key</code> pairs separated by <code>;</code>. Event handler attributes (<code>on...</code>) are refused.</td></tr>
+</tbody>
+</table>
+<p>Bindings are applied after every successful <code>use()</code>. The text written in the HTML is what users see before a language is loaded and without JavaScript. For elements added later, call <code>BUI.locale.apply(root)</code>.</p>
+</section>
+
+<section class="bui-docs-section" aria-labelledby="add-language">
+<h2 id="add-language">Add a language</h2>
+<ol>
+<li>Copy <code>assets/i18n/en.json</code> to <code>assets/i18n/{code}.json</code> and translate the values without changing keys.</li>
+<li>Set <code>meta.code</code>, <code>meta.name</code> and <code>meta.direction</code>.</li>
+<li>Add the plural categories the language needs (check them with <code>new Intl.PluralRules('{code}').resolvedOptions().pluralCategories</code>).</li>
+<li>Run <code>node tests/i18n-keys.js</code>. It fails when a key or a parameter is missing in any file.</li>
+<li>Use it with <code>BUI.locale.use('{code}')</code>. No other file changes.</li>
+</ol><pre class="bui-docs-code" data-lang="bash"><code>node tests/i18n-keys.js</code></pre>
+</section>
+
+<section class="bui-docs-section" aria-labelledby="javascript-api">
+<h2 id="javascript-api">JavaScript API</h2>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Locale methods</caption>
+<thead><tr><th scope="col">Name</th><th scope="col">Returns</th><th scope="col">Description</th></tr></thead>
+<tbody>
+<tr><td><code>BUI.locale.use(code, options?)</code></td><td>Promise&lt;string&gt;</td><td>Loads (or reuses from cache) the language and its fallback, then activates it. Resolves with the code. Rejects when the code is invalid or the file cannot be loaded; the active language is unchanged. If called again before the first call finishes, only the last call is applied.</td></tr>
+<tr><td><code>BUI.locale.t(key, params?)</code></td><td>string</td><td>Translates a dotted key. Never throws; returns the key when it is missing.</td></tr>
+<tr><td><code>BUI.locale.get()</code></td><td>string or <code>null</code></td><td>The active language code, <code>null</code> until <code>use()</code> succeeds.</td></tr>
+<tr><td><code>BUI.locale.getDirection()</code></td><td>string</td><td><code>"ltr"</code> or <code>"rtl"</code>.</td></tr>
+<tr><td><code>BUI.locale.register(code, messages)</code></td><td>boolean</td><td>Adds a language object (same shape as the JSON file) to the cache without a request. Returns <code>false</code> and logs an error when <code>meta.direction</code> is missing or invalid. A later <code>use(code)</code> needs no <code>url</code>.</td></tr>
+<tr><td><code>BUI.locale.apply(root?)</code></td><td>number</td><td>Applies the HTML bindings inside <code>root</code> (default <code>document</code>) and returns the number of elements updated.</td></tr>
+</tbody>
+</table>
+<h3>Options of use()</h3>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">use() options</caption>
+<thead><tr><th scope="col">Name</th><th scope="col">Type</th><th scope="col">Default</th><th scope="col">Description</th></tr></thead>
+<tbody>
+<tr><td><code>url</code></td><td>string</td><td><code>../i18n/{code}.json</code> next to <code>baset-ui.js</code></td><td>Where to load the language from.</td></tr>
+<tr><td><code>fallback</code></td><td>string, <code>false</code> or <code>null</code></td><td><code>"en"</code></td><td>Language used for keys missing in the active language. <code>false</code> or <code>null</code> disables it. Ignored when equal to <code>code</code>.</td></tr>
+<tr><td><code>fallbackUrl</code></td><td>string</td><td>same rule as <code>url</code></td><td>Where to load the fallback language from. A fallback that fails to load logs a warning and is skipped.</td></tr>
+</tbody>
+</table>
+<h3>Events</h3>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Locale events</caption>
+<thead><tr><th scope="col">Name</th><th scope="col">Target</th><th scope="col">Detail</th><th scope="col">Description</th></tr></thead>
+<tbody>
+<tr><td><code>bui:locale:change</code></td><td><code>document.documentElement</code> (bubbles)</td><td><code>{ locale, previousLocale, direction, fallback }</code></td><td>Fired after <code>lang</code>, <code>dir</code> and the HTML bindings were updated, when the active language code changes. Components with texts listen to it and refresh without losing their state.</td></tr>
+</tbody>
+</table>
+</section>
+
+<section class="bui-docs-section" aria-labelledby="accessibility">
+<h2 id="accessibility">Accessibility</h2>
+<p>Changing the language updates <code>lang</code> and <code>dir</code> so assistive technology reads in the right language and direction. Translate <code>aria-label</code> and similar texts with <code>data-bui-i18n-attr</code>. Dates and numbers should use <code>Intl</code> with <code>BUI.locale.get()</code>. The language switch does not move focus. Screen reader pronunciation of the Arabic and French texts was not tested.</p>
+</section>
+
+                </div>
+                <!-- Previous / Next links are appended here by docs.js from the order in nav.js. -->
+            </div>
+            <!-- "On this page" is appended here by docs.js (visible from the XL breakpoint). -->
+        </div>
+    </main>
+
+    <script src="../../assets/js/baset-ui.js"></script>
+    <script src="../../documentation/assets/js/nav.js"></script>
+    <script src="../../documentation/assets/js/docs.js"></script>
+    <script>
+        /* Demo for the "Live example" (docs page only). */
+        (function () {
+            var showing = document.querySelector('[data-locale-showing]');
+            var plural = document.querySelector('[data-locale-plural]');
+            var count = document.querySelector('[data-locale-count]');
+            var out = document.querySelector('[data-locale-readout]');
+            function render() {
+                showing.textContent = BUI.locale.t('common.showing', { from: 1, to: 10, total: 95 });
+                plural.textContent = BUI.locale.t('common.items', { count: Number(count.value) });
+                out.textContent = 'Language: ' + BUI.locale.get() + ', direction: ' + BUI.locale.getDirection();
+            }
+            document.querySelectorAll('[data-locale-set]').forEach(function (button) {
+                button.addEventListener('click', function () {
+                    var code = button.getAttribute('data-locale-set');
+                    BUI.locale.use(code, { url: '../../assets/i18n/' + code + '.json' }).catch(function (e) {
+                        out.textContent = 'Could not load "' + code + '": ' + e.message + ' (serve the site over http or https).';
+                    });
+                });
+            });
+            count.addEventListener('input', function () { if (BUI.locale.get()) render(); });
+            document.documentElement.addEventListener('bui:locale:change', render);
+        })();
+    </script>
+</body>
+</html>

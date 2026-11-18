@@ -6,6 +6,11 @@
         "close": "Close",
         "cancel": "Cancel",
         "confirm": "Confirm",
-        "noResults": "No results found"
+        "noResults": "No results found",
+        "showing": "Showing {from} to {to} of {total}",
+        "items": {
+            "one": "{count} item",
+            "other": "{count} items"
+        }
     }
 }

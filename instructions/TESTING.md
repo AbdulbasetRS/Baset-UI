@@ -1,6 +1,6 @@
 # قواعد الاختبار
 
-> الحالة: لا توجد أطر اختبار مثبتة. يوجد اختبار يدوي ذاتي التشغيل واحد: `tests/manual/core.html` (Task 05). اختيار أداة اختبار آلية = إضافة Dependency تحتاج موافقة ([AI_RULES.md](AI_RULES.md)).
+> الحالة: لا توجد أطر اختبار مثبتة. يوجد اختبار يدوي ذاتي التشغيل واحد: `tests/manual/core.html` (Task 05)، واختبار آلي بلا Dependencies لتطابق مفاتيح i18n: `node tests/i18n-keys.js` (Task 06). اختيار أداة اختبار آلية = إضافة Dependency تحتاج موافقة ([AI_RULES.md](AI_RULES.md)).
 
 ## المبدأ
 لا مهمة مكتملة دون اختبار فعلي، ويُذكر في التقرير ما اختُبر وكيف وما لم يُختبر.
@@ -14,7 +14,7 @@
 | **Light/Dark** | مراجعة بالوضعين |
 | **Responsive** | العروض المذكورة في [RESPONSIVE_DESIGN.md](RESPONSIVE_DESIGN.md)، ولا Horizontal Overflow |
 | **Keyboard/A11y** | حسب [ACCESSIBILITY.md](ACCESSIBILITY.md) |
-| **i18n** | تطابق مفاتيح كل ملفات `assets/i18n/*.json` |
+| **i18n** | تطابق مفاتيح كل ملفات `assets/i18n/*.json`: `node tests/i18n-keys.js` |
 | **JS Lifecycle** | init مرتين، destroy، عدم تسرب مستمعات |
 | **التراجع** | المكونات المسجلة الأخرى لم تتأثر |
 

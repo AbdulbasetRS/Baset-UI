@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-bui-theme="default" data-bui-mode="light" data-root="../../">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Themes - Baset-UI Documentation</title>
+    <meta name="description" content="Switch between themes at runtime, use the Ocean theme and create your own with design tokens only.">
+    <link rel="icon" href="data:,">
+
+    <link rel="stylesheet" href="../../assets/css/baset-ui.css">
+    <link rel="stylesheet" href="../../assets/css/themes/ocean.css">
+    <link rel="stylesheet" href="../../documentation/assets/css/docs.css">
+    <script>
+        /* Prevents a flash of the wrong theme or mode. Same keys as BUI.theme (bui-theme, bui-mode). */
+        (function () {
+            var d = document.documentElement, t = null, m = null, r = null;
+            try { t = localStorage.getItem('bui-theme'); m = localStorage.getItem('bui-mode'); r = localStorage.getItem('bui-docs-dir'); } catch (e) {}
+            if (t && /^[a-z][a-z0-9]*(-[a-z0-9]+)*$/.test(t)) d.setAttribute('data-bui-theme', t);
+            if (m !== 'light' && m !== 'dark') m = window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+            d.setAttribute('data-bui-mode', m);
+            /* Documentation shell only: the saved direction of the RTL/LTR switcher. */
+            if (r === 'rtl' || r === 'ltr') d.setAttribute('dir', r);
+        })();
+    </script>
+</head>
+<body>
+    <main class="bui-docs-main" id="bui-docs-main" tabindex="-1">
+        <div class="bui-docs-page">
+            <div class="bui-docs-page__body">
+
+                <header class="bui-docs-page-header">
+                    <nav class="bui-docs-breadcrumb" aria-label="Breadcrumb" data-docs-breadcrumb hidden></nav>
+                    <h1>Themes</h1>
+                    <p class="bui-docs-lead">A theme is a CSS file that redefines tokens. Core is never edited.</p>
+                </header>
+
+                <div class="bui-docs-content">
+
+<section class="bui-docs-section" aria-labelledby="overview">
+<h2 id="overview">Overview</h2>
+<p>A <strong>theme</strong> is a CSS file that redefines design tokens. It never edits <code>baset-ui.css</code> and never targets a component, so it controls every component through the tokens they read. Two attributes on <code>&lt;html&gt;</code> (or on any element) choose the look: <code>data-bui-theme</code> (default <code>default</code>) and <code>data-bui-mode</code> (<code>light</code> or <code>dark</code>).</p>
+<p>The library ships one extra theme, <code>ocean</code>, in <code>assets/css/themes/ocean.css</code>. It changes colors, the font family, the radius scale, shadows, the thick border width and the focus ring width, in both modes. Use the Theme select in the Navbar to switch the whole documentation site to it.</p>
+<div class="bui-docs-callout bui-docs-callout--note" role="note">
+<p class="bui-docs-callout__title">Note</p>
+<p>No component is implemented yet. The examples below show the tokens through base elements, utilities and docs-only demo boxes. Components will pick the theme up through the same tokens when they exist.</p>
+</div>
+</section>
+
+<section class="bui-docs-section" aria-labelledby="include-activate">
+<h2 id="include-activate">Include and activate</h2>
+<p>Load the theme after Core. The file only declares tokens, so it is safe to load even when the theme is not active.</p>
+<pre class="bui-docs-code" data-lang="html"><code>&lt;link rel="stylesheet" href="assets/css/baset-ui.css"&gt;
+&lt;link rel="stylesheet" href="assets/css/themes/ocean.css"&gt;
+
+&lt;html lang="en" dir="ltr" data-bui-theme="ocean" data-bui-mode="light"&gt;</code></pre>
+<p>Or switch at runtime with <code>BUI.theme</code> (no reload; the choice is saved):</p>
+<pre class="bui-docs-code" data-lang="javascript"><code>BUI.theme.set('ocean');
+BUI.theme.get();          // 'ocean'
+BUI.theme.set('default');</code></pre>
+<p>Add the small <code>&lt;head&gt;</code> script from the <a href="dark-mode.html#no-flash">Dark Mode</a> page so a saved theme and mode are applied before the first paint.</p>
+</section>
+
+<section class="bui-docs-section" aria-labelledby="live-scopes">
+<h2 id="live-scopes">Live: themes on scoped elements</h2>
+<p>The selectors work on any element. Each panel below sets its own <code>data-bui-theme</code> and <code>data-bui-mode</code>, on the same element, so Light and Dark of a theme can sit side by side on one page.</p>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<div class="bui-docs-modes">
+<div class="bui-docs-panel" data-bui-theme="default" data-bui-mode="light">
+<p class="bui-docs-panel__title">Default, Light</p>
+<h3>Sample heading</h3>
+<p>Body text with a <a href="#overview">link</a>.</p>
+<div class="bui-docs-demo-box bui-docs-demo-gap">Primary subtle</div>
+<div class="bui-docs-demo-fill bui-rounded-md bui-shadow-md bui-border-width-thick bui-border-solid bui-border-secondary">Primary fill, radius md, shadow md</div>
+</div>
+<div class="bui-docs-panel" data-bui-theme="ocean" data-bui-mode="light">
+<p class="bui-docs-panel__title">Ocean, Light</p>
+<h3>Sample heading</h3>
+<p>Body text with a <a href="#overview">link</a>.</p>
+<div class="bui-docs-demo-box bui-docs-demo-gap">Primary subtle</div>
+<div class="bui-docs-demo-fill bui-rounded-md bui-shadow-md bui-border-width-thick bui-border-solid bui-border-secondary">Primary fill, radius md, shadow md</div>
+</div>
+<div class="bui-docs-panel" data-bui-theme="ocean" data-bui-mode="dark">
+<p class="bui-docs-panel__title">Ocean, Dark</p>
+<h3>Sample heading</h3>
+<p>Body text with a <a href="#overview">link</a>.</p>
+<div class="bui-docs-demo-box bui-docs-demo-gap">Primary subtle</div>
+<div class="bui-docs-demo-fill bui-rounded-md bui-shadow-md bui-border-width-thick bui-border-solid bui-border-secondary">Primary fill, radius md, shadow md</div>
+</div>
+</div>
+</div>
+</div>
+<div class="bui-docs-callout bui-docs-callout--warning" role="note">
+<p class="bui-docs-callout__title">Warning</p>
+<p>Core declares the static tokens (font family, radius, border widths, focus ring) on <code>:root</code> only. A nested scope that sets a theme overrides the tokens that theme defines, but a nested <code>default</code> scope cannot reset what an ancestor theme changed. While the page itself uses Ocean, the Default panel therefore keeps the Ocean font, radius and border width; its colors and shadows still switch. This is a property of the Task 03 token scopes, not of the theme file.</p>
+</div>
+</section>
+
+<section class="bui-docs-section" aria-labelledby="compare-tokens">
+<h2 id="compare-tokens">Compare tokens</h2>
+<p>Resolved values, read live from the stylesheets (never typed into this page).</p>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Resolved token values per theme and mode</caption>
+<thead><tr><th scope="col">Token</th><th scope="col">Default Light</th><th scope="col">Ocean Light</th><th scope="col">Ocean Dark</th></tr></thead>
+<tbody>
+<tr><td><code>--bui-color-neutral-0</code></td><td><span data-docs-token="--bui-color-neutral-0" data-docs-mode="light" data-docs-theme="default"></span></td><td><span data-docs-token="--bui-color-neutral-0" data-docs-mode="light" data-docs-theme="ocean"></span></td><td><span data-docs-token="--bui-color-neutral-0" data-docs-mode="dark" data-docs-theme="ocean"></span></td></tr>
+<tr><td><code>--bui-color-text</code></td><td><span data-docs-token="--bui-color-text" data-docs-mode="light" data-docs-theme="default"></span></td><td><span data-docs-token="--bui-color-text" data-docs-mode="light" data-docs-theme="ocean"></span></td><td><span data-docs-token="--bui-color-text" data-docs-mode="dark" data-docs-theme="ocean"></span></td></tr>
+<tr><td><code>--bui-color-primary</code></td><td><span data-docs-token="--bui-color-primary" data-docs-mode="light" data-docs-theme="default"></span></td><td><span data-docs-token="--bui-color-primary" data-docs-mode="light" data-docs-theme="ocean"></span></td><td><span data-docs-token="--bui-color-primary" data-docs-mode="dark" data-docs-theme="ocean"></span></td></tr>
+<tr><td><code>--bui-color-primary-contrast</code></td><td><span data-docs-token="--bui-color-primary-contrast" data-docs-mode="light" data-docs-theme="default"></span></td><td><span data-docs-token="--bui-color-primary-contrast" data-docs-mode="light" data-docs-theme="ocean"></span></td><td><span data-docs-token="--bui-color-primary-contrast" data-docs-mode="dark" data-docs-theme="ocean"></span></td></tr>
+<tr><td><code>--bui-color-border-strong</code></td><td><span data-docs-token="--bui-color-border-strong" data-docs-mode="light" data-docs-theme="default"></span></td><td><span data-docs-token="--bui-color-border-strong" data-docs-mode="light" data-docs-theme="ocean"></span></td><td><span data-docs-token="--bui-color-border-strong" data-docs-mode="dark" data-docs-theme="ocean"></span></td></tr>
+<tr><td><code>--bui-shadow-md</code></td><td><span data-docs-token="--bui-shadow-md" data-docs-mode="light" data-docs-theme="default"></span></td><td><span data-docs-token="--bui-shadow-md" data-docs-mode="light" data-docs-theme="ocean"></span></td><td><span data-docs-token="--bui-shadow-md" data-docs-mode="dark" data-docs-theme="ocean"></span></td></tr>
+<tr><td><code>--bui-font-family</code></td><td><span data-docs-token="--bui-font-family" data-docs-mode="light" data-docs-theme="default"></span></td><td><span data-docs-token="--bui-font-family" data-docs-mode="light" data-docs-theme="ocean"></span></td><td><span data-docs-token="--bui-font-family" data-docs-mode="dark" data-docs-theme="ocean"></span></td></tr>
+<tr><td><code>--bui-radius-md</code></td><td><span data-docs-token="--bui-radius-md" data-docs-mode="light" data-docs-theme="default"></span></td><td><span data-docs-token="--bui-radius-md" data-docs-mode="light" data-docs-theme="ocean"></span></td><td><span data-docs-token="--bui-radius-md" data-docs-mode="dark" data-docs-theme="ocean"></span></td></tr>
+<tr><td><code>--bui-border-width-thick</code></td><td><span data-docs-token="--bui-border-width-thick" data-docs-mode="light" data-docs-theme="default"></span></td><td><span data-docs-token="--bui-border-width-thick" data-docs-mode="light" data-docs-theme="ocean"></span></td><td><span data-docs-token="--bui-border-width-thick" data-docs-mode="dark" data-docs-theme="ocean"></span></td></tr>
+<tr><td><code>--bui-focus-ring-width</code></td><td><span data-docs-token="--bui-focus-ring-width" data-docs-mode="light" data-docs-theme="default"></span></td><td><span data-docs-token="--bui-focus-ring-width" data-docs-mode="light" data-docs-theme="ocean"></span></td><td><span data-docs-token="--bui-focus-ring-width" data-docs-mode="dark" data-docs-theme="ocean"></span></td></tr>
+<tr><td><code>--bui-heading-font-weight</code></td><td><span data-docs-token="--bui-heading-font-weight" data-docs-mode="light" data-docs-theme="default"></span></td><td><span data-docs-token="--bui-heading-font-weight" data-docs-mode="light" data-docs-theme="ocean"></span></td><td><span data-docs-token="--bui-heading-font-weight" data-docs-mode="dark" data-docs-theme="ocean"></span></td></tr>
+</tbody>
+</table>
+<p>The font family, radius, thick border and focus ring rows of the Default column are exact only while the page theme is Default (see the warning above).</p>
+</section>
+
+<section class="bui-docs-section" aria-labelledby="contrast">
+<h2 id="contrast">Contrast of the Ocean theme</h2>
+<p>A theme must keep the contrast required by <code>instructions/ACCESSIBILITY.md</code> (4.5:1 for text, 3:1 for interface elements) in Light and Dark. These ratios are computed from the Ocean tokens.</p>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Contrast ratios of Ocean color pairs</caption>
+<thead><tr><th scope="col">Pair</th><th scope="col">Required</th><th scope="col">Light</th><th scope="col">Dark</th></tr></thead>
+<tbody>
+<tr data-docs-contrast data-docs-theme="ocean" data-fg="--bui-color-text" data-bg="--bui-color-bg" data-min="4.5"><td><code>text</code> on <code>bg</code></td><td>4.5:1</td><td data-docs-cell="light"></td><td data-docs-cell="dark"></td></tr>
+<tr data-docs-contrast data-docs-theme="ocean" data-fg="--bui-color-text" data-bg="--bui-color-surface" data-min="4.5"><td><code>text</code> on <code>surface</code></td><td>4.5:1</td><td data-docs-cell="light"></td><td data-docs-cell="dark"></td></tr>
+<tr data-docs-contrast data-docs-theme="ocean" data-fg="--bui-color-text-muted" data-bg="--bui-color-bg" data-min="4.5"><td><code>text-muted</code> on <code>bg</code></td><td>4.5:1</td><td data-docs-cell="light"></td><td data-docs-cell="dark"></td></tr>
+<tr data-docs-contrast data-docs-theme="ocean" data-fg="--bui-color-text-muted" data-bg="--bui-color-surface" data-min="4.5"><td><code>text-muted</code> on <code>surface</code></td><td>4.5:1</td><td data-docs-cell="light"></td><td data-docs-cell="dark"></td></tr>
+<tr data-docs-contrast data-docs-theme="ocean" data-fg="--bui-color-link" data-bg="--bui-color-bg" data-min="4.5"><td><code>link</code> on <code>bg</code></td><td>4.5:1</td><td data-docs-cell="light"></td><td data-docs-cell="dark"></td></tr>
+<tr data-docs-contrast data-docs-theme="ocean" data-fg="--bui-color-primary-contrast" data-bg="--bui-color-primary" data-min="4.5"><td><code>primary-contrast</code> on <code>primary</code></td><td>4.5:1</td><td data-docs-cell="light"></td><td data-docs-cell="dark"></td></tr>
+<tr data-docs-contrast data-docs-theme="ocean" data-fg="--bui-color-primary-contrast" data-bg="--bui-color-primary-hover" data-min="4.5"><td><code>primary-contrast</code> on <code>primary-hover</code></td><td>4.5:1</td><td data-docs-cell="light"></td><td data-docs-cell="dark"></td></tr>
+<tr data-docs-contrast data-docs-theme="ocean" data-fg="--bui-color-primary-contrast" data-bg="--bui-color-primary-active" data-min="4.5"><td><code>primary-contrast</code> on <code>primary-active</code></td><td>4.5:1</td><td data-docs-cell="light"></td><td data-docs-cell="dark"></td></tr>
+<tr data-docs-contrast data-docs-theme="ocean" data-fg="--bui-color-secondary-contrast" data-bg="--bui-color-secondary" data-min="4.5"><td><code>secondary-contrast</code> on <code>secondary</code></td><td>4.5:1</td><td data-docs-cell="light"></td><td data-docs-cell="dark"></td></tr>
+<tr data-docs-contrast data-docs-theme="ocean" data-fg="--bui-color-text" data-bg="--bui-color-primary-subtle" data-min="4.5"><td><code>text</code> on <code>primary-subtle</code></td><td>4.5:1</td><td data-docs-cell="light"></td><td data-docs-cell="dark"></td></tr>
+<tr data-docs-contrast data-docs-theme="ocean" data-fg="--bui-color-border-strong" data-bg="--bui-color-bg" data-min="3.0"><td><code>border-strong</code> on <code>bg</code></td><td>3.0:1</td><td data-docs-cell="light"></td><td data-docs-cell="dark"></td></tr>
+<tr data-docs-contrast data-docs-theme="ocean" data-fg="--bui-color-focus" data-bg="--bui-color-bg" data-min="3.0"><td><code>focus</code> on <code>bg</code></td><td>3.0:1</td><td data-docs-cell="light"></td><td data-docs-cell="dark"></td></tr>
+<tr data-docs-contrast data-docs-theme="ocean" data-fg="--bui-color-primary" data-bg="--bui-color-bg" data-min="3.0"><td><code>primary</code> on <code>bg</code></td><td>3.0:1</td><td data-docs-cell="light"></td><td data-docs-cell="dark"></td></tr>
+</tbody>
+</table>
+<p data-docs-contrast-summary role="status"></p>
+</section>
+
+<section class="bui-docs-section" aria-labelledby="create-theme">
+<h2 id="create-theme">Create a theme</h2>
+<ol>
+<li>Create <code>assets/css/themes/{name}.css</code>.</li>
+<li>Define the Light tokens under <code>[data-bui-theme="{name}"]</code>. Do not use <code>:root</code>, so the theme works on any element.</li>
+<li>Define the Dark tokens under <code>[data-bui-theme="{name}"][data-bui-mode="dark"]</code>. Repeat every mode-dependent token of the Light block, otherwise a Light value leaks into Dark.</li>
+<li>Do not use <code>!important</code> or component selectors.</li>
+<li>Check the contrast (table above is the method) and try every registered component.</li>
+<li>Link the file after <code>baset-ui.css</code> and activate it with <code>data-bui-theme</code> or <code>BUI.theme.set()</code>.</li>
+<li>Add it to the Theme list of the Navbar select if you want the documentation to offer it (<code>THEMES</code> in <code>documentation/assets/js/docs.js</code>).</li>
+</ol><pre class="bui-docs-code" data-lang="css"><code>/* assets/css/themes/sunset.css */
+[data-bui-theme="sunset"] {
+    --bui-color-primary: #b3470d;
+    --bui-color-primary-hover: #8f3a0b;
+    --bui-color-primary-active: #6f2d08;
+    --bui-color-primary-contrast: #ffffff;
+    --bui-radius-md: 0.25rem;
+}
+[data-bui-theme="sunset"][data-bui-mode="dark"] {
+    --bui-color-primary: #ff9f66;
+    --bui-color-primary-hover: #ffb286;
+    --bui-color-primary-active: #ffc7a6;
+    --bui-color-primary-contrast: #1c1006;
+}</code></pre>
+<p>Which tokens exist is documented on the <a href="css-variables.html">CSS Variables</a> page. A theme may leave a token alone: Ocean does not redefine success, warning, danger and info.</p>
+</section>
+
+<section class="bui-docs-section" aria-labelledby="replace-default">
+<h2 id="replace-default">Replace the Default theme</h2>
+<p>There are two ways. The first is recommended: it does not edit the meaning of <code>default</code>.</p>
+<ol>
+<li><strong>Ship your own theme and make it the active one.</strong> Create <code>brand.css</code> as above and set <code>data-bui-theme="brand"</code> on <code>&lt;html&gt;</code> (or call <code>BUI.theme.set('brand')</code> once at startup).</li>
+<li><strong>Redefine <code>default</code>.</strong> Load a file after Core that targets <code>[data-bui-theme="default"]</code> with the same two blocks (Light, and Dark with both attributes on the same element). The <code>&lt;html&gt;</code> element keeps <code>data-bui-theme="default"</code>, so every page picks the new values up without changing markup.</li>
+</ol><pre class="bui-docs-code" data-lang="css"><code>[data-bui-theme="default"] {
+    --bui-color-primary: #7a1fa2;
+    --bui-color-primary-hover: #63198a;
+    --bui-color-primary-active: #4e1470;
+    --bui-color-primary-contrast: #ffffff;
+}
+[data-bui-theme="default"][data-bui-mode="dark"] {
+    --bui-color-primary: #d79bf0;
+    --bui-color-primary-hover: #e3b4f5;
+    --bui-color-primary-active: #ecc9f8;
+    --bui-color-primary-contrast: #1d0a27;
+}</code></pre>
+<p>Core still declares Light values on <code>:root</code> with a lower specificity, so the file above wins without <code>!important</code> as long as it is loaded after <code>baset-ui.css</code>.</p>
+</section>
+
+<section class="bui-docs-section" aria-labelledby="load-dynamically">
+<h2 id="load-dynamically">Load a theme dynamically</h2>
+<p>When you do not want to link every theme up front, <code>BUI.theme.load(name, url)</code> adds the stylesheet on demand and returns a Promise. It does not activate the theme.</p>
+<pre class="bui-docs-code" data-lang="javascript"><code>await BUI.theme.load('ocean', 'assets/css/themes/ocean.css');
+BUI.theme.set('ocean');</code></pre>
+<p>If the same stylesheet is already linked in the page, <code>load()</code> reuses it and does not add a second link. A saved theme that is not linked yet would be applied without styles, so link themes that users can save (as this site does) or load them before the first paint.</p>
+</section>
+
+<section class="bui-docs-section" aria-labelledby="javascript-api">
+<h2 id="javascript-api">JavaScript API</h2>
+<p><code>BUI.theme</code> is part of the Core script. Modes are covered on the <a href="dark-mode.html">Dark Mode</a> page.</p>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Theme methods</caption>
+<thead><tr><th scope="col">Name</th><th scope="col">Returns</th><th scope="col">Description</th></tr></thead>
+<tbody>
+<tr><td><code>BUI.theme.set(name)</code></td><td>string or <code>null</code></td><td>Applies <code>data-bui-theme</code> on <code>&lt;html&gt;</code>, saves it in <code>localStorage</code> key <code>bui-theme</code> and fires <code>bui:theme:change</code>. The name must be kebab-case; otherwise a warning is logged and <code>null</code> is returned. It does not check that the stylesheet exists.</td></tr>
+<tr><td><code>BUI.theme.get()</code></td><td>string</td><td>The active theme name.</td></tr>
+<tr><td><code>BUI.theme.setMode(mode)</code></td><td>string or <code>null</code></td><td>See Dark Mode.</td></tr>
+<tr><td><code>BUI.theme.toggleMode()</code></td><td>string</td><td>See Dark Mode.</td></tr>
+<tr><td><code>BUI.theme.getMode()</code></td><td>string</td><td>See Dark Mode.</td></tr>
+<tr><td><code>BUI.theme.load(name, url)</code></td><td>Promise&lt;string&gt;</td><td>Adds <code>&lt;link rel="stylesheet" data-bui-theme-css="name"&gt;</code> to the head. Resolves with the name when the stylesheet loads; rejects (and logs an error) when it fails or when the arguments are invalid. Calling it again for the same name returns the same Promise.</td></tr>
+</tbody>
+</table>
+<h3>Events</h3>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Theme events</caption>
+<thead><tr><th scope="col">Name</th><th scope="col">Target</th><th scope="col">Detail</th><th scope="col">Description</th></tr></thead>
+<tbody>
+<tr><td><code>bui:theme:change</code></td><td><code>document.documentElement</code> (bubbles)</td><td><code>{ theme, mode, previousTheme, previousMode, source }</code></td><td>Fired when the theme or the mode changes. <code>source</code> is <code>"api"</code> (a method call) or <code>"system"</code> (the operating system changed its color scheme). Not fired for the initial state or when nothing changed.</td></tr>
+</tbody>
+</table><pre class="bui-docs-code" data-lang="javascript"><code>document.documentElement.addEventListener('bui:theme:change', (event) =&gt; {
+    console.log(event.detail.theme, event.detail.mode);
+});</code></pre>
+</section>
+
+<section class="bui-docs-section" aria-labelledby="try-it">
+<h2 id="try-it">Try it</h2>
+<p>These buttons call <code>BUI.theme</code>, so they change the whole page and the choice is saved, exactly like the Navbar controls. <code>data-docs-readout</code> shows the current state.</p>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<div class="bui-d-flex bui-flex-wrap bui-gap-2 bui-items-center">
+<button type="button" class="bui-docs-btn" data-theme-set="default">Default</button>
+<button type="button" class="bui-docs-btn" data-theme-set="ocean">Ocean</button>
+<span role="status" data-theme-readout></span>
+</div>
+</div>
+<pre class="bui-docs-code" data-lang="javascript"><code>document.querySelectorAll('[data-theme-set]').forEach((button) =&gt; {
+    button.addEventListener('click', () =&gt; BUI.theme.set(button.dataset.themeSet));
+});</code></pre>
+</div>
+<p>The buttons are <code>bui-docs-btn</code>, a docs-only class: the library has no Button component yet.</p>
+</section>
+
+<section class="bui-docs-section" aria-labelledby="accessibility">
+<h2 id="accessibility">Accessibility</h2>
+<p>A theme changes colors only through tokens, so the contrast table above is the check to repeat for every new theme (Light and Dark). Focus rings use <code>--bui-color-focus</code> and <code>--bui-focus-ring-width</code>; Ocean widens the ring to 3px. Changing the theme does not move focus and announces nothing. Screen reader behavior of the switcher controls was not tested.</p>
+</section>
+
+                </div>
+                <!-- Previous / Next links are appended here by docs.js from the order in nav.js. -->
+            </div>
+            <!-- "On this page" is appended here by docs.js (visible from the XL breakpoint). -->
+        </div>
+    </main>
+
+    <script src="../../assets/js/baset-ui.js"></script>
+    <script src="../../documentation/assets/js/nav.js"></script>
+    <script src="../../documentation/assets/js/docs.js"></script>
+    <script>
+        /* Demo for the "Try it" example (docs page only). */
+        (function () {
+            var out = document.querySelector('[data-theme-readout]');
+            function show() { out.textContent = 'Theme: ' + BUI.theme.get() + ', mode: ' + BUI.theme.getMode(); }
+            document.querySelectorAll('[data-theme-set]').forEach(function (button) {
+                button.addEventListener('click', function () { BUI.theme.set(button.getAttribute('data-theme-set')); });
+            });
+            document.documentElement.addEventListener('bui:theme:change', show);
+            show();
+        })();
+    </script>
+</body>
+</html>
