@@ -1,0 +1,189 @@
+/*
+ * Documentation Playground styles ONLY (Task 08). Classes use the bui-docs-playground* prefix and are NOT part of the library.
+ * Load after docs.css. Logical properties only, so the layout works in RTL and LTR. Mobile First. Colors come from tokens.
+ * Breakpoints used: SM = 576px, LG = 992px.
+ *
+ * The preview container (.bui-docs-playground__frame) carries its own data-bui-mode, data-bui-theme and dir,
+ * so every token below it resolves for the preview, not for the page.
+ */
+.bui-docs-playground {
+    --bui-docs-pg-handle-w: 1.5rem;
+    margin-block: var(--bui-space-3) var(--bui-space-4);
+    overflow: hidden;
+    border: 1px solid var(--bui-color-border);
+    border-radius: var(--bui-radius-md);
+    background: var(--bui-color-bg);
+}
+.bui-docs-playground__section { padding: var(--bui-space-3); }
+.bui-docs-playground__section + .bui-docs-playground__section { border-block-start: 1px solid var(--bui-color-border); }
+.bui-docs-playground__title {
+    margin-block-end: var(--bui-space-2); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.04em;
+    text-transform: uppercase; color: var(--bui-color-text-muted);
+}
+
+/* ---- Option controls ---- */
+.bui-docs-playground__controls {
+    display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--bui-space-3);
+}
+.bui-docs-playground__field { display: flex; flex-direction: column; gap: 0.25rem; min-width: 0; margin: 0; padding: 0; border: 0; }
+.bui-docs-playground__label {
+    padding: 0; font-size: 0.8125rem; font-weight: 700; color: var(--bui-color-text-muted);
+}
+.bui-docs-playground__field .bui-docs-select,
+.bui-docs-playground__field .bui-docs-input { width: 100%; min-height: 2.25rem; }
+.bui-docs-playground__hint { font-size: 0.75rem; color: var(--bui-color-text-muted); }
+.bui-docs-playground__field .bui-docs-input[aria-invalid="true"] { border-color: var(--bui-color-danger); }
+
+.bui-docs-playground__choices { display: flex; flex-wrap: wrap; gap: var(--bui-space-2); }
+.bui-docs-playground__choice,
+.bui-docs-playground__seg-item {
+    position: relative; display: inline-flex; align-items: center; min-height: 2.25rem; padding: 0.25rem 0.75rem;
+    font-size: 0.875rem; cursor: pointer; color: var(--bui-color-text);
+    background: var(--bui-color-bg); border: 1px solid var(--bui-color-border-strong); border-radius: var(--bui-radius-md);
+}
+.bui-docs-playground__choice input,
+.bui-docs-playground__seg-item input { position: absolute; opacity: 0; width: 1px; height: 1px; margin: 0; pointer-events: none; }
+.bui-docs-playground__choice:hover,
+.bui-docs-playground__seg-item:hover { background: var(--bui-color-surface); }
+.bui-docs-playground__choice:has(input:checked),
+.bui-docs-playground__seg-item:has(input:checked) {
+    font-weight: 700; background: var(--bui-color-primary-subtle); border-color: var(--bui-color-primary);
+}
+.bui-docs-playground__choice:has(input:focus-visible),
+.bui-docs-playground__seg-item:has(input:focus-visible) {
+    outline: var(--bui-focus-ring-width) solid var(--bui-focus-ring-color); outline-offset: var(--bui-focus-ring-offset);
+}
+
+.bui-docs-playground__check {
+    display: flex; align-items: center; gap: 0.5rem; min-height: 2.25rem; font-size: 0.875rem; cursor: pointer;
+    color: var(--bui-color-text);
+}
+.bui-docs-playground__check input:not(.bui-docs-playground__switch) { width: 1.125rem; height: 1.125rem; flex: none; accent-color: var(--bui-color-primary); }
+.bui-docs-playground__switch {
+    position: relative; flex: none; width: 2.5rem; height: 1.5rem; margin: 0; cursor: pointer;
+    appearance: none; -webkit-appearance: none;
+    background: var(--bui-color-bg); border: 1px solid var(--bui-color-border-strong); border-radius: 999px;
+}
+.bui-docs-playground__switch::before {
+    content: ""; position: absolute; inset-block-start: 50%; inset-inline-start: 0.1875rem;
+    width: 1rem; height: 1rem; margin-block-start: -0.5rem; border-radius: 50%; background: var(--bui-color-border-strong);
+    transition: inset-inline-start 0.15s ease, background-color 0.15s ease;
+}
+.bui-docs-playground__switch:checked { background: var(--bui-color-primary); border-color: var(--bui-color-primary); }
+.bui-docs-playground__switch:checked::before { inset-inline-start: 1.1875rem; background: var(--bui-color-primary-contrast); }
+.bui-docs-playground__switch:focus-visible,
+.bui-docs-playground__check input:focus-visible,
+.bui-docs-playground__range:focus-visible,
+.bui-docs-playground__color:focus-visible {
+    outline: var(--bui-focus-ring-width) solid var(--bui-focus-ring-color); outline-offset: var(--bui-focus-ring-offset);
+}
+
+.bui-docs-playground__row { display: flex; align-items: center; gap: var(--bui-space-2); min-height: 2.25rem; }
+.bui-docs-playground__range { flex: 1; min-width: 0; height: 1.5rem; margin: 0; accent-color: var(--bui-color-primary); }
+.bui-docs-playground__color { flex: none; width: 2.75rem; height: 2.25rem; padding: 0.125rem; cursor: pointer; background: var(--bui-color-bg); border: 1px solid var(--bui-color-border-strong); border-radius: var(--bui-radius-md); }
+.bui-docs-playground__output {
+    flex: none; min-width: 3.5rem; font-size: 0.8125rem; color: var(--bui-color-text); direction: ltr; unicode-bidi: isolate;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+}
+.bui-docs-playground__actions { display: flex; flex-wrap: wrap; gap: var(--bui-space-2); margin-block-start: var(--bui-space-3); }
+.bui-docs-playground__btn { min-height: 2.25rem; }
+
+/* ---- Preview toolbar ---- */
+.bui-docs-playground__toolbar { display: flex; flex-wrap: wrap; align-items: flex-end; gap: var(--bui-space-2) var(--bui-space-3); margin-block-end: var(--bui-space-3); }
+.bui-docs-playground__seg-group { min-width: 0; margin: 0; padding: 0; border: 0; }
+.bui-docs-playground__seg-legend { padding: 0; margin-block-end: 0.25rem; font-size: 0.8125rem; font-weight: 700; color: var(--bui-color-text-muted); }
+.bui-docs-playground__seg { display: inline-flex; }
+.bui-docs-playground__seg .bui-docs-playground__seg-item { border-radius: 0; }
+.bui-docs-playground__seg .bui-docs-playground__seg-item + .bui-docs-playground__seg-item { margin-inline-start: -1px; }
+.bui-docs-playground__seg .bui-docs-playground__seg-item:first-child { border-start-start-radius: var(--bui-radius-md); border-end-start-radius: var(--bui-radius-md); }
+.bui-docs-playground__seg .bui-docs-playground__seg-item:last-child { border-start-end-radius: var(--bui-radius-md); border-end-end-radius: var(--bui-radius-md); }
+.bui-docs-playground__seg .bui-docs-playground__seg-item:has(input:checked) { position: relative; z-index: 1; }
+.bui-docs-playground__widths { display: flex; flex-wrap: wrap; gap: var(--bui-space-1); }
+.bui-docs-playground__widths .bui-docs-playground__btn { padding-inline: 0.5rem; font-size: 0.8125rem; }
+.bui-docs-playground__reset-preview { margin-inline-start: auto; }
+.bui-docs-playground__handle:focus-visible,
+.bui-docs-playground__frame:focus-visible {
+    outline: var(--bui-focus-ring-width) solid var(--bui-focus-ring-color); outline-offset: var(--bui-focus-ring-offset);
+}
+
+/* ---- Stage, resizable container and handle ---- */
+.bui-docs-playground__stage {
+    /* The container can be wider than the page column (up to the largest breakpoint): the stage scrolls sideways, the page never does. */
+    overflow-x: auto; padding-block: var(--bui-space-3);
+    background: var(--bui-color-surface); border: 1px solid var(--bui-color-border); border-radius: var(--bui-radius-md);
+}
+.bui-docs-playground__stage:focus-visible { outline: var(--bui-focus-ring-width) solid var(--bui-focus-ring-color); outline-offset: -2px; }
+/* The track holds the side room for half of the handle, which sits on the end edge of the container. */
+.bui-docs-playground__track {
+    box-sizing: border-box; width: fit-content; min-width: 100%;
+    padding-inline: calc(var(--bui-space-2) + var(--bui-docs-pg-handle-w) / 2);
+}
+.bui-docs-playground__sizer { position: relative; width: 100%; }
+.bui-docs-playground__frame {
+    /* data-bui-mode on this element paints its own background and text color from its own tokens. */
+    min-height: 8rem; padding: var(--bui-space-4) var(--bui-space-3); overflow: auto;
+    color: var(--bui-color-text); background: var(--bui-color-bg);
+    border: 1px solid var(--bui-color-border-strong); border-radius: var(--bui-radius-sm);
+}
+.bui-docs-playground__handle {
+    position: absolute; inset-block: 0; inset-inline-end: calc(var(--bui-docs-pg-handle-w) / -2);
+    z-index: 1; display: flex; align-items: center; justify-content: center;
+    width: var(--bui-docs-pg-handle-w); cursor: ew-resize; touch-action: none; user-select: none;
+}
+.bui-docs-playground__handle::before {
+    content: ""; width: 0.25rem; height: 3rem; max-height: 70%; border-radius: 999px; background: var(--bui-color-text-muted);
+}
+.bui-docs-playground__handle:hover::before,
+.bui-docs-playground__stage.is-dragging .bui-docs-playground__handle::before { background: var(--bui-color-primary); }
+.bui-docs-playground__stage.is-dragging { user-select: none; }
+.bui-docs-playground__readout { margin-block-start: var(--bui-space-2); font-size: 0.8125rem; color: var(--bui-color-text-muted); overflow-wrap: anywhere; }
+.bui-docs-playground__error {
+    margin-block-start: var(--bui-space-2); padding: 0.5rem 0.75rem; font-size: 0.875rem; color: var(--bui-color-text);
+    background: var(--bui-color-surface); border: 1px solid var(--bui-color-border-strong); border-inline-start-width: 4px; border-radius: var(--bui-radius-md);
+}
+.bui-docs-playground__error[hidden] { display: none; }
+
+/* ---- Code output: reuses the bui-docs-codeblock look; blocks sit inside the section ---- */
+.bui-docs-playground__code .bui-docs-codeblock { margin-block: 0 var(--bui-space-2); }
+.bui-docs-playground__code .bui-docs-codeblock:last-child { margin-block-end: 0; }
+.bui-docs-playground__code .bui-docs-codeblock[hidden] { display: none; }
+
+@media (pointer: coarse) {
+    .bui-docs-playground { --bui-docs-pg-handle-w: 2.75rem; }
+    .bui-docs-playground__btn,
+    .bui-docs-playground__choice,
+    .bui-docs-playground__seg-item { min-height: 2.75rem; }
+    .bui-docs-playground__widths .bui-docs-playground__btn { min-width: 2.75rem; }
+    .bui-docs-playground__field .bui-docs-select,
+    .bui-docs-playground__field .bui-docs-input,
+    .bui-docs-playground__check,
+    .bui-docs-playground__color,
+    .bui-docs-playground__row { min-height: 2.75rem; }
+    .bui-docs-playground__range { height: 2.75rem; }
+    .bui-docs-playground__color { min-width: 2.75rem; }
+    .bui-docs-playground__switch { width: 3rem; height: 1.75rem; }
+    .bui-docs-playground__switch::before { width: 1.25rem; height: 1.25rem; margin-block-start: -0.625rem; }
+    .bui-docs-playground__switch:checked::before { inset-inline-start: 1.5rem; }
+}
+
+@media (min-width: 576px) {
+    .bui-docs-playground__controls { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (min-width: 992px) {
+    .bui-docs-playground__controls { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .bui-docs-playground__switch::before { transition: none; }
+}
+
+/* Forced Colors: system colors only, so the switch state and the handle stay visible. */
+@media (forced-colors: active) {
+    .bui-docs-playground__switch { border-color: CanvasText; background: Canvas; forced-color-adjust: none; }
+    .bui-docs-playground__switch::before { background: CanvasText; }
+    .bui-docs-playground__switch:checked { background: Highlight; border-color: Highlight; }
+    .bui-docs-playground__switch:checked::before { background: HighlightText; }
+    .bui-docs-playground__handle::before { background: CanvasText; forced-color-adjust: none; }
+    .bui-docs-playground__choice:has(input:checked),
+    .bui-docs-playground__seg-item:has(input:checked) { border-color: Highlight; outline: 2px solid Highlight; }
+}

@@ -17,7 +17,7 @@
 ## الأعمدة
 `Type`: Core | Extension. `JS`: Yes | No. `Docs`: مسار الصفحة أو `-`.
 
-> **الوضع الحالي (بعد Task 07): كل المكونات Planned. لا يوجد أي Component منفذ.** المنفذ: Design Tokens وLayout (Container/Grid/Flexbox/Spacing) كأنظمة أساسية، وUtilities (Flexbox وSpacing وDisplay وPosition وOverflow وVisibility وBorders)، ونواة JavaScript (`BUI`)، وTheme Manager (مع ثيم ocean) وLocale Manager (مع اللغات en وar وfr)، ونظام الأيقونات (Extension CSS فقط). روابط Sidebar للمكونات Placeholders.
+> **الوضع الحالي (بعد Task 08): كل المكونات Planned. لا يوجد أي Component منفذ.** المنفذ: Design Tokens وLayout (Container/Grid/Flexbox/Spacing) كأنظمة أساسية، وUtilities (Flexbox وSpacing وDisplay وPosition وOverflow وVisibility وBorders)، ونواة JavaScript (`BUI`)، وTheme Manager (مع ثيم ocean) وLocale Manager (مع اللغات en وar وfr)، ونظام الأيقونات (Extension CSS فقط)، وإطار Playground للتوثيق (docs فقط، بلا صفحة ولا مكون). روابط Sidebar للمكونات Placeholders.
 
 ### Components
 | Component | Status | Type | JS | Docs | Updated | Notes |
@@ -83,4 +83,5 @@
 | صفحات Utilities الخمس (Display, Position, Overflow, Visibility, Borders) | Completed | Task 04. مفعلة في `nav.js`. صفحة بلا أقسام Component الثمانية (استثناء موثق) |
 | صفحات JavaScript الأربع (Introduction, Initialization, Events, API Reference) | Completed | Task 05. مفعلة في `nav.js`. أمثلتها مقاطع كود بمكون افتراضي `my-widget` معلن في كل صفحة (لا مكون منفذ). 256 تركيبة صفحة/اتجاه/وضع/عرض (مع 4 صفحات سابقة للتراجع) بلا Overflow ولا أخطاء Console ولا 404، Chromium فقط |
 | صفحة Icons (`documentation/advanced/icons.html`) | Completed | Task 07. مفعلة في `nav.js`. صفحة بلا أقسام Component الثمانية (استثناء موثق). 64 تركيبة (8 عروض x اتجاهان x وضعان x ثيمان) والـ dialog مفتوح: بلا Overflow ولا Console ولا 404، Chromium فقط. الأزرار والحقول docs-only (`bui-docs-*`) |
+| Playground Framework (`documentation/assets/js/playground.js` و`css/playground.css`) | Completed | Task 08. إطار Customize مشترك يقبل Schema (8 أنواع تحكم: select وradio-group وcheckbox وswitch وrange وtext وnumber وcolor)، معاينة حية وCode Output (HTML وJS) مع Copy وReset، Light/Dark وRTL/LTR على الحاوية فقط، عرض بأزرار Breakpoints ومقبض سحب/كيبورد، وإعلان مهذب لقارئ الشاشة. لا صفحة توثيق Component تستخدمه بعد (الاختبار بصفحة مؤقتة خارج المشروع). Chromium فقط. **غير مختبر:** قارئ شاشة، Safari/Firefox، لمس فعلي (اختُبر حجم الأهداف بمحاكاة)، Hooks `beforeRender/afterRender` مع مكون JS حقيقي، Forced Colors على Windows الفعلي. **قيد:** عرض الحاوية لا يغيّر نتيجة `@media` (انظر CUSTOMIZATION_AND_PLAYGROUND.md). يتطلب تعديلاً صغيراً في `docs.js` (`BUI_DOCS_HELPERS`) |
 | صفحات Themes وDark Mode وRTL & LTR وInternationalization | Completed | Task 06. مفعلة في `nav.js`. صفحات بلا أقسام Component الثمانية (استثناء موثق). أمثلتها حية على `BUI.theme` و`BUI.locale` وأزرار docs-only (`bui-docs-btn`) لعدم وجود Button. 648 تركيبة (9 صفحات x 9 عروض x ثيم x وضع x اتجاه) بلا Overflow ولا Console ولا 404، Chromium فقط |

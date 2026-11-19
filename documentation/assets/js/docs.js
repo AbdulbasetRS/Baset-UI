@@ -665,6 +665,12 @@
         return frag;
     }
 
+    /*
+     * Shared with playground.js (Task 08), so the Playground code output highlights and copies exactly like every other
+     * code block without a second tokenizer or a second clipboard routine. Docs-only; not part of the BUI library.
+     */
+    window.BUI_DOCS_HELPERS = { highlight: highlight, copyText: copyText };
+
     var LANG_LABELS = { html: 'HTML', css: 'CSS', javascript: 'JavaScript', js: 'JavaScript', json: 'JSON', bash: 'Shell', text: 'Text' };
 
     /* Wraps <pre class="bui-docs-code"> with a header bar (language + Copy) and highlights it. */

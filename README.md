@@ -2,7 +2,7 @@
 
 مكتبة واجهات (CSS + JavaScript) تعمل مباشرة في المتصفح بدون Build Tools، مع موقع Documentation.
 
-**الحالة: مرحلة التأسيس (`0.0.0-foundation`).** لا توجد مكونات منفذة بعد. الموجود: الهيكل المعماري، مجلد التعليمات، واجهة التوثيق، Design Tokens (Light/Dark)، نظام Layout وUtilities، ونواة JavaScript (`BUI`: Registry وInit وEvents وHelpers) مع صفحات توثيقها، وTheme Manager (`BUI.theme`) مع ثيم `ocean`، وLocale Manager (`BUI.locale`) بثلاث لغات (en وar وfr)، ونظام الأيقونات (Phosphor وSVG Mask، 51 أيقونة بستة أوزان) مع كتالوج في صفحة Icons. الإسناد والتراخيص: [THIRD_PARTY.md](THIRD_PARTY.md).
+**الحالة: مرحلة التأسيس (`0.0.0-foundation`).** لا توجد مكونات منفذة بعد. الموجود: الهيكل المعماري، مجلد التعليمات، واجهة التوثيق، Design Tokens (Light/Dark)، نظام Layout وUtilities، ونواة JavaScript (`BUI`: Registry وInit وEvents وHelpers) مع صفحات توثيقها، وTheme Manager (`BUI.theme`) مع ثيم `ocean`، وLocale Manager (`BUI.locale`) بثلاث لغات (en وar وfr)، ونظام الأيقونات (Phosphor وSVG Mask، 51 أيقونة بستة أوزان) مع كتالوج في صفحة Icons، وإطار Playground للتوثيق (docs فقط). الإسناد والتراخيص: [THIRD_PARTY.md](THIRD_PARTY.md).
 
 ## الروابط
 - المستودع (المصدر الأساسي): https://github.com/AbdulbasetRS/Baset-UI

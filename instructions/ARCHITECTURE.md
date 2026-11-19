@@ -81,6 +81,11 @@ Baset-UI/
 - `documentation/assets/js/icons-data.js`: بيانات الكتالوج (مولَّد، docs فقط، مثل `nav.js`). السبب: الصفحة يجب أن تعمل من `file://` فلا يصلح `fetch` لـ JSON.
 - `documentation/advanced/icons.html` (مفعلة في `nav.js`). `THIRD_PARTY.md` في الجذر (إسناد وترخيص Phosphor).
 
+### إطار Playground (Task 08)
+- `documentation/assets/js/playground.js` و`documentation/assets/css/playground.css`: إطار docs-only (الملفان من قائمة المهمة) بلا Dependencies. تحمّلهما صفحات Components التي فيها Playground فقط، ولا يضافان إلى `DOC_PAGE_TEMPLATE.html` كي لا تطلبهما كل صفحة. متغير عام وحيد: `BUI_DOCS_PLAYGROUND`.
+- **تعديل `docs.js` (خارج قائمة الملفات المتوقعة، 6 أسطر):** يعرّض `window.BUI_DOCS_HELPERS = { highlight, copyText }`. السبب: Code Output يتغير عند كل خيار، ويجب أن يُلوَّن وينسخ بنفس سلوك بقية الكتل. البديل (مُلوّن ونسخ ثانٍ داخل `playground.js`) يكرر نحو 150 سطراً ويفترق عن `docs.js` مع الوقت. الإطار يعمل بدونه بتدهور لطيف (كود غير ملون، ونسخ عبر Clipboard API).
+- المعاينة حاوية وليست `iframe` (قرار المهمة): قيدها (Media Queries تتبع الـ Viewport) موثق في [CUSTOMIZATION_AND_PLAYGROUND.md](CUSTOMIZATION_AND_PLAYGROUND.md).
+
 ### قرار المسارات في الصفحات المتداخلة
 - كل صفحة تضع `data-root="../../"` على `<html>`: المسار **من الصفحة نفسها** إلى جذر الموقع (مجلد `index.html`). يُقرأ في `docs.js` ويُبنى عليه كل رابط (Sidebar، Breadcrumb، Previous/Next، رابط الشعار).
 - إن غابت السمة يستنتج `docs.js` الجذر من مسار سكربت `docs.js` نفسه (دائماً ثلاثة مستويات تحت الجذر)، فتبقى الصفحة تعمل. السمة هي المصدر الأساسي لأنها صريحة ولا تعتمد على موضع السكربت.

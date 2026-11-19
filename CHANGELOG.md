@@ -4,6 +4,32 @@
 
 ## [Unreleased]
 
+### Added (Task 08: Playground Framework)
+- `documentation/assets/js/playground.js` (45,061 بايت) و`documentation/assets/css/playground.css` (11,895 بايت): إطار Customize مشترك للتوثيق بلا Dependencies. `BUI_DOCS_PLAYGROUND.define(name, schema)` و`mount(element, schema)` و`escape(text)`؛ النسخة: `getState` و`setState` و`reset` و`resetPreview` و`destroy`.
+- Schema: `controls` بثمانية أنواع (select وradio-group وcheckbox وswitch وrange وtext وnumber وcolor) مع قيم افتراضية، و`template(state, helpers)` يرجع HTML أو `{ html, js }`، و`beforeRender`/`afterRender` اختياريان. تحقق من الـ Schema برسائل خطأ واضحة.
+- معاينة حية، Code Output بكتلتين (HTML وJavaScript) بنسخ مستقل، Reset options وReset preview، Light/Dark وRTL/LTR على حاوية المعاينة فقط، أزرار عرض (Full وBase 320 وXS..XXXL من `--bui-bp-*`) مع مقبض سحب وكيبورد، وإعلان مهذب (polite، مؤجل 700ms) لقارئ الشاشة.
+
+### Changed (Task 08)
+- `documentation/assets/js/docs.js` (+6 أسطر): يعرّض `window.BUI_DOCS_HELPERS = { highlight, copyText }` ليعيد الإطار استخدام التلوين والنسخ. سبب خروجه عن قائمة الملفات موثق في `ARCHITECTURE.md`.
+- `instructions/CUSTOMIZATION_AND_PLAYGROUND.md` (شكل Schema وطريقة الاستخدام والقيد المعروف؛ أُزيل وسم "مستقبلي")، `instructions/templates/COMPONENT_DOCUMENTATION_TEMPLATE.md` (مثال استخدام قسم Customize وبند قائمة تحقق)، `instructions/ARCHITECTURE.md`، `instructions/COMPONENTS_REGISTRY.md`، `instructions/PROJECT_OVERVIEW.md` و`README.md` (سطر الحالة).
+
+### Decisions (Task 08)
+- **العرض يطابق المطلوب ولا يُقصّ بعمود الصفحة:** عمود محتوى التوثيق نحو 820px حتى على شاشة 1920، فلو قُصّ العرض لانهارت أزرار XL وXXL وXXXL إلى القيمة نفسها. الحاوية تأخذ العرض فعلاً (320 إلى 1920) و**منطقة العرض** تتمرر أفقياً (منطقة مسماة قابلة للتركيز)، فلا Overflow للصفحة.
+- الحاوية تحمل أيضاً `data-bui-theme` للصفحة وتتبع تغييره: Dark الخاص بـ Theme (ocean) لا يُطبق إلا إن حمل العنصر الوسمين معاً. هذه إضافة على `data-bui-mode` و`dir` المطلوبين.
+- القيمة الابتدائية للوضع والاتجاه تتبع الصفحة ثم تستقل، وReset preview يعيدها من حالة الصفحة الحالية.
+- المعاينة `innerHTML` (لا تنفذ سكربتات) و`helpers.escape` لقيم `text`؛ قيم بقية الأنواع مقيدة بالنوع. تُعرض `js` ولا تُنفذ، وتهيئة المكونات ذات JS عبر Hooks يتحمل كاتب الصفحة مطابقتها.
+- Reset زران: خيارات المكون، والمعاينة (وضع واتجاه وعرض). لا اختصار كيبورد مخترع.
+- قيم الإطار (نصوص الواجهة) إنجليزية ثابتة كباقي Shell، ولا تدخل ملفات i18n.
+- **قيد معروف موثق:** عرض الحاوية لا يغيّر نتيجة `@media` (الأعمدة `md` تبقى جنباً إلى جنب في حاوية 320 على Viewport 1280)؛ المعاينة ليست بديلاً عن فحص الجهاز.
+
+### Tested (Task 08, Chrome for Testing 153 عبر Playwright فقط، صفحة مؤقتة خارج المشروع لا تُسلَّم، وهي Fixture معلنة بعناصر HTML عادية)
+- وظيفي (50 فحصاً): الأنواع الثمانية بالفأرة والكيبورد، التحديث متزامن، تطابق Code Output مع المعاينة بعد تغييرات متتالية، تهريب `<img onerror>` (لا تنفيذ)، `maxLength`، حالات `number` (خارج الحدود، فارغ)، Reset، `setState/getState`.
+- الحاوية (78): Dark وRTL على الحاوية فقط (`<html>` وجسم الصفحة لا يتغيران، لون الخلفية يطابق Token الداكن)، Dark لثيم ocean صحيح، تتبع تغيير الثيم، عرض بدقة كل Breakpoint، سحب الفأرة (LTR وRTL معكوس) وأسهم/Home/End/Shift، حدود 320 و1920، Reset preview.
+- التخطيط (51): 128 تركيبة (8 عروض x اتجاهان x وضعان x ثيمان x عرضان) بلا Overflow ولا عنصر مقصوص؛ التباين (4 تراكيب ثيم/وضع) للنص والحدود والمقبض ومفتاح التبديل؛ الأهداف 24px (مؤشر عادي) و44px (محاكاة `pointer: coarse`)؛ تأكيد القيد المعروف.
+- الوصولية والدورة (76): أسماء كل العناصر، Tab يصل لكل عنصر، تشغيل كل عنصر بالكيبورد وأزرار Reset، حلقة تركيز ظاهرة، إعلان مؤجل وحيد للتغييرات السريعة وفوري للـ Reset، Copy (نجاح وفشل مع تحديد الكود)، `prefers-reduced-motion`، Forced Colors بمحاكاة، `destroy` متوازن المستمعين وObserver، تركيب مزدوج، 14 حالة Schema خاطئة (خطأ واضح بلا كسر وقالب يرمي استثناء ويتعافى).
+- تراجع: 23 صفحة x (1280 LTR فاتح، 320 RTL داكن) بلا Console ولا Overflow (ملاحظة قديمة موجودة دون تعديلاتي: طلب `/favicon.ico` على `index.html` يعطي 404)، `core.html` 43/43، `tests/i18n-keys.js` وبناء الأيقونات `--check` ناجحان، وCopy في صفحة موجودة ما زال يعمل.
+- **غير مختبر:** قارئات الشاشة، Safari/Firefox، أجهزة اللمس الفعلية، Hooks مع مكون JS حقيقي، Forced Colors على Windows الفعلي.
+
 ### Added (Task 07: Icons System)
 - `assets/icons/{thin,light,regular,solid,bold,duotone}/{name}.svg` و`assets/icons/icons.json`: 51 أيقونة بستة أوزان (Phosphor Icons 2.1.1، MIT؛ `solid` = "fill")، منسوخة مرة واحدة دون تغيير في التصميم. الأسماء والفئات والكلمات المفتاحية في `icons.json` من بيانات Phosphor.
 - `assets/css/extensions/baset-ui-icons.css` (149,674 بايت خام، 28,515 gzip): Extension CSS فقط، مولَّد. الفئات `bui-icon-{weight}` و`bui-icon-{name}` و`bui-icon-{sm|md|lg|xl}` و`bui-icon-flip-rtl`، الوزن الافتراضي `light`، التلوين بـ `currentColor`، Tokens `--bui-icon-size-*`، ودعم Forced Colors والطباعة. لا JavaScript ولا Global جديد.
