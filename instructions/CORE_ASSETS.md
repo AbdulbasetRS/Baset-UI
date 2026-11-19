@@ -54,6 +54,9 @@ Extension سكربت مستقل يُحمَّل بعد `baset-ui.js` ويسجل �
 - الاسم kebab-case، ويُنشئ `BUI.dataTable` وسمة `data-bui-data-table` والأحداث `bui:data-table:*`. تعريف `create/defaults/variants` في [JAVASCRIPT_API.md](JAVASCRIPT_API.md).
 - يلتزم بـ `destroy()` الذي يزيل كل ما أضافه.
 
+### أول Extension منفذ: الأيقونات (Task 07)
+`assets/css/extensions/baset-ui-icons.css` (CSS فقط، مولَّد). **استثناء موثق:** لا يسجل بـ `BUI.register` ولا يحتوي JavaScript لأنه لا سلوك له؛ التسجيل لازم فقط للمكونات ذات JS. يُحمَّل بعد `baset-ui.css`. التفاصيل في [ICONS_SYSTEM.md](ICONS_SYSTEM.md).
+
 ### قواعد الـ Extension
 - ملفاته: `assets/css/extensions/baset-ui-{name}.css` و`assets/js/extensions/baset-ui-{name}.js`.
 - يُحمَّل **بعد** Core ويتسجل عبر آلية تسجيل رسمية (مستقبلي: `BUI.register(...)`) دون تعديل Core.

@@ -4,6 +4,35 @@
 
 ## [Unreleased]
 
+### Added (Task 07: Icons System)
+- `assets/icons/{thin,light,regular,solid,bold,duotone}/{name}.svg` و`assets/icons/icons.json`: 51 أيقونة بستة أوزان (Phosphor Icons 2.1.1، MIT؛ `solid` = "fill")، منسوخة مرة واحدة دون تغيير في التصميم. الأسماء والفئات والكلمات المفتاحية في `icons.json` من بيانات Phosphor.
+- `assets/css/extensions/baset-ui-icons.css` (149,674 بايت خام، 28,515 gzip): Extension CSS فقط، مولَّد. الفئات `bui-icon-{weight}` و`bui-icon-{name}` و`bui-icon-{sm|md|lg|xl}` و`bui-icon-flip-rtl`، الوزن الافتراضي `light`، التلوين بـ `currentColor`، Tokens `--bui-icon-size-*`، ودعم Forced Colors والطباعة. لا JavaScript ولا Global جديد.
+- `tools/build-icons.js`: مولّد بلا Dependencies (`node tools/build-icons.js` و`--check`): يتحقق من الأوزان الستة ومن سلامة الـ SVG (يرفض سكربتات وروابط وصوراً مضمنة)، ويولّد الـ CSS وبيانات الكتالوج.
+- `documentation/advanced/icons.html` (مفعلة في `nav.js`) و`documentation/assets/js/icons-data.js` (مولَّد): كتالوج بشبكة وبحث (بالاسم والكلمات المفتاحية) وتصفية (فئة، اتجاهية) واختيار وزن العرض، ولوحة تفاصيل بـ `<dialog>` أصلي: الأوزان الستة، الحجم واللون وقلب RTL وزخرفية/بوسم، كود HTML مطابق للمعاينة مع Copy.
+- `docs.css`: أصناف الكتالوج `bui-docs-icon-*` (docs فقط).
+- `THIRD_PARTY.md`: إسناد Phosphor ونص ترخيص MIT.
+
+### Changed (Task 07)
+- `ICONS_SYSTEM.md` أُعيد كتابته (القرارات، الاستخدام، المجموعة الأولية، إجراء الإضافة، الحجم، Accessibility). `ARCHITECTURE.md` (مجلد `tools/` والملفات الجديدة)، `CORE_ASSETS.md` (أول Extension)، `ROADMAP.md` (قرار الأيقونات حُسم)، `TESTING.md`، `COMPONENTS_REGISTRY.md`، `PROJECT_OVERVIEW.md`، `README.md` (سطر الحالة).
+- حذف `.gitkeep` من `assets/icons/` و`assets/css/extensions/` (لم يعودا فارغين).
+
+### Decisions (Task 07)
+- المصدر: Phosphor (MIT)، وهو مصدر نسخ لمرة واحدة وليس Dependency. التقنية: SVG Mask. الملف: Extension (حجمه بعيد عن 15KB ولا تحتاجه معظم الصفحات). استثناء موثق: Extension بلا `BUI.register` لأنه CSS فقط.
+- **تصحيح لتقدير سابق:** Duotone لا يحتاج طبقتين ولا يضاعف الحجم؛ القناع يحتفظ بقناة alpha فيظهر الشكل الخلفي بـ 20% من اللون من نفس الملف.
+- اسم الفئة يعتمد على Custom Properties داخلية لكل وزن (`--bui-icon-{weight}-src`) على فئة الأيقونة، وفئة الوزن تختار منها؛ لأن CSS لا يجمع فئتين في `url()` واحد. الخصائص الداخلية مسجلة `@property` بلا وراثة.
+- القلب في RTL بفئة يدوية `bui-icon-flip-rtl` (`:dir(rtl)`) وليس تلقائياً.
+- فئات محجوزة لا تصلح أسماء أيقونات: الأوزان وsm/md/lg/xl وflip-rtl (يفحصها المولّد).
+- مجلد `tools/` جديد لأداة بلا Dependencies، وبيانات الكتالوج في ملف JS مولَّد (ليعمل من `file://`)، وكلاهما موثق في `ARCHITECTURE.md`.
+- الكتالوج يستخدم `<dialog>` أصلياً docs-only ولم يُنشأ `BUI.dialog` (Task 13).
+
+### Tested (Task 07, Chromium 157 عبر Playwright فقط، خادم http محلي)
+- الأوزان الستة: قيم `mask-image` مختلفة، والافتراضي = light، ورسم فعلي بالبكسل (الشكل غير فارغ ولا مربع ممتلئ؛ solid أثقل من thin وbold أثقل من regular؛ duotone فيه نغمة 20%). اللون `currentColor`، والأحجام (1em/16/24/32/48)، والقلب في RTL فقط مع الفئة.
+- الكتالوج: بحث بالاسم والكلمة المفتاحية (يتسامح مع الشرطة/المسافة)، تصفية الفئة والاتجاهية (6)، حالة الفراغ، تغيير وزن الشبكة. الـ dialog: فتح بـ Enter، التركيز داخله، الكود مطابق للمعاينة (HTML الفعلي)، الأوزان بأسهم الكيبورد، Esc والنقر على الخلفية وزر Close، عودة التركيز للمصدر، Copy (Clipboard) وفق حالة الاختبار، وعدم تسرب التركيز لعناصر الصفحة (الانتقال إلى واجهة المتصفح هو سلوك `showModal()` الأصلي).
+- Forced Colors (محاكاة Chromium): الأيقونة ظاهرة بلون نظام.
+- 64 تركيبة (8 عروض 320-1920 x ltr/rtl x light/dark x default/ocean) والـ dialog مفتوح: بلا Overflow أفقي، الـ dialog داخل الشاشة، بلا أخطاء Console ولا 404.
+- تراجع: 23 صفحة (index وكل صفحات التوثيق) بلا أخطاء ولا Overflow؛ `tests/manual/core.html` 43/43 بوضعي autoInit؛ `node tests/i18n-keys.js` ناجح؛ `BUI` بلا أعضاء جديدة؛ `node tools/build-icons.js --check` ناجح.
+- لم يُختبر: قارئات الشاشة، Safari/Firefox، أجهزة اللمس، Forced Colors على نظام فعلي، متصفحات لا تدعم `:dir()` أو `mask` بلا بادئة، أداء الرسم مع آلاف الأيقونات.
+
 ### Added (Task 06: Theme Manager + Locale Manager)
 - `assets/js/baset-ui.js` (52,004 بايت خام، 12,143 gzip، +18,376 عن Task 05): `BUI.theme` (`set`, `setMode`, `toggleMode`, `get`, `getMode`, `load`) و`BUI.locale` (`use`, `t`, `get`, `getDirection`, `register`, `apply`). الأحداث `bui:theme:change` و`bui:locale:change`. ما زال الـ Global الوحيد `BUI`.
 - `assets/css/themes/ocean.css` (5,405 بايت): ثيم Light وDark يعيد تعريف الألوان والخط والـ Radius والظلال وعرض الحد السميك وسماكة Focus دون لمس Core. تباين 40/40 في Light وDark.

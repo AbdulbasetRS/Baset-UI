@@ -74,6 +74,13 @@ Baset-UI/
 - **كل صفحة توثيق (وقالبها و`index.html`) تربط `assets/css/themes/ocean.css` وتحمل Snippet منع الوميض بمفتاحي `bui-theme` و`bui-mode`** (بدل `bui-docs-mode` القديم). السبب: مبدّل الثيم/الوضع في Navbar صار يعتمد على `BUI.theme`، فلو بقي Snippet القديم لقرأ مفتاحاً لم يعد يُكتب وعاد الوميض. المفتاح `bui-docs-dir` (اتجاه Navbar) docs-only ويقرؤه نفس Snippet.
 - `docs.js`: عناصر القيم الحية (`data-docs-token` وصفوف التباين) تقرأ الآن من Probes تحمل `data-bui-mode` و`data-bui-theme` معاً، وتُعاد عند `bui:theme:change`، وتقبل `data-docs-theme` لثيم صريح.
 
+### الأيقونات والأداة (Task 07)
+- `assets/icons/{thin,light,regular,solid,bold,duotone}/{name}.svg` و`assets/icons/icons.json` (قائمة الأيقونات): داخل `assets/icons/` الموجود في الهيكل، وأُزيل `.gitkeep` منه ومن `assets/css/extensions/` لأنهما لم يعودا فارغين.
+- `assets/css/extensions/baset-ui-icons.css`: Extension بحسب [CORE_ASSETS.md](CORE_ASSETS.md) (مولَّد).
+- `tools/build-icons.js`: **مجلد جديد `tools/`** لأدوات المطور الخالية من Dependencies. السبب: ICONS_SYSTEM.md يطلب إجراء موثقاً لإضافة أيقونة، وتوليد ملف CSS من مئات الـ SVG يدوياً غير عملي؛ `tests/` للاختبارات فقط، و`assets/` لما يستخدمه المستخدم النهائي، فالأداة لا تنتمي لأي منهما. لا يعتمد عليه تشغيل المكتبة ولا الموقع.
+- `documentation/assets/js/icons-data.js`: بيانات الكتالوج (مولَّد، docs فقط، مثل `nav.js`). السبب: الصفحة يجب أن تعمل من `file://` فلا يصلح `fetch` لـ JSON.
+- `documentation/advanced/icons.html` (مفعلة في `nav.js`). `THIRD_PARTY.md` في الجذر (إسناد وترخيص Phosphor).
+
 ### قرار المسارات في الصفحات المتداخلة
 - كل صفحة تضع `data-root="../../"` على `<html>`: المسار **من الصفحة نفسها** إلى جذر الموقع (مجلد `index.html`). يُقرأ في `docs.js` ويُبنى عليه كل رابط (Sidebar، Breadcrumb، Previous/Next، رابط الشعار).
 - إن غابت السمة يستنتج `docs.js` الجذر من مسار سكربت `docs.js` نفسه (دائماً ثلاثة مستويات تحت الجذر)، فتبقى الصفحة تعمل. السمة هي المصدر الأساسي لأنها صريحة ولا تعتمد على موضع السكربت.

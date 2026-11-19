@@ -376,3 +376,77 @@ pre.bui-docs-code code { font: inherit; }
 .bui-docs-example :is(h2, h3) { margin: 0 0 var(--bui-space-2); padding: 0; border: 0; line-height: var(--bui-heading-line-height); }
 .bui-docs-example h2 { font-size: var(--bui-heading-2-size); }
 .bui-docs-example h3 { font-size: var(--bui-heading-3-size); }
+
+/* ====================================================================
+ * Task 07 widgets: icon catalog (grid, filters, details dialog). Docs-only, never part of the library.
+ * The dialog is a native <dialog> until BUI.dialog exists.
+ * ==================================================================== */
+.bui-docs-icon-tools { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--bui-space-2) var(--bui-space-3); margin-block: var(--bui-space-3); }
+.bui-docs-icon-field { display: flex; flex-direction: column; gap: 0.25rem; min-width: 0; }
+.bui-docs-icon-field > label { font-size: 0.8125rem; font-weight: 700; color: var(--bui-color-text-muted); }
+.bui-docs-icon-field .bui-docs-input, .bui-docs-icon-field .bui-docs-select { width: 100%; min-height: 2.25rem; }
+.bui-docs-icon-field--check { justify-content: flex-end; }
+.bui-docs-icon-field--check > label { display: flex; align-items: center; gap: 0.5rem; min-height: 2.25rem; font-size: 0.875rem; font-weight: 400; color: var(--bui-color-text); }
+.bui-docs-icon-field--check input { width: 1.125rem; height: 1.125rem; }
+.bui-docs-icon-count { margin-block: 0 var(--bui-space-2); font-size: 0.875rem; color: var(--bui-color-text-muted); }
+
+.bui-docs-icon-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(6.5rem, 1fr)); gap: var(--bui-space-2); margin: 0 0 var(--bui-space-3); padding: 0; list-style: none; }
+.bui-docs-icon-grid > li { min-width: 0; margin: 0; }
+.bui-docs-icon-grid > li[hidden] { display: none; }
+.bui-docs-icon-btn {
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.5rem;
+    width: 100%; min-height: 5.5rem; padding: 0.5rem; font: inherit; cursor: pointer;
+    color: var(--bui-color-text); background: var(--bui-color-bg);
+    border: 1px solid var(--bui-color-border); border-radius: var(--bui-radius-md);
+}
+.bui-docs-icon-btn:hover { background: var(--bui-color-surface); border-color: var(--bui-color-border-strong); }
+.bui-docs-icon-btn__name { max-width: 100%; font-size: 0.75rem; line-height: 1.25; text-align: center; overflow-wrap: anywhere; color: var(--bui-color-text-muted); }
+
+.bui-docs-icon-dialog {
+    width: min(40rem, calc(100vw - 1rem)); max-height: calc(100vh - 1rem); max-height: calc(100dvh - 1rem); padding: var(--bui-space-3); overflow: auto;
+    color: var(--bui-color-text); background: var(--bui-color-bg);
+    border: 1px solid var(--bui-color-border-strong); border-radius: var(--bui-radius-lg); box-shadow: var(--bui-shadow-xl);
+}
+.bui-docs-icon-dialog::backdrop { background: rgba(0, 0, 0, 0.55); }
+.bui-docs-icon-dialog__head { display: flex; align-items: center; justify-content: space-between; gap: var(--bui-space-2); margin-block-end: var(--bui-space-3); }
+.bui-docs-icon-dialog__title { margin: 0; font-size: 1.25rem; overflow-wrap: anywhere; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; direction: ltr; unicode-bidi: isolate; }
+.bui-docs-icon-dialog__preview {
+    display: flex; align-items: center; justify-content: center; min-height: 6rem; margin-block-end: var(--bui-space-3);
+    font-size: 2rem; background: var(--bui-color-surface); border: 1px solid var(--bui-color-border); border-radius: var(--bui-radius-md);
+}
+.bui-docs-icon-fieldset { margin: 0 0 var(--bui-space-3); padding: 0; border: 0; min-width: 0; }
+.bui-docs-icon-fieldset > legend { padding: 0; margin-block-end: 0.25rem; font-size: 0.8125rem; font-weight: 700; color: var(--bui-color-text-muted); }
+.bui-docs-icon-weights { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--bui-space-2); }
+.bui-docs-icon-weight {
+    display: flex; flex-direction: column; align-items: center; gap: 0.25rem; min-height: 4.25rem; padding: 0.5rem 0.25rem; cursor: pointer;
+    font-size: 0.75rem; border: 1px solid var(--bui-color-border); border-radius: var(--bui-radius-md);
+}
+.bui-docs-icon-weight:has(input:checked) { background: var(--bui-color-primary-subtle); border-color: var(--bui-color-primary); }
+.bui-docs-icon-weight:has(input:focus-visible) { outline: var(--bui-focus-ring-width) solid var(--bui-focus-ring-color); outline-offset: var(--bui-focus-ring-offset); }
+.bui-docs-icon-weight input { position: absolute; opacity: 0; width: 1px; height: 1px; margin: 0; pointer-events: none; }
+.bui-docs-icon-controls { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--bui-space-2) var(--bui-space-3); margin-block-end: var(--bui-space-2); }
+.bui-docs-icon-note { margin: 0 0 var(--bui-space-3); font-size: 0.875rem; color: var(--bui-color-text-muted); }
+.bui-docs-icon-codebar {
+    display: flex; align-items: center; justify-content: space-between; gap: var(--bui-space-2);
+    padding: 0.25rem 0.5rem 0.25rem 0.75rem; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase;
+    color: var(--bui-color-text-muted); background: var(--bui-docs-code-bg);
+    border: 1px solid var(--bui-color-border); border-block-end: 0; border-radius: var(--bui-radius-md) var(--bui-radius-md) 0 0;
+}
+.bui-docs-icon-code {
+    margin: 0 0 var(--bui-space-2); padding: 0.75rem; overflow-x: auto; text-align: start; tab-size: 2;
+    font: 0.875rem/1.55 ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+    color: var(--bui-color-text); background: var(--bui-docs-code-bg);
+    border: 1px solid var(--bui-color-border); border-radius: 0 0 var(--bui-radius-md) var(--bui-radius-md);
+}
+.bui-docs-icon-code code { font: inherit; white-space: pre; }
+.bui-docs-icon-classes { margin: 0; font-size: 0.875rem; }
+@media (pointer: coarse) { .bui-docs-icon-dialog .bui-docs-btn { min-height: 2.75rem; min-width: 2.75rem; } }
+
+@media (min-width: 576px) {
+    .bui-docs-icon-tools { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .bui-docs-icon-controls { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .bui-docs-icon-weights { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+}
+@media (min-width: 992px) {
+    .bui-docs-icon-tools { grid-template-columns: minmax(0, 2fr) minmax(0, 2fr) minmax(0, 2fr) minmax(0, 1.5fr); align-items: end; }
+}

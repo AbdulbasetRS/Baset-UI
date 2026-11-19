@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-bui-theme="default" data-bui-mode="light" data-root="../../">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Icons - Baset-UI Documentation</title>
+    <meta name="description" content="The icon system: six weights, CSS mask icons colored by currentColor, sizes, RTL mirroring and a searchable catalog.">
+    <link rel="icon" href="data:,">
+
+    <link rel="stylesheet" href="../../assets/css/baset-ui.css">
+    <link rel="stylesheet" href="../../assets/css/extensions/baset-ui-icons.css">
+    <link rel="stylesheet" href="../../assets/css/themes/ocean.css">
+    <link rel="stylesheet" href="../../documentation/assets/css/docs.css">
+    <script>
+        /* Prevents a flash of the wrong theme or mode. Same keys as BUI.theme (bui-theme, bui-mode). */
+        (function () {
+            var d = document.documentElement, t = null, m = null, r = null;
+            try { t = localStorage.getItem('bui-theme'); m = localStorage.getItem('bui-mode'); r = localStorage.getItem('bui-docs-dir'); } catch (e) {}
+            if (t && /^[a-z][a-z0-9]*(-[a-z0-9]+)*$/.test(t)) d.setAttribute('data-bui-theme', t);
+            if (m !== 'light' && m !== 'dark') m = window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+            d.setAttribute('data-bui-mode', m);
+            /* Documentation shell only: the saved direction of the RTL/LTR switcher. */
+            if (r === 'rtl' || r === 'ltr') d.setAttribute('dir', r);
+        })();
+    </script>
+</head>
+<body>
+    <main class="bui-docs-main" id="bui-docs-main" tabindex="-1">
+        <div class="bui-docs-page">
+            <div class="bui-docs-page__body">
+
+                <header class="bui-docs-page-header">
+                    <nav class="bui-docs-breadcrumb" aria-label="Breadcrumb" data-docs-breadcrumb hidden></nav>
+                    <h1>Icons</h1>
+                    <p class="bui-docs-lead">Six weights, one class per icon, colored by the text color and mirrored on request in RTL.</p>
+                </header>
+
+                <div class="bui-docs-content">
+
+<section class="bui-docs-section" aria-labelledby="overview">
+<h2 id="overview">Overview</h2>
+<p>An icon is an empty <code>&lt;i&gt;</code> element with two classes: a weight (<code>bui-icon-{weight}</code>) and a name (<code>bui-icon-{name}</code>). The artwork is an SVG used as a CSS mask over the element, and the element paints the mask with <code>currentColor</code>, so an icon takes the text color and the font size of its context. There is no JavaScript and no icon font.</p>
+<p>The initial set has <span data-icons-count></span> icons, each in six weights: <code>thin</code>, <code>light</code>, <code>regular</code>, <code>solid</code>, <code>bold</code> and <code>duotone</code>. When the weight class is left out, the weight is <code>light</code>. The artwork comes from <a href="https://phosphoricons.com" rel="noopener" target="_blank">Phosphor Icons</a> (MIT License, see <a href="#license">License</a>).</p>
+<div class="bui-docs-callout bui-docs-callout--note" role="note">
+<p class="bui-docs-callout__title">Note</p>
+<p>The catalog below uses a native <code>&lt;dialog&gt;</code> and docs-only controls (<code>bui-docs-btn</code>, <code>bui-docs-input</code>, <code>bui-docs-select</code>) because the library has no Dialog, Button or Input component yet. They are not part of the library and will be replaced by library components in a later task.</p>
+</div>
+</section>
+
+<section class="bui-docs-section" aria-labelledby="catalog">
+<h2 id="catalog">Catalog</h2>
+<p>Search by name or keyword, filter by category, and choose the weight shown in the grid. Select an icon to open its details: all six weights, size, color, ready-to-copy HTML and the class names.</p>
+<div class="bui-docs-icon-tools">
+<div class="bui-docs-icon-field"><label for="icon-search">Search</label><input id="icon-search" class="bui-docs-input" type="search" autocomplete="off"></div>
+<div class="bui-docs-icon-field"><label for="icon-category">Category</label><select id="icon-category" class="bui-docs-select"><option value="">All categories</option></select></div>
+<div class="bui-docs-icon-field"><label for="icon-weight">Weight in the grid</label><select id="icon-weight" class="bui-docs-select"></select></div>
+<div class="bui-docs-icon-field bui-docs-icon-field--check"><label><input id="icon-directional" type="checkbox"> Directional only</label></div>
+</div>
+<p class="bui-docs-icon-count" id="icon-count" role="status" aria-live="polite"></p>
+<ul class="bui-docs-icon-grid" id="icon-grid" aria-label="Icons"></ul>
+<p id="icon-empty" hidden>No icons match the search and filters.</p>
+</section>
+
+<section class="bui-docs-section" aria-labelledby="installation-include">
+<h2 id="installation-include">Installation and include</h2>
+<p>Icons are an Extension (CSS only): a single file loaded after <code>baset-ui.css</code>. It needs no JavaScript and registers nothing with <code>BUI.register</code>. The file is generated from the SVGs in <code>assets/icons/</code> and embeds them as <code>data:</code> URIs, so it makes no further requests.</p>
+<pre class="bui-docs-code" data-lang="html"><code>&lt;link rel="stylesheet" href="assets/css/baset-ui.css"&gt;
+&lt;link rel="stylesheet" href="assets/css/extensions/baset-ui-icons.css"&gt;
+&lt;!-- optional theme after them --&gt;
+
+&lt;i class="bui-icon-light bui-icon-x" aria-hidden="true"&gt;&lt;/i&gt;</code></pre>
+<div class="bui-docs-callout bui-docs-callout--note" role="note">
+<p class="bui-docs-callout__title">Note</p>
+<p>CORE_ASSETS.md makes a component an Extension when two of its criteria hold. Icons meet two: the stylesheet is far above the 15KB guideline (see <a href="#performance">Size</a>) and most pages do not need it.</p>
+</div>
+</section>
+
+<section class="bui-docs-section" aria-labelledby="weights">
+<h2 id="weights">Weights</h2>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Icon weights</caption>
+<thead><tr><th scope="col">Weight</th><th scope="col">Class</th><th scope="col">Live</th></tr></thead>
+<tbody>
+<tr><td>thin</td><td><code>bui-icon-thin</code></td><td><i class="bui-icon-thin bui-icon-airplane-in-flight bui-icon-lg" aria-hidden="true"></i></td></tr>
+<tr><td>light (default)</td><td><code>bui-icon-light</code></td><td><i class="bui-icon-light bui-icon-airplane-in-flight bui-icon-lg" aria-hidden="true"></i></td></tr>
+<tr><td>regular</td><td><code>bui-icon-regular</code></td><td><i class="bui-icon-regular bui-icon-airplane-in-flight bui-icon-lg" aria-hidden="true"></i></td></tr>
+<tr><td>solid</td><td><code>bui-icon-solid</code></td><td><i class="bui-icon-solid bui-icon-airplane-in-flight bui-icon-lg" aria-hidden="true"></i></td></tr>
+<tr><td>bold</td><td><code>bui-icon-bold</code></td><td><i class="bui-icon-bold bui-icon-airplane-in-flight bui-icon-lg" aria-hidden="true"></i></td></tr>
+<tr><td>duotone</td><td><code>bui-icon-duotone</code></td><td><i class="bui-icon-duotone bui-icon-airplane-in-flight bui-icon-lg" aria-hidden="true"></i></td></tr>
+</tbody>
+</table>
+<p>Without a weight class the icon is <code>light</code>. These two elements are identical:</p>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<i class="bui-icon-airplane-in-flight bui-icon-lg" aria-hidden="true"></i>
+<i class="bui-icon-light bui-icon-airplane-in-flight bui-icon-lg" aria-hidden="true"></i>
+</div>
+</div>
+<p><code>solid</code> is the Phosphor "fill" artwork. <code>duotone</code> needs no second layer: the artwork has a background shape at 20% opacity, and the mask keeps that alpha, so the shape is drawn at 20% of the current color and the outline at full color.</p>
+</section>
+
+<section class="bui-docs-section" aria-labelledby="sizes-color">
+<h2 id="sizes-color">Sizes and color</h2>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Icon sizes</caption>
+<thead><tr><th scope="col">Class</th><th scope="col">Token</th><th scope="col">Value (live)</th></tr></thead>
+<tbody>
+<tr><td>(none)</td><td>-</td><td><code>1em</code>, the size of the surrounding text</td></tr>
+<tr><td><code>bui-icon-sm</code></td><td><code>--bui-icon-size-sm</code></td><td><span data-docs-token="--bui-icon-size-sm" data-docs-mode="light"></span></td></tr>
+<tr><td><code>bui-icon-md</code></td><td><code>--bui-icon-size-md</code></td><td><span data-docs-token="--bui-icon-size-md" data-docs-mode="light"></span></td></tr>
+<tr><td><code>bui-icon-lg</code></td><td><code>--bui-icon-size-lg</code></td><td><span data-docs-token="--bui-icon-size-lg" data-docs-mode="light"></span></td></tr>
+<tr><td><code>bui-icon-xl</code></td><td><code>--bui-icon-size-xl</code></td><td><span data-docs-token="--bui-icon-size-xl" data-docs-mode="light"></span></td></tr>
+</tbody>
+</table>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<div class="bui-d-flex bui-items-center bui-gap-3">
+<i class="bui-icon-bell" aria-hidden="true"></i>
+<i class="bui-icon-bell bui-icon-sm" aria-hidden="true"></i>
+<i class="bui-icon-bell bui-icon-md" aria-hidden="true"></i>
+<i class="bui-icon-bell bui-icon-lg" aria-hidden="true"></i>
+<i class="bui-icon-bell bui-icon-xl" aria-hidden="true"></i>
+</div>
+</div>
+</div>
+<p>Color is the text color. There are no color utilities yet, so the examples set <code>color</code> with a token on the element or on an ancestor. The size tokens derive from the spacing scale, and a theme can override them.</p>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<div class="bui-d-flex bui-items-center bui-gap-3">
+<i class="bui-icon-solid bui-icon-check-circle bui-icon-lg" style="color: var(--bui-color-success)" aria-hidden="true"></i>
+<i class="bui-icon-solid bui-icon-warning bui-icon-lg" style="color: var(--bui-color-warning)" aria-hidden="true"></i>
+<i class="bui-icon-solid bui-icon-x-circle bui-icon-lg" style="color: var(--bui-color-danger)" aria-hidden="true"></i>
+<i class="bui-icon-solid bui-icon-info bui-icon-lg" style="color: var(--bui-color-info)" aria-hidden="true"></i>
+<i class="bui-icon-duotone bui-icon-heart bui-icon-lg" style="color: var(--bui-color-primary)" aria-hidden="true"></i>
+</div>
+</div>
+</div>
+<p>In text, the icon inherits color and size, and sits on the baseline:</p>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<p class="bui-m-0"><i class="bui-icon-clock" aria-hidden="true"></i> Opens at 9:00</p>
+</div>
+</div>
+</section>
+
+<section class="bui-docs-section" aria-labelledby="rtl">
+<h2 id="rtl">RTL and directional icons</h2>
+<p>Icons that point in a direction must mirror in RTL, and icons that do not (a clock, a logo) must not. Add <code>bui-icon-flip-rtl</code> to a directional icon: it applies <code>transform: scaleX(-1)</code> when the computed direction is RTL (the <code>:dir(rtl)</code> pseudo-class, as in the Position utilities). The class is never added automatically, because the same artwork can be literal (an arrow that points at something on the screen) or semantic (a "next" arrow). The catalog marks the directional icons and adds the class to their generated code.</p>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<div class="bui-d-flex bui-flex-wrap bui-gap-4">
+<div dir="ltr"><i class="bui-icon-arrow-right bui-icon-lg bui-icon-flip-rtl" aria-hidden="true"></i> LTR, with the class</div>
+<div dir="rtl"><i class="bui-icon-arrow-right bui-icon-lg bui-icon-flip-rtl" aria-hidden="true"></i> RTL, with the class</div>
+<div dir="rtl"><i class="bui-icon-arrow-right bui-icon-lg" aria-hidden="true"></i> RTL, without the class</div>
+</div>
+</div>
+</div>
+<p>Directional icons of the initial set:</p>
+<ul data-icons-directional></ul>
+</section>
+
+<section class="bui-docs-section" aria-labelledby="add-icon">
+<h2 id="add-icon">Adding an icon</h2>
+<p>The generator is <code>tools/build-icons.js</code>: plain Node, no dependencies. It reads the manifest and the SVGs and writes the stylesheet and the catalog data. A new icon needs all six weights, or the generator fails and names the missing file.</p>
+<ol>
+<li>Put one SVG per weight in <code>assets/icons/{weight}/{name}.svg</code> (<code>thin</code>, <code>light</code>, <code>regular</code>, <code>solid</code>, <code>bold</code>, <code>duotone</code>). The name is kebab-case, describes the meaning, and cannot be a weight, a size or <code>flip-rtl</code>. Each SVG needs <code>xmlns</code> and <code>viewBox</code>, and no scripts, links or embedded images.</li>
+<li>Add an entry to <code>assets/icons/icons.json</code>: <code>name</code>, <code>directional</code> (true when it must mirror in RTL), and optionally <code>categories</code> and <code>tags</code> for the catalog search.</li>
+<li>Run the generator, then check that the files are current.</li>
+<li>If the artwork is not from Phosphor, add its license to <code>THIRD_PARTY.md</code>.</li>
+<li>Check the new icon in the catalog (all weights, RTL, Light and Dark), and update <code>CHANGELOG.md</code>.</li>
+</ol>
+<pre class="bui-docs-code" data-lang="bash"><code>node tools/build-icons.js
+node tools/build-icons.js --check</code></pre>
+<p>The generated files are <code>assets/css/extensions/baset-ui-icons.css</code> and <code>documentation/assets/js/icons-data.js</code>. Do not edit them by hand.</p>
+</section>
+
+<section class="bui-docs-section" aria-labelledby="performance">
+<h2 id="performance">Size</h2>
+<p>Measured for Task 07 with 51 icons in six weights:</p>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Size of the icons stylesheet</caption>
+<thead><tr><th scope="col">File</th><th scope="col">Raw</th><th scope="col">Gzip</th></tr></thead>
+<tbody>
+<tr><td><code>baset-ui-icons.css</code></td><td>149,674 bytes</td><td>28,515 bytes</td></tr>
+</tbody>
+</table>
+<p>The cost grows with the number of icons (about 3 KB raw per icon, for all six weights), and every weight of every icon is in the file even when a page uses one weight. A page that needs a handful of icons can build a smaller file from the same generator by editing the manifest, which is a decision for the project owner and not part of this task.</p>
+</section>
+
+<section class="bui-docs-section" aria-labelledby="responsive-behavior">
+<h2 id="responsive-behavior">Responsive behavior</h2>
+<p>Icons do not change with the breakpoint. They scale with the font size (<code>1em</code>) or follow a size class, and they never take part in layout beyond their box (<code>inline-block</code>, <code>flex-shrink: 0</code>). The catalog grid adapts its column count to the width, and the details dialog fits a 320px viewport and scrolls inside itself.</p>
+</section>
+
+<section class="bui-docs-section" aria-labelledby="accessibility">
+<h2 id="accessibility">Accessibility</h2>
+<h3>Decorative icons</h3>
+<p>An icon that repeats nearby text or adds only decoration gets <code>aria-hidden="true"</code>. This is the default in every example.</p>
+<h3>Icons that carry meaning</h3>
+<p>An icon alone in a control needs a name on the <strong>control</strong>: the icon stays hidden. Do not rely on the icon alone in critical contexts (WCAG 1.4.1): add text. An informative icon outside a control uses <code>role="img"</code> and <code>aria-label</code>, with the label coming from your i18n texts.</p>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<div class="bui-d-flex bui-items-center bui-gap-3">
+<button type="button" class="bui-docs-btn" aria-label="Close"><i class="bui-icon-x" aria-hidden="true"></i></button>
+<i class="bui-icon-solid bui-icon-warning bui-icon-lg" style="color: var(--bui-color-warning)" role="img" aria-label="Warning"></i>
+</div>
+</div>
+</div>
+<p>The button is <code>bui-docs-btn</code>, a docs-only class: the library has no Button component yet.</p>
+<h3>Keyboard</h3>
+<p>The catalog items are buttons (Enter or Space opens the details). In the dialog, Tab and Shift+Tab stay inside it, arrow keys change the weight in the radio group, Esc closes it, and focus returns to the icon that opened it. This behavior is the native <code>&lt;dialog&gt;</code> behavior with <code>showModal()</code>.</p>
+<h3>Contrast and forced colors</h3>
+<p>An icon has the contrast of the text color it takes. A meaningful icon needs 3:1 against its background (WCAG 1.4.11). Because the icon is a painted background, a forced-colors mode would hide it, so the stylesheet repaints icons with <code>CanvasText</code> there. Printing keeps the color (<code>print-color-adjust: exact</code>).</p>
+<h3>Screen reader</h3>
+<p>The attributes above follow the documented behavior. Screen reader announcements were not tested with NVDA, JAWS or VoiceOver for this release.</p>
+</section>
+
+<section class="bui-docs-section" aria-labelledby="license">
+<h2 id="license">License</h2>
+<p>The artwork is from <a href="https://github.com/phosphor-icons/core" rel="noopener" target="_blank">Phosphor Icons</a>, version <span data-icons-source></span>, MIT License, Copyright (c) 2023 Phosphor Icons. The notice and the license text are in <code>THIRD_PARTY.md</code> at the root of the repository and must stay with any copy of the icons. Phosphor is only the source of the files: it is not a dependency of the library and is not loaded at run time.</p>
+</section>
+
+                </div>
+                <!-- Previous / Next links are appended here by docs.js from the order in nav.js. -->
+            </div>
+            <!-- "On this page" is appended here by docs.js (visible from the XL breakpoint). -->
+        </div>
+    </main>
+
+    <dialog class="bui-docs-icon-dialog" id="icon-dialog" aria-labelledby="icon-dialog-title">
+        <div class="bui-docs-icon-dialog__head">
+            <h2 id="icon-dialog-title" class="bui-docs-icon-dialog__title"></h2>
+            <button type="button" class="bui-docs-btn" id="icon-dialog-close">Close</button>
+        </div>
+        <div class="bui-docs-icon-dialog__preview" aria-hidden="true"><i id="icon-dialog-preview"></i></div>
+        <fieldset class="bui-docs-icon-fieldset">
+            <legend>Weight</legend>
+            <div class="bui-docs-icon-weights" id="icon-dialog-weights"></div>
+        </fieldset>
+        <div class="bui-docs-icon-controls">
+            <div class="bui-docs-icon-field"><label for="icon-dialog-size">Size</label><select id="icon-dialog-size" class="bui-docs-select"></select></div>
+            <div class="bui-docs-icon-field"><label for="icon-dialog-color">Color</label><select id="icon-dialog-color" class="bui-docs-select"></select></div>
+            <div class="bui-docs-icon-field bui-docs-icon-field--check"><label><input id="icon-dialog-flip" type="checkbox"> Mirror in RTL</label></div>
+            <div class="bui-docs-icon-field bui-docs-icon-field--check"><label><input id="icon-dialog-decorative" type="checkbox" checked> Decorative (aria-hidden)</label></div>
+            <div class="bui-docs-icon-field"><label for="icon-dialog-label">Accessible label</label><input id="icon-dialog-label" class="bui-docs-input" type="text" disabled></div>
+        </div>
+        <p class="bui-docs-icon-note" id="icon-dialog-note"></p>
+        <div class="bui-docs-icon-codebar">
+            <span class="bui-docs-icon-codebar__title">HTML</span>
+            <button type="button" class="bui-docs-btn bui-docs-copy" id="icon-dialog-copy">Copy</button>
+        </div>
+        <pre class="bui-docs-icon-code" dir="ltr" tabindex="0" aria-label="HTML code"><code id="icon-dialog-code"></code></pre>
+        <p class="bui-docs-icon-classes">Classes: <code id="icon-dialog-name"></code></p>
+        <p class="bui-docs-sr-only" id="icon-dialog-live" role="status" aria-live="polite"></p>
+    </dialog>
+
+    <script src="../../assets/js/baset-ui.js"></script>
+    <script src="../../documentation/assets/js/nav.js"></script>
+    <script src="../../documentation/assets/js/icons-data.js"></script>
+    <script src="../../documentation/assets/js/docs.js"></script>
+    <script>
+        /* Catalog behavior (docs page only). Data comes from icons-data.js, generated from assets/icons/icons.json. */
+        (function () {
+            var D = window.BUI_DOCS_ICONS;
+            if (!D) return;
+            function $(id) { return document.getElementById(id); }
+            function el(tag, cls, text) { var n = document.createElement(tag); if (cls) n.className = cls; if (text) n.textContent = text; return n; }
+            var COLORS = [['', 'Current text color'], ['primary', 'Primary'], ['secondary', 'Secondary'], ['success', 'Success'], ['warning', 'Warning'], ['danger', 'Danger'], ['info', 'Info']];
+            var SIZES = [['', 'Default (1em)'], ['sm', 'Small'], ['md', 'Medium'], ['lg', 'Large'], ['xl', 'Extra large']];
+
+            Array.prototype.forEach.call(document.querySelectorAll('[data-icons-count]'), function (n) { n.textContent = String(D.icons.length); });
+            Array.prototype.forEach.call(document.querySelectorAll('[data-icons-source]'), function (n) { n.textContent = D.source; });
+            var dirList = document.querySelector('[data-icons-directional]');
+            D.icons.filter(function (i) { return i.directional; }).forEach(function (i) {
+                var li = el('li'); li.appendChild(el('code', '', 'bui-icon-' + i.name)); dirList.appendChild(li);
+            });
+
+            /* ---- Grid ---- */
+            var grid = $('icon-grid'), search = $('icon-search'), cat = $('icon-category'), weightSel = $('icon-weight'), dirOnly = $('icon-directional');
+            var count = $('icon-count'), empty = $('icon-empty');
+            var categories = [];
+            D.icons.forEach(function (i) { i.categories.forEach(function (c) { if (categories.indexOf(c) < 0) categories.push(c); }); });
+            categories.sort().forEach(function (c) { var o = el('option', '', c); o.value = c; cat.appendChild(o); });
+            D.weights.forEach(function (w) { var o = el('option', '', w); o.value = w; if (w === D.defaultWeight) o.selected = true; weightSel.appendChild(o); });
+
+            function classes(name, weight, size, flip) {
+                return ['bui-icon-' + weight, 'bui-icon-' + name].concat(size ? ['bui-icon-' + size] : [], flip ? ['bui-icon-flip-rtl'] : []).join(' ');
+            }
+
+            var items = D.icons.map(function (icon) {
+                var li = el('li');
+                var b = el('button', 'bui-docs-icon-btn');
+                b.type = 'button';
+                b.setAttribute('data-icon', icon.name);
+                b.setAttribute('aria-haspopup', 'dialog');
+                var i = el('i'); i.setAttribute('aria-hidden', 'true');
+                b.appendChild(i);
+                b.appendChild(el('span', 'bui-docs-icon-btn__name', icon.name));
+                li.appendChild(b); grid.appendChild(li);
+                return { icon: icon, li: li, i: i, haystack: icon.name.replace(/-/g, ' ') + ' ' + icon.tags.join(' ').toLowerCase() };
+            });
+
+            function paintGrid() {
+                items.forEach(function (it) { it.i.className = classes(it.icon.name, weightSel.value, 'lg', it.icon.directional); });
+            }
+            function filterGrid() {
+                var q = search.value.trim().toLowerCase().replace(/-/g, ' ');
+                var shown = 0;
+                items.forEach(function (it) {
+                    var ok = (!q || it.haystack.indexOf(q) > -1) && (!cat.value || it.icon.categories.indexOf(cat.value) > -1) && (!dirOnly.checked || it.icon.directional);
+                    it.li.hidden = !ok;
+                    if (ok) shown += 1;
+                });
+                count.textContent = 'Showing ' + shown + ' of ' + items.length + ' icons';
+                empty.hidden = shown !== 0;
+            }
+            search.addEventListener('input', filterGrid);
+            cat.addEventListener('change', filterGrid);
+            dirOnly.addEventListener('change', filterGrid);
+            weightSel.addEventListener('change', paintGrid);
+            paintGrid(); filterGrid();
+
+            /* ---- Details dialog (native <dialog>; docs only until BUI.dialog exists) ---- */
+            var dlg = $('icon-dialog'), preview = $('icon-dialog-preview'), codeOut = $('icon-dialog-code'), live = $('icon-dialog-live');
+            var sizeSel = $('icon-dialog-size'), colorSel = $('icon-dialog-color'), flip = $('icon-dialog-flip'), deco = $('icon-dialog-decorative'), label = $('icon-dialog-label');
+            var weightsBox = $('icon-dialog-weights'), note = $('icon-dialog-note');
+            var state = { icon: null, weight: D.defaultWeight };
+
+            SIZES.forEach(function (s) { var o = el('option', '', s[1]); o.value = s[0]; sizeSel.appendChild(o); });
+            COLORS.forEach(function (c) { var o = el('option', '', c[1]); o.value = c[0]; colorSel.appendChild(o); });
+            var radios = {}, thumbs = {};
+            D.weights.forEach(function (w) {
+                var lab = el('label', 'bui-docs-icon-weight');
+                var r = el('input'); r.type = 'radio'; r.name = 'icon-dialog-weight'; r.value = w;
+                var i = el('i'); i.setAttribute('aria-hidden', 'true');
+                lab.appendChild(r); lab.appendChild(i); lab.appendChild(el('span', '', w));
+                weightsBox.appendChild(lab);
+                radios[w] = r; thumbs[w] = i;
+                r.addEventListener('change', function () { if (r.checked) { state.weight = w; render(); } });
+            });
+
+            function colorStyle() { return colorSel.value ? 'color: var(--bui-color-' + colorSel.value + ')' : ''; }
+
+            /* The preview and the code are produced from the same attribute list, so the code is what is shown. */
+            function attrs() {
+                var list = [['class', classes(state.icon.name, state.weight, sizeSel.value, flip.checked)]];
+                var style = colorStyle();
+                if (style) list.push(['style', style]);
+                if (deco.checked) list.push(['aria-hidden', 'true']);
+                else { list.push(['role', 'img']); list.push(['aria-label', label.value]); }
+                return list;
+            }
+            function render() {
+                if (!state.icon) return;
+                var list = attrs();
+                Array.prototype.slice.call(preview.attributes).forEach(function (a) { preview.removeAttribute(a.name); });
+                preview.id = 'icon-dialog-preview';
+                list.forEach(function (a) { preview.setAttribute(a[0], a[1]); });
+                codeOut.textContent = '<i ' + list.map(function (a) { return a[0] + '="' + a[1].replace(/&/g, '&amp;').replace(/"/g, '&quot;') + '"'; }).join(' ') + '></i>';
+                $('icon-dialog-name').textContent = list[0][1].split(' ').slice(0, 2).join(' ');
+                D.weights.forEach(function (w) {
+                    thumbs[w].className = classes(state.icon.name, w, 'lg', flip.checked);
+                    if (colorStyle()) thumbs[w].setAttribute('style', colorStyle()); else thumbs[w].removeAttribute('style');
+                    radios[w].checked = w === state.weight;
+                });
+                label.disabled = deco.checked;
+            }
+
+            function open(name, opener) {
+                var icon = D.icons.filter(function (i) { return i.name === name; })[0];
+                if (!icon) return;
+                state.icon = icon;
+                state.weight = weightSel.value;
+                $('icon-dialog-title').textContent = icon.name;
+                sizeSel.value = 'lg';
+                colorSel.value = '';
+                flip.checked = icon.directional;
+                flip.disabled = !icon.directional;
+                deco.checked = true;
+                label.value = icon.name.replace(/-/g, ' ');
+                note.textContent = icon.directional
+                    ? 'Directional icon: it points somewhere, so it is mirrored in RTL with bui-icon-flip-rtl.'
+                    : 'Not directional: it is not mirrored in RTL.';
+                live.textContent = '';
+                $('icon-dialog-copy').textContent = 'Copy';
+                render();
+                dlg.showModal();
+            }
+
+            grid.addEventListener('click', function (e) {
+                var b = e.target.closest ? e.target.closest('.bui-docs-icon-btn') : null;
+                if (b) open(b.getAttribute('data-icon'), b);
+            });
+            [sizeSel, colorSel, flip, deco, label].forEach(function (c) { c.addEventListener(c.type === 'checkbox' || c.tagName === 'SELECT' ? 'change' : 'input', render); });
+            $('icon-dialog-close').addEventListener('click', function () { dlg.close(); });
+            /* Click on the backdrop (the dialog element itself, outside its content box) closes it. */
+            dlg.addEventListener('click', function (e) {
+                if (e.target !== dlg) return;
+                var r = dlg.getBoundingClientRect();
+                if (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom) dlg.close();
+            });
+
+            function legacyCopy(text) {
+                var ta = document.createElement('textarea');
+                ta.value = text; ta.setAttribute('readonly', ''); ta.style.position = 'fixed'; ta.style.opacity = '0';
+                dlg.appendChild(ta);
+                var ok = false;
+                try { ta.select(); ok = document.execCommand('copy'); } catch (err) { ok = false; }
+                dlg.removeChild(ta);
+                return ok;
+            }
+            $('icon-dialog-copy').addEventListener('click', function () {
+                var text = codeOut.textContent, btn = this;
+                var done = function (ok) {
+                    btn.textContent = ok ? 'Copied' : 'Copy failed';
+                    live.textContent = '';
+                    window.setTimeout(function () { live.textContent = ok ? 'HTML copied to clipboard' : 'Copy failed. Select the code and press Ctrl+C or Command+C.'; }, 30);
+                    if (!ok) { var r = document.createRange(); r.selectNodeContents(codeOut); var s = window.getSelection(); s.removeAllRanges(); s.addRange(r); }
+                    window.setTimeout(function () { btn.textContent = 'Copy'; }, 2000);
+                };
+                if (navigator.clipboard && navigator.clipboard.writeText && window.isSecureContext) {
+                    navigator.clipboard.writeText(text).then(function () { done(true); }, function () { done(legacyCopy(text)); });
+                } else { done(legacyCopy(text)); }
+            });
+        })();
+    </script>
+</body>
+</html>

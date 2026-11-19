@@ -34,6 +34,6 @@ window.BUI_DOCS_NAV = [
     { title: 'JavaScript', items: [{ title: 'Introduction', href: 'documentation/javascript/introduction.html' }, { title: 'Initialization', href: 'documentation/javascript/initialization.html' }, { title: 'Events', href: 'documentation/javascript/events.html' }, { title: 'API Reference', href: 'documentation/javascript/api-reference.html' }] },
     { title: 'Extensions', items: ['Overview'] },
     { title: 'Accessibility', items: ['Guidelines', 'Keyboard Navigation'] },
-    { title: 'Advanced', items: [{ title: 'RTL & LTR', href: 'documentation/advanced/rtl-ltr.html' }, { title: 'Internationalization', href: 'documentation/advanced/internationalization.html' }, 'Icons'] },
+    { title: 'Advanced', items: [{ title: 'RTL & LTR', href: 'documentation/advanced/rtl-ltr.html' }, { title: 'Internationalization', href: 'documentation/advanced/internationalization.html' }, { title: 'Icons', href: 'documentation/advanced/icons.html' }] },
     { title: 'Development', items: ['Changelog', 'Contributing'] }
 ];

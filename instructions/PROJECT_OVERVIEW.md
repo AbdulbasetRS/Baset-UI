@@ -25,7 +25,7 @@
 - لا مكتبات خارجية كجزء من المكتبة دون قرار موثق وموافقة.
 
 ## حالة المشروع الحالية
-مرحلة **التأسيس** (Task 01 إلى Task 06): الهيكل، التعليمات، واجهة التوثيق وقالب الصفحات، Design Tokens (Light/Dark)، نظام Layout وUtilities، ونواة JavaScript (`BUI`: Registry وInit وEvents وHelpers وLogger) مع صفحات توثيقها، وTheme Manager وثيم `ocean`، وLocale Manager وثلاث لغات (en وar وfr). **لا يوجد أي Component منفذ.** ملفات اللغات تحتوي مفاتيح `common` فقط. راجع [COMPONENTS_REGISTRY.md](COMPONENTS_REGISTRY.md) و[ROADMAP.md](ROADMAP.md).
+مرحلة **التأسيس** (Task 01 إلى Task 07): الهيكل، التعليمات، واجهة التوثيق وقالب الصفحات، Design Tokens (Light/Dark)، نظام Layout وUtilities، ونواة JavaScript (`BUI`: Registry وInit وEvents وHelpers وLogger) مع صفحات توثيقها، وTheme Manager وثيم `ocean`، وLocale Manager وثلاث لغات (en وar وfr)، ونظام الأيقونات (Phosphor، SVG Mask، 51 أيقونة بستة أوزان، Extension CSS فقط) مع كتالوج تفاعلي. **لا يوجد أي Component منفذ.** ملفات اللغات تحتوي مفاتيح `common` فقط. راجع [COMPONENTS_REGISTRY.md](COMPONENTS_REGISTRY.md) و[ROADMAP.md](ROADMAP.md).
 
 ## القرارات المعمارية المعتمدة
 | القرار | السبب |

@@ -17,7 +17,7 @@
 ## الأعمدة
 `Type`: Core | Extension. `JS`: Yes | No. `Docs`: مسار الصفحة أو `-`.
 
-> **الوضع الحالي (بعد Task 06): كل المكونات Planned. لا يوجد أي Component منفذ.** المنفذ: Design Tokens وLayout (Container/Grid/Flexbox/Spacing) كأنظمة أساسية، وUtilities (Flexbox وSpacing وDisplay وPosition وOverflow وVisibility وBorders)، ونواة JavaScript (`BUI`)، وTheme Manager (مع ثيم ocean) وLocale Manager (مع اللغات en وar وfr). روابط Sidebar للمكونات Placeholders.
+> **الوضع الحالي (بعد Task 07): كل المكونات Planned. لا يوجد أي Component منفذ.** المنفذ: Design Tokens وLayout (Container/Grid/Flexbox/Spacing) كأنظمة أساسية، وUtilities (Flexbox وSpacing وDisplay وPosition وOverflow وVisibility وBorders)، ونواة JavaScript (`BUI`)، وTheme Manager (مع ثيم ocean) وLocale Manager (مع اللغات en وar وfr)، ونظام الأيقونات (Extension CSS فقط). روابط Sidebar للمكونات Placeholders.
 
 ### Components
 | Component | Status | Type | JS | Docs | Updated | Notes |
@@ -69,7 +69,7 @@
 | Theme Manager (`BUI.theme` + ثيم `ocean`) | Documented | Task 06. `set/setMode/toggleMode/get/getMode/load`، حفظ `bui-theme`/`bui-mode`، `prefers-color-scheme`، الحدث `bui:theme:change`، Snippet منع الوميض. صفحتا Themes وDark Mode في `documentation/customization/`. تفاصيل في [RTL_LTR_AND_THEMES.md](RTL_LTR_AND_THEMES.md). اختُبر آلياً في Chromium فقط (انظر CHANGELOG). **غير مختبر:** تأثير الثيم على مكونات (لا مكون منفذ)، Safari/Firefox، لمس، قارئ شاشة، Forced Colors. حد معروف: نطاق `default` متداخل داخل ثيم آخر لا يعيد قيم Layer 2 |
 | Locale Manager (`BUI.locale` + اللغات en وar وfr) | Documented | Task 06. `use/t/get/getDirection/register/apply`، Cache وFallback ومتغيرات `{name}` وجمع بـ `Intl.PluralRules` وHTML Binding وضبط `lang`/`dir` والحدث `bui:locale:change`، واختبار `node tests/i18n-keys.js`. صفحتا RTL & LTR وInternationalization في `documentation/advanced/`. تفاصيل في [INTERNATIONALIZATION.md](INTERNATIONALIZATION.md). اختُبر آلياً في Chromium فقط. **غير مختبر:** استهلاك مكون حقيقي لـ `bui:locale:change`، `file://` (التحميل يتطلب http/https وهذا موثق)، Safari/Firefox، لمس، قارئ شاشة |
 | Toast Manager / Modal Manager | Planned | Toast/Modal غير مدرجين في Sidebar بعد |
-| Icons | Planned | [ICONS_SYSTEM.md](ICONS_SYSTEM.md) |
+| Icons (Phosphor 2.1.1، SVG Mask، 51 أيقونة x 6 أوزان) | Documented | Task 07. Extension CSS فقط: `assets/css/extensions/baset-ui-icons.css` (149,674 بايت خام، 28,515 gzip، مولَّد بـ `tools/build-icons.js`). صفحة `documentation/advanced/icons.html` (كتالوج: بحث وتصفية وتفاصيل بـ `<dialog>` أصلي docs-only يُستبدل بـ `BUI.dialog` لاحقاً). تفاصيل في [ICONS_SYSTEM.md](ICONS_SYSTEM.md). اختُبر آلياً في Chromium فقط (انظر CHANGELOG). **غير مختبر:** قارئ شاشة، Safari/Firefox، لمس، فعالية `mask` في متصفحات أقدم، Forced Colors على Windows الفعلي (اختُبر بمحاكاة Chromium فقط)، تأثير الأيقونات داخل مكونات (لا مكون منفذ) |
 
 ### Documentation Shell
 | Item | Status | Notes |
@@ -82,4 +82,5 @@
 | صفحات التوثيق الثمانية (Layout x5, Customization x3) | Completed | Task 03. مفعلة في `nav.js` |
 | صفحات Utilities الخمس (Display, Position, Overflow, Visibility, Borders) | Completed | Task 04. مفعلة في `nav.js`. صفحة بلا أقسام Component الثمانية (استثناء موثق) |
 | صفحات JavaScript الأربع (Introduction, Initialization, Events, API Reference) | Completed | Task 05. مفعلة في `nav.js`. أمثلتها مقاطع كود بمكون افتراضي `my-widget` معلن في كل صفحة (لا مكون منفذ). 256 تركيبة صفحة/اتجاه/وضع/عرض (مع 4 صفحات سابقة للتراجع) بلا Overflow ولا أخطاء Console ولا 404، Chromium فقط |
+| صفحة Icons (`documentation/advanced/icons.html`) | Completed | Task 07. مفعلة في `nav.js`. صفحة بلا أقسام Component الثمانية (استثناء موثق). 64 تركيبة (8 عروض x اتجاهان x وضعان x ثيمان) والـ dialog مفتوح: بلا Overflow ولا Console ولا 404، Chromium فقط. الأزرار والحقول docs-only (`bui-docs-*`) |
 | صفحات Themes وDark Mode وRTL & LTR وInternationalization | Completed | Task 06. مفعلة في `nav.js`. صفحات بلا أقسام Component الثمانية (استثناء موثق). أمثلتها حية على `BUI.theme` و`BUI.locale` وأزرار docs-only (`bui-docs-btn`) لعدم وجود Button. 648 تركيبة (9 صفحات x 9 عروض x ثيم x وضع x اتجاه) بلا Overflow ولا Console ولا 404، Chromium فقط |
