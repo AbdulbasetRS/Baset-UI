@@ -2,7 +2,7 @@
  * Baset-UI - Core Stylesheet
  * Version: 0.0.0-foundation
  *
- * Task 03: Design Tokens + Layout (Container, Grid, Flexbox, Spacing). Task 09: Button, Button Group, Close Button.
+ * Task 03: Design Tokens + Layout (Container, Grid, Flexbox, Spacing). Task 09: Button, Button Group, Close Button. Task 10: Avatar, Badge, Progress.
  * Section order follows instructions/CORE_ASSETS.md:
  *   1 Tokens  2 Dark Mode  3 Base  4 Layout  5 Utilities  6 Components  7 Responsive Utilities  8 Print / Reduced motion
  * Tokens are declared so they work on ANY element (see "Token scopes" below and
@@ -244,6 +244,64 @@
     --bui-btn-close-hover-bg: var(--bui-color-neutral-100);
     --bui-btn-close-active-bg: var(--bui-color-neutral-200);
     --bui-btn-close-disabled-opacity: var(--bui-btn-disabled-opacity);
+
+    /* Avatar component tokens (Task 10). Sizes come from the spacing scale. The ring is the outline in the page color used by the status indicator and by Avatar Group. */
+    --bui-avatar-size-xs: var(--bui-space-4);
+    --bui-avatar-size-sm: var(--bui-space-5);
+    --bui-avatar-size-md: calc(var(--bui-space-5) + var(--bui-space-2));
+    --bui-avatar-size-lg: var(--bui-space-6);
+    --bui-avatar-size-xl: calc(var(--bui-space-6) + var(--bui-space-3));
+    --bui-avatar-font-size-xs: var(--bui-font-size-xs);
+    --bui-avatar-font-size-sm: var(--bui-font-size-sm);
+    --bui-avatar-font-size-md: var(--bui-font-size-base);
+    --bui-avatar-font-size-lg: var(--bui-font-size-lg);
+    --bui-avatar-font-size-xl: var(--bui-font-size-2xl);
+    --bui-avatar-font-weight: var(--bui-font-weight-semibold);
+    --bui-avatar-bg: var(--bui-color-neutral-200);
+    --bui-avatar-color: var(--bui-color-neutral-800);
+    --bui-avatar-radius-circle: var(--bui-radius-full);
+    --bui-avatar-radius-rounded: var(--bui-radius-md);
+    --bui-avatar-radius-square: var(--bui-radius-none);
+    --bui-avatar-ring-width: var(--bui-border-width-thick);
+    --bui-avatar-ring-color: var(--bui-color-bg);
+    --bui-avatar-status-size-min: var(--bui-space-2);
+    --bui-avatar-group-overlap: 0.25;
+
+    /* Badge component tokens (Task 10). Colors are not component tokens: they follow the semantic color tokens through the color modifiers. */
+    --bui-badge-font-family: inherit;
+    --bui-badge-font-weight: var(--bui-font-weight-semibold);
+    --bui-badge-line-height: var(--bui-line-height-tight);
+    --bui-badge-border-width: var(--bui-border-width);
+    --bui-badge-radius: var(--bui-radius-sm);
+    --bui-badge-gap: var(--bui-space-1);
+    --bui-badge-padding-x-sm: var(--bui-space-2);
+    --bui-badge-padding-x-md: var(--bui-space-2);
+    --bui-badge-padding-x-lg: calc(var(--bui-space-2) + var(--bui-space-1));
+    --bui-badge-font-size-sm: var(--bui-font-size-xs);
+    --bui-badge-font-size-md: var(--bui-font-size-sm);
+    --bui-badge-font-size-lg: var(--bui-font-size-base);
+    --bui-badge-height-sm: calc(var(--bui-space-3) + var(--bui-space-1));
+    --bui-badge-height-md: calc(var(--bui-space-3) + var(--bui-space-2));
+    --bui-badge-height-lg: calc(var(--bui-space-4) + var(--bui-space-1));
+    --bui-badge-dot-size-sm: var(--bui-space-2);
+    --bui-badge-dot-size-md: calc(var(--bui-space-2) + var(--bui-space-1) / 2);
+    --bui-badge-dot-size-lg: calc(var(--bui-space-2) + var(--bui-space-1));
+    --bui-badge-ring-width: var(--bui-border-width-thick);
+    --bui-badge-ring-color: var(--bui-color-bg);
+
+    /* Progress component tokens (Task 10). The bar color follows the semantic color tokens through the color modifiers. */
+    --bui-progress-height-sm: var(--bui-space-2);
+    --bui-progress-height-md: var(--bui-space-3);
+    --bui-progress-height-lg: var(--bui-space-4);
+    --bui-progress-radius: var(--bui-radius-full);
+    --bui-progress-track-bg: var(--bui-color-neutral-200);
+    --bui-progress-label-color: var(--bui-color-text);
+    --bui-progress-font-size-md: var(--bui-font-size-xs);
+    --bui-progress-font-size-lg: var(--bui-font-size-sm);
+    --bui-progress-font-weight: var(--bui-font-weight-semibold);
+    --bui-progress-duration: var(--bui-duration-slow);
+    --bui-progress-indeterminate-duration: 1.5s;
+    --bui-progress-segment-divider: var(--bui-border-width-thick);
 }
 
 /* =====================================================================
@@ -777,8 +835,309 @@ pre { margin-block: 0 var(--bui-space-3); overflow: auto; }
 .bui-shadow-xl { box-shadow: var(--bui-shadow-xl) !important; }
 
 /* =====================================================================
- * 6. COMPONENTS (alphabetical): Button, Button Group, Close Button (Task 09).
+ * 6. COMPONENTS (alphabetical): Avatar, Badge (Task 10), Button, Button Group, Close Button (Task 09), Progress (Task 10).
  * ===================================================================== */
+
+/* ---------------------------------------------------------------------
+ * Avatar (Task 10). A person or entity shown as an image, initials or an icon in a fixed-size shape.
+ *   - Component tokens: --bui-avatar-* (Layer 3, themeable). Private values: --bui-avatar-_* (internal).
+ *   - Content elements: .bui-avatar__img (image), .bui-avatar__text (initials) or an icon element.
+ *   - Image fallback: the optional BUI.avatar component (data-bui-avatar) adds .is-fallback when the image fails
+ *     (there is no standard attribute for that state, so a state class is used). CSS cannot detect a failed load.
+ *   - Status: .bui-avatar__status--{online|offline|busy|away}. Each status has its own shape, so color is never the only cue.
+ * --------------------------------------------------------------------- */
+.bui-avatar {
+    --bui-avatar-_size: var(--bui-avatar-size-md);
+    --bui-avatar-_font-size: var(--bui-avatar-font-size-md);
+    --bui-avatar-_radius: var(--bui-avatar-radius-circle);
+    --bui-avatar-_status-inset: calc(var(--bui-avatar-_size) * 0.04);
+
+    position: relative;
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    inline-size: var(--bui-avatar-_size);
+    block-size: var(--bui-avatar-_size);
+    margin: 0;
+    padding: 0;
+    font-size: var(--bui-avatar-_font-size);
+    font-weight: var(--bui-avatar-font-weight);
+    line-height: 1;
+    text-align: center;
+    vertical-align: middle;
+    color: var(--bui-avatar-color);
+    background-color: var(--bui-avatar-bg);
+    border-radius: var(--bui-avatar-_radius);
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+/* Sizes (md is the default) */
+.bui-avatar--xs { --bui-avatar-_size: var(--bui-avatar-size-xs); --bui-avatar-_font-size: var(--bui-avatar-font-size-xs); }
+.bui-avatar--sm { --bui-avatar-_size: var(--bui-avatar-size-sm); --bui-avatar-_font-size: var(--bui-avatar-font-size-sm); }
+.bui-avatar--md { --bui-avatar-_size: var(--bui-avatar-size-md); --bui-avatar-_font-size: var(--bui-avatar-font-size-md); }
+.bui-avatar--lg { --bui-avatar-_size: var(--bui-avatar-size-lg); --bui-avatar-_font-size: var(--bui-avatar-font-size-lg); }
+.bui-avatar--xl { --bui-avatar-_size: var(--bui-avatar-size-xl); --bui-avatar-_font-size: var(--bui-avatar-font-size-xl); }
+
+/* Shapes (circle is the default). The status indicator sits at the corner of a rounded or square avatar. */
+.bui-avatar--circle { --bui-avatar-_radius: var(--bui-avatar-radius-circle); }
+.bui-avatar--rounded { --bui-avatar-_radius: var(--bui-avatar-radius-rounded); --bui-avatar-_status-inset: 0px; }
+.bui-avatar--square { --bui-avatar-_radius: var(--bui-avatar-radius-square); --bui-avatar-_status-inset: 0px; }
+
+/* Content */
+.bui-avatar__img {
+    position: absolute;
+    inset: 0;
+    display: block;
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: cover;
+    border-radius: inherit;
+}
+.bui-avatar__text {
+    overflow: hidden;
+    max-inline-size: 100%;
+    white-space: nowrap;
+}
+.bui-avatar > [class*="bui-icon-"] { font-size: calc(var(--bui-avatar-_size) * 0.5); }
+
+/* A failed image is hidden so the text underneath (the fallback) shows. */
+.bui-avatar.is-fallback > .bui-avatar__img { display: none; }
+
+/* Status indicator */
+.bui-avatar__status {
+    --bui-avatar-_status-c: var(--bui-color-success);
+    --bui-avatar-_status-size: max(var(--bui-avatar-status-size-min), calc(var(--bui-avatar-_size) * 0.3));
+
+    position: absolute;
+    inset-block-end: var(--bui-avatar-_status-inset);
+    inset-inline-end: var(--bui-avatar-_status-inset);
+    box-sizing: border-box;
+    inline-size: var(--bui-avatar-_status-size);
+    block-size: var(--bui-avatar-_status-size);
+    background-color: var(--bui-avatar-_status-c);
+    border-radius: var(--bui-radius-full);
+    box-shadow: 0 0 0 var(--bui-avatar-ring-width) var(--bui-avatar-ring-color);
+    forced-color-adjust: none;
+}
+.bui-avatar__status--online { --bui-avatar-_status-c: var(--bui-color-success); }
+/* Busy: a horizontal bar cut out of the dot. */
+.bui-avatar__status--busy { --bui-avatar-_status-c: var(--bui-color-danger); }
+.bui-avatar__status--busy::after {
+    content: "";
+    position: absolute;
+    inset-block: 0;
+    inset-inline: 22%;
+    block-size: 18%;
+    margin-block: auto;
+    background-color: var(--bui-avatar-ring-color);
+    border-radius: var(--bui-radius-full);
+}
+/* Away: a dot with one quarter missing. */
+.bui-avatar__status--away {
+    --bui-avatar-_status-c: var(--bui-color-warning);
+    background-color: transparent;
+    background-image: conic-gradient(from 0deg, transparent 0 25%, var(--bui-avatar-_status-c) 0 100%);
+}
+/* Offline: a hollow ring. */
+.bui-avatar__status--offline {
+    --bui-avatar-_status-c: var(--bui-color-secondary);
+    background-color: var(--bui-avatar-ring-color);
+    border: var(--bui-border-width-thick) solid var(--bui-avatar-_status-c);
+}
+
+/* Forced colors: the background is replaced by the system, so the shape gets a visible edge. */
+@media (forced-colors: active) {
+    .bui-avatar { border: var(--bui-border-width) solid CanvasText; }
+}
+
+/* Avatar Group: overlapping avatars. The overlap is a fraction of each avatar's own size and uses a logical margin,
+   so the stack grows toward the end side in both directions. Later avatars paint above earlier ones. */
+.bui-avatar-group {
+    display: inline-flex;
+    align-items: center;
+    vertical-align: middle;
+}
+.bui-avatar-group > .bui-avatar {
+    box-shadow: 0 0 0 var(--bui-avatar-ring-width) var(--bui-avatar-ring-color);
+}
+.bui-avatar-group > .bui-avatar + .bui-avatar {
+    margin-inline-start: calc(var(--bui-avatar-_size) * var(--bui-avatar-group-overlap) * -1);
+}
+/* Group sizes beat the size class on the avatar (higher specificity). */
+.bui-avatar-group--xs > .bui-avatar { --bui-avatar-_size: var(--bui-avatar-size-xs); --bui-avatar-_font-size: var(--bui-avatar-font-size-xs); }
+.bui-avatar-group--sm > .bui-avatar { --bui-avatar-_size: var(--bui-avatar-size-sm); --bui-avatar-_font-size: var(--bui-avatar-font-size-sm); }
+.bui-avatar-group--md > .bui-avatar { --bui-avatar-_size: var(--bui-avatar-size-md); --bui-avatar-_font-size: var(--bui-avatar-font-size-md); }
+.bui-avatar-group--lg > .bui-avatar { --bui-avatar-_size: var(--bui-avatar-size-lg); --bui-avatar-_font-size: var(--bui-avatar-font-size-lg); }
+.bui-avatar-group--xl > .bui-avatar { --bui-avatar-_size: var(--bui-avatar-size-xl); --bui-avatar-_font-size: var(--bui-avatar-font-size-xl); }
+
+/* ---------------------------------------------------------------------
+ * Badge (Task 10). A small label or count. Not interactive.
+ *   - Component tokens: --bui-badge-* (Layer 3, themeable). Private values: --bui-badge-_* (internal).
+ *   - Color modifiers set the accent set; variant modifiers map it to background, text and border.
+ *   - Subtle text uses the -hover color: the plain accent on the subtle fill is 4.49:1 for success in Light, under the 4.5:1 AA minimum.
+ *   - Notification Badge: .bui-badge-anchor wraps the host and .bui-badge--floating places the badge on its corner
+ *     with logical offsets, so it moves to the other corner in RTL without extra rules.
+ * --------------------------------------------------------------------- */
+.bui-badge {
+    --bui-badge-_accent: var(--bui-color-primary);
+    --bui-badge-_accent-hover: var(--bui-color-primary-hover);
+    --bui-badge-_accent-subtle: var(--bui-color-primary-subtle);
+    --bui-badge-_accent-border: var(--bui-color-primary-border);
+    --bui-badge-_accent-contrast: var(--bui-color-primary-contrast);
+    --bui-badge-_height: var(--bui-badge-height-md);
+    --bui-badge-_padding-x: var(--bui-badge-padding-x-md);
+    --bui-badge-_font-size: var(--bui-badge-font-size-md);
+    --bui-badge-_dot-size: var(--bui-badge-dot-size-md);
+    --bui-badge-_float: var(--bui-badge-_height);
+
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--bui-badge-gap);
+    box-sizing: border-box;
+    min-block-size: var(--bui-badge-_height);
+    min-inline-size: var(--bui-badge-_height);
+    margin: 0;
+    padding-block: 0;
+    padding-inline: var(--bui-badge-_padding-x);
+    font-family: var(--bui-badge-font-family);
+    font-size: var(--bui-badge-_font-size);
+    font-weight: var(--bui-badge-font-weight);
+    line-height: var(--bui-badge-line-height);
+    font-variant-numeric: tabular-nums;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    color: var(--bui-badge-_fg);
+    background-color: var(--bui-badge-_bg);
+    border: var(--bui-badge-border-width) solid var(--bui-badge-_border);
+    border-radius: var(--bui-badge-radius);
+}
+
+/* Variants */
+.bui-badge,
+.bui-badge--solid {
+    --bui-badge-_bg: var(--bui-badge-_accent);
+    --bui-badge-_fg: var(--bui-badge-_accent-contrast);
+    --bui-badge-_border: var(--bui-badge-_accent);
+}
+.bui-badge--subtle {
+    --bui-badge-_bg: var(--bui-badge-_accent-subtle);
+    --bui-badge-_fg: var(--bui-badge-_accent-hover);
+    --bui-badge-_border: var(--bui-badge-_accent-border);
+}
+.bui-badge--outline {
+    --bui-badge-_bg: transparent;
+    --bui-badge-_fg: var(--bui-badge-_accent);
+    --bui-badge-_border: var(--bui-badge-_accent);
+}
+
+/* Colors */
+.bui-badge--primary {
+    --bui-badge-_accent: var(--bui-color-primary);
+    --bui-badge-_accent-hover: var(--bui-color-primary-hover);
+    --bui-badge-_accent-subtle: var(--bui-color-primary-subtle);
+    --bui-badge-_accent-border: var(--bui-color-primary-border);
+    --bui-badge-_accent-contrast: var(--bui-color-primary-contrast);
+}
+.bui-badge--secondary {
+    --bui-badge-_accent: var(--bui-color-secondary);
+    --bui-badge-_accent-hover: var(--bui-color-secondary-hover);
+    --bui-badge-_accent-subtle: var(--bui-color-secondary-subtle);
+    --bui-badge-_accent-border: var(--bui-color-secondary-border);
+    --bui-badge-_accent-contrast: var(--bui-color-secondary-contrast);
+}
+.bui-badge--success {
+    --bui-badge-_accent: var(--bui-color-success);
+    --bui-badge-_accent-hover: var(--bui-color-success-hover);
+    --bui-badge-_accent-subtle: var(--bui-color-success-subtle);
+    --bui-badge-_accent-border: var(--bui-color-success-border);
+    --bui-badge-_accent-contrast: var(--bui-color-success-contrast);
+}
+.bui-badge--warning {
+    --bui-badge-_accent: var(--bui-color-warning);
+    --bui-badge-_accent-hover: var(--bui-color-warning-hover);
+    --bui-badge-_accent-subtle: var(--bui-color-warning-subtle);
+    --bui-badge-_accent-border: var(--bui-color-warning-border);
+    --bui-badge-_accent-contrast: var(--bui-color-warning-contrast);
+}
+.bui-badge--danger {
+    --bui-badge-_accent: var(--bui-color-danger);
+    --bui-badge-_accent-hover: var(--bui-color-danger-hover);
+    --bui-badge-_accent-subtle: var(--bui-color-danger-subtle);
+    --bui-badge-_accent-border: var(--bui-color-danger-border);
+    --bui-badge-_accent-contrast: var(--bui-color-danger-contrast);
+}
+.bui-badge--info {
+    --bui-badge-_accent: var(--bui-color-info);
+    --bui-badge-_accent-hover: var(--bui-color-info-hover);
+    --bui-badge-_accent-subtle: var(--bui-color-info-subtle);
+    --bui-badge-_accent-border: var(--bui-color-info-border);
+    --bui-badge-_accent-contrast: var(--bui-color-info-contrast);
+}
+
+/* Sizes (md is the default) */
+.bui-badge--sm {
+    --bui-badge-_height: var(--bui-badge-height-sm);
+    --bui-badge-_padding-x: var(--bui-badge-padding-x-sm);
+    --bui-badge-_font-size: var(--bui-badge-font-size-sm);
+    --bui-badge-_dot-size: var(--bui-badge-dot-size-sm);
+}
+.bui-badge--md {
+    --bui-badge-_height: var(--bui-badge-height-md);
+    --bui-badge-_padding-x: var(--bui-badge-padding-x-md);
+    --bui-badge-_font-size: var(--bui-badge-font-size-md);
+    --bui-badge-_dot-size: var(--bui-badge-dot-size-md);
+}
+.bui-badge--lg {
+    --bui-badge-_height: var(--bui-badge-height-lg);
+    --bui-badge-_padding-x: var(--bui-badge-padding-x-lg);
+    --bui-badge-_font-size: var(--bui-badge-font-size-lg);
+    --bui-badge-_dot-size: var(--bui-badge-dot-size-lg);
+}
+
+/* Options */
+.bui-badge--pill { border-radius: var(--bui-radius-full); }
+/* Dot: no visible content. Put a visually hidden text inside it for assistive technology. */
+.bui-badge--dot {
+    --bui-badge-_float: var(--bui-badge-_dot-size);
+    inline-size: var(--bui-badge-_dot-size);
+    block-size: var(--bui-badge-_dot-size);
+    min-inline-size: 0;
+    min-block-size: 0;
+    padding: 0;
+    border-radius: var(--bui-radius-full);
+}
+/* A dot has no text, so the subtle fill would be nearly invisible on the page (1.10:1 measured). Subtle uses the solid fill; outline stays a hollow ring. */
+.bui-badge--dot.bui-badge--subtle {
+    --bui-badge-_bg: var(--bui-badge-_accent);
+    --bui-badge-_border: var(--bui-badge-_accent);
+}
+.bui-badge > [class*="bui-icon-"] { flex: none; }
+
+/* Notification Badge: the anchor is the host's positioning context. */
+.bui-badge-anchor {
+    position: relative;
+    display: inline-flex;
+    vertical-align: middle;
+}
+.bui-badge--floating {
+    position: absolute;
+    inset-block-start: calc(var(--bui-badge-_float) / -2);
+    inset-inline-end: calc(var(--bui-badge-_float) / -2);
+    box-shadow: 0 0 0 var(--bui-badge-ring-width) var(--bui-badge-ring-color);
+}
+.bui-badge--floating.bui-badge--bottom {
+    inset-block-start: auto;
+    inset-block-end: calc(var(--bui-badge-_float) / -2);
+}
+.bui-badge--floating.bui-badge--start {
+    inset-inline-end: auto;
+    inset-inline-start: calc(var(--bui-badge-_float) / -2);
+}
 
 /* ---------------------------------------------------------------------
  * Button (Task 09). Reference pattern for components, see instructions/COMPONENT_DEVELOPMENT.md.
@@ -1195,6 +1554,158 @@ pre { margin-block: 0 var(--bui-space-3); overflow: auto; }
     .bui-btn-close {
         inline-size: max(var(--bui-btn-close-_size), var(--bui-btn-close-_touch-size));
         block-size: max(var(--bui-btn-close-_size), var(--bui-btn-close-_touch-size));
+    }
+}
+
+/* ---------------------------------------------------------------------
+ * Progress (Task 10). A bar for the completion of a task, determinate or indeterminate.
+ *   - Component tokens: --bui-progress-* (Layer 3, themeable). Private values: --bui-progress-_* (internal).
+ *   - Value: the unitless number --bui-progress-value (0 to 100, a percentage) on the .bui-progress element. It is a registered
+ *     <number> property, so the fill and the label colors animate together. The optional BUI.progress component keeps it
+ *     and aria-valuenow in sync.
+ *   - State hook: the attribute is the state. A progressbar without aria-valuenow is indeterminate (it is also what ARIA says).
+ *   - Label inside the bar: .bui-progress__label is centered over the whole track and its text color switches from the on-fill color
+ *     to the text color at the fill edge, so it stays readable at any value. It uses background-clip: text, with a plain
+ *     text color where that is not supported and a Canvas pill in forced colors mode.
+ *   - Segments: .bui-progress-stack holds several .bui-progress, each with its own value (its share of the whole).
+ * --------------------------------------------------------------------- */
+@property --bui-progress-value {
+    syntax: "<number>";
+    inherits: true;
+    initial-value: 0;
+}
+@keyframes bui-progress-slide {
+    from { translate: calc(var(--bui-progress-_dir) * -100%) 0; }
+    to { translate: calc(var(--bui-progress-_dir) * 250%) 0; }
+}
+
+.bui-progress {
+    --bui-progress-_accent: var(--bui-color-primary);
+    --bui-progress-_accent-contrast: var(--bui-color-primary-contrast);
+    --bui-progress-_height: var(--bui-progress-height-md);
+    --bui-progress-_font-size: var(--bui-progress-font-size-md);
+    --bui-progress-_fill: var(--bui-progress-value);
+    --bui-progress-_dir: 1;
+
+    position: relative;
+    display: block;
+    overflow: hidden;
+    inline-size: 100%;
+    block-size: var(--bui-progress-_height);
+    background-color: var(--bui-progress-track-bg);
+    border-radius: var(--bui-progress-radius);
+    transition: --bui-progress-value var(--bui-progress-duration) var(--bui-easing-standard);
+}
+.bui-progress:dir(rtl) { --bui-progress-_dir: -1; }
+
+.bui-progress__bar {
+    display: block;
+    inline-size: calc(var(--bui-progress-_fill) * 1%);
+    block-size: 100%;
+    background-color: var(--bui-progress-_accent);
+    border-radius: inherit;
+}
+
+/* Label inside the bar */
+.bui-progress__label {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    font-size: var(--bui-progress-_font-size);
+    font-weight: var(--bui-progress-font-weight);
+    line-height: 1;
+    white-space: nowrap;
+    color: var(--bui-progress-label-color);
+    pointer-events: none;
+}
+@supports ((-webkit-background-clip: text) or (background-clip: text)) {
+    .bui-progress__label {
+        color: transparent;
+        background-image: linear-gradient(to right, var(--bui-progress-_accent-contrast) calc(var(--bui-progress-_fill) * 1%), var(--bui-progress-label-color) calc(var(--bui-progress-_fill) * 1%));
+        -webkit-background-clip: text;
+        background-clip: text;
+    }
+    .bui-progress__label:dir(rtl) {
+        background-image: linear-gradient(to left, var(--bui-progress-_accent-contrast) calc(var(--bui-progress-_fill) * 1%), var(--bui-progress-label-color) calc(var(--bui-progress-_fill) * 1%));
+    }
+}
+
+/* Colors (primary is the default) */
+.bui-progress--primary { --bui-progress-_accent: var(--bui-color-primary); --bui-progress-_accent-contrast: var(--bui-color-primary-contrast); }
+.bui-progress--secondary { --bui-progress-_accent: var(--bui-color-secondary); --bui-progress-_accent-contrast: var(--bui-color-secondary-contrast); }
+.bui-progress--success { --bui-progress-_accent: var(--bui-color-success); --bui-progress-_accent-contrast: var(--bui-color-success-contrast); }
+.bui-progress--warning { --bui-progress-_accent: var(--bui-color-warning); --bui-progress-_accent-contrast: var(--bui-color-warning-contrast); }
+.bui-progress--danger { --bui-progress-_accent: var(--bui-color-danger); --bui-progress-_accent-contrast: var(--bui-color-danger-contrast); }
+.bui-progress--info { --bui-progress-_accent: var(--bui-color-info); --bui-progress-_accent-contrast: var(--bui-color-info-contrast); }
+
+/* Sizes (md is the default). The small bar is too thin for a label, so a label inside it is not shown. */
+.bui-progress--sm { --bui-progress-_height: var(--bui-progress-height-sm); }
+.bui-progress--md { --bui-progress-_height: var(--bui-progress-height-md); --bui-progress-_font-size: var(--bui-progress-font-size-md); }
+.bui-progress--lg { --bui-progress-_height: var(--bui-progress-height-lg); --bui-progress-_font-size: var(--bui-progress-font-size-lg); }
+.bui-progress--sm .bui-progress__label { display: none; }
+
+/* Indeterminate: no aria-valuenow. A part of the bar slides along the track; there is no value, so no label. */
+.bui-progress:not([aria-valuenow]) .bui-progress__bar {
+    inline-size: 40%;
+    animation: bui-progress-slide var(--bui-progress-indeterminate-duration) ease-in-out infinite;
+}
+.bui-progress:not([aria-valuenow]) .bui-progress__label { display: none; }
+
+/* Label outside the bar: a row above it, with the name and the value. */
+.bui-progress-label {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--bui-space-2);
+    margin-block-end: var(--bui-space-1);
+    font-size: var(--bui-font-size-sm);
+    color: var(--bui-color-text);
+}
+
+/* Segments: the stack is the track, each .bui-progress is one segment whose width is its value. */
+.bui-progress-stack {
+    --bui-progress-_height: var(--bui-progress-height-md);
+    display: flex;
+    overflow: hidden;
+    inline-size: 100%;
+    block-size: var(--bui-progress-_height);
+    background-color: var(--bui-progress-track-bg);
+    border-radius: var(--bui-progress-radius);
+}
+.bui-progress-stack--sm { --bui-progress-_height: var(--bui-progress-height-sm); }
+.bui-progress-stack--md { --bui-progress-_height: var(--bui-progress-height-md); }
+.bui-progress-stack--lg { --bui-progress-_height: var(--bui-progress-height-lg); }
+.bui-progress-stack > .bui-progress {
+    --bui-progress-_height: inherit;
+    --bui-progress-_fill: 100;
+    flex: 0 0 auto;
+    inline-size: calc(var(--bui-progress-value) * 1%);
+    block-size: 100%;
+    background-color: transparent;
+    border-radius: 0;
+}
+.bui-progress-stack > .bui-progress + .bui-progress { border-inline-start: var(--bui-progress-segment-divider) solid var(--bui-color-bg); }
+.bui-progress-stack--sm .bui-progress__label { display: none; }
+.bui-progress-stack--lg > .bui-progress { --bui-progress-_font-size: var(--bui-progress-font-size-lg); }
+
+/* Forced colors: backgrounds are replaced by the system, so the track gets an edge, the fill uses Highlight and the label sits on a Canvas pill. */
+@media (forced-colors: active) {
+    .bui-progress, .bui-progress-stack { border: var(--bui-border-width) solid CanvasText; }
+    .bui-progress-stack > .bui-progress { border-block: 0; border-inline-end: 0; }
+    .bui-progress-stack > .bui-progress:first-child { border-inline-start: 0; }
+    .bui-progress__bar { background-color: Highlight; forced-color-adjust: none; }
+    .bui-progress__label {
+        inset: 0;
+        margin: auto;
+        inline-size: max-content;
+        padding-inline: var(--bui-space-1);
+        color: CanvasText;
+        background: Canvas;
+        background-image: none;
+        border-radius: var(--bui-radius-sm);
     }
 }
 
@@ -2832,4 +3343,6 @@ pre { margin-block: 0 var(--bui-space-3); overflow: auto; }
     }
     /* The Button spinner is a status indicator, so it is slowed down instead of stopped. */
     .bui-btn[aria-busy="true"]::before { animation-duration: 2s; }
+    /* The indeterminate Progress bar is a status indicator too: slowed down instead of stopped. */
+    .bui-progress:not([aria-valuenow]) .bui-progress__bar { animation-duration: 3s; }
 }

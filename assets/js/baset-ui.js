@@ -5,8 +5,9 @@
  * Task 05: the BUI namespace, component registry, init, instances, events, DOM helpers,
  * utilities, options parser, logger and the optional observer.
  * Task 06: BUI.theme (theme and mode manager) and BUI.locale (translations, direction, HTML binding).
- * No component ships with the core. Rules: instructions/JAVASCRIPT_API.md,
- * instructions/COMPONENT_DEVELOPMENT.md and instructions/CORE_ASSETS.md.
+ * Task 10: the first two components that need a little JavaScript, registered at the end of this file
+ * through the public register(): avatar (image fallback) and progress (set the value). The other components are CSS only.
+ * Rules: instructions/JAVASCRIPT_API.md, instructions/COMPONENT_DEVELOPMENT.md and instructions/CORE_ASSETS.md.
  * The only global this file creates is window.BUI.
  */
 (function (window, document) {
@@ -1203,6 +1204,203 @@
     };
 
     window.BUI = BUI;
+
+    /* ------------------------------------------------------------------ */
+    /* Components shipped with the Core (Task 10)                          */
+    /* ------------------------------------------------------------------ */
+
+    /*
+     * Avatar. CSS cannot tell that an image failed to load, so this component listens to the image and, when it fails
+     * (or has no src), adds .is-fallback to the avatar. The CSS then hides the image and the initials underneath show.
+     * Markup: <span class="bui-avatar" data-bui-avatar><img class="bui-avatar__img" src alt="Name"><span class="bui-avatar__text" aria-hidden="true">AB</span></span>
+     * Accessibility: when the fallback is on, the text takes over the name that was in the image alt (role="img" + aria-label).
+     * Event: bui:avatar:fallback.
+     */
+    register('avatar', {
+        defaults: {},
+        create: function (el, options, ctx) {
+            var img = el.querySelector('.bui-avatar__img');
+            var text = el.querySelector('.bui-avatar__text');
+            var failed = false;
+            var destroyed = false;
+            var saved = null;
+
+            function setFallback(on, silent) {
+                if (on === failed) return;
+                failed = on;
+                if (on) {
+                    el.classList.add('is-fallback');
+                    var name = img ? img.getAttribute('alt') : '';
+                    if (text && name) {
+                        saved = { role: text.getAttribute('role'), label: text.getAttribute('aria-label'), hidden: text.getAttribute('aria-hidden') };
+                        text.setAttribute('role', 'img');
+                        text.setAttribute('aria-label', name);
+                        text.removeAttribute('aria-hidden');
+                    }
+                    if (!silent) ctx.trigger('fallback', { image: img });
+                } else {
+                    el.classList.remove('is-fallback');
+                    if (text && saved) {
+                        ['role', 'aria-label', 'aria-hidden'].forEach(function (attr, i) {
+                            var value = saved[['role', 'label', 'hidden'][i]];
+                            if (value === null) text.removeAttribute(attr); else text.setAttribute(attr, value);
+                        });
+                    }
+                    saved = null;
+                }
+            }
+
+            function check() {
+                if (!img || destroyed) return;
+                if (!img.getAttribute('src')) { setFallback(true); return; }
+                if (!img.complete) return; /* still loading: the load or error event decides */
+                if (img.naturalWidth > 0) { setFallback(false); return; }
+                /* complete with no size: a failed image, or an SVG without intrinsic size. decode() tells them apart. */
+                if (typeof img.decode === 'function') {
+                    img.decode().then(function () { if (!destroyed) setFallback(false); }, function () { if (!destroyed) setFallback(true); });
+                } else {
+                    setFallback(true);
+                }
+            }
+            function onError() { setFallback(true); }
+            function onLoad() { setFallback(false); }
+
+            if (img) {
+                img.addEventListener('error', onError);
+                img.addEventListener('load', onLoad);
+            } else {
+                ctx.log.debug('The avatar has no .bui-avatar__img, so there is nothing to watch.');
+            }
+            check();
+
+            return {
+                isFallback: function () { return failed; },
+                refresh: check,
+                destroy: function () {
+                    destroyed = true;
+                    if (img) {
+                        img.removeEventListener('error', onError);
+                        img.removeEventListener('load', onLoad);
+                    }
+                    setFallback(false, true);
+                }
+            };
+        }
+    });
+
+    /*
+     * Progress. The value is shown by CSS from --bui-progress-value (a percentage) and by assistive technology from aria-valuenow.
+     * This component keeps both in sync: set(value) clamps to aria-valuemin/aria-valuemax, null makes the bar indeterminate
+     * (no aria-valuenow), and an element with [data-bui-progress-text] shows the formatted percentage (inside the bar, or elsewhere
+     * with data-bui-progress-text="{id of the progress element}"). Events: bui:progress:change and bui:progress:complete.
+     * Without this component a progress bar still works: write the attributes and the --bui-progress-value yourself.
+     */
+    register('progress', {
+        defaults: {},
+        create: function (el, options, ctx) {
+            var added = [];
+            var min = 0;
+            var max = 100;
+            var value = null;
+
+            function ensure(attr, val) {
+                if (!el.hasAttribute(attr)) { el.setAttribute(attr, val); added.push(attr); }
+            }
+            ensure('role', 'progressbar');
+            ensure('aria-valuemin', '0');
+            ensure('aria-valuemax', '100');
+            if (!el.hasAttribute('aria-label') && !el.hasAttribute('aria-labelledby')) {
+                ctx.log.warn('A progressbar needs an accessible name: add aria-label or aria-labelledby.');
+            }
+
+            function number(attr, fallback) {
+                var n = parseFloat(el.getAttribute(attr));
+                return isFinite(n) ? n : fallback;
+            }
+            function readRange() {
+                min = number('aria-valuemin', 0);
+                max = number('aria-valuemax', 100);
+                if (!(max > min)) {
+                    ctx.log.warn('aria-valuemax must be greater than aria-valuemin. 0 and 100 are used.');
+                    min = 0;
+                    max = 100;
+                }
+            }
+            function percent(v) { return Math.round(((v - min) / (max - min)) * 10000) / 100; }
+            function format(p) {
+                var lang = (locale.get && locale.get()) || document.documentElement.lang || undefined;
+                try { return new Intl.NumberFormat(lang, { style: 'percent', maximumFractionDigits: 0 }).format(p / 100); } catch (e) { return Math.round(p) + '%'; }
+            }
+            function mirrors() {
+                var list = Array.prototype.slice.call(el.querySelectorAll('[data-bui-progress-text=""]'));
+                if (el.id) {
+                    Array.prototype.forEach.call(document.getElementsByTagName('*'), function (node) {
+                        if (node.getAttribute('data-bui-progress-text') === el.id) list.push(node);
+                    });
+                }
+                return list;
+            }
+            function render() {
+                var p = value === null ? null : percent(value);
+                if (value === null) {
+                    el.removeAttribute('aria-valuenow');
+                    el.style.removeProperty('--bui-progress-value');
+                } else {
+                    el.setAttribute('aria-valuenow', String(value));
+                    el.style.setProperty('--bui-progress-value', String(p));
+                }
+                mirrors().forEach(function (node) { node.textContent = p === null ? '' : format(p); });
+            }
+            function load() {
+                readRange();
+                var raw = el.getAttribute('aria-valuenow');
+                if (raw === null) { value = null; return; }
+                var n = parseFloat(raw);
+                if (!isFinite(n)) {
+                    ctx.log.warn('aria-valuenow is not a number, so the bar is indeterminate.');
+                    value = null;
+                    return;
+                }
+                value = Math.min(max, Math.max(min, n));
+            }
+            function onLocale() { render(); }
+
+            load();
+            render();
+            document.documentElement.addEventListener('bui:locale:change', onLocale);
+
+            var api = {
+                set: function (next) {
+                    var target;
+                    if (next === null || next === undefined) {
+                        target = null;
+                    } else if (typeof next === 'number' && isFinite(next)) {
+                        target = Math.min(max, Math.max(min, next));
+                    } else {
+                        ctx.log.warn('set() expects a finite number or null, got ' + String(next) + '. The value was not changed.');
+                        return api;
+                    }
+                    var previous = value;
+                    value = target;
+                    render();
+                    if (previous !== value) {
+                        ctx.trigger('change', { value: value, percent: value === null ? null : percent(value), previousValue: previous, indeterminate: value === null });
+                        if (value !== null && value === max) ctx.trigger('complete', { value: value });
+                    }
+                    return api;
+                },
+                get: function () { return value; },
+                getPercent: function () { return value === null ? null : percent(value); },
+                refresh: function () { load(); render(); return api; },
+                destroy: function () {
+                    document.documentElement.removeEventListener('bui:locale:change', onLocale);
+                    added.forEach(function (attr) { el.removeAttribute(attr); });
+                    added = [];
+                }
+            };
+            return api;
+        }
+    });
 
     /*
      * Automatic init. While the document is loading it runs on DOMContentLoaded. If the script was

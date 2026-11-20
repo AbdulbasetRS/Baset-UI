@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<!--
+    Manual test page for Badge, Avatar and Progress (Task 10).
+    Test fixture only: it renders every Badge variant x color x size, the Badge options, the Notification Badge placements,
+    the Avatar sizes, shapes, content types, statuses and groups, and the Progress bars (determinate, indeterminate, labels, segments).
+    DECLARED FIXTURES (not real data): the names, initials and counts are sample text. The "good" image is a small generated SVG
+    in a data: URI (no file and no network request). The "broken" image is a data: URI that is not a valid image on purpose,
+    so the image fails to decode without any network request (a missing file would produce a 404).
+    The selects switch the theme, the mode and the direction of the whole page.
+    The buttons in the BUI.progress section call the real API. Open it through a local server or file://.
+-->
+<html lang="en" dir="ltr" data-bui-theme="default" data-bui-mode="light">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Badge, Avatar, Progress manual test - Baset-UI</title>
+    <link rel="icon" href="data:,">
+    <link rel="stylesheet" href="../../assets/css/baset-ui.css">
+    <link rel="stylesheet" href="../../assets/css/extensions/baset-ui-icons.css">
+    <link rel="stylesheet" href="../../assets/css/themes/ocean.css">
+    <style>
+        body { padding: var(--bui-space-3); }
+        .t-bar { display: flex; flex-wrap: wrap; gap: var(--bui-space-2); margin-block-end: var(--bui-space-3); }
+        .t-row { display: flex; flex-wrap: wrap; gap: var(--bui-space-2); align-items: center; margin-block-end: var(--bui-space-2); }
+        .t-block { margin-block-end: var(--bui-space-4); }
+        .t-narrow { max-inline-size: 28rem; }
+        .t-gap { margin-block-end: var(--bui-space-2); }
+        h2 { font-size: var(--bui-font-size-lg); }
+        h3 { font-size: var(--bui-font-size-base); margin-block-start: var(--bui-space-3); }
+    </style>
+</head>
+<body>
+    <h1>Badge, Avatar, Progress</h1>
+    <div class="t-bar">
+        <label>Theme <select id="t-theme"><option value="default">default</option><option value="ocean">ocean</option></select></label>
+        <label>Mode <select id="t-mode"><option value="light">light</option><option value="dark">dark</option></select></label>
+        <label>Direction <select id="t-dir"><option value="ltr">ltr</option><option value="rtl">rtl</option></select></label>
+    </div>
+
+    <h2>Badge</h2>
+    <h3>Variant x color x size</h3>
+    <div id="t-badge-matrix"></div>
+    <h3>Options: pill, dot, icon, counts</h3>
+    <div id="t-badge-options"></div>
+    <h3>Notification Badge (placements, counts, dot)</h3>
+    <div id="t-badge-float"></div>
+
+    <h2>Avatar</h2>
+    <h3>Sizes x shapes (initials)</h3>
+    <div id="t-avatar-matrix"></div>
+    <h3>Content: initials, icon, image, failed image</h3>
+    <div id="t-avatar-content"></div>
+    <h3>Status</h3>
+    <div id="t-avatar-status"></div>
+    <h3>Group</h3>
+    <div id="t-avatar-group"></div>
+
+    <h2>Progress</h2>
+    <h3>Determinate: color x size x value</h3>
+    <div id="t-progress-matrix" class="t-narrow"></div>
+    <h3>Label inside and outside</h3>
+    <div id="t-progress-labels" class="t-narrow"></div>
+    <h3>Indeterminate</h3>
+    <div id="t-progress-indeterminate" class="t-narrow"></div>
+    <h3>Segments</h3>
+    <div id="t-progress-stack" class="t-narrow"></div>
+    <h3>BUI.progress (JavaScript)</h3>
+    <div id="t-progress-js" class="t-narrow"></div>
+
+    <script src="../../assets/js/baset-ui.js"></script>
+    <script>
+        (function () {
+            var VARIANTS = ['solid', 'subtle', 'outline'];
+            var COLORS = ['primary', 'secondary', 'success', 'warning', 'danger', 'info'];
+            var SIZES = ['sm', 'md', 'lg'];
+            var BELL = '<i class="bui-icon-regular bui-icon-bell" aria-hidden="true"></i>';
+            var CHECK = '<i class="bui-icon-regular bui-icon-check" aria-hidden="true"></i>';
+            var USER = '<i class="bui-icon-regular bui-icon-user" aria-hidden="true"></i>';
+            /* Declared fixture: a generated SVG (a shape, not a photo). width and height are set so naturalWidth is not 0. */
+            var GOOD_IMG = 'data:image/svg+xml;utf8,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'96\' height=\'96\' viewBox=\'0 0 96 96\'%3E%3Crect width=\'96\' height=\'96\' fill=\'%232457d6\'/%3E%3Ccircle cx=\'48\' cy=\'38\' r=\'16\' fill=\'%23ffffff\'/%3E%3Crect x=\'20\' y=\'60\' width=\'56\' height=\'36\' rx=\'18\' fill=\'%23ffffff\'/%3E%3C/svg%3E';
+            /* Declared fixture: not a valid image on purpose (fails to decode, no network request). */
+            var BAD_IMG = 'data:image/png;base64,AAAA';
+
+            function $(id) { return document.getElementById(id); }
+            function row(inner) { return '<div class="t-row">' + inner + '</div>'; }
+
+            /* ---------------- Badge ---------------- */
+            var h = '';
+            VARIANTS.forEach(function (v) {
+                SIZES.forEach(function (s) {
+                    var r = '';
+                    COLORS.forEach(function (c) {
+                        r += '<span class="bui-badge bui-badge--' + v + ' bui-badge--' + c + ' bui-badge--' + s + '" data-t="badge" data-v="' + v + '" data-c="' + c + '" data-s="' + s + '">' + c + '</span>';
+                    });
+                    h += row(r);
+                });
+            });
+            $('t-badge-matrix').innerHTML = h;
+
+            h = '';
+            SIZES.forEach(function (s) {
+                var r = '';
+                r += '<span class="bui-badge bui-badge--pill bui-badge--' + s + '" data-t="pill" data-s="' + s + '">Pill</span>';
+                r += '<span class="bui-badge bui-badge--pill bui-badge--danger bui-badge--' + s + '" data-t="count" data-s="' + s + '">7</span>';
+                r += '<span class="bui-badge bui-badge--pill bui-badge--danger bui-badge--' + s + '" data-t="count-wide" data-s="' + s + '">128</span>';
+                r += '<span class="bui-badge bui-badge--dot bui-badge--success bui-badge--' + s + '" data-t="dot" data-s="' + s + '"><span class="bui-visually-hidden">Online</span></span>';
+                r += '<span class="bui-badge bui-badge--subtle bui-badge--success bui-badge--' + s + '" data-t="icon" data-s="' + s + '">' + CHECK + 'Done</span>';
+                r += '<span class="bui-badge bui-badge--outline bui-badge--info bui-badge--' + s + '" data-t="icon-end" data-s="' + s + '">Sync ' + BELL + '</span>';
+                h += row(r);
+            });
+            h += row('<span class="bui-badge bui-badge--dot bui-badge--outline bui-badge--secondary" data-t="dot-outline"><span class="bui-visually-hidden">Offline</span></span><span class="bui-badge bui-badge--dot bui-badge--subtle bui-badge--warning" data-t="dot-subtle"><span class="bui-visually-hidden">Away</span></span>');
+            $('t-badge-options').innerHTML = h;
+
+            function host(inner, color, cls) {
+                return '<span class="bui-badge-anchor" data-t="anchor"><button type="button" class="bui-btn bui-btn--outline bui-btn--secondary bui-btn--icon" aria-label="Notifications">' + BELL + '</button>' +
+                    '<span class="bui-badge bui-badge--' + color + ' ' + cls + ' bui-badge--floating">' + inner + '</span></span>';
+            }
+            h = '';
+            h += row(host('3', 'danger', 'bui-badge--pill bui-badge--sm') + host('128', 'danger', 'bui-badge--pill bui-badge--sm') + host('<span class="bui-visually-hidden">New</span>', 'danger', 'bui-badge--dot'));
+            h += row(host('1', 'info', 'bui-badge--pill bui-badge--sm bui-badge--bottom') + host('2', 'success', 'bui-badge--pill bui-badge--sm bui-badge--start') + host('9', 'warning', 'bui-badge--pill bui-badge--sm bui-badge--bottom bui-badge--start'));
+            h += row(host('5', 'primary', 'bui-badge--pill bui-badge--md') + host('5', 'primary', 'bui-badge--pill bui-badge--lg') + host('<span class="bui-visually-hidden">New</span>', 'success', 'bui-badge--dot bui-badge--lg'));
+            $('t-badge-float').innerHTML = h;
+
+            /* ---------------- Avatar ---------------- */
+            var AS = ['xs', 'sm', 'md', 'lg', 'xl'];
+            var SHAPES = ['circle', 'rounded', 'square'];
+            h = '';
+            SHAPES.forEach(function (sh) {
+                var r = '';
+                AS.forEach(function (s) {
+                    r += '<span class="bui-avatar bui-avatar--' + s + ' bui-avatar--' + sh + '" role="img" aria-label="Sara Ahmed" data-t="avatar" data-s="' + s + '" data-sh="' + sh + '"><span class="bui-avatar__text" aria-hidden="true">SA</span></span>';
+                });
+                h += row(r);
+            });
+            $('t-avatar-matrix').innerHTML = h;
+
+            h = '';
+            h += row(
+                '<span class="bui-avatar bui-avatar--lg" data-t="initials"><span class="bui-avatar__text" role="img" aria-label="Sara Ahmed">SA</span></span>' +
+                '<span class="bui-avatar bui-avatar--lg" data-t="icon">' + USER + '</span>' +
+                '<span class="bui-avatar bui-avatar--lg" data-bui-avatar data-t="image-ok"><img class="bui-avatar__img" src="' + GOOD_IMG + '" alt="Sara Ahmed"><span class="bui-avatar__text" aria-hidden="true">SA</span></span>' +
+                '<span class="bui-avatar bui-avatar--lg" data-bui-avatar data-t="image-bad"><img class="bui-avatar__img" src="' + BAD_IMG + '" alt="Omar Khalil"><span class="bui-avatar__text" aria-hidden="true">OK</span></span>' +
+                '<span class="bui-avatar bui-avatar--lg" data-bui-avatar data-t="image-nosrc"><img class="bui-avatar__img" alt="Lina Saad"><span class="bui-avatar__text" aria-hidden="true">LS</span></span>' +
+                '<span class="bui-avatar bui-avatar--lg bui-avatar--rounded" data-bui-avatar data-t="image-ok-rounded"><img class="bui-avatar__img" src="' + GOOD_IMG + '" alt="Sara Ahmed"><span class="bui-avatar__text" aria-hidden="true">SA</span></span>' +
+                '<span class="bui-avatar bui-avatar--lg bui-avatar--square" data-bui-avatar data-t="image-bad-square"><img class="bui-avatar__img" src="' + BAD_IMG + '" alt="Omar Khalil"><span class="bui-avatar__text" aria-hidden="true">OK</span></span>'
+            );
+            $('t-avatar-content').innerHTML = h;
+
+            var STATUS = [['online', 'avatar.statusOnline', 'Online'], ['away', 'avatar.statusAway', 'Away'], ['busy', 'avatar.statusBusy', 'Busy'], ['offline', 'avatar.statusOffline', 'Offline']];
+            h = '';
+            SHAPES.forEach(function (sh) {
+                var r = '';
+                STATUS.forEach(function (st) {
+                    AS.forEach(function (s) {
+                        if (s === 'xs' || s === 'xl') { return; }
+                        r += '<span class="bui-avatar bui-avatar--' + s + ' bui-avatar--' + sh + '" data-t="status" data-st="' + st[0] + '" data-s="' + s + '" data-sh="' + sh + '"><span class="bui-avatar__text" role="img" aria-label="Sara Ahmed">SA</span>' +
+                            '<span class="bui-avatar__status bui-avatar__status--' + st[0] + '" role="img" aria-label="' + st[2] + '" data-bui-i18n-attr="aria-label:' + st[1] + '"></span></span>';
+                    });
+                });
+                h += row(r);
+            });
+            $('t-avatar-status').innerHTML = h;
+
+            function group(size, rounded) {
+                var shape = rounded ? ' bui-avatar--rounded' : '';
+                return '<div class="bui-avatar-group bui-avatar-group--' + size + '" role="group" aria-label="Project members" data-t="group" data-s="' + size + '">' +
+                    '<span class="bui-avatar' + shape + '" role="img" aria-label="Sara Ahmed">SA</span>' +
+                    '<span class="bui-avatar' + shape + '" role="img" aria-label="Omar Khalil">OK</span>' +
+                    '<span class="bui-avatar' + shape + '" role="img" aria-label="Lina Saad">LS</span>' +
+                    '<span class="bui-avatar' + shape + '" role="img" aria-label="3 more"><bdi>+3</bdi></span></div>';
+            }
+            h = row(group('xs') + group('sm') + group('md') + group('lg') + group('xl'));
+            h += row(group('md', true) + '<div class="bui-avatar-group" data-t="group-mixed"><span class="bui-avatar bui-avatar--sm">AB</span><span class="bui-avatar bui-avatar--lg">CD</span><span class="bui-avatar bui-avatar--md">EF</span></div>');
+            $('t-avatar-group').innerHTML = h;
+
+            /* ---------------- Progress ---------------- */
+            function bar(color, size, value, label, extra) {
+                return '<div class="bui-progress bui-progress--' + color + ' bui-progress--' + size + '" role="progressbar" aria-label="Sample ' + color + '" aria-valuenow="' + value + '" aria-valuemin="0" aria-valuemax="100" style="--bui-progress-value: ' + value + '" data-t="progress" data-c="' + color + '" data-s="' + size + '" data-v="' + value + '"' + (extra || '') + '>' +
+                    '<div class="bui-progress__bar"></div>' + (label ? '<span class="bui-progress__label">' + value + '%</span>' : '') + '</div><div class="t-gap"></div>';
+            }
+            h = '';
+            COLORS.forEach(function (c) { SIZES.forEach(function (s) { h += bar(c, s, 60, true); }); });
+            [0, 5, 35, 50, 95, 100].forEach(function (v) { h += bar('primary', 'lg', v, true); });
+            $('t-progress-matrix').innerHTML = h;
+
+            h = bar('primary', 'md', 40, true) + bar('success', 'lg', 72, true);
+            h += '<div class="bui-progress-label" data-t="outside-label"><span id="t-out-name">Uploading photos</span><span data-bui-progress-text="t-out">40%</span></div>' +
+                '<div id="t-out" class="bui-progress bui-progress--info" role="progressbar" aria-labelledby="t-out-name" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="--bui-progress-value: 40" data-bui-progress><div class="bui-progress__bar"></div></div>';
+            $('t-progress-labels').innerHTML = h;
+
+            h = '<div class="bui-progress" role="progressbar" aria-label="Loading" data-t="indeterminate" data-bui-i18n-attr="aria-label:common.loading" aria-valuemin="0" aria-valuemax="100"><div class="bui-progress__bar"></div></div><div class="t-gap"></div>' +
+                '<div class="bui-progress bui-progress--success bui-progress--lg" role="progressbar" aria-label="Loading" data-t="indeterminate" aria-valuemin="0" aria-valuemax="100"><div class="bui-progress__bar"></div></div><div class="t-gap"></div>' +
+                '<div class="bui-progress bui-progress--danger bui-progress--sm" role="progressbar" aria-label="Loading" data-t="indeterminate" aria-valuemin="0" aria-valuemax="100"><div class="bui-progress__bar"></div></div>';
+            $('t-progress-indeterminate').innerHTML = h;
+
+            function seg(color, value, name) {
+                return '<div class="bui-progress bui-progress--' + color + '" role="progressbar" aria-label="' + name + '" aria-valuenow="' + value + '" aria-valuemin="0" aria-valuemax="100" style="--bui-progress-value: ' + value + '" data-t="segment"><div class="bui-progress__bar"></div><span class="bui-progress__label">' + value + '%</span></div>';
+            }
+            h = '';
+            ['md', 'lg', 'sm'].forEach(function (s) {
+                h += '<div class="bui-progress-stack bui-progress-stack--' + s + '" role="group" aria-label="Storage by type" data-t="stack" data-s="' + s + '">' + seg('primary', 40, 'Documents') + seg('success', 20, 'Images') + seg('warning', 10, 'Other') + '</div><div class="t-gap"></div>';
+            });
+            $('t-progress-stack').innerHTML = h;
+
+            h = '<div id="t-js-bar" class="bui-progress bui-progress--lg" aria-label="Sample task" aria-valuenow="40" data-bui-progress><div class="bui-progress__bar"></div><span class="bui-progress__label" data-bui-progress-text>40%</span></div>' +
+                '<div class="t-row" style="margin-block-start: var(--bui-space-2)">' +
+                '<button type="button" class="bui-btn bui-btn--sm" data-set="25">Set 25</button>' +
+                '<button type="button" class="bui-btn bui-btn--sm" data-set="75">Set 75</button>' +
+                '<button type="button" class="bui-btn bui-btn--sm" data-set="100">Set 100</button>' +
+                '<button type="button" class="bui-btn bui-btn--sm bui-btn--outline" data-set="null">Indeterminate</button>' +
+                '<button type="button" class="bui-btn bui-btn--sm bui-btn--outline" data-set="999">Set 999 (clamped)</button></div>' +
+                '<p id="t-js-log" role="status" style="margin-block-start: var(--bui-space-2)">No event yet.</p>';
+            $('t-progress-js').innerHTML = h;
+
+            BUI.init(document);
+            var jsBar = document.getElementById('t-js-bar');
+            var log = $('t-js-log');
+            ['change', 'complete'].forEach(function (name) {
+                jsBar.addEventListener('bui:progress:' + name, function (e) {
+                    log.textContent = name + ': ' + JSON.stringify(e.detail);
+                });
+            });
+            $('t-progress-js').addEventListener('click', function (e) {
+                var b = e.target.closest('[data-set]');
+                if (!b) { return; }
+                var raw = b.getAttribute('data-set');
+                BUI.progress(jsBar).set(raw === 'null' ? null : Number(raw));
+            });
+
+            /* ---------------- Switches ---------------- */
+            var root = document.documentElement;
+            $('t-theme').addEventListener('change', function () { BUI.theme.set(this.value); });
+            $('t-mode').addEventListener('change', function () { BUI.theme.setMode(this.value); });
+            $('t-dir').addEventListener('change', function () { root.setAttribute('dir', this.value); });
+        })();
+    </script>
+</body>
+</html>

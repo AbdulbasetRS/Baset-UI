@@ -7,7 +7,7 @@
 - Layout: Containers, Grid, Flex Utilities, Responsive Utilities.
 - المكونات الأساسية الصغيرة والمشتركة (Buttons, Forms, Modals, Alerts, Toasts, Cards...).
 
-**الحالة الحالية (Task 09):** Tokens كاملة (Light/Dark)، Base، Layout (Container/Grid)، Utilities (Flexbox وSpacing وDisplay وPosition وOverflow وVisibility وBorders)، وكل نسخ الـ Breakpoints، وقسم 6 (Components) فيه Button وButton Group وClose Button (Task 09، النمط في [COMPONENT_DEVELOPMENT.md](COMPONENT_DEVELOPMENT.md)). نسخ الـ Breakpoints موجودة لـ Display وPosition (النوع فقط) وOverflow؛ لا نسخ لـ Visibility وBorders وz-index وOffsets وtruncate/line-clamp.
+**الحالة الحالية (Task 10):** Tokens كاملة (Light/Dark)، Base، Layout (Container/Grid)، Utilities (Flexbox وSpacing وDisplay وPosition وOverflow وVisibility وBorders)، وكل نسخ الـ Breakpoints، وقسم 6 (Components) فيه Avatar وBadge وButton وButton Group وClose Button وProgress (Task 09 وTask 10، النمط في [COMPONENT_DEVELOPMENT.md](COMPONENT_DEVELOPMENT.md)). في Task 10 صار `baset-ui.js` يحتوي أيضاً مكونين مسجلين (`avatar` و`progress`) بعد `window.BUI = BUI`، لأن لهما سلوكاً صغيراً لا يستقيم بـ CSS وحده (انظر [ARCHITECTURE.md](ARCHITECTURE.md)). نسخ الـ Breakpoints موجودة لـ Display وPosition (النوع فقط) وOverflow؛ لا نسخ لـ Visibility وBorders وz-index وOffsets وtruncate/line-clamp.
 
 ### ترتيب الأقسام داخل الملف (إلزامي)
 1. Tokens  2. Dark Mode  3. Base  4. Layout  5. Utilities  6. Components (أبجدياً)  7. Responsive Utilities  8. Print/Reduced-motion.

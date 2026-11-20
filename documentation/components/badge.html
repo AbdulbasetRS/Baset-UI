@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-bui-theme="default" data-bui-mode="light" data-root="../../">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Badge - Baset-UI Documentation</title>
+    <meta name="description" content="Badge: solid, subtle and outline variants, six semantic colors, three sizes, pill, dot, icon and a Notification Badge that works in RTL. CSS only.">
+    <!-- Empty icon: avoids a /favicon.ico 404 until the project has a real icon. -->
+    <link rel="icon" href="data:,">
+
+    <link rel="stylesheet" href="../../assets/css/baset-ui.css">
+    <link rel="stylesheet" href="../../assets/css/extensions/baset-ui-icons.css">
+    <link rel="stylesheet" href="../../assets/css/themes/ocean.css">
+    <link rel="stylesheet" href="../../documentation/assets/css/docs.css">
+    <link rel="stylesheet" href="../../documentation/assets/css/playground.css">
+    <script>
+        /* Prevents a flash of the wrong theme or mode. Same keys as BUI.theme (bui-theme, bui-mode). */
+        (function () {
+            var d = document.documentElement, t = null, m = null, r = null;
+            try { t = localStorage.getItem('bui-theme'); m = localStorage.getItem('bui-mode'); r = localStorage.getItem('bui-docs-dir'); } catch (e) {}
+            if (t && /^[a-z][a-z0-9]*(-[a-z0-9]+)*$/.test(t)) d.setAttribute('data-bui-theme', t);
+            if (m !== 'light' && m !== 'dark') m = window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+            d.setAttribute('data-bui-mode', m);
+            /* Documentation shell only: the saved direction of the RTL/LTR switcher. */
+            if (r === 'rtl' || r === 'ltr') d.setAttribute('dir', r);
+        })();
+    </script>
+</head>
+<body>
+    <main class="bui-docs-main" id="bui-docs-main" tabindex="-1">
+        <div class="bui-docs-page">
+            <div class="bui-docs-page__body">
+
+                <header class="bui-docs-page-header">
+                    <nav class="bui-docs-breadcrumb" aria-label="Breadcrumb" data-docs-breadcrumb hidden></nav>
+                    <h1>Badge</h1>
+                    <p class="bui-docs-lead">A small label or count in three variants, six semantic colors and three sizes, with pill, dot, icon and notification placement. CSS only.</p>
+                </header>
+
+                <div class="bui-docs-content">
+                    <section class="bui-docs-section" aria-labelledby="installation-include">
+                        <h2 id="installation-include">01. Installation &amp; Include</h2>
+
+<p>Badge is part of the Core stylesheet, so <code>assets/css/baset-ui.css</code> is the only required file. Load the icons Extension only if a badge or its host contains an icon, and a Theme if you use one. Order: Core, then Extension, then Theme. No JavaScript is needed.</p>
+<pre class="bui-docs-code" data-lang="html"><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="en" dir="ltr" data-bui-theme="default" data-bui-mode="light"&gt;
+&lt;head&gt;
+    &lt;meta charset="utf-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
+    &lt;title&gt;Badge&lt;/title&gt;
+    &lt;link rel="stylesheet" href="assets/css/baset-ui.css"&gt;
+    &lt;!-- Only when a badge or its host contains an icon --&gt;
+    &lt;link rel="stylesheet" href="assets/css/extensions/baset-ui-icons.css"&gt;
+    &lt;!-- Optional theme --&gt;
+    &lt;link rel="stylesheet" href="assets/css/themes/ocean.css"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;span class="bui-badge"&gt;New&lt;/span&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+
+                    </section>
+
+                    <section class="bui-docs-section" aria-labelledby="customize">
+                        <h2 id="customize">02. Customize</h2>
+
+<p>Every option below is a real class documented in section 04. The text in the examples is sample text. A dot has no text, so the text option is ignored when Dot is on. Notification places the badge on the corner of a sample icon button; its position options apply only then.</p>
+<div data-docs-playground="badge"></div>
+
+                    </section>
+
+                    <section class="bui-docs-section" aria-labelledby="default">
+                        <h2 id="default">03. Default</h2>
+
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<span class="bui-badge">New</span>
+</div>
+<pre class="bui-docs-code" data-lang="html"><code>&lt;span class="bui-badge"&gt;New&lt;/span&gt;</code></pre>
+</div>
+<p>With no modifier, <code>.bui-badge</code> is a solid, primary, medium badge with a small corner radius.</p>
+
+                    </section>
+
+                    <section class="bui-docs-section" aria-labelledby="variants-options">
+                        <h2 id="variants-options">04. Variants &amp; Options</h2>
+
+<h3>Variants</h3>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Badge variants</caption>
+<thead><tr><th scope="col">Name</th><th scope="col">Class</th><th scope="col">Description</th></tr></thead>
+<tbody>
+<tr><td><code>solid</code> (default)</td><td><code>bui-badge--solid</code></td><td>Filled with the color. The class is optional because it is the default.</td></tr>
+<tr><td><code>subtle</code></td><td><code>bui-badge--subtle</code></td><td>A light fill with a colored border. The text uses the color's <code>-hover</code> token, because the plain color on the light fill is below 4.5:1 for success in Light mode.</td></tr>
+<tr><td><code>outline</code></td><td><code>bui-badge--outline</code></td><td>Transparent with a colored border and colored text.</td></tr>
+</tbody>
+</table>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<div class="bui-d-flex bui-flex-wrap bui-gap-2 bui-docs-demo-gap"><span class="bui-badge bui-badge--solid bui-badge--primary">Primary</span><span class="bui-badge bui-badge--solid bui-badge--secondary">Secondary</span><span class="bui-badge bui-badge--solid bui-badge--success">Success</span><span class="bui-badge bui-badge--solid bui-badge--warning">Warning</span><span class="bui-badge bui-badge--solid bui-badge--danger">Danger</span><span class="bui-badge bui-badge--solid bui-badge--info">Info</span></div>
+<div class="bui-d-flex bui-flex-wrap bui-gap-2 bui-docs-demo-gap"><span class="bui-badge bui-badge--subtle bui-badge--primary">Primary</span><span class="bui-badge bui-badge--subtle bui-badge--secondary">Secondary</span><span class="bui-badge bui-badge--subtle bui-badge--success">Success</span><span class="bui-badge bui-badge--subtle bui-badge--warning">Warning</span><span class="bui-badge bui-badge--subtle bui-badge--danger">Danger</span><span class="bui-badge bui-badge--subtle bui-badge--info">Info</span></div>
+<div class="bui-d-flex bui-flex-wrap bui-gap-2 bui-docs-demo-gap"><span class="bui-badge bui-badge--outline bui-badge--primary">Primary</span><span class="bui-badge bui-badge--outline bui-badge--secondary">Secondary</span><span class="bui-badge bui-badge--outline bui-badge--success">Success</span><span class="bui-badge bui-badge--outline bui-badge--warning">Warning</span><span class="bui-badge bui-badge--outline bui-badge--danger">Danger</span><span class="bui-badge bui-badge--outline bui-badge--info">Info</span></div>
+</div>
+<pre class="bui-docs-code" data-lang="html"><code>&lt;span class="bui-badge bui-badge--solid bui-badge--primary"&gt;Primary&lt;/span&gt;
+&lt;span class="bui-badge bui-badge--subtle bui-badge--success"&gt;Success&lt;/span&gt;
+&lt;span class="bui-badge bui-badge--outline bui-badge--danger"&gt;Danger&lt;/span&gt;</code></pre>
+</div>
+<p>Each row is one variant in the six colors. Any variant works with any color.</p>
+<h3>Colors</h3>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Badge colors</caption>
+<thead><tr><th scope="col">Name</th><th scope="col">Class</th><th scope="col">Tokens it reads</th></tr></thead>
+<tbody>
+<tr><td><code>primary</code> (default)</td><td><code>bui-badge--primary</code></td><td><code>--bui-color-primary</code>, <code>-hover</code>, <code>-subtle</code>, <code>-border</code>, <code>-contrast</code></td></tr>
+<tr><td><code>secondary</code></td><td><code>bui-badge--secondary</code></td><td>Same five tokens with the <code>secondary</code> name.</td></tr>
+<tr><td><code>success</code></td><td><code>bui-badge--success</code></td><td>Same five tokens with the <code>success</code> name.</td></tr>
+<tr><td><code>warning</code></td><td><code>bui-badge--warning</code></td><td>Same five tokens with the <code>warning</code> name.</td></tr>
+<tr><td><code>danger</code></td><td><code>bui-badge--danger</code></td><td>Same five tokens with the <code>danger</code> name.</td></tr>
+<tr><td><code>info</code></td><td><code>bui-badge--info</code></td><td>Same five tokens with the <code>info</code> name.</td></tr>
+</tbody>
+</table>
+<h3>Sizes</h3>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Badge sizes</caption>
+<thead><tr><th scope="col">Name</th><th scope="col">Class</th><th scope="col">Minimum height</th><th scope="col">Font size</th></tr></thead>
+<tbody>
+<tr><td><code>sm</code></td><td><code>bui-badge--sm</code></td><td><code>--bui-badge-height-sm</code></td><td><code>--bui-badge-font-size-sm</code></td></tr>
+<tr><td><code>md</code> (default)</td><td><code>bui-badge--md</code></td><td><code>--bui-badge-height-md</code></td><td><code>--bui-badge-font-size-md</code></td></tr>
+<tr><td><code>lg</code></td><td><code>bui-badge--lg</code></td><td><code>--bui-badge-height-lg</code></td><td><code>--bui-badge-font-size-lg</code></td></tr>
+</tbody>
+</table>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<div class="bui-d-flex bui-flex-wrap bui-gap-2 bui-items-center">
+<span class="bui-badge bui-badge--sm">Small</span>
+<span class="bui-badge bui-badge--md">Medium</span>
+<span class="bui-badge bui-badge--lg">Large</span>
+</div>
+</div>
+<pre class="bui-docs-code" data-lang="html"><code>&lt;span class="bui-badge bui-badge--sm"&gt;Small&lt;/span&gt;
+&lt;span class="bui-badge bui-badge--md"&gt;Medium&lt;/span&gt;
+&lt;span class="bui-badge bui-badge--lg"&gt;Large&lt;/span&gt;</code></pre>
+</div>
+<h3>Options</h3>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Badge options</caption>
+<thead><tr><th scope="col">Name</th><th scope="col">Type</th><th scope="col">Default</th><th scope="col">HTML</th><th scope="col">Description</th></tr></thead>
+<tbody>
+<tr><td>variant</td><td>enum</td><td><code>solid</code></td><td><code>bui-badge--{solid|subtle|outline}</code></td><td>Visual style.</td></tr>
+<tr><td>color</td><td>enum</td><td><code>primary</code></td><td><code>bui-badge--{primary|secondary|success|warning|danger|info}</code></td><td>Semantic color.</td></tr>
+<tr><td>size</td><td>enum</td><td><code>md</code></td><td><code>bui-badge--{sm|md|lg}</code></td><td>Height, padding and font size.</td></tr>
+<tr><td>pill</td><td>boolean</td><td>false</td><td><code>bui-badge--pill</code></td><td>Fully rounded ends. Best for counts.</td></tr>
+<tr><td>dot</td><td>boolean</td><td>false</td><td><code>bui-badge--dot</code></td><td>A small round mark with no visible text. Put a visually hidden text inside it. With <code>subtle</code> it is filled like <code>solid</code> (a light fill alone is almost invisible); with <code>outline</code> it is a hollow ring.</td></tr>
+<tr><td>icon</td><td>element</td><td>none</td><td><code>&lt;i class="bui-icon-regular bui-icon-{name}" aria-hidden="true"&gt;&lt;/i&gt;</code> inside the badge</td><td>Before or after the text. Needs the icons Extension.</td></tr>
+<tr><td>notification</td><td>boolean</td><td>false</td><td><code>bui-badge-anchor</code> on the host and <code>bui-badge--floating</code> on the badge</td><td>Places the badge on the corner of another element.</td></tr>
+<tr><td>placement</td><td>enum</td><td>top end</td><td><code>bui-badge--bottom</code>, <code>bui-badge--start</code> (with <code>--floating</code>)</td><td>Default is the top corner on the end side. Add <code>--bottom</code> for the bottom and <code>--start</code> for the start side.</td></tr>
+</tbody>
+</table>
+<h3>Component tokens</h3>
+<p>The tokens are declared on <code>:root</code>, on any <code>[data-bui-mode]</code> and on any <code>[data-bui-theme]</code> element, so a Theme or a container can override them. Colors are not component tokens: they follow the semantic color tokens through the color modifiers, so a Theme changes them by redefining the semantic colors.</p>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Badge component tokens</caption>
+<thead><tr><th scope="col">Token</th><th scope="col">Default</th><th scope="col">Description</th></tr></thead>
+<tbody>
+<tr><td><code>--bui-badge-font-family</code></td><td><code>inherit</code></td><td>Font family.</td></tr>
+<tr><td><code>--bui-badge-font-weight</code></td><td><code>var(--bui-font-weight-semibold)</code></td><td>Font weight.</td></tr>
+<tr><td><code>--bui-badge-line-height</code></td><td><code>var(--bui-line-height-tight)</code></td><td>Line height.</td></tr>
+<tr><td><code>--bui-badge-border-width</code></td><td><code>var(--bui-border-width)</code></td><td>Border width (all variants keep a border so sizes match).</td></tr>
+<tr><td><code>--bui-badge-radius</code></td><td><code>var(--bui-radius-sm)</code></td><td>Corner radius (a pill or dot is fully round).</td></tr>
+<tr><td><code>--bui-badge-gap</code></td><td><code>var(--bui-space-1)</code></td><td>Space between icon and text.</td></tr>
+<tr><td><code>--bui-badge-padding-x-{sm|md|lg}</code></td><td>Derived from the spacing scale</td><td>Horizontal padding per size.</td></tr>
+<tr><td><code>--bui-badge-font-size-{sm|md|lg}</code></td><td>Derived from the font-size scale</td><td>Font size per size.</td></tr>
+<tr><td><code>--bui-badge-height-{sm|md|lg}</code></td><td>Derived from the spacing scale</td><td>Minimum height and minimum width per size.</td></tr>
+<tr><td><code>--bui-badge-dot-size-{sm|md|lg}</code></td><td>Derived from the spacing scale</td><td>Diameter of a dot per size.</td></tr>
+<tr><td><code>--bui-badge-ring-width</code></td><td><code>var(--bui-border-width-thick)</code></td><td>Width of the outline that separates a floating badge from its host.</td></tr>
+<tr><td><code>--bui-badge-ring-color</code></td><td><code>var(--bui-color-bg)</code></td><td>Color of that outline. Set it to the host background when the host is not on the page background.</td></tr>
+</tbody>
+</table>
+
+                    </section>
+
+                    <section class="bui-docs-section" aria-labelledby="examples">
+                        <h2 id="examples">05. Examples</h2>
+
+<h3>With an icon</h3>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<div class="bui-d-flex bui-flex-wrap bui-gap-2 bui-items-center">
+<span class="bui-badge bui-badge--subtle bui-badge--success"><i class="bui-icon-regular bui-icon-check" aria-hidden="true"></i> Done</span>
+<span class="bui-badge bui-badge--outline bui-badge--info">Sync <i class="bui-icon-regular bui-icon-bell" aria-hidden="true"></i></span>
+</div>
+</div>
+<pre class="bui-docs-code" data-lang="html"><code>&lt;span class="bui-badge bui-badge--subtle bui-badge--success"&gt;&lt;i class="bui-icon-regular bui-icon-check" aria-hidden="true"&gt;&lt;/i&gt; Done&lt;/span&gt;
+&lt;span class="bui-badge bui-badge--outline bui-badge--info"&gt;Sync &lt;i class="bui-icon-regular bui-icon-bell" aria-hidden="true"&gt;&lt;/i&gt;&lt;/span&gt;</code></pre>
+</div>
+<p>Icons come from the icons Extension and are decorative (<code>aria-hidden="true"</code>). The gap between icon and text is <code>--bui-badge-gap</code>. In a right-to-left page the icon moves to the other side automatically.</p>
+<h3>Counts</h3>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<div class="bui-d-flex bui-flex-wrap bui-gap-2 bui-items-center">
+<span class="bui-badge bui-badge--pill bui-badge--danger">7</span>
+<span class="bui-badge bui-badge--pill bui-badge--danger">128</span>
+<span class="bui-badge bui-badge--pill bui-badge--secondary bui-badge--subtle">99+</span>
+</div>
+</div>
+<pre class="bui-docs-code" data-lang="html"><code>&lt;span class="bui-badge bui-badge--pill bui-badge--danger"&gt;7&lt;/span&gt;
+&lt;span class="bui-badge bui-badge--pill bui-badge--danger"&gt;128&lt;/span&gt;
+&lt;span class="bui-badge bui-badge--pill bui-badge--secondary bui-badge--subtle"&gt;99+&lt;/span&gt;</code></pre>
+</div>
+<p>The count text is yours: Badge does not format or cap numbers, so write <code>99+</code> yourself when the number is large. Digits use tabular numerals, and a badge never gets narrower than its height, so a single digit stays round with <code>bui-badge--pill</code>.</p>
+<h3>Notification Badge</h3>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<div class="bui-d-flex bui-flex-wrap bui-gap-4 bui-items-center bui-p-2">
+<span class="bui-badge-anchor">
+    <button type="button" class="bui-btn bui-btn--outline bui-btn--secondary bui-btn--icon" aria-label="Notifications"><i class="bui-icon-regular bui-icon-bell" aria-hidden="true"></i></button>
+    <span class="bui-badge bui-badge--danger bui-badge--pill bui-badge--sm bui-badge--floating">3</span>
+</span>
+<span class="bui-badge-anchor">
+    <button type="button" class="bui-btn bui-btn--outline bui-btn--secondary bui-btn--icon" aria-label="Notifications"><i class="bui-icon-regular bui-icon-bell" aria-hidden="true"></i></button>
+    <span class="bui-badge bui-badge--danger bui-badge--pill bui-badge--sm bui-badge--floating">128</span>
+</span>
+<span class="bui-badge-anchor">
+    <button type="button" class="bui-btn bui-btn--outline bui-btn--secondary bui-btn--icon" aria-label="Notifications"><i class="bui-icon-regular bui-icon-bell" aria-hidden="true"></i></button>
+    <span class="bui-badge bui-badge--danger bui-badge--dot bui-badge--floating"><span class="bui-visually-hidden">New</span></span>
+</span>
+<span class="bui-badge-anchor">
+    <button type="button" class="bui-btn bui-btn--outline bui-btn--secondary bui-btn--icon" aria-label="Notifications"><i class="bui-icon-regular bui-icon-bell" aria-hidden="true"></i></button>
+    <span class="bui-badge bui-badge--info bui-badge--pill bui-badge--sm bui-badge--bottom bui-badge--start bui-badge--floating">9</span>
+</span>
+</div>
+</div>
+<pre class="bui-docs-code" data-lang="html"><code>&lt;span class="bui-badge-anchor"&gt;
+    &lt;button type="button" class="bui-btn bui-btn--outline bui-btn--secondary bui-btn--icon" aria-label="Notifications"&gt;&lt;i class="bui-icon-regular bui-icon-bell" aria-hidden="true"&gt;&lt;/i&gt;&lt;/button&gt;
+    &lt;span class="bui-badge bui-badge--danger bui-badge--pill bui-badge--sm bui-badge--floating"&gt;3&lt;/span&gt;
+&lt;/span&gt;
+&lt;span class="bui-badge-anchor"&gt;
+    &lt;button type="button" class="bui-btn bui-btn--outline bui-btn--secondary bui-btn--icon" aria-label="Notifications"&gt;&lt;i class="bui-icon-regular bui-icon-bell" aria-hidden="true"&gt;&lt;/i&gt;&lt;/button&gt;
+    &lt;span class="bui-badge bui-badge--danger bui-badge--pill bui-badge--sm bui-badge--floating"&gt;128&lt;/span&gt;
+&lt;/span&gt;
+&lt;span class="bui-badge-anchor"&gt;
+    &lt;button type="button" class="bui-btn bui-btn--outline bui-btn--secondary bui-btn--icon" aria-label="Notifications"&gt;&lt;i class="bui-icon-regular bui-icon-bell" aria-hidden="true"&gt;&lt;/i&gt;&lt;/button&gt;
+    &lt;span class="bui-badge bui-badge--danger bui-badge--dot bui-badge--floating"&gt;&lt;span class="bui-visually-hidden"&gt;New&lt;/span&gt;&lt;/span&gt;
+&lt;/span&gt;
+&lt;span class="bui-badge-anchor"&gt;
+    &lt;button type="button" class="bui-btn bui-btn--outline bui-btn--secondary bui-btn--icon" aria-label="Notifications"&gt;&lt;i class="bui-icon-regular bui-icon-bell" aria-hidden="true"&gt;&lt;/i&gt;&lt;/button&gt;
+    &lt;span class="bui-badge bui-badge--info bui-badge--pill bui-badge--sm bui-badge--bottom bui-badge--start bui-badge--floating"&gt;9&lt;/span&gt;
+&lt;/span&gt;</code></pre>
+</div>
+<p>The host sits inside <code>bui-badge-anchor</code>, which is its positioning context, and the badge uses <code>inset-block-start</code> and <code>inset-inline-end</code>. In a right-to-left page the badge therefore moves to the left corner with no extra class. The count is part of the accessible name only if you add it: the badge text is read after the host, so for a button write the count in the label (for example "Notifications, 3 new") instead of relying on the badge alone, and mark the badge <code>aria-hidden="true"</code> when the label already says it.</p>
+<h3>Status dot</h3>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<div class="bui-d-flex bui-flex-wrap bui-gap-3 bui-items-center">
+<span class="bui-badge bui-badge--dot bui-badge--success"><span class="bui-visually-hidden">Online</span></span> Online
+<span class="bui-badge bui-badge--dot bui-badge--outline bui-badge--secondary"><span class="bui-visually-hidden">Offline</span></span> Offline
+</div>
+</div>
+<pre class="bui-docs-code" data-lang="html"><code>&lt;span class="bui-badge bui-badge--dot bui-badge--success"&gt;&lt;span class="bui-visually-hidden"&gt;Online&lt;/span&gt;&lt;/span&gt; Online
+&lt;span class="bui-badge bui-badge--dot bui-badge--outline bui-badge--secondary"&gt;&lt;span class="bui-visually-hidden"&gt;Offline&lt;/span&gt;&lt;/span&gt; Offline</code></pre>
+</div>
+<p>The dot is not enough alone: color is never the only way to carry meaning, so keep the word next to it or inside it as visually hidden text.</p>
+
+                    </section>
+
+                    <section class="bui-docs-section" aria-labelledby="javascript-api">
+                        <h2 id="javascript-api">06. JavaScript API</h2>
+
+<p>CSS only, no JavaScript API. Badge registers nothing with <code>BUI.register</code>, fires no events and has no options to parse. Change the text, classes or attributes with your own code when the count changes.</p>
+<p>Badge adds no translation key: its text is whatever you write. For a visually hidden text inside a dot, use <code>data-bui-i18n</code> with a key you own, or one of the existing keys in <code>assets/i18n/*.json</code>.</p>
+
+                    </section>
+
+                    <section class="bui-docs-section" aria-labelledby="responsive-behavior">
+                        <h2 id="responsive-behavior">07. Responsive Behavior</h2>
+
+<p>Badge has no breakpoint-specific styles; it follows its container and its font size.</p>
+<ul>
+<li>A badge never wraps its text (<code>white-space: nowrap</code>), so keep the text short. A long text inside a narrow container overflows; shorten it or place the badge where it can wrap as a whole (a flex row with <code>bui-flex-wrap</code>).</li>
+<li>A badge is inline-flex, so it sits in a line of text and takes its size from the font size of its size class, not from the surrounding text.</li>
+<li>A floating badge sits partly outside its host. Leave room around the host (padding or margin) so it is not clipped by an ancestor with <code>overflow: hidden</code>.</li>
+<li>Badge has no hover styles and no touch-target rule, because it is not interactive. If the badge is clickable, put it inside a button or a link instead.</li>
+</ul>
+
+                    </section>
+
+                    <section class="bui-docs-section" aria-labelledby="accessibility">
+                        <h2 id="accessibility">08. Accessibility</h2>
+
+<h3>Keyboard</h3>
+<p>Badge is not interactive: it is not focusable and has no keyboard behavior. A badge inside a button or link is part of that control.</p>
+<h3>ARIA</h3>
+<ul>
+<li>A badge with text is read as normal text, in document order. A bare number next to a label can be ambiguous, so write the meaning in the surrounding text or in a visually hidden text ("3 unread messages").</li>
+<li>A dot has no text: put a visually hidden text inside it (<code>bui-visually-hidden</code>). Without it, assistive technology sees an empty element.</li>
+<li>A badge that changes while the user is on the page (a live count) is not announced by itself. Put it in a <code>role="status"</code> region if the change matters.</li>
+<li>Icons inside a badge are decorative (<code>aria-hidden="true"</code>).</li>
+<li>Meaning never depends on color alone: use text, an icon or a visually hidden text next to the color.</li>
+</ul>
+<h3>Screen reader</h3>
+<p>Not tested with a screen reader (NVDA, VoiceOver or similar). The semantics come from plain text and standard classes; how each reader announces a floating count after its host was not verified.</p>
+<h3>Contrast</h3>
+<p>Measured in Chromium for every variant, color and size, in Light and Dark, with the default and ocean themes, in both directions (432 samples). The lowest text contrast is 5.02:1 (solid warning, Light), above the 4.5:1 AA threshold. Dots (filled and outline) measure at least 5.02:1 against the page background, above the 3:1 non-text minimum. Badge has no animation.</p>
+
+                    </section>
+
+
+                </div>
+                <!-- Previous / Next links are appended here by docs.js from the order in nav.js. -->
+            </div>
+            <!-- "On this page" is appended here by docs.js (visible from the XL breakpoint). -->
+        </div>
+    </main>
+
+    <script src="../../assets/js/baset-ui.js"></script>
+    <script src="../../documentation/assets/js/nav.js"></script>
+    <script src="../../documentation/assets/js/docs.js"></script>
+    <script src="../../documentation/assets/js/playground.js"></script>
+    <script>
+        /* Docs-only helpers for this page. */
+        (function () {
+            BUI_DOCS_PLAYGROUND.define('badge', {
+                title: 'Badge playground',
+                controls: [
+                    { type: 'select', name: 'variant', label: 'Variant', default: 'solid',
+                      options: [{ value: 'solid', label: 'Solid' }, { value: 'subtle', label: 'Subtle' }, { value: 'outline', label: 'Outline' }] },
+                    { type: 'select', name: 'color', label: 'Color', default: 'primary',
+                      options: [{ value: 'primary', label: 'Primary' }, { value: 'secondary', label: 'Secondary' }, { value: 'success', label: 'Success' }, { value: 'warning', label: 'Warning' }, { value: 'danger', label: 'Danger' }, { value: 'info', label: 'Info' }] },
+                    { type: 'radio-group', name: 'size', label: 'Size', default: 'md',
+                      options: [{ value: 'sm', label: 'Small' }, { value: 'md', label: 'Medium' }, { value: 'lg', label: 'Large' }] },
+                    { type: 'text', name: 'label', label: 'Text', default: 'New', maxLength: 12 },
+                    { type: 'select', name: 'icon', label: 'Icon', default: 'none',
+                      options: [{ value: 'none', label: 'None' }, { value: 'before', label: 'Before the text' }, { value: 'after', label: 'After the text' }] },
+                    { type: 'switch', name: 'pill', label: 'Pill' },
+                    { type: 'switch', name: 'dot', label: 'Dot (no visible text)' },
+                    { type: 'switch', name: 'notification', label: 'Notification (on an icon button)' },
+                    { type: 'select', name: 'placement', label: 'Notification placement', default: 'top-end',
+                      options: [{ value: 'top-end', label: 'Top, end side' }, { value: 'top-start', label: 'Top, start side' }, { value: 'bottom-end', label: 'Bottom, end side' }, { value: 'bottom-start', label: 'Bottom, start side' }] }
+                ],
+                template: function (state, h) {
+                    var cls = ['bui-badge'];
+                    if (state.variant !== 'solid') { cls.push('bui-badge--' + state.variant); }
+                    if (state.color !== 'primary') { cls.push('bui-badge--' + state.color); }
+                    if (state.size !== 'md') { cls.push('bui-badge--' + state.size); }
+                    if (state.pill && !state.dot) { cls.push('bui-badge--pill'); }
+                    if (state.dot) { cls.push('bui-badge--dot'); }
+                    if (state.notification) {
+                        cls.push('bui-badge--floating');
+                        if (state.placement.indexOf('bottom') === 0) { cls.push('bui-badge--bottom'); }
+                        if (state.placement.slice(-5) === 'start') { cls.push('bui-badge--start'); }
+                    }
+                    var label = h.escape(state.label);
+                    var icon = '<i class="bui-icon-regular bui-icon-check" aria-hidden="true"></i>';
+                    var inner = state.dot
+                        ? '<span class="bui-visually-hidden">' + label + '</span>'
+                        : (state.icon === 'before' ? icon + ' ' : '') + label + (state.icon === 'after' ? ' ' + icon : '');
+                    var badge = '<span class="' + cls.join(' ') + '">' + inner + '</span>';
+                    if (!state.notification) { return badge; }
+                    return '<span class="bui-badge-anchor">\n' +
+                        '    <button type="button" class="bui-btn bui-btn--outline bui-btn--secondary bui-btn--icon" aria-label="Notifications"><i class="bui-icon-regular bui-icon-bell" aria-hidden="true"></i></button>\n' +
+                        '    ' + badge + '\n</span>';
+                }
+            });
+        })();
+    </script>
+</body>
+</html>

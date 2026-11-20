@@ -13,5 +13,11 @@
             "many": "{count} d'éléments",
             "other": "{count} éléments"
         }
+    },
+    "avatar": {
+        "statusOnline": "En ligne",
+        "statusOffline": "Hors ligne",
+        "statusBusy": "Occupé",
+        "statusAway": "Absent"
     }
 }

@@ -16,5 +16,11 @@
             "many": "{count} عنصرًا",
             "other": "{count} عنصر"
         }
+    },
+    "avatar": {
+        "statusOnline": "متصل",
+        "statusOffline": "غير متصل",
+        "statusBusy": "مشغول",
+        "statusAway": "بعيد"
     }
 }

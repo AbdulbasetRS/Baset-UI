@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-bui-theme="default" data-bui-mode="light" data-root="../../">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Avatar - Baset-UI Documentation</title>
+    <meta name="description" content="Avatar: initials, icon or image with fallback, sizes, shapes, status indicator and an Avatar Group that overlaps correctly in RTL.">
+    <!-- Empty icon: avoids a /favicon.ico 404 until the project has a real icon. -->
+    <link rel="icon" href="data:,">
+
+    <link rel="stylesheet" href="../../assets/css/baset-ui.css">
+    <link rel="stylesheet" href="../../assets/css/extensions/baset-ui-icons.css">
+    <link rel="stylesheet" href="../../assets/css/themes/ocean.css">
+    <link rel="stylesheet" href="../../documentation/assets/css/docs.css">
+    <link rel="stylesheet" href="../../documentation/assets/css/playground.css">
+    <script>
+        /* Prevents a flash of the wrong theme or mode. Same keys as BUI.theme (bui-theme, bui-mode). */
+        (function () {
+            var d = document.documentElement, t = null, m = null, r = null;
+            try { t = localStorage.getItem('bui-theme'); m = localStorage.getItem('bui-mode'); r = localStorage.getItem('bui-docs-dir'); } catch (e) {}
+            if (t && /^[a-z][a-z0-9]*(-[a-z0-9]+)*$/.test(t)) d.setAttribute('data-bui-theme', t);
+            if (m !== 'light' && m !== 'dark') m = window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+            d.setAttribute('data-bui-mode', m);
+            /* Documentation shell only: the saved direction of the RTL/LTR switcher. */
+            if (r === 'rtl' || r === 'ltr') d.setAttribute('dir', r);
+        })();
+    </script>
+</head>
+<body>
+    <main class="bui-docs-main" id="bui-docs-main" tabindex="-1">
+        <div class="bui-docs-page">
+            <div class="bui-docs-page__body">
+
+                <header class="bui-docs-page-header">
+                    <nav class="bui-docs-breadcrumb" aria-label="Breadcrumb" data-docs-breadcrumb hidden></nav>
+                    <h1>Avatar</h1>
+                    <p class="bui-docs-lead">A person or entity shown as initials, an icon or an image, in five sizes and three shapes, with a status indicator and an overlapping group. The image fallback is a small JavaScript component.</p>
+                </header>
+
+                <div class="bui-docs-content">
+                    <section class="bui-docs-section" aria-labelledby="installation-include">
+                        <h2 id="installation-include">01. Installation &amp; Include</h2>
+
+<p>Avatar is part of the Core stylesheet. The image fallback needs the Core JavaScript (<code>assets/js/baset-ui.js</code>), because CSS cannot detect that an image failed to load. Without the script an avatar with initials, an icon or a working image still renders; only the fallback and its event are missing. Load the icons Extension only if you use an icon.</p>
+<pre class="bui-docs-code" data-lang="html"><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="en" dir="ltr" data-bui-theme="default" data-bui-mode="light"&gt;
+&lt;head&gt;
+    &lt;meta charset="utf-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
+    &lt;title&gt;Avatar&lt;/title&gt;
+    &lt;link rel="stylesheet" href="assets/css/baset-ui.css"&gt;
+    &lt;!-- Only when an avatar uses an icon --&gt;
+    &lt;link rel="stylesheet" href="assets/css/extensions/baset-ui-icons.css"&gt;
+    &lt;!-- Optional theme --&gt;
+    &lt;link rel="stylesheet" href="assets/css/themes/ocean.css"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;span class="bui-avatar" role="img" aria-label="Sara Ahmed"&gt;
+        &lt;span class="bui-avatar__text" aria-hidden="true"&gt;SA&lt;/span&gt;
+    &lt;/span&gt;
+
+    &lt;!-- Only for the image fallback --&gt;
+    &lt;script src="assets/js/baset-ui.js"&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+
+                    </section>
+
+                    <section class="bui-docs-section" aria-labelledby="customize">
+                        <h2 id="customize">02. Customize</h2>
+
+<p>Every option is a real class or attribute documented in section 04. The names and initials are sample text. The image options use generated images declared as docs fixtures: a small drawing for "Image", and an intentionally broken data URI for "Image that fails to load", so you can watch the fallback with no network request. The status option adds the indicator to a single avatar; the group option shows three avatars and a counter at the chosen size and shape.</p>
+<div data-docs-playground="avatar"></div>
+
+                    </section>
+
+                    <section class="bui-docs-section" aria-labelledby="default">
+                        <h2 id="default">03. Default</h2>
+
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<span class="bui-avatar" role="img" aria-label="Sara Ahmed"><span class="bui-avatar__text" aria-hidden="true">SA</span></span>
+</div>
+<pre class="bui-docs-code" data-lang="html"><code>&lt;span class="bui-avatar" role="img" aria-label="Sara Ahmed"&gt;&lt;span class="bui-avatar__text" aria-hidden="true"&gt;SA&lt;/span&gt;&lt;/span&gt;</code></pre>
+</div>
+<p>With no modifier, <code>.bui-avatar</code> is a medium circle. The name is on the avatar, as an accessible name for the initials, which are hidden from assistive technology so they are not read letter by letter.</p>
+
+                    </section>
+
+                    <section class="bui-docs-section" aria-labelledby="variants-options">
+                        <h2 id="variants-options">04. Variants &amp; Options</h2>
+
+<h3>Sizes</h3>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Avatar sizes</caption>
+<thead><tr><th scope="col">Name</th><th scope="col">Class</th><th scope="col">Size token</th></tr></thead>
+<tbody>
+<tr><td><code>xs</code></td><td><code>bui-avatar--xs</code></td><td><code>--bui-avatar-size-xs</code></td></tr>
+<tr><td><code>sm</code></td><td><code>bui-avatar--sm</code></td><td><code>--bui-avatar-size-sm</code></td></tr>
+<tr><td><code>md</code> (default)</td><td><code>bui-avatar--md</code></td><td><code>--bui-avatar-size-md</code></td></tr>
+<tr><td><code>lg</code></td><td><code>bui-avatar--lg</code></td><td><code>--bui-avatar-size-lg</code></td></tr>
+<tr><td><code>xl</code></td><td><code>bui-avatar--xl</code></td><td><code>--bui-avatar-size-xl</code></td></tr>
+</tbody>
+</table>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<div class="bui-d-flex bui-flex-wrap bui-gap-3 bui-items-center">
+<span class="bui-avatar bui-avatar--xs" role="img" aria-label="Sara Ahmed"><span class="bui-avatar__text" aria-hidden="true">SA</span></span>
+<span class="bui-avatar bui-avatar--sm" role="img" aria-label="Sara Ahmed"><span class="bui-avatar__text" aria-hidden="true">SA</span></span>
+<span class="bui-avatar bui-avatar--md" role="img" aria-label="Sara Ahmed"><span class="bui-avatar__text" aria-hidden="true">SA</span></span>
+<span class="bui-avatar bui-avatar--lg" role="img" aria-label="Sara Ahmed"><span class="bui-avatar__text" aria-hidden="true">SA</span></span>
+<span class="bui-avatar bui-avatar--xl" role="img" aria-label="Sara Ahmed"><span class="bui-avatar__text" aria-hidden="true">SA</span></span>
+</div>
+</div>
+<pre class="bui-docs-code" data-lang="html"><code>&lt;span class="bui-avatar bui-avatar--xs" role="img" aria-label="Sara Ahmed"&gt;&lt;span class="bui-avatar__text" aria-hidden="true"&gt;SA&lt;/span&gt;&lt;/span&gt;
+&lt;span class="bui-avatar bui-avatar--sm" role="img" aria-label="Sara Ahmed"&gt;&lt;span class="bui-avatar__text" aria-hidden="true"&gt;SA&lt;/span&gt;&lt;/span&gt;
+&lt;span class="bui-avatar bui-avatar--md" role="img" aria-label="Sara Ahmed"&gt;&lt;span class="bui-avatar__text" aria-hidden="true"&gt;SA&lt;/span&gt;&lt;/span&gt;
+&lt;span class="bui-avatar bui-avatar--lg" role="img" aria-label="Sara Ahmed"&gt;&lt;span class="bui-avatar__text" aria-hidden="true"&gt;SA&lt;/span&gt;&lt;/span&gt;
+&lt;span class="bui-avatar bui-avatar--xl" role="img" aria-label="Sara Ahmed"&gt;&lt;span class="bui-avatar__text" aria-hidden="true"&gt;SA&lt;/span&gt;&lt;/span&gt;</code></pre>
+</div>
+<h3>Shapes</h3>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Avatar shapes</caption>
+<thead><tr><th scope="col">Name</th><th scope="col">Class</th><th scope="col">Radius token</th></tr></thead>
+<tbody>
+<tr><td><code>circle</code> (default)</td><td><code>bui-avatar--circle</code></td><td><code>--bui-avatar-radius-circle</code></td></tr>
+<tr><td><code>rounded</code></td><td><code>bui-avatar--rounded</code></td><td><code>--bui-avatar-radius-rounded</code></td></tr>
+<tr><td><code>square</code></td><td><code>bui-avatar--square</code></td><td><code>--bui-avatar-radius-square</code></td></tr>
+</tbody>
+</table>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<div class="bui-d-flex bui-flex-wrap bui-gap-3 bui-items-center">
+<span class="bui-avatar bui-avatar--circle" role="img" aria-label="Sara Ahmed"><span class="bui-avatar__text" aria-hidden="true">SA</span></span>
+<span class="bui-avatar bui-avatar--rounded" role="img" aria-label="Sara Ahmed"><span class="bui-avatar__text" aria-hidden="true">SA</span></span>
+<span class="bui-avatar bui-avatar--square" role="img" aria-label="Sara Ahmed"><span class="bui-avatar__text" aria-hidden="true">SA</span></span>
+</div>
+</div>
+<pre class="bui-docs-code" data-lang="html"><code>&lt;span class="bui-avatar bui-avatar--circle" role="img" aria-label="Sara Ahmed"&gt;&lt;span class="bui-avatar__text" aria-hidden="true"&gt;SA&lt;/span&gt;&lt;/span&gt;
+&lt;span class="bui-avatar bui-avatar--rounded" role="img" aria-label="Sara Ahmed"&gt;&lt;span class="bui-avatar__text" aria-hidden="true"&gt;SA&lt;/span&gt;&lt;/span&gt;
+&lt;span class="bui-avatar bui-avatar--square" role="img" aria-label="Sara Ahmed"&gt;&lt;span class="bui-avatar__text" aria-hidden="true"&gt;SA&lt;/span&gt;&lt;/span&gt;</code></pre>
+</div>
+<h3>Content</h3>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Avatar content</caption>
+<thead><tr><th scope="col">Content</th><th scope="col">Markup</th><th scope="col">Notes</th></tr></thead>
+<tbody>
+<tr><td>Initials</td><td><code>&lt;span class="bui-avatar__text"&gt;SA&lt;/span&gt;</code></td><td>One or two letters. The avatar clips and centers them.</td></tr>
+<tr><td>Icon</td><td><code>&lt;i class="bui-icon-regular bui-icon-user" aria-hidden="true"&gt;&lt;/i&gt;</code></td><td>Needs the icons Extension. Sized from the avatar size.</td></tr>
+<tr><td>Image</td><td><code>&lt;img class="bui-avatar__img" src="..." alt="Name"&gt;</code></td><td>Fills the avatar. Add the initials after it as the fallback and <code>data-bui-avatar</code> on the avatar.</td></tr>
+</tbody>
+</table>
+<h3>Status</h3>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Avatar status</caption>
+<thead><tr><th scope="col">Name</th><th scope="col">Class</th><th scope="col">Shape (so color is not the only cue)</th></tr></thead>
+<tbody>
+<tr><td><code>online</code></td><td><code>bui-avatar__status--online</code></td><td>Solid dot, success color.</td></tr>
+<tr><td><code>away</code></td><td><code>bui-avatar__status--away</code></td><td>Dot with one quarter missing, warning color.</td></tr>
+<tr><td><code>busy</code></td><td><code>bui-avatar__status--busy</code></td><td>Dot with a horizontal bar, danger color.</td></tr>
+<tr><td><code>offline</code></td><td><code>bui-avatar__status--offline</code></td><td>Hollow ring, secondary color.</td></tr>
+</tbody>
+</table>
+<h3>Options</h3>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Avatar options</caption>
+<thead><tr><th scope="col">Name</th><th scope="col">Type</th><th scope="col">Default</th><th scope="col">HTML</th><th scope="col">Description</th></tr></thead>
+<tbody>
+<tr><td>size</td><td>enum</td><td><code>md</code></td><td><code>bui-avatar--{xs|sm|md|lg|xl}</code></td><td>Width and height.</td></tr>
+<tr><td>shape</td><td>enum</td><td><code>circle</code></td><td><code>bui-avatar--{circle|rounded|square}</code></td><td>Corner radius.</td></tr>
+<tr><td>status</td><td>enum</td><td>none</td><td><code>&lt;span class="bui-avatar__status bui-avatar__status--{online|away|busy|offline}"&gt;</code></td><td>Indicator on the end-bottom corner. Needs an accessible name (see section 08).</td></tr>
+<tr><td>group</td><td>container</td><td>none</td><td><code>bui-avatar-group</code> (+ <code>bui-avatar-group--{xs|sm|md|lg|xl}</code>)</td><td>Overlapping row of avatars.</td></tr>
+<tr><td><code>data-bui-avatar</code></td><td>attribute</td><td>absent</td><td>Attribute on the avatar</td><td>Turns on the image fallback. Not needed without an image.</td></tr>
+</tbody>
+</table>
+<h3>Component tokens</h3>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Avatar component tokens</caption>
+<thead><tr><th scope="col">Token</th><th scope="col">Default</th><th scope="col">Description</th></tr></thead>
+<tbody>
+<tr><td><code>--bui-avatar-size-{xs|sm|md|lg|xl}</code></td><td>Derived from the spacing scale</td><td>Width and height per size.</td></tr>
+<tr><td><code>--bui-avatar-font-size-{xs|sm|md|lg|xl}</code></td><td>Derived from the font-size scale</td><td>Initials and icon size per size.</td></tr>
+<tr><td><code>--bui-avatar-font-weight</code></td><td><code>var(--bui-font-weight-semibold)</code></td><td>Initials weight.</td></tr>
+<tr><td><code>--bui-avatar-bg</code></td><td>Subtle primary</td><td>Background behind initials and icons.</td></tr>
+<tr><td><code>--bui-avatar-color</code></td><td>Text color on that background</td><td>Initials and icon color.</td></tr>
+<tr><td><code>--bui-avatar-radius-{circle|rounded|square}</code></td><td>Full, medium, none</td><td>Radius per shape.</td></tr>
+<tr><td><code>--bui-avatar-ring-width</code>, <code>--bui-avatar-ring-color</code></td><td>Thick border, page background</td><td>Outline that separates a status dot and grouped avatars from what is behind them.</td></tr>
+<tr><td><code>--bui-avatar-status-size-min</code></td><td>Derived from the spacing scale</td><td>Smallest status dot, so it stays visible on an extra small avatar.</td></tr>
+<tr><td><code>--bui-avatar-group-overlap</code></td><td><code>0.25</code></td><td>Fraction of an avatar covered by the next one in a group.</td></tr>
+</tbody>
+</table>
+
+                    </section>
+
+                    <section class="bui-docs-section" aria-labelledby="examples">
+                        <h2 id="examples">05. Examples</h2>
+
+<h3>Initials, icon and image</h3>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<div class="bui-d-flex bui-flex-wrap bui-gap-3 bui-items-center">
+<span class="bui-avatar bui-avatar--lg" role="img" aria-label="Sara Ahmed"><span class="bui-avatar__text" aria-hidden="true">SA</span></span>
+<span class="bui-avatar bui-avatar--lg" role="img" aria-label="Guest"><i class="bui-icon-regular bui-icon-user" aria-hidden="true"></i></span>
+<span class="bui-avatar bui-avatar--lg" data-bui-avatar>
+    <img class="bui-avatar__img" src="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='96' viewBox='0 0 96 96'%3E%3Crect width='96' height='96' fill='%232457d6'/%3E%3Ccircle cx='48' cy='38' r='16' fill='%23ffffff'/%3E%3Cpath d='M16 96c0-18 14-30 32-30s32 12 32 30z' fill='%23ffffff'/%3E%3C/svg%3E" alt="Sara Ahmed">
+    <span class="bui-avatar__text" aria-hidden="true">SA</span>
+</span>
+</div>
+</div>
+<pre class="bui-docs-code" data-lang="html"><code>&lt;span class="bui-avatar bui-avatar--lg" role="img" aria-label="Sara Ahmed"&gt;&lt;span class="bui-avatar__text" aria-hidden="true"&gt;SA&lt;/span&gt;&lt;/span&gt;
+&lt;span class="bui-avatar bui-avatar--lg" role="img" aria-label="Guest"&gt;&lt;i class="bui-icon-regular bui-icon-user" aria-hidden="true"&gt;&lt;/i&gt;&lt;/span&gt;
+&lt;span class="bui-avatar bui-avatar--lg" data-bui-avatar&gt;
+    &lt;img class="bui-avatar__img" src="img/sara.jpg" alt="Sara Ahmed"&gt;
+    &lt;span class="bui-avatar__text" aria-hidden="true"&gt;SA&lt;/span&gt;
+&lt;/span&gt;</code></pre>
+</div>
+<p>Docs fixture: the image in the preview is a small generated SVG (a data URI), because the library ships no photos and the examples make no network request. The code block shows a placeholder path.</p>
+<h3>Image fallback</h3>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<div class="bui-d-flex bui-flex-wrap bui-gap-3 bui-items-center">
+<span class="bui-avatar bui-avatar--lg" data-bui-avatar>
+    <img class="bui-avatar__img" src="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='96' viewBox='0 0 96 96'%3E%3Crect width='96' height='96' fill='%232457d6'/%3E%3Ccircle cx='48' cy='38' r='16' fill='%23ffffff'/%3E%3Cpath d='M16 96c0-18 14-30 32-30s32 12 32 30z' fill='%23ffffff'/%3E%3C/svg%3E" alt="Sara Ahmed">
+    <span class="bui-avatar__text" aria-hidden="true">SA</span>
+</span>
+<span class="bui-avatar bui-avatar--lg" data-bui-avatar>
+    <img class="bui-avatar__img" src="data:image/png;base64,AAAA" alt="Omar Khalil">
+    <span class="bui-avatar__text" aria-hidden="true">OK</span>
+</span>
+</div>
+</div>
+<pre class="bui-docs-code" data-lang="html"><code>&lt;span class="bui-avatar bui-avatar--lg" data-bui-avatar&gt;
+    &lt;img class="bui-avatar__img" src="img/sara.jpg" alt="Sara Ahmed"&gt;
+    &lt;span class="bui-avatar__text" aria-hidden="true"&gt;SA&lt;/span&gt;
+&lt;/span&gt;
+&lt;span class="bui-avatar bui-avatar--lg" data-bui-avatar&gt;
+    &lt;img class="bui-avatar__img" src="img/missing.jpg" alt="Omar Khalil"&gt;
+    &lt;span class="bui-avatar__text" aria-hidden="true"&gt;OK&lt;/span&gt;
+&lt;/span&gt;</code></pre>
+</div>
+<p>Docs fixture: the second avatar points at an intentionally broken data URI (<code>data:image/png;base64,AAAA</code>) so the failure happens with no 404. Put the initials in the avatar as the fallback content: when the image fails, has no <code>src</code> or an empty one, the avatar gets <code>.is-fallback</code>, the image is hidden and the initials show. If the image later loads (the <code>src</code> changes), call <code>BUI.avatar(el).refresh()</code> or let the <code>load</code> event clear the state. Without the script, a broken image shows the browser's broken-image icon over the initials.</p>
+<h3>Status indicator</h3>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<div class="bui-d-flex bui-flex-wrap bui-gap-4 bui-items-center">
+<span class="bui-avatar bui-avatar--lg" role="img" aria-label="Sara Ahmed">
+    <span class="bui-avatar__text" aria-hidden="true">SA</span>
+    <span class="bui-avatar__status bui-avatar__status--online" role="img" aria-label="Online"></span>
+</span>
+<span class="bui-avatar bui-avatar--lg" role="img" aria-label="Sara Ahmed">
+    <span class="bui-avatar__text" aria-hidden="true">SA</span>
+    <span class="bui-avatar__status bui-avatar__status--away" role="img" aria-label="Away"></span>
+</span>
+<span class="bui-avatar bui-avatar--lg" role="img" aria-label="Sara Ahmed">
+    <span class="bui-avatar__text" aria-hidden="true">SA</span>
+    <span class="bui-avatar__status bui-avatar__status--busy" role="img" aria-label="Busy"></span>
+</span>
+<span class="bui-avatar bui-avatar--lg" role="img" aria-label="Sara Ahmed">
+    <span class="bui-avatar__text" aria-hidden="true">SA</span>
+    <span class="bui-avatar__status bui-avatar__status--offline" role="img" aria-label="Offline"></span>
+</span>
+</div>
+</div>
+<pre class="bui-docs-code" data-lang="html"><code>&lt;span class="bui-avatar bui-avatar--lg" role="img" aria-label="Sara Ahmed"&gt;
+    &lt;span class="bui-avatar__text" aria-hidden="true"&gt;SA&lt;/span&gt;
+    &lt;span class="bui-avatar__status bui-avatar__status--online" role="img" aria-label="Online"&gt;&lt;/span&gt;
+&lt;/span&gt;
+&lt;span class="bui-avatar bui-avatar--lg" role="img" aria-label="Sara Ahmed"&gt;
+    &lt;span class="bui-avatar__text" aria-hidden="true"&gt;SA&lt;/span&gt;
+    &lt;span class="bui-avatar__status bui-avatar__status--away" role="img" aria-label="Away"&gt;&lt;/span&gt;
+&lt;/span&gt;
+&lt;span class="bui-avatar bui-avatar--lg" role="img" aria-label="Sara Ahmed"&gt;
+    &lt;span class="bui-avatar__text" aria-hidden="true"&gt;SA&lt;/span&gt;
+    &lt;span class="bui-avatar__status bui-avatar__status--busy" role="img" aria-label="Busy"&gt;&lt;/span&gt;
+&lt;/span&gt;
+&lt;span class="bui-avatar bui-avatar--lg" role="img" aria-label="Sara Ahmed"&gt;
+    &lt;span class="bui-avatar__text" aria-hidden="true"&gt;SA&lt;/span&gt;
+    &lt;span class="bui-avatar__status bui-avatar__status--offline" role="img" aria-label="Offline"&gt;&lt;/span&gt;
+&lt;/span&gt;</code></pre>
+</div>
+<p>The status sits on the end-bottom corner, so in a right-to-left page it moves to the left. Give it its own <code>role="img"</code> and a label; the status words are available as translation keys <code>avatar.statusOnline</code>, <code>statusAway</code>, <code>statusBusy</code> and <code>statusOffline</code> (use <code>data-bui-i18n-attr="aria-label:avatar.statusOnline"</code>).</p>
+<h3>Avatar Group</h3>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<div class="bui-avatar-group" role="group" aria-label="Project members">
+    <span class="bui-avatar" role="img" aria-label="Sara Ahmed"><span class="bui-avatar__text" aria-hidden="true">SA</span></span>
+    <span class="bui-avatar" role="img" aria-label="Omar Khalil"><span class="bui-avatar__text" aria-hidden="true">OK</span></span>
+    <span class="bui-avatar" role="img" aria-label="Lina Saad"><span class="bui-avatar__text" aria-hidden="true">LS</span></span>
+    <span class="bui-avatar" role="img" aria-label="3 more"><bdi>+3</bdi></span>
+</div>
+</div>
+<pre class="bui-docs-code" data-lang="html"><code>&lt;div class="bui-avatar-group" role="group" aria-label="Project members"&gt;
+    &lt;span class="bui-avatar" role="img" aria-label="Sara Ahmed"&gt;&lt;span class="bui-avatar__text" aria-hidden="true"&gt;SA&lt;/span&gt;&lt;/span&gt;
+    &lt;span class="bui-avatar" role="img" aria-label="Omar Khalil"&gt;&lt;span class="bui-avatar__text" aria-hidden="true"&gt;OK&lt;/span&gt;&lt;/span&gt;
+    &lt;span class="bui-avatar" role="img" aria-label="Lina Saad"&gt;&lt;span class="bui-avatar__text" aria-hidden="true"&gt;LS&lt;/span&gt;&lt;/span&gt;
+    &lt;span class="bui-avatar" role="img" aria-label="3 more"&gt;&lt;bdi&gt;+3&lt;/bdi&gt;&lt;/span&gt;
+&lt;/div&gt;</code></pre>
+</div>
+<p>Each avatar after the first uses a negative <code>margin-inline-start</code> equal to <code>--bui-avatar-group-overlap</code> times its own size, so the row overlaps correctly in left-to-right and right-to-left pages, and later avatars paint above earlier ones. Avatars in a group get the group size class (<code>bui-avatar-group--lg</code>) instead of each having its own. A "+3" counter is just an avatar with text; wrap a number in <code>&lt;bdi&gt;</code> so it keeps its order in right-to-left text. The group has <code>role="group"</code> and a label; the counter needs a label that says what it counts.</p>
+
+                    </section>
+
+                    <section class="bui-docs-section" aria-labelledby="javascript-api">
+                        <h2 id="javascript-api">06. JavaScript API</h2>
+
+<p>Avatar registers an optional component, <code>BUI.avatar</code>. It only manages the image fallback: with no image, or with an image that always loads, you do not need it. Add <code>data-bui-avatar</code> to an avatar that contains an image and it starts automatically with <code>BUI.init()</code> (called on page load). To start it by hand use <code>BUI.avatar(el)</code>.</p>
+<p>What it does: it watches the image <code>error</code> and <code>load</code> events (and checks an image that already failed before the script ran), and adds or removes the state class <code>.is-fallback</code>. The state is a class because no standard attribute exists for it. While in fallback, the initials element (<code>.bui-avatar__text</code>) takes over the name that was in the image <code>alt</code>: it gets <code>role="img"</code> and <code>aria-label</code> with that text, and loses <code>aria-hidden</code>. When the image works again the original attributes are restored.</p>
+<h3>Methods</h3>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Avatar methods</caption>
+<thead><tr><th scope="col">Method</th><th scope="col">Returns</th><th scope="col">Description</th></tr></thead>
+<tbody>
+<tr><td><code>BUI.avatar(el)</code></td><td>instance</td><td>Creates the instance on <code>el</code> (or returns the existing one).</td></tr>
+<tr><td><code>isFallback()</code></td><td>boolean</td><td>True when the image failed or has no source.</td></tr>
+<tr><td><code>refresh()</code></td><td>void</td><td>Checks the image again. Call it after changing the <code>src</code>.</td></tr>
+<tr><td><code>destroy()</code></td><td>void</td><td>Removes the listeners and clears the fallback state (the class and the attributes it set).</td></tr>
+</tbody>
+</table>
+<h3>Events</h3>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Avatar events</caption>
+<thead><tr><th scope="col">Event</th><th scope="col">When</th></tr></thead>
+<tbody>
+<tr><td><code>bui:avatar:fallback</code></td><td>The avatar enters the fallback state. It bubbles from the avatar element.</td></tr>
+</tbody>
+</table>
+<h3>Options</h3>
+<p>None. There is no <code>data-bui-avatar-*</code> option.</p>
+<h3>Decision</h3>
+<p>The fallback is a small JavaScript component and not CSS, because CSS has no selector for a failed image load. Everything else in Avatar (size, shape, status, group) is CSS only.</p>
+
+                    </section>
+
+                    <section class="bui-docs-section" aria-labelledby="responsive-behavior">
+                        <h2 id="responsive-behavior">07. Responsive Behavior</h2>
+
+<p>Avatar has fixed sizes from tokens, so it does not change at breakpoints; it keeps its size on every screen.</p>
+<ul>
+<li>An avatar never shrinks (<code>flex: none</code>), so a flex row does not squash it into an oval.</li>
+<li>Put avatars in a container with <code>bui-flex-wrap</code> if there can be many. An Avatar Group does not wrap: it is one overlapping row, so cap the number you show and add a "+N" counter.</li>
+<li>Initials are not truncated; keep them to one or two letters.</li>
+<li>The smallest size (<code>xs</code>) is not a touch target. If the avatar is clickable, put it inside a button or link of at least 44 by 44 pixels.</li>
+</ul>
+
+                    </section>
+
+                    <section class="bui-docs-section" aria-labelledby="accessibility">
+                        <h2 id="accessibility">08. Accessibility</h2>
+
+<h3>Keyboard</h3>
+<p>Avatar is not interactive and is not focusable. If it opens a profile, put it inside a <code>&lt;button&gt;</code> or <code>&lt;a&gt;</code>; the control then carries the focus and the label.</p>
+<h3>ARIA</h3>
+<ul>
+<li>Initials are not read well letter by letter. Give the avatar <code>role="img"</code> and <code>aria-label</code> with the person's name, and mark the initials <code>aria-hidden="true"</code>.</li>
+<li>An avatar next to the visible name is decorative: use <code>aria-hidden="true"</code> on it so the name is not read twice.</li>
+<li>An image has an <code>alt</code> with the name. In fallback the script gives the initials that name, so the avatar keeps one accessible name.</li>
+<li>An icon is decorative (<code>aria-hidden="true"</code>); the label goes on the avatar.</li>
+<li>A status indicator has its own <code>role="img"</code> and label ("Online"). Color is not the only cue: each status has a different shape.</li>
+<li>An Avatar Group has <code>role="group"</code> and an <code>aria-label</code>; a "+3" counter has a label such as "3 more".</li>
+</ul>
+<h3>Screen reader</h3>
+<p>Not tested with a screen reader (NVDA, VoiceOver or similar). The names come from standard roles and labels; their announcement was not verified.</p>
+<h3>Contrast and motion</h3>
+<p>Initials were measured in Chromium for every size and shape, in Light and Dark, with the default and ocean themes, in both directions (120 samples): the lowest is 8.06:1, above the 4.5:1 AA threshold. The status indicator measured at least 5.02:1 against its surroundings (288 samples), above the 3:1 non-text minimum. In forced-colors mode an avatar gets a visible border. Avatar has no animation.</p>
+
+                    </section>
+
+
+                </div>
+                <!-- Previous / Next links are appended here by docs.js from the order in nav.js. -->
+            </div>
+            <!-- "On this page" is appended here by docs.js (visible from the XL breakpoint). -->
+        </div>
+    </main>
+
+    <script src="../../assets/js/baset-ui.js"></script>
+    <script src="../../documentation/assets/js/nav.js"></script>
+    <script src="../../documentation/assets/js/docs.js"></script>
+    <script src="../../documentation/assets/js/playground.js"></script>
+    <script>
+        (function () {
+            var GOOD = "data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='96' viewBox='0 0 96 96'%3E%3Crect width='96' height='96' fill='%232457d6'/%3E%3Ccircle cx='48' cy='38' r='16' fill='%23ffffff'/%3E%3Cpath d='M16 96c0-18 14-30 32-30s32 12 32 30z' fill='%23ffffff'/%3E%3C/svg%3E";
+            var BAD = 'data:image/png;base64,AAAA';
+            BUI_DOCS_PLAYGROUND.define('avatar', {
+                title: 'Avatar playground',
+                controls: [
+                    { type: 'radio-group', name: 'size', label: 'Size', default: 'lg',
+                      options: [{ value: 'xs', label: 'XS' }, { value: 'sm', label: 'SM' }, { value: 'md', label: 'MD' }, { value: 'lg', label: 'LG' }, { value: 'xl', label: 'XL' }] },
+                    { type: 'radio-group', name: 'shape', label: 'Shape', default: 'circle',
+                      options: [{ value: 'circle', label: 'Circle' }, { value: 'rounded', label: 'Rounded' }, { value: 'square', label: 'Square' }] },
+                    { type: 'select', name: 'content', label: 'Content', default: 'initials',
+                      options: [{ value: 'initials', label: 'Initials' }, { value: 'icon', label: 'Icon' }, { value: 'image', label: 'Image (docs fixture)' }, { value: 'broken', label: 'Image that fails to load (fallback)' }] },
+                    { type: 'text', name: 'initials', label: 'Initials', default: 'SA', maxLength: 2 },
+                    { type: 'select', name: 'status', label: 'Status', default: 'none',
+                      options: [{ value: 'none', label: 'None' }, { value: 'online', label: 'Online' }, { value: 'away', label: 'Away' }, { value: 'busy', label: 'Busy' }, { value: 'offline', label: 'Offline' }] },
+                    { type: 'switch', name: 'group', label: 'Avatar Group (3 avatars + counter)' }
+                ],
+                beforeRender: function (frame) { BUI.destroy(frame); },
+                template: function (state, h) {
+                    var ini = h.escape(state.initials);
+                    var shape = state.shape === 'circle' ? '' : ' bui-avatar--' + state.shape;
+                    function one(size, text, name, withStatus) {
+                        var cls = 'bui-avatar' + (size ? ' bui-avatar--' + size : '') + shape;
+                        var inner, attrs = '';
+                        var statusHtml = withStatus && state.status !== 'none'
+                            ? '\n    <span class="bui-avatar__status bui-avatar__status--' + state.status + '" role="img" aria-label="' + state.status.charAt(0).toUpperCase() + state.status.slice(1) + '"></span>' : '';
+                        if (state.content === 'icon') {
+                            attrs = ' role="img" aria-label="Guest"';
+                            inner = '<i class="bui-icon-regular bui-icon-user" aria-hidden="true"></i>';
+                        } else if (state.content === 'image' || state.content === 'broken') {
+                            attrs = ' data-bui-avatar';
+                            inner = '\n    <img class="bui-avatar__img" src="' + (state.content === 'image' ? GOOD : BAD) + '" alt="' + name + '">' +
+                                '\n    <span class="bui-avatar__text" aria-hidden="true">' + text + '</span>' + (statusHtml ? '' : '\n');
+                        } else {
+                            attrs = ' role="img" aria-label="' + name + '"';
+                            inner = '<span class="bui-avatar__text" aria-hidden="true">' + text + '</span>';
+                        }
+                        return '<span class="' + cls + '"' + attrs + '>' + inner + statusHtml + (statusHtml ? '\n' : '') + '</span>';
+                    }
+                    var size = state.size === 'md' ? '' : state.size;
+                    if (!state.group) { return one(size, ini, 'Sara Ahmed', true); }
+                    var g = 'bui-avatar-group' + (size ? ' bui-avatar-group--' + size : '');
+                    var inner = one('', ini, 'Sara Ahmed', false) + '\n    ' + one('', 'OK', 'Omar Khalil', false) + '\n    ' + one('', 'LS', 'Lina Saad', false) +
+                        '\n    <span class="bui-avatar' + shape + '" role="img" aria-label="3 more"><bdi>+3</bdi></span>';
+                    return '<div class="' + g + '" role="group" aria-label="Project members">\n    ' + inner + '\n</div>';
+                },
+                afterRender: function (frame) { BUI.init(frame); }
+            });
+        })();
+    </script>
+</body>
+</html>

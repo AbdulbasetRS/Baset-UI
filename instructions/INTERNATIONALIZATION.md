@@ -63,3 +63,6 @@ BUI.locale.apply(root);                              // يطبق HTML Binding ع
 3. شغل اختبار التطابق: `node tests/i18n-keys.js` (بلا Dependencies؛ يفحص صحة JSON، `meta`، تطابق المفاتيح، camelCase، عمق التداخل، وتطابق المتغيرات؛ يخرج بـ 1 عند أي فشل).
 4. وثّق اللغة في صفحة Internationalization.
 لا تعديل في JavaScript أو CSS لإضافة لغة. (`fr` أضيفت في Task 06 لإثبات ذلك؛ لغات أخرى غير مطلوبة الآن.)
+
+## مفاتيح Task 10
+أُضيفت مجموعة `avatar` إلى `en.json` و`ar.json` و`fr.json` معاً: `avatar.statusOnline` و`statusOffline` و`statusBusy` و`statusAway` (للاسم الوصولي لمؤشر حالة Avatar عبر `data-bui-i18n-attr="aria-label:avatar.statusOnline"`). Badge وProgress لا يضيفان مفاتيح: نصهما من كاتب الصفحة، ومؤشر Progress غير المحدد يعيد استخدام `common.loading`. Progress يعيد رسم نصه المنسق عند `bui:locale:change`.

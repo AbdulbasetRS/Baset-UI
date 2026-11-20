@@ -31,10 +31,12 @@
 | Button Group | `bui-btn-group` | `--bui-btn-group-*` (خاصة فقط) | معتمد (Task 09) |
 | Close Button | `bui-btn-close` | `--bui-btn-close-*` | معتمد (Task 09) |
 
+Badge وAvatar وProgress (Task 10) بلا اختصار معتمد، فتبقى بأسمائها الكاملة: `bui-badge` و`bui-avatar` و`bui-progress`، وTokens `--bui-badge-*` و`--bui-avatar-*` و`--bui-progress-*`. العناصر الفرعية بـ BEM: `bui-avatar__img` و`__text` و`__status`، و`bui-progress__bar` و`__label`. المجموعات المستقلة: `bui-avatar-group` و`bui-progress-stack` (حاوية) و`bui-progress-label` (صف تسمية خارجية) و`bui-badge-anchor` (مضيف الشارة العائمة).
+
 ## قيم خاصة وحالات (Task 09)
 - **Token خاص (داخلي):** اسم يحتوي `_` بعد اسم المكون: `--bui-btn-_bg`. ليس API ولا يوثق كخيار ولا يعدله المستخدم أو الثيم.
 - **حجم:** `--bui-{component}-{prop}-{sm|md|lg}`. **لمس:** `--bui-{component}-touch-{prop}-{sm|md|lg}`.
-- **حالة:** السمة القياسية هي الحالة حين توجد (`disabled`, `aria-disabled="true"`, `aria-busy="true"`)، وفئة `is-{state}` لغيرها.
+- **حالة:** السمة القياسية هي الحالة حين توجد (`disabled`, `aria-disabled="true"`, `aria-busy="true"`)، وفئة `is-{state}` لغيرها (مثال Task 10: `is-fallback` على Avatar، لأن فشل تحميل الصورة لا سمة قياسية له).
 - **Modifier افتراضي** له اسم صريح اختياري (`bui-btn--solid`).
 - **Keyframes:** `bui-{component}-{name}` (`bui-btn-spin`).
 

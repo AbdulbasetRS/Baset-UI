@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-bui-theme="default" data-bui-mode="light" data-root="../../">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Progress - Baset-UI Documentation</title>
+    <meta name="description" content="Progress: determinate and indeterminate bars with ARIA, sizes, colors, labels and segments. Optional BUI.progress(el).set(value).">
+    <!-- Empty icon: avoids a /favicon.ico 404 until the project has a real icon. -->
+    <link rel="icon" href="data:,">
+
+    <link rel="stylesheet" href="../../assets/css/baset-ui.css">
+    <link rel="stylesheet" href="../../assets/css/extensions/baset-ui-icons.css">
+    <link rel="stylesheet" href="../../assets/css/themes/ocean.css">
+    <link rel="stylesheet" href="../../documentation/assets/css/docs.css">
+    <link rel="stylesheet" href="../../documentation/assets/css/playground.css">
+    <script>
+        /* Prevents a flash of the wrong theme or mode. Same keys as BUI.theme (bui-theme, bui-mode). */
+        (function () {
+            var d = document.documentElement, t = null, m = null, r = null;
+            try { t = localStorage.getItem('bui-theme'); m = localStorage.getItem('bui-mode'); r = localStorage.getItem('bui-docs-dir'); } catch (e) {}
+            if (t && /^[a-z][a-z0-9]*(-[a-z0-9]+)*$/.test(t)) d.setAttribute('data-bui-theme', t);
+            if (m !== 'light' && m !== 'dark') m = window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+            d.setAttribute('data-bui-mode', m);
+            /* Documentation shell only: the saved direction of the RTL/LTR switcher. */
+            if (r === 'rtl' || r === 'ltr') d.setAttribute('dir', r);
+        })();
+    </script>
+</head>
+<body>
+    <main class="bui-docs-main" id="bui-docs-main" tabindex="-1">
+        <div class="bui-docs-page">
+            <div class="bui-docs-page__body">
+
+                <header class="bui-docs-page-header">
+                    <nav class="bui-docs-breadcrumb" aria-label="Breadcrumb" data-docs-breadcrumb hidden></nav>
+                    <h1>Progress</h1>
+                    <p class="bui-docs-lead">A bar that shows how far a task has come, determinate or indeterminate, in six colors and three sizes, with a label inside or outside and optional segments.</p>
+                </header>
+
+                <div class="bui-docs-content">
+                    <section class="bui-docs-section" aria-labelledby="installation-include">
+                        <h2 id="installation-include">01. Installation &amp; Include</h2>
+
+<p>Progress is part of the Core stylesheet and works with no JavaScript when you set the value in the markup. The optional Core JavaScript (<code>assets/js/baset-ui.js</code>) adds <code>BUI.progress(el).set(value)</code>, which updates the value, the ARIA attributes and an optional text together. A Theme is optional. Order: Core, then Theme.</p>
+<pre class="bui-docs-code" data-lang="html"><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="en" dir="ltr" data-bui-theme="default" data-bui-mode="light"&gt;
+&lt;head&gt;
+    &lt;meta charset="utf-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
+    &lt;title&gt;Progress&lt;/title&gt;
+    &lt;link rel="stylesheet" href="assets/css/baset-ui.css"&gt;
+    &lt;!-- Optional theme --&gt;
+    &lt;link rel="stylesheet" href="assets/css/themes/ocean.css"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div class="bui-progress" role="progressbar" aria-label="Upload"
+         aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"
+         style="--bui-progress-value: 40"&gt;
+        &lt;div class="bui-progress__bar"&gt;&lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;!-- Only for BUI.progress(el).set(value) --&gt;
+    &lt;script src="assets/js/baset-ui.js"&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+
+                    </section>
+
+                    <section class="bui-docs-section" aria-labelledby="customize">
+                        <h2 id="customize">02. Customize</h2>
+
+<p>Every option is a real class or value documented in section 04. The value is a sample number. Indeterminate removes <code>aria-valuenow</code> and the value, the same state you get from <code>set(null)</code>. The label inside the bar is hidden at the small size and in indeterminate mode, because there is no room or no value. Segments show a stack of three parts that add up to the value you choose: Documents takes the chosen value, Images and Other take a fixed share.</p>
+<div data-docs-playground="progress"></div>
+
+                    </section>
+
+                    <section class="bui-docs-section" aria-labelledby="default">
+                        <h2 id="default">03. Default</h2>
+
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<div class="bui-progress" role="progressbar" aria-label="Upload" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="--bui-progress-value: 40">
+    <div class="bui-progress__bar"></div>
+</div>
+</div>
+<pre class="bui-docs-code" data-lang="html"><code>&lt;div class="bui-progress" role="progressbar" aria-label="Upload" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="--bui-progress-value: 40"&gt;
+    &lt;div class="bui-progress__bar"&gt;&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+</div>
+<p>With no modifier, <code>.bui-progress</code> is a medium primary bar. The width comes from <code>--bui-progress-value</code> (a number from 0 to 100); the ARIA attributes carry the same value for assistive technology. Keep the two equal: the script does this for you.</p>
+
+                    </section>
+
+                    <section class="bui-docs-section" aria-labelledby="variants-options">
+                        <h2 id="variants-options">04. Variants &amp; Options</h2>
+
+<h3>Modes</h3>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Progress modes</caption>
+<thead><tr><th scope="col">Mode</th><th scope="col">How</th><th scope="col">Description</th></tr></thead>
+<tbody>
+<tr><td>Determinate</td><td><code>aria-valuenow</code> present, plus <code>--bui-progress-value</code></td><td>The bar fills from 0 to the value. A change animates.</td></tr>
+<tr><td>Indeterminate</td><td>No <code>aria-valuenow</code></td><td>A part of the bar slides along the track. The CSS reads the missing attribute, which is also what ARIA says: no value is known.</td></tr>
+</tbody>
+</table>
+<h3>Colors</h3>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Progress colors</caption>
+<thead><tr><th scope="col">Name</th><th scope="col">Class</th></tr></thead>
+<tbody>
+<tr><td><code>primary</code> (default)</td><td><code>bui-progress--primary</code></td></tr>
+<tr><td><code>secondary</code></td><td><code>bui-progress--secondary</code></td></tr>
+<tr><td><code>success</code></td><td><code>bui-progress--success</code></td></tr>
+<tr><td><code>warning</code></td><td><code>bui-progress--warning</code></td></tr>
+<tr><td><code>danger</code></td><td><code>bui-progress--danger</code></td></tr>
+<tr><td><code>info</code></td><td><code>bui-progress--info</code></td></tr>
+</tbody>
+</table>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<div class="bui-d-grid bui-gap-3">
+<div class="bui-progress bui-progress--primary" role="progressbar" aria-label="Primary" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="--bui-progress-value: 60">
+    <div class="bui-progress__bar"></div>
+</div>
+<div class="bui-progress bui-progress--secondary" role="progressbar" aria-label="Secondary" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="--bui-progress-value: 60">
+    <div class="bui-progress__bar"></div>
+</div>
+<div class="bui-progress bui-progress--success" role="progressbar" aria-label="Success" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="--bui-progress-value: 60">
+    <div class="bui-progress__bar"></div>
+</div>
+<div class="bui-progress bui-progress--warning" role="progressbar" aria-label="Warning" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="--bui-progress-value: 60">
+    <div class="bui-progress__bar"></div>
+</div>
+<div class="bui-progress bui-progress--danger" role="progressbar" aria-label="Danger" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="--bui-progress-value: 60">
+    <div class="bui-progress__bar"></div>
+</div>
+<div class="bui-progress bui-progress--info" role="progressbar" aria-label="Info" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="--bui-progress-value: 60">
+    <div class="bui-progress__bar"></div>
+</div>
+</div>
+</div>
+<pre class="bui-docs-code" data-lang="html"><code>&lt;div class="bui-progress bui-progress--primary" role="progressbar" aria-label="Primary" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="--bui-progress-value: 60"&gt;
+    &lt;div class="bui-progress__bar"&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="bui-progress bui-progress--secondary" role="progressbar" aria-label="Secondary" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="--bui-progress-value: 60"&gt;
+    &lt;div class="bui-progress__bar"&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="bui-progress bui-progress--success" role="progressbar" aria-label="Success" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="--bui-progress-value: 60"&gt;
+    &lt;div class="bui-progress__bar"&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="bui-progress bui-progress--warning" role="progressbar" aria-label="Warning" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="--bui-progress-value: 60"&gt;
+    &lt;div class="bui-progress__bar"&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="bui-progress bui-progress--danger" role="progressbar" aria-label="Danger" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="--bui-progress-value: 60"&gt;
+    &lt;div class="bui-progress__bar"&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="bui-progress bui-progress--info" role="progressbar" aria-label="Info" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="--bui-progress-value: 60"&gt;
+    &lt;div class="bui-progress__bar"&gt;&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+</div>
+<h3>Sizes</h3>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Progress sizes</caption>
+<thead><tr><th scope="col">Name</th><th scope="col">Class</th><th scope="col">Height token</th><th scope="col">Label inside</th></tr></thead>
+<tbody>
+<tr><td><code>sm</code></td><td><code>bui-progress--sm</code></td><td><code>--bui-progress-height-sm</code></td><td>Hidden (too thin).</td></tr>
+<tr><td><code>md</code> (default)</td><td><code>bui-progress--md</code></td><td><code>--bui-progress-height-md</code></td><td>Shown.</td></tr>
+<tr><td><code>lg</code></td><td><code>bui-progress--lg</code></td><td><code>--bui-progress-height-lg</code></td><td>Shown, larger text.</td></tr>
+</tbody>
+</table>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<div class="bui-d-grid bui-gap-3">
+<div class="bui-progress bui-progress--sm" role="progressbar" aria-label="sm" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="--bui-progress-value: 50">
+    <div class="bui-progress__bar"></div>
+</div>
+<div class="bui-progress bui-progress--md" role="progressbar" aria-label="md" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="--bui-progress-value: 50">
+    <div class="bui-progress__bar"></div>
+    <span class="bui-progress__label">50%</span>
+</div>
+<div class="bui-progress bui-progress--lg" role="progressbar" aria-label="lg" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="--bui-progress-value: 50">
+    <div class="bui-progress__bar"></div>
+    <span class="bui-progress__label">50%</span>
+</div>
+</div>
+</div>
+<pre class="bui-docs-code" data-lang="html"><code>&lt;div class="bui-progress bui-progress--sm" role="progressbar" aria-label="sm" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="--bui-progress-value: 50"&gt;
+    &lt;div class="bui-progress__bar"&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="bui-progress bui-progress--md" role="progressbar" aria-label="md" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="--bui-progress-value: 50"&gt;
+    &lt;div class="bui-progress__bar"&gt;&lt;/div&gt;
+    &lt;span class="bui-progress__label"&gt;50%&lt;/span&gt;
+&lt;/div&gt;
+&lt;div class="bui-progress bui-progress--lg" role="progressbar" aria-label="lg" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="--bui-progress-value: 50"&gt;
+    &lt;div class="bui-progress__bar"&gt;&lt;/div&gt;
+    &lt;span class="bui-progress__label"&gt;50%&lt;/span&gt;
+&lt;/div&gt;</code></pre>
+</div>
+<h3>Options</h3>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Progress options</caption>
+<thead><tr><th scope="col">Name</th><th scope="col">Type</th><th scope="col">Default</th><th scope="col">HTML</th><th scope="col">Description</th></tr></thead>
+<tbody>
+<tr><td>value</td><td>number 0-100</td><td>none</td><td><code>aria-valuenow</code> and <code>style="--bui-progress-value: N"</code></td><td>Omit both for indeterminate. Use another range with <code>aria-valuemin</code> and <code>aria-valuemax</code>; the script maps it to 0-100 for the width.</td></tr>
+<tr><td>color</td><td>enum</td><td><code>primary</code></td><td><code>bui-progress--{primary|secondary|success|warning|danger|info}</code></td><td>Semantic color of the fill.</td></tr>
+<tr><td>size</td><td>enum</td><td><code>md</code></td><td><code>bui-progress--{sm|md|lg}</code></td><td>Bar height.</td></tr>
+<tr><td>label inside</td><td>element</td><td>none</td><td><code>&lt;span class="bui-progress__label"&gt;40%&lt;/span&gt;</code> inside the bar</td><td>Centered over the whole track. The text switches color at the fill edge.</td></tr>
+<tr><td>label outside</td><td>element</td><td>none</td><td><code>bui-progress-label</code> row before the bar</td><td>A name and a value above the bar.</td></tr>
+<tr><td>segments</td><td>container</td><td>none</td><td><code>bui-progress-stack</code> holding several <code>bui-progress</code></td><td>Each part has its own value, which is its share of the whole.</td></tr>
+<tr><td><code>data-bui-progress</code></td><td>attribute</td><td>absent</td><td>Attribute on the bar</td><td>Starts the optional JavaScript on load.</td></tr>
+</tbody>
+</table>
+<h3>Component tokens</h3>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Progress component tokens</caption>
+<thead><tr><th scope="col">Token</th><th scope="col">Default</th><th scope="col">Description</th></tr></thead>
+<tbody>
+<tr><td><code>--bui-progress-height-{sm|md|lg}</code></td><td>Derived from the spacing scale</td><td>Bar height per size.</td></tr>
+<tr><td><code>--bui-progress-radius</code></td><td><code>var(--bui-radius-full)</code></td><td>Track and fill radius.</td></tr>
+<tr><td><code>--bui-progress-track-bg</code></td><td>Subtle background</td><td>Track color.</td></tr>
+<tr><td><code>--bui-progress-label-color</code></td><td><code>var(--bui-color-text)</code></td><td>Label color over the empty track. Over the fill it uses the color's contrast token.</td></tr>
+<tr><td><code>--bui-progress-font-size-{md|lg}</code></td><td>Derived from the font-size scale</td><td>Inside label size.</td></tr>
+<tr><td><code>--bui-progress-font-weight</code></td><td><code>var(--bui-font-weight-semibold)</code></td><td>Inside label weight.</td></tr>
+<tr><td><code>--bui-progress-duration</code></td><td>Standard duration</td><td>Time of a value change.</td></tr>
+<tr><td><code>--bui-progress-indeterminate-duration</code></td><td><code>1.5s</code></td><td>Time of one slide.</td></tr>
+<tr><td><code>--bui-progress-segment-divider</code></td><td>Thin border width</td><td>Gap line between segments.</td></tr>
+</tbody>
+</table>
+
+                    </section>
+
+                    <section class="bui-docs-section" aria-labelledby="examples">
+                        <h2 id="examples">05. Examples</h2>
+
+<h3>Determinate with a label inside</h3>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<div class="bui-d-grid bui-gap-3">
+<div class="bui-progress bui-progress--success bui-progress--lg" role="progressbar" aria-label="Profile completion" aria-valuenow="72" aria-valuemin="0" aria-valuemax="100" style="--bui-progress-value: 72">
+    <div class="bui-progress__bar"></div>
+    <span class="bui-progress__label">72%</span>
+</div>
+<div class="bui-progress" role="progressbar" aria-label="Upload" aria-valuenow="35" aria-valuemin="0" aria-valuemax="100" style="--bui-progress-value: 35">
+    <div class="bui-progress__bar"></div>
+    <span class="bui-progress__label">35%</span>
+</div>
+</div>
+</div>
+<pre class="bui-docs-code" data-lang="html"><code>&lt;div class="bui-progress bui-progress--success bui-progress--lg" role="progressbar" aria-label="Profile completion" aria-valuenow="72" aria-valuemin="0" aria-valuemax="100" style="--bui-progress-value: 72"&gt;
+    &lt;div class="bui-progress__bar"&gt;&lt;/div&gt;
+    &lt;span class="bui-progress__label"&gt;72%&lt;/span&gt;
+&lt;/div&gt;
+&lt;div class="bui-progress" role="progressbar" aria-label="Upload" aria-valuenow="35" aria-valuemin="0" aria-valuemax="100" style="--bui-progress-value: 35"&gt;
+    &lt;div class="bui-progress__bar"&gt;&lt;/div&gt;
+    &lt;span class="bui-progress__label"&gt;35%&lt;/span&gt;
+&lt;/div&gt;</code></pre>
+</div>
+<p>The label is centered over the whole track. Its text color changes exactly at the fill edge, so it stays readable at any value: at 50% half of the text is on the fill color and half on the track, which is expected. The effect uses <code>background-clip: text</code>; where it is missing, the label falls back to the normal text color. In forced colors mode the label gets a system background.</p>
+<h3>Label outside the bar</h3>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<div class="bui-progress-label">
+    <span id="docs-out-name">Uploading photos</span>
+    <span>40%</span>
+</div>
+<div class="bui-progress bui-progress--info" role="progressbar" aria-labelledby="docs-out-name" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="--bui-progress-value: 40">
+    <div class="bui-progress__bar"></div>
+</div>
+</div>
+<pre class="bui-docs-code" data-lang="html"><code>&lt;div class="bui-progress-label"&gt;
+    &lt;span id="docs-out-name"&gt;Uploading photos&lt;/span&gt;
+    &lt;span&gt;40%&lt;/span&gt;
+&lt;/div&gt;
+&lt;div class="bui-progress bui-progress--info" role="progressbar" aria-labelledby="docs-out-name" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="--bui-progress-value: 40"&gt;
+    &lt;div class="bui-progress__bar"&gt;&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+</div>
+<p>Use <code>aria-labelledby</code> to point the bar at the visible name, so the name is not repeated in an <code>aria-label</code>. With the JavaScript, put <code>data-bui-progress-text</code> on the value element to keep it in sync (see section 06).</p>
+<h3>Indeterminate</h3>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<div class="bui-d-grid bui-gap-3">
+<div class="bui-progress" role="progressbar" aria-label="Loading" aria-valuemin="0" aria-valuemax="100">
+    <div class="bui-progress__bar"></div>
+</div>
+<div class="bui-progress bui-progress--success bui-progress--lg" role="progressbar" aria-label="Loading" aria-valuemin="0" aria-valuemax="100">
+    <div class="bui-progress__bar"></div>
+</div>
+<div class="bui-progress bui-progress--danger bui-progress--sm" role="progressbar" aria-label="Loading" aria-valuemin="0" aria-valuemax="100">
+    <div class="bui-progress__bar"></div>
+</div>
+</div>
+</div>
+<pre class="bui-docs-code" data-lang="html"><code>&lt;div class="bui-progress" role="progressbar" aria-label="Loading" aria-valuemin="0" aria-valuemax="100"&gt;
+    &lt;div class="bui-progress__bar"&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="bui-progress bui-progress--success bui-progress--lg" role="progressbar" aria-label="Loading" aria-valuemin="0" aria-valuemax="100"&gt;
+    &lt;div class="bui-progress__bar"&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="bui-progress bui-progress--danger bui-progress--sm" role="progressbar" aria-label="Loading" aria-valuemin="0" aria-valuemax="100"&gt;
+    &lt;div class="bui-progress__bar"&gt;&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+</div>
+<p>Use it when the time is unknown. There is no value, so there is no <code>aria-valuenow</code> and no label inside. In a right-to-left page the slide runs in the opposite direction. With <code>prefers-reduced-motion: reduce</code> the slide is slowed to 3 seconds, not stopped, because a still bar would look like a frozen task; a determinate change is not affected.</p>
+<h3>Segments</h3>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<div class="bui-progress-stack bui-progress-stack--lg" role="group" aria-label="Storage by type">
+    <div class="bui-progress bui-progress--primary" role="progressbar" aria-label="Documents" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="--bui-progress-value: 40">
+        <div class="bui-progress__bar"></div>
+        <span class="bui-progress__label">40%</span>
+    </div>
+    <div class="bui-progress bui-progress--success" role="progressbar" aria-label="Images" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="--bui-progress-value: 20">
+        <div class="bui-progress__bar"></div>
+        <span class="bui-progress__label">20%</span>
+    </div>
+    <div class="bui-progress bui-progress--warning" role="progressbar" aria-label="Other" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100" style="--bui-progress-value: 10">
+        <div class="bui-progress__bar"></div>
+        <span class="bui-progress__label">10%</span>
+    </div>
+</div>
+</div>
+<pre class="bui-docs-code" data-lang="html"><code>&lt;div class="bui-progress-stack bui-progress-stack--lg" role="group" aria-label="Storage by type"&gt;
+    &lt;div class="bui-progress bui-progress--primary" role="progressbar" aria-label="Documents" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="--bui-progress-value: 40"&gt;
+        &lt;div class="bui-progress__bar"&gt;&lt;/div&gt;
+        &lt;span class="bui-progress__label"&gt;40%&lt;/span&gt;
+    &lt;/div&gt;
+    &lt;div class="bui-progress bui-progress--success" role="progressbar" aria-label="Images" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="--bui-progress-value: 20"&gt;
+        &lt;div class="bui-progress__bar"&gt;&lt;/div&gt;
+        &lt;span class="bui-progress__label"&gt;20%&lt;/span&gt;
+    &lt;/div&gt;
+    &lt;div class="bui-progress bui-progress--warning" role="progressbar" aria-label="Other" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100" style="--bui-progress-value: 10"&gt;
+        &lt;div class="bui-progress__bar"&gt;&lt;/div&gt;
+        &lt;span class="bui-progress__label"&gt;10%&lt;/span&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+</div>
+<p>Each segment is a normal progress bar whose width is its value, so the values are shares of the whole track and should add up to at most 100. Every segment has its own label and its own <code>aria-valuenow</code>; the group names the set. A segment is separated by a thin line (<code>--bui-progress-segment-divider</code>) on its start side, so the order flips in a right-to-left page.</p>
+
+                    </section>
+
+                    <section class="bui-docs-section" aria-labelledby="javascript-api">
+                        <h2 id="javascript-api">06. JavaScript API</h2>
+
+<p>The JavaScript is optional. Without it, Progress works from the markup: you set <code>aria-valuenow</code> and <code>--bui-progress-value</code> yourself. <code>BUI.progress(el)</code> does both in one call and keeps them equal. Decision: it was added because keeping a style value and an ARIA value in step by hand is the most common mistake with a progress bar; the component stays small and has no options.</p>
+<p>Add <code>data-bui-progress</code> to start it on load, or call <code>BUI.progress(el)</code>.</p>
+<pre class="bui-docs-code" data-lang="javascript"><code>var bar = BUI.progress(document.querySelector('#upload'));
+bar.set(60);      // value, ARIA and text updated together
+bar.set(null);    // indeterminate (removes aria-valuenow)
+bar.get();        // 60, or null when indeterminate</code></pre>
+<h3>Methods</h3>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Progress methods</caption>
+<thead><tr><th scope="col">Method</th><th scope="col">Returns</th><th scope="col">Description</th></tr></thead>
+<tbody>
+<tr><td><code>set(value)</code></td><td>void</td><td>Sets the value, clamped to <code>aria-valuemin</code> and <code>aria-valuemax</code>. <code>null</code> makes it indeterminate. A value that is not a number is ignored with a warning.</td></tr>
+<tr><td><code>get()</code></td><td>number or null</td><td>The current value, or <code>null</code> when indeterminate.</td></tr>
+<tr><td><code>getPercent()</code></td><td>number or null</td><td>The value as 0-100 of the range.</td></tr>
+<tr><td><code>refresh()</code></td><td>void</td><td>Re-reads the attributes and redraws (after you changed them yourself, or after a language change).</td></tr>
+<tr><td><code>destroy()</code></td><td>void</td><td>Removes the listeners.</td></tr>
+</tbody>
+</table>
+<h3>Text sync</h3>
+<p>An element with <code>data-bui-progress-text</code> shows the percentage and is updated by <code>set</code>. With an empty value it must be inside the bar; with an id it targets the element with that id (a label outside the bar). The number is formatted with the page language and is redrawn on a language change.</p>
+<h3>Events</h3>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Progress events</caption>
+<thead><tr><th scope="col">Event</th><th scope="col">When</th><th scope="col">Detail</th></tr></thead>
+<tbody>
+<tr><td><code>bui:progress:change</code></td><td>After <code>set</code> changes the value.</td><td><code>value</code>, <code>percent</code>, <code>previousValue</code>, <code>indeterminate</code></td></tr>
+<tr><td><code>bui:progress:complete</code></td><td>The value reaches the maximum.</td><td>Same detail.</td></tr>
+</tbody>
+</table>
+<h3>Attributes it adds</h3>
+<p>If missing, it adds <code>role="progressbar"</code>, <code>aria-valuemin="0"</code> and <code>aria-valuemax="100"</code>. It cannot invent a name: with no <code>aria-label</code> or <code>aria-labelledby</code> it logs a warning.</p>
+
+                    </section>
+
+                    <section class="bui-docs-section" aria-labelledby="responsive-behavior">
+                        <h2 id="responsive-behavior">07. Responsive Behavior</h2>
+
+<p>Progress is block level and fills its container (<code>inline-size: 100%</code>), so it follows the width of whatever holds it, from 320 pixels up. There are no breakpoint rules.</p>
+<ul>
+<li>The height stays fixed from the size token on every screen.</li>
+<li>In a segment stack the labels are not truncated: a narrow segment hides its text by clipping (<code>overflow: hidden</code>), so keep the numbers short or use the small size, which hides labels.</li>
+<li>The outside label row wraps on narrow screens; the name takes the width and the value stays on the end side.</li>
+<li>Progress is not interactive, so there are no hover or touch rules.</li>
+</ul>
+
+                    </section>
+
+                    <section class="bui-docs-section" aria-labelledby="accessibility">
+                        <h2 id="accessibility">08. Accessibility</h2>
+
+<h3>Keyboard</h3>
+<p>Progress is not focusable and has no keyboard behavior. It reports a state; it does not take input.</p>
+<h3>ARIA</h3>
+<ul>
+<li><code>role="progressbar"</code> with <code>aria-valuemin</code>, <code>aria-valuemax</code> and, for a determinate bar, <code>aria-valuenow</code>.</li>
+<li>An indeterminate bar has no <code>aria-valuenow</code>. This is the ARIA way to say the value is unknown, and the CSS uses it as the state.</li>
+<li>A name is required: <code>aria-label</code>, or <code>aria-labelledby</code> pointing at the visible text.</li>
+<li><code>aria-valuetext</code> may be added when the number is not meaningful alone ("3 of 10 files"). The script does not manage it.</li>
+<li>A value change is not announced by assistive technology on its own. If it matters, update a <code>role="status"</code> region at sensible steps instead of at every percent.</li>
+<li>The label inside and the track color are not the only carriers of meaning: the number is in the label, the attributes and the text.</li>
+</ul>
+<h3>Contrast</h3>
+<p>Measured in Chromium in Light and Dark, with the default and ocean themes, in both directions. The label over the fill is at least 5.02:1 (160 samples) and over the empty track at least 9.96:1 (160 samples); both are above 4.5:1. The fill against the track is at least 3.73:1 (208 samples), above the 3:1 non-text minimum.</p>
+<h3>Motion</h3>
+<p>With <code>prefers-reduced-motion: reduce</code>, the indeterminate slide is slowed to 3 seconds and a value change keeps its short transition. It is not stopped; this is the same rule as the Button spinner.</p>
+<h3>Screen reader</h3>
+<p>Not tested with a screen reader (NVDA, VoiceOver or similar). The semantics are the standard progressbar pattern; how each reader announces updates was not verified.</p>
+
+                    </section>
+
+
+                </div>
+                <!-- Previous / Next links are appended here by docs.js from the order in nav.js. -->
+            </div>
+            <!-- "On this page" is appended here by docs.js (visible from the XL breakpoint). -->
+        </div>
+    </main>
+
+    <script src="../../assets/js/baset-ui.js"></script>
+    <script src="../../documentation/assets/js/nav.js"></script>
+    <script src="../../documentation/assets/js/docs.js"></script>
+    <script src="../../documentation/assets/js/playground.js"></script>
+    <script>
+        (function () {
+            BUI_DOCS_PLAYGROUND.define('progress', {
+                title: 'Progress playground',
+                controls: [
+                    { type: 'select', name: 'color', label: 'Color', default: 'primary',
+                      options: [{ value: 'primary', label: 'Primary' }, { value: 'secondary', label: 'Secondary' }, { value: 'success', label: 'Success' }, { value: 'warning', label: 'Warning' }, { value: 'danger', label: 'Danger' }, { value: 'info', label: 'Info' }] },
+                    { type: 'radio-group', name: 'size', label: 'Size', default: 'md',
+                      options: [{ value: 'sm', label: 'Small' }, { value: 'md', label: 'Medium' }, { value: 'lg', label: 'Large' }] },
+                    { type: 'switch', name: 'indeterminate', label: 'Indeterminate' },
+                    { type: 'range', name: 'value', label: 'Value', default: 40, min: 0, max: 100, step: 5 },
+                    { type: 'radio-group', name: 'label', label: 'Label', default: 'inside',
+                      options: [{ value: 'none', label: 'None' }, { value: 'inside', label: 'Inside the bar' }, { value: 'outside', label: 'Outside the bar' }] },
+                    { type: 'switch', name: 'segments', label: 'Segments (3 parts)' }
+                ],
+                template: function (state) {
+                    var v = Number(state.value);
+                    var cls = 'bui-progress' + (state.color !== 'primary' ? ' bui-progress--' + state.color : '') + (state.size !== 'md' ? ' bui-progress--' + state.size : '');
+                    function seg(color, value, name) {
+                        return '    <div class="bui-progress bui-progress--' + color + '" role="progressbar" aria-label="' + name + '" aria-valuenow="' + value + '" aria-valuemin="0" aria-valuemax="100" style="--bui-progress-value: ' + value + '">\n' +
+                            '        <div class="bui-progress__bar"></div>\n' +
+                            (state.label === 'inside' && state.size !== 'sm' ? '        <span class="bui-progress__label">' + value + '%</span>\n' : '') + '    </div>';
+                    }
+                    if (state.segments) {
+                        var a = Math.round(v * 0.5 / 5) * 5, b = Math.round(v * 0.3 / 5) * 5, c = Math.max(0, Math.min(100 - a - b, Math.round(v * 0.2 / 5) * 5));
+                        return '<div class="bui-progress-stack bui-progress-stack--' + state.size + '" role="group" aria-label="Storage by type">\n' +
+                            seg('primary', a, 'Documents') + '\n' + seg('success', b, 'Images') + '\n' + seg('warning', c, 'Other') + '\n</div>';
+                    }
+                    var outer = state.label === 'outside' && !state.indeterminate;
+                    var bar = '<div class="' + cls + '" role="progressbar" ' + (outer ? 'aria-labelledby="pg-name"' : 'aria-label="Upload"') +
+                        (state.indeterminate ? '' : ' aria-valuenow="' + v + '" style="--bui-progress-value: ' + v + '"') + ' aria-valuemin="0" aria-valuemax="100">\n' +
+                        '    <div class="bui-progress__bar"></div>' +
+                        (state.label === 'inside' && !state.indeterminate && state.size !== 'sm' ? '\n    <span class="bui-progress__label">' + v + '%</span>' : '') + '\n</div>';
+                    return outer ? '<div class="bui-progress-label">\n    <span id="pg-name">Upload</span>\n    <span>' + v + '%</span>\n</div>\n' + bar : bar;
+                }
+            });
+        })();
+    </script>
+</body>
+</html>

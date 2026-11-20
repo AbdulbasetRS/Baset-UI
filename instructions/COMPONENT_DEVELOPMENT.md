@@ -1,6 +1,6 @@
 # معايير تطوير المكونات
 
-كل Component يتبع نفس المعمارية مع السماح باختلافات منطقية حسب طبيعته. (المنفذ حتى Task 09: Button وButton Group وClose Button، وهي النمط المرجعي أدناه.)
+كل Component يتبع نفس المعمارية مع السماح باختلافات منطقية حسب طبيعته. (المنفذ حتى Task 10: Avatar وBadge وButton وButton Group وClose Button وProgress. النمط المرجعي أدناه من Task 09، وTask 10 اتبعه.)
 
 ## قائمة قبل البدء
 - التأكد من وجود المكون في [COMPONENTS_REGISTRY.md](COMPONENTS_REGISTRY.md) أو إضافته.
@@ -86,3 +86,10 @@ const select = BUI.select.remote('#users', { perPage: 10 });
 
 ### Fixture الاختبار
 `tests/manual/button.html`: يعرض Variant x Color x Size والحالات التي تحتاج سمة (disabled وloading) والعناصر الأخرى وكل تخطيطات المجموعة والـ Close Button، مع مبدلات الثيم والوضع والاتجاه. حالات hover وactive وfocus تُفحص بالمؤشر أو بالكيبورد أو بإجبارها من أدوات المطور.
+
+### إضافات Task 10 (Badge وAvatar وProgress)
+- **CSS فقط أم JS صغير:** Badge CSS فقط. Avatar وProgress CSS مع JS **اختياري** مسجل بـ `BUI.register` داخل `baset-ui.js` (قسم Components shipped with the Core). المعيار: JS يُضاف فقط حين لا يستطيع CSS إنجاز السلوك (Avatar: كشف فشل تحميل الصورة؛ Progress: إبقاء `aria-valuenow` و`--bui-progress-value` متطابقين). الصفحة تقول بوضوح "CSS only" في قسم JavaScript API للمكون بلا JS.
+- **الحالة:** السمة القياسية حين توجد. Progress غير المحدد = غياب `aria-valuenow` (هذا ما تقوله ARIA، وCSS يقرأه بـ `:not([aria-valuenow])`). Avatar الاحتياطي لا سمة قياسية له، فالحالة فئة `is-fallback` (استثناء مبرر بالقاعدة نفسها في NAMING_CONVENTIONS.md).
+- **Logical Properties حصراً** للموضع (`inset-inline-end`) والتداخل (`margin-inline-start` السالب)، فلا فئة RTL. الاتجاه الذي لا تحله الخصائص المنطقية (حركة Progress غير المحدد، وتدرج نص التسمية) يُقلب بـ `:dir(rtl)` على قيمة خاصة (`--bui-progress-_dir`) أو تدرج خاص.
+- **اللون ليس الإشارة الوحيدة:** مؤشرات حالة Avatar لكل منها شكل مختلف (نقطة وربع مفقود وشريط وحلقة).
+- **Fixture:** `tests/manual/badge-avatar-progress.html` (انظر ARCHITECTURE.md). صور الاختبار مولدة (data URI) ومعلنة في رأس الملف، ولا صور خارجية.

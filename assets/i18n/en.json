@@ -12,5 +12,11 @@
             "one": "{count} item",
             "other": "{count} items"
         }
+    },
+    "avatar": {
+        "statusOnline": "Online",
+        "statusOffline": "Offline",
+        "statusBusy": "Busy",
+        "statusAway": "Away"
     }
 }

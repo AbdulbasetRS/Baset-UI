@@ -4,6 +4,44 @@
 
 ## [Unreleased]
 
+### Added (Task 10: Badge + Avatar + Progress)
+- `assets/css/baset-ui.css` (185,831 بايت خام و23,505 gzip، كان 161,098 و19,109): ثلاثة مكونات في قسم 6 مرتبة أبجدياً (Avatar قبل Button، وBadge بينهما، وProgress بعد Close Button)، وComponent Tokens في الطبقة 3 (`--bui-avatar-*` و`--bui-badge-*` و`--bui-progress-*`).
+- `assets/js/baset-ui.js` (61,801 بايت خام و14,476 gzip، كان 52,004 و12,143): مكونان مسجلان بـ `BUI.register`: `avatar` و`progress` (انظر Decisions).
+- **Badge (CSS فقط):** `bui-badge` بثلاثة Variants (solid وsubtle وoutline) x ستة ألوان x ثلاثة أحجام، `--pill` و`--dot` وأيقونة بالـ Extension، وشارة إشعار عائمة: `bui-badge-anchor` على المضيف و`bui-badge--floating` (+ `--bottom` و`--start`) بـ `inset-inline-end` و`inset-block-start`.
+- **Avatar:** `bui-avatar` بخمسة أحجام (`xs` إلى `xl`) وثلاثة أشكال (`circle` وهو الافتراضي، `rounded`، `square`)، محتواه أحرف (`__text`) أو أيقونة أو صورة (`__img`) مع Fallback، ومؤشر حالة `__status--{online|away|busy|offline}`، و`bui-avatar-group` (+ `--{xs..xl}`) بتداخل `margin-inline-start` سالب نسبته `--bui-avatar-group-overlap`. `BUI.avatar(el)`: `isFallback` و`refresh` و`destroy`، والحدث `bui:avatar:fallback`.
+- **Progress:** `bui-progress` محدد وغير محدد، ستة ألوان x ثلاثة أحجام، تسمية داخل الشريط (`__label`) أو خارجه (`bui-progress-label`)، وSegments عبر `bui-progress-stack`. `BUI.progress(el)`: `set(value|null)` و`get` و`getPercent` و`refresh` و`destroy`، والحدثان `bui:progress:change` و`bui:progress:complete`، ومزامنة `[data-bui-progress-text]`.
+- `assets/i18n/en.json` و`ar.json` و`fr.json`: مجموعة `avatar` (`statusOnline` و`statusOffline` و`statusBusy` و`statusAway`) في الملفات الثلاثة معاً. `node tests/i18n-keys.js` ينجح (12 مفتاحاً).
+- ثلاث صفحات توثيق في `documentation/components/` (`badge.html` و`avatar.html` و`progress.html`) بالأقسام الثمانية بالترتيب وPlayground حقيقي لكل منها (Schema خاص: 9 و6 و6 عناصر تحكم)، مفعلة في `nav.js` (Active State مختبر). قسم JavaScript API في Badge يقول صراحة إنه CSS فقط.
+- `tests/manual/badge-avatar-progress.html`: Fixture للمصفوفات الكاملة والـ Fallback والمجموعات وحالات Progress، مع مبدلات الثيم والوضع والاتجاه (انظر ARCHITECTURE.md). Fixtures معلنة: صورة SVG مولدة وصورة معطوبة عمداً بـ data URI.
+
+### Changed (Task 10)
+- `documentation/assets/js/nav.js`: Avatar وBadge وProgress تحولت من نصوص إلى `{ title, href }` (الترتيب لم يتغير).
+- `instructions/` المعدلة: `COMPONENTS_REGISTRY.md` وARCHITECTURE.md وCOMPONENT_DEVELOPMENT.md (قسم إضافات Task 10) وNAMING_CONVENTIONS.md وCORE_ASSETS.md وJAVASCRIPT_API.md وINTERNATIONALIZATION.md وPROJECT_OVERVIEW.md.
+
+### Decisions (Task 10)
+- **JS اختياري ضمن الـ Core:** `avatar` لأن CSS لا يكشف فشل تحميل الصورة، و`progress` لأن إبقاء `aria-valuenow` و`--bui-progress-value` متطابقين يدوياً هو الخطأ الأشيع. كلاهما بلا Options. Badge بلا JS. بدون JS يعمل كل شيء من الـ Markup عدا الـ Fallback ومزامنة القيمة.
+- **الحالة:** Progress غير المحدد = غياب `aria-valuenow` (السمة القياسية هي الحالة)؛ Avatar الاحتياطي فئة `is-fallback` لأن لا سمة قياسية لفشل الصورة (الاستثناء الذي تسمح به NAMING_CONVENTIONS.md). عند الـ Fallback ينقل الـ JS اسم `alt` إلى عنصر الأحرف (`role="img"` + `aria-label`) ويعيد الأصل عند عودة الصورة.
+- **أسماء كاملة** `bui-badge` و`bui-avatar` و`bui-progress` لأن لا اختصار معتمداً لها في جدول NAMING_CONVENTIONS.md.
+- **نقطة Badge من نوع subtle** تُملأ بلون solid، لأن خلفيتها الفاتحة بلا نص تقاس 1.10:1 (Light) و1.37:1 (Dark) وتكاد تختفي؛ نقطة outline حلقة مجوفة.
+- **نص Badge subtle** بلون `-hover` لا اللون العادي، لأن اللون العادي على الخلفية الفاتحة أقل من 4.5:1 (success في Light).
+- **مؤشرات حالة Avatar بأشكال مختلفة** (نقطة، ونقطة ينقصها ربع، ونقطة بشريط، وحلقة مجوفة) فلا يكون اللون الإشارة الوحيدة.
+- **Avatar Group** تداخله نسبة من حجم كل صورة (`--bui-avatar-group-overlap: 0.25`) بـ `margin-inline-start`، فيعمل في RTL بلا قاعدة خاصة، والأحدث ترسم فوق الأقدم.
+- **تسمية Progress الداخلية** مركزة على المسار كله ويتبدل لون النص عند حافة التعبئة (تدرج مقصوص بالنص، `to right` وفي RTL `to left`) فتبقى مقروءة عند أي قيمة. الاحتياط: لون النص العادي حيث لا يدعم المتصفح `background-clip: text`، وقرص Canvas في Forced Colors. عند 50% يظهر نصف النص بكل لون، وهذا مقصود وموثق.
+- **Reduced Motion:** حركة Progress غير المحدد تُبطأ إلى 3s ولا تتوقف (مؤشر حالة، الفلسفة نفسها لـ Spinner الزر)؛ تغير القيمة المحدد يبقى انتقالاً قصيراً.
+- **Segments:** كل جزء Progress كامل بقيمته وتسميته، وقيمته نسبته من المسار كله؛ الجمع حتى 100 مسؤولية كاتب الصفحة.
+- **حجم `sm` لـ Progress** يخفي التسمية الداخلية (لا يتسع لها)، والغير المحدد لا تسمية له (لا قيمة).
+
+### Tested (Task 10, Chromium عبر Playwright فقط، خادم http محلي)
+- **التباين (قياس حي في المتصفح، default وocean x Light وDark x LTR وRTL):** Badge 432 عينة، أدنى نص 5.02:1 (solid warning، Light)، وحد outline على سطح 4.68:1 كأدنى قيمة، والنقطة 40 عينة (أدنى 5.02:1)؛ أحرف Avatar 120 عينة (أدنى 8.06:1)، ومؤشر الحالة 288 (أدنى 5.02:1)؛ Progress: التسمية فوق التعبئة 160 عينة (أدنى 5.02:1) وفوق المسار 160 (أدنى 9.96:1)، والتعبئة مقابل المسار 208 (أدنى 3.73:1، فوق حد 3:1 لغير النص).
+- **Fixture:** 24 تركيبة (ثيمان x وضعان x اتجاهان x 320 و768 و1920): فشل الصورة وعدم فشل الصورة السليمة (3 + 1 حالات)، ترتيب مجموعة Avatar وتداخلها صحيحان في LTR وRTL، مؤشر الحالة على الحافة الصحيحة، `role` و`aria-valuemin/max/now` لكل Progress وغياب `aria-valuenow` لغير المحدد، بلا Overflow أفقي ولا أخطاء Console.
+- **JS API:** `set(75)` يزامن `aria-valuenow` و`--bui-progress-value` والنص؛ `set(999)` يقص إلى 100 ويطلق `complete` مرة؛ `set(null)` يزيل `aria-valuenow`؛ `set(-5)` يقص إلى 0؛ حدث Avatar `fallback` عند فشل الصورة؛ Reduced Motion يعطي 3s.
+- **صفحات التوثيق:** 3 صفحات x LTR وRTL: Active State في Sidebar، الأقسام 01 إلى 08 بالترتيب، بلا Console ولا 404؛ مسح Responsive (320 و375 و768 و1024 و1920 x ltr/light وrtl/dark) بلا Overflow أفقي؛ Playground: 26 فحصاً بتحريك كل عنصر تحكم (المعاينة تطابق Code Output، تهريب النص، الخيارات غير المنطبقة).
+- **i18n:** تبديل en/ar/fr يحدّث اسم مؤشر الحالة (Online/متصل/En ligne) و`dir`، وProgress يعيد رسم نصه عند `bui:locale:change`.
+- **الكيبورد:** Badge وAvatar وProgress غير قابلة للتركيز (لا عناصر تفاعلية).
+- **التراجع:** 33 صفحة HTML (كل صفحات التوثيق والـ Fixtures و`index.html`) بلا Console ولا 404 عدا ما يلي، و`tests/manual/core.html` 43/43، و`node tools/build-icons.js --check` ينجح، و`node --check assets/js/baset-ui.js`، وصحة JSON للغات الثلاث.
+- **مشكلة سابقة ليست من Task 10:** ظهر مرة واحدة 404 على `index.html` (لم يتكرر في إعادة التشغيل؛ لا يوجد `<link rel="icon">` في `index.html` فالمرجح `/favicon.ico`). الملف لم يُعدَّل في هذه المهمة (مطابق للأصل). لم يُعالج لأنه خارج النطاق.
+- **لم يُختبر:** قارئات الشاشة (NVDA وVoiceOver)، خاصة إعلان تغيير Progress وقراءة عدد الشارة العائمة، Safari وFirefox، أجهزة لمس فعلية، Forced Colors على Windows الفعلي (بدائل Canvas وحدود Avatar مكتوبة بمحاكاة CSS فقط)، متصفحات بلا `@property` أو `:dir()` أو `background-clip: text`، صور Avatar حقيقية من الشبكة (Fixtures مولدة)، الاستخدام داخل Card/List Group/Dialog (غير منفذة).
+
 ### Added (Task 09: Button + Button Group + Close Button)
 - `assets/css/baset-ui.css` (161,098 بايت خام و19,109 gzip، كان 140,405 و15,024): قسم 6 (Components) فيه ثلاثة مكونات CSS فقط، وComponent Tokens في الطبقة 3 (`--bui-btn-*` و`--bui-btn-close-*`).
 - **Button:** 4 Variants (solid وoutline وghost وlink) x 6 ألوان دلالية x 3 أحجام (`sm`/`md`/`lg`)، `bui-btn--block` للعرض الكامل و`bui-btn--icon` لزر الأيقونة فقط، حالات hover وfocus-visible وactive وdisabled وloading. يعمل على `button` و`a` و`input type="button"`. Loading عبر `aria-busy="true"`: Spinner داخلي (`::before`) يحل محل الأيقونة ويمنع إدخال المؤشر.

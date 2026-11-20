@@ -93,6 +93,13 @@ Baset-UI/
 - صفحات المكونات الثلاث تحمّل `playground.css` و`playground.js` وأيقونات الـ Extension في `<head>` (الأيقونات لازمة لأمثلة الأزرار ذات الأيقونة).
 - النمط المرجعي (Tokens والـ CSS والـ Playground Schema) في [COMPONENT_DEVELOPMENT.md](COMPONENT_DEVELOPMENT.md).
 
+### Badge وAvatar وProgress (Task 10)
+- الكود في `assets/css/baset-ui.css` (قسم 6) و`assets/js/baset-ui.js`، بلا ملف جديد في `assets/`. ثلاث صفحات في `documentation/components/` (`badge.html` و`avatar.html` و`progress.html`) مفعلة في `nav.js`.
+- **JS داخل الـ Core:** `avatar` و`progress` مسجلان في `baset-ui.js` بعد `window.BUI = BUI` (قسم Components shipped with the Core)، لا في ملف Extension، لأنهما مكونان أساسيان صغيران (نحو 9.8 كيلوبايت خام معاً) ويتبعان قاعدة "Core فيه ما يحتاجه كل موقع". Badge لا JS له.
+- **ملف جديد: `tests/manual/badge-avatar-progress.html`** (خارج قائمة ملفات المهمة). السبب: [TESTING.md](TESTING.md) يطلب Checklist يدوي لكل مكون في `tests/manual/{component}.html`، ومصفوفة Variant x Color x Size والحالات وحالات الاحتياط لا تتسع في صفحات التوثيق. ملف واحد للثلاثة لأنها صغيرة وتتشارك الصفحة والمبدلات. **Fixtures معلنة** في رأس الملف: صورة SVG مولدة كـ data URI، وصورة معطوبة عمداً (`data:image/png;base64,AAAA`) لاختبار الـ Fallback بلا طلب شبكة ولا 404. لا يُشحن كمكون ولا يحمّله شيء.
+- صفحات التوثيق الثلاث تستخدم الـ Fixtures نفسها (صورة مولدة وصورة معطوبة) في أمثلة Avatar وPlayground، وتذكر ذلك في نص الصفحة. كود المثال المعروض يستعمل مساراً وهمياً (`img/sara.jpg`) والمعاينة تستعمل الـ data URI.
+- النمط المرجعي في [COMPONENT_DEVELOPMENT.md](COMPONENT_DEVELOPMENT.md) (قسم إضافات Task 10).
+
 ### قرار المسارات في الصفحات المتداخلة
 - كل صفحة تضع `data-root="../../"` على `<html>`: المسار **من الصفحة نفسها** إلى جذر الموقع (مجلد `index.html`). يُقرأ في `docs.js` ويُبنى عليه كل رابط (Sidebar، Breadcrumb، Previous/Next، رابط الشعار).
 - إن غابت السمة يستنتج `docs.js` الجذر من مسار سكربت `docs.js` نفسه (دائماً ثلاثة مستويات تحت الجذر)، فتبقى الصفحة تعمل. السمة هي المصدر الأساسي لأنها صريحة ولا تعتمد على موضع السكربت.
