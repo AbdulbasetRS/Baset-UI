@@ -2,8 +2,8 @@
  * Baset-UI - Core Stylesheet
  * Version: 0.0.0-foundation
  *
- * Task 03: Design Tokens + Layout (Container, Grid, Flexbox, Spacing).
- * No Components. Section order follows instructions/CORE_ASSETS.md:
+ * Task 03: Design Tokens + Layout (Container, Grid, Flexbox, Spacing). Task 09: Button, Button Group, Close Button.
+ * Section order follows instructions/CORE_ASSETS.md:
  *   1 Tokens  2 Dark Mode  3 Base  4 Layout  5 Utilities  6 Components  7 Responsive Utilities  8 Print / Reduced motion
  * Tokens are declared so they work on ANY element (see "Token scopes" below and
  * instructions/RTL_LTR_AND_THEMES.md), not only on :root.
@@ -202,6 +202,48 @@
     --bui-code-font-size: 0.875em;
     --bui-code-color: var(--bui-color-text);
     --bui-code-bg: var(--bui-color-surface);
+
+    /* Button component tokens (Task 09). Shape and size only: colors come from the semantic color tokens through the color modifiers. */
+    --bui-btn-font-family: inherit;
+    --bui-btn-font-weight: var(--bui-font-weight-medium);
+    --bui-btn-line-height: var(--bui-line-height-snug);
+    --bui-btn-border-width: var(--bui-border-width);
+    --bui-btn-radius: var(--bui-radius-md);
+    --bui-btn-gap: var(--bui-space-2);
+    --bui-btn-padding-y: var(--bui-space-1);
+    --bui-btn-padding-x-sm: calc(var(--bui-space-2) + var(--bui-space-1));
+    --bui-btn-padding-x-md: var(--bui-space-3);
+    --bui-btn-padding-x-lg: var(--bui-space-4);
+    --bui-btn-font-size-sm: var(--bui-font-size-sm);
+    --bui-btn-font-size-md: var(--bui-font-size-base);
+    --bui-btn-font-size-lg: var(--bui-font-size-lg);
+    --bui-btn-height-sm: calc(var(--bui-space-4) + var(--bui-space-2));
+    --bui-btn-height-md: calc(var(--bui-space-5) + var(--bui-space-2));
+    --bui-btn-height-lg: var(--bui-space-6);
+    --bui-btn-touch-height-sm: calc(var(--bui-space-5) + var(--bui-space-2));
+    --bui-btn-touch-height-md: calc(var(--bui-space-5) + var(--bui-space-2) + var(--bui-space-1));
+    --bui-btn-touch-height-lg: var(--bui-space-6);
+    --bui-btn-disabled-opacity: 0.55;
+    --bui-btn-spinner-size: 1em;
+    --bui-btn-spinner-width: 0.125em;
+    --bui-btn-spinner-duration: 0.75s;
+
+    /* Close Button component tokens (Task 09). A parent component (Alert, Dialog, Toast) may re-declare the color tokens on itself. */
+    --bui-btn-close-size-sm: var(--bui-space-4);
+    --bui-btn-close-size-md: var(--bui-space-5);
+    --bui-btn-close-size-lg: calc(var(--bui-space-5) + var(--bui-space-2));
+    --bui-btn-close-touch-size-sm: calc(var(--bui-space-5) + var(--bui-space-1));
+    --bui-btn-close-touch-size-md: calc(var(--bui-space-5) + var(--bui-space-2) + var(--bui-space-1));
+    --bui-btn-close-touch-size-lg: var(--bui-space-6);
+    --bui-btn-close-font-size-sm: var(--bui-font-size-sm);
+    --bui-btn-close-font-size-md: var(--bui-font-size-base);
+    --bui-btn-close-font-size-lg: var(--bui-font-size-lg);
+    --bui-btn-close-radius: var(--bui-radius-md);
+    --bui-btn-close-color: var(--bui-color-text-muted);
+    --bui-btn-close-hover-color: var(--bui-color-text);
+    --bui-btn-close-hover-bg: var(--bui-color-neutral-100);
+    --bui-btn-close-active-bg: var(--bui-color-neutral-200);
+    --bui-btn-close-disabled-opacity: var(--bui-btn-disabled-opacity);
 }
 
 /* =====================================================================
@@ -735,8 +777,426 @@ pre { margin-block: 0 var(--bui-space-3); overflow: auto; }
 .bui-shadow-xl { box-shadow: var(--bui-shadow-xl) !important; }
 
 /* =====================================================================
- * 6. COMPONENTS (alphabetical). None yet.
+ * 6. COMPONENTS (alphabetical): Button, Button Group, Close Button (Task 09).
  * ===================================================================== */
+
+/* ---------------------------------------------------------------------
+ * Button (Task 09). Reference pattern for components, see instructions/COMPONENT_DEVELOPMENT.md.
+ *   - Component tokens: --bui-btn-* (Layer 3, themeable). Private values: --bui-btn-_* (underscore = internal, not API).
+ *   - Color modifiers set the accent set; variant modifiers map it to background, text and border for the rest, hover and active.
+ *   - State hooks: :disabled, [aria-disabled="true"], [aria-busy="true"] (no is-* class: the attribute is the state).
+ * --------------------------------------------------------------------- */
+@keyframes bui-btn-spin { to { transform: rotate(360deg); } }
+
+.bui-btn {
+    --bui-btn-_accent: var(--bui-color-primary);
+    --bui-btn-_accent-hover: var(--bui-color-primary-hover);
+    --bui-btn-_accent-active: var(--bui-color-primary-active);
+    --bui-btn-_accent-subtle: var(--bui-color-primary-subtle);
+    --bui-btn-_accent-contrast: var(--bui-color-primary-contrast);
+    --bui-btn-_height: var(--bui-btn-height-md);
+    --bui-btn-_touch-height: var(--bui-btn-touch-height-md);
+    --bui-btn-_padding-x: var(--bui-btn-padding-x-md);
+    --bui-btn-_font-size: var(--bui-btn-font-size-md);
+
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--bui-btn-gap);
+    min-height: var(--bui-btn-_height);
+    margin: 0;
+    padding: var(--bui-btn-padding-y) var(--bui-btn-_padding-x);
+    font-family: var(--bui-btn-font-family);
+    font-size: var(--bui-btn-_font-size);
+    font-weight: var(--bui-btn-font-weight);
+    line-height: var(--bui-btn-line-height);
+    text-align: center;
+    text-decoration: none;
+    vertical-align: middle;
+    /* The label wraps instead of overflowing a narrow container. */
+    white-space: normal;
+    overflow-wrap: anywhere;
+    color: var(--bui-btn-_fg-c);
+    background-color: var(--bui-btn-_bg-c);
+    border: var(--bui-btn-border-width) solid var(--bui-btn-_border-c);
+    border-radius: var(--bui-btn-radius);
+    -webkit-appearance: none;
+    appearance: none;
+    cursor: pointer;
+    -webkit-user-select: none;
+    user-select: none;
+    touch-action: manipulation;
+    transition-property: color, background-color, border-color, box-shadow;
+    transition-duration: var(--bui-duration-fast);
+    transition-timing-function: var(--bui-easing-standard);
+}
+
+/* Variants. Each one defines the rest, hover and active values; the -c values are the ones currently applied. */
+.bui-btn,
+.bui-btn--solid {
+    --bui-btn-_bg: var(--bui-btn-_accent);
+    --bui-btn-_fg: var(--bui-btn-_accent-contrast);
+    --bui-btn-_border: var(--bui-btn-_accent);
+    --bui-btn-_bg-hover: var(--bui-btn-_accent-hover);
+    --bui-btn-_fg-hover: var(--bui-btn-_accent-contrast);
+    --bui-btn-_border-hover: var(--bui-btn-_accent-hover);
+    --bui-btn-_bg-active: var(--bui-btn-_accent-active);
+    --bui-btn-_fg-active: var(--bui-btn-_accent-contrast);
+    --bui-btn-_border-active: var(--bui-btn-_accent-active);
+}
+.bui-btn--outline {
+    --bui-btn-_bg: transparent;
+    --bui-btn-_fg: var(--bui-btn-_accent);
+    --bui-btn-_border: var(--bui-btn-_accent);
+    --bui-btn-_bg-hover: var(--bui-btn-_accent-subtle);
+    --bui-btn-_fg-hover: var(--bui-btn-_accent-hover);
+    --bui-btn-_border-hover: var(--bui-btn-_accent-hover);
+    --bui-btn-_bg-active: var(--bui-btn-_accent-subtle);
+    --bui-btn-_fg-active: var(--bui-btn-_accent-active);
+    --bui-btn-_border-active: var(--bui-btn-_accent-active);
+}
+.bui-btn--ghost {
+    --bui-btn-_bg: transparent;
+    --bui-btn-_fg: var(--bui-btn-_accent);
+    --bui-btn-_border: transparent;
+    --bui-btn-_bg-hover: var(--bui-btn-_accent-subtle);
+    --bui-btn-_fg-hover: var(--bui-btn-_accent-hover);
+    --bui-btn-_border-hover: transparent;
+    --bui-btn-_bg-active: var(--bui-btn-_accent-subtle);
+    --bui-btn-_fg-active: var(--bui-btn-_accent-active);
+    --bui-btn-_border-active: transparent;
+}
+.bui-btn--link {
+    --bui-btn-_bg: transparent;
+    --bui-btn-_fg: var(--bui-btn-_accent);
+    --bui-btn-_border: transparent;
+    --bui-btn-_bg-hover: transparent;
+    --bui-btn-_fg-hover: var(--bui-btn-_accent-hover);
+    --bui-btn-_border-hover: transparent;
+    --bui-btn-_bg-active: transparent;
+    --bui-btn-_fg-active: var(--bui-btn-_accent-active);
+    --bui-btn-_border-active: transparent;
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+}
+
+/* Applied values (state rules below only switch these three). */
+.bui-btn {
+    --bui-btn-_bg-c: var(--bui-btn-_bg);
+    --bui-btn-_fg-c: var(--bui-btn-_fg);
+    --bui-btn-_border-c: var(--bui-btn-_border);
+}
+
+/* Colors */
+.bui-btn--primary {
+    --bui-btn-_accent: var(--bui-color-primary);
+    --bui-btn-_accent-hover: var(--bui-color-primary-hover);
+    --bui-btn-_accent-active: var(--bui-color-primary-active);
+    --bui-btn-_accent-subtle: var(--bui-color-primary-subtle);
+    --bui-btn-_accent-contrast: var(--bui-color-primary-contrast);
+}
+.bui-btn--secondary {
+    --bui-btn-_accent: var(--bui-color-secondary);
+    --bui-btn-_accent-hover: var(--bui-color-secondary-hover);
+    --bui-btn-_accent-active: var(--bui-color-secondary-active);
+    --bui-btn-_accent-subtle: var(--bui-color-secondary-subtle);
+    --bui-btn-_accent-contrast: var(--bui-color-secondary-contrast);
+}
+.bui-btn--success {
+    --bui-btn-_accent: var(--bui-color-success);
+    --bui-btn-_accent-hover: var(--bui-color-success-hover);
+    --bui-btn-_accent-active: var(--bui-color-success-active);
+    --bui-btn-_accent-subtle: var(--bui-color-success-subtle);
+    --bui-btn-_accent-contrast: var(--bui-color-success-contrast);
+}
+.bui-btn--warning {
+    --bui-btn-_accent: var(--bui-color-warning);
+    --bui-btn-_accent-hover: var(--bui-color-warning-hover);
+    --bui-btn-_accent-active: var(--bui-color-warning-active);
+    --bui-btn-_accent-subtle: var(--bui-color-warning-subtle);
+    --bui-btn-_accent-contrast: var(--bui-color-warning-contrast);
+}
+.bui-btn--danger {
+    --bui-btn-_accent: var(--bui-color-danger);
+    --bui-btn-_accent-hover: var(--bui-color-danger-hover);
+    --bui-btn-_accent-active: var(--bui-color-danger-active);
+    --bui-btn-_accent-subtle: var(--bui-color-danger-subtle);
+    --bui-btn-_accent-contrast: var(--bui-color-danger-contrast);
+}
+.bui-btn--info {
+    --bui-btn-_accent: var(--bui-color-info);
+    --bui-btn-_accent-hover: var(--bui-color-info-hover);
+    --bui-btn-_accent-active: var(--bui-color-info-active);
+    --bui-btn-_accent-subtle: var(--bui-color-info-subtle);
+    --bui-btn-_accent-contrast: var(--bui-color-info-contrast);
+}
+
+/* Sizes (md is the default) */
+.bui-btn--sm {
+    --bui-btn-_height: var(--bui-btn-height-sm);
+    --bui-btn-_touch-height: var(--bui-btn-touch-height-sm);
+    --bui-btn-_padding-x: var(--bui-btn-padding-x-sm);
+    --bui-btn-_font-size: var(--bui-btn-font-size-sm);
+}
+.bui-btn--md {
+    --bui-btn-_height: var(--bui-btn-height-md);
+    --bui-btn-_touch-height: var(--bui-btn-touch-height-md);
+    --bui-btn-_padding-x: var(--bui-btn-padding-x-md);
+    --bui-btn-_font-size: var(--bui-btn-font-size-md);
+}
+.bui-btn--lg {
+    --bui-btn-_height: var(--bui-btn-height-lg);
+    --bui-btn-_touch-height: var(--bui-btn-touch-height-lg);
+    --bui-btn-_padding-x: var(--bui-btn-padding-x-lg);
+    --bui-btn-_font-size: var(--bui-btn-font-size-lg);
+}
+
+/* Full width, and icon only (a square: the accessible name comes from aria-label on the button). */
+.bui-btn--block { display: flex; inline-size: 100%; }
+.bui-btn--icon { inline-size: var(--bui-btn-_height); min-inline-size: var(--bui-btn-_height); padding-inline: 0; }
+.bui-btn--icon > [class*="bui-icon-"] { font-size: 1.25em; }
+
+/* States. Hover only where a pointer can hover, so a tap never leaves a sticky hover look. */
+@media (hover: hover) {
+    .bui-btn:hover:not(:disabled):not([aria-disabled="true"]):not([aria-busy="true"]) {
+        --bui-btn-_bg-c: var(--bui-btn-_bg-hover);
+        --bui-btn-_fg-c: var(--bui-btn-_fg-hover);
+        --bui-btn-_border-c: var(--bui-btn-_border-hover);
+    }
+    .bui-btn--link:hover:not(:disabled):not([aria-disabled="true"]):not([aria-busy="true"]) { text-decoration-thickness: 0.125em; }
+}
+.bui-btn:active:not(:disabled):not([aria-disabled="true"]):not([aria-busy="true"]) {
+    --bui-btn-_bg-c: var(--bui-btn-_bg-active);
+    --bui-btn-_fg-c: var(--bui-btn-_fg-active);
+    --bui-btn-_border-c: var(--bui-btn-_border-active);
+}
+.bui-btn:disabled,
+.bui-btn[aria-disabled="true"] { opacity: var(--bui-btn-disabled-opacity); }
+.bui-btn:disabled { cursor: not-allowed; }
+/* A link cannot be disabled natively, and aria-disabled does not stop a click: block pointer input (keyboard needs tabindex="-1" and no href). */
+.bui-btn[aria-disabled="true"],
+.bui-btn[aria-busy="true"] { pointer-events: none; }
+
+/* Loading: an inner spinner replaces the icon. Not available on input elements (they cannot hold content). */
+.bui-btn[aria-busy="true"],
+.bui-btn[aria-busy="true"]:disabled,
+.bui-btn[aria-busy="true"][aria-disabled="true"] { opacity: 1; }
+.bui-btn[aria-busy="true"]::before {
+    content: "";
+    flex: none;
+    inline-size: var(--bui-btn-spinner-size);
+    block-size: var(--bui-btn-spinner-size);
+    border: var(--bui-btn-spinner-width) solid currentColor;
+    border-inline-end-color: transparent;
+    border-radius: 50%;
+    animation: bui-btn-spin var(--bui-btn-spinner-duration) linear infinite;
+}
+.bui-btn[aria-busy="true"] > [class*="bui-icon-"] { display: none; }
+
+@media (pointer: coarse) {
+    .bui-btn { min-height: max(var(--bui-btn-_height), var(--bui-btn-_touch-height)); }
+    .bui-btn--icon {
+        inline-size: max(var(--bui-btn-_height), var(--bui-btn-_touch-height));
+        min-inline-size: max(var(--bui-btn-_height), var(--bui-btn-_touch-height));
+    }
+}
+
+/* ---------------------------------------------------------------------
+ * Button Group (Task 09). The group joins direct .bui-btn children.
+ * Layout flags: --bui-btn-group-_h is 1 for a row and 0 for a column, --bui-btn-group-_v is the opposite.
+ * They drive the overlap and the corner radii, so a layout switch (vertical, stack) only flips flags and flex-direction.
+ * --------------------------------------------------------------------- */
+.bui-btn-group {
+    --bui-btn-group-_h: 1;
+    --bui-btn-group-_v: 0;
+    position: relative;
+    display: inline-flex;
+    flex-direction: row;
+    vertical-align: middle;
+    max-inline-size: 100%;
+}
+.bui-btn-group > .bui-btn:hover,
+.bui-btn-group > .bui-btn:focus-visible,
+.bui-btn-group > .bui-btn:active { z-index: 1; }
+
+.bui-btn-group > .bui-btn:not(:first-child) {
+    margin-inline-start: calc(var(--bui-btn-border-width) * -1 * var(--bui-btn-group-_h));
+    margin-block-start: calc(var(--bui-btn-border-width) * -1 * var(--bui-btn-group-_v));
+}
+.bui-btn-group > .bui-btn:first-child:not(:last-child) {
+    border-start-start-radius: var(--bui-btn-radius);
+    border-start-end-radius: calc(var(--bui-btn-radius) * var(--bui-btn-group-_v));
+    border-end-start-radius: calc(var(--bui-btn-radius) * var(--bui-btn-group-_h));
+    border-end-end-radius: 0;
+}
+.bui-btn-group > .bui-btn:last-child:not(:first-child) {
+    border-start-start-radius: 0;
+    border-start-end-radius: calc(var(--bui-btn-radius) * var(--bui-btn-group-_h));
+    border-end-start-radius: calc(var(--bui-btn-radius) * var(--bui-btn-group-_v));
+    border-end-end-radius: var(--bui-btn-radius);
+}
+.bui-btn-group > .bui-btn:not(:first-child):not(:last-child) { border-radius: 0; }
+/* Solid buttons share one color, so a hairline in the text color of the button marks the joint. Outline buttons overlap their borders instead. */
+.bui-btn-group > .bui-btn:not(:first-child):not(.bui-btn--outline):not(.bui-btn--ghost):not(.bui-btn--link) {
+    border-inline-start-color: var(--bui-btn-_accent-contrast);
+}
+
+.bui-btn-group--vertical {
+    --bui-btn-group-_h: 0;
+    --bui-btn-group-_v: 1;
+    flex-direction: column;
+}
+.bui-btn-group--vertical > .bui-btn:not(:first-child):not(.bui-btn--outline):not(.bui-btn--ghost):not(.bui-btn--link) {
+    border-inline-start-color: var(--bui-btn-_border-c);
+    border-block-start-color: var(--bui-btn-_accent-contrast);
+}
+
+/* Group sizes: the group wins over a size class on a child. */
+.bui-btn-group--sm > .bui-btn {
+    --bui-btn-_height: var(--bui-btn-height-sm);
+    --bui-btn-_touch-height: var(--bui-btn-touch-height-sm);
+    --bui-btn-_padding-x: var(--bui-btn-padding-x-sm);
+    --bui-btn-_font-size: var(--bui-btn-font-size-sm);
+}
+.bui-btn-group--lg > .bui-btn {
+    --bui-btn-_height: var(--bui-btn-height-lg);
+    --bui-btn-_touch-height: var(--bui-btn-touch-height-lg);
+    --bui-btn-_padding-x: var(--bui-btn-padding-x-lg);
+    --bui-btn-_font-size: var(--bui-btn-font-size-lg);
+}
+
+/* Stack: a column below 576px, a row from 576px. */
+.bui-btn-group--stack-sm {
+    --bui-btn-group-_h: 0;
+    --bui-btn-group-_v: 1;
+    flex-direction: column;
+}
+.bui-btn-group--stack-sm > .bui-btn:not(:first-child):not(.bui-btn--outline):not(.bui-btn--ghost):not(.bui-btn--link) {
+    border-inline-start-color: var(--bui-btn-_border-c);
+    border-block-start-color: var(--bui-btn-_accent-contrast);
+}
+@media (min-width: 576px) {
+    .bui-btn-group--stack-sm {
+        --bui-btn-group-_h: 1;
+        --bui-btn-group-_v: 0;
+        flex-direction: row;
+    }
+    .bui-btn-group--stack-sm > .bui-btn:not(:first-child):not(.bui-btn--outline):not(.bui-btn--ghost):not(.bui-btn--link) {
+        border-block-start-color: var(--bui-btn-_border-c);
+        border-inline-start-color: var(--bui-btn-_accent-contrast);
+    }
+}
+
+/* Stack: a column below 768px, a row from 768px. */
+.bui-btn-group--stack-md {
+    --bui-btn-group-_h: 0;
+    --bui-btn-group-_v: 1;
+    flex-direction: column;
+}
+.bui-btn-group--stack-md > .bui-btn:not(:first-child):not(.bui-btn--outline):not(.bui-btn--ghost):not(.bui-btn--link) {
+    border-inline-start-color: var(--bui-btn-_border-c);
+    border-block-start-color: var(--bui-btn-_accent-contrast);
+}
+@media (min-width: 768px) {
+    .bui-btn-group--stack-md {
+        --bui-btn-group-_h: 1;
+        --bui-btn-group-_v: 0;
+        flex-direction: row;
+    }
+    .bui-btn-group--stack-md > .bui-btn:not(:first-child):not(.bui-btn--outline):not(.bui-btn--ghost):not(.bui-btn--link) {
+        border-block-start-color: var(--bui-btn-_border-c);
+        border-inline-start-color: var(--bui-btn-_accent-contrast);
+    }
+}
+
+/* Stack: a column below 992px, a row from 992px. */
+.bui-btn-group--stack-lg {
+    --bui-btn-group-_h: 0;
+    --bui-btn-group-_v: 1;
+    flex-direction: column;
+}
+.bui-btn-group--stack-lg > .bui-btn:not(:first-child):not(.bui-btn--outline):not(.bui-btn--ghost):not(.bui-btn--link) {
+    border-inline-start-color: var(--bui-btn-_border-c);
+    border-block-start-color: var(--bui-btn-_accent-contrast);
+}
+@media (min-width: 992px) {
+    .bui-btn-group--stack-lg {
+        --bui-btn-group-_h: 1;
+        --bui-btn-group-_v: 0;
+        flex-direction: row;
+    }
+    .bui-btn-group--stack-lg > .bui-btn:not(:first-child):not(.bui-btn--outline):not(.bui-btn--ghost):not(.bui-btn--link) {
+        border-block-start-color: var(--bui-btn-_border-c);
+        border-inline-start-color: var(--bui-btn-_accent-contrast);
+    }
+}
+
+/* ---------------------------------------------------------------------
+ * Close Button (Task 09). A square icon button. Markup: <button type="button" class="bui-btn-close"> with an x icon inside.
+ * The colors are tokens so a parent component can re-declare them on itself (for example to inherit its own text color).
+ * --------------------------------------------------------------------- */
+.bui-btn-close {
+    --bui-btn-close-_size: var(--bui-btn-close-size-md);
+    --bui-btn-close-_touch-size: var(--bui-btn-close-touch-size-md);
+    --bui-btn-close-_font-size: var(--bui-btn-close-font-size-md);
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    inline-size: var(--bui-btn-close-_size);
+    block-size: var(--bui-btn-close-_size);
+    margin: 0;
+    padding: 0;
+    font-size: var(--bui-btn-close-_font-size);
+    line-height: 1;
+    color: var(--bui-btn-close-color);
+    background-color: transparent;
+    border: var(--bui-border-width) solid transparent;
+    border-radius: var(--bui-btn-close-radius);
+    -webkit-appearance: none;
+    appearance: none;
+    cursor: pointer;
+    touch-action: manipulation;
+    transition-property: color, background-color;
+    transition-duration: var(--bui-duration-fast);
+    transition-timing-function: var(--bui-easing-standard);
+}
+.bui-btn-close--sm {
+    --bui-btn-close-_size: var(--bui-btn-close-size-sm);
+    --bui-btn-close-_touch-size: var(--bui-btn-close-touch-size-sm);
+    --bui-btn-close-_font-size: var(--bui-btn-close-font-size-sm);
+}
+.bui-btn-close--md {
+    --bui-btn-close-_size: var(--bui-btn-close-size-md);
+    --bui-btn-close-_touch-size: var(--bui-btn-close-touch-size-md);
+    --bui-btn-close-_font-size: var(--bui-btn-close-font-size-md);
+}
+.bui-btn-close--lg {
+    --bui-btn-close-_size: var(--bui-btn-close-size-lg);
+    --bui-btn-close-_touch-size: var(--bui-btn-close-touch-size-lg);
+    --bui-btn-close-_font-size: var(--bui-btn-close-font-size-lg);
+}
+@media (hover: hover) {
+    .bui-btn-close:hover:not(:disabled):not([aria-disabled="true"]) {
+        color: var(--bui-btn-close-hover-color);
+        background-color: var(--bui-btn-close-hover-bg);
+    }
+}
+.bui-btn-close:active:not(:disabled):not([aria-disabled="true"]) {
+    color: var(--bui-btn-close-hover-color);
+    background-color: var(--bui-btn-close-active-bg);
+}
+.bui-btn-close:disabled,
+.bui-btn-close[aria-disabled="true"] { opacity: var(--bui-btn-close-disabled-opacity); }
+.bui-btn-close:disabled { cursor: not-allowed; }
+.bui-btn-close[aria-disabled="true"] { pointer-events: none; }
+@media (pointer: coarse) {
+    .bui-btn-close {
+        inline-size: max(var(--bui-btn-close-_size), var(--bui-btn-close-_touch-size));
+        block-size: max(var(--bui-btn-close-_size), var(--bui-btn-close-_touch-size));
+    }
+}
 
 /* =====================================================================
  * 7. RESPONSIVE UTILITIES
@@ -2370,4 +2830,6 @@ pre { margin-block: 0 var(--bui-space-3); overflow: auto; }
         --bui-duration-base: 0.01ms;
         --bui-duration-slow: 0.01ms;
     }
+    /* The Button spinner is a status indicator, so it is slowed down instead of stopped. */
+    .bui-btn[aria-busy="true"]::before { animation-duration: 2s; }
 }

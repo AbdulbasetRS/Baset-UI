@@ -85,7 +85,7 @@
 
 ### Code Block
 ```html
-<pre class="bui-docs-code" data-lang="html"><code>&lt;button class="bui-button"&gt;Save&lt;/button&gt;</code></pre>
+<pre class="bui-docs-code" data-lang="html"><code>&lt;button class="bui-btn"&gt;Save&lt;/button&gt;</code></pre>
 ```
 - `data-lang`: `html` | `css` | `javascript` | `json` | `bash` | `text` (الافتراضي `text` بلا تلوين).
 - يجب تهريب `<` و`&` داخل `<code>` (`&lt;` و`&amp;`).

@@ -86,6 +86,13 @@ Baset-UI/
 - **تعديل `docs.js` (خارج قائمة الملفات المتوقعة، 6 أسطر):** يعرّض `window.BUI_DOCS_HELPERS = { highlight, copyText }`. السبب: Code Output يتغير عند كل خيار، ويجب أن يُلوَّن وينسخ بنفس سلوك بقية الكتل. البديل (مُلوّن ونسخ ثانٍ داخل `playground.js`) يكرر نحو 150 سطراً ويفترق عن `docs.js` مع الوقت. الإطار يعمل بدونه بتدهور لطيف (كود غير ملون، ونسخ عبر Clipboard API).
 - المعاينة حاوية وليست `iframe` (قرار المهمة): قيدها (Media Queries تتبع الـ Viewport) موثق في [CUSTOMIZATION_AND_PLAYGROUND.md](CUSTOMIZATION_AND_PLAYGROUND.md).
 
+### Button وButton Group وClose Button (Task 09)
+- الكود داخل `assets/css/baset-ui.css` (قسم 6 من [CORE_ASSETS.md](CORE_ASSETS.md))، بلا ملف CSS أو JS جديد في `assets/`. ثلاث صفحات في `documentation/components/` (`button.html` و`button-group.html` و`close-button.html`) مفعلة في `nav.js`. لا مجلدات جديدة.
+- **ملف جديد: `tests/manual/button.html`** (خارج قائمة ملفات المهمة). السبب: [TESTING.md](TESTING.md) يطلب Checklist اختبار يدوي لكل مكون في `tests/manual/{component}.html`، والمصفوفة الكاملة Variant x Color x Size x الحالات (ومعها المجموعات وClose Button) لا تتسع في صفحات التوثيق. ملف واحد للمكونات الثلاثة لأنها تتشارك الأصناف والـ Tokens. Fixture معلن، لا يُشحن كمكون ولا يحمّله شيء.
+- **الاعتماد:** Close Button يرسم أيقونة `x` من Extension الأيقونات، لكن الاعتماد على مستوى الـ Markup (الأيقونة عنصر داخل الزر) وليس في CSS الـ Core، فيبقى اتجاه الاعتماد سليماً (Core لا يعرف الـ Extension). `[class*="bui-icon-"]` في Button محدد عام.
+- صفحات المكونات الثلاث تحمّل `playground.css` و`playground.js` وأيقونات الـ Extension في `<head>` (الأيقونات لازمة لأمثلة الأزرار ذات الأيقونة).
+- النمط المرجعي (Tokens والـ CSS والـ Playground Schema) في [COMPONENT_DEVELOPMENT.md](COMPONENT_DEVELOPMENT.md).
+
 ### قرار المسارات في الصفحات المتداخلة
 - كل صفحة تضع `data-root="../../"` على `<html>`: المسار **من الصفحة نفسها** إلى جذر الموقع (مجلد `index.html`). يُقرأ في `docs.js` ويُبنى عليه كل رابط (Sidebar، Breadcrumb، Previous/Next، رابط الشعار).
 - إن غابت السمة يستنتج `docs.js` الجذر من مسار سكربت `docs.js` نفسه (دائماً ثلاثة مستويات تحت الجذر)، فتبقى الصفحة تعمل. السمة هي المصدر الأساسي لأنها صريحة ولا تعتمد على موضع السكربت.

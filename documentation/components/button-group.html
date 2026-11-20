@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-bui-theme="default" data-bui-mode="light" data-root="../../">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Button Group - Baset-UI Documentation</title>
+    <meta name="description" content="Button Group: joins related buttons in a row or a column with correct borders and corners in LTR and RTL, with an optional stack on small screens. CSS only.">
+    <!-- Empty icon: avoids a /favicon.ico 404 until the project has a real icon. -->
+    <link rel="icon" href="data:,">
+
+    <link rel="stylesheet" href="../../assets/css/baset-ui.css">
+    <link rel="stylesheet" href="../../assets/css/extensions/baset-ui-icons.css">
+    <link rel="stylesheet" href="../../assets/css/themes/ocean.css">
+    <link rel="stylesheet" href="../../documentation/assets/css/docs.css">
+    <link rel="stylesheet" href="../../documentation/assets/css/playground.css">
+    <script>
+        /* Prevents a flash of the wrong theme or mode. Same keys as BUI.theme (bui-theme, bui-mode). */
+        (function () {
+            var d = document.documentElement, t = null, m = null, r = null;
+            try { t = localStorage.getItem('bui-theme'); m = localStorage.getItem('bui-mode'); r = localStorage.getItem('bui-docs-dir'); } catch (e) {}
+            if (t && /^[a-z][a-z0-9]*(-[a-z0-9]+)*$/.test(t)) d.setAttribute('data-bui-theme', t);
+            if (m !== 'light' && m !== 'dark') m = window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+            d.setAttribute('data-bui-mode', m);
+            /* Documentation shell only: the saved direction of the RTL/LTR switcher. */
+            if (r === 'rtl' || r === 'ltr') d.setAttribute('dir', r);
+        })();
+    </script>
+</head>
+<body>
+    <main class="bui-docs-main" id="bui-docs-main" tabindex="-1">
+        <div class="bui-docs-page">
+            <div class="bui-docs-page__body">
+
+                <header class="bui-docs-page-header">
+                    <nav class="bui-docs-breadcrumb" aria-label="Breadcrumb" data-docs-breadcrumb hidden></nav>
+                    <h1>Button Group</h1>
+                    <p class="bui-docs-lead">Joins related buttons in a row or a column, with joined borders and corners that follow the page direction. CSS only.</p>
+                </header>
+
+                <div class="bui-docs-content">
+                    <section class="bui-docs-section" aria-labelledby="installation-include">
+                        <h2 id="installation-include">01. Installation &amp; Include</h2>
+
+<p>Button Group is part of the Core stylesheet, together with Button, so <code>assets/css/baset-ui.css</code> is the only required file. Load the icons Extension only if a button contains an icon. No JavaScript is needed.</p>
+<pre class="bui-docs-code" data-lang="html"><code>&lt;link rel="stylesheet" href="assets/css/baset-ui.css"&gt;
+&lt;!-- Only when a button contains an icon --&gt;
+&lt;link rel="stylesheet" href="assets/css/extensions/baset-ui-icons.css"&gt;
+
+&lt;div class="bui-btn-group" role="group" aria-label="Calendar view"&gt;
+    &lt;button type="button" class="bui-btn bui-btn--outline"&gt;Day&lt;/button&gt;
+    &lt;button type="button" class="bui-btn bui-btn--outline"&gt;Week&lt;/button&gt;
+    &lt;button type="button" class="bui-btn bui-btn--outline"&gt;Month&lt;/button&gt;
+&lt;/div&gt;</code></pre>
+                    </section>
+
+                    <section class="bui-docs-section" aria-labelledby="customize">
+                        <h2 id="customize">02. Customize</h2>
+
+<p>Every option below is a real class or attribute documented in section 04. The button labels are sample text. The <em>Stack below</em> option reacts to the width of the browser window, not to the width of the preview frame, because media queries follow the viewport; resize the window to see it.</p>
+<div data-docs-playground="button-group"></div>
+
+                    </section>
+
+                    <section class="bui-docs-section" aria-labelledby="default">
+                        <h2 id="default">03. Default</h2>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<div class="bui-btn-group" role="group" aria-label="Calendar view">
+    <button type="button" class="bui-btn bui-btn--outline">Day</button>
+    <button type="button" class="bui-btn bui-btn--outline">Week</button>
+    <button type="button" class="bui-btn bui-btn--outline">Month</button>
+</div>
+</div>
+</div>
+<p>A group is a horizontal row of direct <code>.bui-btn</code> children. It needs <code>role="group"</code> and an <code>aria-label</code> that names the set.</p>
+                    </section>
+
+                    <section class="bui-docs-section" aria-labelledby="variants-options">
+                        <h2 id="variants-options">04. Variants &amp; Options</h2>
+
+<h3>Layout and size</h3>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Button Group classes</caption>
+<thead><tr><th scope="col">Name</th><th scope="col">Class</th><th scope="col">Description</th></tr></thead>
+<tbody>
+<tr><td>Row (default)</td><td><code>bui-btn-group</code></td><td>Buttons side by side. Borders overlap by one border width and only the outer corners are rounded.</td></tr>
+<tr><td>Column</td><td><code>bui-btn-group--vertical</code></td><td>Buttons stacked. Only the top corners of the first button and the bottom corners of the last one are rounded.</td></tr>
+<tr><td>Small</td><td><code>bui-btn-group--sm</code></td><td>Sets the small size on every button. The group size wins over a size class on a button.</td></tr>
+<tr><td>Large</td><td><code>bui-btn-group--lg</code></td><td>Sets the large size on every button.</td></tr>
+<tr><td>Stack below 576px</td><td><code>bui-btn-group--stack-sm</code></td><td>A column below 576px and a row from 576px.</td></tr>
+<tr><td>Stack below 768px</td><td><code>bui-btn-group--stack-md</code></td><td>A column below 768px and a row from 768px.</td></tr>
+<tr><td>Stack below 992px</td><td><code>bui-btn-group--stack-lg</code></td><td>A column below 992px and a row from 992px.</td></tr>
+</tbody>
+</table>
+<h3>Joints and corners</h3>
+<ul>
+<li>Outline, ghost and link buttons overlap their borders by one border width, so a shared edge is drawn once.</li>
+<li>Solid buttons share one color, so the joint is a hairline in the text color of the button (<code>--bui-color-*-contrast</code>) instead of an overlap you cannot see.</li>
+<li>Corners use logical properties: in a right-to-left page the first button is on the right and it is the one with the rounded start corners.</li>
+<li>The hovered, focused or pressed button is raised above its neighbors so its border and focus ring are never covered.</li>
+</ul>
+<h3>Options</h3>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Button Group options</caption>
+<thead><tr><th scope="col">Name</th><th scope="col">Type</th><th scope="col">Default</th><th scope="col">HTML</th><th scope="col">Description</th></tr></thead>
+<tbody>
+<tr><td>orientation</td><td>enum</td><td><code>horizontal</code></td><td><code>bui-btn-group--vertical</code></td><td>Column instead of row.</td></tr>
+<tr><td>stack</td><td>enum</td><td>none</td><td><code>bui-btn-group--stack-{sm|md|lg}</code></td><td>Column below the breakpoint, row from it. Has no effect together with <code>--vertical</code>.</td></tr>
+<tr><td>size</td><td>enum</td><td><code>md</code></td><td><code>bui-btn-group--{sm|lg}</code></td><td>Applies to every button of the group.</td></tr>
+<tr><td>variant and color</td><td>enum</td><td>solid, primary</td><td>Classes on each button</td><td>Set on the buttons (<code>bui-btn--outline</code>, <code>bui-btn--danger</code>, and so on), not on the group. Buttons of different colors can be mixed.</td></tr>
+<tr><td>role</td><td>attribute</td><td>required</td><td><code>role="group"</code></td><td>Groups the buttons for assistive technology.</td></tr>
+<tr><td>label</td><td>attribute</td><td>required</td><td><code>aria-label="..."</code></td><td>Names the group. Use <code>aria-labelledby</code> if a visible label exists.</td></tr>
+</tbody>
+</table>
+<h3>Component tokens</h3>
+<p>A group has no tokens of its own. Corner radius and joint width come from <code>--bui-btn-radius</code> and <code>--bui-btn-border-width</code>, so a Theme that changes them changes the groups too. The internal flags <code>--bui-btn-group-_h</code> and <code>--bui-btn-group-_v</code> are not part of the API.</p>
+
+                    </section>
+
+                    <section class="bui-docs-section" aria-labelledby="examples">
+                        <h2 id="examples">05. Examples</h2>
+<h3>Colors, variants and sizes</h3>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<div class="bui-d-flex bui-flex-column bui-gap-3 bui-items-start">
+<div class="bui-btn-group bui-btn-group--sm" role="group" aria-label="Small solid group">
+    <button type="button" class="bui-btn">Left</button>
+    <button type="button" class="bui-btn">Middle</button>
+    <button type="button" class="bui-btn">Right</button>
+</div>
+<div class="bui-btn-group" role="group" aria-label="Mixed colors">
+    <button type="button" class="bui-btn bui-btn--success">Approve</button>
+    <button type="button" class="bui-btn bui-btn--warning">Hold</button>
+    <button type="button" class="bui-btn bui-btn--danger">Reject</button>
+</div>
+<div class="bui-btn-group bui-btn-group--lg" role="group" aria-label="Large outline group">
+    <button type="button" class="bui-btn bui-btn--outline bui-btn--secondary">Day</button>
+    <button type="button" class="bui-btn bui-btn--outline bui-btn--secondary">Week</button>
+    <button type="button" class="bui-btn bui-btn--outline bui-btn--secondary">Month</button>
+</div>
+</div>
+</div>
+</div><h3>Icon-only toolbar</h3>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<div class="bui-btn-group" role="group" aria-label="Item actions">
+    <button type="button" class="bui-btn bui-btn--outline bui-btn--secondary bui-btn--icon" aria-label="Edit"><i class="bui-icon-regular bui-icon-pencil-simple" aria-hidden="true"></i></button>
+    <button type="button" class="bui-btn bui-btn--outline bui-btn--secondary bui-btn--icon" aria-label="Copy"><i class="bui-icon-regular bui-icon-copy" aria-hidden="true"></i></button>
+    <button type="button" class="bui-btn bui-btn--outline bui-btn--danger bui-btn--icon" aria-label="Delete"><i class="bui-icon-regular bui-icon-trash" aria-hidden="true"></i></button>
+</div>
+</div>
+</div>
+<p>Each icon-only button needs its own <code>aria-label</code>. Use <code>bui-btn--icon</code> on every button of the group so they stay square.</p>
+<h3>Vertical group</h3>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<div class="bui-btn-group bui-btn-group--vertical" role="group" aria-label="Sort by">
+    <button type="button" class="bui-btn bui-btn--outline">Name</button>
+    <button type="button" class="bui-btn bui-btn--outline">Date</button>
+    <button type="button" class="bui-btn bui-btn--outline">Size</button>
+</div>
+</div>
+</div><h3>Links and inputs in a group</h3>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<div class="bui-btn-group" role="group" aria-label="Pages">
+    <a href="#" class="bui-btn bui-btn--outline">Previous</a>
+    <a href="#" class="bui-btn bui-btn--outline">Next</a>
+    <input type="button" class="bui-btn bui-btn--outline" value="Jump">
+</div>
+</div>
+</div><h3>Stack on small screens</h3>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<div class="bui-btn-group bui-btn-group--stack-md" role="group" aria-label="Plan">
+    <button type="button" class="bui-btn bui-btn--outline">Monthly</button>
+    <button type="button" class="bui-btn bui-btn--outline">Yearly</button>
+    <button type="button" class="bui-btn bui-btn--outline">Lifetime</button>
+</div>
+</div>
+</div>
+<p>This group is a column in a window narrower than 768px and a row from 768px. The current window width is <strong data-docs-current-bp></strong>.</p>
+<h3>Direction</h3>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<div class="bui-d-flex bui-flex-column bui-gap-3 bui-items-start">
+<div class="bui-btn-group" dir="ltr" role="group" aria-label="Left to right">
+    <button type="button" class="bui-btn bui-btn--outline">One</button>
+    <button type="button" class="bui-btn bui-btn--outline">Two</button>
+    <button type="button" class="bui-btn bui-btn--outline">Three</button>
+</div>
+<div class="bui-btn-group" dir="rtl" role="group" aria-label="Right to left">
+    <button type="button" class="bui-btn bui-btn--outline">One</button>
+    <button type="button" class="bui-btn bui-btn--outline">Two</button>
+    <button type="button" class="bui-btn bui-btn--outline">Three</button>
+</div>
+</div>
+</div>
+</div>
+<p>The second group has <code>dir="rtl"</code> on itself, so both directions show at once. A group follows the <code>dir</code> of the page by default.</p>
+
+                    </section>
+
+                    <section class="bui-docs-section" aria-labelledby="javascript-api">
+                        <h2 id="javascript-api">06. JavaScript API</h2>
+
+<p>CSS only, no JavaScript API. Button Group registers nothing with <code>BUI.register</code>, fires no events and has no options to parse. It does not move focus between buttons: each button stays in the normal Tab order.</p>
+
+                    </section>
+
+                    <section class="bui-docs-section" aria-labelledby="responsive-behavior">
+                        <h2 id="responsive-behavior">07. Responsive Behavior</h2>
+
+<p>A group is a row by default and never wraps, so keep the number and length of its buttons within the width of the smallest screen you support, or stack it.</p>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Responsive behavior of Button Group</caption>
+<thead><tr><th scope="col">Class</th><th scope="col">Below the breakpoint</th><th scope="col">From the breakpoint</th></tr></thead>
+<tbody>
+<tr><td><code>bui-btn-group</code></td><td>Row</td><td>Row</td></tr>
+<tr><td><code>bui-btn-group--vertical</code></td><td>Column</td><td>Column</td></tr>
+<tr><td><code>bui-btn-group--stack-sm</code></td><td>Column</td><td>Row from 576px</td></tr>
+<tr><td><code>bui-btn-group--stack-md</code></td><td>Column</td><td>Row from 768px</td></tr>
+<tr><td><code>bui-btn-group--stack-lg</code></td><td>Column</td><td>Row from 992px</td></tr>
+</tbody>
+</table>
+<ul>
+<li>The stack is mobile first: the column is the base style and a <code>min-width</code> media query restores the row.</li>
+<li>In a column the buttons have the width of the widest button. Use the layout utilities around the group to change that.</li>
+<li>The size of the buttons on touch devices follows <a href="button.html#responsive-behavior">Button</a>.</li>
+<li>The breakpoint reacts to the browser window, so a narrow container inside a wide window does not stack.</li>
+</ul>
+
+                    </section>
+
+                    <section class="bui-docs-section" aria-labelledby="accessibility">
+                        <h2 id="accessibility">08. Accessibility</h2>
+
+<h3>Keyboard</h3>
+<p>A group adds no keyboard behavior. Every button is a separate Tab stop, and Enter and Space activate the focused button (Enter only for a link). Arrow keys do nothing. A set of controls that should be one Tab stop with arrow-key navigation is a toolbar, which this component is not.</p>
+<h3>ARIA</h3>
+<ul>
+<li><code>role="group"</code> and an <code>aria-label</code> (or <code>aria-labelledby</code>) are required. Without a name the group conveys nothing.</li>
+<li>Each button follows the rules of <a href="button.html#accessibility">Button</a>: icon-only buttons need <code>aria-label</code>.</li>
+<li>The group does not set a pressed or selected state. Toggle behavior is out of scope.</li>
+<li>Focus is never hidden: the focused button is raised above its neighbors, so the focus ring is fully visible.</li>
+<li>The order in the DOM is the reading and Tab order in both directions: in a right-to-left page the first button is drawn on the right.</li>
+</ul>
+<h3>Screen reader</h3>
+<p>Not tested with a screen reader. The group name is expected to be announced when focus enters the group, as for any <code>role="group"</code>, but this was not verified.</p>
+
+                    </section>
+
+
+                </div>
+                <!-- Previous / Next links are appended here by docs.js from the order in nav.js. -->
+            </div>
+            <!-- "On this page" is appended here by docs.js (visible from the XL breakpoint). -->
+        </div>
+    </main>
+
+    <script src="../../assets/js/baset-ui.js"></script>
+    <script src="../../documentation/assets/js/nav.js"></script>
+    <script src="../../documentation/assets/js/docs.js"></script>
+    <script src="../../documentation/assets/js/playground.js"></script>
+    <script>
+        /* Docs-only helpers for this page. */
+        (function () {
+            /* The examples use href="#" as a placeholder: do not jump to the top when it is clicked. */
+            document.addEventListener('click', function (e) {
+                var a = e.target.closest && e.target.closest('a[href="#"]');
+                if (a && a.closest('.bui-docs-example__preview, [data-docs-playground]')) { e.preventDefault(); }
+            });
+
+            var LABELS = ['Day', 'Week', 'Month', 'Year', 'All'];
+            BUI_DOCS_PLAYGROUND.define('button-group', {
+                title: 'Button Group playground',
+                controls: [
+                    { type: 'radio-group', name: 'orientation', label: 'Orientation', default: 'horizontal',
+                      options: [{ value: 'horizontal', label: 'Horizontal' }, { value: 'vertical', label: 'Vertical' }] },
+                    { type: 'select', name: 'stack', label: 'Stack below (horizontal only)', default: 'none',
+                      options: [{ value: 'none', label: 'Never' }, { value: 'sm', label: 'Below 576px (sm)' }, { value: 'md', label: 'Below 768px (md)' }, { value: 'lg', label: 'Below 992px (lg)' }] },
+                    { type: 'radio-group', name: 'size', label: 'Size', default: 'md',
+                      options: [{ value: 'sm', label: 'Small' }, { value: 'md', label: 'Medium' }, { value: 'lg', label: 'Large' }] },
+                    { type: 'select', name: 'variant', label: 'Variant', default: 'outline',
+                      options: [{ value: 'solid', label: 'Solid' }, { value: 'outline', label: 'Outline' }, { value: 'ghost', label: 'Ghost' }, { value: 'link', label: 'Link' }] },
+                    { type: 'select', name: 'color', label: 'Color', default: 'primary',
+                      options: [{ value: 'primary', label: 'Primary' }, { value: 'secondary', label: 'Secondary' }, { value: 'success', label: 'Success' }, { value: 'warning', label: 'Warning' }, { value: 'danger', label: 'Danger' }, { value: 'info', label: 'Info' }] },
+                    { type: 'range', name: 'count', label: 'Number of buttons', min: 2, max: 5, step: 1, default: 3 },
+                    { type: 'switch', name: 'disabledLast', label: 'Disable the last button' },
+                    { type: 'text', name: 'groupLabel', label: 'Group label (aria-label)', default: 'Calendar view', maxLength: 30 }
+                ],
+                template: function (state, h) {
+                    var gc = ['bui-btn-group'];
+                    if (state.orientation === 'vertical') { gc.push('bui-btn-group--vertical'); }
+                    else if (state.stack !== 'none') { gc.push('bui-btn-group--stack-' + state.stack); }
+                    if (state.size !== 'md') { gc.push('bui-btn-group--' + state.size); }
+                    var bc = ['bui-btn'];
+                    if (state.variant !== 'solid') { bc.push('bui-btn--' + state.variant); }
+                    if (state.color !== 'primary') { bc.push('bui-btn--' + state.color); }
+                    var cn = bc.join(' ');
+                    var lines = [];
+                    for (var i = 0; i < state.count; i++) {
+                        var last = i === state.count - 1;
+                        lines.push('    <button type="button" class="' + cn + '"' + (last && state.disabledLast ? ' disabled' : '') + '>' + LABELS[i] + '</button>');
+                    }
+                    return '<div class="' + gc.join(' ') + '" role="group" aria-label="' + h.escape(state.groupLabel) + '">\n' + lines.join('\n') + '\n</div>';
+                }
+            });
+        })();
+    </script>
+</body>
+</html>

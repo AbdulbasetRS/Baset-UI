@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<!--
+    Manual test page for Button, Button Group and Close Button (Task 09).
+    Test fixture only: it renders every Variant x Color x Size, the states that need an attribute
+    (disabled, loading), the other elements (a, input), groups in every layout and the close button.
+    Hover, active and focus are not drawn here: trigger them with the pointer or the keyboard,
+    or force them in the browser developer tools (Elements > :hov).
+    The three selects switch the theme, the mode and the direction of the whole page.
+    Open it through a local server or file://. It needs no JavaScript from the library.
+-->
+<html lang="en" dir="ltr" data-bui-theme="default" data-bui-mode="light">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Button manual test - Baset-UI</title>
+    <link rel="icon" href="data:,">
+    <link rel="stylesheet" href="../../assets/css/baset-ui.css">
+    <link rel="stylesheet" href="../../assets/css/extensions/baset-ui-icons.css">
+    <link rel="stylesheet" href="../../assets/css/themes/ocean.css">
+    <style>
+        body { padding: var(--bui-space-3); }
+        .t-bar { display: flex; flex-wrap: wrap; gap: var(--bui-space-2); margin-block-end: var(--bui-space-3); }
+        .t-row { display: flex; flex-wrap: wrap; gap: var(--bui-space-2); align-items: center; margin-block-end: var(--bui-space-2); }
+        .t-block { margin-block-end: var(--bui-space-4); }
+        h2 { font-size: var(--bui-font-size-lg); }
+    </style>
+</head>
+<body>
+    <h1>Button, Button Group, Close Button</h1>
+    <div class="t-bar">
+        <label>Theme <select id="t-theme"><option value="default">default</option><option value="ocean">ocean</option></select></label>
+        <label>Mode <select id="t-mode"><option value="light">light</option><option value="dark">dark</option></select></label>
+        <label>Direction <select id="t-dir"><option value="ltr">ltr</option><option value="rtl">rtl</option></select></label>
+    </div>
+
+    <h2>Variant x color x size</h2>
+    <div id="t-matrix"></div>
+
+    <h2>Attribute states and elements</h2>
+    <div id="t-states"></div>
+
+    <h2>Button Group</h2>
+    <div id="t-groups"></div>
+
+    <h2>Close Button</h2>
+    <div id="t-close"></div>
+
+    <script>
+        (function () {
+            var VARIANTS = ['solid', 'outline', 'ghost', 'link'];
+            var COLORS = ['primary', 'secondary', 'success', 'warning', 'danger', 'info'];
+            var SIZES = ['sm', 'md', 'lg'];
+            var PLUS = '<i class="bui-icon-regular bui-icon-plus" aria-hidden="true"></i>';
+            var X = '<i class="bui-icon-regular bui-icon-x" aria-hidden="true"></i>';
+
+            function cls(v, c, s) { return 'bui-btn bui-btn--' + v + ' bui-btn--' + c + ' bui-btn--' + s; }
+            var m = '';
+            VARIANTS.forEach(function (v) {
+                SIZES.forEach(function (s) {
+                    m += '<div class="t-row">';
+                    COLORS.forEach(function (c) {
+                        m += '<button type="button" class="' + cls(v, c, s) + '" data-t="rest" data-v="' + v + '" data-c="' + c + '" data-s="' + s + '">' + c + '</button>';
+                    });
+                    m += '</div>';
+                });
+            });
+            document.getElementById('t-matrix').innerHTML = m;
+
+            var st = '';
+            VARIANTS.forEach(function (v) {
+                st += '<div class="t-row">';
+                COLORS.forEach(function (c) {
+                    st += '<button type="button" class="' + cls(v, c, 'md') + '" disabled data-t="disabled" data-v="' + v + '" data-c="' + c + '" data-s="md">' + c + '</button>';
+                    st += '<button type="button" class="' + cls(v, c, 'md') + '" aria-busy="true" data-t="busy" data-v="' + v + '" data-c="' + c + '" data-s="md">' + c + '</button>';
+                });
+                st += '</div>';
+            });
+            st += '<div class="t-row">' +
+                '<button type="button" class="bui-btn" data-t="icon-start" data-v="solid" data-c="primary" data-s="md">' + PLUS + ' Icon before</button>' +
+                '<button type="button" class="bui-btn bui-btn--outline" data-t="icon-end" data-v="outline" data-c="primary" data-s="md">Icon after ' + PLUS + '</button>' +
+                '<button type="button" class="bui-btn bui-btn--icon" aria-label="Add" data-t="icon-only" data-v="solid" data-c="primary" data-s="md">' + PLUS + '</button>' +
+                '<button type="button" class="bui-btn bui-btn--icon bui-btn--sm" aria-label="Add" data-t="icon-only" data-v="solid" data-c="primary" data-s="sm">' + PLUS + '</button>' +
+                '<button type="button" class="bui-btn bui-btn--icon bui-btn--lg" aria-label="Add" data-t="icon-only" data-v="solid" data-c="primary" data-s="lg">' + PLUS + '</button>' +
+                '<button type="button" class="bui-btn bui-btn--icon" aria-busy="true" aria-label="Add" data-t="icon-only-busy" data-v="solid" data-c="primary" data-s="md">' + PLUS + '</button>' +
+                '<button type="button" class="bui-btn" aria-busy="true" data-t="icon-busy" data-v="solid" data-c="primary" data-s="md">' + PLUS + ' Saving</button>' +
+                '</div>' +
+                '<div class="t-row">' +
+                '<a href="#" class="bui-btn bui-btn--outline" data-t="anchor" data-v="outline" data-c="primary" data-s="md">Anchor</a>' +
+                '<a class="bui-btn bui-btn--secondary" role="link" aria-disabled="true" data-t="anchor-disabled" data-v="solid" data-c="secondary" data-s="md">Disabled anchor</a>' +
+                '<input type="button" class="bui-btn bui-btn--secondary" value="Input" data-t="input" data-v="solid" data-c="secondary" data-s="md">' +
+                '<input type="button" class="bui-btn bui-btn--outline" value="Input disabled" disabled data-t="input-disabled" data-v="outline" data-c="primary" data-s="md">' +
+                '<input type="button" class="bui-btn" value="Input busy" aria-busy="true" disabled data-t="input-busy" data-v="solid" data-c="primary" data-s="md">' +
+                '</div>' +
+                '<div class="t-row" style="max-width: 320px"><button type="button" class="bui-btn bui-btn--block" data-t="block" data-v="solid" data-c="primary" data-s="md">Full width button with a label that is long enough to wrap onto several lines in a narrow container</button></div>';
+            document.getElementById('t-states').innerHTML = st;
+
+            function group(extra, v, labels, attrs) {
+                return '<div class="bui-btn-group' + extra + '" role="group" aria-label="Group" ' + (attrs || '') + '>' +
+                    labels.map(function (l) { return '<button type="button" class="bui-btn bui-btn--' + v + '" data-v="' + v + '">' + l + '</button>'; }).join('') + '</div>';
+            }
+            var g = '';
+            ['solid', 'outline', 'ghost', 'link'].forEach(function (v) {
+                g += '<div class="t-row">' + group('', v, ['One', 'Two', 'Three']) + group(' bui-btn-group--vertical', v, ['One', 'Two', 'Three']) +
+                    group(' bui-btn-group--sm', v, ['One', 'Two']) + group(' bui-btn-group--lg', v, ['One', 'Two']) + group('', v, ['Only']) + '</div>';
+            });
+            g += '<div class="t-row">' + group(' bui-btn-group--stack-sm', 'outline', ['A', 'B', 'C']) + group(' bui-btn-group--stack-md', 'outline', ['A', 'B', 'C']) + group(' bui-btn-group--stack-lg', 'outline', ['A', 'B', 'C']) + '</div>';
+            g += '<div class="t-row">' +
+                '<div class="bui-btn-group" role="group" aria-label="Mixed"><button type="button" class="bui-btn bui-btn--success">Yes</button><button type="button" class="bui-btn bui-btn--warning">Maybe</button><button type="button" class="bui-btn bui-btn--danger">No</button></div>' +
+                '<div class="bui-btn-group" role="group" aria-label="Icons"><button type="button" class="bui-btn bui-btn--outline bui-btn--icon" aria-label="Add">' + PLUS + '</button><button type="button" class="bui-btn bui-btn--outline bui-btn--icon" aria-label="Add again">' + PLUS + '</button></div>' +
+                '<div class="bui-btn-group" role="group" aria-label="Elements"><a href="#" class="bui-btn bui-btn--outline">Link</a><input type="button" class="bui-btn bui-btn--outline" value="Input"><button type="button" class="bui-btn bui-btn--outline" disabled>Disabled</button></div>' +
+                '</div>';
+            document.getElementById('t-groups').innerHTML = g;
+
+            var c = '<div class="t-row">';
+            SIZES.forEach(function (s) {
+                c += '<button type="button" class="bui-btn-close bui-btn-close--' + s + '" aria-label="Close" data-bui-i18n-attr="aria-label:common.close" data-s="' + s + '">' + X + '</button>';
+                c += '<button type="button" class="bui-btn-close bui-btn-close--' + s + '" aria-label="Close" disabled data-t="disabled" data-s="' + s + '">' + X + '</button>';
+            });
+            c += '</div>';
+            document.getElementById('t-close').innerHTML = c;
+
+            var root = document.documentElement;
+            function bind(id, attr) {
+                document.getElementById(id).addEventListener('change', function (e) { root.setAttribute(attr, e.target.value); });
+            }
+            bind('t-theme', 'data-bui-theme'); bind('t-mode', 'data-bui-mode'); bind('t-dir', 'dir');
+            document.addEventListener('click', function (e) { if (e.target.closest('a[href="#"]')) { e.preventDefault(); } });
+        })();
+    </script>
+</body>
+</html>

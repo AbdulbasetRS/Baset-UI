@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-bui-theme="default" data-bui-mode="light" data-root="../../">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Close Button - Baset-UI Documentation</title>
+    <meta name="description" content="Close Button: a square icon button with the x icon and a translatable accessible name. CSS only.">
+    <!-- Empty icon: avoids a /favicon.ico 404 until the project has a real icon. -->
+    <link rel="icon" href="data:,">
+
+    <link rel="stylesheet" href="../../assets/css/baset-ui.css">
+    <link rel="stylesheet" href="../../assets/css/extensions/baset-ui-icons.css">
+    <link rel="stylesheet" href="../../assets/css/themes/ocean.css">
+    <link rel="stylesheet" href="../../documentation/assets/css/docs.css">
+    <link rel="stylesheet" href="../../documentation/assets/css/playground.css">
+    <script>
+        /* Prevents a flash of the wrong theme or mode. Same keys as BUI.theme (bui-theme, bui-mode). */
+        (function () {
+            var d = document.documentElement, t = null, m = null, r = null;
+            try { t = localStorage.getItem('bui-theme'); m = localStorage.getItem('bui-mode'); r = localStorage.getItem('bui-docs-dir'); } catch (e) {}
+            if (t && /^[a-z][a-z0-9]*(-[a-z0-9]+)*$/.test(t)) d.setAttribute('data-bui-theme', t);
+            if (m !== 'light' && m !== 'dark') m = window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+            d.setAttribute('data-bui-mode', m);
+            /* Documentation shell only: the saved direction of the RTL/LTR switcher. */
+            if (r === 'rtl' || r === 'ltr') d.setAttribute('dir', r);
+        })();
+    </script>
+</head>
+<body>
+    <main class="bui-docs-main" id="bui-docs-main" tabindex="-1">
+        <div class="bui-docs-page">
+            <div class="bui-docs-page__body">
+
+                <header class="bui-docs-page-header">
+                    <nav class="bui-docs-breadcrumb" aria-label="Breadcrumb" data-docs-breadcrumb hidden></nav>
+                    <h1>Close Button</h1>
+                    <p class="bui-docs-lead">A square icon button that closes or dismisses something. CSS only, with an accessible name that can be translated.</p>
+                </header>
+
+                <div class="bui-docs-content">
+                    <section class="bui-docs-section" aria-labelledby="installation-include">
+                        <h2 id="installation-include">01. Installation &amp; Include</h2>
+
+<p>Close Button is part of the Core stylesheet, so <code>assets/css/baset-ui.css</code> is required. It draws the <code>x</code> icon from the icon system, so <code>assets/css/extensions/baset-ui-icons.css</code> is required too: without it the button is empty. Load <code>assets/js/baset-ui.js</code> only if you want the accessible name translated (see section 06). Order: Core, then Extension, then Theme.</p>
+<pre class="bui-docs-code" data-lang="html"><code>&lt;link rel="stylesheet" href="assets/css/baset-ui.css"&gt;
+&lt;link rel="stylesheet" href="assets/css/extensions/baset-ui-icons.css"&gt;
+
+&lt;button type="button" class="bui-btn-close" aria-label="Close"
+        data-bui-i18n-attr="aria-label:common.close"&gt;
+    &lt;i class="bui-icon-regular bui-icon-x" aria-hidden="true"&gt;&lt;/i&gt;
+&lt;/button&gt;</code></pre>
+                    </section>
+
+                    <section class="bui-docs-section" aria-labelledby="customize">
+                        <h2 id="customize">02. Customize</h2>
+
+<p>Every option below is a real class or attribute documented in section 04.</p>
+<div data-docs-playground="close-button"></div>
+
+                    </section>
+
+                    <section class="bui-docs-section" aria-labelledby="default">
+                        <h2 id="default">03. Default</h2>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<button type="button" class="bui-btn-close" aria-label="Close" data-bui-i18n-attr="aria-label:common.close"><i class="bui-icon-regular bui-icon-x" aria-hidden="true"></i></button>
+</div>
+</div>
+<p>The button has the static English name <code>Close</code>, so it is accessible without any JavaScript. <code>data-bui-i18n-attr</code> replaces it with the translation of <code>common.close</code> when the Locale Manager is used.</p>
+                    </section>
+
+                    <section class="bui-docs-section" aria-labelledby="variants-options">
+                        <h2 id="variants-options">04. Variants &amp; Options</h2>
+
+<h3>Sizes</h3>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Close Button sizes</caption>
+<thead><tr><th scope="col">Name</th><th scope="col">Class</th><th scope="col">Size</th><th scope="col">Size on touch devices</th></tr></thead>
+<tbody>
+<tr><td><code>sm</code></td><td><code>bui-btn-close--sm</code></td><td>1.5rem (24px)</td><td>2.25rem (36px)</td></tr>
+<tr><td><code>md</code> (default)</td><td><code>bui-btn-close--md</code></td><td>2rem (32px)</td><td>2.75rem (44px)</td></tr>
+<tr><td><code>lg</code></td><td><code>bui-btn-close--lg</code></td><td>2.5rem (40px)</td><td>3rem (48px)</td></tr>
+</tbody>
+</table><div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<div class="bui-d-flex bui-flex-wrap bui-gap-3 bui-items-center">
+<button type="button" class="bui-btn-close bui-btn-close--sm" aria-label="Close" data-bui-i18n-attr="aria-label:common.close"><i class="bui-icon-regular bui-icon-x" aria-hidden="true"></i></button>
+<button type="button" class="bui-btn-close" aria-label="Close" data-bui-i18n-attr="aria-label:common.close"><i class="bui-icon-regular bui-icon-x" aria-hidden="true"></i></button>
+<button type="button" class="bui-btn-close bui-btn-close--lg" aria-label="Close" data-bui-i18n-attr="aria-label:common.close"><i class="bui-icon-regular bui-icon-x" aria-hidden="true"></i></button>
+</div>
+</div>
+</div>
+<h3>Icon weights</h3>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<div class="bui-d-flex bui-flex-wrap bui-gap-3 bui-items-center">
+<button type="button" class="bui-btn-close" aria-label="Close" data-bui-i18n-attr="aria-label:common.close"><i class="bui-icon-thin bui-icon-x" aria-hidden="true"></i></button>
+<button type="button" class="bui-btn-close" aria-label="Close" data-bui-i18n-attr="aria-label:common.close"><i class="bui-icon-light bui-icon-x" aria-hidden="true"></i></button>
+<button type="button" class="bui-btn-close" aria-label="Close" data-bui-i18n-attr="aria-label:common.close"><i class="bui-icon-regular bui-icon-x" aria-hidden="true"></i></button>
+<button type="button" class="bui-btn-close" aria-label="Close" data-bui-i18n-attr="aria-label:common.close"><i class="bui-icon-solid bui-icon-x" aria-hidden="true"></i></button>
+<button type="button" class="bui-btn-close" aria-label="Close" data-bui-i18n-attr="aria-label:common.close"><i class="bui-icon-bold bui-icon-x" aria-hidden="true"></i></button>
+<button type="button" class="bui-btn-close" aria-label="Close" data-bui-i18n-attr="aria-label:common.close"><i class="bui-icon-duotone bui-icon-x" aria-hidden="true"></i></button>
+</div>
+</div>
+</div>
+<p>The weight is chosen on the icon element, not on the button. The light weight (the icon default) is thin at small sizes; the examples use <code>regular</code>.</p>
+<h3>States</h3>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Close Button states</caption>
+<thead><tr><th scope="col">State</th><th scope="col">How it is triggered</th><th scope="col">Notes</th></tr></thead>
+<tbody>
+<tr><td>Hover</td><td>Pointer over the button</td><td>Darker icon on a subtle fill. Applies only on devices that can hover.</td></tr>
+<tr><td>Focus visible</td><td>Keyboard focus</td><td>The global focus ring.</td></tr>
+<tr><td>Active</td><td>Pointer or key held down</td><td>A stronger fill than hover.</td></tr>
+<tr><td>Disabled</td><td><code>disabled</code> (or <code>aria-disabled="true"</code>)</td><td>Opacity from <code>--bui-btn-close-disabled-opacity</code>.</td></tr>
+</tbody>
+</table><div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<div class="bui-d-flex bui-flex-wrap bui-gap-3 bui-items-center">
+<button type="button" class="bui-btn-close" aria-label="Close" data-bui-i18n-attr="aria-label:common.close"><i class="bui-icon-regular bui-icon-x" aria-hidden="true"></i></button>
+<button type="button" class="bui-btn-close" aria-label="Close" data-bui-i18n-attr="aria-label:common.close" disabled><i class="bui-icon-regular bui-icon-x" aria-hidden="true"></i></button>
+</div>
+</div>
+</div>
+<h3>Options</h3>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Close Button options</caption>
+<thead><tr><th scope="col">Name</th><th scope="col">Type</th><th scope="col">Default</th><th scope="col">HTML</th><th scope="col">Description</th></tr></thead>
+<tbody>
+<tr><td>size</td><td>enum</td><td><code>md</code></td><td><code>bui-btn-close--{sm|md|lg}</code></td><td>Width and height of the square, and the icon size.</td></tr>
+<tr><td>icon weight</td><td>enum</td><td><code>regular</code> in the examples</td><td><code>bui-icon-{thin|light|regular|solid|bold|duotone}</code> on the icon</td><td>Weight of the x icon (see Icons).</td></tr>
+<tr><td>disabled</td><td>boolean</td><td>false</td><td><code>disabled</code></td><td>Disables the button.</td></tr>
+<tr><td>accessible name</td><td>attribute</td><td>required</td><td><code>aria-label="Close"</code></td><td>Static fallback name.</td></tr>
+<tr><td>translation</td><td>attribute</td><td>optional</td><td><code>data-bui-i18n-attr="aria-label:common.close"</code></td><td>Replaces the name with the translation of <code>common.close</code> (needs the JavaScript Core).</td></tr>
+</tbody>
+</table>
+<h3>Component tokens</h3>
+<p>The tokens are declared on <code>:root</code>, on any <code>[data-bui-mode]</code> and on any <code>[data-bui-theme]</code> element. Close Button is designed to sit inside other components, so a parent can re-declare the color tokens on itself (for example <code>--bui-btn-close-color: currentColor</code>) without any selector for the close button. Names that contain <code>_</code> are internal and not part of the API.</p>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Close Button component tokens</caption>
+<thead><tr><th scope="col">Token</th><th scope="col">Default</th><th scope="col">Description</th></tr></thead>
+<tbody>
+<tr><td><code>--bui-btn-close-size-{sm|md|lg}</code></td><td>Derived from the spacing scale</td><td>Width and height per size.</td></tr>
+<tr><td><code>--bui-btn-close-touch-size-{sm|md|lg}</code></td><td>Derived from the spacing scale</td><td>Width and height per size when <code>pointer: coarse</code>.</td></tr>
+<tr><td><code>--bui-btn-close-font-size-{sm|md|lg}</code></td><td>Derived from the font-size scale</td><td>Icon size (the icon is 1em).</td></tr>
+<tr><td><code>--bui-btn-close-radius</code></td><td><code>var(--bui-radius-md)</code></td><td>Corner radius.</td></tr>
+<tr><td><code>--bui-btn-close-color</code></td><td><code>var(--bui-color-text-muted)</code></td><td>Icon color at rest.</td></tr>
+<tr><td><code>--bui-btn-close-hover-color</code></td><td><code>var(--bui-color-text)</code></td><td>Icon color on hover and active.</td></tr>
+<tr><td><code>--bui-btn-close-hover-bg</code></td><td><code>var(--bui-color-neutral-100)</code></td><td>Background on hover.</td></tr>
+<tr><td><code>--bui-btn-close-active-bg</code></td><td><code>var(--bui-color-neutral-200)</code></td><td>Background when pressed.</td></tr>
+<tr><td><code>--bui-btn-close-disabled-opacity</code></td><td><code>var(--bui-btn-disabled-opacity)</code></td><td>Opacity when disabled.</td></tr>
+</tbody>
+</table>
+                    </section>
+
+                    <section class="bui-docs-section" aria-labelledby="examples">
+                        <h2 id="examples">05. Examples</h2>
+<h3>In a header</h3>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<div class="bui-d-flex bui-items-center bui-justify-between bui-gap-3 bui-p-3 bui-border bui-rounded-md">
+    <strong>Filters</strong>
+    <button type="button" class="bui-btn-close" aria-label="Close filters"><i class="bui-icon-regular bui-icon-x" aria-hidden="true"></i></button>
+</div>
+</div>
+</div>
+<p>Use <code>bui-justify-between</code> (or <code>bui-ms-auto</code> on the button) to place it at the end of a header. Give the button a specific name (<code>Close filters</code>) when the context needs it; a static <code>aria-label</code> is not translated.</p>
+<h3>On a colored surface</h3>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<div class="bui-d-flex bui-items-center bui-justify-between bui-gap-3 bui-p-3 bui-rounded-md" style="background: var(--bui-color-info-subtle); color: var(--bui-color-text); --bui-btn-close-color: var(--bui-color-text); --bui-btn-close-hover-bg: var(--bui-color-info-border);">
+    <span>Your changes were saved.</span>
+    <button type="button" class="bui-btn-close" aria-label="Close"><i class="bui-icon-regular bui-icon-x" aria-hidden="true"></i></button>
+</div>
+</div>
+</div>
+<p>The parent re-declares two tokens for its own subtree. The text color and the info surface come from the semantic tokens, so the example follows Light, Dark and Themes.</p>
+<h3>Translated name</h3>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<div class="bui-d-flex bui-flex-wrap bui-gap-2 bui-items-center bui-docs-demo-gap">
+<button type="button" class="bui-btn bui-btn--outline bui-btn--secondary bui-btn--sm" data-locale-set="en">English</button>
+<button type="button" class="bui-btn bui-btn--outline bui-btn--secondary bui-btn--sm" data-locale-set="ar">العربية</button>
+<button type="button" class="bui-btn bui-btn--outline bui-btn--secondary bui-btn--sm" data-locale-set="fr">Français</button>
+</div>
+<div class="bui-d-flex bui-items-center bui-gap-2">
+<button type="button" class="bui-btn-close" aria-label="Close" data-bui-i18n-attr="aria-label:common.close"><i class="bui-icon-regular bui-icon-x" aria-hidden="true"></i></button>
+<span>aria-label: <code data-demo-name>Close</code></span>
+</div>
+</div>
+<pre class="bui-docs-code" data-lang="javascript"><code>await BUI.locale.use('ar', { url: 'assets/i18n/ar.json', fallback: false });
+// Every [data-bui-i18n-attr="aria-label:common.close"] now has aria-label="..." in Arabic.</code></pre>
+</div>
+<p><code>fallback: false</code> is used because this example needs one key only; by default the Locale Manager also loads the English fallback. The language switch changes the language and direction of this whole page, as on the Internationalization page. It needs the page to be served over http or https (<code>fetch</code> does not work from <code>file://</code>).</p>
+
+                    </section>
+
+                    <section class="bui-docs-section" aria-labelledby="javascript-api">
+                        <h2 id="javascript-api">06. JavaScript API</h2>
+
+<p>CSS only, no JavaScript API. Close Button registers nothing with <code>BUI.register</code> and fires no events: what happens when it is pressed is up to the component that contains it or to your own click handler.</p>
+<p>Translation is the only optional link to the JavaScript Core. CSS alone cannot translate an <code>aria-label</code>, so the markup carries a static English <code>aria-label</code> (works with no JavaScript) and the attribute <code>data-bui-i18n-attr="aria-label:common.close"</code>. When <code>baset-ui.js</code> is loaded and <code>BUI.locale.use()</code> has run, the Locale Manager replaces the name with the translation and keeps it updated when the language changes. The key <code>common.close</code> already exists in every language file, so no i18n key was added for this component.</p>
+
+                    </section>
+
+                    <section class="bui-docs-section" aria-labelledby="responsive-behavior">
+                        <h2 id="responsive-behavior">07. Responsive Behavior</h2>
+
+<p>Close Button has no breakpoint-specific styles. It is a fixed square that does not shrink in a flex row.</p>
+<ul>
+<li>On touch devices (<code>pointer: coarse</code>) the square grows to 36px (sm), 44px (md) and 48px (lg). The small size on touch is below the 44px recommendation and above the 24px WCAG 2.2 AA minimum. The visible area of the button grows, not only the icon.</li>
+<li>Hover styles apply only when the device can hover.</li>
+<li>In a right-to-left page nothing mirrors: the x icon is symmetric. The button moves to the other end of a header through <code>justify-content</code> and logical margins such as <code>bui-ms-auto</code>.</li>
+</ul>
+
+                    </section>
+
+                    <section class="bui-docs-section" aria-labelledby="accessibility">
+                        <h2 id="accessibility">08. Accessibility</h2>
+
+<h3>Keyboard</h3>
+<p>It is a native <code>&lt;button&gt;</code>: Tab focuses it, Enter and Space activate it. A disabled button is not focusable. Pressing Escape is not handled here; closing on Escape belongs to the component that is closed.</p>
+<h3>ARIA</h3>
+<ul>
+<li>The button must have an accessible name, because it contains only an icon: <code>aria-label</code> on the button. The icon inside has <code>aria-hidden="true"</code>.</li>
+<li>Use <code>type="button"</code> so it never submits a form by accident.</li>
+<li>When the context matters (several close buttons on a page), use a specific name such as "Close filters". The default <code>common.close</code> text is generic.</li>
+<li>Meaning does not depend on color alone: the x shape carries it.</li>
+</ul>
+<h3>Screen reader</h3>
+<p>Not tested with a screen reader. Whether the translated name is announced in the right language after a language switch was not verified with assistive technology; the attribute value was verified in the browser.</p>
+<h3>Contrast and motion</h3>
+<p>Measured in Chromium in Light and Dark with the default and ocean themes, for the three sizes at rest, hover, active and focus-visible (48 samples). The icon contrast against its background is at least 5.90:1 at rest, 12.28:1 on hover and 9.96:1 when pressed (3:1 is required for an icon that carries meaning). The focus ring is at least 6.01:1 against the page. A disabled button is exempt from the contrast requirement. With <code>prefers-reduced-motion: reduce</code> the color transition is shortened by the duration tokens. Forced colors mode was only checked with the Chromium emulation (the transparent border stays drawn), not on a real Windows high contrast theme.</p>
+
+                    </section>
+
+
+                </div>
+                <!-- Previous / Next links are appended here by docs.js from the order in nav.js. -->
+            </div>
+            <!-- "On this page" is appended here by docs.js (visible from the XL breakpoint). -->
+        </div>
+    </main>
+
+    <script src="../../assets/js/baset-ui.js"></script>
+    <script src="../../documentation/assets/js/nav.js"></script>
+    <script src="../../documentation/assets/js/docs.js"></script>
+    <script src="../../documentation/assets/js/playground.js"></script>
+    <script>
+        /* Docs-only helpers for this page. */
+        (function () {
+            var name = document.querySelector('[data-demo-name]');
+            var button = name ? name.closest('.bui-docs-example__preview').querySelector('.bui-btn-close') : null;
+            function readout() { if (name && button) { name.textContent = button.getAttribute('aria-label'); } }
+            document.querySelectorAll('[data-locale-set]').forEach(function (b) {
+                b.addEventListener('click', function () {
+                    var code = b.getAttribute('data-locale-set');
+                    BUI.locale.use(code, { url: '../../assets/i18n/' + code + '.json', fallback: false }).catch(function (e) {
+                        if (name) { name.textContent = 'Could not load "' + code + '" (serve the site over http or https).'; }
+                    });
+                });
+            });
+            document.documentElement.addEventListener('bui:locale:change', readout);
+
+            BUI_DOCS_PLAYGROUND.define('close-button', {
+                title: 'Close Button playground',
+                controls: [
+                    { type: 'radio-group', name: 'size', label: 'Size', default: 'md',
+                      options: [{ value: 'sm', label: 'Small' }, { value: 'md', label: 'Medium' }, { value: 'lg', label: 'Large' }] },
+                    { type: 'select', name: 'weight', label: 'Icon weight', default: 'regular',
+                      options: [{ value: 'thin', label: 'Thin' }, { value: 'light', label: 'Light' }, { value: 'regular', label: 'Regular' }, { value: 'solid', label: 'Solid' }, { value: 'bold', label: 'Bold' }, { value: 'duotone', label: 'Duotone' }] },
+                    { type: 'switch', name: 'disabled', label: 'Disabled' },
+                    { type: 'switch', name: 'translate', label: 'Translate the name (data-bui-i18n-attr)', default: true }
+                ],
+                template: function (state, h) {
+                    var cn = 'bui-btn-close' + (state.size !== 'md' ? ' bui-btn-close--' + state.size : '');
+                    return '<button type="button" class="' + cn + '" aria-label="Close"' +
+                        (state.translate ? ' data-bui-i18n-attr="aria-label:common.close"' : '') +
+                        (state.disabled ? ' disabled' : '') + '>\n' +
+                        '    <i class="bui-icon-' + state.weight + ' bui-icon-x" aria-hidden="true"></i>\n</button>';
+                }
+            });
+        })();
+    </script>
+</body>
+</html>

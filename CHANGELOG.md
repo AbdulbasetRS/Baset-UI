@@ -4,6 +4,44 @@
 
 ## [Unreleased]
 
+### Added (Task 09: Button + Button Group + Close Button)
+- `assets/css/baset-ui.css` (161,098 بايت خام و19,109 gzip، كان 140,405 و15,024): قسم 6 (Components) فيه ثلاثة مكونات CSS فقط، وComponent Tokens في الطبقة 3 (`--bui-btn-*` و`--bui-btn-close-*`).
+- **Button:** 4 Variants (solid وoutline وghost وlink) x 6 ألوان دلالية x 3 أحجام (`sm`/`md`/`lg`)، `bui-btn--block` للعرض الكامل و`bui-btn--icon` لزر الأيقونة فقط، حالات hover وfocus-visible وactive وdisabled وloading. يعمل على `button` و`a` و`input type="button"`. Loading عبر `aria-busy="true"`: Spinner داخلي (`::before`) يحل محل الأيقونة ويمنع إدخال المؤشر.
+- **Button Group:** صف وعمود (`--vertical`) وأحجام (`--sm`/`--lg`) وتحول عمودي متجاوب `--stack-sm|md|lg` (Mobile First)، تلاصق حدود وزوايا بـ Logical Properties يعمل في RTL، فاصل بلون النص بين أزرار solid.
+- **Close Button:** زر مربع (`--sm`/`--md`/`--lg`) لأيقونة `x`، ألوانه Tokens يعيد المكون الأب تعريفها.
+- ثلاث صفحات توثيق في `documentation/components/` (`button.html` و`button-group.html` و`close-button.html`) بالأقسام الثمانية بالترتيب وPlayground حقيقي لكل منها (Schema خاص: 9 و8 و4 عناصر تحكم)، مفعلة في `nav.js`.
+- `tests/manual/button.html`: Fixture لمصفوفة Variant x Color x Size والحالات والمجموعات وClose Button، مع مبدلات الثيم والوضع والاتجاه (انظر ARCHITECTURE.md).
+
+### Changed (Task 09)
+- `instructions/`: `COMPONENT_DEVELOPMENT.md` (قسم **النمط المرجعي**: تسمية Tokens وبنية CSS وشكل Playground Schema)، `NAMING_CONVENTIONS.md` (Tokens الخاصة `_` والحالة بالسمة وKeyframes)، `COMPONENTS_REGISTRY.md` (المكونات الثلاثة Documented وملاحظات الأنظمة)، `ARCHITECTURE.md` (قسم Task 09)، `CORE_ASSETS.md` وPROJECT_OVERVIEW.md وRTL_LTR_AND_THEMES.md وINTERNATIONALIZATION.md وCUSTOMIZATION_AND_PLAYGROUND.md (أسطر الحالة فقط).
+- حُذف `documentation/components/.gitkeep` لأن المجلد لم يعد فارغاً (قاعدة 5 في ARCHITECTURE.md).
+- `assets/i18n/*.json`: **لم تتغير.** المكونات تعيد استخدام `common.close` و`common.loading`.
+
+### Changed (Task 09, تسمية مختصرة بطلبك)
+- الأصناف: `bui-btn` و`bui-btn-group` و`bui-btn-close` (بدل `bui-button` و`bui-button-group` و`bui-close-button`)، والـ Modifiers كما هي (`bui-btn--outline`، `bui-btn--lg`، `bui-btn-group--stack-md`). الـ Tokens: `--bui-btn-*` و`--bui-btn-close-*`، والـ Keyframes `bui-btn-spin`. بدون Aliases للأسماء القديمة. القاعدة وجدول الاختصارات المعتمدة في `NAMING_CONVENTIONS.md`. أسماء الملفات (`button.html`) وSchemas الـ Playground (`button`) بقيت كما هي.
+
+### Decisions (Task 09)
+- **النمط المرجعي** (التفاصيل في COMPONENT_DEVELOPMENT.md): Tokens عامة `--bui-{component}-{prop}[-{size}]` في الطبقة 3؛ قيم خاصة `--bui-{component}-_*`؛ الألوان تأتي من Tokens الألوان الدلالية عبر Modifier اللون (فيتحكم الثيم بها دون Tokens لونية خاصة بالمكون)؛ Modifier افتراضي لكل خيار؛ Playground Schema يحذف القيم الافتراضية من Code Output.
+- **السمة هي الحالة:** `disabled` و`aria-disabled="true"` و`aria-busy="true"` وليس فئة `is-loading`. السبب: نقل الحالة الدلالية مع الشكل في مكان واحد وعدم تكرارها. `aria-busy` وحدها تمنع المؤشر فقط ولا تمنع Enter/Space: موثق، والتوصية معالج يتحقق من السمة أو إضافة `disabled`.
+- **Loading لا يخفي النص:** Spinner بجانب النص (يحل محل الأيقونة) بدل تغطية الزر، فيبقى النص مقروءاً. الثمن: عرض الزر يتغير عند التبديل إن لم يكن فيه أيقونة. `aria-busy` لا تعلنها قارئات الشاشة غالباً فيُوصى بنص مخفي `common.loading` داخل الزر.
+- **`input type="button"` لا يدعم Spinner ولا أيقونة** (عنصر بلا محتوى): موثق، يدعم باقي الخيارات.
+- **رابط معطل:** بلا `href` ومعه `role="link"` و`aria-disabled="true"`؛ `aria-disabled` وحدها على رابط له `href` لا توقف تنقل الكيبورد.
+- **التحول العمودي المتجاوب:** `--stack-{sm|md|lg}` (576 و768 و992). الأساس عمودي و`min-width` يعيد الصف. تُنفذ الأعلام `_h`/`_v` بدل تكرار قواعد الزوايا لكل نقطة.
+- **فاصل أزرار solid:** خط بلون نص الزر (`--bui-color-*-contrast`) على حافة البداية فقط، لأن حدودها بلون الخلفية فتختفي عند التلاصق. أزرار outline تتداخل حدودها بدل ذلك.
+- **أهداف اللمس** (`pointer: coarse`): Button 40 و44 و48px، Close Button 36 و44 و48px. حجم `sm` على اللمس أقل من توصية 44px وأعلى من حد WCAG 2.2 AA (24px).
+- **Close Button:** الاسم `aria-label` ثابت بالإنجليزية (يعمل بلا JS) + `data-bui-i18n-attr="aria-label:common.close"` للترجمة (يحتاج `baset-ui.js`)، لأن CSS وحده لا يترجم. يتطلب Extension الأيقونات في Include وإلا يظهر فارغاً (موثق).
+- `Spinner` يُبطأ (2s) تحت `prefers-reduced-motion` ولا يتوقف لأنه مؤشر حالة، بخلاف بقية الحركة التي تتوقف بـ Tokens المدة.
+
+### Tested (Task 09, Chromium 157 عبر Playwright فقط، خادم http محلي)
+- **التباين:** 2,984 عينة لـ Button (4 Variants x 6 ألوان x 3 أحجام x حالات rest وhover وactive وfocus-visible وloading، إضافة a وinput، x default وocean x Light وDark x LTR وRTL): أدنى نسبة نص 5.02:1 (solid warning، Light)، أدنى حلقة تركيز 6.01:1، أدنى حد outline 5.02:1. Close Button: 48 عينة، أدنى 5.90:1 (سكون) و12.28:1 (hover) و9.96:1 (active). حالات hover وactive وfocus بإجبارها عبر CDP (`CSS.forcePseudoState`)، وتأكد أن الستايل يتغير فعلاً. disabled مستثنى من الشرط.
+- **الهندسة:** زوايا وتداخل الحدود في الصف والعمود وLTR وRTL (الزر الأول يمين في RTL)، وStack عند 320 و575 و576 و767 و768 و992 و1920، الفاصل على الحافة الصحيحة في الاتجاهين، الأحجام (32 و40 و48)، زر الأيقونة مربع، الزر الكامل يلتف النص بلا Overflow.
+- **الكيبورد والمؤشر:** Enter وSpace على button وinput وClose Button، Tab يتخطى المعطل والرابط بلا `href`، المعطل لا يطلق Click، `aria-disabled` و`aria-busy` يمنعان المؤشر، `aria-busy` وحدها لا تمنع الكيبورد (كما هو موثق)، حلقة التركيز ظاهرة (2px بإزاحة 2px).
+- **Responsive:** 256 تركيبة (3 صفحات توثيق + Fixture x 8 عروض 320-1920 x اتجاهان x وضعان x ثيمان) بلا Overflow أفقي ولا أخطاء Console ولا 404.
+- **Playground:** 62 فحصاً بتحريك كل عنصر تحكم في الصفحات الثلاث: المعاينة تطابق Code Output، تهريب النص، Reset، عدم تطبيق الخيارات غير المنطبقة.
+- **i18n:** `node tests/i18n-keys.js` ينجح (لم تتغير الملفات)، وتبديل en/ar/fr يحدّث `aria-label` و`lang` و`dir` فعلياً. **لمس:** محاكاة `pointer: coarse` (hasTouch وisMobile) تعطي الأحجام أعلاه. **Reduced motion وForced Colors:** بمحاكاة Chromium.
+- **التراجع:** 26 صفحة (كل صفحات التوثيق و`index.html`) بلا Console ولا 404، و`tests/manual/core.html` 43/43، و`node tools/build-icons.js --check` ينجح، و`node --check` للـ JS، وصحة JSON.
+- **لم يُختبر:** قارئات الشاشة (NVDA وVoiceOver)، Safari وFirefox، أجهزة لمس فعلية، Forced Colors على Windows الفعلي، متصفحات أقدم من الحديثة (الـ CSS يعتمد على `:dir()` و`:not()` بقوائم و`calc()` بقيم أعلام و`@media (hover)`)، الاستخدام داخل Alert/Dialog/Toast (غير منفذة).
+
 ### Added (Task 08: Playground Framework)
 - `documentation/assets/js/playground.js` (45,061 بايت) و`documentation/assets/css/playground.css` (11,895 بايت): إطار Customize مشترك للتوثيق بلا Dependencies. `BUI_DOCS_PLAYGROUND.define(name, schema)` و`mount(element, schema)` و`escape(text)`؛ النسخة: `getState` و`setState` و`reset` و`resetPreview` و`destroy`.
 - Schema: `controls` بثمانية أنواع (select وradio-group وcheckbox وswitch وrange وtext وnumber وcolor) مع قيم افتراضية، و`template(state, helpers)` يرجع HTML أو `{ html, js }`، و`beforeRender`/`afterRender` اختياريان. تحقق من الـ Schema برسائل خطأ واضحة.

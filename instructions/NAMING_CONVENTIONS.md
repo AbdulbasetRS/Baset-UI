@@ -5,11 +5,11 @@
 
 | العنصر | القاعدة | مثال |
 |---|---|---|
-| CSS Class (Block) | `bui-{component}` | `.bui-button` |
+| CSS Class (Block) | `bui-{component}` | `.bui-btn` |
 | CSS Element | `bui-{component}__{element}` | `.bui-modal__header` |
-| CSS Modifier | `bui-{component}--{modifier}` | `.bui-button--primary` |
+| CSS Modifier | `bui-{component}--{modifier}` | `.bui-btn--primary` |
 | CSS State | `is-{state}` / `has-{state}` مع ربطها بالمكون | `.bui-modal.is-open` |
-| CSS Variable | `--bui-{category}-{name}` (وللمكون: `--bui-{component}-{prop}`) | `--bui-color-primary`، `--bui-button-padding-x` |
+| CSS Variable | `--bui-{category}-{name}` (وللمكون: `--bui-{component}-{prop}`) | `--bui-color-primary`، `--bui-btn-padding-x` |
 | HTML Attribute | `data-bui-{name}` | `data-bui-select`, `data-bui-theme` |
 | Option Attribute | `data-bui-{option-kebab}` | `data-bui-per-page` |
 | Events (DOM) | `bui:{component}:{event}` | `bui:modal:open` |
@@ -18,6 +18,25 @@
 | JS Class داخلية | PascalCase | `ModalController` |
 | Icon Class | `bui-icon-{weight}` + `bui-icon-{name}` | [ICONS_SYSTEM.md](ICONS_SYSTEM.md) |
 | مفاتيح i18n | `section.camelCaseKey` | `common.noResults` |
+
+## أسماء الأصناف المختصرة (قرار Task 09)
+الأصناف والـ Tokens تستخدم اسماً مختصراً على نمط Bootstrap، مع إبقاء البادئة `bui-` دائماً.
+- **القاعدة:** الاسم المختصر مأخوذ من الجدول أدناه فقط. أي مكون جديد له اختصار يُقترح في مهمته ويُوافق عليه قبل التنفيذ ثم يضاف للجدول، ولا يُخترع اختصار داخل الكود. مكون لا يوجد له اختصار معتمد يبقى باسمه الكامل.
+- الاختصار يسري على الصنف و`--bui-{اختصار}-*` للـ Tokens والـ `@keyframes` والـ Modifiers (`bui-btn--outline`). أما أسماء الملفات والصفحات والـ Playground Schema والنصوص فتبقى بالاسم الكامل (`button.html`، Schema `button`).
+- لا Aliases بالأسماء الطويلة القديمة.
+
+| المكون | الصنف | Tokens | الحالة |
+|---|---|---|---|
+| Button | `bui-btn` | `--bui-btn-*` | معتمد (Task 09) |
+| Button Group | `bui-btn-group` | `--bui-btn-group-*` (خاصة فقط) | معتمد (Task 09) |
+| Close Button | `bui-btn-close` | `--bui-btn-close-*` | معتمد (Task 09) |
+
+## قيم خاصة وحالات (Task 09)
+- **Token خاص (داخلي):** اسم يحتوي `_` بعد اسم المكون: `--bui-btn-_bg`. ليس API ولا يوثق كخيار ولا يعدله المستخدم أو الثيم.
+- **حجم:** `--bui-{component}-{prop}-{sm|md|lg}`. **لمس:** `--bui-{component}-touch-{prop}-{sm|md|lg}`.
+- **حالة:** السمة القياسية هي الحالة حين توجد (`disabled`, `aria-disabled="true"`, `aria-busy="true"`)، وفئة `is-{state}` لغيرها.
+- **Modifier افتراضي** له اسم صريح اختياري (`bui-btn--solid`).
+- **Keyframes:** `bui-{component}-{name}` (`bui-btn-spin`).
 
 ## الملفات
 - ملفات CSS/JS/HTML/JSON: `kebab-case` بحروف صغيرة (`date-picker.js`).

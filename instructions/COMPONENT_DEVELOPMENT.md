@@ -1,6 +1,6 @@
 # معايير تطوير المكونات
 
-كل Component يتبع نفس المعمارية مع السماح باختلافات منطقية حسب طبيعته. (لا يوجد Component منفذ حالياً.)
+كل Component يتبع نفس المعمارية مع السماح باختلافات منطقية حسب طبيعته. (المنفذ حتى Task 09: Button وButton Group وClose Button، وهي النمط المرجعي أدناه.)
 
 ## قائمة قبل البدء
 - التأكد من وجود المكون في [COMPONENTS_REGISTRY.md](COMPONENTS_REGISTRY.md) أو إضافته.
@@ -55,3 +55,34 @@ const select = BUI.select.remote('#users', { perPage: 10 });
 
 ## تعريف الاكتمال (Definition of Done)
 الكود + Documentation بالترتيب الإلزامي + Playground + اختبارات ناجحة + مراجعة RTL/LTR/Light/Dark/Responsive + تحديث Registry.
+
+## النمط المرجعي (Task 09: Button وButton Group وClose Button)
+أول مكونات المكتبة. باقي المكونات تتبع هذا النمط ما لم يوجد سبب موثق للخروج عنه.
+
+### التسمية
+- Block/Modifier حسب [NAMING_CONVENTIONS.md](NAMING_CONVENTIONS.md): `bui-btn`، `bui-btn--{variant|color|size|block|icon}`. مكون مجموعة له Block خاص (`bui-btn-group`). المكون الافتراضي بلا Modifier (`bui-btn` = solid وprimary وmd)، ولكل قيمة افتراضية Modifier صريح اختياري (`--solid`, `--primary`, `--md`) ليستطيع الـ Playground وكاتب الصفحة التصريح بها.
+- **Component Tokens (عامة):** `--bui-{component}-{prop}` وللأحجام `--bui-{component}-{prop}-{sm|md|lg}`، وللمس `--bui-{component}-touch-{prop}-{size}`. تُعرَّف في **الطبقة 3** من `baset-ui.css` (`:root, [data-bui-mode], [data-bui-theme]`) بـ `var()` على Tokens الطبقة 1 و2 فقط (مقاسات وألوان من مقياس المسافات والألوان الدلالية، لا قيم حرة).
+- **قيم خاصة:** الاسم الذي يحتوي `_` بعد اسم المكون (`--bui-btn-_bg`) داخلي وليس API ولا يوثق كخيار. تُستخدم لحساب القيمة المطبقة من الـ Modifiers.
+- **الألوان ليست Component Tokens:** Modifier اللون يعيّن مجموعة `_accent*` من `--bui-color-{name}*`، فيتحكم الثيم بالمكون عبر Tokens الألوان العامة. Component Tokens للشكل والحجم والحركة والحالات.
+- أنماط الحالة: لكل Variant قيم السكون وhover وactive، وقواعد الحالة تبدل ثلاث قيم مطبقة فقط (`_bg-c` و`_fg-c` و`_border-c`).
+
+### بنية CSS داخل `baset-ui.css` (قسم 6، ترتيب أبجدي)
+1. تعليق ترويسة يشرح النمط. 2. `@keyframes` بالبادئة `bui-{component}-`. 3. القاعدة الأساسية بكل القيم الافتراضية. 4. Variants ثم Colors ثم Sizes ثم الخيارات (`block`, `icon`). 5. الحالات. 6. `@media (pointer: coarse)` لرفع الأهداف. 7. المكونات المرتبطة (Group) بعد المكون.
+- مرجع الحالة: **السمة هي الحالة** حين يوجد معيار (`:disabled`، `[aria-disabled="true"]`، `[aria-busy="true"]`) بدل فئة `is-*` المكررة. الفئة `is-*` للحالات التي لا تقابلها سمة قياسية.
+- `:hover` داخل `@media (hover: hover)`. التحريك يستخدم Tokens المدة فيتوقف بـ `prefers-reduced-motion`؛ المؤشرات التي تدل على حالة (Spinner) تُبطأ ولا تتوقف (قاعدة في القسم 8).
+- أهداف اللمس: `min-height: max(القيمة العادية, قيمة المس)`. أي ارتفاع يبقى قابلاً للتخصيص بالثيم.
+- التلاصق وتبديل التخطيط: أعلام أرقام (`--bui-btn-group-_h`/`_v` بقيمة 0 أو 1) تتحكم بالتداخل وأنصاف الأقطار بـ `calc()`، فتبديل الاتجاه (عمودي أو Stack متجاوب) يغيّر الأعلام و`flex-direction` فقط بلا تكرار القواعد.
+- الأيقونات داخل المكون تُحدد بـ `[class*="bui-icon-"]` (محدد عام، بلا اعتماد على ملف الـ Extension). المكون الذي يرسم أيقونة (Close Button) يتطلب الـ Extension في Include ويوثق ذلك. Core لا يعتمد على Extension: الاعتماد على مستوى الـ Markup فقط.
+- أحجام المجموعة تتفوق على الحجم في الزر (خصوصية أعلى) ويُوثق ذلك.
+- مكون سيوضع داخل غيره (Close Button داخل Alert لاحقاً): ألوانه Tokens عامة يعيد الأب تعريفها على نفسه.
+
+### شكل Playground Schema
+- `{ title, controls, template }` فقط (بلا Hooks للمكونات CSS فقط). اسم Schema = اسم المكون (`button`, `button-group`, `close-button`).
+- كل خيار يقابل Class أو سمة موثقة في قسم 04. `select` للقيم الكثيرة (Variant وColor وElement)، `radio-group` للأحجام والاتجاه، `switch` للحالات والخيارات المنطقية (`disabled`, `loading`, `block`)، `range` للأعداد (عدد أزرار المجموعة)، `text` للنصوص (يمر عبر `h.escape()`) مثل Label.
+- `template` يحذف القيم الافتراضية (لا يطبع `bui-btn--primary` ولا `--md`) فيبقى Code Output هو الحد الأدنى المنسوخ.
+- الخيارات التي لا تنطبق على تركيبة (أيقونة على `input`) تُهمل في القالب وتُوثق في فقرة قسم Customize، ولا تُخفى الواجهة ديناميكياً (الإطار لا يدعم الاعتماد بين الخيارات).
+- الصفحة تضيف معالج نقر docs-only يمنع قفز `href="#"` داخل المعاينة.
+- ترتيب الملفات في `<head>`: `baset-ui.css` ثم Extension الأيقونات ثم الثيم ثم `docs.css` ثم `playground.css`؛ وآخر `<body>`: `baset-ui.js` ثم `nav.js` ثم `docs.js` ثم `playground.js` ثم سكربت الصفحة.
+
+### Fixture الاختبار
+`tests/manual/button.html`: يعرض Variant x Color x Size والحالات التي تحتاج سمة (disabled وloading) والعناصر الأخرى وكل تخطيطات المجموعة والـ Close Button، مع مبدلات الثيم والوضع والاتجاه. حالات hover وactive وfocus تُفحص بالمؤشر أو بالكيبورد أو بإجبارها من أدوات المطور.

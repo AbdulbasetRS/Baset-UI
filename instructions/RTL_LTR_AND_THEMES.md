@@ -1,6 +1,6 @@
 # الاتجاهات (RTL/LTR) والـ Themes
 
-> الحالة (Task 06): **Theme Manager (`BUI.theme`) منفذ**، وثيم `ocean` (Light/Dark) في `assets/css/themes/ocean.css`. Tokens الافتراضية (Light/Dark) في `baset-ui.css` (Task 03). Task 04: أدوات Borders تقرأ Tokens، وtranslate-middle يعتمد `:dir(rtl)`. التوثيق الموجه للمستخدمين: صفحات Themes وDark Mode وRTL & LTR في `documentation/`. لا مكون منفذ بعد، فتأثير الثيم على المكونات غير مختبر.
+> الحالة (Task 06): **Theme Manager (`BUI.theme`) منفذ**، وثيم `ocean` (Light/Dark) في `assets/css/themes/ocean.css`. Tokens الافتراضية (Light/Dark) في `baset-ui.css` (Task 03). Task 04: أدوات Borders تقرأ Tokens، وtranslate-middle يعتمد `:dir(rtl)`. التوثيق الموجه للمستخدمين: صفحات Themes وDark Mode وRTL & LTR في `documentation/`. Task 09: تأثير الثيمين default وocean على Button وButton Group وClose Button مختبر في Chromium (Light وDark وLTR وRTL)؛ تأثيره على مكونات أخرى غير مختبر لأنها غير منفذة.
 
 ## RTL / LTR (إلزامي)
 - الاتجاه يُحدد بـ `dir` على `<html>` (أو على حاوية لمعاينات محلية).
@@ -30,7 +30,7 @@ Theme = ملف CSS يعيد تعريف Tokens (وأحياناً Component Tokens
 
 ### طبقات Tokens
 1. **Global Tokens:** `--bui-color-*`, `--bui-font-*`, `--bui-radius-*`, `--bui-shadow-*`, `--bui-space-*`.
-2. **Component Tokens:** `--bui-grid-gutter`, `--bui-container-padding-x` (والمستقبلي `--bui-button-bg`) وتشتق افتراضياً من Global.
+2. **Component Tokens:** `--bui-grid-gutter`, `--bui-container-padding-x` (والمستقبلي `--bui-btn-bg`) وتشتق افتراضياً من Global.
 المكونات تقرأ Component Tokens فقط (مع Fallback إلى Global)، فيستطيع الـ Theme التحكم بكل مكون دون كتابة Selectors له.
 
 **التنفيذ في `baset-ui.css` (Task 03) وقواعد الاشتقاق:**

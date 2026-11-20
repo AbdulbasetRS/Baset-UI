@@ -1,6 +1,6 @@
 # نظام الترجمة (i18n)
 
-> الحالة (Task 06): **`BUI.locale` منفذ** في `assets/js/baset-ui.js`، والملفات `en.json` و`ar.json` و`fr.json` بنفس المفاتيح. التوثيق الموجه للمستخدمين: `documentation/advanced/internationalization.html`. لا يوجد مكون منفذ يستهلك النصوص بعد، فتحديث المكونات عند تغيير اللغة (`refresh()`) غير مختبر مع مكون حقيقي.
+> الحالة (Task 06): **`BUI.locale` منفذ** في `assets/js/baset-ui.js`، والملفات `en.json` و`ar.json` و`fr.json` بنفس المفاتيح. التوثيق الموجه للمستخدمين: `documentation/advanced/internationalization.html`. Close Button (Task 09) يستهلك `common.close` عبر HTML Binding (`data-bui-i18n-attr`) واختُبر بـ en وar وfr؛ لكنه CSS فقط ولا يستمع لـ `bui:locale:change`، فتحديث المكونات ذات JS عبر `refresh()` غير مختبر مع مكون حقيقي.
 
 ## الملفات
 `assets/i18n/{code}.json`. مثال: `en.json`, `ar.json`, `fr.json`, `pt-br.json`.

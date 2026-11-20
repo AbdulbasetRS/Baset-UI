@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-bui-theme="default" data-bui-mode="light" data-root="../../">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Button - Baset-UI Documentation</title>
+    <meta name="description" content="Button: four variants, six semantic colors, three sizes, loading and disabled states, on button, a and input elements. CSS only.">
+    <!-- Empty icon: avoids a /favicon.ico 404 until the project has a real icon. -->
+    <link rel="icon" href="data:,">
+
+    <link rel="stylesheet" href="../../assets/css/baset-ui.css">
+    <link rel="stylesheet" href="../../assets/css/extensions/baset-ui-icons.css">
+    <link rel="stylesheet" href="../../assets/css/themes/ocean.css">
+    <link rel="stylesheet" href="../../documentation/assets/css/docs.css">
+    <link rel="stylesheet" href="../../documentation/assets/css/playground.css">
+    <script>
+        /* Prevents a flash of the wrong theme or mode. Same keys as BUI.theme (bui-theme, bui-mode). */
+        (function () {
+            var d = document.documentElement, t = null, m = null, r = null;
+            try { t = localStorage.getItem('bui-theme'); m = localStorage.getItem('bui-mode'); r = localStorage.getItem('bui-docs-dir'); } catch (e) {}
+            if (t && /^[a-z][a-z0-9]*(-[a-z0-9]+)*$/.test(t)) d.setAttribute('data-bui-theme', t);
+            if (m !== 'light' && m !== 'dark') m = window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+            d.setAttribute('data-bui-mode', m);
+            /* Documentation shell only: the saved direction of the RTL/LTR switcher. */
+            if (r === 'rtl' || r === 'ltr') d.setAttribute('dir', r);
+        })();
+    </script>
+</head>
+<body>
+    <main class="bui-docs-main" id="bui-docs-main" tabindex="-1">
+        <div class="bui-docs-page">
+            <div class="bui-docs-page__body">
+
+                <header class="bui-docs-page-header">
+                    <nav class="bui-docs-breadcrumb" aria-label="Breadcrumb" data-docs-breadcrumb hidden></nav>
+                    <h1>Button</h1>
+                    <p class="bui-docs-lead">A clickable control in four variants, six semantic colors and three sizes. CSS only, on a button, a link or an input.</p>
+                </header>
+
+                <div class="bui-docs-content">
+                    <section class="bui-docs-section" aria-labelledby="installation-include">
+                        <h2 id="installation-include">01. Installation &amp; Include</h2>
+
+<p>Button is part of the Core stylesheet, so <code>assets/css/baset-ui.css</code> is the only required file. Load the icons Extension only if a button contains an icon, and a Theme if you use one. Order: Core, then Extension, then Theme. No JavaScript is needed.</p>
+<pre class="bui-docs-code" data-lang="html"><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="en" dir="ltr" data-bui-theme="default" data-bui-mode="light"&gt;
+&lt;head&gt;
+    &lt;meta charset="utf-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
+    &lt;title&gt;Button&lt;/title&gt;
+    &lt;link rel="stylesheet" href="assets/css/baset-ui.css"&gt;
+    &lt;!-- Only when a button contains an icon --&gt;
+    &lt;link rel="stylesheet" href="assets/css/extensions/baset-ui-icons.css"&gt;
+    &lt;!-- Optional theme --&gt;
+    &lt;link rel="stylesheet" href="assets/css/themes/ocean.css"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;button type="button" class="bui-btn"&gt;Save changes&lt;/button&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+                    </section>
+
+                    <section class="bui-docs-section" aria-labelledby="customize">
+                        <h2 id="customize">02. Customize</h2>
+
+<p>Every option below is a real class or attribute documented in section 04. The label text in the examples is sample text. Full width does not apply to an icon-only button, and <code>input</code> cannot hold an icon or a spinner, so those two options are ignored for it.</p>
+<div data-docs-playground="button"></div>
+
+                    </section>
+
+                    <section class="bui-docs-section" aria-labelledby="default">
+                        <h2 id="default">03. Default</h2>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<button type="button" class="bui-btn">Save changes</button>
+</div>
+</div>
+<p>With no modifier, <code>.bui-btn</code> is a solid, primary, medium button.</p>
+                    </section>
+
+                    <section class="bui-docs-section" aria-labelledby="variants-options">
+                        <h2 id="variants-options">04. Variants &amp; Options</h2>
+
+<h3>Variants</h3>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Button variants</caption>
+<thead><tr><th scope="col">Name</th><th scope="col">Class</th><th scope="col">Description</th></tr></thead>
+<tbody>
+<tr><td><code>solid</code> (default)</td><td><code>bui-btn--solid</code></td><td>Filled with the color. The class is optional because it is the default.</td></tr>
+<tr><td><code>outline</code></td><td><code>bui-btn--outline</code></td><td>Transparent with a colored border and colored text. Hover and active use a subtle fill.</td></tr>
+<tr><td><code>ghost</code></td><td><code>bui-btn--ghost</code></td><td>No fill and no visible border until hover or active. The border stays transparent so the size does not change.</td></tr>
+<tr><td><code>link</code></td><td><code>bui-btn--link</code></td><td>Looks like a text link: underlined, no fill. It keeps the padding and minimum height of a button.</td></tr>
+</tbody>
+</table>
+<h3>Colors</h3>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Button colors</caption>
+<thead><tr><th scope="col">Name</th><th scope="col">Class</th><th scope="col">Tokens it reads</th></tr></thead>
+<tbody>
+<tr><td><code>primary</code> (default)</td><td><code>bui-btn--primary</code></td><td><code>--bui-color-primary</code>, <code>-hover</code>, <code>-active</code>, <code>-subtle</code>, <code>-contrast</code></td></tr>
+<tr><td><code>secondary</code></td><td><code>bui-btn--secondary</code></td><td>Same five tokens with the <code>secondary</code> name.</td></tr>
+<tr><td><code>success</code></td><td><code>bui-btn--success</code></td><td>Same five tokens with the <code>success</code> name.</td></tr>
+<tr><td><code>warning</code></td><td><code>bui-btn--warning</code></td><td>Same five tokens with the <code>warning</code> name.</td></tr>
+<tr><td><code>danger</code></td><td><code>bui-btn--danger</code></td><td>Same five tokens with the <code>danger</code> name.</td></tr>
+<tr><td><code>info</code></td><td><code>bui-btn--info</code></td><td>Same five tokens with the <code>info</code> name.</td></tr>
+</tbody>
+</table>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<div class="bui-d-flex bui-flex-wrap bui-gap-2 bui-docs-demo-gap"><button type="button" class="bui-btn bui-btn--primary">Primary</button><button type="button" class="bui-btn bui-btn--secondary">Secondary</button><button type="button" class="bui-btn bui-btn--success">Success</button><button type="button" class="bui-btn bui-btn--warning">Warning</button><button type="button" class="bui-btn bui-btn--danger">Danger</button><button type="button" class="bui-btn bui-btn--info">Info</button></div>
+<div class="bui-d-flex bui-flex-wrap bui-gap-2 bui-docs-demo-gap"><button type="button" class="bui-btn bui-btn--outline bui-btn--primary">Primary</button><button type="button" class="bui-btn bui-btn--outline bui-btn--secondary">Secondary</button><button type="button" class="bui-btn bui-btn--outline bui-btn--success">Success</button><button type="button" class="bui-btn bui-btn--outline bui-btn--warning">Warning</button><button type="button" class="bui-btn bui-btn--outline bui-btn--danger">Danger</button><button type="button" class="bui-btn bui-btn--outline bui-btn--info">Info</button></div>
+<div class="bui-d-flex bui-flex-wrap bui-gap-2 bui-docs-demo-gap"><button type="button" class="bui-btn bui-btn--ghost bui-btn--primary">Primary</button><button type="button" class="bui-btn bui-btn--ghost bui-btn--secondary">Secondary</button><button type="button" class="bui-btn bui-btn--ghost bui-btn--success">Success</button><button type="button" class="bui-btn bui-btn--ghost bui-btn--warning">Warning</button><button type="button" class="bui-btn bui-btn--ghost bui-btn--danger">Danger</button><button type="button" class="bui-btn bui-btn--ghost bui-btn--info">Info</button></div>
+<div class="bui-d-flex bui-flex-wrap bui-gap-2 bui-docs-demo-gap"><button type="button" class="bui-btn bui-btn--link bui-btn--primary">Primary</button><button type="button" class="bui-btn bui-btn--link bui-btn--secondary">Secondary</button><button type="button" class="bui-btn bui-btn--link bui-btn--success">Success</button><button type="button" class="bui-btn bui-btn--link bui-btn--warning">Warning</button><button type="button" class="bui-btn bui-btn--link bui-btn--danger">Danger</button><button type="button" class="bui-btn bui-btn--link bui-btn--info">Info</button></div>
+
+</div>
+<pre class="bui-docs-code" data-lang="html"><code>&lt;button type="button" class="bui-btn bui-btn--primary"&gt;Primary&lt;/button&gt;
+&lt;button type="button" class="bui-btn bui-btn--outline bui-btn--danger"&gt;Danger&lt;/button&gt;
+&lt;button type="button" class="bui-btn bui-btn--ghost bui-btn--success"&gt;Success&lt;/button&gt;
+&lt;button type="button" class="bui-btn bui-btn--link bui-btn--info"&gt;Info&lt;/button&gt;</code></pre>
+</div>
+<p>Each row above is one variant in the six colors. Any variant works with any color.</p>
+<h3>Sizes</h3>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Button sizes</caption>
+<thead><tr><th scope="col">Name</th><th scope="col">Class</th><th scope="col">Height</th><th scope="col">Height on touch devices</th></tr></thead>
+<tbody>
+<tr><td><code>sm</code></td><td><code>bui-btn--sm</code></td><td>2rem (32px)</td><td>2.5rem (40px)</td></tr>
+<tr><td><code>md</code> (default)</td><td><code>bui-btn--md</code></td><td>2.5rem (40px)</td><td>2.75rem (44px)</td></tr>
+<tr><td><code>lg</code></td><td><code>bui-btn--lg</code></td><td>3rem (48px)</td><td>3rem (48px)</td></tr>
+</tbody>
+</table><div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<div class="bui-d-flex bui-flex-wrap bui-gap-2 bui-items-center">
+<button type="button" class="bui-btn bui-btn--sm">Small</button>
+<button type="button" class="bui-btn">Medium</button>
+<button type="button" class="bui-btn bui-btn--lg">Large</button>
+</div>
+</div>
+</div>
+<h3>States</h3>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Button states</caption>
+<thead><tr><th scope="col">State</th><th scope="col">How it is triggered</th><th scope="col">Notes</th></tr></thead>
+<tbody>
+<tr><td>Hover</td><td>Pointer over the button</td><td>Applies only on devices that can hover (<code>@media (hover: hover)</code>), so a tap does not leave a sticky hover look.</td></tr>
+<tr><td>Focus visible</td><td>Keyboard focus</td><td>Uses the global focus ring (<code>--bui-focus-ring-width</code>, <code>--bui-focus-ring-offset</code> and <code>--bui-color-focus</code>).</td></tr>
+<tr><td>Active</td><td>Pointer or key held down</td><td>Darker (or lighter in Dark mode) than hover.</td></tr>
+<tr><td>Disabled</td><td><code>disabled</code> on a button or input, <code>aria-disabled="true"</code> on a link</td><td>Opacity from <code>--bui-btn-disabled-opacity</code>. Pointer input is blocked on <code>aria-disabled</code> elements.</td></tr>
+<tr><td>Loading</td><td><code>aria-busy="true"</code></td><td>An inner spinner replaces the icon and pointer input is blocked. Not available on <code>input</code>, which cannot hold content.</td></tr>
+</tbody>
+</table><div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<div class="bui-d-flex bui-flex-wrap bui-gap-2 bui-items-center">
+<button type="button" class="bui-btn" disabled>Disabled</button>
+<button type="button" class="bui-btn bui-btn--outline" disabled>Disabled</button>
+<button type="button" class="bui-btn" disabled aria-busy="true"><span class="bui-visually-hidden" data-bui-i18n="common.loading">Loading...</span>Saving</button>
+<button type="button" class="bui-btn bui-btn--outline" disabled aria-busy="true"><span class="bui-visually-hidden" data-bui-i18n="common.loading">Loading...</span>Saving</button>
+<a class="bui-btn bui-btn--secondary" role="link" aria-disabled="true">Disabled link</a>
+</div>
+</div>
+</div>
+<p>A loading button also needs a text for assistive technology. The pattern above puts a visually hidden <code>common.loading</code> text inside the button, translated by <code>data-bui-i18n</code> when the Locale Manager is used.</p>
+<h3>Options</h3>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Button options</caption>
+<thead><tr><th scope="col">Name</th><th scope="col">Type</th><th scope="col">Default</th><th scope="col">HTML</th><th scope="col">Description</th></tr></thead>
+<tbody>
+<tr><td>variant</td><td>enum</td><td><code>solid</code></td><td><code>bui-btn--{solid|outline|ghost|link}</code></td><td>Visual style.</td></tr>
+<tr><td>color</td><td>enum</td><td><code>primary</code></td><td><code>bui-btn--{primary|secondary|success|warning|danger|info}</code></td><td>Semantic color.</td></tr>
+<tr><td>size</td><td>enum</td><td><code>md</code></td><td><code>bui-btn--{sm|md|lg}</code></td><td>Height, padding and font size.</td></tr>
+<tr><td>block</td><td>boolean</td><td>false</td><td><code>bui-btn--block</code></td><td>Full width. Do not combine with <code>bui-btn--icon</code>.</td></tr>
+<tr><td>icon only</td><td>boolean</td><td>false</td><td><code>bui-btn--icon</code></td><td>A square button for a single icon. The button needs <code>aria-label</code>.</td></tr>
+<tr><td>disabled</td><td>boolean</td><td>false</td><td><code>disabled</code> or <code>aria-disabled="true"</code></td><td>Use <code>disabled</code> on <code>button</code> and <code>input</code>. A link has no native disabled state.</td></tr>
+<tr><td>loading</td><td>boolean</td><td>false</td><td><code>aria-busy="true"</code></td><td>Shows the inner spinner and blocks pointer input.</td></tr>
+</tbody>
+</table>
+<h3>Component tokens</h3>
+<p>The tokens are declared on <code>:root</code>, on any <code>[data-bui-mode]</code> and on any <code>[data-bui-theme]</code> element, so a Theme or a container can override them (a Theme only has to redefine tokens). Colors are not component tokens: they follow the semantic color tokens through the color modifiers, so a Theme that redefines <code>--bui-color-primary</code> restyles every primary button. Names that contain <code>_</code> (such as <code>--bui-btn-_bg</code>) are internal and not part of the API.</p>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Button component tokens</caption>
+<thead><tr><th scope="col">Token</th><th scope="col">Default</th><th scope="col">Description</th></tr></thead>
+<tbody>
+<tr><td><code>--bui-btn-font-family</code></td><td><code>inherit</code></td><td>Font family.</td></tr>
+<tr><td><code>--bui-btn-font-weight</code></td><td><code>var(--bui-font-weight-medium)</code></td><td>Font weight.</td></tr>
+<tr><td><code>--bui-btn-line-height</code></td><td><code>var(--bui-line-height-snug)</code></td><td>Line height of the label.</td></tr>
+<tr><td><code>--bui-btn-border-width</code></td><td><code>var(--bui-border-width)</code></td><td>Border width, also used for the joints in a Button Group.</td></tr>
+<tr><td><code>--bui-btn-radius</code></td><td><code>var(--bui-radius-md)</code></td><td>Corner radius.</td></tr>
+<tr><td><code>--bui-btn-gap</code></td><td><code>var(--bui-space-2)</code></td><td>Space between icon and label.</td></tr>
+<tr><td><code>--bui-btn-padding-y</code></td><td><code>var(--bui-space-1)</code></td><td>Vertical padding (the minimum height normally decides the height).</td></tr>
+<tr><td><code>--bui-btn-padding-x-{sm|md|lg}</code></td><td>Derived from the spacing scale</td><td>Horizontal padding per size.</td></tr>
+<tr><td><code>--bui-btn-font-size-{sm|md|lg}</code></td><td>Derived from the font-size scale</td><td>Font size per size.</td></tr>
+<tr><td><code>--bui-btn-height-{sm|md|lg}</code></td><td>Derived from the spacing scale</td><td>Minimum height per size.</td></tr>
+<tr><td><code>--bui-btn-touch-height-{sm|md|lg}</code></td><td>Derived from the spacing scale</td><td>Minimum height per size when <code>pointer: coarse</code>.</td></tr>
+<tr><td><code>--bui-btn-disabled-opacity</code></td><td><code>0.55</code></td><td>Opacity of a disabled button.</td></tr>
+<tr><td><code>--bui-btn-spinner-size</code></td><td><code>1em</code></td><td>Spinner diameter.</td></tr>
+<tr><td><code>--bui-btn-spinner-width</code></td><td><code>0.125em</code></td><td>Spinner stroke width.</td></tr>
+<tr><td><code>--bui-btn-spinner-duration</code></td><td><code>0.75s</code></td><td>Time of one spinner turn.</td></tr>
+</tbody>
+</table>
+                    </section>
+
+                    <section class="bui-docs-section" aria-labelledby="examples">
+                        <h2 id="examples">05. Examples</h2>
+<h3>Buttons with icons</h3>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<div class="bui-d-flex bui-flex-wrap bui-gap-2 bui-items-center">
+<button type="button" class="bui-btn"><i class="bui-icon-regular bui-icon-plus" aria-hidden="true"></i> Add item</button>
+<button type="button" class="bui-btn bui-btn--outline">Download <i class="bui-icon-regular bui-icon-download-simple" aria-hidden="true"></i></button>
+<button type="button" class="bui-btn bui-btn--icon" aria-label="Add item"><i class="bui-icon-regular bui-icon-plus" aria-hidden="true"></i></button>
+<button type="button" class="bui-btn bui-btn--outline bui-btn--secondary bui-btn--icon bui-btn--lg" aria-label="Refresh"><i class="bui-icon-regular bui-icon-arrows-clockwise" aria-hidden="true"></i></button>
+</div>
+</div>
+</div>
+<p>Icons come from the icons Extension and are decorative (<code>aria-hidden="true"</code>). An icon-only button must carry <code>aria-label</code> on the button itself. In a right-to-left page the icon moves to the other side automatically; a directional icon (such as an arrow) also needs <code>bui-icon-flip-rtl</code>.</p>
+<h3>Full width</h3>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<button type="button" class="bui-btn bui-btn--block">Continue</button>
+<div class="bui-docs-demo-gap"></div>
+<button type="button" class="bui-btn bui-btn--outline bui-btn--block">Back</button>
+</div>
+</div><h3>Link and input elements</h3>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<div class="bui-d-flex bui-flex-wrap bui-gap-2 bui-items-center">
+<a href="#" class="bui-btn bui-btn--outline">Open the report</a>
+<input type="button" class="bui-btn bui-btn--secondary" value="Reset">
+</div>
+</div>
+</div>
+<p>Use <code>&lt;a&gt;</code> for navigation and <code>&lt;button&gt;</code> for actions. <code>&lt;input type="button"&gt;</code> supports variants, colors, sizes, full width and <code>disabled</code>, but it cannot show an icon or the loading spinner because an input cannot contain elements.</p>
+<h3>Loading while saving</h3>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<button type="button" class="bui-btn" data-demo-save>Save changes</button>
+<p class="bui-mt-2 bui-mb-0" role="status" data-demo-status>Click the button: it shows the loading state for two seconds.</p>
+</div>
+<pre class="bui-docs-code" data-lang="javascript"><code>const button = document.querySelector('[data-demo-save]');
+button.addEventListener('click', () =&gt; {
+    if (button.getAttribute('aria-busy') === 'true') return; // aria-busy blocks the pointer, not Enter or Space
+    button.setAttribute('aria-busy', 'true');
+    saveChanges().finally(() =&gt; button.removeAttribute('aria-busy'));
+});</code></pre>
+</div>
+<p>The library has no JavaScript API for this: you set and remove <code>aria-busy</code> yourself. This pattern keeps keyboard focus on the button. If you prefer, add <code>disabled</code> as well: it blocks every kind of activation, but the browser then moves focus away from the button.</p>
+<h3>Form actions</h3>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<div class="bui-d-flex bui-flex-wrap bui-gap-2 bui-justify-end">
+<button type="button" class="bui-btn bui-btn--ghost bui-btn--secondary">Cancel</button>
+<button type="button" class="bui-btn bui-btn--outline bui-btn--danger">Delete</button>
+<button type="button" class="bui-btn">Save changes</button>
+</div>
+</div>
+</div>
+                    </section>
+
+                    <section class="bui-docs-section" aria-labelledby="javascript-api">
+                        <h2 id="javascript-api">06. JavaScript API</h2>
+
+<p>CSS only, no JavaScript API. Button registers nothing with <code>BUI.register</code>, fires no events and has no options to parse. The state hooks are plain attributes (<code>disabled</code>, <code>aria-disabled</code>, <code>aria-busy</code>) that your own code can set and remove, as in the loading example above.</p>
+<p>The only optional link to the JavaScript Core is translation: a text inside a button can use <code>data-bui-i18n="common.loading"</code>, which the Locale Manager fills (see <a href="../advanced/internationalization.html">Internationalization</a>). No key was added for Button: it reuses <code>common.loading</code>.</p>
+
+                    </section>
+
+                    <section class="bui-docs-section" aria-labelledby="responsive-behavior">
+                        <h2 id="responsive-behavior">07. Responsive Behavior</h2>
+
+<p>Button has no breakpoint-specific styles; it follows its container.</p>
+<ul>
+<li>The label wraps onto several lines instead of overflowing a narrow container (tested down to a 320px viewport), and the button grows taller.</li>
+<li>A button is inline by default. Add <code>bui-btn--block</code> for full width, or use the layout utilities (for example <code>bui-d-flex</code> with <code>bui-flex-wrap</code> and <code>bui-gap-2</code>) to arrange several buttons.</li>
+<li>On touch devices (<code>pointer: coarse</code>) the minimum height rises to 40px (sm), 44px (md) and 48px (lg), and an icon-only button becomes square at the same size. The small size on touch is below the 44px recommendation and above the 24px WCAG 2.2 AA minimum.</li>
+<li>Hover styles apply only when the device can hover.</li>
+<li>To stack a row of related buttons on small screens, use <a href="button-group.html">Button Group</a> with <code>bui-btn-group--stack-{sm|md|lg}</code>.</li>
+</ul>
+
+                    </section>
+
+                    <section class="bui-docs-section" aria-labelledby="accessibility">
+                        <h2 id="accessibility">08. Accessibility</h2>
+
+<h3>Keyboard</h3>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Keyboard behavior of Button</caption>
+<thead><tr><th scope="col">Element</th><th scope="col">Keys</th><th scope="col">Behavior</th></tr></thead>
+<tbody>
+<tr><td><code>button</code>, <code>input type="button"</code></td><td>Tab, Enter, Space</td><td>Tab focuses it, Enter and Space activate it.</td></tr>
+<tr><td><code>a</code> with <code>href</code></td><td>Tab, Enter</td><td>Enter follows the link. Space does not activate a link (browser behavior).</td></tr>
+<tr><td><code>disabled</code></td><td>-</td><td>Not focusable and not activated.</td></tr>
+<tr><td><code>aria-busy="true"</code> alone</td><td>Tab, Enter, Space</td><td>Still focusable and still activated by the keyboard. Guard in your handler, or add <code>disabled</code>.</td></tr>
+</tbody>
+</table>
+<p>Keyboard focus shows the global focus ring. Focus is not lost on hover or active states.</p>
+<h3>ARIA</h3>
+<ul>
+<li>Use native elements first. A link used as a button (an action) needs <code>role="button"</code> and its own Space handling; prefer <code>&lt;button&gt;</code> for actions.</li>
+<li>An icon-only button needs <code>aria-label</code> on the button. The icon inside has <code>aria-hidden="true"</code>. Translate the label with <code>data-bui-i18n-attr="aria-label:{key}"</code>.</li>
+<li>A disabled link has no <code>href</code>, <code>role="link"</code> and <code>aria-disabled="true"</code>. Setting only <code>aria-disabled</code> on a link that still has an <code>href</code> does not stop keyboard navigation.</li>
+<li><code>aria-busy="true"</code> marks the loading state. Because screen readers rarely announce it on a button, add a visually hidden text (<code>common.loading</code>) inside the button, as in section 04.</li>
+<li>Meaning never depends on color alone: the link variant is underlined, the disabled state also changes opacity and the cursor, and loading shows a spinner.</li>
+</ul>
+<h3>Screen reader</h3>
+<p>Not tested with a screen reader (NVDA, VoiceOver or similar): the semantics above come from native elements and standard attributes, but how each reader announces the loading text and the disabled link was not verified.</p>
+<h3>Contrast and motion</h3>
+<p>Measured in Chromium for every variant, color and size in the rest, hover, active, focus-visible and loading states, in Light and Dark, with the default and ocean themes, in both directions (2,984 samples). The lowest text contrast is 5.02:1 (solid warning, Light), above the 4.5:1 AA threshold. The focus ring is at least 6.01:1 against the page and the border of an outline button at least 5.02:1 (3:1 is required). The check measured computed colors; it does not replace a review with a contrast tool on your own Theme.</p>
+<p>Disabled buttons are exempt from the WCAG contrast requirement and keep the opacity from <code>--bui-btn-disabled-opacity</code>. With <code>prefers-reduced-motion: reduce</code> the spinner is slowed to one turn per two seconds instead of stopped, because it is a status indicator, and color transitions are shortened by the duration tokens. Forced colors mode was only checked with the Chromium emulation (borders stay drawn, including the transparent ones), not on a real Windows high contrast theme.</p>
+
+                    </section>
+
+
+                </div>
+                <!-- Previous / Next links are appended here by docs.js from the order in nav.js. -->
+            </div>
+            <!-- "On this page" is appended here by docs.js (visible from the XL breakpoint). -->
+        </div>
+    </main>
+
+    <script src="../../assets/js/baset-ui.js"></script>
+    <script src="../../documentation/assets/js/nav.js"></script>
+    <script src="../../documentation/assets/js/docs.js"></script>
+    <script src="../../documentation/assets/js/playground.js"></script>
+    <script>
+        /* Docs-only helpers for this page. */
+        (function () {
+            /* The examples use href="#" as a placeholder: do not jump to the top when it is clicked. */
+            document.addEventListener('click', function (e) {
+                var a = e.target.closest && e.target.closest('a[href="#"]');
+                if (a && a.closest('.bui-docs-example__preview, [data-docs-playground]')) { e.preventDefault(); }
+            });
+
+            /* Live "Loading while saving" example (user code, not library API). */
+            var save = document.querySelector('[data-demo-save]');
+            var status = document.querySelector('[data-demo-status]');
+            var idle = status ? status.textContent : '';
+            if (save) {
+                save.addEventListener('click', function () {
+                    if (save.getAttribute('aria-busy') === 'true') { return; }
+                    save.setAttribute('aria-busy', 'true');
+                    var hidden = document.createElement('span');
+                    hidden.className = 'bui-visually-hidden';
+                    hidden.textContent = 'Loading...';
+                    save.insertBefore(hidden, save.firstChild);
+                    status.textContent = 'Saving...';
+                    setTimeout(function () {
+                        save.removeAttribute('aria-busy');
+                        hidden.remove();
+                        status.textContent = 'Saved. ' + idle;
+                    }, 2000);
+                });
+            }
+
+            BUI_DOCS_PLAYGROUND.define('button', {
+                title: 'Button playground',
+                controls: [
+                    { type: 'select', name: 'variant', label: 'Variant', default: 'solid',
+                      options: [{ value: 'solid', label: 'Solid' }, { value: 'outline', label: 'Outline' }, { value: 'ghost', label: 'Ghost' }, { value: 'link', label: 'Link' }] },
+                    { type: 'select', name: 'color', label: 'Color', default: 'primary',
+                      options: [{ value: 'primary', label: 'Primary' }, { value: 'secondary', label: 'Secondary' }, { value: 'success', label: 'Success' }, { value: 'warning', label: 'Warning' }, { value: 'danger', label: 'Danger' }, { value: 'info', label: 'Info' }] },
+                    { type: 'radio-group', name: 'size', label: 'Size', default: 'md',
+                      options: [{ value: 'sm', label: 'Small' }, { value: 'md', label: 'Medium' }, { value: 'lg', label: 'Large' }] },
+                    { type: 'select', name: 'element', label: 'Element', default: 'button',
+                      options: [{ value: 'button', label: 'button' }, { value: 'a', label: 'a (link)' }, { value: 'input', label: 'input type="button" (text only)' }] },
+                    { type: 'text', name: 'label', label: 'Label', default: 'Save changes', maxLength: 24 },
+                    { type: 'select', name: 'icon', label: 'Icon', default: 'none',
+                      options: [{ value: 'none', label: 'None' }, { value: 'before', label: 'Before the label' }, { value: 'after', label: 'After the label' }, { value: 'only', label: 'Icon only (label becomes aria-label)' }] },
+                    { type: 'switch', name: 'block', label: 'Full width' },
+                    { type: 'switch', name: 'disabled', label: 'Disabled' },
+                    { type: 'switch', name: 'loading', label: 'Loading' }
+                ],
+                template: function (state, h) {
+                    var isInput = state.element === 'input';
+                    var isLink = state.element === 'a';
+                    var iconOnly = state.icon === 'only' && !isInput;
+                    var cls = ['bui-btn'];
+                    if (state.variant !== 'solid') { cls.push('bui-btn--' + state.variant); }
+                    if (state.color !== 'primary') { cls.push('bui-btn--' + state.color); }
+                    if (state.size !== 'md') { cls.push('bui-btn--' + state.size); }
+                    if (iconOnly) { cls.push('bui-btn--icon'); } else if (state.block) { cls.push('bui-btn--block'); }
+                    var cn = cls.join(' ');
+                    var off = state.disabled || state.loading;
+                    var label = h.escape(state.label);
+                    var icon = '<i class="bui-icon-regular bui-icon-plus" aria-hidden="true"></i>';
+                    var busy = state.loading ? ' aria-busy="true"' : '';
+
+                    if (isInput) {
+                        return '<input type="button" class="' + cn + '" value="' + label + '"' + (off ? ' disabled' : '') + busy + '>';
+                    }
+                    var inner;
+                    if (iconOnly) { inner = icon; }
+                    else {
+                        inner = (state.loading ? '<span class="bui-visually-hidden" data-bui-i18n="common.loading">Loading...</span>' : '') +
+                            (state.icon === 'before' ? icon + ' ' : '') + label + (state.icon === 'after' ? ' ' + icon : '');
+                    }
+                    var aria = iconOnly ? ' aria-label="' + label + '"' : '';
+                    if (isLink) {
+                        var linkState = off ? ' role="link" aria-disabled="true"' : ' href="#"';
+                        return '<a class="' + cn + '"' + linkState + busy + aria + '>' + inner + '</a>';
+                    }
+                    return '<button type="button" class="' + cn + '"' + (off ? ' disabled' : '') + busy + aria + '>' + inner + '</button>';
+                }
+            });
+        })();
+    </script>
+</body>
+</html>
