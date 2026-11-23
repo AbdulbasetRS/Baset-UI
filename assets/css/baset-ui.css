@@ -302,6 +302,45 @@
     --bui-progress-duration: var(--bui-duration-slow);
     --bui-progress-indeterminate-duration: 1.5s;
     --bui-progress-segment-divider: var(--bui-border-width-thick);
+
+    /* Card component tokens (Task 11). The neutral surface colors are tokens so a Theme can restyle the default card; the accent colors of the variants follow the semantic color tokens through the color modifiers. */
+    --bui-card-bg: var(--bui-color-bg);
+    --bui-card-color: var(--bui-color-text);
+    --bui-card-muted-color: var(--bui-color-text-muted);
+    --bui-card-border-color: var(--bui-color-border);
+    --bui-card-border-width: var(--bui-border-width);
+    --bui-card-radius: var(--bui-radius-lg);
+    --bui-card-shadow: none;
+    --bui-card-hover-shadow: var(--bui-shadow-md);
+    --bui-card-padding-x: var(--bui-space-3);
+    --bui-card-padding-y: var(--bui-space-3);
+    --bui-card-cap-padding-y: var(--bui-space-2);
+    --bui-card-cap-bg: var(--bui-color-surface);
+    --bui-card-gap: var(--bui-space-2);
+    --bui-card-title-font-size: var(--bui-font-size-lg);
+    --bui-card-title-font-weight: var(--bui-font-weight-semibold);
+    --bui-card-subtitle-font-size: var(--bui-font-size-sm);
+    --bui-card-media-bg: var(--bui-color-surface);
+    --bui-card-media-size: calc(var(--bui-space-6) * 4);
+
+    /* List Group component tokens (Task 11). The active item uses the primary color; a parent (a Card) may re-declare these on itself. */
+    --bui-list-group-bg: var(--bui-color-bg);
+    --bui-list-group-color: var(--bui-color-text);
+    --bui-list-group-border-color: var(--bui-color-border);
+    --bui-list-group-border-width: var(--bui-border-width);
+    --bui-list-group-radius: var(--bui-radius-md);
+    --bui-list-group-item-padding-x: var(--bui-space-3);
+    --bui-list-group-item-padding-y: var(--bui-space-2);
+    --bui-list-group-hover-bg: var(--bui-color-surface);
+    --bui-list-group-pressed-bg: var(--bui-color-neutral-100);
+    --bui-list-group-active-bg: var(--bui-color-primary);
+    --bui-list-group-active-color: var(--bui-color-primary-contrast);
+    --bui-list-group-active-border-color: var(--bui-color-primary);
+    --bui-list-group-disabled-bg: var(--bui-color-surface);
+    --bui-list-group-disabled-color: var(--bui-color-text-muted);
+    --bui-list-group-counter-gap: var(--bui-space-2);
+    --bui-list-group-counter-style: decimal;
+    --bui-list-group-touch-height: calc(var(--bui-space-5) + var(--bui-space-2) + var(--bui-space-1));
 }
 
 /* =====================================================================
@@ -835,7 +874,7 @@ pre { margin-block: 0 var(--bui-space-3); overflow: auto; }
 .bui-shadow-xl { box-shadow: var(--bui-shadow-xl) !important; }
 
 /* =====================================================================
- * 6. COMPONENTS (alphabetical): Avatar, Badge (Task 10), Button, Button Group, Close Button (Task 09), Progress (Task 10).
+ * 6. COMPONENTS (alphabetical): Avatar, Badge (Task 10), Button, Button Group (Task 09), Card (Task 11), Close Button (Task 09), List Group (Task 11), Progress (Task 10).
  * ===================================================================== */
 
 /* ---------------------------------------------------------------------
@@ -1492,6 +1531,259 @@ pre { margin-block: 0 var(--bui-space-3); overflow: auto; }
 }
 
 /* ---------------------------------------------------------------------
+ * Card (Task 11). A bordered container for related content. Follows the Button pattern (instructions/COMPONENT_DEVELOPMENT.md).
+ *   - Component tokens: --bui-card-* (Layer 3, themeable). Private values: --bui-card-_* (internal, not API).
+ *   - Elements: __header, __body, __footer, __title, __subtitle, __text, __media, __stretched-link.
+ *   - Variants --solid, --subtle, --outline map the accent set to background, text and border; the color modifiers set the accent set.
+ *     A bare .bui-card is the neutral default. A color modifier has an effect only together with a variant.
+ *   - Layout flags: --bui-card-_h is 1 for a row and 0 for a column, --bui-card-_v is the opposite. They drive the media size and the
+ *     corner radii of the first and last child, so the horizontal layouts (always, or from a breakpoint) only flip the flags and flex-direction.
+ *   - A horizontal card has the media and the body as direct children (a header or footer would become a column).
+ *   - Stretched Link: the ::after of .bui-card__stretched-link covers the card. The link must not be positioned, and no positioned
+ *     element may sit between it and the card. Other interactive elements in the card are raised above it (zero specificity, so
+ *     a component that positions itself, such as a close button, keeps its own position).
+ * --------------------------------------------------------------------- */
+.bui-card {
+    --bui-card-_accent: var(--bui-color-primary);
+    --bui-card-_accent-hover: var(--bui-color-primary-hover);
+    --bui-card-_accent-subtle: var(--bui-color-primary-subtle);
+    --bui-card-_accent-border: var(--bui-color-primary-border);
+    --bui-card-_accent-contrast: var(--bui-color-primary-contrast);
+    --bui-card-_bg: var(--bui-card-bg);
+    --bui-card-_fg: var(--bui-card-color);
+    --bui-card-_muted: var(--bui-card-muted-color);
+    --bui-card-_border: var(--bui-card-border-color);
+    --bui-card-_cap-bg: var(--bui-card-cap-bg);
+    --bui-card-_divider: var(--bui-card-border-color);
+    --bui-card-_hover-bg: var(--bui-list-group-hover-bg);
+    --bui-card-_pressed-bg: var(--bui-list-group-pressed-bg);
+    --bui-card-_active-bg: var(--bui-list-group-active-bg);
+    --bui-card-_active-fg: var(--bui-list-group-active-color);
+    --bui-card-_ring: var(--bui-focus-ring-color);
+    --bui-card-_h: 0;
+    --bui-card-_v: 1;
+    --bui-card-_inner-radius: max(0px, calc(var(--bui-card-radius) - var(--bui-card-border-width)));
+
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-inline-size: 0;
+    block-size: 100%;
+    margin: 0;
+    color: var(--bui-card-_fg);
+    background-color: var(--bui-card-_bg);
+    border: var(--bui-card-border-width) solid var(--bui-card-_border);
+    border-radius: var(--bui-card-radius);
+    box-shadow: var(--bui-card-shadow);
+    overflow-wrap: break-word;
+    transition: box-shadow var(--bui-duration-fast) var(--bui-easing-standard), border-color var(--bui-duration-fast) var(--bui-easing-standard);
+}
+
+/* Corners of the first and last child follow the layout: the block-start corners in a column, the inline-start corners in a row. */
+.bui-card > :first-child:not(:last-child) {
+    border-start-start-radius: var(--bui-card-_inner-radius);
+    border-start-end-radius: calc(var(--bui-card-_inner-radius) * var(--bui-card-_v));
+    border-end-start-radius: calc(var(--bui-card-_inner-radius) * var(--bui-card-_h));
+    border-end-end-radius: 0;
+}
+.bui-card > :last-child:not(:first-child) {
+    border-start-start-radius: 0;
+    border-start-end-radius: calc(var(--bui-card-_inner-radius) * var(--bui-card-_h));
+    border-end-start-radius: calc(var(--bui-card-_inner-radius) * var(--bui-card-_v));
+    border-end-end-radius: var(--bui-card-_inner-radius);
+}
+.bui-card > :only-child { border-radius: var(--bui-card-_inner-radius); }
+
+/* Variants */
+.bui-card--solid {
+    --bui-card-_bg: var(--bui-card-_accent);
+    --bui-card-_fg: var(--bui-card-_accent-contrast);
+    --bui-card-_muted: var(--bui-card-_accent-contrast);
+    --bui-card-_border: var(--bui-card-_accent);
+    --bui-card-_cap-bg: transparent;
+    --bui-card-_divider: var(--bui-card-_accent-contrast);
+    --bui-card-_hover-bg: var(--bui-card-_accent-hover);
+    --bui-card-_pressed-bg: var(--bui-card-_accent-hover);
+    --bui-card-_active-bg: var(--bui-card-_accent-contrast);
+    --bui-card-_active-fg: var(--bui-card-_accent);
+    --bui-card-_ring: var(--bui-card-_accent-contrast);
+}
+.bui-card--subtle {
+    --bui-card-_bg: var(--bui-card-_accent-subtle);
+    --bui-card-_border: var(--bui-card-_accent-border);
+    --bui-card-_cap-bg: transparent;
+    --bui-card-_divider: var(--bui-card-_accent-border);
+    --bui-card-_hover-bg: var(--bui-card-_accent-border);
+    --bui-card-_pressed-bg: var(--bui-card-_accent-border);
+}
+.bui-card--outline {
+    --bui-card-_bg: transparent;
+    --bui-card-_border: var(--bui-card-_accent);
+    --bui-card-_cap-bg: transparent;
+    --bui-card-_divider: var(--bui-card-_accent-border);
+}
+
+/* Colors */
+.bui-card--primary {
+    --bui-card-_accent: var(--bui-color-primary);
+    --bui-card-_accent-hover: var(--bui-color-primary-hover);
+    --bui-card-_accent-subtle: var(--bui-color-primary-subtle);
+    --bui-card-_accent-border: var(--bui-color-primary-border);
+    --bui-card-_accent-contrast: var(--bui-color-primary-contrast);
+}
+.bui-card--secondary {
+    --bui-card-_accent: var(--bui-color-secondary);
+    --bui-card-_accent-hover: var(--bui-color-secondary-hover);
+    --bui-card-_accent-subtle: var(--bui-color-secondary-subtle);
+    --bui-card-_accent-border: var(--bui-color-secondary-border);
+    --bui-card-_accent-contrast: var(--bui-color-secondary-contrast);
+}
+.bui-card--success {
+    --bui-card-_accent: var(--bui-color-success);
+    --bui-card-_accent-hover: var(--bui-color-success-hover);
+    --bui-card-_accent-subtle: var(--bui-color-success-subtle);
+    --bui-card-_accent-border: var(--bui-color-success-border);
+    --bui-card-_accent-contrast: var(--bui-color-success-contrast);
+}
+.bui-card--warning {
+    --bui-card-_accent: var(--bui-color-warning);
+    --bui-card-_accent-hover: var(--bui-color-warning-hover);
+    --bui-card-_accent-subtle: var(--bui-color-warning-subtle);
+    --bui-card-_accent-border: var(--bui-color-warning-border);
+    --bui-card-_accent-contrast: var(--bui-color-warning-contrast);
+}
+.bui-card--danger {
+    --bui-card-_accent: var(--bui-color-danger);
+    --bui-card-_accent-hover: var(--bui-color-danger-hover);
+    --bui-card-_accent-subtle: var(--bui-color-danger-subtle);
+    --bui-card-_accent-border: var(--bui-color-danger-border);
+    --bui-card-_accent-contrast: var(--bui-color-danger-contrast);
+}
+.bui-card--info {
+    --bui-card-_accent: var(--bui-color-info);
+    --bui-card-_accent-hover: var(--bui-color-info-hover);
+    --bui-card-_accent-subtle: var(--bui-color-info-subtle);
+    --bui-card-_accent-border: var(--bui-color-info-border);
+    --bui-card-_accent-contrast: var(--bui-color-info-contrast);
+}
+
+/* Elements */
+.bui-card__header,
+.bui-card__footer {
+    padding: var(--bui-card-cap-padding-y) var(--bui-card-padding-x);
+    background-color: var(--bui-card-_cap-bg);
+}
+.bui-card__header { border-block-end: var(--bui-card-border-width) solid var(--bui-card-_divider); }
+.bui-card__footer { border-block-start: var(--bui-card-border-width) solid var(--bui-card-_divider); }
+.bui-card__body {
+    flex: 1 1 auto;
+    min-inline-size: 0;
+    padding: var(--bui-card-padding-y) var(--bui-card-padding-x);
+}
+.bui-card__title {
+    margin: 0 0 calc(var(--bui-card-gap) / 2);
+    font-size: var(--bui-card-title-font-size);
+    font-weight: var(--bui-card-title-font-weight);
+    line-height: var(--bui-heading-line-height);
+    color: inherit;
+}
+.bui-card__subtitle {
+    margin: 0 0 var(--bui-card-gap);
+    font-size: var(--bui-card-subtitle-font-size);
+    font-weight: var(--bui-font-weight-regular);
+    line-height: var(--bui-line-height-snug);
+    color: var(--bui-card-_muted);
+}
+.bui-card__text { margin: 0 0 var(--bui-card-gap); }
+:where(.bui-card__body, .bui-card__header, .bui-card__footer) > :last-child { margin-block-end: 0; }
+
+/* Media: an image or an inline SVG. In a column it is as wide as the card and keeps its ratio; in a row it has the media size and fills the height. */
+.bui-card__media {
+    flex: none;
+    inline-size: calc(var(--bui-card-media-size) * var(--bui-card-_h) + 100% * var(--bui-card-_v));
+    max-inline-size: calc(45% * var(--bui-card-_h) + 100% * var(--bui-card-_v));
+    overflow: hidden;
+    background-color: var(--bui-card-media-bg);
+}
+.bui-card__media > img,
+.bui-card__media > svg,
+.bui-card__media > picture,
+.bui-card__media > video {
+    display: block;
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: cover;
+}
+
+/* Horizontal: a row always (--horizontal), or from a breakpoint (a column below it). */
+.bui-card--horizontal {
+    --bui-card-_h: 1;
+    --bui-card-_v: 0;
+    flex-direction: row;
+}
+@media (min-width: 576px) {
+    .bui-card--horizontal-sm { --bui-card-_h: 1; --bui-card-_v: 0; flex-direction: row; }
+}
+@media (min-width: 768px) {
+    .bui-card--horizontal-md { --bui-card-_h: 1; --bui-card-_v: 0; flex-direction: row; }
+}
+@media (min-width: 992px) {
+    .bui-card--horizontal-lg { --bui-card-_h: 1; --bui-card-_v: 0; flex-direction: row; }
+}
+
+/* Stretched Link */
+.bui-card__stretched-link {
+    color: inherit;
+    text-decoration: none;
+}
+.bui-card__stretched-link::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    border-radius: var(--bui-card-radius);
+}
+@media (hover: hover) {
+    .bui-card__stretched-link:hover { text-decoration: underline; }
+    .bui-card:has(.bui-card__stretched-link:hover) {
+        border-color: var(--bui-card-_accent);
+        box-shadow: var(--bui-card-hover-shadow);
+    }
+}
+/* The ring is drawn by the ::after so it surrounds the whole card, and inside its edge so an ancestor with overflow cannot clip it. */
+.bui-card__stretched-link:focus-visible { outline: none; }
+.bui-card__stretched-link:focus-visible::after {
+    outline: var(--bui-focus-ring-width) solid var(--bui-card-_ring);
+    outline-offset: calc(var(--bui-focus-ring-width) * -1);
+}
+/* Other interactive elements stay above the stretched link. Zero specificity on purpose. */
+:where(.bui-card:has(.bui-card__stretched-link)) :where(a, button, input, select, textarea, summary, [role="button"], [tabindex]):not(.bui-card__stretched-link) {
+    position: relative;
+    z-index: 2;
+}
+@supports not selector(:has(*)) {
+    :where(.bui-card) :where(a, button, input, select, textarea, summary, [role="button"], [tabindex]):not(.bui-card__stretched-link) {
+        position: relative;
+        z-index: 2;
+    }
+}
+
+/* A List Group inside a Card takes the card's text and divider colors and keeps its hover and active colors readable on the card variant. */
+.bui-card .bui-list-group {
+    --bui-list-group-bg: transparent;
+    --bui-list-group-color: var(--bui-card-_fg);
+    --bui-list-group-border-color: var(--bui-card-_divider);
+    --bui-list-group-hover-bg: var(--bui-card-_hover-bg);
+    --bui-list-group-pressed-bg: var(--bui-card-_pressed-bg);
+    --bui-list-group-active-bg: var(--bui-card-_active-bg);
+    --bui-list-group-active-color: var(--bui-card-_active-fg);
+    --bui-list-group-active-border-color: var(--bui-card-_active-bg);
+}
+.bui-card > .bui-list-group--flush { overflow: hidden; }
+.bui-card > .bui-list-group--flush:not(:first-child) { border-block-start: var(--bui-card-border-width) solid var(--bui-card-_divider); }
+.bui-card > .bui-list-group--flush:not(:last-child) { border-block-end: var(--bui-card-border-width) solid var(--bui-card-_divider); }
+
+/* ---------------------------------------------------------------------
  * Close Button (Task 09). A square icon button. Markup: <button type="button" class="bui-btn-close"> with an x icon inside.
  * The colors are tokens so a parent component can re-declare them on itself (for example to inherit its own text color).
  * --------------------------------------------------------------------- */
@@ -1555,6 +1847,149 @@ pre { margin-block: 0 var(--bui-space-3); overflow: auto; }
         inline-size: max(var(--bui-btn-close-_size), var(--bui-btn-close-_touch-size));
         block-size: max(var(--bui-btn-close-_size), var(--bui-btn-close-_touch-size));
     }
+}
+
+/* ---------------------------------------------------------------------
+ * List Group (Task 11). A list of related items. Follows the Button pattern (instructions/COMPONENT_DEVELOPMENT.md).
+ *   - Component tokens: --bui-list-group-* (Layer 3, themeable). Private values: --bui-list-group-_* (internal, not API).
+ *   - Markup: <ul|ol class="bui-list-group"> with <li class="bui-list-group__item">, or a <div class="bui-list-group"> whose items are
+ *     <a href> or <button>. Items that are links or buttons get the hover, pressed and focus styles; plain items do not.
+ *   - State hooks: [aria-current] (the active item; a value other than "false"), [aria-disabled="true"], :disabled. No is-* class: the attribute is the state.
+ *   - Layout flags: --bui-list-group-_h is 1 for a row and 0 for a column, --bui-list-group-_v is the opposite. They drive the border overlap and the
+ *     corner radii, so the horizontal layouts (always, or from a breakpoint) only flip the flags and flex-direction.
+ *   - --flush is for the column layout: it does not combine with the horizontal layouts.
+ * --------------------------------------------------------------------- */
+.bui-list-group {
+    --bui-list-group-_h: 0;
+    --bui-list-group-_v: 1;
+    --bui-list-group-_radius: var(--bui-list-group-radius);
+
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-radius: var(--bui-list-group-radius);
+}
+
+.bui-list-group__item {
+    --bui-list-group-_bg-c: var(--bui-list-group-bg);
+    --bui-list-group-_fg-c: var(--bui-list-group-color);
+    --bui-list-group-_border-c: var(--bui-list-group-border-color);
+
+    position: relative;
+    display: block;
+    min-inline-size: 0;
+    margin: 0;
+    padding: var(--bui-list-group-item-padding-y) var(--bui-list-group-item-padding-x);
+    font: inherit;
+    text-align: start;
+    text-decoration: none;
+    overflow-wrap: break-word;
+    color: var(--bui-list-group-_fg-c);
+    background-color: var(--bui-list-group-_bg-c);
+    border: var(--bui-list-group-border-width) solid var(--bui-list-group-_border-c);
+    border-radius: 0;
+}
+button.bui-list-group__item {
+    inline-size: 100%;
+    cursor: pointer;
+}
+
+/* The borders of neighbours overlap, so one line separates two items. */
+.bui-list-group__item:not(:first-child) {
+    margin-inline-start: calc(var(--bui-list-group-border-width) * -1 * var(--bui-list-group-_h));
+    margin-block-start: calc(var(--bui-list-group-border-width) * -1 * var(--bui-list-group-_v));
+}
+.bui-list-group__item:first-child:not(:last-child) {
+    border-start-start-radius: var(--bui-list-group-_radius);
+    border-start-end-radius: calc(var(--bui-list-group-_radius) * var(--bui-list-group-_v));
+    border-end-start-radius: calc(var(--bui-list-group-_radius) * var(--bui-list-group-_h));
+    border-end-end-radius: 0;
+}
+.bui-list-group__item:last-child:not(:first-child) {
+    border-start-start-radius: 0;
+    border-start-end-radius: calc(var(--bui-list-group-_radius) * var(--bui-list-group-_h));
+    border-end-start-radius: calc(var(--bui-list-group-_radius) * var(--bui-list-group-_v));
+    border-end-end-radius: var(--bui-list-group-_radius);
+}
+.bui-list-group__item:only-child { border-radius: var(--bui-list-group-_radius); }
+
+/* Numbered: use an <ol>. The number is decorative (the list semantics already carry the order), so it has an empty alternative text where supported. */
+.bui-list-group--numbered { counter-reset: bui-list-group; }
+.bui-list-group--numbered > .bui-list-group__item { counter-increment: bui-list-group; }
+.bui-list-group--numbered > .bui-list-group__item::before {
+    content: counter(bui-list-group, var(--bui-list-group-counter-style)) ".";
+    content: counter(bui-list-group, var(--bui-list-group-counter-style)) "." / "";
+    display: inline-block;
+    margin-inline-end: var(--bui-list-group-counter-gap);
+    font-variant-numeric: tabular-nums;
+}
+
+/* Flush: no outer border and no rounded corners; only a line between the items. */
+.bui-list-group--flush {
+    --bui-list-group-_radius: 0px;
+    border-radius: 0;
+}
+.bui-list-group--flush > .bui-list-group__item {
+    margin: 0;
+    border-inline-width: 0;
+    border-block-start-width: 0;
+}
+.bui-list-group--flush > .bui-list-group__item:last-child { border-block-end-width: 0; }
+
+/* States. Hover only where a pointer can hover. The rules for the interactive states exclude the disabled and the active item. */
+@media (hover: hover) {
+    .bui-list-group__item:where(a[href], button):hover:where(:not([aria-disabled="true"], :disabled, [aria-current]:not([aria-current="false"]))) {
+        --bui-list-group-_bg-c: var(--bui-list-group-hover-bg);
+    }
+}
+.bui-list-group__item:where(a[href], button):active:where(:not([aria-disabled="true"], :disabled, [aria-current]:not([aria-current="false"]))) {
+    --bui-list-group-_bg-c: var(--bui-list-group-pressed-bg);
+}
+.bui-list-group__item[aria-current]:not([aria-current="false"]) {
+    --bui-list-group-_bg-c: var(--bui-list-group-active-bg);
+    --bui-list-group-_fg-c: var(--bui-list-group-active-color);
+    --bui-list-group-_border-c: var(--bui-list-group-active-border-color);
+    z-index: 1;
+}
+.bui-list-group__item:disabled,
+.bui-list-group__item[aria-disabled="true"] {
+    --bui-list-group-_bg-c: var(--bui-list-group-disabled-bg);
+    --bui-list-group-_fg-c: var(--bui-list-group-disabled-color);
+}
+.bui-list-group__item:disabled { cursor: not-allowed; }
+/* A link cannot be disabled natively, and aria-disabled does not stop a click: block pointer input (keyboard needs tabindex="-1" and no href). */
+.bui-list-group__item[aria-disabled="true"] { pointer-events: none; }
+/* The ring is drawn inside the item (the neighbours overlap it), in the active text color on the active item (the primary ring would vanish on the primary fill). */
+.bui-list-group__item:focus-visible {
+    z-index: 2;
+    outline-offset: calc(var(--bui-focus-ring-width) * -1);
+}
+.bui-list-group__item[aria-current]:not([aria-current="false"]):focus-visible { outline-color: var(--bui-list-group-active-color); }
+
+@media (pointer: coarse) {
+    .bui-list-group__item:where(a[href], button) { min-block-size: var(--bui-list-group-touch-height); }
+}
+
+/* Horizontal: a row always (--horizontal), or from a breakpoint (a column below it). */
+.bui-list-group--horizontal {
+    --bui-list-group-_h: 1;
+    --bui-list-group-_v: 0;
+    flex-direction: row;
+}
+.bui-list-group--horizontal > .bui-list-group__item { flex: 1 1 0%; }
+@media (min-width: 576px) {
+    .bui-list-group--horizontal-sm { --bui-list-group-_h: 1; --bui-list-group-_v: 0; flex-direction: row; }
+    .bui-list-group--horizontal-sm > .bui-list-group__item { flex: 1 1 0%; }
+}
+@media (min-width: 768px) {
+    .bui-list-group--horizontal-md { --bui-list-group-_h: 1; --bui-list-group-_v: 0; flex-direction: row; }
+    .bui-list-group--horizontal-md > .bui-list-group__item { flex: 1 1 0%; }
+}
+@media (min-width: 992px) {
+    .bui-list-group--horizontal-lg { --bui-list-group-_h: 1; --bui-list-group-_v: 0; flex-direction: row; }
+    .bui-list-group--horizontal-lg > .bui-list-group__item { flex: 1 1 0%; }
 }
 
 /* ---------------------------------------------------------------------

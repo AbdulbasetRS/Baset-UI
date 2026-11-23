@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-bui-theme="default" data-bui-mode="light" data-root="../../">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>List Group - Baset-UI Documentation</title>
+    <meta name="description" content="List Group: basic, flush, numbered, active and disabled items, links and buttons, badges and icons, and responsive horizontal layouts. CSS only.">
+    <!-- Empty icon: avoids a /favicon.ico 404 until the project has a real icon. -->
+    <link rel="icon" href="data:,">
+
+    <link rel="stylesheet" href="../../assets/css/baset-ui.css">
+    <link rel="stylesheet" href="../../assets/css/extensions/baset-ui-icons.css">
+    <link rel="stylesheet" href="../../assets/css/themes/ocean.css">
+    <link rel="stylesheet" href="../../documentation/assets/css/docs.css">
+    <link rel="stylesheet" href="../../documentation/assets/css/playground.css">
+    <script>
+        /* Prevents a flash of the wrong theme or mode. Same keys as BUI.theme (bui-theme, bui-mode). */
+        (function () {
+            var d = document.documentElement, t = null, m = null, r = null;
+            try { t = localStorage.getItem('bui-theme'); m = localStorage.getItem('bui-mode'); r = localStorage.getItem('bui-docs-dir'); } catch (e) {}
+            if (t && /^[a-z][a-z0-9]*(-[a-z0-9]+)*$/.test(t)) d.setAttribute('data-bui-theme', t);
+            if (m !== 'light' && m !== 'dark') m = window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+            d.setAttribute('data-bui-mode', m);
+            /* Documentation shell only: the saved direction of the RTL/LTR switcher. */
+            if (r === 'rtl' || r === 'ltr') d.setAttribute('dir', r);
+        })();
+    </script>
+</head>
+<body>
+    <main class="bui-docs-main" id="bui-docs-main" tabindex="-1">
+        <div class="bui-docs-page">
+            <div class="bui-docs-page__body">
+
+                <header class="bui-docs-page-header">
+                    <nav class="bui-docs-breadcrumb" aria-label="Breadcrumb" data-docs-breadcrumb hidden></nav>
+                    <h1>List Group</h1>
+                    <p class="bui-docs-lead">A list of related items: plain, flush, numbered, links or buttons, with active and disabled states, badges, icons and responsive horizontal layouts. CSS only.</p>
+                </header>
+
+                <div class="bui-docs-content">
+                    <section class="bui-docs-section" aria-labelledby="installation-include">
+                        <h2 id="installation-include">01. Installation &amp; Include</h2>
+
+<p>List Group is part of the Core stylesheet, so <code>assets/css/baset-ui.css</code> is the only required file. Load the icons Extension only if an item contains an icon, and a Theme if you use one. Order: Core, then Extension, then Theme. No JavaScript is needed.</p>
+<pre class="bui-docs-code" data-lang="html"><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="en" dir="ltr" data-bui-theme="default" data-bui-mode="light"&gt;
+&lt;head&gt;
+    &lt;meta charset="utf-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
+    &lt;title&gt;List Group&lt;/title&gt;
+    &lt;link rel="stylesheet" href="assets/css/baset-ui.css"&gt;
+    &lt;!-- Only when the content contains an icon --&gt;
+    &lt;link rel="stylesheet" href="assets/css/extensions/baset-ui-icons.css"&gt;
+    &lt;!-- Optional theme --&gt;
+    &lt;link rel="stylesheet" href="assets/css/themes/ocean.css"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;ul class="bui-list-group"&gt;
+        &lt;li class="bui-list-group__item"&gt;First item&lt;/li&gt;
+        &lt;li class="bui-list-group__item"&gt;Second item&lt;/li&gt;
+    &lt;/ul&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+<p>The item texts, names and counts in the examples are sample text.</p>
+
+                    </section>
+
+                    <section class="bui-docs-section" aria-labelledby="customize">
+                        <h2 id="customize">02. Customize</h2>
+
+<p>Every option below is a real class documented in section 04. Numbered needs an ordered list, so it applies only to the List type (links and buttons are not lists). Flush is for the column layout and is ignored when a horizontal layout is chosen. The active item is the second one and the disabled item is the third. The text is sample text.</p>
+<div data-docs-playground="list-group"></div>
+
+                    </section>
+
+                    <section class="bui-docs-section" aria-labelledby="default">
+                        <h2 id="default">03. Default</h2>
+
+<div class="bui-row"><div class="bui-col-12 bui-col-md-8">
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<ul class="bui-list-group">
+    <li class="bui-list-group__item">First item</li>
+    <li class="bui-list-group__item">Second item</li>
+    <li class="bui-list-group__item">Third item</li>
+</ul>
+</div>
+</div>
+</div></div>
+<p>With no modifier, <code>.bui-list-group</code> is a vertical list with a border and rounded outer corners. One line separates two items.</p>
+
+                    </section>
+
+                    <section class="bui-docs-section" aria-labelledby="variants-options">
+                        <h2 id="variants-options">04. Variants &amp; Options</h2>
+
+<h3>Markup and semantics</h3>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">List Group markup</caption>
+<thead><tr><th scope="col">Use</th><th scope="col">Markup</th></tr></thead>
+<tbody>
+<tr><td>Plain items</td><td><code>&lt;ul class="bui-list-group"&gt;</code> with <code>&lt;li class="bui-list-group__item"&gt;</code></td></tr>
+<tr><td>Numbered</td><td><code>&lt;ol class="bui-list-group bui-list-group--numbered"&gt;</code> with <code>li</code> items</td></tr>
+<tr><td>Links</td><td><code>&lt;div class="bui-list-group"&gt;</code> with <code>&lt;a href class="bui-list-group__item"&gt;</code></td></tr>
+<tr><td>Buttons</td><td><code>&lt;div class="bui-list-group"&gt;</code> with <code>&lt;button type="button" class="bui-list-group__item"&gt;</code></td></tr>
+</tbody>
+</table>
+<p>Only items that are <code>a[href]</code> or <code>button</code> get the hover, pressed and focus styles; plain items stay still. A list of links or buttons is a <code>div</code>, not a <code>ul</code>, because its children are not <code>li</code> elements.</p>
+<h3>Classes</h3>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">List Group classes</caption>
+<thead><tr><th scope="col">Class</th><th scope="col">Description</th></tr></thead>
+<tbody>
+<tr><td><code>bui-list-group</code></td><td>The container.</td></tr>
+<tr><td><code>bui-list-group__item</code></td><td>An item (<code>li</code>, <code>a</code> or <code>button</code>).</td></tr>
+<tr><td><code>bui-list-group--flush</code></td><td>No outer border and no rounded corners; only a line between items. For the column layout.</td></tr>
+<tr><td><code>bui-list-group--numbered</code></td><td>A number before each item (use an <code>ol</code>).</td></tr>
+<tr><td><code>bui-list-group--horizontal</code></td><td>A row at every width. Items share the width equally.</td></tr>
+<tr><td><code>bui-list-group--horizontal-sm</code>, <code>-md</code>, <code>-lg</code></td><td>A column below 576px, 768px or 992px, and a row from that width.</td></tr>
+</tbody>
+</table>
+<h3>States</h3>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">List Group states</caption>
+<thead><tr><th scope="col">State</th><th scope="col">Hook</th><th scope="col">Notes</th></tr></thead>
+<tbody>
+<tr><td>Active</td><td><code>aria-current="true"</code> (or <code>"page"</code>, <code>"step"</code>...)</td><td>Any value except <code>"false"</code>. Primary fill and contrast text. There is no <code>is-active</code> class: the attribute is the state.</td></tr>
+<tr><td>Disabled button</td><td><code>disabled</code></td><td>Native: not focusable, not clickable.</td></tr>
+<tr><td>Disabled link or plain item</td><td><code>aria-disabled="true"</code></td><td>A link needs <code>tabindex="-1"</code> and no <code>href</code> so the keyboard skips it; pointer input is blocked by CSS.</td></tr>
+<tr><td>Hover, pressed</td><td>(pseudo-classes)</td><td>Only on <code>a[href]</code> and <code>button</code>, and not on a disabled or active item. Hover only where a pointer can hover.</td></tr>
+</tbody>
+</table>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<ul class="bui-list-group">
+    <li class="bui-list-group__item">A plain item</li>
+    <li class="bui-list-group__item" aria-current="true">An active item</li>
+    <li class="bui-list-group__item" aria-disabled="true">A disabled item</li>
+</ul>
+</div>
+</div>
+<h3>Flush and numbered</h3>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<div class="bui-row bui-row-cols-1 bui-row-cols-md-2 bui-g-3">
+    <div class="bui-col"><ul class="bui-list-group bui-list-group--flush">
+        <li class="bui-list-group__item">Flush item</li>
+        <li class="bui-list-group__item">Flush item</li>
+        <li class="bui-list-group__item">Flush item</li>
+    </ul></div>
+    <div class="bui-col"><ol class="bui-list-group bui-list-group--numbered">
+        <li class="bui-list-group__item">Numbered item</li>
+        <li class="bui-list-group__item">Numbered item</li>
+        <li class="bui-list-group__item">Numbered item</li>
+    </ol></div>
+</div>
+</div>
+</div>
+<p>The number is drawn by a CSS counter and marked decorative (empty alternative text) where the browser supports it, because the <code>ol</code> already carries the order. For other numerals set the counter style on the list: <code>--bui-list-group-counter-style: arabic-indic</code> (any CSS counter style name).</p>
+<h3>Links and buttons</h3>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<div class="bui-row bui-row-cols-1 bui-row-cols-md-2 bui-g-3">
+    <div class="bui-col"><div class="bui-list-group">
+        <a href="#" class="bui-list-group__item">A link</a>
+        <a href="#" class="bui-list-group__item" aria-current="page">The current page</a>
+        <a class="bui-list-group__item" aria-disabled="true" tabindex="-1">A disabled link</a>
+    </div></div>
+    <div class="bui-col"><div class="bui-list-group">
+        <button type="button" class="bui-list-group__item">A button</button>
+        <button type="button" class="bui-list-group__item" aria-current="true">A selected button</button>
+        <button type="button" class="bui-list-group__item" disabled>A disabled button</button>
+    </div></div>
+</div>
+</div>
+</div>
+<h3>Badges and icons</h3>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<ul class="bui-list-group">
+    <li class="bui-list-group__item bui-d-flex bui-items-center bui-justify-between">
+        <span><i class="bui-icon-regular bui-icon-user bui-me-2" aria-hidden="true"></i>Users</span>
+        <span class="bui-badge bui-badge--primary bui-badge--pill">14</span>
+    </li>
+    <li class="bui-list-group__item bui-d-flex bui-items-center bui-justify-between">
+        <span><i class="bui-icon-regular bui-icon-bell bui-me-2" aria-hidden="true"></i>Alerts</span>
+        <span class="bui-badge bui-badge--danger bui-badge--pill">2</span>
+    </li>
+</ul>
+</div>
+</div><p>The item is a block, so inline content (text with a <code>strong</code>) flows normally. For an icon, text and a badge on one line, make the item a flex row with the Utilities (<code>bui-d-flex bui-items-center bui-justify-between</code>) and wrap the icon and text in one element. Decorative icons get <code>aria-hidden="true"</code>; a count that matters to a reader needs text a reader can use (for example "14 users").</p>
+<h3>Horizontal</h3>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<ul class="bui-list-group bui-list-group--horizontal-md">
+    <li class="bui-list-group__item">One</li>
+    <li class="bui-list-group__item" aria-current="true">Two</li>
+    <li class="bui-list-group__item">Three</li>
+</ul>
+</div>
+</div><p>A column below 768px and a row from 768px. In a row the items share the width equally and wrap their text. Flush does not combine with the horizontal layouts.</p>
+<h3>Tokens</h3>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">List Group tokens</caption>
+<thead><tr><th scope="col">Token</th><th scope="col">Default</th><th scope="col">Description</th></tr></thead>
+<tbody>
+<tr><td><code>--bui-list-group-bg</code>, <code>-color</code>, <code>-border-color</code>, <code>-border-width</code></td><td>page surface, text, neutral border, 1px</td><td>Item surface, text and border.</td></tr>
+<tr><td><code>--bui-list-group-radius</code></td><td><code>--bui-radius-md</code></td><td>Outer corner radius.</td></tr>
+<tr><td><code>--bui-list-group-item-padding-x</code>, <code>-item-padding-y</code></td><td>spacing 3, 2</td><td>Item padding.</td></tr>
+<tr><td><code>--bui-list-group-hover-bg</code>, <code>-pressed-bg</code></td><td>surface, neutral 100</td><td>Link and button item backgrounds.</td></tr>
+<tr><td><code>--bui-list-group-active-bg</code>, <code>-active-color</code>, <code>-active-border-color</code></td><td>primary, its contrast</td><td>The active item.</td></tr>
+<tr><td><code>--bui-list-group-disabled-bg</code>, <code>-disabled-color</code></td><td>surface, muted text</td><td>Disabled items.</td></tr>
+<tr><td><code>--bui-list-group-counter-gap</code>, <code>-counter-style</code></td><td>spacing 2, decimal</td><td>Space after the number, and the counter style.</td></tr>
+<tr><td><code>--bui-list-group-touch-height</code></td><td>44px</td><td>Minimum height of link and button items on a touch pointer.</td></tr>
+</tbody>
+</table>
+
+                    </section>
+
+                    <section class="bui-docs-section" aria-labelledby="examples">
+                        <h2 id="examples">05. Examples</h2>
+
+<h3>Navigation links</h3>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<nav aria-label="Sample sections">
+    <div class="bui-list-group">
+        <a href="#" class="bui-list-group__item" aria-current="page">Overview</a>
+        <a href="#" class="bui-list-group__item">Details</a>
+        <a href="#" class="bui-list-group__item">Settings</a>
+    </div>
+</nav>
+</div>
+</div>
+<p>Use <code>aria-current="page"</code> for the link of the current page. Wrap a list of links in a <code>nav</code> with a label when it is navigation.</p>
+<h3>Selectable buttons</h3>
+<p>The List Group does not manage selection: toggle <code>aria-current</code> (or your own state attribute) in your script. It has no JavaScript of its own.</p>
+<h3>Inside a Card</h3>
+<p>See the example on the <a href="card.html">Card</a> page: a flush list group takes the card colors and sits flush with the card edges.</p>
+
+                    </section>
+
+                    <section class="bui-docs-section" aria-labelledby="javascript-api">
+                        <h2 id="javascript-api">06. JavaScript API</h2>
+
+<p>CSS only, no JavaScript API. List Group registers nothing with <code>BUI.register</code>, fires no events and does not manage the active item: your code sets or removes <code>aria-current</code>. It has no internal text, so it adds no translation key to <code>assets/i18n/*.json</code>.</p>
+
+                    </section>
+
+                    <section class="bui-docs-section" aria-labelledby="responsive-behavior">
+                        <h2 id="responsive-behavior">07. Responsive Behavior</h2>
+
+<ul>
+<li>The default list is a column and as wide as its container; long words wrap inside the items (no horizontal scrolling).</li>
+<li><code>bui-list-group--horizontal-sm</code>, <code>-md</code> and <code>-lg</code> are a column below 576px, 768px and 992px and a row from there; <code>bui-list-group--horizontal</code> is a row at every width, with the items sharing the width and wrapping their text. These are viewport media queries.</li>
+<li>On a touch pointer (<code>pointer: coarse</code>), link and button items are at least 44px high; plain items keep their size.</li>
+<li>The border overlap and the corner radii are flipped by the layout, so a horizontal list keeps its rounded outer corners at the start and end sides, in LTR and RTL.</li>
+</ul>
+
+                    </section>
+
+                    <section class="bui-docs-section" aria-labelledby="accessibility">
+                        <h2 id="accessibility">08. Accessibility</h2>
+
+<h3>Keyboard</h3>
+<p>Plain items are not focusable. Link and button items are tab stops in source order, and activate with their native keys (Enter for a link, Enter and Space for a button). Disabled buttons are skipped natively; a disabled link needs <code>tabindex="-1"</code> and no <code>href</code>. The focus ring is drawn inside the item (the neighbours overlap its outside) and, on the active item, in the active text color so it stays visible on the primary fill.</p>
+<h3>ARIA and semantics</h3>
+<ul>
+<li>Use <code>ul</code>/<code>li</code> for plain items and <code>ol</code> for a numbered list, so the count and order are announced. A list of links or buttons is a <code>div</code> (use a <code>nav</code> with a label for navigation).</li>
+<li><code>aria-current</code> marks the current item (<code>"page"</code> for the current page, <code>"true"</code> otherwise). <code>aria-disabled="true"</code> marks a disabled link or plain item; use <code>disabled</code> on a button.</li>
+<li>The list style is reset, which some versions of Safari with VoiceOver treat as removing the list role. This was not tested; if it matters in your project, add <code>role="list"</code> to the <code>ul</code> or <code>ol</code>.</li>
+<li>Do not rely on color alone for the active item when meaning matters: the attribute carries the state for assistive technology, and you can add visible text or an icon.</li>
+</ul>
+<h3>Contrast</h3>
+<p>Measured in Chromium for plain, active and disabled items, and for items inside every card variant, in Light and Dark with the default and ocean themes (together with the Card samples: 524 samples, lowest 5.07:1 for the List Group). Hover and pressed states stay above 4.5:1 in cards of every variant (64 samples). Disabled items are exempt from the contrast requirement and still measure above 3:1.</p>
+<h3>Screen reader</h3>
+<p>Not tested with a screen reader (NVDA, VoiceOver or similar).</p>
+
+                    </section>
+
+
+                </div>
+                <!-- Previous / Next links are appended here by docs.js from the order in nav.js. -->
+            </div>
+            <!-- "On this page" is appended here by docs.js (visible from the XL breakpoint). -->
+        </div>
+    </main>
+
+    <script src="../../assets/js/baset-ui.js"></script>
+    <script src="../../documentation/assets/js/nav.js"></script>
+    <script src="../../documentation/assets/js/docs.js"></script>
+    <script src="../../documentation/assets/js/playground.js"></script>
+    <script>
+        /* Docs-only helpers for this page. */
+        (function () {
+            document.addEventListener('click', function (e) {
+                var a = e.target.closest ? e.target.closest('a[href="#"]') : null;
+                if (a && a.closest('[data-docs-playground], .bui-docs-example__preview')) { e.preventDefault(); }
+            });
+            BUI_DOCS_PLAYGROUND.define('list-group', {
+                title: 'List Group playground',
+                controls: [
+                    { type: 'select', name: 'type', label: 'Type', default: 'list',
+                      options: [{ value: 'list', label: 'List (ul or ol)' }, { value: 'links', label: 'Links' }, { value: 'buttons', label: 'Buttons' }] },
+                    { type: 'select', name: 'layout', label: 'Layout', default: 'vertical',
+                      options: [{ value: 'vertical', label: 'Column (default)' }, { value: 'horizontal', label: 'Horizontal' }, { value: 'horizontal-sm', label: 'Horizontal from sm' }, { value: 'horizontal-md', label: 'Horizontal from md' }, { value: 'horizontal-lg', label: 'Horizontal from lg' }] },
+                    { type: 'range', name: 'count', label: 'Items', default: 4, min: 2, max: 6, step: 1 },
+                    { type: 'switch', name: 'flush', label: 'Flush (column only)' },
+                    { type: 'switch', name: 'numbered', label: 'Numbered (List type only)' },
+                    { type: 'switch', name: 'active', label: 'Active item (the second)' },
+                    { type: 'switch', name: 'disabled', label: 'Disabled item (the third)' },
+                    { type: 'switch', name: 'icons', label: 'Icons' },
+                    { type: 'switch', name: 'badges', label: 'Badges' },
+                    { type: 'text', name: 'label', label: 'Item text', default: 'List item', maxLength: 30 }
+                ],
+                template: function (state, h) {
+                    var cls = ['bui-list-group'];
+                    var horizontal = state.layout !== 'vertical';
+                    if (state.layout !== 'vertical') { cls.push('bui-list-group--' + state.layout); }
+                    if (state.flush && !horizontal) { cls.push('bui-list-group--flush'); }
+                    var ordered = state.type === 'list' && state.numbered;
+                    if (ordered) { cls.push('bui-list-group--numbered'); }
+                    var tag = state.type === 'list' ? 'li' : (state.type === 'links' ? 'a' : 'button');
+                    var wrap = state.type === 'list' ? (ordered ? 'ol' : 'ul') : 'div';
+                    var label = h.escape(state.label);
+                    var rich = state.icons || state.badges;
+                    var out = '<' + wrap + ' class="' + cls.join(' ') + '">\n';
+                    for (var i = 1; i <= state.count; i++) {
+                        var attrs = ' class="bui-list-group__item' + (rich ? ' bui-d-flex bui-items-center bui-justify-between' : '') + '"';
+                        var isActive = state.active && i === 2;
+                        var isDisabled = state.disabled && i === 3;
+                        if (state.type === 'links') { attrs += isDisabled ? ' tabindex="-1"' : ' href="#"'; }
+                        if (state.type === 'buttons') { attrs += ' type="button"'; }
+                        if (isActive) { attrs += state.type === 'links' ? ' aria-current="page"' : ' aria-current="true"'; }
+                        if (isDisabled) { attrs += state.type === 'buttons' ? ' disabled' : ' aria-disabled="true"'; }
+                        var text = label + ' ' + i;
+                        var inner = text;
+                        if (rich) {
+                            inner = '<span>' + (state.icons ? '<i class="bui-icon-regular bui-icon-user bui-me-2" aria-hidden="true"></i>' : '') + text + '</span>';
+                            if (state.badges) { inner += '<span class="bui-badge bui-badge--primary bui-badge--pill">' + i + '</span>'; }
+                        }
+                        out += '    <' + tag + attrs + '>' + inner + '</' + tag + '>\n';
+                    }
+                    return out + '</' + wrap + '>';
+                }
+            });
+        })();
+    </script>
+</body>
+</html>

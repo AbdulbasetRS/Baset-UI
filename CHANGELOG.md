@@ -4,6 +4,31 @@
 
 ## [Unreleased]
 
+### Added (Task 11: Card + List Group)
+- `assets/css/baset-ui.css` (207,037 بايت خام و26,437 gzip، كان 185,831 و23,505): Card بين Button Group وClose Button، وList Group بين Close Button وProgress في قسم 6، وTokens في الطبقة 3 (`--bui-card-*` و`--bui-list-group-*`). بلا JS وبلا مفاتيح i18n (لا نص داخلي).
+- **Card:** `bui-card` مع `__header/__body/__footer/__title/__subtitle/__text/__media`، وVariants (افتراضي محايد، `--solid` و`--subtle` و`--outline`) x ستة ألوان، وأفقي `--horizontal` و`--horizontal-sm|md|lg`، وStretched Link (`__stretched-link`) بحلقة تركيز حول البطاقة كلها، وبطاقة بارتفاع 100% لتتساوى في الـ Grid. قائمة List Group داخل Card تتبع ألوان البطاقة.
+- **List Group:** `bui-list-group` و`__item` على `li` أو `a[href]` أو `button`، و`--flush` و`--numbered` (عداد CSS) و`--horizontal` و`--horizontal-sm|md|lg`، والحالات بالسمات (`aria-current` و`aria-disabled` و`disabled`)، وHover وPressed للروابط والأزرار فقط، وارتفاع 44 بكسل للمؤشر اللمسي.
+- `documentation/components/card.html` و`list-group.html` بالأقسام الثمانية بالترتيب وPlayground حقيقي لكل منهما (Schema خاص: 11 و10 عناصر تحكم)، ومفعلتان في `nav.js`. قسم JavaScript API يذكر أنهما CSS فقط.
+- `tests/manual/card-list-group.html`: Fixture للمصفوفات الكاملة والأفقي والـ Stretched Link والـ Grid والقوائم داخل Cards (انظر ARCHITECTURE.md). Fixtures معلنة: نصوص عينة وSVG مضمن مولد.
+
+### Changed (Task 11)
+- `documentation/assets/js/nav.js`: Card وList Group تحولا من نصين إلى `{ title, href }` (الترتيب لم يتغير: List Group ما زال بعد Progress كما كان).
+- `instructions/` المعدلة: `COMPONENTS_REGISTRY.md` وARCHITECTURE.md وCOMPONENT_DEVELOPMENT.md (قسم إضافات Task 11) وNAMING_CONVENTIONS.md وCORE_ASSETS.md وPROJECT_OVERVIEW.md.
+
+### Decisions (Task 11)
+- **Stretched Link بعنصر `bui-card__stretched-link` لا Utility عامة:** المطلوب ضمن Card، وUtility عامة تحتاج مهمة Utilities. يُرفع ما حوله من عناصر تفاعلية بـ `:where()` (تخصيص صفري) و`:has()`، مع `@supports not selector(:has(*))` للرفع الشامل.
+- **الحالة بالسمة (`aria-current`/`aria-disabled`/`disabled`) بلا فئة `active`/`disabled`**، حسب NAMING_CONVENTIONS.
+- **Header/Footer غير مدعومين كأبناء مباشرين في Card الأفقي، و`--flush` لا يجتمع مع الأفقي في List Group.** بديل Grid لأجل الـ Header/Footer رُفض لأنه يعتمد على عدد الصفوف الضمنية؛ القيدان موثقان.
+- **اللون في Card يعمل مع Variant فقط** (البطاقة الافتراضية محايدة)، كما في Badge.
+
+### Tested (Task 11) - Chromium 157 (Playwright)، بلا متصفحات أخرى
+- تباين النص: 524 عينة (Card: العنوان والعنوان الفرعي والنص والـ Header والـ Footer لكل Variant x لون، وعناصر List Group وقوائم داخل Cards) x ثيمان (default وocean) x وضعان: لا إخفاق، الأدنى 5.02. Hover/Pressed داخل Cards: 64 عينة >= 4.5. حلقة تركيز Stretched Link >= 3:1.
+- لا Horizontal Overflow: 64 تركيبة (ثيمان x وضعان x اتجاهان x 8 عروض من 320 إلى 1920) على الـ Fixture، و20 تركيبة لكل صفحة توثيق.
+- Breakpoints الأفقية (576/768/992) صحيحة عند 8 عروض x 8 تركيبات (ثيمان x وضعان x اتجاهان). ارتفاعات متساوية في الـ Grid وFooter في الأسفل عند 3 عروض.
+- Stretched Link: النقر على الزاوية والوسائط، والعناصر الداخلية (زر ورابط) تستجيب دون تفعيل الرابط، Tab وEnter وSpace، في LTR وRTL: 34 فحصاً ناجحاً. List Group: Hover لا يغير النشط ولا المعطل، Tab يتخطى المعطل.
+- Playground: كل عنصر تحكم في الصفحتين يغير المخرج كما هو موثق (فحص آلي). لا أخطاء Console ولا 404 في الصفحتين.
+- **لم يُختبر:** قارئات الشاشة، الأجهزة اللمسية الحقيقية (محاكاة `pointer: coarse` فقط)، Safari وFirefox (الاعتماد على `:has()` و`:dir` و`outline` المنحني)، وVoiceOver مع `list-style: none`.
+
 ### Added (Task 10: Badge + Avatar + Progress)
 - `assets/css/baset-ui.css` (185,831 بايت خام و23,505 gzip، كان 161,098 و19,109): ثلاثة مكونات في قسم 6 مرتبة أبجدياً (Avatar قبل Button، وBadge بينهما، وProgress بعد Close Button)، وComponent Tokens في الطبقة 3 (`--bui-avatar-*` و`--bui-badge-*` و`--bui-progress-*`).
 - `assets/js/baset-ui.js` (61,801 بايت خام و14,476 gzip، كان 52,004 و12,143): مكونان مسجلان بـ `BUI.register`: `avatar` و`progress` (انظر Decisions).

@@ -1,6 +1,6 @@
 # معايير تطوير المكونات
 
-كل Component يتبع نفس المعمارية مع السماح باختلافات منطقية حسب طبيعته. (المنفذ حتى Task 10: Avatar وBadge وButton وButton Group وClose Button وProgress. النمط المرجعي أدناه من Task 09، وTask 10 اتبعه.)
+كل Component يتبع نفس المعمارية مع السماح باختلافات منطقية حسب طبيعته. (المنفذ حتى Task 11: Avatar وBadge وButton وButton Group وCard وClose Button وList Group وProgress. النمط المرجعي أدناه من Task 09، وTask 10 اتبعه.)
 
 ## قائمة قبل البدء
 - التأكد من وجود المكون في [COMPONENTS_REGISTRY.md](COMPONENTS_REGISTRY.md) أو إضافته.
@@ -93,3 +93,11 @@ const select = BUI.select.remote('#users', { perPage: 10 });
 - **Logical Properties حصراً** للموضع (`inset-inline-end`) والتداخل (`margin-inline-start` السالب)، فلا فئة RTL. الاتجاه الذي لا تحله الخصائص المنطقية (حركة Progress غير المحدد، وتدرج نص التسمية) يُقلب بـ `:dir(rtl)` على قيمة خاصة (`--bui-progress-_dir`) أو تدرج خاص.
 - **اللون ليس الإشارة الوحيدة:** مؤشرات حالة Avatar لكل منها شكل مختلف (نقطة وربع مفقود وشريط وحلقة).
 - **Fixture:** `tests/manual/badge-avatar-progress.html` (انظر ARCHITECTURE.md). صور الاختبار مولدة (data URI) ومعلنة في رأس الملف، ولا صور خارجية.
+
+### إضافات Task 11 (Card وList Group)
+- **Flags الاتجاه:** `--bui-card-_h/_v` و`--bui-list-group-_h/_v` (1 للصف و0 للعمود وعكسها) تتحكم في تداخل الحدود وانحناء أول وآخر ابن وحجم الوسائط، فالتخطيط الأفقي (دائماً أو من Breakpoint) يقلب الـ Flags واتجاه الـ Flex فقط. انحناءات الأبناء بخصائص منطقية فتصح في RTL بلا قواعد إضافية.
+- **الحالة بالسمة:** نشط = `aria-current` (أي قيمة غير `"false"`)، معطل = `disabled` أو `aria-disabled="true"`، بلا فئات `is-*`. قواعد hover/pressed تستثني النشط والمعطل بـ `:where(:not(...))` لتبقى بتخصيص منخفض فلا تتغلب على حالة النشط.
+- **تخصيص صفري للتعاون بين المكونات:** رفع العناصر التفاعلية فوق الـ Stretched Link يتم بـ `:where(...)` (تخصيص 0) فلا يكسر مكوناً يحدد موضعه بنفسه. الـ Fallback لغير الداعمين لـ `:has()` في `@supports not selector(:has(*))`.
+- **مكون داخل مكون:** الأب يعيد تصريح Tokens الابن على نفسه (Card يعيد تصريح `--bui-list-group-*` لقوائمه) بدل أن يتضمن الابن معرفة بالأب.
+- **حلقة التركيز داخل العنصر:** عند تداخل الجيران أو وجود `overflow` عند الأب تُرسم الحلقة بـ `outline-offset` سالب، ولونها يتبدل حيث يطابق لون الحلقة لون الخلفية (العنصر النشط، وCard solid).
+- **قيد معلن:** Header وFooter في Card أفقي غير مدعومين كأبناء مباشرين (يصيران عمودين)، و`--flush` في List Group لا يجتمع مع الأفقي. كلاهما موثق في صفحتي التوثيق، وخيارات Playground المتعارضة تُهمل في القالب وتُذكر في فقرة Customize.

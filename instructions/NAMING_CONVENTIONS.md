@@ -31,6 +31,8 @@
 | Button Group | `bui-btn-group` | `--bui-btn-group-*` (خاصة فقط) | معتمد (Task 09) |
 | Close Button | `bui-btn-close` | `--bui-btn-close-*` | معتمد (Task 09) |
 
+Card وList Group (Task 11) بلا اختصار معتمد، فتبقى بأسمائها الكاملة: `bui-card` و`bui-list-group`، وTokens `--bui-card-*` و`--bui-list-group-*`. العناصر: `bui-card__header/__body/__footer/__title/__subtitle/__text/__media/__stretched-link`، و`bui-list-group__item`. التخطيط الأفقي بتعديل على المكون نفسه: `bui-card--horizontal[-sm|-md|-lg]` و`bui-list-group--horizontal[-sm|-md|-lg]` (الاسم بلا لاحقة = صف دائماً، ومع Breakpoint = صف من هذا العرض).
+
 Badge وAvatar وProgress (Task 10) بلا اختصار معتمد، فتبقى بأسمائها الكاملة: `bui-badge` و`bui-avatar` و`bui-progress`، وTokens `--bui-badge-*` و`--bui-avatar-*` و`--bui-progress-*`. العناصر الفرعية بـ BEM: `bui-avatar__img` و`__text` و`__status`، و`bui-progress__bar` و`__label`. المجموعات المستقلة: `bui-avatar-group` و`bui-progress-stack` (حاوية) و`bui-progress-label` (صف تسمية خارجية) و`bui-badge-anchor` (مضيف الشارة العائمة).
 
 ## قيم خاصة وحالات (Task 09)

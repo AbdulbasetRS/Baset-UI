@@ -100,6 +100,12 @@ Baset-UI/
 - صفحات التوثيق الثلاث تستخدم الـ Fixtures نفسها (صورة مولدة وصورة معطوبة) في أمثلة Avatar وPlayground، وتذكر ذلك في نص الصفحة. كود المثال المعروض يستعمل مساراً وهمياً (`img/sara.jpg`) والمعاينة تستعمل الـ data URI.
 - النمط المرجعي في [COMPONENT_DEVELOPMENT.md](COMPONENT_DEVELOPMENT.md) (قسم إضافات Task 10).
 
+### Card وList Group (Task 11)
+- الكود في `assets/css/baset-ui.css` (قسم 6: Card بين Button Group وClose Button، وList Group بين Close Button وProgress) بلا ملف جديد في `assets/` وبلا JS. صفحتان في `documentation/components/` (`card.html` و`list-group.html`) مفعلتان في `nav.js`.
+- **ملف جديد: `tests/manual/card-list-group.html`** (خارج قائمة ملفات المهمة). السبب: [TESTING.md](TESTING.md) يطلب Checklist يدوي لكل مكون في `tests/manual/{component}.html`، ومصفوفة Variant x Color والتخطيطات الأفقية وStretched Link مع عناصر داخلية وقوائم داخل Cards لا تتسع في صفحات التوثيق. ملف واحد للمكونين لأن قائمة داخل Card تختبرهما معاً. **Fixtures معلنة** في رأس الملف: كل النصوص والأرقام نص عينة، والوسائط SVG مضمن مولد بألوان الـ Tokens بلا ملف ولا طلب شبكة. لا يُشحن كمكون ولا يحمّله شيء.
+- أمثلة التوثيق تستعمل SVG مضمناً مولداً بدل صورة، فكود المثال المعروض هو نفسه الذي يعمل (بخلاف Avatar).
+- النمط المرجعي في [COMPONENT_DEVELOPMENT.md](COMPONENT_DEVELOPMENT.md) (قسم إضافات Task 11).
+
 ### قرار المسارات في الصفحات المتداخلة
 - كل صفحة تضع `data-root="../../"` على `<html>`: المسار **من الصفحة نفسها** إلى جذر الموقع (مجلد `index.html`). يُقرأ في `docs.js` ويُبنى عليه كل رابط (Sidebar، Breadcrumb، Previous/Next، رابط الشعار).
 - إن غابت السمة يستنتج `docs.js` الجذر من مسار سكربت `docs.js` نفسه (دائماً ثلاثة مستويات تحت الجذر)، فتبقى الصفحة تعمل. السمة هي المصدر الأساسي لأنها صريحة ولا تعتمد على موضع السكربت.

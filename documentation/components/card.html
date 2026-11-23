@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-bui-theme="default" data-bui-mode="light" data-root="../../">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Card - Baset-UI Documentation</title>
+    <meta name="description" content="Card: neutral, solid, subtle and outline variants, six semantic colors, header, body, footer, media, horizontal layouts, an accessible Stretched Link and Grid layouts. CSS only.">
+    <!-- Empty icon: avoids a /favicon.ico 404 until the project has a real icon. -->
+    <link rel="icon" href="data:,">
+
+    <link rel="stylesheet" href="../../assets/css/baset-ui.css">
+    <link rel="stylesheet" href="../../assets/css/extensions/baset-ui-icons.css">
+    <link rel="stylesheet" href="../../assets/css/themes/ocean.css">
+    <link rel="stylesheet" href="../../documentation/assets/css/docs.css">
+    <link rel="stylesheet" href="../../documentation/assets/css/playground.css">
+    <script>
+        /* Prevents a flash of the wrong theme or mode. Same keys as BUI.theme (bui-theme, bui-mode). */
+        (function () {
+            var d = document.documentElement, t = null, m = null, r = null;
+            try { t = localStorage.getItem('bui-theme'); m = localStorage.getItem('bui-mode'); r = localStorage.getItem('bui-docs-dir'); } catch (e) {}
+            if (t && /^[a-z][a-z0-9]*(-[a-z0-9]+)*$/.test(t)) d.setAttribute('data-bui-theme', t);
+            if (m !== 'light' && m !== 'dark') m = window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+            d.setAttribute('data-bui-mode', m);
+            /* Documentation shell only: the saved direction of the RTL/LTR switcher. */
+            if (r === 'rtl' || r === 'ltr') d.setAttribute('dir', r);
+        })();
+    </script>
+</head>
+<body>
+    <main class="bui-docs-main" id="bui-docs-main" tabindex="-1">
+        <div class="bui-docs-page">
+            <div class="bui-docs-page__body">
+
+                <header class="bui-docs-page-header">
+                    <nav class="bui-docs-breadcrumb" aria-label="Breadcrumb" data-docs-breadcrumb hidden></nav>
+                    <h1>Card</h1>
+                    <p class="bui-docs-lead">A bordered container with header, body, footer and media, in four variants and six colors, horizontal layouts and a stretched link. CSS only.</p>
+                </header>
+
+                <div class="bui-docs-content">
+                    <section class="bui-docs-section" aria-labelledby="installation-include">
+                        <h2 id="installation-include">01. Installation &amp; Include</h2>
+
+<p>Card is part of the Core stylesheet, so <code>assets/css/baset-ui.css</code> is the only required file. Load the icons Extension only if the content contains an icon, and a Theme if you use one. Order: Core, then Extension, then Theme. No JavaScript is needed.</p>
+<pre class="bui-docs-code" data-lang="html"><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="en" dir="ltr" data-bui-theme="default" data-bui-mode="light"&gt;
+&lt;head&gt;
+    &lt;meta charset="utf-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
+    &lt;title&gt;Card&lt;/title&gt;
+    &lt;link rel="stylesheet" href="assets/css/baset-ui.css"&gt;
+    &lt;!-- Only when the content contains an icon --&gt;
+    &lt;link rel="stylesheet" href="assets/css/extensions/baset-ui-icons.css"&gt;
+    &lt;!-- Optional theme --&gt;
+    &lt;link rel="stylesheet" href="assets/css/themes/ocean.css"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;article class="bui-card"&gt;
+        &lt;div class="bui-card__body"&gt;
+            &lt;h3 class="bui-card__title"&gt;Card title&lt;/h3&gt;
+            &lt;p class="bui-card__text"&gt;Card text.&lt;/p&gt;
+        &lt;/div&gt;
+    &lt;/article&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+<p>The media in the examples of this page is a small inline SVG made for the page (a declared sample, not a photograph); its colors come from the theme tokens. The titles and texts are sample text. A real project puts its own <code>img</code> or <code>svg</code> inside <code>bui-card__media</code>.</p>
+
+                    </section>
+
+                    <section class="bui-docs-section" aria-labelledby="customize">
+                        <h2 id="customize">02. Customize</h2>
+
+<p>Every option below is a real class documented in section 04. Horizontal layouts take the media and the body as direct children, so the header and footer options are ignored when a horizontal layout is chosen. A color has an effect only together with a variant (Solid, Subtle or Outline), so it is ignored for Default. Stretched link wraps the title in a link that covers the whole card; the inner button stays clickable. The text is sample text.</p>
+<div data-docs-playground="card"></div>
+
+                    </section>
+
+                    <section class="bui-docs-section" aria-labelledby="default">
+                        <h2 id="default">03. Default</h2>
+
+<div class="bui-row bui-g-3"><div class="bui-col-12 bui-col-md-8">
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<article class="bui-card">
+    <div class="bui-card__body">
+        <h3 class="bui-card__title">Card title</h3>
+        <p class="bui-card__subtitle">Card subtitle</p>
+        <p class="bui-card__text">Some sample text inside the body of the card.</p>
+    </div>
+</article>
+</div>
+</div>
+</div></div>
+<p>With no modifier, <code>.bui-card</code> is a neutral card: a page-colored surface with a border and a large corner radius. It fills the width of its container and the height of its grid column.</p>
+
+                    </section>
+
+                    <section class="bui-docs-section" aria-labelledby="variants-options">
+                        <h2 id="variants-options">04. Variants &amp; Options</h2>
+
+<h3>Elements</h3>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Card elements</caption>
+<thead><tr><th scope="col">Class</th><th scope="col">Description</th></tr></thead>
+<tbody>
+<tr><td><code>bui-card</code></td><td>The card. Any block element (<code>article</code>, <code>div</code>, <code>section</code>, <code>li</code>).</td></tr>
+<tr><td><code>bui-card__header</code></td><td>Top bar with a divider and a slightly tinted surface.</td></tr>
+<tr><td><code>bui-card__body</code></td><td>The padded content area. It grows, so a footer stays at the bottom of cards of equal height.</td></tr>
+<tr><td><code>bui-card__footer</code></td><td>Bottom bar with a divider.</td></tr>
+<tr><td><code>bui-card__title</code></td><td>Title text. Put it on a heading element of the right level (<code>h2</code> to <code>h6</code>); it only sets the size and weight.</td></tr>
+<tr><td><code>bui-card__subtitle</code></td><td>Muted secondary line under the title.</td></tr>
+<tr><td><code>bui-card__text</code></td><td>A paragraph of body text with a bottom gap (none on the last one).</td></tr>
+<tr><td><code>bui-card__media</code></td><td>The media area: put an <code>img</code>, <code>svg</code>, <code>picture</code> or <code>video</code> inside. It is clipped to the card corners and the content fills it.</td></tr>
+<tr><td><code>bui-card__stretched-link</code></td><td>A link whose ::after covers the whole card (see Stretched Link below).</td></tr>
+</tbody>
+</table>
+<h3>Variants</h3>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Card variants</caption>
+<thead><tr><th scope="col">Name</th><th scope="col">Class</th><th scope="col">Description</th></tr></thead>
+<tbody>
+<tr><td>default</td><td><code>bui-card</code></td><td>Neutral: page surface, neutral border, tinted header and footer. No modifier.</td></tr>
+<tr><td><code>solid</code></td><td><code>bui-card--solid</code></td><td>Filled with the color; the text uses the color's <code>-contrast</code> token and the dividers use the same color.</td></tr>
+<tr><td><code>subtle</code></td><td><code>bui-card--subtle</code></td><td>The light fill of the color with its border; the text keeps the neutral text colors.</td></tr>
+<tr><td><code>outline</code></td><td><code>bui-card--outline</code></td><td>Transparent with a border in the color.</td></tr>
+</tbody>
+</table>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<div class="bui-row bui-row-cols-2 bui-row-cols-md-3 bui-row-cols-xl-6 bui-g-2 bui-docs-demo-gap"><div class="bui-col"><div class="bui-card bui-card--solid bui-card--primary"><div class="bui-card__body"><h4 class="bui-card__title">Primary</h4><p class="bui-card__text">Solid</p></div></div></div><div class="bui-col"><div class="bui-card bui-card--solid bui-card--secondary"><div class="bui-card__body"><h4 class="bui-card__title">Secondary</h4><p class="bui-card__text">Solid</p></div></div></div><div class="bui-col"><div class="bui-card bui-card--solid bui-card--success"><div class="bui-card__body"><h4 class="bui-card__title">Success</h4><p class="bui-card__text">Solid</p></div></div></div><div class="bui-col"><div class="bui-card bui-card--solid bui-card--warning"><div class="bui-card__body"><h4 class="bui-card__title">Warning</h4><p class="bui-card__text">Solid</p></div></div></div><div class="bui-col"><div class="bui-card bui-card--solid bui-card--danger"><div class="bui-card__body"><h4 class="bui-card__title">Danger</h4><p class="bui-card__text">Solid</p></div></div></div><div class="bui-col"><div class="bui-card bui-card--solid bui-card--info"><div class="bui-card__body"><h4 class="bui-card__title">Info</h4><p class="bui-card__text">Solid</p></div></div></div></div>
+<div class="bui-row bui-row-cols-2 bui-row-cols-md-3 bui-row-cols-xl-6 bui-g-2 bui-docs-demo-gap"><div class="bui-col"><div class="bui-card bui-card--subtle bui-card--primary"><div class="bui-card__body"><h4 class="bui-card__title">Primary</h4><p class="bui-card__text">Subtle</p></div></div></div><div class="bui-col"><div class="bui-card bui-card--subtle bui-card--secondary"><div class="bui-card__body"><h4 class="bui-card__title">Secondary</h4><p class="bui-card__text">Subtle</p></div></div></div><div class="bui-col"><div class="bui-card bui-card--subtle bui-card--success"><div class="bui-card__body"><h4 class="bui-card__title">Success</h4><p class="bui-card__text">Subtle</p></div></div></div><div class="bui-col"><div class="bui-card bui-card--subtle bui-card--warning"><div class="bui-card__body"><h4 class="bui-card__title">Warning</h4><p class="bui-card__text">Subtle</p></div></div></div><div class="bui-col"><div class="bui-card bui-card--subtle bui-card--danger"><div class="bui-card__body"><h4 class="bui-card__title">Danger</h4><p class="bui-card__text">Subtle</p></div></div></div><div class="bui-col"><div class="bui-card bui-card--subtle bui-card--info"><div class="bui-card__body"><h4 class="bui-card__title">Info</h4><p class="bui-card__text">Subtle</p></div></div></div></div>
+<div class="bui-row bui-row-cols-2 bui-row-cols-md-3 bui-row-cols-xl-6 bui-g-2 bui-docs-demo-gap"><div class="bui-col"><div class="bui-card bui-card--outline bui-card--primary"><div class="bui-card__body"><h4 class="bui-card__title">Primary</h4><p class="bui-card__text">Outline</p></div></div></div><div class="bui-col"><div class="bui-card bui-card--outline bui-card--secondary"><div class="bui-card__body"><h4 class="bui-card__title">Secondary</h4><p class="bui-card__text">Outline</p></div></div></div><div class="bui-col"><div class="bui-card bui-card--outline bui-card--success"><div class="bui-card__body"><h4 class="bui-card__title">Success</h4><p class="bui-card__text">Outline</p></div></div></div><div class="bui-col"><div class="bui-card bui-card--outline bui-card--warning"><div class="bui-card__body"><h4 class="bui-card__title">Warning</h4><p class="bui-card__text">Outline</p></div></div></div><div class="bui-col"><div class="bui-card bui-card--outline bui-card--danger"><div class="bui-card__body"><h4 class="bui-card__title">Danger</h4><p class="bui-card__text">Outline</p></div></div></div><div class="bui-col"><div class="bui-card bui-card--outline bui-card--info"><div class="bui-card__body"><h4 class="bui-card__title">Info</h4><p class="bui-card__text">Outline</p></div></div></div></div>
+</div>
+</div>
+<p>Each row is one variant in the six colors. A variant needs a color class to leave primary; the neutral default takes no color. Inside a solid card, a button of the same color would disappear into the fill, so use a button of another color (for example <code>bui-btn--secondary</code>).</p>
+<h3>Colors</h3>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Card colors</caption>
+<thead><tr><th scope="col">Name</th><th scope="col">Class</th><th scope="col">Tokens it reads</th></tr></thead>
+<tbody>
+<tr><td><code>primary</code> (default accent)</td><td><code>bui-card--primary</code></td><td><code>--bui-color-primary</code>, <code>-hover</code>, <code>-subtle</code>, <code>-border</code>, <code>-contrast</code></td></tr>
+<tr><td><code>secondary</code></td><td><code>bui-card--secondary</code></td><td>Same five tokens with the <code>secondary</code> name.</td></tr>
+<tr><td><code>success</code></td><td><code>bui-card--success</code></td><td>Same five tokens with the <code>success</code> name.</td></tr>
+<tr><td><code>warning</code></td><td><code>bui-card--warning</code></td><td>Same five tokens with the <code>warning</code> name.</td></tr>
+<tr><td><code>danger</code></td><td><code>bui-card--danger</code></td><td>Same five tokens with the <code>danger</code> name.</td></tr>
+<tr><td><code>info</code></td><td><code>bui-card--info</code></td><td>Same five tokens with the <code>info</code> name.</td></tr>
+</tbody>
+</table>
+<h3>Layout</h3>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Card layouts</caption>
+<thead><tr><th scope="col">Class</th><th scope="col">Behavior</th></tr></thead>
+<tbody>
+<tr><td>(none)</td><td>A column: media on top, then header, body and footer in source order.</td></tr>
+<tr><td><code>bui-card--horizontal</code></td><td>A row at every width: the media at the start side and the body next to it.</td></tr>
+<tr><td><code>bui-card--horizontal-sm</code></td><td>A column below 576px and a row from 576px.</td></tr>
+<tr><td><code>bui-card--horizontal-md</code></td><td>A column below 768px and a row from 768px.</td></tr>
+<tr><td><code>bui-card--horizontal-lg</code></td><td>A column below 992px and a row from 992px.</td></tr>
+</tbody>
+</table>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<article class="bui-card bui-card--horizontal-md">
+    <div class="bui-card__media"><svg viewBox="0 0 16 9" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Abstract shapes (sample media)"><rect width="16" height="9" style="fill:var(--bui-color-primary-subtle)"/><circle cx="5" cy="5" r="3" style="fill:var(--bui-color-primary)"/><rect x="9" y="2" width="5" height="5" style="fill:var(--bui-color-secondary)"/></svg></div>
+    <div class="bui-card__body">
+        <h3 class="bui-card__title">Horizontal from md</h3>
+        <p class="bui-card__text">A column on a narrow screen, a row from 768px. Put the media after the body in the source to place it at the end side.</p>
+    </div>
+</article>
+</div>
+</div>
+<p>A horizontal card has the media and the body as direct children: a <code>bui-card__header</code> or <code>bui-card__footer</code> would become a column of its own, so put that content inside the body. The media is 12rem wide (at most 45% of the card) and fills the height; use <code>preserveAspectRatio="xMidYMid slice"</code> on an SVG, or the default <code>object-fit: cover</code> of an image. The corners at the media side follow the direction: the same markup is correct in RTL.</p>
+<h3>Stretched Link</h3>
+<p>Put a link with <code>bui-card__stretched-link</code> on the title. Its ::after covers the whole card, so a click anywhere on the card follows the link, and the keyboard focus ring is drawn around the whole card.</p>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<article class="bui-card">
+    <div class="bui-card__body">
+        <h3 class="bui-card__title"><a href="#" class="bui-card__stretched-link">Clickable card</a></h3>
+        <p class="bui-card__text">Click anywhere on the card. The button below keeps its own action.</p>
+        <button type="button" class="bui-btn bui-btn--sm bui-btn--outline">Own action</button>
+    </div>
+</article>
+</div>
+</div>
+<ul>
+<li>The link must not be positioned, and no positioned element may sit between it and the card (the card is the positioning context). A wrapper with <code>position</code>, <code>transform</code> or <code>filter</code> around the link makes the link cover that wrapper only.</li>
+<li>Other interactive elements in the card (<code>a</code>, <code>button</code>, <code>input</code>, <code>select</code>, <code>textarea</code>, <code>summary</code>, <code>[role="button"]</code> and <code>[tabindex]</code>) are raised above the stretched link automatically, with zero specificity: a component that positions itself (for example an absolutely positioned close button) keeps its own position and gets only the stacking order. This needs <code>:has()</code>; where it is not supported, all such elements in every card are raised instead.</li>
+<li>Selecting the text of a stretched card with the mouse is not possible, because the link covers it. Use it for cards whose main purpose is to open one destination.</li>
+<li>Do not wrap the whole card in an <code>a</code>: it would nest interactive elements.</li>
+</ul>
+<h3>Tokens</h3>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Card tokens</caption>
+<thead><tr><th scope="col">Token</th><th scope="col">Default</th><th scope="col">Description</th></tr></thead>
+<tbody>
+<tr><td><code>--bui-card-bg</code>, <code>--bui-card-color</code>, <code>--bui-card-muted-color</code></td><td>page surface, text, muted text</td><td>Neutral surface colors of the default card.</td></tr>
+<tr><td><code>--bui-card-border-color</code>, <code>--bui-card-border-width</code></td><td>neutral border, 1px</td><td>Border and dividers.</td></tr>
+<tr><td><code>--bui-card-radius</code></td><td><code>--bui-radius-lg</code></td><td>Corner radius. The corners of the first and last child follow it.</td></tr>
+<tr><td><code>--bui-card-shadow</code>, <code>--bui-card-hover-shadow</code></td><td>none, <code>--bui-shadow-md</code></td><td>Resting shadow and the shadow of a stretched card under the pointer.</td></tr>
+<tr><td><code>--bui-card-padding-x</code>, <code>--bui-card-padding-y</code>, <code>--bui-card-cap-padding-y</code></td><td>spacing 3, 3, 2</td><td>Padding of the body, and of the header and footer.</td></tr>
+<tr><td><code>--bui-card-cap-bg</code></td><td>surface</td><td>Header and footer background of the default card.</td></tr>
+<tr><td><code>--bui-card-gap</code></td><td>spacing 2</td><td>Gap under the title, subtitle and text.</td></tr>
+<tr><td><code>--bui-card-title-font-size</code>, <code>--bui-card-title-font-weight</code>, <code>--bui-card-subtitle-font-size</code></td><td>lg, semibold, sm</td><td>Type of the title and subtitle.</td></tr>
+<tr><td><code>--bui-card-media-bg</code>, <code>--bui-card-media-size</code></td><td>surface, 12rem</td><td>Media background and the media width of a horizontal card.</td></tr>
+</tbody>
+</table>
+<p>The accent colors of the variants are not component tokens: the color modifiers read the global semantic color tokens, so a Theme restyles every card by changing those tokens. Re-declare the component tokens on a card, a container or a Theme to restyle it.</p>
+
+                    </section>
+
+                    <section class="bui-docs-section" aria-labelledby="examples">
+                        <h2 id="examples">05. Examples</h2>
+
+<h3>Header, body and footer</h3>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<article class="bui-card">
+    <div class="bui-card__header">Featured</div>
+    <div class="bui-card__body">
+        <h3 class="bui-card__title">Special title</h3>
+        <p class="bui-card__subtitle">Sample subtitle</p>
+        <p class="bui-card__text">Sample text under the title. The footer stays at the bottom when the card is taller than its content.</p>
+        <button type="button" class="bui-btn bui-btn--sm">Go somewhere</button>
+    </div>
+    <div class="bui-card__footer">2 days ago</div>
+</article>
+</div>
+</div>
+<h3>Media</h3>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<div class="bui-row bui-row-cols-1 bui-row-cols-md-2 bui-g-3"><div class="bui-col"><article class="bui-card"><div class="bui-card__media"><svg viewBox="0 0 16 9" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Abstract shapes (sample media)"><rect width="16" height="9" style="fill:var(--bui-color-primary-subtle)"/><circle cx="5" cy="5" r="3" style="fill:var(--bui-color-primary)"/><rect x="9" y="2" width="5" height="5" style="fill:var(--bui-color-secondary)"/></svg></div><div class="bui-card__body"><h3 class="bui-card__title">Media on top</h3><p class="bui-card__text">The media keeps its ratio and is clipped to the corners.</p></div></article></div><div class="bui-col"><article class="bui-card"><div class="bui-card__body"><h3 class="bui-card__title">Media at the bottom</h3><p class="bui-card__text">Put the media last in the source.</p></div><div class="bui-card__media"><svg viewBox="0 0 16 9" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Abstract shapes (sample media)"><rect width="16" height="9" style="fill:var(--bui-color-info-subtle)"/><circle cx="11" cy="4.5" r="3" style="fill:var(--bui-color-info)"/><rect x="2" y="2" width="5" height="5" style="fill:var(--bui-color-secondary)"/></svg></div></article></div></div>
+</div>
+</div>
+<p>The media is a generated inline SVG used as a declared sample. With a real image write <code>&lt;img src="..." alt="..."&gt;</code> and give a meaningful <code>alt</code>, or <code>alt=""</code> if the image is decorative.</p>
+<h3>Horizontal</h3>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<article class="bui-card bui-card--horizontal">
+    <div class="bui-card__media"><svg viewBox="0 0 16 9" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Abstract shapes (sample media)"><rect width="16" height="9" style="fill:var(--bui-color-info-subtle)"/><circle cx="11" cy="4.5" r="3" style="fill:var(--bui-color-info)"/><rect x="2" y="2" width="5" height="5" style="fill:var(--bui-color-secondary)"/></svg></div>
+    <div class="bui-card__body">
+        <h3 class="bui-card__title">Always horizontal</h3>
+        <p class="bui-card__text">The media stays at the start side at every width.</p>
+    </div>
+</article>
+</div>
+</div>
+<h3>Cards in the Grid</h3>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<div class="bui-row bui-row-cols-1 bui-row-cols-sm-2 bui-row-cols-lg-3 bui-g-3">
+    <div class="bui-col"><article class="bui-card"><div class="bui-card__body"><h3 class="bui-card__title">Short</h3><p class="bui-card__text">One line.</p></div><div class="bui-card__footer">Footer</div></article></div>
+    <div class="bui-col"><article class="bui-card"><div class="bui-card__body"><h3 class="bui-card__title">Longer</h3><p class="bui-card__text">A longer text that takes several lines, so the other cards in the row stretch to the same height and their footers line up at the bottom.</p></div><div class="bui-card__footer">Footer</div></article></div>
+    <div class="bui-col"><article class="bui-card"><div class="bui-card__body"><h3 class="bui-card__title">Another</h3><p class="bui-card__text">Sample text.</p></div><div class="bui-card__footer">Footer</div></article></div>
+</div>
+</div>
+</div><p>Cards are laid out with the Grid: a <code>bui-row</code> with <code>bui-row-cols-*</code> and a gutter class (<code>bui-g-3</code>), each card inside a <code>bui-col</code>. A card is as tall as its column (<code>block-size: 100%</code>), and a column stretches to the row, so cards of one row have equal heights.</p>
+<h3>Stretched link with inner controls</h3>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<div class="bui-row bui-row-cols-1 bui-row-cols-md-2 bui-g-3">
+    <div class="bui-col"><article class="bui-card">
+        <div class="bui-card__media"><svg viewBox="0 0 16 9" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Abstract shapes (sample media)"><rect width="16" height="9" style="fill:var(--bui-color-primary-subtle)"/><circle cx="5" cy="5" r="3" style="fill:var(--bui-color-primary)"/><rect x="9" y="2" width="5" height="5" style="fill:var(--bui-color-secondary)"/></svg></div>
+        <div class="bui-card__body">
+            <h3 class="bui-card__title"><a href="#" class="bui-card__stretched-link">Open the article</a></h3>
+            <p class="bui-card__text">A click on the image, the text or the empty space opens the article.</p>
+            <a href="#" class="bui-btn bui-btn--sm bui-btn--outline">Share</a>
+        </div>
+    </article></div>
+    <div class="bui-col"><article class="bui-card bui-card--solid bui-card--info">
+        <div class="bui-card__body">
+            <h3 class="bui-card__title"><a href="#" class="bui-card__stretched-link">Solid card link</a></h3>
+            <p class="bui-card__text">The focus ring uses the contrast color so it stays visible on the fill.</p>
+        </div>
+    </article></div>
+</div>
+</div>
+</div>
+<h3>List Group inside a card</h3>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<div class="bui-row bui-row-cols-1 bui-row-cols-md-2 bui-g-3">
+    <div class="bui-col"><article class="bui-card">
+        <div class="bui-card__body"><h3 class="bui-card__title">Default</h3></div>
+        <ul class="bui-list-group bui-list-group--flush">
+            <li class="bui-list-group__item">First item</li>
+            <li class="bui-list-group__item" aria-current="true">Active item</li>
+            <li class="bui-list-group__item">Last item</li>
+        </ul>
+    </article></div>
+    <div class="bui-col"><article class="bui-card bui-card--solid bui-card--success">
+        <div class="bui-card__body"><h3 class="bui-card__title">Solid</h3></div>
+        <ul class="bui-list-group bui-list-group--flush">
+            <li class="bui-list-group__item">First item</li>
+            <li class="bui-list-group__item" aria-current="true">Active item</li>
+            <li class="bui-list-group__item">Last item</li>
+        </ul>
+    </article></div>
+</div>
+</div>
+</div>
+<p>A List Group inside a card takes the card's text and divider colors and a hover and active color that stay readable on each variant. Use <code>bui-list-group--flush</code> so it sits flush with the card edges. The list is described on the <a href="list-group.html">List Group</a> page.</p>
+
+                    </section>
+
+                    <section class="bui-docs-section" aria-labelledby="javascript-api">
+                        <h2 id="javascript-api">06. JavaScript API</h2>
+
+<p>CSS only, no JavaScript API. Card registers nothing with <code>BUI.register</code>, fires no events and has no options to parse. Card has no internal text, so it adds no translation key to <code>assets/i18n/*.json</code>: the title, text and link text are whatever you write (use <code>data-bui-i18n</code> with your own keys if you translate them).</p>
+
+                    </section>
+
+                    <section class="bui-docs-section" aria-labelledby="responsive-behavior">
+                        <h2 id="responsive-behavior">07. Responsive Behavior</h2>
+
+<ul>
+<li>Base (below 480px): a card is a column and as wide as its container. In the Grid, <code>bui-row-cols-1</code> gives one card per row.</li>
+<li><code>bui-card--horizontal-sm</code>, <code>-md</code> and <code>-lg</code> turn from a column into a row at 576px, 768px and 992px. <code>bui-card--horizontal</code> is a row at every width, and its media is at most 45% of the card, so the body keeps room at 320px.</li>
+<li>Long unbroken text wraps inside the card (<code>overflow-wrap: break-word</code>); the card never causes horizontal scrolling of the page.</li>
+<li>Cards in one Grid row have equal heights at every width. The corners of the media follow the layout: top corners in a column, the start-side corners in a row.</li>
+<li>The horizontal breakpoints are viewport media queries (not container queries): a horizontal card in a narrow column of a wide screen is still a row.</li>
+</ul>
+
+                    </section>
+
+                    <section class="bui-docs-section" aria-labelledby="accessibility">
+                        <h2 id="accessibility">08. Accessibility</h2>
+
+<h3>Keyboard</h3>
+<p>A plain card is not interactive and is not focusable. A stretched link is one tab stop: Tab focuses the link, Enter follows it, and the focus ring surrounds the whole card (drawn inside the card edge so a container with <code>overflow</code> cannot clip it). Buttons and links inside the card are separate tab stops in source order and keep their own Enter and Space behavior; activating one of them does not follow the stretched link.</p>
+<h3>ARIA and semantics</h3>
+<ul>
+<li>Use <code>article</code> for a self-contained card (a post, a product), or <code>div</code>/<code>li</code> otherwise. Card adds no role.</li>
+<li>Put the stretched link on the title, inside a heading of the right level, so the link name is the title and the card appears in the heading outline. Do not put the link on an empty element.</li>
+<li>Give media meaningful <code>alt</code> text, or <code>alt=""</code> when it is decorative. An SVG that carries meaning needs <code>role="img"</code> and an <code>aria-label</code>.</li>
+<li>Meaning never depends on color alone: a colored card still needs its words (for example "Error:") in the text.</li>
+</ul>
+<h3>Contrast</h3>
+<p>Measured in Chromium for every variant and color (title, subtitle, text, header and footer), in Light and Dark, with the default and ocean themes: 524 samples together with the List Group fixtures, the lowest text contrast is 5.02:1 (above the 4.5:1 AA threshold). The stretched-link ring measures at least 3:1 against the card background on the neutral, three sample cards (neutral, inner controls and solid) in the same themes and modes. Hover and pressed states of list items inside cards stay above 4.5:1 (64 samples).</p>
+<h3>Screen reader</h3>
+<p>Not tested with a screen reader (NVDA, VoiceOver or similar). The semantics come from standard elements; how a reader announces a heading that contains a stretched link was not verified.</p>
+
+                    </section>
+
+
+                </div>
+                <!-- Previous / Next links are appended here by docs.js from the order in nav.js. -->
+            </div>
+            <!-- "On this page" is appended here by docs.js (visible from the XL breakpoint). -->
+        </div>
+    </main>
+
+    <script src="../../assets/js/baset-ui.js"></script>
+    <script src="../../documentation/assets/js/nav.js"></script>
+    <script src="../../documentation/assets/js/docs.js"></script>
+    <script src="../../documentation/assets/js/playground.js"></script>
+    <script>
+        /* Docs-only helpers for this page. */
+        (function () {
+            /* A link with href="#" inside a preview must not scroll the page. */
+            document.addEventListener('click', function (e) {
+                var a = e.target.closest ? e.target.closest('a[href="#"]') : null;
+                if (a && a.closest('[data-docs-playground], .bui-docs-example__preview')) { e.preventDefault(); }
+            });
+            var svg = '<svg viewBox="0 0 16 9" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Abstract shapes (sample media)"><rect width="16" height="9" style="fill:var(--bui-color-primary-subtle)"/><circle cx="5" cy="5" r="3" style="fill:var(--bui-color-primary)"/><rect x="9" y="2" width="5" height="5" style="fill:var(--bui-color-secondary)"/></svg>';
+            BUI_DOCS_PLAYGROUND.define('card', {
+                title: 'Card playground',
+                controls: [
+                    { type: 'select', name: 'variant', label: 'Variant', default: 'default',
+                      options: [{ value: 'default', label: 'Default (neutral)' }, { value: 'solid', label: 'Solid' }, { value: 'subtle', label: 'Subtle' }, { value: 'outline', label: 'Outline' }] },
+                    { type: 'select', name: 'color', label: 'Color (with a variant)', default: 'primary',
+                      options: [{ value: 'primary', label: 'Primary' }, { value: 'secondary', label: 'Secondary' }, { value: 'success', label: 'Success' }, { value: 'warning', label: 'Warning' }, { value: 'danger', label: 'Danger' }, { value: 'info', label: 'Info' }] },
+                    { type: 'select', name: 'layout', label: 'Layout', default: 'vertical',
+                      options: [{ value: 'vertical', label: 'Column (default)' }, { value: 'horizontal', label: 'Horizontal' }, { value: 'horizontal-sm', label: 'Horizontal from sm' }, { value: 'horizontal-md', label: 'Horizontal from md' }, { value: 'horizontal-lg', label: 'Horizontal from lg' }] },
+                    { type: 'switch', name: 'header', label: 'Header (column only)' },
+                    { type: 'switch', name: 'media', label: 'Media' },
+                    { type: 'switch', name: 'subtitle', label: 'Subtitle' },
+                    { type: 'switch', name: 'footer', label: 'Footer (column only)' },
+                    { type: 'switch', name: 'link', label: 'Stretched link on the title' },
+                    { type: 'switch', name: 'button', label: 'Inner button' },
+                    { type: 'text', name: 'title', label: 'Title', default: 'Card title', maxLength: 40 },
+                    { type: 'text', name: 'text', label: 'Text', default: 'Some sample text inside the card.', maxLength: 120 }
+                ],
+                template: function (state, h) {
+                    var cls = ['bui-card'];
+                    if (state.variant !== 'default') {
+                        cls.push('bui-card--' + state.variant);
+                        if (state.color !== 'primary') { cls.push('bui-card--' + state.color); }
+                    }
+                    if (state.layout !== 'vertical') { cls.push('bui-card--' + state.layout); }
+                    var horizontal = state.layout !== 'vertical';
+                    var title = h.escape(state.title);
+                    if (state.link) { title = '<a href="#" class="bui-card__stretched-link">' + title + '</a>'; }
+                    var out = '<article class="' + cls.join(' ') + '">\n';
+                    if (state.header && !horizontal) { out += '    <div class="bui-card__header">Header</div>\n'; }
+                    if (state.media) { out += '    <div class="bui-card__media">' + svg + '</div>\n'; }
+                    out += '    <div class="bui-card__body">\n';
+                    out += '        <h3 class="bui-card__title">' + title + '</h3>\n';
+                    if (state.subtitle) { out += '        <p class="bui-card__subtitle">Card subtitle</p>\n'; }
+                    out += '        <p class="bui-card__text">' + h.escape(state.text) + '</p>\n';
+                    if (state.button) {
+                        out += '        <button type="button" class="bui-btn bui-btn--sm' + (state.variant === 'solid' ? ' bui-btn--secondary' : '') + '">Action</button>\n';
+                    }
+                    out += '    </div>\n';
+                    if (state.footer && !horizontal) { out += '    <div class="bui-card__footer">Footer</div>\n'; }
+                    return out + '</article>';
+                }
+            });
+        })();
+    </script>
+</body>
+</html>
