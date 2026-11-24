@@ -88,7 +88,7 @@ Sizes، Colors، Variants، States، Options، Configurations، Responsive Previ
 - `beforeRender(frame)`: قبل كل إعادة رسم وعند `destroy()`؛ أنسب مكان لتدمير نسخ المكون.
 - `afterRender(frame, state)`: بعد كل رسم؛ أنسب مكان لتهيئة المكون على `frame`.
 
-المسؤولية على كاتب الصفحة أن يطابق JS المعروض في Code Output ما تفعله الـ Hooks. هذه الـ Hooks لم تُختبر مع مكون JS حقيقي: مكونات Task 09 (Button وButton Group وClose Button) CSS فقط فلا تستخدمها (اختُبرت بمثال تجريبي بسيط). نمط Schema المرجعي لمكون CSS فقط في [COMPONENT_DEVELOPMENT.md](COMPONENT_DEVELOPMENT.md).
+المسؤولية على كاتب الصفحة أن يطابق JS المعروض في Code Output ما تفعله الـ Hooks. اختُبرت الـ Hooks مع مكون JS حقيقي في Task 12 (Chromium فقط): Input يدمّر ويهيّئ `password-toggle` بها (`BUI.destroy(frame)` في `beforeRender` و`BUI.init(frame)` في `afterRender`)، وCheckbox يضبط `indeterminate` في `afterRender` ويعرض سطر `js` في Code Output. لم تُختبر في Safari/Firefox. نمط Schema المرجعي لمكون CSS فقط في [COMPONENT_DEVELOPMENT.md](COMPONENT_DEVELOPMENT.md).
 
 ## واجهة الإطار
 | الدالة | الوصف |

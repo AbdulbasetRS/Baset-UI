@@ -1403,6 +1403,62 @@
     });
 
     /*
+     * Password toggle (Task 12). Shows or hides the value of a password input. The button keeps one accessible name ("Show password",
+     * translated with data-bui-i18n-attr="aria-label:form.showPassword") and exposes its state with aria-pressed, so the name never changes.
+     * The input is found with aria-controls (an id), or else the .bui-input of the same .bui-input-group.
+     * Markup: <button type="button" class="bui-btn" data-bui-password-toggle aria-pressed="false" aria-controls="pw" aria-label="Show password">
+     *             <i class="bui-icon-regular bui-icon-eye bui-password-toggle__show" aria-hidden="true"></i>
+     *             <i class="bui-icon-regular bui-icon-eye-slash bui-password-toggle__hide" aria-hidden="true"></i></button>
+     * Event: bui:password-toggle:toggle (detail { visible }). Without this component the input still works as a plain password field.
+     */
+    register('password-toggle', {
+        defaults: {},
+        create: function (el, options, ctx) {
+            var controls = el.getAttribute('aria-controls');
+            var input = controls ? document.getElementById(controls) : null;
+            if (!input) {
+                var group = el.closest('.bui-input-group');
+                input = group ? group.querySelector('.bui-input') : null;
+            }
+            if (!input || input.tagName !== 'INPUT') {
+                ctx.log.warn('No input found: add aria-controls with the input id, or place the button in the same .bui-input-group.');
+                return { destroy: function () {} };
+            }
+            var originalType = input.getAttribute('type');
+            var visible = false;
+
+            function render(on) {
+                visible = on;
+                input.setAttribute('type', on ? 'text' : 'password');
+                el.setAttribute('aria-pressed', on ? 'true' : 'false');
+            }
+            function set(on) {
+                on = !!on;
+                if (on === visible) return;
+                render(on);
+                ctx.trigger('toggle', { visible: visible });
+            }
+            function onClick() { set(!visible); }
+
+            if (originalType !== 'password') { ctx.log.warn('The target input is not type="password"; it is switched to password.'); }
+            render(false);
+            el.addEventListener('click', onClick);
+
+            return {
+                show: function () { set(true); },
+                hide: function () { set(false); },
+                toggle: function () { set(!visible); },
+                isVisible: function () { return visible; },
+                destroy: function () {
+                    el.removeEventListener('click', onClick);
+                    if (originalType === null) { input.removeAttribute('type'); } else { input.setAttribute('type', originalType); }
+                    el.removeAttribute('aria-pressed');
+                }
+            };
+        }
+    });
+
+    /*
      * Automatic init. While the document is loading it runs on DOMContentLoaded. If the script was
      * loaded later, it runs in the next task so a BUI.config({ autoInit: false }) written right after
      * the script tag still applies. The observer starts only after this first step.

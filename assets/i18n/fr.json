@@ -19,5 +19,8 @@
         "statusOffline": "Hors ligne",
         "statusBusy": "Occupé",
         "statusAway": "Absent"
+    },
+    "form": {
+        "showPassword": "Afficher le mot de passe"
     }
 }

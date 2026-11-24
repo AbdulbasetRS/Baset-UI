@@ -27,6 +27,7 @@ BUI.theme.{set, setMode, toggleMode, get, getMode, load};   // Task 06، الت�
 BUI.locale.{use, t, get, getDirection, register, apply};    // Task 06، التفاصيل في INTERNATIONALIZATION.md
 BUI.avatar(el)  -> { isFallback, refresh, destroy }            // Task 10، اختياري، data-bui-avatar
 BUI.progress(el) -> { set, get, getPercent, refresh, destroy } // Task 10، اختياري، data-bui-progress
+BUI.passwordToggle(el) -> { show, hide, toggle, isVisible, destroy } // Task 12، اختياري، data-bui-password-toggle، الحدث bui:password-toggle:toggle
 BUI.{camelCaseName}(target, options?)         // Factory يضيفه register()
 BUI.{camelCaseName}.{variant}(target, options?)
 ```

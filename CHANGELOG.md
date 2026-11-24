@@ -4,6 +4,37 @@
 
 ## [Unreleased]
 
+### Added (Task 12: Form Controls + Input + Checkbox + Radio + Switch)
+- `assets/css/baset-ui.css` (235,063 بايت خام و31,553 gzip، كان 207,037 و26,437): Form Controls وCheckbox وInput وRadio وSwitch في قسم 6 بالترتيب الأبجدي (Checkbox بعد Card، Form Controls وInput قبل List Group، Radio وSwitch بعد Progress)، وTokens في الطبقة 3 (`--bui-form-*` و`--bui-input-*` و`--bui-check-*` و`--bui-switch-*`). لا ملف CSS جديد.
+- **Form Controls:** `bui-form-group` (Grid، عمودي، و`--horizontal` و`--horizontal-sm|md|lg`) و`bui-form-label` (`--required`) و`bui-form-text` (`--error` و`--success`) و`bui-form-fieldset` و`bui-form-legend`.
+- **Input:** `bui-input` على `input` (text وemail وpassword وnumber وsearch وurl وtel وdate) و`textarea`، أحجام `--sm|--md|--lg`، حالات readonly وdisabled وvalid وinvalid (حلقة داخلية فتختلف الحافة بغير اللون)، Input Group (`bui-input-group` و`bui-input-group__text` و`--sm|--lg`)، قاعدة Autofill (`:-webkit-autofill`)، وارتفاع أكبر على المؤشر الخشن.
+- **Checkbox وRadio وSwitch:** على `<input>` الأصلي بـ `appearance: none`، داخل `bui-checkbox` و`bui-radio` و`bui-switch` (`__input` ثم `__label`)، أحجام `--sm|--md|--lg`، `--inline`، Indeterminate لـ Checkbox، `role="switch"` لـ Switch، وقواعد مشتركة بين الثلاثة (الـ Label وhover وdisabled والتحقق وFocus وForced Colors).
+- `assets/js/baset-ui.js` (64,750 بايت خام و15,029 gzip، كان 61,801 و14,476): مكون اختياري `password-toggle` (`data-bui-password-toggle`، `BUI.passwordToggle`، `show/hide/toggle/isVisible/destroy`، الحدث `bui:password-toggle:toggle`). الاسم الوصولي ثابت والحالة بـ `aria-pressed`.
+- i18n: مفتاح `form.showPassword` في `en.json` وar وfr معاً (`node tests/i18n-keys.js` ناجح: 13 مفتاحاً).
+- `documentation/components/form-controls.html` و`input.html` و`checkbox.html` و`radio.html` و`switch.html`، بالأقسام الثمانية بالترتيب وPlayground حقيقي لكل صفحة، ومفعلة في `nav.js`.
+- `tests/manual/forms.html`: Fixture معلن (انظر ARCHITECTURE.md).
+
+### Changed (Task 12)
+- `COMPONENTS_REGISTRY.md` وARCHITECTURE.md وCOMPONENT_DEVELOPMENT.md وNAMING_CONVENTIONS.md وINTERNATIONALIZATION.md وJAVASCRIPT_API.md وCORE_ASSETS.md وPROJECT_OVERVIEW.md وCUSTOMIZATION_AND_PLAYGROUND.md (ملفات `instructions/`).
+- تفعيل صفحات Forms الخمس غيّر رابط Next/Previous في أسفل بعض صفحات التوثيق الموجودة (لا تغيير في أي مكون سابق: قورنت 35 صفحة قبل التعديل وبعده في Chromium، والفروق الوحيدة روابط Next/Previous).
+
+### Decisions (Task 12)
+- **لا Floating Label:** يعتمد على Placeholder مخفي وانكماش الـ Label عند التركيز ويتأثر بتبديل الاتجاه؛ الـ Label الظاهر فوق الحقل أأمن. موثق في صفحة Form Controls.
+- **حالة invalid:** تُقبل `is-invalid` و`aria-invalid="true"` بالمظهر نفسه (طلب المهمة صراحة `is-valid`/`is-invalid` مع `aria-invalid`، وقاعدة الحالة بالسمة تفضّل السمة القياسية)؛ `is-valid` فئة لأنه لا سمة قياسية للصحة.
+- **مساعد كلمة المرور داخل الـ Core:** يتبع قرار Task 10 (JS صغير اختياري مسجل في `baset-ui.js` لما لا يستقيم بـ CSS). الاسم ثابت و`aria-pressed` بدل تبديل الاسم، فلا مفتاح i18n إلا `form.showPassword`.
+- **`fieldset` لا يصلح Grid أفقياً** (المتصفح لا يضع `legend` كعنصر شبكة)، فالأفقي لمجموعات الراديو بـ `role="radiogroup"` و`aria-labelledby`.
+- **`<select>` الأصلي لم يُنسَّق** (Select مهمة لاحقة)، وChrome الأصلي لحقول file/color/range لم يُلمس.
+- **اتجاه النص:** `dir="ltr"` لحقول البريد والرابط والهاتف والرقم، و`dir="auto"` للنص الحر. قيس أن الحقل الفارغ بـ `dir="auto"` يصبح LTR في صفحة RTL (وفق المتصفح) وهو موثق.
+- **علامة Checkbox بحدود فيزيائية** عمداً (رسم لا يُعكس في RTL)، وبقية المكان Logical Properties (المؤشر `inset-inline-start`).
+
+### Tested (Task 12) - Chromium (Playwright)، بلا متصفحات أخرى
+- تشغيل: 5 صفحات توثيق وFixture بلا أخطاء Console ولا 404. صياغة: `node --check` لـ `baset-ui.js` ولسكربتات الصفحات. `node tests/i18n-keys.js` وفحص الأيقونات ناجحان.
+- التباين: 1,024 عينة، صفر فشل (أدنى نص 5.07:1، أدنى غير نصي 3.73:1).
+- Overflow: 320 تركيبة للصفحات الخمس و64 للـ Fixture، صفر Overflow أفقي.
+- Playground: 97 حالة (كل الخيارات في الصفحات الخمس)، المعاينة تطابق Code Output. تهيئة `password-toggle` داخل المعاينة بـ Hooks، وIndeterminate.
+- كيبورد: ترتيب Tab، Space على Checkbox وSwitch، أسهم Radio في LTR وRTL، نقر الـ Label بالنمطين. Switch: موضع المؤشر في LTR وRTL. المؤشر الخشن: ارتفاعات 40/44/48 وصفوف 44. Forced Colors (محاكاة).
+- **غير مختبر:** قارئ شاشة، Safari/Firefox، لمس فعلي، Autofill حقيقي، Forced Colors على Windows، `content: "*" / ""` في متصفحات لا تدعم النص البديل، `dir="auto"` على أجهزة فعلية.
+
 ### Added (Task 11: Card + List Group)
 - `assets/css/baset-ui.css` (207,037 بايت خام و26,437 gzip، كان 185,831 و23,505): Card بين Button Group وClose Button، وList Group بين Close Button وProgress في قسم 6، وTokens في الطبقة 3 (`--bui-card-*` و`--bui-list-group-*`). بلا JS وبلا مفاتيح i18n (لا نص داخلي).
 - **Card:** `bui-card` مع `__header/__body/__footer/__title/__subtitle/__text/__media`، وVariants (افتراضي محايد، `--solid` و`--subtle` و`--outline`) x ستة ألوان، وأفقي `--horizontal` و`--horizontal-sm|md|lg`، وStretched Link (`__stretched-link`) بحلقة تركيز حول البطاقة كلها، وبطاقة بارتفاع 100% لتتساوى في الـ Grid. قائمة List Group داخل Card تتبع ألوان البطاقة.

@@ -106,6 +106,13 @@ Baset-UI/
 - أمثلة التوثيق تستعمل SVG مضمناً مولداً بدل صورة، فكود المثال المعروض هو نفسه الذي يعمل (بخلاف Avatar).
 - النمط المرجعي في [COMPONENT_DEVELOPMENT.md](COMPONENT_DEVELOPMENT.md) (قسم إضافات Task 11).
 
+### Form Controls وInput وCheckbox وRadio وSwitch (Task 12)
+- الكود في `assets/css/baset-ui.css` (قسم 6، بالترتيب الأبجدي) و`assets/js/baset-ui.js` (مكون `password-toggle` الاختياري في قسم Components shipped with the Core، كـ`avatar` و`progress`)، بلا ملف جديد في `assets/`. خمس صفحات في `documentation/components/` (`form-controls.html` و`input.html` و`checkbox.html` و`radio.html` و`switch.html`) مفعلة في `nav.js` تحت قسم Forms (القاعدة: Forms داخل `components/`). لا مجلدات جديدة.
+- **ملف جديد: `tests/manual/forms.html`** (خارج قائمة ملفات المهمة). السبب: [TESTING.md](TESTING.md) يطلب Checklist يدوي لكل مكون في `tests/manual/{component}.html`، ومصفوفة النوع x الحجم x الحالة (والتحقق ومجموعات Input وتخطيطات Form Group وترتيب Tab) لا تتسع في صفحات التوثيق. ملف واحد للخمسة لأنها تتشارك الحالات والـ Tokens ولأن Form Group يجمعها. **Fixtures معلنة** في رأس الملف: كل النصوص والقيم نص عينة، بلا صور ولا طلبات شبكة. لا يُشحن كمكون ولا يحمّله شيء.
+- المكونات الثلاثة (Checkbox وRadio وSwitch) تشترك في كتلة قواعد واحدة معلنة داخل قسم Checkbox (Selectors مشتركة)، ويضيف Radio وSwitch بعدها ما يخصه فقط. هذا استثناء من "قسم لكل مكون" لأن تكرار الأحجام والـ Label وhover وdisabled والتحقق ثلاث مرات يفرّق الثلاثة مع الوقت.
+- صفحات المكونات الخمس تحمّل `playground.css` و`playground.js` وأيقونات الـ Extension في `<head>` (الأيقونات لأمثلة Input Group ومساعد كلمة المرور).
+- النمط المرجعي في [COMPONENT_DEVELOPMENT.md](COMPONENT_DEVELOPMENT.md) (قسم إضافات Task 12).
+
 ### قرار المسارات في الصفحات المتداخلة
 - كل صفحة تضع `data-root="../../"` على `<html>`: المسار **من الصفحة نفسها** إلى جذر الموقع (مجلد `index.html`). يُقرأ في `docs.js` ويُبنى عليه كل رابط (Sidebar، Breadcrumb، Previous/Next، رابط الشعار).
 - إن غابت السمة يستنتج `docs.js` الجذر من مسار سكربت `docs.js` نفسه (دائماً ثلاثة مستويات تحت الجذر)، فتبقى الصفحة تعمل. السمة هي المصدر الأساسي لأنها صريحة ولا تعتمد على موضع السكربت.

@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-bui-theme="default" data-bui-mode="light" data-root="../../">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Switch - Baset-UI Documentation</title>
+    <meta name="description" content="Switch: a native checkbox with role switch drawn as a track and thumb, with sizes and RTL support. CSS only.">
+    <!-- Empty icon: avoids a /favicon.ico 404 until the project has a real icon. -->
+    <link rel="icon" href="data:,">
+
+    <link rel="stylesheet" href="../../assets/css/baset-ui.css">
+    <link rel="stylesheet" href="../../assets/css/extensions/baset-ui-icons.css">
+    <link rel="stylesheet" href="../../assets/css/themes/ocean.css">
+    <link rel="stylesheet" href="../../documentation/assets/css/docs.css">
+    <link rel="stylesheet" href="../../documentation/assets/css/playground.css">
+    <script>
+        /* Prevents a flash of the wrong theme or mode. Same keys as BUI.theme (bui-theme, bui-mode). */
+        (function () {
+            var d = document.documentElement, t = null, m = null, r = null;
+            try { t = localStorage.getItem('bui-theme'); m = localStorage.getItem('bui-mode'); r = localStorage.getItem('bui-docs-dir'); } catch (e) {}
+            if (t && /^[a-z][a-z0-9]*(-[a-z0-9]+)*$/.test(t)) d.setAttribute('data-bui-theme', t);
+            if (m !== 'light' && m !== 'dark') m = window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+            d.setAttribute('data-bui-mode', m);
+            /* Documentation shell only: the saved direction of the RTL/LTR switcher. */
+            if (r === 'rtl' || r === 'ltr') d.setAttribute('dir', r);
+        })();
+    </script>
+</head>
+<body>
+    <main class="bui-docs-main" id="bui-docs-main" tabindex="-1">
+        <div class="bui-docs-page">
+            <div class="bui-docs-page__body">
+
+                <header class="bui-docs-page-header">
+                    <nav class="bui-docs-breadcrumb" aria-label="Breadcrumb" data-docs-breadcrumb hidden></nav>
+                    <h1>Switch</h1>
+                    <p class="bui-docs-lead">An on and off switch built on a native checkbox with role switch: sizes, RTL support and validation states. CSS only.</p>
+                </header>
+
+                <div class="bui-docs-content">
+                    <section class="bui-docs-section" aria-labelledby="installation-include">
+                        <h2 id="installation-include">01. Installation &amp; Include</h2>
+
+<p>Switch is part of the Core stylesheet, so <code>assets/css/baset-ui.css</code> is the only file required. It is CSS only and needs no icon Extension: the tick, the dot and the thumb are drawn with CSS. Switch shares its label, hover, disabled and validation rules with Checkbox and Radio inside the Core stylesheet.</p>
+<pre class="bui-docs-code" data-lang="html"><code>&lt;link rel="stylesheet" href="assets/css/baset-ui.css"&gt;
+
+&lt;div class="bui-switch"&gt;&lt;input class="bui-switch__input" type="checkbox" role="switch" id="agree"&gt;&lt;label class="bui-switch__label" for="agree"&gt;Label text&lt;/label&gt;&lt;/div&gt;</code></pre>
+
+                    </section>
+
+                    <section class="bui-docs-section" aria-labelledby="customize">
+                        <h2 id="customize">02. Customize</h2>
+
+<p>Every option below is a real class or attribute documented in section 04.</p>
+<div data-docs-playground="switch"></div>
+
+                    </section>
+
+                    <section class="bui-docs-section" aria-labelledby="default">
+                        <h2 id="default">03. Default</h2>
+
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<div class="bui-switch"><input class="bui-switch__input" type="checkbox" role="switch" id="sw-def" checked><label class="bui-switch__label" for="sw-def">Label text</label></div>
+</div>
+</div>
+<p>Switch is built on the native <code>&lt;input type="checkbox" role="switch"&gt;</code>, drawn with <code>appearance: none</code>: it keeps native focus, form submission, the <code>checked</code> and <code>disabled</code> attributes and the Constraint Validation API. The wrapper (<code>bui-switch</code>) holds the input and its label; the input comes <strong>before</strong> the label.</p>
+
+                    </section>
+
+                    <section class="bui-docs-section" aria-labelledby="variants-options">
+                        <h2 id="variants-options">04. Variants &amp; Options</h2>
+
+<h3>Markup patterns</h3>
+<p>Two equivalent patterns. The recommended one links the label with <code>for</code> and <code>id</code>; the alternative makes the wrapper a <code>label</code> that contains the input and a <code>span</code> (no ids needed).</p>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<div class="bui-switch"><input class="bui-switch__input" type="checkbox" role="switch" id="sw-p1"><label class="bui-switch__label" for="sw-p1">Wrapper div and a label with for</label></div>
+<label class="bui-switch"><input class="bui-switch__input" type="checkbox" role="switch"><span class="bui-switch__label">Label text</span></label>
+</div>
+</div>
+<h3>Sizes</h3>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Switch sizes</caption>
+<thead><tr><th scope="col">Name</th><th scope="col">Class</th><th scope="col">Control size</th><th scope="col">Label size</th></tr></thead>
+<tbody>
+<tr><td><code>sm</code></td><td><code>bui-switch--sm</code></td><td>1.25rem (20px) high</td><td>0.875rem</td></tr>
+<tr><td><code>md</code> (default)</td><td><code>bui-switch--md</code></td><td>1.5rem (24px) high</td><td>1rem</td></tr>
+<tr><td><code>lg</code></td><td><code>bui-switch--lg</code></td><td>1.75rem (28px) high</td><td>1.125rem</td></tr>
+</tbody>
+</table>
+
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<div class="bui-switch bui-switch--sm"><input class="bui-switch__input" type="checkbox" role="switch" id="sw-s1" checked><label class="bui-switch__label" for="sw-s1">Small</label></div>
+<div class="bui-switch"><input class="bui-switch__input" type="checkbox" role="switch" id="sw-s2" checked><label class="bui-switch__label" for="sw-s2">Medium (default)</label></div>
+<div class="bui-switch bui-switch--lg"><input class="bui-switch__input" type="checkbox" role="switch" id="sw-s3" checked><label class="bui-switch__label" for="sw-s3">Large</label></div>
+</div>
+</div>
+<h3>Stacked and inline</h3>
+<p>Items are stacked by default. <code>bui-switch--inline</code> puts items on one line and wraps them. A long label wraps and the control stays on its first line.</p>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<div class="bui-switch bui-switch--inline"><input class="bui-switch__input" type="checkbox" role="switch" id="sw-i1" checked><label class="bui-switch__label" for="sw-i1">Inline one</label></div>
+<div class="bui-switch bui-switch--inline"><input class="bui-switch__input" type="checkbox" role="switch" id="sw-i2"><label class="bui-switch__label" for="sw-i2">Inline two</label></div>
+<div class="bui-switch bui-switch--inline"><input class="bui-switch__input" type="checkbox" role="switch" id="sw-i3"><label class="bui-switch__label" for="sw-i3">Inline three</label></div>
+</div>
+</div>
+<h3>States</h3>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Switch states</caption>
+<thead><tr><th scope="col">State</th><th scope="col">How</th><th scope="col">Notes</th></tr></thead>
+<tbody>
+<tr><td>Unchecked</td><td>default</td><td>Strong border (at least 3:1 against the page).</td></tr>
+<tr><td>Checked</td><td><code>checked</code></td><td>Primary fill with the thumb moved to the end side.</td></tr>
+<tr><td>Hover</td><td>Pointer over the control or its label</td><td>Darker border (or fill). Only on devices that can hover; not on disabled or validation states.</td></tr>
+<tr><td>Focus visible</td><td>Keyboard focus</td><td>The global focus ring around the control.</td></tr>
+<tr><td>Disabled</td><td><code>disabled</code></td><td>The control and its label dim (opacity); not focusable.</td></tr>
+<tr><td>Valid</td><td><code>is-valid</code></td><td>Success-colored border plus an inner ring (thicker edge, so not only a color).</td></tr>
+<tr><td>Invalid</td><td><code>is-invalid</code> or <code>aria-invalid="true"</code></td><td>Danger-colored border plus the inner ring. Add a message with <code>aria-describedby</code>.</td></tr>
+</tbody>
+</table>
+
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<div class="bui-d-flex bui-flex-wrap bui-gap-4">
+<div class="bui-switch"><input class="bui-switch__input" type="checkbox" role="switch" id="sw-t1"><label class="bui-switch__label" for="sw-t1">Unchecked</label></div>
+<div class="bui-switch"><input class="bui-switch__input" type="checkbox" role="switch" id="sw-t2" checked><label class="bui-switch__label" for="sw-t2">Checked</label></div>
+<div class="bui-switch"><input class="bui-switch__input" type="checkbox" role="switch" id="sw-t3" disabled><label class="bui-switch__label" for="sw-t3">Disabled</label></div>
+<div class="bui-switch"><input class="bui-switch__input" type="checkbox" role="switch" id="sw-t4" disabled checked><label class="bui-switch__label" for="sw-t4">Disabled and checked</label></div>
+<div class="bui-switch"><input class="bui-switch__input is-valid" type="checkbox" role="switch" id="sw-t5" checked><label class="bui-switch__label" for="sw-t5">Valid</label></div>
+<div class="bui-switch"><input class="bui-switch__input is-invalid" type="checkbox" role="switch" id="sw-t6" aria-invalid="true"><label class="bui-switch__label" for="sw-t6">Invalid</label></div>
+
+</div>
+</div>
+</div>
+<h3>Switch or checkbox</h3><p>Use a switch for a setting that takes effect immediately (on or off, like a light). Use a checkbox when the choice is submitted with a form or is one of several options. The control is a checkbox input with <code>role="switch"</code>: the role is required, because without it assistive technology announces a checkbox.</p>
+<p>The thumb moves with a logical offset, so it travels toward the end side in both directions: to the right in LTR and to the left in RTL (checked in Chromium). The shape is not flipped, so nothing else is needed for RTL.</p>
+<h3>Options</h3>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Switch options</caption>
+<thead><tr><th scope="col">Name</th><th scope="col">Type</th><th scope="col">Default</th><th scope="col">HTML</th><th scope="col">Description</th></tr></thead>
+<tbody>
+<tr><td>size</td><td>enum</td><td><code>md</code></td><td><code>bui-switch--{sm|md|lg}</code></td><td>Control and label size (set on the wrapper).</td></tr>
+<tr><td>layout</td><td>enum</td><td>stacked</td><td><code>bui-switch--inline</code></td><td>One line, wraps.</td></tr>
+<tr><td>checked</td><td>boolean</td><td>false</td><td><code>checked</code></td><td>Native attribute.</td></tr>
+<tr><td>disabled</td><td>boolean</td><td>false</td><td><code>disabled</code></td><td>Native attribute; also dims the following label.</td></tr>
+<tr><td>state</td><td>enum</td><td>none</td><td><code>is-valid</code>, <code>is-invalid</code> or <code>aria-invalid="true"</code></td><td>Validation style on the input.</td></tr>
+<tr><td>role</td><td>attribute</td><td>required</td><td><code>role="switch"</code></td><td>Makes assistive technology announce a switch.</td></tr>
+</tbody>
+</table>
+
+<h3>Component tokens</h3><p>Declared on <code>:root</code>, on any <code>[data-bui-mode]</code> and on any <code>[data-bui-theme]</code> element.</p>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Switch component tokens</caption>
+<thead><tr><th scope="col">Token</th><th scope="col">Default</th><th scope="col">Description</th></tr></thead>
+<tbody>
+<tr><td><code>--bui-check-font-size-{sm|md|lg}</code></td><td>0.875rem, 1rem, 1.125rem</td><td>Label size per size.</td></tr>
+<tr><td><code>--bui-check-gap</code></td><td>0.5rem</td><td>Space between the control and its label.</td></tr>
+<tr><td><code>--bui-check-inline-gap</code></td><td>1rem</td><td>Space after an inline item.</td></tr>
+<tr><td><code>--bui-check-border-width</code></td><td>2px</td><td>Border width of the control.</td></tr>
+<tr><td><code>--bui-check-bg</code></td><td>page background</td><td>Background when unchecked.</td></tr>
+<tr><td><code>--bui-check-border-color</code></td><td>strong border color</td><td>Border when unchecked (at least 3:1 against the page).</td></tr>
+<tr><td><code>--bui-check-hover-border-color</code></td><td>neutral 700</td><td>Border on hover.</td></tr>
+<tr><td><code>--bui-check-checked-bg</code></td><td>primary color</td><td>Fill when checked or indeterminate.</td></tr>
+<tr><td><code>--bui-check-checked-hover-bg</code></td><td>primary hover color</td><td>Fill of a checked control on hover.</td></tr>
+<tr><td><code>--bui-check-label-color</code></td><td>text color</td><td>Label color.</td></tr>
+<tr><td><code>--bui-check-disabled-opacity</code></td><td>0.55 (same as Button)</td><td>Opacity of a disabled control and its label.</td></tr>
+<tr><td><code>--bui-check-min-height</code></td><td>1.5rem</td><td>Minimum row height.</td></tr>
+<tr><td><code>--bui-check-touch-height</code></td><td>2.75rem</td><td>Row height on coarse pointers.</td></tr>
+<tr><td><code>--bui-switch-size-{sm|md|lg}</code></td><td>1.25rem, 1.5rem, 1.75rem</td><td>Track height per size (width is 1.8 times the height).</td></tr>
+<tr><td><code>--bui-switch-track-bg</code></td><td>neutral 100</td><td>Track when off.</td></tr>
+<tr><td><code>--bui-switch-thumb-color</code></td><td>neutral 600</td><td>Thumb when off (at least 3:1 against the track).</td></tr>
+<tr><td><code>--bui-switch-thumb-checked-color</code></td><td>primary contrast color</td><td>Thumb when on.</td></tr>
+<tr><td><code>--bui-switch-thumb-gap</code></td><td>2px</td><td>Space between the thumb and the track edge.</td></tr>
+</tbody>
+</table>
+
+                    </section>
+
+                    <section class="bui-docs-section" aria-labelledby="examples">
+                        <h2 id="examples">05. Examples</h2>
+
+<h3>Settings list</h3>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<fieldset class="bui-form-fieldset">
+<legend class="bui-form-legend">Privacy</legend>
+<div class="bui-switch"><input class="bui-switch__input" type="checkbox" role="switch" id="sw-a" aria-describedby="sw-a-h" checked><label class="bui-switch__label" for="sw-a">Show my profile</label></div>
+<div class="bui-form-text" id="sw-a-h">Anyone can see your name.</div>
+<div class="bui-switch"><input class="bui-switch__input" type="checkbox" role="switch" id="sw-b"><label class="bui-switch__label" for="sw-b">Share usage data</label></div>
+<div class="bui-switch"><input class="bui-switch__input" type="checkbox" role="switch" id="sw-c" disabled><label class="bui-switch__label" for="sw-c">Managed by your administrator</label></div>
+</fieldset>
+</div>
+</div>
+<h3>Reading the state in script</h3>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<div class="bui-switch"><input class="bui-switch__input" type="checkbox" role="switch" id="sw-live"><label class="bui-switch__label" for="sw-live">Dark preview</label></div>
+<p class="bui-form-text" id="sw-live-out" aria-live="polite">Off</p>
+</div>
+<pre class="bui-docs-code" data-lang="javascript"><code>var sw = document.getElementById('sw-live');
+sw.addEventListener('change', function () {
+    document.getElementById('sw-live-out').textContent = sw.checked ? 'On' : 'Off';
+});</code></pre>
+</div>
+<h3>Label wrapper pattern</h3>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<label class="bui-switch"><input class="bui-switch__input" type="checkbox" role="switch"><span class="bui-switch__label">The whole row is the label (no ids needed)</span></label>
+</div>
+</div>
+
+                    </section>
+
+                    <section class="bui-docs-section" aria-labelledby="javascript-api">
+                        <h2 id="javascript-api">06. JavaScript API</h2>
+
+<p>CSS only, no JavaScript API. Switch registers nothing with <code>BUI.register</code>, fires no events and has no options to parse. It has no internal text, so it adds no key to <code>assets/i18n/*.json</code>: the labels are what you write (use <code>data-bui-i18n</code> with your own keys to translate them). Use the native API: <code>input.checked</code>, the <code>change</code> event.</p>
+
+                    </section>
+
+                    <section class="bui-docs-section" aria-labelledby="responsive-behavior">
+                        <h2 id="responsive-behavior">07. Responsive Behavior</h2>
+
+<ul>
+<li>The control keeps its size at every width; the label wraps (<code>overflow-wrap: anywhere</code>) so a long label never causes horizontal scrolling.</li>
+<li>On touch devices (pointer: coarse) the row grows to 44px and the label stretches to the full row height, so the tap target is the whole row. In the default pointer the row is at least 24px high. Verified with a coarse-pointer emulation in Chromium.</li>
+<li>Inline items wrap onto the next line when the container is too narrow.</li>
+</ul>
+
+                    </section>
+
+                    <section class="bui-docs-section" aria-labelledby="accessibility">
+                        <h2 id="accessibility">08. Accessibility</h2>
+
+<h3>Keyboard</h3>
+<p>Space toggles the switch (a native checkbox, so Enter does not toggle it). Tab and Shift+Tab move between controls in source order. Clicking the label toggles the control (verified, in both label patterns). The focus ring is the global ring drawn around the control.</p>
+<h3>ARIA and semantics</h3>
+<ul>
+<li><code>role="switch"</code> on the checkbox input makes assistive technology announce an on or off switch. Do not add <code>aria-checked</code>: the native <code>checked</code> state is used.</li>
+<li>Every control needs a visible label (linked with <code>for</code> and <code>id</code>, or the wrapper is the <code>label</code>).</li>
+<li>Help and error text is linked with <code>aria-describedby</code>; an invalid control also gets <code>aria-invalid="true"</code>. The invalid style adds a thicker edge, so the state is not only a color.</li>
+<li>Where it matters, the state does not depend on color alone: the checked state has a tick, a dot or a moved thumb, and the unchecked and checked states differ in shape or position.</li>
+<li>A native <code>readonly</code> attribute does not exist for this input type, so it is not styled: use <code>disabled</code>, or show the value as text.</li>
+</ul>
+<h3>Contrast</h3>
+<p>Measured in Chromium on the manual test page for every size and state in Light and Dark, the default and ocean themes and LTR and RTL (1,024 samples with the other Task 12 pages): label text at least 5.07:1 (AA: 4.5:1); the unchecked border, the checked fill against the page, the tick or dot or thumb against its fill, and the thumb against the track at least 3.73:1 (AA for UI components: 3:1). Disabled controls are exempt and not counted.</p>
+<h3>Forced colors</h3>
+<p>The fill and marks are redrawn with system colors (<code>Highlight</code>, <code>HighlightText</code>, <code>ButtonText</code>, <code>Canvas</code>). Checked only with the forced-colors emulation of Chromium (the checked fill, tick, dot and thumb resolved to system colors), not on Windows.</p>
+<h3>Screen reader</h3>
+<p>Not tested with a screen reader (NVDA, VoiceOver or similar). Not tested in Safari or Firefox, or on a real touch device.</p>
+
+                    </section>
+
+
+                </div>
+                <!-- Previous / Next links are appended here by docs.js from the order in nav.js. -->
+            </div>
+            <!-- "On this page" is appended here by docs.js (visible from the XL breakpoint). -->
+        </div>
+    </main>
+
+    <script src="../../assets/js/baset-ui.js"></script>
+    <script src="../../documentation/assets/js/nav.js"></script>
+    <script src="../../documentation/assets/js/docs.js"></script>
+    <script src="../../documentation/assets/js/playground.js"></script>
+    <script>
+        /* Docs-only helpers for this page. */
+        (function () {
+            /* A link with href="#" inside a preview must not scroll the page, and a submit button must not submit it. */
+            document.addEventListener('click', function (e) {
+                var a = e.target.closest ? e.target.closest('a[href="#"]') : null;
+                if (a && a.closest('[data-docs-playground], .bui-docs-example__preview')) { e.preventDefault(); }
+            });
+            document.addEventListener('submit', function (e) {
+                if (e.target.closest && e.target.closest('[data-docs-playground], .bui-docs-example__preview')) { e.preventDefault(); }
+            });
+
+            var sw = document.getElementById('sw-live');
+            sw.addEventListener('change', function () {
+                document.getElementById('sw-live-out').textContent = sw.checked ? 'On' : 'Off';
+            });
+
+            BUI_DOCS_PLAYGROUND.define('switch', {
+                title: 'Switch playground',
+                controls: [
+                    { type: 'radio-group', name: 'size', label: 'Size', default: 'md',
+                      options: [{ value: 'sm', label: 'Small' }, { value: 'md', label: 'Medium' }, { value: 'lg', label: 'Large' }] },
+                    { type: 'text', name: 'label', label: 'Label', default: 'Switch label', maxLength: 28 },
+                    { type: 'switch', name: 'checked', label: 'Checked' },
+                    { type: 'switch', name: 'disabled', label: 'Disabled' },
+                    { type: 'switch', name: 'inline', label: 'Inline' },
+                    { type: 'radio-group', name: 'state', label: 'State', default: 'none',
+                      options: [{ value: 'none', label: 'None' }, { value: 'valid', label: 'Valid' }, { value: 'invalid', label: 'Invalid' }] }
+                ],
+                template: function (state, h) {
+                    var cl = 'bui-switch';
+                    var wrap = cl + (state.size !== 'md' ? ' ' + cl + '--' + state.size : '') + (state.inline ? ' ' + cl + '--inline' : '');
+                    var input = cl + '__input' + (state.state === 'valid' ? ' is-valid' : state.state === 'invalid' ? ' is-invalid' : '');
+                    var n = 1;
+                    var out = '';
+                    for (var i = 1; i <= n; i += 1) {
+                        var id = 'option-' + i;
+                        var checked = state.checked;
+                        var label = n > 1 ? h.escape(state.label) + ' ' + i : h.escape(state.label);
+                        out += '<div class="' + wrap + '">\n' +
+                            '    <input class="' + input + '" type="checkbox" role="switch"' + ' id="' + id + '"' +
+                            (checked ? ' checked' : '') + (state.disabled ? ' disabled' : '') + (state.state === 'invalid' ? ' aria-invalid="true"' : '') + '>\n' +
+                            '    <label class="' + cl + '__label" for="' + id + '">' + label + '</label>\n</div>' + (i < n ? '\n' : '');
+                    }
+                    return out;
+                }
+            });
+
+        })();
+    </script>
+</body>
+</html>

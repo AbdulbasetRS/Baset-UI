@@ -22,5 +22,8 @@
         "statusOffline": "غير متصل",
         "statusBusy": "مشغول",
         "statusAway": "بعيد"
+    },
+    "form": {
+        "showPassword": "إظهار كلمة المرور"
     }
 }

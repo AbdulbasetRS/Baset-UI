@@ -18,5 +18,8 @@
         "statusOffline": "Offline",
         "statusBusy": "Busy",
         "statusAway": "Away"
+    },
+    "form": {
+        "showPassword": "Show password"
     }
 }

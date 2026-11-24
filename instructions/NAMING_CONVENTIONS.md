@@ -35,6 +35,8 @@ Card وList Group (Task 11) بلا اختصار معتمد، فتبقى بأسم
 
 Badge وAvatar وProgress (Task 10) بلا اختصار معتمد، فتبقى بأسمائها الكاملة: `bui-badge` و`bui-avatar` و`bui-progress`، وTokens `--bui-badge-*` و`--bui-avatar-*` و`--bui-progress-*`. العناصر الفرعية بـ BEM: `bui-avatar__img` و`__text` و`__status`، و`bui-progress__bar` و`__label`. المجموعات المستقلة: `bui-avatar-group` و`bui-progress-stack` (حاوية) و`bui-progress-label` (صف تسمية خارجية) و`bui-badge-anchor` (مضيف الشارة العائمة).
 
+Form Controls وInput وCheckbox وRadio وSwitch (Task 12) بلا اختصار معتمد، فتبقى بأسمائها الكاملة: `bui-form-group` و`bui-form-label` و`bui-form-text` و`bui-form-fieldset` و`bui-form-legend` (وModifiers `--required` و`--error` و`--success` و`--horizontal[-sm|-md|-lg]`)، و`bui-input` و`bui-input-group` (`__text`)، و`bui-checkbox` و`bui-radio` و`bui-switch` (`__input` و`__label`، وModifiers `--sm|--md|--lg` و`--inline`)، و`bui-password-toggle__show|__hide` لأيقونتي المساعد. Tokens `--bui-form-*` و`--bui-input-*` و`--bui-check-*` (مشتركة بين Checkbox وRadio وSwitch) و`--bui-switch-*`. فئات الحالة `is-valid` و`is-invalid` على العنصر الأصلي.
+
 ## قيم خاصة وحالات (Task 09)
 - **Token خاص (داخلي):** اسم يحتوي `_` بعد اسم المكون: `--bui-btn-_bg`. ليس API ولا يوثق كخيار ولا يعدله المستخدم أو الثيم.
 - **حجم:** `--bui-{component}-{prop}-{sm|md|lg}`. **لمس:** `--bui-{component}-touch-{prop}-{sm|md|lg}`.

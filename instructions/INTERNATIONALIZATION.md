@@ -66,3 +66,6 @@ BUI.locale.apply(root);                              // يطبق HTML Binding ع
 
 ## مفاتيح Task 10
 أُضيفت مجموعة `avatar` إلى `en.json` و`ar.json` و`fr.json` معاً: `avatar.statusOnline` و`statusOffline` و`statusBusy` و`statusAway` (للاسم الوصولي لمؤشر حالة Avatar عبر `data-bui-i18n-attr="aria-label:avatar.statusOnline"`). Badge وProgress لا يضيفان مفاتيح: نصهما من كاتب الصفحة، ومؤشر Progress غير المحدد يعيد استخدام `common.loading`. Progress يعيد رسم نصه المنسق عند `bui:locale:change`.
+
+## مفاتيح Task 12
+أُضيفت مجموعة `form` إلى `en.json` و`ar.json` و`fr.json` معاً: `form.showPassword` (الاسم الوصولي لزر إظهار كلمة المرور في Input عبر `data-bui-i18n-attr="aria-label:form.showPassword"`). الاسم ثابت (الحالة بـ `aria-pressed`) فلا مفتاح "إخفاء". Form Controls وCheckbox وRadio وSwitch لا تضيف مفاتيح: النصوص من كاتب الصفحة. الاختبار: `node tests/i18n-keys.js` (13 مفتاحاً، ناجح).

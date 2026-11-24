@@ -2,7 +2,7 @@
  * Baset-UI - Core Stylesheet
  * Version: 0.0.0-foundation
  *
- * Task 03: Design Tokens + Layout (Container, Grid, Flexbox, Spacing). Task 09: Button, Button Group, Close Button. Task 10: Avatar, Badge, Progress.
+ * Task 03: Design Tokens + Layout (Container, Grid, Flexbox, Spacing). Task 09: Button, Button Group, Close Button. Task 10: Avatar, Badge, Progress. Task 11: Card, List Group. Task 12: Form Controls, Input, Checkbox, Radio, Switch.
  * Section order follows instructions/CORE_ASSETS.md:
  *   1 Tokens  2 Dark Mode  3 Base  4 Layout  5 Utilities  6 Components  7 Responsive Utilities  8 Print / Reduced motion
  * Tokens are declared so they work on ANY element (see "Token scopes" below and
@@ -341,6 +341,82 @@
     --bui-list-group-counter-gap: var(--bui-space-2);
     --bui-list-group-counter-style: decimal;
     --bui-list-group-touch-height: calc(var(--bui-space-5) + var(--bui-space-2) + var(--bui-space-1));
+    /* Form Controls tokens (Task 12): label, help text, group spacing and the horizontal layout. */
+    --bui-form-label-color: var(--bui-color-text);
+    --bui-form-label-font-size: var(--bui-font-size-sm);
+    --bui-form-label-font-weight: var(--bui-font-weight-medium);
+    --bui-form-text-color: var(--bui-color-text-muted);
+    --bui-form-text-font-size: var(--bui-font-size-sm);
+    --bui-form-error-color: var(--bui-color-danger);
+    --bui-form-success-color: var(--bui-color-success);
+    --bui-form-group-gap: var(--bui-space-1);
+    --bui-form-group-spacing: var(--bui-space-3);
+    --bui-form-horizontal-label-width: calc(var(--bui-space-6) * 3);
+    --bui-form-horizontal-gap: var(--bui-space-3);
+    --bui-form-legend-font-size: var(--bui-form-label-font-size);
+    /* Input and Textarea tokens (Task 12). The state colors come from the semantic color tokens. */
+    --bui-input-font-family: inherit;
+    --bui-input-line-height: var(--bui-line-height-snug);
+    --bui-input-font-size-sm: var(--bui-font-size-sm);
+    --bui-input-font-size-md: var(--bui-font-size-base);
+    --bui-input-font-size-lg: var(--bui-font-size-lg);
+    --bui-input-height-sm: calc(var(--bui-space-4) + var(--bui-space-2));
+    --bui-input-height-md: calc(var(--bui-space-5) + var(--bui-space-2));
+    --bui-input-height-lg: var(--bui-space-6);
+    --bui-input-touch-height-sm: calc(var(--bui-space-5) + var(--bui-space-2));
+    --bui-input-touch-height-md: calc(var(--bui-space-5) + var(--bui-space-2) + var(--bui-space-1));
+    --bui-input-touch-height-lg: var(--bui-space-6);
+    --bui-input-padding-x-sm: var(--bui-space-2);
+    --bui-input-padding-x-md: calc(var(--bui-space-2) + var(--bui-space-1));
+    --bui-input-padding-x-lg: var(--bui-space-3);
+    --bui-input-padding-y: var(--bui-space-1);
+    --bui-input-textarea-padding-y: var(--bui-space-2);
+    --bui-input-textarea-min-height: calc(var(--bui-space-6) * 2);
+    --bui-input-border-width: var(--bui-border-width);
+    --bui-input-radius: var(--bui-radius-md);
+    --bui-input-bg: var(--bui-color-bg);
+    --bui-input-color: var(--bui-color-text);
+    --bui-input-border-color: var(--bui-color-border-strong);
+    --bui-input-hover-border-color: var(--bui-color-neutral-700);
+    --bui-input-focus-border-color: var(--bui-color-focus);
+    --bui-input-placeholder-color: var(--bui-color-text-muted);
+    --bui-input-readonly-bg: var(--bui-color-surface);
+    --bui-input-readonly-border-color: var(--bui-color-border);
+    --bui-input-disabled-bg: var(--bui-color-surface);
+    --bui-input-disabled-color: var(--bui-color-text-muted);
+    --bui-input-disabled-border-color: var(--bui-color-border);
+    --bui-input-valid-color: var(--bui-color-success);
+    --bui-input-invalid-color: var(--bui-color-danger);
+    --bui-input-addon-bg: var(--bui-color-surface);
+    --bui-input-addon-color: var(--bui-color-text-muted);
+    /* Checkbox, Radio and Switch tokens (Task 12). Check controls share the first group; the switch has its own sizes. */
+    --bui-check-size-sm: var(--bui-space-3);
+    --bui-check-size-md: calc(var(--bui-space-3) + var(--bui-space-1));
+    --bui-check-size-lg: calc(var(--bui-space-3) + var(--bui-space-2));
+    --bui-check-font-size-sm: var(--bui-font-size-sm);
+    --bui-check-font-size-md: var(--bui-font-size-base);
+    --bui-check-font-size-lg: var(--bui-font-size-lg);
+    --bui-check-gap: var(--bui-space-2);
+    --bui-check-inline-gap: var(--bui-space-3);
+    --bui-check-border-width: var(--bui-border-width-thick);
+    --bui-check-radius: var(--bui-radius-sm);
+    --bui-check-bg: var(--bui-color-bg);
+    --bui-check-border-color: var(--bui-color-border-strong);
+    --bui-check-hover-border-color: var(--bui-color-neutral-700);
+    --bui-check-checked-bg: var(--bui-color-primary);
+    --bui-check-checked-hover-bg: var(--bui-color-primary-hover);
+    --bui-check-mark-color: var(--bui-color-primary-contrast);
+    --bui-check-label-color: var(--bui-color-text);
+    --bui-check-disabled-opacity: var(--bui-btn-disabled-opacity);
+    --bui-check-min-height: calc(var(--bui-space-4) + var(--bui-space-1) * 2);
+    --bui-check-touch-height: calc(var(--bui-space-5) + var(--bui-space-2) + var(--bui-space-1));
+    --bui-switch-size-sm: calc(var(--bui-space-3) + var(--bui-space-1));
+    --bui-switch-size-md: calc(var(--bui-space-3) + var(--bui-space-2));
+    --bui-switch-size-lg: calc(var(--bui-space-4) + var(--bui-space-1));
+    --bui-switch-track-bg: var(--bui-color-neutral-100);
+    --bui-switch-thumb-color: var(--bui-color-neutral-600);
+    --bui-switch-thumb-checked-color: var(--bui-color-primary-contrast);
+    --bui-switch-thumb-gap: var(--bui-border-width-thick);
 }
 
 /* =====================================================================
@@ -874,7 +950,7 @@ pre { margin-block: 0 var(--bui-space-3); overflow: auto; }
 .bui-shadow-xl { box-shadow: var(--bui-shadow-xl) !important; }
 
 /* =====================================================================
- * 6. COMPONENTS (alphabetical): Avatar, Badge (Task 10), Button, Button Group (Task 09), Card (Task 11), Close Button (Task 09), List Group (Task 11), Progress (Task 10).
+ * 6. COMPONENTS (alphabetical): Avatar, Badge (Task 10), Button, Button Group (Task 09), Card (Task 11), Checkbox (Task 12), Close Button (Task 09), Form Controls (Task 12), Input (Task 12), List Group (Task 11), Progress (Task 10), Radio (Task 12), Switch (Task 12).
  * ===================================================================== */
 
 /* ---------------------------------------------------------------------
@@ -1784,6 +1860,179 @@ pre { margin-block: 0 var(--bui-space-3); overflow: auto; }
 .bui-card > .bui-list-group--flush:not(:last-child) { border-block-end: var(--bui-card-border-width) solid var(--bui-card-_divider); }
 
 /* ---------------------------------------------------------------------
+ * Checkbox (Task 12). Built on the native <input type="checkbox">, drawn with appearance: none. Radio and Switch (below, in their
+ * own sections) reuse this block through shared selectors: the three controls share size, label, hover, disabled and validation rules.
+ * Markup: <div class="bui-checkbox"><input class="bui-checkbox__input" type="checkbox" id="x"><label class="bui-checkbox__label" for="x">Text</label></div>
+ * (the wrapper may also be a <label> that contains the input and a <span class="bui-checkbox__label">).
+ * Internal --bui-check-_* properties are not API. The check mark is a drawing, so it uses physical borders on purpose: a tick is never mirrored in RTL.
+ * --------------------------------------------------------------------- */
+.bui-checkbox,
+.bui-radio,
+.bui-switch {
+    --bui-check-_size: var(--bui-check-size-md);
+    --bui-check-_font-size: var(--bui-check-font-size-md);
+    display: flex;
+    align-items: flex-start;
+    gap: var(--bui-check-gap);
+    min-block-size: var(--bui-check-min-height);
+    margin-block-end: var(--bui-space-1);
+    font-size: var(--bui-check-_font-size);
+    line-height: var(--bui-line-height-base);
+    color: var(--bui-check-label-color);
+}
+.bui-switch { --bui-check-_size: var(--bui-switch-size-md); }
+.bui-checkbox--sm, .bui-radio--sm { --bui-check-_size: var(--bui-check-size-sm); --bui-check-_font-size: var(--bui-check-font-size-sm); }
+.bui-checkbox--md, .bui-radio--md { --bui-check-_size: var(--bui-check-size-md); --bui-check-_font-size: var(--bui-check-font-size-md); }
+.bui-checkbox--lg, .bui-radio--lg { --bui-check-_size: var(--bui-check-size-lg); --bui-check-_font-size: var(--bui-check-font-size-lg); }
+.bui-switch--sm { --bui-check-_size: var(--bui-switch-size-sm); --bui-check-_font-size: var(--bui-check-font-size-sm); }
+.bui-switch--md { --bui-check-_size: var(--bui-switch-size-md); --bui-check-_font-size: var(--bui-check-font-size-md); }
+.bui-switch--lg { --bui-check-_size: var(--bui-switch-size-lg); --bui-check-_font-size: var(--bui-check-font-size-lg); }
+/* Inline: items sit on one line and wrap. Stacked is the default. */
+.bui-checkbox--inline,
+.bui-radio--inline,
+.bui-switch--inline {
+    display: inline-flex;
+    margin-inline-end: var(--bui-check-inline-gap);
+    vertical-align: top;
+}
+
+.bui-checkbox__input,
+.bui-radio__input,
+.bui-switch__input {
+    position: relative;
+    display: inline-grid;
+    flex: none;
+    place-content: center;
+    inline-size: var(--bui-check-_size);
+    block-size: var(--bui-check-_size);
+    /* Centers the control on the first line of the label. */
+    margin: calc((var(--bui-line-height-base) * 1em - var(--bui-check-_size)) / 2) 0;
+    font: inherit;
+    color: inherit;
+    background-color: var(--bui-check-bg);
+    border: var(--bui-check-border-width) solid var(--bui-check-border-color);
+    border-radius: var(--bui-check-radius);
+    -webkit-appearance: none;
+    appearance: none;
+    cursor: pointer;
+    touch-action: manipulation;
+    transition-property: background-color, border-color, box-shadow;
+    transition-duration: var(--bui-duration-fast);
+    transition-timing-function: var(--bui-easing-standard);
+}
+.bui-checkbox__input::before,
+.bui-radio__input::before,
+.bui-switch__input::before {
+    content: "";
+    transition-property: opacity, transform, inset-inline-start, background-color;
+    transition-duration: var(--bui-duration-fast);
+    transition-timing-function: var(--bui-easing-standard);
+}
+.bui-checkbox__input:focus-visible,
+.bui-radio__input:focus-visible,
+.bui-switch__input:focus-visible { outline-offset: var(--bui-focus-ring-offset); }
+
+/* Checkbox mark: a rotated L (checked) or a bar (indeterminate). */
+.bui-checkbox__input::before {
+    inline-size: calc(var(--bui-check-_size) * 0.3);
+    block-size: calc(var(--bui-check-_size) * 0.55);
+    margin-block-start: calc(var(--bui-check-_size) * -0.08);
+    border: solid var(--bui-check-mark-color);
+    border-width: 0 var(--bui-border-width-thick) var(--bui-border-width-thick) 0;
+    opacity: 0;
+    transform: rotate(45deg) scale(0.5);
+}
+.bui-checkbox__input:checked::before { opacity: 1; transform: rotate(45deg) scale(1); }
+.bui-checkbox__input:indeterminate::before {
+    inline-size: calc(var(--bui-check-_size) * 0.5);
+    block-size: var(--bui-border-width-thick);
+    margin: 0;
+    background-color: var(--bui-check-mark-color);
+    border: 0;
+    opacity: 1;
+    transform: none;
+}
+.bui-checkbox__input:checked,
+.bui-checkbox__input:indeterminate,
+.bui-radio__input:checked,
+.bui-switch__input:checked {
+    background-color: var(--bui-check-checked-bg);
+    border-color: var(--bui-check-checked-bg);
+}
+
+/* Label: stretches to the full row height so the click and touch target is at least the minimum height. */
+.bui-checkbox__label,
+.bui-radio__label,
+.bui-switch__label {
+    flex: 1 1 auto;
+    align-self: stretch;
+    min-inline-size: 0;
+    cursor: pointer;
+    overflow-wrap: anywhere;
+}
+.bui-checkbox--inline > .bui-checkbox__label,
+.bui-radio--inline > .bui-radio__label,
+.bui-switch--inline > .bui-switch__label { flex: 0 1 auto; }
+
+@media (hover: hover) {
+    .bui-checkbox:hover > .bui-checkbox__input:not(:disabled):not(:checked):not(:indeterminate):not(.is-valid):not(.is-invalid):not([aria-invalid="true"]),
+    .bui-radio:hover > .bui-radio__input:not(:disabled):not(:checked):not(.is-valid):not(.is-invalid):not([aria-invalid="true"]),
+    .bui-switch:hover > .bui-switch__input:not(:disabled):not(:checked):not(.is-valid):not(.is-invalid):not([aria-invalid="true"]) { border-color: var(--bui-check-hover-border-color); }
+    .bui-checkbox:hover > .bui-checkbox__input:not(:disabled):is(:checked, :indeterminate):not(.is-valid):not(.is-invalid):not([aria-invalid="true"]),
+    .bui-radio:hover > .bui-radio__input:not(:disabled):checked:not(.is-valid):not(.is-invalid):not([aria-invalid="true"]),
+    .bui-switch:hover > .bui-switch__input:not(:disabled):checked:not(.is-valid):not(.is-invalid):not([aria-invalid="true"]) {
+        background-color: var(--bui-check-checked-hover-bg);
+        border-color: var(--bui-check-checked-hover-bg);
+    }
+}
+
+/* Disabled: the native attribute is the state. The label that follows the input dims with it. */
+.bui-checkbox__input:disabled,
+.bui-radio__input:disabled,
+.bui-switch__input:disabled { cursor: not-allowed; opacity: var(--bui-check-disabled-opacity); }
+.bui-checkbox__input:disabled + .bui-checkbox__label,
+.bui-radio__input:disabled + .bui-radio__label,
+.bui-switch__input:disabled + .bui-switch__label { cursor: not-allowed; opacity: var(--bui-check-disabled-opacity); }
+
+/* Validation: is-valid / is-invalid / aria-invalid. The extra inset ring makes the edge thicker, so the state is not only a color. */
+.bui-checkbox__input.is-valid, .bui-radio__input.is-valid, .bui-switch__input.is-valid {
+    border-color: var(--bui-input-valid-color);
+    box-shadow: inset 0 0 0 var(--bui-border-width) var(--bui-input-valid-color);
+}
+.bui-checkbox__input.is-invalid, .bui-radio__input.is-invalid, .bui-switch__input.is-invalid,
+.bui-checkbox__input[aria-invalid="true"], .bui-radio__input[aria-invalid="true"], .bui-switch__input[aria-invalid="true"] {
+    border-color: var(--bui-input-invalid-color);
+    box-shadow: inset 0 0 0 var(--bui-border-width) var(--bui-input-invalid-color);
+}
+.bui-checkbox__input.is-invalid:focus-visible, .bui-radio__input.is-invalid:focus-visible, .bui-switch__input.is-invalid:focus-visible,
+.bui-checkbox__input[aria-invalid="true"]:focus-visible, .bui-radio__input[aria-invalid="true"]:focus-visible, .bui-switch__input[aria-invalid="true"]:focus-visible { outline-color: var(--bui-input-invalid-color); }
+.bui-checkbox__input.is-valid:focus-visible, .bui-radio__input.is-valid:focus-visible, .bui-switch__input.is-valid:focus-visible { outline-color: var(--bui-input-valid-color); }
+
+@media (pointer: coarse) {
+    .bui-checkbox, .bui-radio, .bui-switch { min-block-size: var(--bui-check-touch-height); align-items: center; }
+    .bui-checkbox__input, .bui-radio__input, .bui-switch__input { margin-block: 0; }
+    .bui-checkbox__label, .bui-radio__label, .bui-switch__label { display: flex; align-items: center; }
+}
+
+/* Forced colors: the system replaces backgrounds, so the fill and the marks are redrawn with system colors. */
+@media (forced-colors: active) {
+    .bui-checkbox__input, .bui-radio__input, .bui-switch__input {
+        forced-color-adjust: none;
+        background-color: Canvas;
+        border-color: ButtonText;
+    }
+    .bui-checkbox__input:checked, .bui-checkbox__input:indeterminate, .bui-radio__input:checked, .bui-switch__input:checked {
+        background-color: Highlight;
+        border-color: Highlight;
+    }
+    .bui-checkbox__input::before { border-color: HighlightText; }
+    .bui-checkbox__input:indeterminate::before, .bui-radio__input::before { background-color: HighlightText; }
+    .bui-switch__input::before { background-color: ButtonText; }
+    .bui-switch__input:checked::before { background-color: HighlightText; }
+    .bui-checkbox__input:disabled, .bui-radio__input:disabled, .bui-switch__input:disabled { border-color: GrayText; }
+}
+
+/* ---------------------------------------------------------------------
  * Close Button (Task 09). A square icon button. Markup: <button type="button" class="bui-btn-close"> with an x icon inside.
  * The colors are tokens so a parent component can re-declare them on itself (for example to inherit its own text color).
  * --------------------------------------------------------------------- */
@@ -1847,6 +2096,241 @@ pre { margin-block: 0 var(--bui-space-3); overflow: auto; }
         inline-size: max(var(--bui-btn-close-_size), var(--bui-btn-close-_touch-size));
         block-size: max(var(--bui-btn-close-_size), var(--bui-btn-close-_touch-size));
     }
+}
+
+/* ---------------------------------------------------------------------
+ * Form Controls (Task 12). Layout and text for forms: Form Group, label, help and error text, Fieldset and Legend.
+ * Markup: <div class="bui-form-group"><label class="bui-form-label" for="x">Label</label><input class="bui-input" id="x" aria-describedby="x-help"><div class="bui-form-text" id="x-help">Help</div></div>
+ * The group is a grid: one column by default, two columns (label, control) with --horizontal or from a breakpoint with --horizontal-{sm|md|lg}.
+ * Internal --bui-form-group-_* properties are not API.
+ * --------------------------------------------------------------------- */
+.bui-form-group {
+    --bui-form-group-_cols: minmax(0, 1fr);
+    --bui-form-group-_content-col: 1;
+    --bui-form-group-_label-min: 0px;
+    display: grid;
+    grid-template-columns: var(--bui-form-group-_cols);
+    align-items: start;
+    column-gap: var(--bui-form-horizontal-gap);
+    row-gap: var(--bui-form-group-gap);
+    margin-block-end: var(--bui-form-group-spacing);
+}
+.bui-form-group:last-child { margin-block-end: 0; }
+.bui-form-group > * { grid-column: var(--bui-form-group-_content-col); min-inline-size: 0; }
+.bui-form-group > .bui-form-label { grid-column: 1; min-block-size: var(--bui-form-group-_label-min); }
+.bui-form-group--horizontal {
+    --bui-form-group-_cols: var(--bui-form-horizontal-label-width) minmax(0, 1fr);
+    --bui-form-group-_content-col: 2;
+    --bui-form-group-_label-min: var(--bui-input-height-md);
+}
+@media (min-width: 576px) {
+    .bui-form-group--horizontal-sm {
+        --bui-form-group-_cols: var(--bui-form-horizontal-label-width) minmax(0, 1fr);
+        --bui-form-group-_content-col: 2;
+        --bui-form-group-_label-min: var(--bui-input-height-md);
+    }
+}
+@media (min-width: 768px) {
+    .bui-form-group--horizontal-md {
+        --bui-form-group-_cols: var(--bui-form-horizontal-label-width) minmax(0, 1fr);
+        --bui-form-group-_content-col: 2;
+        --bui-form-group-_label-min: var(--bui-input-height-md);
+    }
+}
+@media (min-width: 992px) {
+    .bui-form-group--horizontal-lg {
+        --bui-form-group-_cols: var(--bui-form-horizontal-label-width) minmax(0, 1fr);
+        --bui-form-group-_content-col: 2;
+        --bui-form-group-_label-min: var(--bui-input-height-md);
+    }
+}
+
+.bui-form-label {
+    display: flex;
+    align-items: center;
+    margin: 0;
+    font-size: var(--bui-form-label-font-size);
+    font-weight: var(--bui-form-label-font-weight);
+    line-height: var(--bui-line-height-snug);
+    color: var(--bui-form-label-color);
+}
+/* The required marker is decoration (the empty alternative text keeps it out of the accessible name); the real signal is the required attribute. */
+.bui-form-label--required::after {
+    content: "*" / "";
+    margin-inline-start: var(--bui-space-1);
+    color: var(--bui-form-error-color);
+}
+
+.bui-form-text {
+    margin: 0;
+    font-size: var(--bui-form-text-font-size);
+    line-height: var(--bui-line-height-snug);
+    color: var(--bui-form-text-color);
+}
+.bui-form-text--error { color: var(--bui-form-error-color); }
+.bui-form-text--success { color: var(--bui-form-success-color); }
+
+.bui-form-fieldset {
+    min-inline-size: 0;
+    margin: 0 0 var(--bui-form-group-spacing);
+    padding: 0;
+    border: 0;
+}
+.bui-form-fieldset:last-child { margin-block-end: 0; }
+.bui-form-legend {
+    float: none;
+    inline-size: 100%;
+    margin: 0 0 var(--bui-form-group-gap);
+    padding: 0;
+    font-size: var(--bui-form-legend-font-size);
+    font-weight: var(--bui-form-label-font-weight);
+    line-height: var(--bui-line-height-snug);
+    color: var(--bui-form-label-color);
+}
+
+/* ---------------------------------------------------------------------
+ * Input and Textarea (Task 12). One class for the text-like native controls: <input type="text|email|password|number|search|url|tel|date"> and <textarea>.
+ * The native element and its Constraint Validation API are untouched; the class only draws it. Select, file, color and range inputs are not styled here.
+ * Internal --bui-input-_* properties are not API. State: the native attribute (disabled, readonly) is the state; is-valid and is-invalid exist
+ * because valid has no native attribute, and invalid also matches [aria-invalid="true"]. Both states add an inset ring so they are not only a color.
+ * --------------------------------------------------------------------- */
+.bui-input {
+    --bui-input-_height: var(--bui-input-height-md);
+    --bui-input-_touch-height: var(--bui-input-touch-height-md);
+    --bui-input-_font-size: var(--bui-input-font-size-md);
+    --bui-input-_padding-x: var(--bui-input-padding-x-md);
+    --bui-input-_ring: 0 0 #0000;
+    display: block;
+    inline-size: 100%;
+    min-block-size: var(--bui-input-_height);
+    margin: 0;
+    padding: var(--bui-input-padding-y) var(--bui-input-_padding-x);
+    font-family: var(--bui-input-font-family);
+    font-size: var(--bui-input-_font-size);
+    line-height: var(--bui-input-line-height);
+    color: var(--bui-input-color);
+    text-align: start;
+    background-color: var(--bui-input-bg);
+    background-clip: padding-box;
+    border: var(--bui-input-border-width) solid var(--bui-input-border-color);
+    border-radius: var(--bui-input-radius);
+    box-shadow: var(--bui-input-_ring);
+    -webkit-appearance: none;
+    appearance: none;
+    transition-property: border-color, background-color, box-shadow;
+    transition-duration: var(--bui-duration-fast);
+    transition-timing-function: var(--bui-easing-standard);
+}
+textarea.bui-input {
+    min-block-size: var(--bui-input-textarea-min-height);
+    padding-block: var(--bui-input-textarea-padding-y);
+    resize: vertical;
+}
+.bui-input::placeholder { color: var(--bui-input-placeholder-color); opacity: 1; }
+
+.bui-input--sm { --bui-input-_height: var(--bui-input-height-sm); --bui-input-_touch-height: var(--bui-input-touch-height-sm); --bui-input-_font-size: var(--bui-input-font-size-sm); --bui-input-_padding-x: var(--bui-input-padding-x-sm); }
+.bui-input--md { --bui-input-_height: var(--bui-input-height-md); --bui-input-_touch-height: var(--bui-input-touch-height-md); --bui-input-_font-size: var(--bui-input-font-size-md); --bui-input-_padding-x: var(--bui-input-padding-x-md); }
+.bui-input--lg { --bui-input-_height: var(--bui-input-height-lg); --bui-input-_touch-height: var(--bui-input-touch-height-lg); --bui-input-_font-size: var(--bui-input-font-size-lg); --bui-input-_padding-x: var(--bui-input-padding-x-lg); }
+
+@media (hover: hover) {
+    .bui-input:hover:not(:disabled):not(:read-only):not(:focus) { border-color: var(--bui-input-hover-border-color); }
+}
+.bui-input:focus { border-color: var(--bui-input-focus-border-color); }
+.bui-input:focus-visible { outline-offset: 0; }
+
+.bui-input:read-only:not(:disabled) {
+    background-color: var(--bui-input-readonly-bg);
+    border-color: var(--bui-input-readonly-border-color);
+}
+.bui-input:disabled {
+    color: var(--bui-input-disabled-color);
+    background-color: var(--bui-input-disabled-bg);
+    border-color: var(--bui-input-disabled-border-color);
+    cursor: not-allowed;
+    -webkit-text-fill-color: var(--bui-input-disabled-color);
+}
+
+/* Validation. The ring is part of box-shadow through --bui-input-_ring so autofill (below) can keep it. */
+.bui-input.is-valid {
+    --bui-input-_ring: inset 0 0 0 var(--bui-border-width) var(--bui-input-valid-color);
+    border-color: var(--bui-input-valid-color);
+}
+.bui-input.is-invalid,
+.bui-input[aria-invalid="true"] {
+    --bui-input-_ring: inset 0 0 0 var(--bui-border-width) var(--bui-input-invalid-color);
+    border-color: var(--bui-input-invalid-color);
+}
+.bui-input.is-valid:focus-visible { outline-color: var(--bui-input-valid-color); }
+.bui-input.is-invalid:focus-visible,
+.bui-input[aria-invalid="true"]:focus-visible { outline-color: var(--bui-input-invalid-color); }
+
+/* Autofill: the browser paints its own background and text color, which breaks Dark mode. Painting the field color back with a huge inset shadow is the standard workaround. */
+.bui-input:-webkit-autofill,
+.bui-input:-webkit-autofill:hover,
+.bui-input:-webkit-autofill:focus {
+    -webkit-text-fill-color: var(--bui-input-color);
+    caret-color: var(--bui-input-color);
+    box-shadow: var(--bui-input-_ring), 0 0 0 100vmax var(--bui-input-bg) inset;
+}
+
+/* Touch targets: the minimum height grows on coarse pointers (the group text follows so the row stays level). */
+@media (pointer: coarse) {
+    .bui-input, .bui-input-group__text { min-block-size: max(var(--bui-input-_height), var(--bui-input-_touch-height)); }
+}
+
+/* Date inputs: the native picker icon follows the text color in Dark mode through color-scheme (set by the mode). */
+
+/* Input Group: an input with a prefix and/or suffix (text, icon or button). The children share borders and only the outer corners are round. */
+.bui-input-group {
+    display: flex;
+    align-items: stretch;
+    inline-size: 100%;
+}
+.bui-input-group > .bui-input { position: relative; flex: 1 1 auto; inline-size: 1%; min-inline-size: 0; }
+.bui-input-group > .bui-input:focus,
+.bui-input-group > .bui-input.is-valid,
+.bui-input-group > .bui-input.is-invalid,
+.bui-input-group > .bui-input[aria-invalid="true"] { z-index: 1; }
+.bui-input-group > .bui-btn:focus-visible { position: relative; z-index: 2; }
+.bui-input-group > :not(:first-child) {
+    margin-inline-start: calc(var(--bui-input-border-width) * -1);
+    border-start-start-radius: 0;
+    border-end-start-radius: 0;
+}
+.bui-input-group > :not(:last-child) {
+    border-start-end-radius: 0;
+    border-end-end-radius: 0;
+}
+.bui-input-group__text {
+    --bui-input-_height: var(--bui-input-height-md);
+    --bui-input-_touch-height: var(--bui-input-touch-height-md);
+    --bui-input-_font-size: var(--bui-input-font-size-md);
+    --bui-input-_padding-x: var(--bui-input-padding-x-md);
+    display: flex;
+    flex: none;
+    align-items: center;
+    min-block-size: var(--bui-input-_height);
+    padding: var(--bui-input-padding-y) var(--bui-input-_padding-x);
+    font-size: var(--bui-input-_font-size);
+    line-height: var(--bui-input-line-height);
+    color: var(--bui-input-addon-color);
+    white-space: nowrap;
+    background-color: var(--bui-input-addon-bg);
+    border: var(--bui-input-border-width) solid var(--bui-input-border-color);
+    border-radius: var(--bui-input-radius);
+}
+/* Group sizes beat the size class on the children (higher specificity). */
+.bui-input-group--sm > .bui-input, .bui-input-group--sm > .bui-input-group__text { --bui-input-_height: var(--bui-input-height-sm); --bui-input-_touch-height: var(--bui-input-touch-height-sm); --bui-input-_font-size: var(--bui-input-font-size-sm); --bui-input-_padding-x: var(--bui-input-padding-x-sm); }
+.bui-input-group--lg > .bui-input, .bui-input-group--lg > .bui-input-group__text { --bui-input-_height: var(--bui-input-height-lg); --bui-input-_touch-height: var(--bui-input-touch-height-lg); --bui-input-_font-size: var(--bui-input-font-size-lg); --bui-input-_padding-x: var(--bui-input-padding-x-lg); }
+
+/* Password toggle (optional JavaScript: data-bui-password-toggle). The two icons swap with the button state (the selectors out-rank the icon Extension display rule), so the markup does not depend on any icon class name. */
+[data-bui-password-toggle] > .bui-password-toggle__hide { display: none; }
+[data-bui-password-toggle][aria-pressed="true"] > .bui-password-toggle__show { display: none; }
+[data-bui-password-toggle][aria-pressed="true"] > .bui-password-toggle__hide { display: inline-block; }
+
+@media (forced-colors: active) {
+    .bui-input.is-valid, .bui-input.is-invalid, .bui-input[aria-invalid="true"] { border-color: Highlight; }
+    .bui-input:disabled { border-color: GrayText; }
 }
 
 /* ---------------------------------------------------------------------
@@ -2142,6 +2626,46 @@ button.bui-list-group__item {
         background-image: none;
         border-radius: var(--bui-radius-sm);
     }
+}
+
+/* ---------------------------------------------------------------------
+ * Radio (Task 12). The native <input type="radio">; shares the Checkbox block above. Radios with the same name form one group
+ * and the browser provides the arrow-key navigation. Markup: <div class="bui-radio"><input class="bui-radio__input" type="radio" name="g" id="x"><label class="bui-radio__label" for="x">Text</label></div>
+ * --------------------------------------------------------------------- */
+.bui-radio__input { border-radius: var(--bui-radius-full); }
+.bui-radio__input::before {
+    inline-size: 42%;
+    block-size: 42%;
+    background-color: var(--bui-check-mark-color);
+    border-radius: var(--bui-radius-full);
+    opacity: 0;
+    transform: scale(0.4);
+}
+.bui-radio__input:checked::before { opacity: 1; transform: scale(1); }
+
+/* ---------------------------------------------------------------------
+ * Switch (Task 12). A native <input type="checkbox" role="switch"> drawn as a track and a thumb; shares the Checkbox block above.
+ * The thumb moves with a logical offset (inset-inline-start), so it travels toward the end side in both LTR and RTL.
+ * Markup: <div class="bui-switch"><input class="bui-switch__input" type="checkbox" role="switch" id="x"><label class="bui-switch__label" for="x">Text</label></div>
+ * --------------------------------------------------------------------- */
+.bui-switch__input {
+    inline-size: calc(var(--bui-check-_size) * 1.8);
+    background-color: var(--bui-switch-track-bg);
+    border-radius: var(--bui-radius-full);
+    place-content: normal;
+}
+.bui-switch__input::before {
+    position: absolute;
+    inset-block: var(--bui-switch-thumb-gap);
+    inset-inline-start: var(--bui-switch-thumb-gap);
+    inline-size: calc(var(--bui-check-_size) - 2 * var(--bui-check-border-width) - 2 * var(--bui-switch-thumb-gap));
+    block-size: auto;
+    background-color: var(--bui-switch-thumb-color);
+    border-radius: var(--bui-radius-full);
+}
+.bui-switch__input:checked::before {
+    inset-inline-start: calc(100% - (var(--bui-check-_size) - 2 * var(--bui-check-border-width) - 2 * var(--bui-switch-thumb-gap)) - var(--bui-switch-thumb-gap));
+    background-color: var(--bui-switch-thumb-checked-color);
 }
 
 /* =====================================================================

@@ -1,6 +1,6 @@
 # معايير تطوير المكونات
 
-كل Component يتبع نفس المعمارية مع السماح باختلافات منطقية حسب طبيعته. (المنفذ حتى Task 11: Avatar وBadge وButton وButton Group وCard وClose Button وList Group وProgress. النمط المرجعي أدناه من Task 09، وTask 10 اتبعه.)
+كل Component يتبع نفس المعمارية مع السماح باختلافات منطقية حسب طبيعته. (المنفذ حتى Task 12: Avatar وBadge وButton وButton Group وCard وCheckbox وClose Button وForm Controls وInput وList Group وProgress وRadio وSwitch. النمط المرجعي أدناه من Task 09، وTask 10 اتبعه.)
 
 ## قائمة قبل البدء
 - التأكد من وجود المكون في [COMPONENTS_REGISTRY.md](COMPONENTS_REGISTRY.md) أو إضافته.
@@ -101,3 +101,16 @@ const select = BUI.select.remote('#users', { perPage: 10 });
 - **مكون داخل مكون:** الأب يعيد تصريح Tokens الابن على نفسه (Card يعيد تصريح `--bui-list-group-*` لقوائمه) بدل أن يتضمن الابن معرفة بالأب.
 - **حلقة التركيز داخل العنصر:** عند تداخل الجيران أو وجود `overflow` عند الأب تُرسم الحلقة بـ `outline-offset` سالب، ولونها يتبدل حيث يطابق لون الحلقة لون الخلفية (العنصر النشط، وCard solid).
 - **قيد معلن:** Header وFooter في Card أفقي غير مدعومين كأبناء مباشرين (يصيران عمودين)، و`--flush` في List Group لا يجتمع مع الأفقي. كلاهما موثق في صفحتي التوثيق، وخيارات Playground المتعارضة تُهمل في القالب وتُذكر في فقرة Customize.
+
+### إضافات Task 12 (Form Controls وInput وCheckbox وRadio وSwitch)
+- **العنصر الأصلي أولاً:** المكون يرسم `<input>` و`<textarea>` الأصليين (`appearance: none`) ولا يستبدلهما، فيبقى التركيز والإرسال وConstraint Validation API والـ Autofill للمتصفح. لا JavaScript للتحقق: الصفحة تبدّل `is-valid`/`is-invalid`/`aria-invalid` بسكربتها (موثق كمثال لا API).
+- **ترتيب العنصر في Markup:** `__input` قبل `__label` (الأخ التالي)، لأن حالة الـ Label المعطل وhover الغلاف تعتمد على `input + label` و`wrapper:hover > input`. الغلاف `div` أو `label` بالقواعد نفسها.
+- **كتلة مشتركة:** مكونات الفئة نفسها (Checkbox وRadio وSwitch) تشترك في Selectors واحدة للحجم والـ Label والحالات، وتعلن ذلك في تعليق الترويسة. الخصائص الداخلية المشتركة `--bui-check-_size` و`--bui-check-_font-size` (ليست API).
+- **حالة التحقق:** `is-valid` فئة (لا سمة قياسية للصحة)، و`is-invalid` أو `aria-invalid="true"` بمظهر واحد. الحالة لا تعتمد على اللون: حلقة `box-shadow` داخلية تزيد سماكة الحافة دون تغيير التخطيط (`--bui-input-_ring`)، وتبقى مع Autofill.
+- **قواعد hover تستثني حالات التحقق** (`:not(.is-valid):not(.is-invalid):not([aria-invalid="true"])`) كي لا تتغلب على لون الحافة.
+- **Grid بدل Flex لـ Form Group** وأعلام مكانية (`--bui-form-group-_cols` و`_content-col` و`_label-min`)، فالتخطيط الأفقي (دائماً أو من Breakpoint) يبدّل ثلاث قيم فقط بلا تكرار القواعد.
+- **المؤشر الخشن:** لكل حجم Token لمس (`--bui-input-touch-height-*`) و`min-block-size: max(...)`، وصفوف Check تصل 44px والـ Label يتمدد لصف كامل.
+- **Forced Colors:** المكونات المرسومة بـ `appearance: none` تعيد رسم التعبئة والعلامات بألوان النظام (`@media (forced-colors: active)`).
+- **JS اختياري (`password-toggle`):** يتبع نمط Task 10 (مسجل في `baset-ui.js`، `destroy()` يعيد النوع الأصلي ويزيل `aria-pressed`). الاسم الوصولي ثابت والحالة بـ `aria-pressed` (نمط Toggle Button)، فلا تبديل نص ولا اعتماد JS على الترجمة. الأيقونتان تتبدلان بـ CSS من الحالة بـ Selector أعلى من قاعدة الـ Extension، فلا يعرف الـ Core أسماء الأيقونات.
+- **Playground بـ Hooks:** Input يستعمل `beforeRender` (`BUI.destroy(frame)`) و`afterRender` (`BUI.init(frame)`)، وCheckbox يضبط `indeterminate` في `afterRender` ويعرض سطر `js` في Code Output. أول استخدام حقيقي للـ Hooks (اختُبر في Chromium).
+- **Fixture:** `tests/manual/forms.html` (انظر ARCHITECTURE.md).

@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-bui-theme="default" data-bui-mode="light" data-root="../../">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Form Controls - Baset-UI Documentation</title>
+    <meta name="description" content="Form Controls: form group, label, help and error text, fieldset and legend, horizontal layout. CSS only.">
+    <!-- Empty icon: avoids a /favicon.ico 404 until the project has a real icon. -->
+    <link rel="icon" href="data:,">
+
+    <link rel="stylesheet" href="../../assets/css/baset-ui.css">
+    <link rel="stylesheet" href="../../assets/css/extensions/baset-ui-icons.css">
+    <link rel="stylesheet" href="../../assets/css/themes/ocean.css">
+    <link rel="stylesheet" href="../../documentation/assets/css/docs.css">
+    <link rel="stylesheet" href="../../documentation/assets/css/playground.css">
+    <script>
+        /* Prevents a flash of the wrong theme or mode. Same keys as BUI.theme (bui-theme, bui-mode). */
+        (function () {
+            var d = document.documentElement, t = null, m = null, r = null;
+            try { t = localStorage.getItem('bui-theme'); m = localStorage.getItem('bui-mode'); r = localStorage.getItem('bui-docs-dir'); } catch (e) {}
+            if (t && /^[a-z][a-z0-9]*(-[a-z0-9]+)*$/.test(t)) d.setAttribute('data-bui-theme', t);
+            if (m !== 'light' && m !== 'dark') m = window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+            d.setAttribute('data-bui-mode', m);
+            /* Documentation shell only: the saved direction of the RTL/LTR switcher. */
+            if (r === 'rtl' || r === 'ltr') d.setAttribute('dir', r);
+        })();
+    </script>
+</head>
+<body>
+    <main class="bui-docs-main" id="bui-docs-main" tabindex="-1">
+        <div class="bui-docs-page">
+            <div class="bui-docs-page__body">
+
+                <header class="bui-docs-page-header">
+                    <nav class="bui-docs-breadcrumb" aria-label="Breadcrumb" data-docs-breadcrumb hidden></nav>
+                    <h1>Form Controls</h1>
+                    <p class="bui-docs-lead">The layout and text around form fields: groups, labels, help and error messages, fieldsets, and vertical or responsive horizontal layouts. CSS only.</p>
+                </header>
+
+                <div class="bui-docs-content">
+                    <section class="bui-docs-section" aria-labelledby="installation-include">
+                        <h2 id="installation-include">01. Installation &amp; Include</h2>
+
+<p>Form Controls is part of the Core stylesheet, so <code>assets/css/baset-ui.css</code> is the only file required. It is CSS only: the layout classes style plain <code>div</code>, <code>label</code>, <code>fieldset</code> and <code>legend</code> elements. The icon Extension is needed only if an Input Group example uses an icon.</p>
+<pre class="bui-docs-code" data-lang="html"><code>&lt;link rel="stylesheet" href="assets/css/baset-ui.css"&gt;
+&lt;!-- Optional: icons inside an Input Group. --&gt;
+&lt;link rel="stylesheet" href="assets/css/extensions/baset-ui-icons.css"&gt;
+
+&lt;div class="bui-form-group"&gt;
+    &lt;label class="bui-form-label" for="email"&gt;Email&lt;/label&gt;
+    &lt;input class="bui-input" id="email" type="email" aria-describedby="email-help"&gt;
+    &lt;div class="bui-form-text" id="email-help"&gt;We will not share it.&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+
+                    </section>
+
+                    <section class="bui-docs-section" aria-labelledby="customize">
+                        <h2 id="customize">02. Customize</h2>
+
+<p>Every option below is a real class or attribute documented in section 04. The control is a plain Input; its own options are in the <a href="input.html">Input</a> page.</p>
+<div data-docs-playground="form-controls"></div>
+
+                    </section>
+
+                    <section class="bui-docs-section" aria-labelledby="default">
+                        <h2 id="default">03. Default</h2>
+
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<div class="bui-form-group">
+<label class="bui-form-label" for="fc-default">Email</label>
+<input class="bui-input" id="fc-default" type="email" autocomplete="email" aria-describedby="fc-default-help">
+<div class="bui-form-text" id="fc-default-help">We will not share it.</div>
+</div>
+</div>
+</div>
+<p>A group is a grid: the label, the control and the help text are its children, one per row. The text is linked to the control with <code>aria-describedby</code>, and the label with <code>for</code> and <code>id</code>.</p>
+
+                    </section>
+
+                    <section class="bui-docs-section" aria-labelledby="variants-options">
+                        <h2 id="variants-options">04. Variants &amp; Options</h2>
+
+<h3>Parts</h3>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Form Controls classes</caption>
+<thead><tr><th scope="col">Class</th><th scope="col">Element</th><th scope="col">Description</th></tr></thead>
+<tbody>
+<tr><td><code>bui-form-group</code></td><td>any block</td><td>A grid that holds a label, a control and its text. Adds the space below the group (none after the last group).</td></tr>
+<tr><td><code>bui-form-label</code></td><td><code>label</code> or <code>span</code></td><td>The label. A flex box with a minimum height so it lines up with the control in a horizontal group.</td></tr>
+<tr><td><code>bui-form-label--required</code></td><td>modifier</td><td>Adds a red asterisk after the text. It is decoration with empty alternative text; the real signal is the <code>required</code> attribute.</td></tr>
+<tr><td><code>bui-form-text</code></td><td>any block</td><td>Help text under the control (small, muted).</td></tr>
+<tr><td><code>bui-form-text--error</code></td><td>modifier</td><td>Error message color. Pair it with <code>is-invalid</code> or <code>aria-invalid</code> on the control.</td></tr>
+<tr><td><code>bui-form-text--success</code></td><td>modifier</td><td>Success message color. Pair it with <code>is-valid</code> on the control.</td></tr>
+<tr><td><code>bui-form-fieldset</code></td><td><code>fieldset</code></td><td>Resets the native fieldset (no border, padding or minimum width) and adds the space below.</td></tr>
+<tr><td><code>bui-form-legend</code></td><td><code>legend</code></td><td>The legend, styled like a label.</td></tr>
+</tbody>
+</table>
+
+<h3>Layout</h3>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Form group layouts</caption>
+<thead><tr><th scope="col">Class</th><th scope="col">Behavior</th><th scope="col">Breakpoint</th></tr></thead>
+<tbody>
+<tr><td>(none)</td><td>Vertical: label, control and text in one column.</td><td>always</td></tr>
+<tr><td><code>bui-form-group--horizontal</code></td><td>Two columns: the label (9rem) and the control. Help text sits under the control.</td><td>always</td></tr>
+<tr><td><code>bui-form-group--horizontal-sm</code></td><td>Vertical below the breakpoint, horizontal from it.</td><td>576px</td></tr>
+<tr><td><code>bui-form-group--horizontal-md</code></td><td>Same.</td><td>768px</td></tr>
+<tr><td><code>bui-form-group--horizontal-lg</code></td><td>Same.</td><td>992px</td></tr>
+</tbody>
+</table>
+
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<div class="bui-form-group bui-form-group--horizontal-md">
+<label class="bui-form-label" for="fc-h1">Full name</label>
+<input class="bui-input" id="fc-h1" autocomplete="name" aria-describedby="fc-h1-help">
+<div class="bui-form-text" id="fc-h1-help">Horizontal from 768px, vertical below it.</div>
+</div>
+<div class="bui-form-group bui-form-group--horizontal-md">
+<label class="bui-form-label" for="fc-h2">Notes</label>
+<textarea class="bui-input" id="fc-h2" rows="3"></textarea>
+</div>
+</div>
+</div>
+<div class="bui-docs-callout bui-docs-callout--note" role="note">
+<p class="bui-docs-callout__title">Note</p>
+<p>The breakpoints are viewport media queries, not container queries: a horizontal group inside a narrow column on a wide screen is still horizontal. A <code>fieldset</code> cannot be a horizontal group, because the browser does not place a <code>legend</code> as a grid item. For a horizontal group of radios or checkboxes use a <code>div</code> with <code>role="radiogroup"</code> (or <code>role="group"</code>) and <code>aria-labelledby</code> that points to a <code>bui-form-label</code>, as in the Examples section.</p>
+</div>
+
+<h3>Label and text states</h3>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<div class="bui-form-group">
+<label class="bui-form-label bui-form-label--required" for="fc-req">Required field</label>
+<input class="bui-input" id="fc-req" required aria-describedby="fc-req-help">
+<div class="bui-form-text" id="fc-req-help">The asterisk is decoration; <code>required</code> is the signal.</div>
+</div>
+<div class="bui-form-group">
+<label class="bui-form-label" for="fc-bad">Field with an error</label>
+<input class="bui-input is-invalid" id="fc-bad" aria-invalid="true" aria-describedby="fc-bad-msg" value="abc">
+<div class="bui-form-text bui-form-text--error" id="fc-bad-msg">Enter at least 6 characters.</div>
+</div>
+<div class="bui-form-group">
+<label class="bui-form-label" for="fc-good">Field that passed</label>
+<input class="bui-input is-valid" id="fc-good" aria-describedby="fc-good-msg" value="abcdefg">
+<div class="bui-form-text bui-form-text--success" id="fc-good-msg">Looks good.</div>
+</div>
+</div>
+</div>
+<h3>Fieldset and legend</h3>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<fieldset class="bui-form-fieldset">
+<legend class="bui-form-legend">Notifications</legend>
+<div class="bui-checkbox"><input class="bui-checkbox__input" type="checkbox" id="fc-fs1" checked><label class="bui-checkbox__label" for="fc-fs1">Email</label></div>
+<div class="bui-checkbox"><input class="bui-checkbox__input" type="checkbox" id="fc-fs2"><label class="bui-checkbox__label" for="fc-fs2">Text message</label></div>
+</fieldset>
+</div>
+</div>
+<p>Use a fieldset and legend for a set of related controls (a radio group, a set of checkboxes): the legend is announced with each control.</p>
+<h3>Validation</h3>
+<p>States are plain: <code>is-valid</code> and <code>is-invalid</code> on the control, <code>aria-invalid="true"</code> for invalid (the invalid style applies to either), and an error message linked with <code>aria-describedby</code>. The library does not run validation: use the browser's Constraint Validation API (<code>checkValidity()</code>, <code>validationMessage</code>, <code>setCustomValidity()</code>) and toggle the classes, as in the form below. The script is page code, not a library API.</p>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<form id="fc-form" novalidate>
+<div class="bui-form-group">
+<label class="bui-form-label bui-form-label--required" for="fc-name">Name</label>
+<input class="bui-input" id="fc-name" name="name" required minlength="3" autocomplete="name" aria-describedby="fc-name-msg">
+<div class="bui-form-text" id="fc-name-msg">At least 3 characters.</div>
+</div>
+<div class="bui-form-group">
+<label class="bui-form-label bui-form-label--required" for="fc-mail">Email</label>
+<input class="bui-input" id="fc-mail" name="email" type="email" dir="ltr" required autocomplete="email" aria-describedby="fc-mail-msg">
+<div class="bui-form-text" id="fc-mail-msg">Used only to reply.</div>
+</div>
+<button type="submit" class="bui-btn">Validate</button>
+</form>
+</div>
+<pre class="bui-docs-code" data-lang="javascript"><code>form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    Array.prototype.forEach.call(form.elements, function (el) {
+        if (!el.willValidate) { return; }
+        var ok = el.checkValidity();
+        el.classList.toggle('is-valid', ok);
+        el.classList.toggle('is-invalid', !ok);
+        if (ok) { el.removeAttribute('aria-invalid'); } else { el.setAttribute('aria-invalid', 'true'); }
+        var msg = document.getElementById(el.getAttribute('aria-describedby'));
+        if (msg) {
+            msg.classList.toggle('bui-form-text--error', !ok);
+            if (!ok) { msg.textContent = el.validationMessage; }
+        }
+    });
+});</code></pre>
+</div>
+<p>When a field becomes valid again the message keeps the last error text; reset it to your help text if you want it back. The browser's <code>validationMessage</code> is in the browser language, not the page language: write your own messages (and translate them) when that matters.</p>
+<h3>Floating label</h3>
+<p>Not provided, on purpose. A floating label depends on a placeholder that is present but invisible, shrinks the label text while the field is focused, and changes position when the direction changes. A visible label above the control keeps the label readable at every size and is the safer default. This is a documented decision of Task 12, not an omission.</p>
+<h3>Component tokens</h3>
+<p>Declared on <code>:root</code>, on any <code>[data-bui-mode]</code> and on any <code>[data-bui-theme]</code> element.</p>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Form Controls component tokens</caption>
+<thead><tr><th scope="col">Token</th><th scope="col">Default</th><th scope="col">Description</th></tr></thead>
+<tbody>
+<tr><td><code>--bui-form-label-color</code></td><td>text color</td><td>Label and legend color.</td></tr>
+<tr><td><code>--bui-form-label-font-size</code></td><td>0.875rem</td><td>Label size.</td></tr>
+<tr><td><code>--bui-form-label-font-weight</code></td><td>500</td><td>Label weight.</td></tr>
+<tr><td><code>--bui-form-text-color</code></td><td>muted text color</td><td>Help text color.</td></tr>
+<tr><td><code>--bui-form-text-font-size</code></td><td>0.875rem</td><td>Help text size.</td></tr>
+<tr><td><code>--bui-form-error-color</code></td><td>danger color</td><td>Error text and required marker.</td></tr>
+<tr><td><code>--bui-form-success-color</code></td><td>success color</td><td>Success text.</td></tr>
+<tr><td><code>--bui-form-group-gap</code></td><td>0.25rem</td><td>Space between label, control and text.</td></tr>
+<tr><td><code>--bui-form-group-spacing</code></td><td>1rem</td><td>Space below a group or fieldset.</td></tr>
+<tr><td><code>--bui-form-horizontal-label-width</code></td><td>9rem</td><td>Label column of a horizontal group.</td></tr>
+<tr><td><code>--bui-form-horizontal-gap</code></td><td>1rem</td><td>Gap between the two columns.</td></tr>
+<tr><td><code>--bui-form-legend-font-size</code></td><td>label size</td><td>Legend size.</td></tr>
+</tbody>
+</table>
+
+                    </section>
+
+                    <section class="bui-docs-section" aria-labelledby="examples">
+                        <h2 id="examples">05. Examples</h2>
+
+<h3>Sign-in</h3>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<form id="fc-signin">
+<div class="bui-form-group">
+<label class="bui-form-label" for="fc-s-user">Username</label>
+<input class="bui-input" id="fc-s-user" autocomplete="username">
+</div>
+<div class="bui-form-group">
+<label class="bui-form-label" for="fc-s-pass">Password</label>
+<div class="bui-input-group">
+<input class="bui-input" id="fc-s-pass" type="password" autocomplete="current-password">
+<button type="button" class="bui-btn bui-btn--outline bui-btn--secondary" data-bui-password-toggle aria-controls="fc-s-pass" aria-pressed="false" aria-label="Show password" data-bui-i18n-attr="aria-label:form.showPassword">
+<i class="bui-icon-regular bui-icon-eye bui-password-toggle__show" aria-hidden="true"></i>
+<i class="bui-icon-regular bui-icon-eye-slash bui-password-toggle__hide" aria-hidden="true"></i>
+</button>
+</div>
+</div>
+<div class="bui-form-group">
+<div class="bui-checkbox"><input class="bui-checkbox__input" type="checkbox" id="fc-s-keep"><label class="bui-checkbox__label" for="fc-s-keep">Keep me signed in</label></div>
+</div>
+<button type="submit" class="bui-btn bui-btn--block">Sign in</button>
+</form>
+</div>
+</div>
+<h3>Horizontal settings form</h3>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<form id="fc-settings">
+<div class="bui-form-group bui-form-group--horizontal-md">
+<label class="bui-form-label" for="fc-p-name">Display name</label>
+<input class="bui-input" id="fc-p-name" autocomplete="nickname" aria-describedby="fc-p-name-help">
+<div class="bui-form-text" id="fc-p-name-help">Shown next to your posts.</div>
+</div>
+<div class="bui-form-group bui-form-group--horizontal-md">
+<label class="bui-form-label" for="fc-p-site">Website</label>
+<div class="bui-input-group">
+<span class="bui-input-group__text">https://</span>
+<input class="bui-input" id="fc-p-site" type="text" dir="ltr" autocomplete="url">
+</div>
+</div>
+<div class="bui-form-group bui-form-group--horizontal-md">
+<span class="bui-form-label" id="fc-p-plan-l">Plan</span>
+<div role="radiogroup" aria-labelledby="fc-p-plan-l">
+<div class="bui-radio"><input class="bui-radio__input" type="radio" name="fc-p-plan" id="fc-p-plan1" checked><label class="bui-radio__label" for="fc-p-plan1">Monthly</label></div>
+<div class="bui-radio"><input class="bui-radio__input" type="radio" name="fc-p-plan" id="fc-p-plan2"><label class="bui-radio__label" for="fc-p-plan2">Yearly</label></div>
+</div>
+</div>
+<div class="bui-form-group bui-form-group--horizontal-md">
+<span class="bui-form-label" id="fc-p-n-l">Updates</span>
+<div class="bui-switch"><input class="bui-switch__input" type="checkbox" role="switch" id="fc-p-n" aria-labelledby="fc-p-n-l fc-p-n-t"><label class="bui-switch__label" for="fc-p-n" id="fc-p-n-t">Send product updates</label></div>
+</div>
+<div class="bui-form-group bui-form-group--horizontal-md">
+<div></div>
+<div><button type="submit" class="bui-btn">Save</button></div>
+</div>
+</form>
+</div>
+</div>
+<p>The last group has an empty first cell so the button lines up with the controls; the example is a plain pattern, not a class.</p>
+
+                    </section>
+
+                    <section class="bui-docs-section" aria-labelledby="javascript-api">
+                        <h2 id="javascript-api">06. JavaScript API</h2>
+
+<p>CSS only, no JavaScript API. Form Controls registers nothing with <code>BUI.register</code>, fires no events and has no options to parse. It has no internal text, so it adds no key to <code>assets/i18n/*.json</code>: the labels, help text and messages are what you write (use <code>data-bui-i18n</code> with your own keys to translate them). The validation script in section 04 is page code that uses the browser's own Constraint Validation API.</p>
+
+                    </section>
+
+                    <section class="bui-docs-section" aria-labelledby="responsive-behavior">
+                        <h2 id="responsive-behavior">07. Responsive Behavior</h2>
+
+<ul>
+<li>Base (below 480px): groups are one column and as wide as the form. Inputs fill the width of their group.</li>
+<li><code>bui-form-group--horizontal-sm</code>, <code>-md</code> and <code>-lg</code> turn from one column into two at 576px, 768px and 992px; <code>--horizontal</code> is two columns at every width, so it needs a container wide enough for a 9rem label column (use a breakpoint variant on narrow screens).</li>
+<li>The label column is a token (<code>--bui-form-horizontal-label-width</code>); the control column takes the rest and can shrink to nothing without overflowing, so long values and wide controls never push the page sideways.</li>
+<li>On touch devices (pointer: coarse) inputs grow to at least 40px, 44px and 48px (small, medium, large) and check controls rows to 44px.</li>
+<li>The breakpoints are viewport media queries: the Playground preview width does not trigger them (see the note in the Playground documentation).</li>
+</ul>
+
+                    </section>
+
+                    <section class="bui-docs-section" aria-labelledby="accessibility">
+                        <h2 id="accessibility">08. Accessibility</h2>
+
+<h3>Keyboard</h3>
+<p>Form Controls adds no behavior: Tab order is the source order, and every native control keeps its own keys. Tab order was verified on a sample form (text, email, tel, checkbox, switch, button).</p>
+<h3>ARIA and semantics</h3>
+<ul>
+<li>Every control has a visible <code>label</code> linked with <code>for</code> and <code>id</code> (or wraps the control). A placeholder is not a label.</li>
+<li>Link help and error text to the control with <code>aria-describedby</code> (several ids are allowed, separated by spaces).</li>
+<li>Mark a required field with the <code>required</code> attribute. The asterisk from <code>bui-form-label--required</code> has an empty text alternative, so it does not become part of the accessible name. Browsers that do not support the alternative-text syntax in <code>content</code> show the same asterisk and may read it aloud.</li>
+<li>When a field is invalid set <code>aria-invalid="true"</code> and show the message as text. The invalid style also adds a thicker edge, so the state is not only a color.</li>
+<li>Group related controls with <code>fieldset</code> and <code>legend</code>, or with <code>role="group"</code> or <code>role="radiogroup"</code> and <code>aria-labelledby</code>.</li>
+</ul>
+<h3>Contrast</h3>
+<p>Measured in Chromium on the manual test page for every state (Light and Dark, the default and ocean themes, LTR and RTL): 1,024 samples for the Form Controls, Input, Checkbox, Radio and Switch pages together. Text (label, help, error and success text, input text, placeholder, addon text) is at least 5.07:1 (AA needs 4.5:1). Non-text parts (input border, check border, checked fill, tick, switch thumb, focus ring) are at least 3.73:1 (AA needs 3:1). Disabled controls are exempt from contrast and were not counted.</p>
+<h3>Screen reader</h3>
+<p>Not tested with a screen reader (NVDA, VoiceOver or similar). Not tested in Safari or Firefox, with a real touch device, or with real browser autofill (the autofill rule exists and was only checked for syntax; the headless test browser cannot trigger autofill).</p>
+
+                    </section>
+
+
+                </div>
+                <!-- Previous / Next links are appended here by docs.js from the order in nav.js. -->
+            </div>
+            <!-- "On this page" is appended here by docs.js (visible from the XL breakpoint). -->
+        </div>
+    </main>
+
+    <script src="../../assets/js/baset-ui.js"></script>
+    <script src="../../documentation/assets/js/nav.js"></script>
+    <script src="../../documentation/assets/js/docs.js"></script>
+    <script src="../../documentation/assets/js/playground.js"></script>
+    <script>
+        /* Docs-only helpers for this page. */
+        (function () {
+            /* A link with href="#" inside a preview must not scroll the page, and a submit button must not submit it. */
+            document.addEventListener('click', function (e) {
+                var a = e.target.closest ? e.target.closest('a[href="#"]') : null;
+                if (a && a.closest('[data-docs-playground], .bui-docs-example__preview')) { e.preventDefault(); }
+            });
+            document.addEventListener('submit', function (e) {
+                if (e.target.closest && e.target.closest('[data-docs-playground], .bui-docs-example__preview')) { e.preventDefault(); }
+            });
+
+            var fcForm = document.getElementById('fc-form');
+            if (fcForm) {
+                fcForm.addEventListener('submit', function (e) {
+                    e.preventDefault();
+                    Array.prototype.forEach.call(fcForm.elements, function (el) {
+                        if (!el.willValidate) { return; }
+                        var ok = el.checkValidity();
+                        el.classList.toggle('is-valid', ok);
+                        el.classList.toggle('is-invalid', !ok);
+                        if (ok) { el.removeAttribute('aria-invalid'); } else { el.setAttribute('aria-invalid', 'true'); }
+                        var msg = document.getElementById(el.getAttribute('aria-describedby'));
+                        if (msg) {
+                            msg.classList.toggle('bui-form-text--error', !ok);
+                            if (!ok) { msg.textContent = el.validationMessage; }
+                        }
+                    });
+                });
+            }
+
+            BUI_DOCS_PLAYGROUND.define('form-controls', {
+                title: 'Form Controls playground',
+                controls: [
+                    { type: 'select', name: 'layout', label: 'Layout', default: 'vertical',
+                      options: [{ value: 'vertical', label: 'Vertical (default)' }, { value: 'horizontal', label: 'Horizontal' }, { value: 'horizontal-sm', label: 'Horizontal from sm' }, { value: 'horizontal-md', label: 'Horizontal from md' }, { value: 'horizontal-lg', label: 'Horizontal from lg' }] },
+                    { type: 'radio-group', name: 'control', label: 'Control', default: 'input',
+                      options: [{ value: 'input', label: 'Input' }, { value: 'textarea', label: 'Textarea' }] },
+                    { type: 'text', name: 'label', label: 'Label', default: 'Email', maxLength: 24 },
+                    { type: 'switch', name: 'required', label: 'Required (label marker and attribute)' },
+                    { type: 'switch', name: 'help', label: 'Help text', default: true },
+                    { type: 'radio-group', name: 'state', label: 'State', default: 'none',
+                      options: [{ value: 'none', label: 'None' }, { value: 'valid', label: 'Valid' }, { value: 'invalid', label: 'Invalid' }] }
+                ],
+                template: function (state, h) {
+                    var group = 'bui-form-group' + (state.layout !== 'vertical' ? ' bui-form-group--' + state.layout : '');
+                    var label = 'bui-form-label' + (state.required ? ' bui-form-label--required' : '');
+                    var cls = 'bui-input' + (state.state === 'valid' ? ' is-valid' : state.state === 'invalid' ? ' is-invalid' : '');
+                    var describedby = (state.help || state.state === 'invalid') ? ' aria-describedby="field-text"' : '';
+                    var control = state.control === 'textarea'
+                        ? '<textarea class="' + cls + '" id="field" rows="3"' + (state.required ? ' required' : '') + (state.state === 'invalid' ? ' aria-invalid="true"' : '') + describedby + '></textarea>'
+                        : '<input class="' + cls + '" id="field" type="text"' + (state.required ? ' required' : '') + (state.state === 'invalid' ? ' aria-invalid="true"' : '') + describedby + '>';
+                    var text = '';
+                    if (state.state === 'invalid') { text = '\n    <div class="bui-form-text bui-form-text--error" id="field-text">This value is not valid.</div>'; }
+                    else if (state.state === 'valid') { text = '\n    <div class="bui-form-text bui-form-text--success" id="field-text">Looks good.</div>'; }
+                    else if (state.help) { text = '\n    <div class="bui-form-text" id="field-text">Help text for the field.</div>'; }
+                    return '<div class="' + group + '">\n    <label class="' + label + '" for="field">' + h.escape(state.label) + '</label>\n    ' + control + text + '\n</div>';
+                }
+            });
+
+        })();
+    </script>
+</body>
+</html>
