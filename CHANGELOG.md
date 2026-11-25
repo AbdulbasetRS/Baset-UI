@@ -4,6 +4,28 @@
 
 ## [Unreleased]
 
+### Added (Task 13: Overlay Manager + Dialog + Drawer)
+- `assets/js/baset-ui.js` (85,789 بايت خام و20,244 gzip، كان 64,750 و15,029): **Overlay Manager** (`BUI.overlay.{getStack,getTop,closeAll}`) قبل `window.BUI = BUI`، والمكونان `dialog` و`drawer` مسجلان بعد `password-toggle`، والاسم المستعار `BUI.modal === BUI.dialog`، ومستمع نقر مفوّض واحد لـ `data-bui-dialog-open` و`data-bui-drawer-open`. قفل تمرير واحد مشترك بلا إزاحة، وتنظيف تلقائي إن أُزيلت طبقة مفتوحة من DOM.
+- `assets/css/baset-ui.css` (246,749 بايت خام و34,507 gzip، كان 235,063 و31,553): Dialog وDrawer في قسم 6 (بين Close Button وForm Controls)، وTokens `--bui-overlay-*` (مشتركة) و`--bui-dialog-*` و`--bui-drawer-size-*` في الطبقة 3.
+- **Dialog:** `bui-dialog` على `<dialog>` الأصلي، `__panel/__header/__title/__body/__footer`، `--sm|md|lg|xl` و`--centered` و`--scrollable` (Body) والافتراضي Page و`--fullscreen` و`--fullscreen-until-{sm|md|lg|xl}`، Static (`data-bui-static`) وخيار `keyboard`، تداخل، `<form method="dialog">`، محتوى ديناميكي (`load` أو `url`).
+- **Drawer:** `bui-drawer` بنفس الأساس، `--start|end|top|bottom` (start/end تنعكس في RTL مع اتجاه الانزلاق) و`--sm|md|lg|xl` و`--no-backdrop`.
+- **JS:** الخيارات `static` و`keyboard` و`focus` و`restoreFocus` و`url` و`load` و`loadOnce`؛ الطرق `open/close/toggle/isOpen/destroy`؛ الأحداث القابلة للإلغاء `bui:dialog|drawer:beforeopen` و`beforeclose` ثم `open` و`close` و`load` و`loaderror`.
+- `assets/i18n/{en,ar,fr}.json`: `overlay.loadError` (14 مفتاحاً، `node tests/i18n-keys.js` ناجح).
+- `documentation/components/dialog.html` و`drawer.html` بالأقسام الثمانية وPlayground حقيقي لكل منهما، ومفعلتان في `nav.js`.
+- `tests/manual/overlays.html` و`tests/manual/fixtures/overlay-content.html` (Fixtures معلنة، انظر ARCHITECTURE.md).
+- **قرارات (انظر COMPONENT_DEVELOPMENT.md):** (1) `<dialog>` الأصلي بدل المخصص مع أدلة وأثر على Toast/Popover (يجب أن يعملا في الـ Top Layer). (2) Dialog وDrawer في الـ Core لا Extension (CORE_ASSETS.md). (3) الاسم الرسمي `BUI.dialog` و`BUI.modal` اسم مستعار. (4) **الأحداث `beforeopen`/`beforeclose` بلا شرطة** بدل `before-open` الوارد في JAVASCRIPT_API.md (تعارض حُسم بأولوية المهمة الصريحة، ويحتاج تأكيدك). (5) لاحقة `--fullscreen-until-{bp}`.
+- **ثمن معروف:** مع `scrollbar-gutter` (لعدم الإزاحة) لا يغطي الـ Scrim مساحة شريط التمرير المحجوزة على المنصات ذات الأشرطة الكلاسيكية، فتظهر بعرض الشريط بلا تعتيم.
+
+### Changed (Task 13)
+- ملفات `instructions/` المعدلة: `COMPONENTS_REGISTRY.md` و`PROJECT_OVERVIEW.md` و`ARCHITECTURE.md` و`COMPONENT_DEVELOPMENT.md` و`CORE_ASSETS.md` و`NAMING_CONVENTIONS.md` و`JAVASCRIPT_API.md` و`INTERNATIONALIZATION.md` و`TESTING.md`. تغيير قاعدة موجودة: اسما الحدثين `before-open`/`before-close` صارا `beforeopen`/`beforeclose` (JAVASCRIPT_API.md وNAMING_CONVENTIONS.md). بند Modal Manager المستقبلي حلّ محله Overlay Manager. `AI_RULES.md` لم يتغير.
+
+### Tested (Task 13، Chromium 157 فقط عبر Playwright خارج المستودع)
+- فتح/إغلاق بالزر وAPI وDismiss وEsc والنقر خارجاً (وسحب من الصندوق إلى الخارج لا يغلق)؛ عزل الصفحة؛ Tab وShift+Tab 12 مرة لا تخرج؛ إعادة التركيز لزر الفتح؛ Nested (Esc يغلق B ثم A، والقفل يبقى حتى آخر طبقة)؛ ترتيب الأحداث ومصادر الإغلاق؛ إلغاء `beforeopen` و`beforeclose` (Esc وDismiss)؛ Static وkeyboard=false (4 ضغطات Esc)؛ `<form method="dialog">` مع `returnValue`؛ `focus` وحالة بلا عنصر قابل للتركيز؛ 29/29.
+- قفل التمرير: لا إزاحة (عرض body وعنصر ثابت وscrollY) في صفحة طويلة LTR وRTL وصفحة قصيرة بلا شريط، واستعادة `style` كاملاً؛ Drawer: الجوانب الأربعة بالقياس في LTR وRTL وعرض 24rem واتجاه الانزلاق وNo-backdrop وDrawer+Dialog و`closeAll`؛ المحتوى الديناميكي (دالة، فشل، `url` من نفس الأصل، رفض عبر الأصول، ترجمة الخطأ ar)؛ destroy أثناء الفتح ومستمعات 0 بعد destroy و60 دورة create/destroy؛ إزالة الحوار من DOM وهو مفتوح؛ عنصر غير `<dialog>` يرجع `null`؛ `fullscreen-until-md` عند 500 و900؛ لا Overflow أفقي لـ xl عند 320 و480 و768 و1920؛ 33/33.
+- التوثيق: صفحتان بلا أخطاء Console ولا 404 وأقسام ثمانية بالترتيب ولا معرفات مكررة؛ Playground: 25 حالة لـ Dialog و21 لـ Drawer (المعاينة تطابق Code Output، وتهريب نص العنوان) وفتح المعاينة فعلياً (الحجم وملء الشاشة والتوسط وStart/End مع RTL المعاينة)؛ 12/12؛ لا Overflow أفقي في 128 تركيبة؛ التباين 432 عينة (أدنى 5.90:1)؛ Reduced Motion (إغلاق فوري) وحركة عادية (ينتظر الخروج)؛ Forced Colors بمحاكاة (Scrim شفاف وحدّ للصندوق).
+- التراجع: `tests/manual/core.html` 43/43، و43 صفحة (توثيق وindex واختبارات يدوية) بلا أخطاء Console ولا 404، و`node tests/i18n-keys.js` ناجح.
+- **غير مختبر:** قارئ شاشة (NVDA/VoiceOver/JAWS)، Firefox وSafari (الدعم من المنصة لا من اختبار)، لمس فعلي وقفل التمرير على iOS/Android، Forced Colors على Windows الفعلي، مسار Padding البديل حيث لا يوجد `scrollbar-gutter`، `:dir(rtl)` في متصفحات أقدم، السحب للإغلاق (غير منفذ).
+
 ### Added (Task 12: Form Controls + Input + Checkbox + Radio + Switch)
 - `assets/css/baset-ui.css` (235,063 بايت خام و31,553 gzip، كان 207,037 و26,437): Form Controls وCheckbox وInput وRadio وSwitch في قسم 6 بالترتيب الأبجدي (Checkbox بعد Card، Form Controls وInput قبل List Group، Radio وSwitch بعد Progress)، وTokens في الطبقة 3 (`--bui-form-*` و`--bui-input-*` و`--bui-check-*` و`--bui-switch-*`). لا ملف CSS جديد.
 - **Form Controls:** `bui-form-group` (Grid، عمودي، و`--horizontal` و`--horizontal-sm|md|lg`) و`bui-form-label` (`--required`) و`bui-form-text` (`--error` و`--success`) و`bui-form-fieldset` و`bui-form-legend`.

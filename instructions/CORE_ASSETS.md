@@ -7,7 +7,7 @@
 - Layout: Containers, Grid, Flex Utilities, Responsive Utilities.
 - المكونات الأساسية الصغيرة والمشتركة (Buttons, Forms, Modals, Alerts, Toasts, Cards...).
 
-**الحالة الحالية (Task 12):** Tokens كاملة (Light/Dark)، Base، Layout (Container/Grid)، Utilities (Flexbox وSpacing وDisplay وPosition وOverflow وVisibility وBorders)، وكل نسخ الـ Breakpoints، وقسم 6 (Components) فيه Avatar وBadge وButton وButton Group وCard وCheckbox وClose Button وForm Controls وInput وList Group وProgress وRadio وSwitch (Task 09 إلى Task 12، وحجم `baset-ui.css` بعد Task 12: 235,063 بايت خام و31,553 gzip، النمط في [COMPONENT_DEVELOPMENT.md](COMPONENT_DEVELOPMENT.md)). في Task 10 صار `baset-ui.js` يحتوي أيضاً مكونين مسجلين (`avatar` و`progress`)، وفي Task 12 ثالثاً (`password-toggle`، `baset-ui.js` 64,750 بايت خام و15,029 gzip) بعد `window.BUI = BUI`، لأن لهما سلوكاً صغيراً لا يستقيم بـ CSS وحده (انظر [ARCHITECTURE.md](ARCHITECTURE.md)). نسخ الـ Breakpoints موجودة لـ Display وPosition (النوع فقط) وOverflow؛ لا نسخ لـ Visibility وBorders وz-index وOffsets وtruncate/line-clamp.
+**الحالة الحالية (Task 13):** Tokens كاملة (Light/Dark)، Base، Layout (Container/Grid)، Utilities (Flexbox وSpacing وDisplay وPosition وOverflow وVisibility وBorders)، وكل نسخ الـ Breakpoints، وقسم 6 (Components) فيه Avatar وBadge وButton وButton Group وCard وCheckbox وClose Button وDialog وDrawer وForm Controls وInput وList Group وProgress وRadio وSwitch (Task 09 إلى Task 13، وحجم `baset-ui.css` بعد Task 13: 246,749 بايت خام و34,507 gzip، النمط في [COMPONENT_DEVELOPMENT.md](COMPONENT_DEVELOPMENT.md)). في Task 10 صار `baset-ui.js` يحتوي أيضاً مكونين مسجلين (`avatar` و`progress`)، وفي Task 12 ثالثاً (`password-toggle`، `baset-ui.js` 64,750 بايت خام و15,029 gzip) بعد `window.BUI = BUI`، وفي Task 13 رابعاً وخامساً (`dialog` و`drawer`، مع Overlay Manager قبل `window.BUI`؛ `baset-ui.js` 85,789 بايت خام و20,244 gzip)، لأن لهما سلوكاً صغيراً لا يستقيم بـ CSS وحده (انظر [ARCHITECTURE.md](ARCHITECTURE.md)). نسخ الـ Breakpoints موجودة لـ Display وPosition (النوع فقط) وOverflow؛ لا نسخ لـ Visibility وBorders وz-index وOffsets وtruncate/line-clamp.
 
 ### ترتيب الأقسام داخل الملف (إلزامي)
 1. Tokens  2. Dark Mode  3. Base  4. Layout  5. Utilities  6. Components (أبجدياً)  7. Responsive Utilities  8. Print/Reduced-motion.
@@ -22,9 +22,9 @@
 - ممنوع `!important` إلا في Utilities المصممة لذلك.
 
 ## `assets/js/baset-ui.js`
-**المسؤولية (إلزامي):** Core Initialization، Global Config، Theme Manager، Locale Manager، Toast Manager، Modal Manager، Shared Utilities، DOM Helpers، Component Initialization، Event Management.
+**المسؤولية (إلزامي):** Core Initialization، Global Config، Theme Manager، Locale Manager، Overlay Manager (يحل محل Modal Manager)، Toast Manager، Shared Utilities، DOM Helpers، Component Initialization، Event Management.
 
-**الحالة الحالية (Task 06):** منفذ: Theme Manager (`BUI.theme`) وLocale Manager (`BUI.locale`) إضافة إلى ما يلي من Task 05: Namespace `BUI`، Global Config (`BUI.config`)، Registry (`BUI.register`)، Init وInstances، Events، DOM Helpers، Utilities، Options Parser، Logger، وObserver اختياري. **غير منفذ (مستقبلي):** Toast Manager وModal Manager. الواجهة في [JAVASCRIPT_API.md](JAVASCRIPT_API.md).
+**الحالة الحالية (Task 06):** منفذ: Theme Manager (`BUI.theme`) وLocale Manager (`BUI.locale`) إضافة إلى ما يلي من Task 05: Namespace `BUI`، Global Config (`BUI.config`)، Registry (`BUI.register`)، Init وInstances، Events، DOM Helpers، Utilities، Options Parser، Logger، وObserver اختياري. **منفذ في Task 13:** Overlay Manager (`BUI.overlay`) و`BUI.dialog` (الاسم المستعار `BUI.modal`) و`BUI.drawer`. **غير منفذ (مستقبلي):** Toast Manager. الواجهة في [JAVASCRIPT_API.md](JAVASCRIPT_API.md).
 
 قواعد: IIFE أو UMD بدون Modules كشرط، يعرّض `window.BUI` فقط، لا متغيرات Global أخرى. التفاصيل في [JAVASCRIPT_API.md](JAVASCRIPT_API.md).
 
@@ -64,3 +64,6 @@ Extension سكربت مستقل يُحمَّل بعد `baset-ui.js` ويسجل �
 - يوثق في قسم Installation & Include الملفات المطلوبة وترتيبها.
 - إن كان له نصوص، تُضاف مفاتيحه لجميع ملفات i18n.
 - قرار جعل Component Extension يُسجل في [COMPONENTS_REGISTRY.md](COMPONENTS_REGISTRY.md) مع السبب.
+
+### قرار Task 13: Dialog وDrawer في الـ Core لا Extension
+حجم Dialog وDrawer معاً نحو 21KB خام JS و12KB خام CSS، أي يتجاوز حد 15KB (الشرط 1)، لكن الشرط 2 لا يتحقق: النوافذ المنبثقة مما يحتاجه معظم المواقع، و[CORE_ASSETS.md](CORE_ASSETS.md) نفسه يضع Modals ضمن الـ Core وModal Manager ضمن `baset-ui.js`. المطلوب شرطان على الأقل للجعل Extension، فيبقيان في الـ Core. Overlay Manager يُعرَّف قبل `window.BUI = BUI` (بنية تحتية)، والمكونان يُسجلان بعده كـ `avatar` و`progress`.

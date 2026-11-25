@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-bui-theme="default" data-bui-mode="light" data-root="../../">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Dialog - Baset-UI Documentation</title>
+    <meta name="description" content="Dialog: a modal window built on the native dialog element, with focus handling, scroll lock, sizes, scrolling modes, fullscreen, static backdrop and nested dialogs.">
+    <!-- Empty icon: avoids a /favicon.ico 404 until the project has a real icon. -->
+    <link rel="icon" href="data:,">
+
+    <link rel="stylesheet" href="../../assets/css/baset-ui.css">
+    <link rel="stylesheet" href="../../assets/css/extensions/baset-ui-icons.css">
+    <link rel="stylesheet" href="../../assets/css/themes/ocean.css">
+    <link rel="stylesheet" href="../../documentation/assets/css/docs.css">
+    <link rel="stylesheet" href="../../documentation/assets/css/playground.css">
+    <script>
+        /* Prevents a flash of the wrong theme or mode. Same keys as BUI.theme (bui-theme, bui-mode). */
+        (function () {
+            var d = document.documentElement, t = null, m = null, r = null;
+            try { t = localStorage.getItem('bui-theme'); m = localStorage.getItem('bui-mode'); r = localStorage.getItem('bui-docs-dir'); } catch (e) {}
+            if (t && /^[a-z][a-z0-9]*(-[a-z0-9]+)*$/.test(t)) d.setAttribute('data-bui-theme', t);
+            if (m !== 'light' && m !== 'dark') m = window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+            d.setAttribute('data-bui-mode', m);
+            /* Documentation shell only: the saved direction of the RTL/LTR switcher. */
+            if (r === 'rtl' || r === 'ltr') d.setAttribute('dir', r);
+        })();
+    </script>
+</head>
+<body>
+    <main class="bui-docs-main" id="bui-docs-main" tabindex="-1">
+        <div class="bui-docs-page">
+            <div class="bui-docs-page__body">
+
+                <header class="bui-docs-page-header">
+                    <nav class="bui-docs-breadcrumb" aria-label="Breadcrumb" data-docs-breadcrumb hidden></nav>
+                    <h1>Dialog</h1>
+                    <p class="bui-docs-lead">A modal window that asks for attention. Built on the native dialog element, with a shared overlay manager for focus, Esc, nesting and the page scroll lock.</p>
+                </header>
+
+                <div class="bui-docs-content">
+                    <section class="bui-docs-section" aria-labelledby="installation-include">
+                        <h2 id="installation-include">01. Installation &amp; Include</h2>
+
+<p>Dialog is part of the Core files: <code>assets/css/baset-ui.css</code> for the look and <code>assets/js/baset-ui.js</code> for the behavior (opening, closing, focus, scroll lock). Without the script the <code>&lt;dialog&gt;</code> stays closed. The close button draws the <code>x</code> icon, so <code>assets/css/extensions/baset-ui-icons.css</code> is needed for the examples on this page (the component itself does not require it).</p>
+<pre class="bui-docs-code" data-lang="html"><code>&lt;link rel="stylesheet" href="assets/css/baset-ui.css"&gt;
+&lt;link rel="stylesheet" href="assets/css/extensions/baset-ui-icons.css"&gt;
+
+&lt;button type="button" class="bui-btn" data-bui-dialog-open="#my-dialog"&gt;Open&lt;/button&gt;
+
+&lt;dialog class="bui-dialog" id="my-dialog" aria-labelledby="my-dialog-title" data-bui-dialog&gt;
+    &lt;div class="bui-dialog__panel"&gt;
+        &lt;div class="bui-dialog__header"&gt;
+            &lt;h2 class="bui-dialog__title" id="my-dialog-title"&gt;Title&lt;/h2&gt;
+            &lt;button type="button" class="bui-btn-close" data-bui-dismiss aria-label="Close"
+                data-bui-i18n-attr="aria-label:common.close"&gt;&lt;i class="bui-icon-regular bui-icon-x" aria-hidden="true"&gt;&lt;/i&gt;&lt;/button&gt;
+        &lt;/div&gt;
+        &lt;div class="bui-dialog__body"&gt;Content.&lt;/div&gt;
+        &lt;div class="bui-dialog__footer"&gt;
+            &lt;button type="button" class="bui-btn" data-bui-dismiss&gt;Done&lt;/button&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/dialog&gt;
+
+&lt;script src="assets/js/baset-ui.js"&gt;&lt;/script&gt;</code></pre>
+<div class="bui-docs-callout bui-docs-callout--note" role="note">
+<p class="bui-docs-callout__title">Note</p>
+<p>It is built on the native <code>&lt;dialog&gt;</code> element opened with <code>showModal()</code>, so it needs a current evergreen browser. It was tested in Chromium only (not in Firefox or Safari). The decision and its trade-offs are in <a href="../../instructions/COMPONENT_DEVELOPMENT.md">COMPONENT_DEVELOPMENT.md</a>.</p>
+</div>
+                    </section>
+
+                    <section class="bui-docs-section" aria-labelledby="customize">
+                        <h2 id="customize">02. Customize</h2>
+
+<p>Every option below is a real class or attribute documented in section 04. The preview holds a button and the dialog; press the button to open it (the dialog covers the page, as it does for your visitors, and it follows the preview's Light/Dark and RTL/LTR switches). The Responsive Preview width only resizes the preview box: a dialog is sized against the browser window, so use the browser window or the <code>fullscreen-until-*</code> classes' breakpoints to check responsive behavior (see section 07).</p>
+<div data-docs-playground="dialog"></div>
+                    </section>
+
+                    <section class="bui-docs-section" aria-labelledby="default">
+                        <h2 id="default">03. Default</h2>
+
+<p>A top-aligned, medium-width dialog with a header, a body and a footer. The page behind is locked and inert; Esc, the close button and a click on the dark area close it.</p>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<button type="button" class="bui-btn" data-bui-dialog-open="#ex-default">Open dialog</button>
+<dialog class="bui-dialog" id="ex-default" aria-labelledby="ex-default-t" data-bui-dialog>
+<div class="bui-dialog__panel">
+<div class="bui-dialog__header"><h2 class="bui-dialog__title" id="ex-default-t">Dialog title</h2><button type="button" class="bui-btn-close" data-bui-dismiss aria-label="Close" data-bui-i18n-attr="aria-label:common.close"><i class="bui-icon-regular bui-icon-x" aria-hidden="true"></i></button></div>
+<div class="bui-dialog__body"><p>Sample body text. Press Esc, the close button, or click outside to close.</p></div>
+<div class="bui-dialog__footer"><button type="button" class="bui-btn bui-btn--outline bui-btn--secondary" data-bui-dismiss>Cancel</button><button type="button" class="bui-btn" data-bui-dismiss>Save</button></div>
+</div>
+</dialog>
+</div>
+</div>
+
+                    </section>
+
+                    <section class="bui-docs-section" aria-labelledby="variants-options">
+                        <h2 id="variants-options">04. Variants &amp; Options</h2>
+
+<h3>Structure</h3>
+<p>The <code>&lt;dialog&gt;</code> element is the full-screen dark area; its first child <code>__panel</code> is the visible box. <code>__header</code>, <code>__body</code> and <code>__footer</code> go inside the panel (all three optional), and the title is <code>__title</code>. Name the dialog with <code>aria-labelledby</code> (the title id) and, if useful, <code>aria-describedby</code>.</p>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Dialog classes and attributes</caption>
+<thead><tr><th scope="col">Class or attribute</th><th scope="col">Applies to</th><th scope="col">Description</th></tr></thead>
+<tbody>
+<tr><td><code>bui-dialog</code></td><td><code>&lt;dialog&gt;</code></td><td>The dialog and its dark area. Required.</td></tr>
+<tr><td><code>bui-dialog--sm|md|lg|xl</code></td><td><code>&lt;dialog&gt;</code></td><td>Maximum width: 21rem, 33rem (default), 51rem, 72rem. Never wider than the screen.</td></tr>
+<tr><td><code>bui-dialog--centered</code></td><td><code>&lt;dialog&gt;</code></td><td>Centers the panel vertically. The default is top aligned.</td></tr>
+<tr><td><code>bui-dialog--scrollable</code></td><td><code>&lt;dialog&gt;</code></td><td>Only the body scrolls; header and footer stay. Without it the whole dialog scrolls inside the dark area ("page" scroll).</td></tr>
+<tr><td><code>bui-dialog--fullscreen</code></td><td><code>&lt;dialog&gt;</code></td><td>Always fills the screen.</td></tr>
+<tr><td><code>bui-dialog--fullscreen-until-sm|md|lg|xl</code></td><td><code>&lt;dialog&gt;</code></td><td>Fills the screen below 576px, 768px, 992px or 1200px, and is a normal dialog from that width up (combine with a size class).</td></tr>
+<tr><td><code>bui-dialog__panel</code></td><td>first child</td><td>The visible box. Required, and it must be a direct child.</td></tr>
+<tr><td><code>bui-dialog__header</code>, <code>__title</code>, <code>__body</code>, <code>__footer</code></td><td>inside the panel</td><td>Optional parts. The footer aligns its buttons to the end.</td></tr>
+<tr><td><code>data-bui-dismiss</code></td><td>any control inside</td><td>Closes the nearest dialog when clicked.</td></tr>
+<tr><td><code>data-bui-dialog-open="#id"</code></td><td>a button or link</td><td>Opens the dialog with that id. Works for dialogs added later.</td></tr>
+<tr><td><code>.is-closing</code>, <code>.is-static-bump</code></td><td>state (set by the script)</td><td>Do not set them yourself.</td></tr>
+</tbody>
+</table>
+<h3>Options</h3>
+<p>Set options with <code>data-bui-*</code> attributes on the <code>&lt;dialog&gt;</code> or in the second argument of <code>BUI.dialog()</code>. Defaults, then attributes, then JavaScript options (see section 06).</p>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Dialog options</caption>
+<thead><tr><th scope="col">Name</th><th scope="col">Type</th><th scope="col">Default</th><th scope="col">HTML attribute</th><th scope="col">Description</th></tr></thead>
+<tbody>
+<tr><td><code>static</code></td><td>boolean</td><td><code>false</code></td><td><code>data-bui-static</code></td><td>A click on the dark area does not close the dialog; it bounces briefly instead.</td></tr>
+<tr><td><code>keyboard</code></td><td>boolean</td><td><code>true</code></td><td><code>data-bui-keyboard</code></td><td>Esc closes the dialog. With <code>false</code> Esc does nothing.</td></tr>
+<tr><td><code>focus</code></td><td>string (selector)</td><td><code>""</code></td><td><code>data-bui-focus</code></td><td>Element inside the dialog that receives focus on open. Without it the browser focuses the first focusable element (or the panel if there is none).</td></tr>
+<tr><td><code>restoreFocus</code></td><td>boolean</td><td><code>true</code></td><td><code>data-bui-restore-focus</code></td><td>Return focus to the element that opened the dialog when it closes.</td></tr>
+<tr><td><code>url</code></td><td>string</td><td><code>""</code></td><td><code>data-bui-url</code></td><td>Same-origin address whose HTML is loaded into the body on open. See "Dynamic content".</td></tr>
+<tr><td><code>load</code></td><td>function</td><td><code>null</code></td><td>(JavaScript only)</td><td>Function returning (or resolving to) content for the body. See "Dynamic content".</td></tr>
+<tr><td><code>loadOnce</code></td><td>boolean</td><td><code>true</code></td><td><code>data-bui-load-once</code></td><td>Load once (true) or on every open (false).</td></tr>
+</tbody>
+</table>
+                    </section>
+
+                    <section class="bui-docs-section" aria-labelledby="examples">
+                        <h2 id="examples">05. Examples</h2>
+
+<h3>Sizes</h3>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<button type="button" class="bui-btn bui-btn--outline" data-bui-dialog-open="#ex-s-sm">Small</button><button type="button" class="bui-btn bui-btn--outline" data-bui-dialog-open="#ex-s-md">Medium</button><button type="button" class="bui-btn bui-btn--outline" data-bui-dialog-open="#ex-s-lg">Large</button><button type="button" class="bui-btn bui-btn--outline" data-bui-dialog-open="#ex-s-xl">Extra large</button>
+<dialog class="bui-dialog bui-dialog--sm" id="ex-s-sm" aria-labelledby="ex-s-sm-t" data-bui-dialog>
+<div class="bui-dialog__panel">
+<div class="bui-dialog__header"><h2 class="bui-dialog__title" id="ex-s-sm-t">Small dialog</h2><button type="button" class="bui-btn-close" data-bui-dismiss aria-label="Close" data-bui-i18n-attr="aria-label:common.close"><i class="bui-icon-regular bui-icon-x" aria-hidden="true"></i></button></div>
+<div class="bui-dialog__body"><p>Maximum width changes with the size class.</p></div>
+</div>
+</dialog><dialog class="bui-dialog bui-dialog--md" id="ex-s-md" aria-labelledby="ex-s-md-t" data-bui-dialog>
+<div class="bui-dialog__panel">
+<div class="bui-dialog__header"><h2 class="bui-dialog__title" id="ex-s-md-t">Medium dialog</h2><button type="button" class="bui-btn-close" data-bui-dismiss aria-label="Close" data-bui-i18n-attr="aria-label:common.close"><i class="bui-icon-regular bui-icon-x" aria-hidden="true"></i></button></div>
+<div class="bui-dialog__body"><p>Maximum width changes with the size class.</p></div>
+</div>
+</dialog><dialog class="bui-dialog bui-dialog--lg" id="ex-s-lg" aria-labelledby="ex-s-lg-t" data-bui-dialog>
+<div class="bui-dialog__panel">
+<div class="bui-dialog__header"><h2 class="bui-dialog__title" id="ex-s-lg-t">Large dialog</h2><button type="button" class="bui-btn-close" data-bui-dismiss aria-label="Close" data-bui-i18n-attr="aria-label:common.close"><i class="bui-icon-regular bui-icon-x" aria-hidden="true"></i></button></div>
+<div class="bui-dialog__body"><p>Maximum width changes with the size class.</p></div>
+</div>
+</dialog><dialog class="bui-dialog bui-dialog--xl" id="ex-s-xl" aria-labelledby="ex-s-xl-t" data-bui-dialog>
+<div class="bui-dialog__panel">
+<div class="bui-dialog__header"><h2 class="bui-dialog__title" id="ex-s-xl-t">Extra large dialog</h2><button type="button" class="bui-btn-close" data-bui-dismiss aria-label="Close" data-bui-i18n-attr="aria-label:common.close"><i class="bui-icon-regular bui-icon-x" aria-hidden="true"></i></button></div>
+<div class="bui-dialog__body"><p>Maximum width changes with the size class.</p></div>
+</div>
+</dialog>
+</div>
+</div>
+<h3>Centered and scrolling</h3>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<button type="button" class="bui-btn bui-btn--outline" data-bui-dialog-open="#ex-center">Centered</button>
+<button type="button" class="bui-btn bui-btn--outline" data-bui-dialog-open="#ex-sbody">Scrollable body</button>
+<button type="button" class="bui-btn bui-btn--outline" data-bui-dialog-open="#ex-spage">Scrollable page</button>
+<dialog class="bui-dialog bui-dialog--centered" id="ex-center" aria-labelledby="ex-center-t" data-bui-dialog>
+<div class="bui-dialog__panel">
+<div class="bui-dialog__header"><h2 class="bui-dialog__title" id="ex-center-t">Centered</h2><button type="button" class="bui-btn-close" data-bui-dismiss aria-label="Close" data-bui-i18n-attr="aria-label:common.close"><i class="bui-icon-regular bui-icon-x" aria-hidden="true"></i></button></div>
+<div class="bui-dialog__body"><p>Vertically centered.</p></div>
+</div>
+</dialog>
+<dialog class="bui-dialog bui-dialog--scrollable" id="ex-sbody" aria-labelledby="ex-sbody-t" data-bui-dialog>
+<div class="bui-dialog__panel">
+<div class="bui-dialog__header"><h2 class="bui-dialog__title" id="ex-sbody-t">Scrollable body</h2><button type="button" class="bui-btn-close" data-bui-dismiss aria-label="Close" data-bui-i18n-attr="aria-label:common.close"><i class="bui-icon-regular bui-icon-x" aria-hidden="true"></i></button></div>
+<div class="bui-dialog__body"><p>Sample paragraph 1. Placeholder text used to make the content long enough to scroll.</p><p>Sample paragraph 2. Placeholder text used to make the content long enough to scroll.</p><p>Sample paragraph 3. Placeholder text used to make the content long enough to scroll.</p><p>Sample paragraph 4. Placeholder text used to make the content long enough to scroll.</p><p>Sample paragraph 5. Placeholder text used to make the content long enough to scroll.</p><p>Sample paragraph 6. Placeholder text used to make the content long enough to scroll.</p><p>Sample paragraph 7. Placeholder text used to make the content long enough to scroll.</p><p>Sample paragraph 8. Placeholder text used to make the content long enough to scroll.</p></div>
+<div class="bui-dialog__footer"><button type="button" class="bui-btn" data-bui-dismiss>Done</button></div>
+</div>
+</dialog>
+<dialog class="bui-dialog" id="ex-spage" aria-labelledby="ex-spage-t" data-bui-dialog>
+<div class="bui-dialog__panel">
+<div class="bui-dialog__header"><h2 class="bui-dialog__title" id="ex-spage-t">Scrollable page</h2><button type="button" class="bui-btn-close" data-bui-dismiss aria-label="Close" data-bui-i18n-attr="aria-label:common.close"><i class="bui-icon-regular bui-icon-x" aria-hidden="true"></i></button></div>
+<div class="bui-dialog__body"><p>Sample paragraph 1. Placeholder text used to make the content long enough to scroll.</p><p>Sample paragraph 2. Placeholder text used to make the content long enough to scroll.</p><p>Sample paragraph 3. Placeholder text used to make the content long enough to scroll.</p><p>Sample paragraph 4. Placeholder text used to make the content long enough to scroll.</p><p>Sample paragraph 5. Placeholder text used to make the content long enough to scroll.</p><p>Sample paragraph 6. Placeholder text used to make the content long enough to scroll.</p><p>Sample paragraph 7. Placeholder text used to make the content long enough to scroll.</p><p>Sample paragraph 8. Placeholder text used to make the content long enough to scroll.</p></div>
+<div class="bui-dialog__footer"><button type="button" class="bui-btn" data-bui-dismiss>Done</button></div>
+</div>
+</dialog>
+</div>
+<pre class="bui-docs-code" data-lang="html"><code>&lt;!-- Centered --&gt;
+&lt;dialog class="bui-dialog bui-dialog--centered" id="d1" aria-labelledby="d1-t" data-bui-dialog&gt; ... &lt;/dialog&gt;
+
+&lt;!-- Only the body scrolls --&gt;
+&lt;dialog class="bui-dialog bui-dialog--scrollable" id="d2" aria-labelledby="d2-t" data-bui-dialog&gt; ... &lt;/dialog&gt;
+
+&lt;!-- Default: the whole dialog scrolls inside the dark area --&gt;
+&lt;dialog class="bui-dialog" id="d3" aria-labelledby="d3-t" data-bui-dialog&gt; ... &lt;/dialog&gt;</code></pre>
+</div>
+<h3>Fullscreen</h3>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<button type="button" class="bui-btn bui-btn--outline" data-bui-dialog-open="#ex-full">Fullscreen</button>
+<button type="button" class="bui-btn bui-btn--outline" data-bui-dialog-open="#ex-until">Fullscreen below md</button>
+<dialog class="bui-dialog bui-dialog--fullscreen" id="ex-full" aria-labelledby="ex-full-t" data-bui-dialog>
+<div class="bui-dialog__panel">
+<div class="bui-dialog__header"><h2 class="bui-dialog__title" id="ex-full-t">Fullscreen</h2><button type="button" class="bui-btn-close" data-bui-dismiss aria-label="Close" data-bui-i18n-attr="aria-label:common.close"><i class="bui-icon-regular bui-icon-x" aria-hidden="true"></i></button></div>
+<div class="bui-dialog__body"><p>Always fills the screen.</p></div>
+<div class="bui-dialog__footer"><button type="button" class="bui-btn" data-bui-dismiss>Done</button></div>
+</div>
+</dialog>
+<dialog class="bui-dialog bui-dialog--lg bui-dialog--fullscreen-until-md" id="ex-until" aria-labelledby="ex-until-t" data-bui-dialog>
+<div class="bui-dialog__panel">
+<div class="bui-dialog__header"><h2 class="bui-dialog__title" id="ex-until-t">Fullscreen below md</h2><button type="button" class="bui-btn-close" data-bui-dismiss aria-label="Close" data-bui-i18n-attr="aria-label:common.close"><i class="bui-icon-regular bui-icon-x" aria-hidden="true"></i></button></div>
+<div class="bui-dialog__body"><p>Fills the screen below 768px wide, a large dialog above.</p></div>
+</div>
+</dialog>
+</div>
+</div>
+<h3>Static backdrop</h3>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<button type="button" class="bui-btn bui-btn--outline" data-bui-dialog-open="#ex-static">Static backdrop</button>
+<button type="button" class="bui-btn bui-btn--outline" data-bui-dialog-open="#ex-nokeys">Static, Esc disabled</button>
+<dialog class="bui-dialog" id="ex-static" aria-labelledby="ex-static-t" data-bui-static data-bui-dialog>
+<div class="bui-dialog__panel">
+<div class="bui-dialog__header"><h2 class="bui-dialog__title" id="ex-static-t">Static backdrop</h2><button type="button" class="bui-btn-close" data-bui-dismiss aria-label="Close" data-bui-i18n-attr="aria-label:common.close"><i class="bui-icon-regular bui-icon-x" aria-hidden="true"></i></button></div>
+<div class="bui-dialog__body"><p>A click outside bounces the dialog instead of closing it. Esc still closes it.</p></div>
+</div>
+</dialog>
+<dialog class="bui-dialog" id="ex-nokeys" aria-labelledby="ex-nokeys-t" data-bui-static data-bui-keyboard="false" data-bui-dialog>
+<div class="bui-dialog__panel">
+<div class="bui-dialog__header"><h2 class="bui-dialog__title" id="ex-nokeys-t">Static, Esc disabled</h2></div>
+<div class="bui-dialog__body"><p>Only the button below closes this dialog.</p></div>
+<div class="bui-dialog__footer"><button type="button" class="bui-btn" data-bui-dismiss>Close</button></div>
+</div>
+</dialog>
+</div>
+</div>
+<h3>Nested dialogs</h3>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<button type="button" class="bui-btn bui-btn--outline" data-bui-dialog-open="#ex-a">Open dialog A</button>
+<dialog class="bui-dialog" id="ex-a" aria-labelledby="ex-a-t" data-bui-dialog>
+<div class="bui-dialog__panel">
+<div class="bui-dialog__header"><h2 class="bui-dialog__title" id="ex-a-t">Dialog A</h2><button type="button" class="bui-btn-close" data-bui-dismiss aria-label="Close" data-bui-i18n-attr="aria-label:common.close"><i class="bui-icon-regular bui-icon-x" aria-hidden="true"></i></button></div>
+<div class="bui-dialog__body"><p>Outer dialog.</p><button type="button" class="bui-btn" data-bui-dialog-open="#ex-b">Open dialog B</button></div>
+<dialog class="bui-dialog bui-dialog--sm" id="ex-b" aria-labelledby="ex-b-t" data-bui-dialog>
+<div class="bui-dialog__panel">
+<div class="bui-dialog__header"><h2 class="bui-dialog__title" id="ex-b-t">Dialog B</h2><button type="button" class="bui-btn-close" data-bui-dismiss aria-label="Close" data-bui-i18n-attr="aria-label:common.close"><i class="bui-icon-regular bui-icon-x" aria-hidden="true"></i></button></div>
+<div class="bui-dialog__body"><p>Esc closes only this one; focus returns to the button in A.</p></div>
+</div>
+</dialog>
+</div>
+</dialog>
+</div>
+</div>
+<h3>A form inside a dialog</h3>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<button type="button" class="bui-btn" data-bui-dialog-open="#ex-confirm">Delete item</button> <span data-confirm-out aria-live="polite">No answer yet.</span>
+<dialog class="bui-dialog bui-dialog--sm bui-dialog--centered" id="ex-confirm" aria-labelledby="ex-confirm-t" data-bui-dialog>
+<form method="dialog" class="bui-dialog__panel">
+<div class="bui-dialog__header"><h2 class="bui-dialog__title" id="ex-confirm-t">Delete this item?</h2></div>
+<div class="bui-dialog__body">This sample action cannot be undone.</div>
+<div class="bui-dialog__footer"><button type="submit" class="bui-btn bui-btn--outline bui-btn--secondary" value="cancel">Cancel</button><button type="submit" class="bui-btn bui-btn--danger" value="delete">Delete</button></div>
+</form>
+</dialog>
+</div>
+<pre class="bui-docs-code" data-lang="html"><code>&lt;dialog class="bui-dialog" id="confirm" aria-labelledby="confirm-t" data-bui-dialog&gt;
+    &lt;form method="dialog" class="bui-dialog__panel"&gt;
+        ...
+        &lt;button type="submit" value="cancel"&gt;Cancel&lt;/button&gt;
+        &lt;button type="submit" value="delete"&gt;Delete&lt;/button&gt;
+    &lt;/form&gt;
+&lt;/dialog&gt;
+&lt;script&gt;
+    document.getElementById('confirm').addEventListener('bui:dialog:close', function (e) {
+        if (e.target !== this) return;          // events of nested dialogs bubble
+        console.log(e.detail.returnValue);      // "cancel" or "delete"
+    });
+&lt;/script&gt;</code></pre>
+</div>
+<h3>Dynamic content</h3>
+<p>The body can be filled when the dialog opens. A function (JavaScript only) or a same-origin address returns the content; while it loads the body shows a status line, and if it fails an error line is shown and the dialog reloads on the next open.</p>
+<h3>Function</h3>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<button type="button" class="bui-btn bui-btn--outline" data-bui-dialog-open="#ex-load">Load with a function</button>
+<dialog class="bui-dialog" id="ex-load" aria-labelledby="ex-load-t">
+<div class="bui-dialog__panel">
+<div class="bui-dialog__header"><h2 class="bui-dialog__title" id="ex-load-t">Loaded content</h2><button type="button" class="bui-btn-close" data-bui-dismiss aria-label="Close" data-bui-i18n-attr="aria-label:common.close"><i class="bui-icon-regular bui-icon-x" aria-hidden="true"></i></button></div>
+<div class="bui-dialog__body"><p>Fallback markup, restored by destroy().</p></div>
+</div>
+</dialog>
+</div>
+<pre class="bui-docs-code" data-lang="javascript"><code>BUI.dialog('#ex-load', {
+    load: function (body) {
+        // Return a string (HTML, so only trusted content), a Node, or a Promise of either.
+        return fetch('/fragments/profile.html').then(function (r) { return r.text(); });
+    }
+});</code></pre>
+</div>
+
+<pre class="bui-docs-code" data-lang="html"><code>&lt;!-- Same-origin address: the HTML is inserted into .bui-dialog__body on first open --&gt;
+&lt;dialog class="bui-dialog" id="remote" aria-labelledby="remote-t" data-bui-dialog data-bui-url="fragments/profile.html"&gt; ... &lt;/dialog&gt;</code></pre>
+<div class="bui-docs-callout bui-docs-callout--warning" role="note">
+<p class="bui-docs-callout__title">Warning</p>
+<p>Loaded content is inserted as HTML, so load only content you control. A <code>url</code> on another origin is refused. The live function example above simulates a slow request with a timer, because a real address needs a server.</p>
+</div>
+<h3>Open from JavaScript</h3>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<button type="button" class="bui-btn" data-js-open>Open with BUI.dialog()</button>
+<dialog class="bui-dialog" id="ex-js" aria-labelledby="ex-js-t">
+<div class="bui-dialog__panel">
+<div class="bui-dialog__header"><h2 class="bui-dialog__title" id="ex-js-t">Opened from JavaScript</h2><button type="button" class="bui-btn-close" data-bui-dismiss aria-label="Close" data-bui-i18n-attr="aria-label:common.close"><i class="bui-icon-regular bui-icon-x" aria-hidden="true"></i></button></div>
+<div class="bui-dialog__body"><p>Opened by <code>BUI.dialog('#ex-js').open()</code>.</p></div>
+</div>
+</dialog>
+</div>
+<pre class="bui-docs-code" data-lang="javascript"><code>var dialog = BUI.dialog('#my-dialog', { static: true });
+dialog.open();                 // true, or false if beforeopen was canceled
+dialog.close('done');          // returnValue "done"
+dialog.toggle();
+dialog.isOpen();
+dialog.destroy();              // closes at once, removes listeners</code></pre>
+</div>
+
+                    </section>
+
+                    <section class="bui-docs-section" aria-labelledby="javascript-api">
+                        <h2 id="javascript-api">06. JavaScript API</h2>
+
+<p><code>BUI.dialog(target, options)</code> returns an instance (the same one if called again for the element). <code>BUI.modal</code> is an alias of the same function; events, the <code>data-bui-dialog</code> attribute and <code>BUI.getInstance(el, 'dialog')</code> always use the name <code>dialog</code>. The target must be a <code>&lt;dialog&gt;</code>; anything else logs an error and returns <code>null</code>.</p>
+<h3>Methods</h3>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Dialog methods</caption>
+<thead><tr><th scope="col">Name</th><th scope="col">Returns</th><th scope="col">Description</th></tr></thead>
+<tbody>
+<tr><td><code>open(trigger?)</code></td><td>boolean</td><td>Opens the dialog. <code>trigger</code> (an element) is where focus returns. Returns <code>false</code> if it is already open or <code>beforeopen</code> was canceled.</td></tr>
+<tr><td><code>close(returnValue?)</code></td><td>boolean</td><td>Starts closing (after the exit animation). Returns <code>false</code> if it is not open or <code>beforeclose</code> was canceled.</td></tr>
+<tr><td><code>toggle()</code></td><td>boolean</td><td>Opens or closes.</td></tr>
+<tr><td><code>isOpen()</code></td><td>boolean</td><td>Whether it is open.</td></tr>
+<tr><td><code>destroy()</code></td><td>void</td><td>Closes at once without animation or events, removes every listener and timer, restores the original body markup if content was loaded, and removes the <code>tabindex</code> it added to the panel.</td></tr>
+</tbody>
+</table><h3>Events</h3>
+<p>DOM events on the <code>&lt;dialog&gt;</code>, named <code>bui:dialog:{name}</code>. They bubble (a dialog nested in another dialog's markup also reaches the outer listeners, so compare <code>event.target</code>). <code>detail.relatedTarget</code> is the element that opened it.</p>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Dialog events</caption>
+<thead><tr><th scope="col">Event</th><th scope="col">Cancelable</th><th scope="col">Detail</th><th scope="col">When</th></tr></thead>
+<tbody>
+<tr><td><code>beforeopen</code></td><td>yes</td><td><code>relatedTarget</code></td><td>Before opening. <code>preventDefault()</code> keeps it closed.</td></tr>
+<tr><td><code>open</code></td><td>no</td><td><code>relatedTarget</code></td><td>Right after it opened (the entry animation may still run).</td></tr>
+<tr><td><code>beforeclose</code></td><td>yes</td><td><code>source</code>, <code>relatedTarget</code></td><td>Before closing. <code>source</code> is <code>api</code>, <code>dismiss</code>, <code>escape</code>, <code>backdrop</code> or <code>form</code>. <code>preventDefault()</code> keeps it open.</td></tr>
+<tr><td><code>close</code></td><td>no</td><td><code>source</code>, <code>returnValue</code>, <code>relatedTarget</code></td><td>After it closed and focus returned. Also fires if the native <code>close()</code> was called on the element.</td></tr>
+<tr><td><code>load</code></td><td>no</td><td>(empty)</td><td>Dynamic content was inserted.</td></tr>
+<tr><td><code>loaderror</code></td><td>no</td><td><code>error</code></td><td>Dynamic content failed to load.</td></tr>
+</tbody>
+</table><div class="bui-docs-callout bui-docs-callout--note" role="note">
+<p class="bui-docs-callout__title">Note</p>
+<p>Events are named <code>beforeopen</code> and <code>beforeclose</code> (no hyphen), like the platform's <code>beforetoggle</code>. A <code>&lt;form method="dialog"&gt;</code> submit is intercepted so it also goes through <code>beforeclose</code>. Calling the native <code>dialog.close()</code> directly skips <code>beforeclose</code> by design of the platform.</p>
+</div>
+<h3>Overlay manager</h3>
+<p>Dialog and Drawer share one manager, <code>BUI.overlay</code>. It keeps the stack of open overlays and the single page scroll lock, and drops an open overlay that was removed from the page.</p>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">BUI.overlay</caption>
+<thead><tr><th scope="col">Name</th><th scope="col">Returns</th><th scope="col">Description</th></tr></thead>
+<tbody>
+<tr><td><code>getStack()</code></td><td>array of elements</td><td>The open dialogs and drawers, bottom first.</td></tr>
+<tr><td><code>getTop()</code></td><td>element or <code>null</code></td><td>The top one.</td></tr>
+<tr><td><code>closeAll()</code></td><td>number</td><td>Asks every open overlay to close, top first, and returns how many accepted.</td></tr>
+</tbody>
+</table><p>While an overlay is open the page gets <code>overflow: hidden</code> and the custom property <code>--bui-scroll-lock-gap</code> (the scrollbar width) on <code>&lt;html&gt;</code>. Where the browser supports <code>scrollbar-gutter</code> the scrollbar space is kept reserved so nothing moves, and the dark area stops short of that strip (the page color shows there). Elsewhere padding of the same width is added to <code>&lt;html&gt;</code>.</p>
+                    </section>
+
+                    <section class="bui-docs-section" aria-labelledby="responsive-behavior">
+                        <h2 id="responsive-behavior">07. Responsive Behavior</h2>
+
+<p>The panel is as wide as its size class allows but never wider than the screen minus a 1rem margin, so it fits from 320px. Long content scrolls: the whole dialog by default, or only the body with <code>bui-dialog--scrollable</code>. Use <code>bui-dialog--fullscreen-until-md</code> (or <code>sm</code>, <code>lg</code>, <code>xl</code>) to give small screens the whole screen; these classes are Mobile First (fullscreen is the base and a <code>min-width</code> query ends it). A dialog is positioned against the browser window, not against its parent, so it does not respond to the width of a container.</p>
+                    </section>
+
+                    <section class="bui-docs-section" aria-labelledby="accessibility">
+                        <h2 id="accessibility">08. Accessibility</h2>
+
+<h3>Keyboard</h3>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Dialog keyboard</caption>
+<thead><tr><th scope="col">Key</th><th scope="col">Action</th></tr></thead>
+<tbody>
+<tr><td><kbd>Tab</kbd> / <kbd>Shift</kbd>+<kbd>Tab</kbd></td><td>Moves between the focusable elements inside. At the last or first one it wraps, so focus never leaves the dialog. The page behind cannot be reached.</td></tr>
+<tr><td><kbd>Esc</kbd></td><td>Closes the top dialog only (not the ones below it). Off with <code>keyboard: false</code>.</td></tr>
+<tr><td><kbd>Enter</kbd> / <kbd>Space</kbd></td><td>Activates the focused button, including the close button.</td></tr>
+</tbody>
+</table><h3>Focus</h3>
+<p>On open, focus goes to the <code>focus</code> option's element, else to the first focusable element, else to the panel itself. On close it returns to the element that opened the dialog (the trigger, or whatever was focused when <code>open()</code> was called without one). Browsers such as Safari do not focus a button when it is clicked, which is why the trigger is remembered.</p>
+<h3>ARIA and screen readers</h3>
+<p>The native element provides <code>role="dialog"</code> and modality: everything outside is inert and hidden from assistive technology while it is open. You provide the name: <code>aria-labelledby</code> pointing at the title (or <code>aria-label</code>), and <code>aria-describedby</code> for a short description. For a dialog that needs an immediate response, such as a confirmation, add <code>role="alertdialog"</code>. A warning is logged on creation if the dialog has no accessible name. The close button's name comes from the language files (<code>common.close</code>).</p>
+<p>Not tested with a screen reader (NVDA, VoiceOver, JAWS). The behavior above is the platform's and was verified in Chromium only; see the test report in CHANGELOG.md.</p>
+<h3>Motion, colors and touch</h3>
+<p>The enter and exit animations use the motion tokens, so <code>prefers-reduced-motion</code> removes them. In forced colors mode the dark area is dropped and the panel keeps a system-color border. The panel text uses the same tokens as the rest of the library, in every theme, in Light and Dark.</p>
+                    </section>
+
+                </div>
+                <!-- Previous / Next links are appended here by docs.js from the order in nav.js. -->
+            </div>
+            <!-- "On this page" is appended here by docs.js (visible from the XL breakpoint). -->
+        </div>
+    </main>
+
+    <script src="../../assets/js/baset-ui.js"></script>
+    <script src="../../documentation/assets/js/nav.js"></script>
+    <script src="../../documentation/assets/js/docs.js"></script>
+    <script src="../../documentation/assets/js/playground.js"></script>
+    <script>
+        /* Docs-only helpers for this page. */
+        (function () {
+            BUI.dialog('#ex-load', { load: function () {
+                return new Promise(function (resolve) { setTimeout(function () { resolve('<p>Loaded by a function after a short simulated delay. Sample text.</p>'); }, 600); });
+            } });
+            var js = document.querySelector('[data-js-open]');
+            if (js) { js.addEventListener('click', function () { BUI.dialog('#ex-js').open(js); }); }
+            var confirmEl = document.getElementById('ex-confirm');
+            var out = document.querySelector('[data-confirm-out]');
+            if (confirmEl && out) {
+                confirmEl.addEventListener('bui:dialog:close', function (e) {
+                    if (e.target !== confirmEl) { return; }
+                    out.textContent = 'Answer: ' + (e.detail.returnValue || 'none');
+                });
+            }
+            /* Keeps the links inside previews from jumping the page. */
+            document.addEventListener('click', function (e) {
+                var a = e.target.closest && e.target.closest('a[href="#"]');
+                if (a && a.closest('[data-docs-playground], .bui-docs-example__preview')) { e.preventDefault(); }
+            });
+            BUI_DOCS_PLAYGROUND.define('dialog', {
+                title: 'Dialog playground',
+                controls: [
+                    { type: 'text', name: 'title', label: 'Title', default: 'Dialog title', maxLength: 40 },
+                    { type: 'radio-group', name: 'size', label: 'Size', default: 'md', options: [{ value: 'sm', label: 'Small' }, { value: 'md', label: 'Medium' }, { value: 'lg', label: 'Large' }, { value: 'xl', label: 'Extra large' }] },
+                    { type: 'radio-group', name: 'position', label: 'Position', default: 'top', options: [{ value: 'top', label: 'Top' }, { value: 'centered', label: 'Centered' }] },
+                    { type: 'radio-group', name: 'scroll', label: 'Scrolling', default: 'page', options: [{ value: 'page', label: 'Page' }, { value: 'body', label: 'Body' }] },
+                    { type: 'select', name: 'fullscreen', label: 'Fullscreen', default: 'none', options: [{ value: 'none', label: 'Never' }, { value: 'always', label: 'Always' }, { value: 'until-sm', label: 'Below sm (576px)' }, { value: 'until-md', label: 'Below md (768px)' }, { value: 'until-lg', label: 'Below lg (992px)' }, { value: 'until-xl', label: 'Below xl (1200px)' }] },
+                    { type: 'switch', name: 'static', label: 'Static backdrop', default: false },
+                    { type: 'switch', name: 'keyboard', label: 'Esc closes', default: true },
+                    { type: 'switch', name: 'footer', label: 'Footer', default: true },
+                    { type: 'range', name: 'paragraphs', label: 'Paragraphs in the body', default: 2, min: 1, max: 14 }
+                ],
+                template: function (s, h) {
+                    var cls = ['bui-dialog'];
+                    if (s.size !== 'md') { cls.push('bui-dialog--' + s.size); }
+                    if (s.position === 'centered') { cls.push('bui-dialog--centered'); }
+                    if (s.scroll === 'body') { cls.push('bui-dialog--scrollable'); }
+                    if (s.fullscreen === 'always') { cls.push('bui-dialog--fullscreen'); }
+                    else if (s.fullscreen !== 'none') { cls.push('bui-dialog--fullscreen-' + s.fullscreen); }
+                    var attrs = ' data-bui-dialog' + (s.static ? ' data-bui-static' : '') + (s.keyboard ? '' : ' data-bui-keyboard="false"');
+                    var body = '';
+                    for (var i = 1; i <= s.paragraphs; i += 1) { body += '\n            <p>Sample paragraph ' + i + '.</p>'; }
+                    var footer = s.footer ? '\n        <div class="bui-dialog__footer">\n            <button type="button" class="bui-btn bui-btn--outline bui-btn--secondary" data-bui-dismiss>Cancel</button>\n            <button type="button" class="bui-btn" data-bui-dismiss>Save</button>\n        </div>' : '';
+                    return '<button type="button" class="bui-btn" data-bui-dialog-open="#pg-dialog">Open dialog</button>\n' +
+                        '<dialog class="' + cls.join(' ') + '" id="pg-dialog" aria-labelledby="pg-dialog-title"' + attrs + '>\n' +
+                        '    <div class="bui-dialog__panel">\n' +
+                        '        <div class="bui-dialog__header">\n            <h2 class="bui-dialog__title" id="pg-dialog-title">' + h.escape(s.title) + '</h2>\n' +
+                        '            <button type="button" class="bui-btn-close" data-bui-dismiss aria-label="Close" data-bui-i18n-attr="aria-label:common.close"><i class="bui-icon-regular bui-icon-x" aria-hidden="true"></i></button>\n        </div>\n' +
+                        '        <div class="bui-dialog__body">' + body + '\n        </div>' + footer + '\n    </div>\n</dialog>';
+                },
+                beforeRender: function (frame) { BUI.destroy(frame); },
+                afterRender: function (frame) { BUI.init(frame); }
+            });
+        })();
+    </script>
+</body>
+</html>

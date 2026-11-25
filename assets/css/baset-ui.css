@@ -417,6 +417,33 @@
     --bui-switch-thumb-color: var(--bui-color-neutral-600);
     --bui-switch-thumb-checked-color: var(--bui-color-primary-contrast);
     --bui-switch-thumb-gap: var(--bui-border-width-thick);
+    /* Overlay tokens (Task 13), shared by Dialog and Drawer: the scrim and the panel surface. Dialog and Drawer add their own sizes below. */
+    --bui-overlay-backdrop-bg: var(--bui-color-overlay);
+    --bui-overlay-bg: var(--bui-color-bg);
+    --bui-overlay-color: var(--bui-color-text);
+    --bui-overlay-muted-color: var(--bui-color-text-muted);
+    --bui-overlay-border-color: var(--bui-color-border);
+    --bui-overlay-border-width: var(--bui-border-width);
+    --bui-overlay-divider-color: var(--bui-color-border);
+    --bui-overlay-shadow: var(--bui-shadow-xl);
+    --bui-overlay-padding-x: var(--bui-space-3);
+    --bui-overlay-padding-y: var(--bui-space-3);
+    --bui-overlay-gap: var(--bui-space-2);
+    --bui-overlay-title-font-size: var(--bui-font-size-lg);
+    --bui-overlay-title-font-weight: var(--bui-font-weight-semibold);
+    --bui-overlay-duration: var(--bui-duration-base);
+    --bui-overlay-easing: var(--bui-easing-standard);
+    --bui-dialog-radius: var(--bui-radius-lg);
+    --bui-dialog-margin: var(--bui-space-3);
+    --bui-dialog-offset: var(--bui-space-4);
+    --bui-dialog-width-sm: calc(var(--bui-space-6) * 7);
+    --bui-dialog-width-md: calc(var(--bui-space-6) * 11);
+    --bui-dialog-width-lg: calc(var(--bui-space-6) * 17);
+    --bui-dialog-width-xl: calc(var(--bui-space-6) * 24);
+    --bui-drawer-size-sm: calc(var(--bui-space-6) * 6);
+    --bui-drawer-size-md: calc(var(--bui-space-6) * 8);
+    --bui-drawer-size-lg: calc(var(--bui-space-6) * 12);
+    --bui-drawer-size-xl: calc(var(--bui-space-6) * 16);
 }
 
 /* =====================================================================
@@ -950,7 +977,7 @@ pre { margin-block: 0 var(--bui-space-3); overflow: auto; }
 .bui-shadow-xl { box-shadow: var(--bui-shadow-xl) !important; }
 
 /* =====================================================================
- * 6. COMPONENTS (alphabetical): Avatar, Badge (Task 10), Button, Button Group (Task 09), Card (Task 11), Checkbox (Task 12), Close Button (Task 09), Form Controls (Task 12), Input (Task 12), List Group (Task 11), Progress (Task 10), Radio (Task 12), Switch (Task 12).
+ * 6. COMPONENTS (alphabetical): Avatar, Badge (Task 10), Button, Button Group (Task 09), Card (Task 11), Checkbox (Task 12), Close Button (Task 09), Dialog (Task 13), Drawer (Task 13), Form Controls (Task 12), Input (Task 12), List Group (Task 11), Progress (Task 10), Radio (Task 12), Switch (Task 12).
  * ===================================================================== */
 
 /* ---------------------------------------------------------------------
@@ -2096,6 +2123,214 @@ pre { margin-block: 0 var(--bui-space-3); overflow: auto; }
         inline-size: max(var(--bui-btn-close-_size), var(--bui-btn-close-_touch-size));
         block-size: max(var(--bui-btn-close-_size), var(--bui-btn-close-_touch-size));
     }
+}
+
+/* ---------------------------------------------------------------------
+ * Dialog and Drawer (Task 13). Both are built on the native <dialog> element opened with showModal(), which gives the top layer, the inert
+ * page behind, Esc and the focus return. The <dialog> itself is the full-screen scrim (the native ::backdrop is hidden), so every color comes
+ * from the Overlay tokens and a click on the scrim is a click on the <dialog> element. The visible box is the first child (__panel).
+ * Because the top layer ignores z-index, no z-index is set. They need baset-ui.js to open (BUI.dialog and BUI.drawer).
+ * Markup: <dialog class="bui-dialog" aria-labelledby="t" data-bui-dialog><div class="bui-dialog__panel">
+ *            <div class="bui-dialog__header"><h2 class="bui-dialog__title" id="t">Title</h2> close button</div>
+ *            <div class="bui-dialog__body">...</div><div class="bui-dialog__footer">...</div></div></dialog>
+ * The two blocks share the scrim, the header, body and footer rules (listed together below) and the keyframes named bui-overlay-*.
+ * A parent flag (--bui-dialog-_fs, 1 or 0) switches the Fullscreen look so a breakpoint class only changes one number.
+ * --------------------------------------------------------------------- */
+@keyframes bui-overlay-fade-in { from { background-color: transparent; } }
+@keyframes bui-overlay-fade-out { to { background-color: transparent; } }
+@keyframes bui-dialog-in { from { opacity: 0; translate: 0 calc(var(--bui-space-3) * -1); } to { opacity: 1; translate: 0 0; } }
+@keyframes bui-dialog-out { from { opacity: 1; translate: 0 0; } to { opacity: 0; translate: 0 calc(var(--bui-space-3) * -1); } }
+@keyframes bui-dialog-bump { 50% { scale: 1.02; } }
+@keyframes bui-drawer-in { from { translate: var(--bui-drawer-_from-x) var(--bui-drawer-_from-y); } to { translate: 0 0; } }
+@keyframes bui-drawer-out { from { translate: 0 0; } to { translate: var(--bui-drawer-_from-x) var(--bui-drawer-_from-y); } }
+
+.bui-dialog,
+.bui-drawer {
+    position: fixed;
+    inset: 0;
+    box-sizing: border-box;
+    inline-size: 100%;
+    block-size: 100%;
+    max-inline-size: none;
+    max-block-size: none;
+    margin: 0;
+    padding: 0;
+    color: var(--bui-overlay-color);
+    background-color: var(--bui-overlay-backdrop-bg);
+    border: 0;
+    overscroll-behavior: contain;
+}
+.bui-dialog::backdrop,
+.bui-drawer::backdrop { background: transparent; }
+.bui-dialog:focus,
+.bui-drawer:focus,
+.bui-dialog__panel:focus,
+.bui-drawer__panel:focus { outline: none; }
+
+.bui-dialog__header,
+.bui-drawer__header {
+    display: flex;
+    flex: none;
+    align-items: center;
+    gap: var(--bui-overlay-gap);
+    padding: var(--bui-overlay-padding-y) var(--bui-overlay-padding-x);
+    border-block-end: var(--bui-overlay-border-width) solid var(--bui-overlay-divider-color);
+}
+.bui-dialog__title,
+.bui-drawer__title {
+    flex: 1 1 auto;
+    min-inline-size: 0;
+    margin: 0;
+    font-size: var(--bui-overlay-title-font-size);
+    font-weight: var(--bui-overlay-title-font-weight);
+    line-height: var(--bui-line-height-snug);
+    color: inherit;
+    overflow-wrap: anywhere;
+}
+.bui-dialog__body,
+.bui-drawer__body {
+    flex: 1 1 auto;
+    padding: var(--bui-overlay-padding-y) var(--bui-overlay-padding-x);
+}
+.bui-dialog__body > :last-child,
+.bui-drawer__body > :last-child { margin-block-end: 0; }
+.bui-dialog__footer,
+.bui-drawer__footer {
+    display: flex;
+    flex: none;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-end;
+    gap: var(--bui-overlay-gap);
+    padding: var(--bui-overlay-padding-y) var(--bui-overlay-padding-x);
+    border-block-start: var(--bui-overlay-border-width) solid var(--bui-overlay-divider-color);
+}
+/* Text shown while dynamic content loads, or when it failed (added by baset-ui.js). */
+.bui-dialog__status,
+.bui-drawer__status {
+    margin: 0;
+    color: var(--bui-overlay-muted-color);
+}
+
+/* Dialog. Top aligned by default, centered with --centered. The page scrolls inside the scrim unless --scrollable is set. */
+.bui-dialog {
+    --bui-dialog-_width: var(--bui-dialog-width-md);
+    --bui-dialog-_fs: 0;
+}
+.bui-dialog[open] {
+    display: flex;
+    flex-direction: column;
+    padding: calc(var(--bui-dialog-margin) * (1 - var(--bui-dialog-_fs)));
+    overflow-y: auto;
+    animation: bui-overlay-fade-in var(--bui-overlay-duration) var(--bui-overlay-easing);
+}
+.bui-dialog__panel {
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    inline-size: 100%;
+    max-inline-size: calc(var(--bui-dialog-_width) + var(--bui-dialog-_fs) * 100vw);
+    min-block-size: calc(var(--bui-dialog-_fs) * 100%);
+    margin-block: calc(var(--bui-dialog-offset) * (1 - var(--bui-dialog-_fs))) 0;
+    margin-inline: auto;
+    color: var(--bui-overlay-color);
+    background-color: var(--bui-overlay-bg);
+    border: calc(var(--bui-overlay-border-width) * (1 - var(--bui-dialog-_fs))) solid var(--bui-overlay-border-color);
+    border-radius: calc(var(--bui-dialog-radius) * (1 - var(--bui-dialog-_fs)));
+    box-shadow: var(--bui-overlay-shadow);
+}
+.bui-dialog[open] > .bui-dialog__panel { animation: bui-dialog-in var(--bui-overlay-duration) var(--bui-overlay-easing); }
+.bui-dialog--sm { --bui-dialog-_width: var(--bui-dialog-width-sm); }
+.bui-dialog--md { --bui-dialog-_width: var(--bui-dialog-width-md); }
+.bui-dialog--lg { --bui-dialog-_width: var(--bui-dialog-width-lg); }
+.bui-dialog--xl { --bui-dialog-_width: var(--bui-dialog-width-xl); }
+.bui-dialog--centered > .bui-dialog__panel { margin-block: auto; }
+.bui-dialog--scrollable[open] { overflow-y: hidden; }
+.bui-dialog--scrollable > .bui-dialog__panel { max-block-size: 100%; }
+.bui-dialog--scrollable .bui-dialog__body { overflow-y: auto; }
+.bui-dialog--fullscreen { --bui-dialog-_fs: 1; }
+.bui-dialog--fullscreen-until-sm,
+.bui-dialog--fullscreen-until-md,
+.bui-dialog--fullscreen-until-lg,
+.bui-dialog--fullscreen-until-xl { --bui-dialog-_fs: 1; }
+/* The until-* classes are fullscreen below the named breakpoint (Mobile First: the Fullscreen look is the base and a min-width query ends it). */
+@media (min-width: 576px) { .bui-dialog--fullscreen-until-sm { --bui-dialog-_fs: 0; } }
+@media (min-width: 768px) { .bui-dialog--fullscreen-until-md { --bui-dialog-_fs: 0; } }
+@media (min-width: 992px) { .bui-dialog--fullscreen-until-lg { --bui-dialog-_fs: 0; } }
+@media (min-width: 1200px) { .bui-dialog--fullscreen-until-xl { --bui-dialog-_fs: 0; } }
+.bui-dialog.is-static-bump > .bui-dialog__panel { animation: bui-dialog-bump var(--bui-duration-slow) var(--bui-overlay-easing); }
+.bui-dialog.is-closing { animation: bui-overlay-fade-out var(--bui-overlay-duration) var(--bui-overlay-easing) forwards; }
+.bui-dialog.is-closing > .bui-dialog__panel { animation: bui-dialog-out var(--bui-overlay-duration) var(--bui-overlay-easing) forwards; }
+
+/* Drawer. A panel fixed to one edge of the scrim. start and end follow the writing direction (they swap in RTL); top and bottom do not. */
+.bui-drawer {
+    --bui-drawer-_size: var(--bui-drawer-size-md);
+    --bui-drawer-_dir: 1;
+    --bui-drawer-_from-x: calc(-100% * var(--bui-drawer-_dir));
+    --bui-drawer-_from-y: 0px;
+}
+.bui-drawer:dir(rtl) { --bui-drawer-_dir: -1; }
+.bui-drawer[open] {
+    display: block;
+    overflow: hidden;
+    animation: bui-overlay-fade-in var(--bui-overlay-duration) var(--bui-overlay-easing);
+}
+.bui-drawer__panel {
+    position: absolute;
+    inset-block: 0;
+    inset-inline-start: 0;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    inline-size: min(var(--bui-drawer-_size), 100%);
+    color: var(--bui-overlay-color);
+    background-color: var(--bui-overlay-bg);
+    border-inline-end: var(--bui-overlay-border-width) solid var(--bui-overlay-border-color);
+    box-shadow: var(--bui-overlay-shadow);
+}
+.bui-drawer__body { overflow-y: auto; min-block-size: 0; }
+.bui-drawer[open] > .bui-drawer__panel { animation: bui-drawer-in var(--bui-overlay-duration) var(--bui-overlay-easing); }
+.bui-drawer--start { --bui-drawer-_from-x: calc(-100% * var(--bui-drawer-_dir)); }
+.bui-drawer--end { --bui-drawer-_from-x: calc(100% * var(--bui-drawer-_dir)); }
+.bui-drawer--end > .bui-drawer__panel {
+    inset-inline: auto 0;
+    border-inline-end: 0;
+    border-inline-start: var(--bui-overlay-border-width) solid var(--bui-overlay-border-color);
+}
+.bui-drawer--top,
+.bui-drawer--bottom { --bui-drawer-_from-x: 0px; }
+.bui-drawer--top { --bui-drawer-_from-y: -100%; }
+.bui-drawer--bottom { --bui-drawer-_from-y: 100%; }
+.bui-drawer--top > .bui-drawer__panel,
+.bui-drawer--bottom > .bui-drawer__panel {
+    inset-inline: 0;
+    inline-size: auto;
+    max-block-size: min(var(--bui-drawer-_size), 100%);
+    border-inline-end: 0;
+}
+.bui-drawer--top > .bui-drawer__panel {
+    inset-block: 0 auto;
+    border-block-end: var(--bui-overlay-border-width) solid var(--bui-overlay-border-color);
+}
+.bui-drawer--bottom > .bui-drawer__panel {
+    inset-block: auto 0;
+    border-block-start: var(--bui-overlay-border-width) solid var(--bui-overlay-border-color);
+}
+.bui-drawer--sm { --bui-drawer-_size: var(--bui-drawer-size-sm); }
+.bui-drawer--md { --bui-drawer-_size: var(--bui-drawer-size-md); }
+.bui-drawer--lg { --bui-drawer-_size: var(--bui-drawer-size-lg); }
+.bui-drawer--xl { --bui-drawer-_size: var(--bui-drawer-size-xl); }
+.bui-drawer--no-backdrop { --bui-overlay-backdrop-bg: transparent; }
+.bui-drawer.is-static-bump > .bui-drawer__panel { animation: bui-dialog-bump var(--bui-duration-slow) var(--bui-overlay-easing); }
+.bui-drawer.is-closing { animation: bui-overlay-fade-out var(--bui-overlay-duration) var(--bui-overlay-easing) forwards; }
+.bui-drawer.is-closing > .bui-drawer__panel { animation: bui-drawer-out var(--bui-overlay-duration) var(--bui-overlay-easing) forwards; }
+
+/* Forced colors: the system replaces the scrim color with an opaque one, so the scrim is dropped and the panel border (a system color) outlines the panel. */
+@media (forced-colors: active) {
+    .bui-dialog,
+    .bui-drawer { background: transparent; }
+    .bui-dialog__panel,
+    .bui-drawer__panel { border-color: CanvasText; }
 }
 
 /* ---------------------------------------------------------------------

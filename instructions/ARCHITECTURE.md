@@ -113,6 +113,11 @@ Baset-UI/
 - صفحات المكونات الخمس تحمّل `playground.css` و`playground.js` وأيقونات الـ Extension في `<head>` (الأيقونات لأمثلة Input Group ومساعد كلمة المرور).
 - النمط المرجعي في [COMPONENT_DEVELOPMENT.md](COMPONENT_DEVELOPMENT.md) (قسم إضافات Task 12).
 
+### Dialog وDrawer وOverlay Manager (Task 13)
+- الكود في `assets/css/baset-ui.css` (قسم 6: Dialog وDrawer بين Close Button وForm Controls، مع Tokens `--bui-overlay-*` و`--bui-dialog-*` و`--bui-drawer-*` في الطبقة 3) و`assets/js/baset-ui.js` (Overlay Manager قبل `window.BUI = BUI`، والمكونان `dialog` و`drawer` مسجلان بعد `password-toggle`). لا ملف جديد في `assets/`. صفحتان في `documentation/components/` (`dialog.html` و`drawer.html`) مفعلتان في `nav.js`. مفتاح i18n جديد `overlay.loadError`.
+- **ملفان جديدان (خارج قائمة ملفات المهمة):** `tests/manual/overlays.html` (السبب: [TESTING.md](TESTING.md) يطلب Checklist يدوي لكل مكون، ومصفوفة الأحجام والأنماط والتداخل والمحتوى الديناميكي لا تتسع في صفحات التوثيق؛ ملف واحد للمكونين لأن Drawer يُفتح فوق Dialog وبالعكس) و`tests/manual/fixtures/overlay-content.html` (**مجلد جديد `tests/manual/fixtures/`**: مقطع HTML صغير بلا ملف CSS أو JS، يلزم لاختبار خيار `url` فعلياً، لأن `fetch` يحتاج عنواناً حقيقياً من نفس الأصل. Fixture معلن، لا يُشحن كمكون ولا يحمّله شيء سوى الصفحة اليدوية). **Fixtures معلنة** في رأس الصفحة: كل النصوص نص عينة.
+- **القرار: `<dialog>` الأصلي مقابل التنفيذ المخصص** موثق مع الأدلة في [COMPONENT_DEVELOPMENT.md](COMPONENT_DEVELOPMENT.md) (قسم إضافات Task 13).
+
 ### قرار المسارات في الصفحات المتداخلة
 - كل صفحة تضع `data-root="../../"` على `<html>`: المسار **من الصفحة نفسها** إلى جذر الموقع (مجلد `index.html`). يُقرأ في `docs.js` ويُبنى عليه كل رابط (Sidebar، Breadcrumb، Previous/Next، رابط الشعار).
 - إن غابت السمة يستنتج `docs.js` الجذر من مسار سكربت `docs.js` نفسه (دائماً ثلاثة مستويات تحت الجذر)، فتبقى الصفحة تعمل. السمة هي المصدر الأساسي لأنها صريحة ولا تعتمد على موضع السكربت.

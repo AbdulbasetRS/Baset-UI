@@ -1,6 +1,6 @@
 # معايير تطوير المكونات
 
-كل Component يتبع نفس المعمارية مع السماح باختلافات منطقية حسب طبيعته. (المنفذ حتى Task 12: Avatar وBadge وButton وButton Group وCard وCheckbox وClose Button وForm Controls وInput وList Group وProgress وRadio وSwitch. النمط المرجعي أدناه من Task 09، وTask 10 اتبعه.)
+كل Component يتبع نفس المعمارية مع السماح باختلافات منطقية حسب طبيعته. (المنفذ حتى Task 13: Avatar وBadge وButton وButton Group وCard وCheckbox وClose Button وDialog وDrawer وForm Controls وInput وList Group وProgress وRadio وSwitch. النمط المرجعي أدناه من Task 09، وTask 10 اتبعه.)
 
 ## قائمة قبل البدء
 - التأكد من وجود المكون في [COMPONENTS_REGISTRY.md](COMPONENTS_REGISTRY.md) أو إضافته.
@@ -114,3 +114,34 @@ const select = BUI.select.remote('#users', { perPage: 10 });
 - **JS اختياري (`password-toggle`):** يتبع نمط Task 10 (مسجل في `baset-ui.js`، `destroy()` يعيد النوع الأصلي ويزيل `aria-pressed`). الاسم الوصولي ثابت والحالة بـ `aria-pressed` (نمط Toggle Button)، فلا تبديل نص ولا اعتماد JS على الترجمة. الأيقونتان تتبدلان بـ CSS من الحالة بـ Selector أعلى من قاعدة الـ Extension، فلا يعرف الـ Core أسماء الأيقونات.
 - **Playground بـ Hooks:** Input يستعمل `beforeRender` (`BUI.destroy(frame)`) و`afterRender` (`BUI.init(frame)`)، وCheckbox يضبط `indeterminate` في `afterRender` ويعرض سطر `js` في Code Output. أول استخدام حقيقي للـ Hooks (اختُبر في Chromium).
 - **Fixture:** `tests/manual/forms.html` (انظر ARCHITECTURE.md).
+
+### إضافات Task 13 (Overlay Manager وDialog وDrawer)
+
+#### قرار: `<dialog>` الأصلي (`showModal`) بدل تنفيذ مخصص بـ `role="dialog"`
+**القرار: الأصلي.** القياس في Chromium 157 (Playwright، شريط تمرير حقيقي) والباقي من مواصفات المنصة (لم يُختبر Firefox ولا Safari في هذه البيئة):
+
+| المطلوب | الأصلي | ملاحظة |
+|---|---|---|
+| عزل الخلفية (`inert`/`aria-hidden`) | يوفره المتصفح لكل ما خارج الـ Dialog المفتوح | مقاس: `focus()` على عنصر خارجي يفشل، وكذلك على Dialog سفلي أثناء التداخل |
+| Esc يغلق الأعلى فقط | حدث `cancel` على الأعلى فقط | مقاس مع Dialog متداخل (Esc الأول يغلق B، الثاني A) |
+| Stack وترتيب الطبقات | الـ Top Layer بترتيب الفتح | لا حاجة لـ `z-index` (انظر الأثر أدناه) |
+| Focus Trap | التركيز لا يصل للصفحة، لكن Tab من آخر عنصر قد يخرج لواجهة المتصفح | أُضيف التفاف يدوي صغير (Tab وShift+Tab) على أعلى طبقة، مقاس |
+| إعادة التركيز | يعيده المتصفح لآخر عنصر مركّز | Safari لا يركّز الزر عند النقر، فيُخزَّن زر الفتح صراحة ويُعاد إليه |
+| Scroll Lock | **لا يوفره** | يوفره Overlay Manager (انظر أدناه) |
+| Static Backdrop | يتطلب اعتراض `cancel` | `preventDefault()` على `cancel` وحده لا يكفي في بعض إصدارات Chrome (تكرار Esc يغلق)، فيُمنع أيضاً `keydown` لـ Esc حين `keyboard: false`، وهذا مقاس |
+
+**الأثر المقبول:** عناصر الـ Top Layer تتجاوز `z-index`، فلا يُعيَّن `z-index` لـ Dialog/Drawer، وتبقى Tokens `--bui-z-*` لما ليس في الـ Top Layer. **خطر على المهام اللاحقة:** أي عنصر عائم يُضاف إلى `<body>` بـ `z-index` عادي (Toast في Task 15، Popover/Menu في Task 16) سيظهر **خلف** Dialog مفتوح؛ يجب أن يعمل في الـ Top Layer أيضاً (مثلاً Popover API أو `<dialog>` غير مشروط) أو يُحمَّل داخل الـ Dialog. ما يُرسم داخل الـ Dialog نفسه (قائمة داخل Dialog) يرث موقعه فلا يتأثر.
+
+#### Overlay Manager
+- مكدس عناصر `{ el, type, instance, release }` من الأسفل. **قفل التمرير واحد مشترك** (يبدأ عند أول طبقة ويُرفع عند آخر طبقة). `overflow: hidden` على `<html>`؛ لمنع الإزاحة: إن وُجد شريط تمرير فعلاً (`innerWidth - clientWidth > 0`) يُضبط `scrollbar-gutter: stable` فيبقى مكانه محجوزاً (لا يتحرك المحتوى ولا العناصر الثابتة، مقاس: عرض الـ body وموضع عنصر `position: fixed` وscrollY قبل/أثناء/بعد، في LTR وRTL، وفي صفحة قصيرة بلا شريط). **لا يُطبَّق `stable` بلا قياس** لأن `scrollbar-gutter: stable` على عنصر `overflow: hidden` يحجز المساحة حتى بلا شريط (مقاس) فيزيح الصفحة. حيث لا يُدعم `scrollbar-gutter` يُضاف Padding بنفس العرض على `<html>` (تتحرك العناصر الثابتة؛ مسار مكتوب وغير مختبر). **ثمن معروف:** الـ Scrim الثابت لا يغطي الشريط المحجوز (مقاس: محاولة تمديده بـ `inset` سالب لا ترسم فيه)، فيظهر بعرض الشريط بلا تعتيم على المنصات ذات الأشرطة الكلاسيكية؛ البديل (Padding) يعتم كل شيء لكنه يزيح العناصر الثابتة، واخترنا عدم الإزاحة لأنه المطلوب صراحة. الشريط الطافي (macOS وأجهزة اللمس) بعرض 0 فلا أثر.
+- **الأمان من التسرب:** `MutationObserver` على المستند يعمل فقط ما دام المكدس غير فارغ، ويسحب أي طبقة أُزيلت من DOM وهي مفتوحة ويرفع القفل (مختبر).
+- iOS: `overflow: hidden` على `<html>` هو الأسلوب المعتمد؛ iOS قديم قد يحتاج حيلة `position: fixed`، وهذا غير منفذ وغير مختبر.
+
+#### النمط
+- **الـ `<dialog>` نفسه هو الـ Scrim** (عنصر بحجم النافذة بلون `--bui-overlay-backdrop-bg`، و`::backdrop` الأصلي شفاف)، وأول ابن له `__panel` هو الصندوق المرئي. السبب: ألوان الـ Scrim تأتي من Tokens وراثة عادية (ليس `::backdrop` الذي لا يرث الخصائص المخصصة في المتصفحات الأقدم)، والنقر على الـ Scrim = النقر على `<dialog>` نفسه. إغلاق الـ Backdrop يتطلب أن يبدأ `pointerdown` على الـ Scrim أيضاً (سحب من النص إلى الخارج لا يغلق، مختبر).
+- **Flags لا نسخ:** `--bui-dialog-_fs` (0 أو 1) يتحكم بتحول ملء الشاشة (الحشوة والعرض الأقصى والارتفاع والحدّ والانحناء بـ `calc()`)، فصنف `--fullscreen-until-md` يبدّل رقماً واحداً داخل `min-width` (Mobile First). `--bui-drawer-_dir` (1 أو -1 بـ `:dir(rtl)`) يقلب اتجاه الانزلاق، والمواضع بخصائص منطقية.
+- **الإغلاق بحركة:** `is-closing` يشغّل حركة الخروج، ويُنتظر `Animation.finished` لكل الحركات الجارية (مع مهلة أمان) ثم يُستدعى `close()` الأصلي؛ المعالجة النهائية (رفع القفل وإعادة التركيز وحدث `close`) في حدث `close` الأصلي، فتعمل أيضاً حين يُستدعى `dialog.close()` مباشرة. مع `prefers-reduced-motion` تُصفَّر المدة فيُغلق فوراً (مقاس).
+- **`<form method="dialog">`:** يُعترض `submit` ويمر بـ `beforeclose` (`source: 'form'`) و`returnValue` من الزر. استدعاء `dialog.close()` الأصلي مباشرة يتخطى `beforeclose` (طبيعة المنصة).
+- **المحتوى الديناميكي:** `load` دالة أو `url` من نفس الأصل؛ `innerHTML` للنص الراجع (لمحتوى موثوق، موثق بتحذير). النص الإنجليزي لسطر الحالة نص HTML Binding الافتراضي، ولا يُترجَم إلا حين توجد لغة نشطة (خلاف ذلك يُرجع `translate` المفتاح نفسه، وهذا اكتُشف أثناء التنفيذ).
+- **Playground:** المعاينة زر فتح وحوار حقيقي (لا يمكن عرضه مفتوحاً مع بقاء عناصر التحكم متاحة لأنه Modal)، بـ Hooks `beforeRender` (`BUI.destroy(frame)`) و`afterRender` (`BUI.init(frame)`). مقاس الحوار من نافذة المتصفح لا من حاوية المعاينة.
+- **Fixture:** `tests/manual/overlays.html` (انظر ARCHITECTURE.md).

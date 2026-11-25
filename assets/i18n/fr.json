@@ -22,5 +22,8 @@
     },
     "form": {
         "showPassword": "Afficher le mot de passe"
+    },
+    "overlay": {
+        "loadError": "Le contenu n’a pas pu être chargé."
     }
 }

@@ -21,5 +21,8 @@
     },
     "form": {
         "showPassword": "Show password"
+    },
+    "overlay": {
+        "loadError": "The content could not be loaded."
     }
 }

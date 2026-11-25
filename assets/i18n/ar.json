@@ -25,5 +25,8 @@
     },
     "form": {
         "showPassword": "إظهار كلمة المرور"
+    },
+    "overlay": {
+        "loadError": "تعذر تحميل المحتوى."
     }
 }

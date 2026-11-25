@@ -2,6 +2,8 @@
 
 > الحالة: لا توجد أطر اختبار مثبتة. يوجد اختبار يدوي ذاتي التشغيل واحد: `tests/manual/core.html` (Task 05)، واختبار آلي بلا Dependencies لتطابق مفاتيح i18n: `node tests/i18n-keys.js` (Task 06)، وفحص الأيقونات: `node tools/build-icons.js --check` (Task 07: يتحقق من الأوزان الستة لكل أيقونة ومن أن الملفات المولَّدة حديثة). اختيار أداة اختبار آلية = إضافة Dependency تحتاج موافقة ([AI_RULES.md](AI_RULES.md)).
 
+> Task 13: صفحة الاختبار اليدوي `tests/manual/overlays.html` (مع Fixture `tests/manual/fixtures/overlay-content.html` لاختبار `url`، تحتاج http أو https). الاختبارات الآلية للسلوك نُفذت بمتصفح آلي خارج المستودع (Playwright/Chromium) ولا تُشحن لأنها تحتاج Dependency، وملخصها في CHANGELOG.
+
 ## المبدأ
 لا مهمة مكتملة دون اختبار فعلي، ويُذكر في التقرير ما اختُبر وكيف وما لم يُختبر.
 

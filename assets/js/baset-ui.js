@@ -1180,6 +1180,92 @@
     };
 
     /* ------------------------------------------------------------------ */
+    /* Overlay manager (Task 13)                                           */
+    /* ------------------------------------------------------------------ */
+
+    /*
+     * Keeps the stack of open overlays (Dialog and Drawer) and the one page scroll lock they share. The native <dialog> opened with
+     * showModal() already supplies the top layer, the inert page behind it and Esc on the top overlay only; this manager adds what it
+     * does not: the lock without layout shift, the order of the stack and cleanup when an open overlay is removed from the page.
+     * Entries are { el, type, instance, release }, bottom first.
+     */
+    var overlayStack = [];
+    var overlaySaved = null;     /* inline styles of <html> to restore while the scroll lock is on */
+    var overlayObserver = null;
+
+    /*
+     * overflow:hidden removes the page scrollbar, which would widen the page. When a scrollbar exists (innerWidth - clientWidth > 0)
+     * scrollbar-gutter:stable keeps its space reserved, so neither the content nor fixed elements move. Where scrollbar-gutter is not
+     * supported the same width is added as padding (fixed elements still move there). Overlay scrollbars (gap 0) need nothing.
+     */
+    function lockScroll() {
+        if (overlaySaved) return;
+        var root = document.documentElement;
+        var gap = Math.max(0, window.innerWidth - root.clientWidth);
+        overlaySaved = { overflow: root.style.overflow, gutter: root.style.scrollbarGutter, padding: root.style.paddingInlineEnd };
+        if (gap > 0) {
+            if (window.CSS && typeof window.CSS.supports === 'function' && window.CSS.supports('scrollbar-gutter', 'stable')) {
+                root.style.scrollbarGutter = 'stable';
+            } else {
+                root.style.paddingInlineEnd = ((parseFloat(window.getComputedStyle(root).paddingInlineEnd) || 0) + gap) + 'px';
+            }
+        }
+        root.style.overflow = 'hidden';
+        root.style.setProperty('--bui-scroll-lock-gap', gap + 'px');
+    }
+
+    function unlockScroll() {
+        if (!overlaySaved) return;
+        var root = document.documentElement;
+        root.style.overflow = overlaySaved.overflow;
+        root.style.scrollbarGutter = overlaySaved.gutter;
+        root.style.paddingInlineEnd = overlaySaved.padding;
+        root.style.removeProperty('--bui-scroll-lock-gap');
+        overlaySaved = null;
+    }
+
+    function overlayRemove(entry) {
+        var index = overlayStack.indexOf(entry);
+        if (index === -1) return;
+        overlayStack.splice(index, 1);
+        if (!overlayStack.length) {
+            unlockScroll();
+            if (overlayObserver) { overlayObserver.disconnect(); overlayObserver = null; }
+        }
+    }
+
+    /* An open overlay that was removed from the document is dropped from the stack, so the scroll lock cannot leak. */
+    function pruneOverlays() {
+        overlayStack.slice().forEach(function (entry) {
+            if (entry.el.isConnected) return;
+            overlayRemove(entry);
+            entry.release();
+        });
+    }
+
+    function overlayPush(entry) {
+        if (overlayStack.indexOf(entry) !== -1) return;
+        if (!overlayStack.length) lockScroll();
+        overlayStack.push(entry);
+        if (!overlayObserver && typeof window.MutationObserver === 'function') {
+            overlayObserver = new window.MutationObserver(pruneOverlays);
+            overlayObserver.observe(document.documentElement, { childList: true, subtree: true });
+        }
+    }
+
+    var overlay = {
+        /* The open overlay elements, bottom first. */
+        getStack: function () { return overlayStack.map(function (entry) { return entry.el; }); },
+        getTop: function () { return overlayStack.length ? overlayStack[overlayStack.length - 1].el : null; },
+        /* Asks every open overlay to close (top first). Returns how many accepted; a canceled beforeclose does not count. */
+        closeAll: function () {
+            var count = 0;
+            overlayStack.slice().reverse().forEach(function (entry) { if (entry.instance.close()) count += 1; });
+            return count;
+        }
+    };
+
+    /* ------------------------------------------------------------------ */
     /* Public namespace                                                    */
     /* ------------------------------------------------------------------ */
 
@@ -1200,7 +1286,8 @@
         utils: utils,
         log: log,
         theme: theme,
-        locale: locale
+        locale: locale,
+        overlay: overlay
     };
 
     window.BUI = BUI;
@@ -1456,6 +1543,359 @@
                 }
             };
         }
+    });
+
+    /*
+     * Dialog and Drawer (Task 13). One implementation for both: each is a native <dialog> opened with showModal() (see the Overlay manager
+     * above). The <dialog> is the full-screen scrim and its first child is the visible panel (.bui-{type}__panel), so a click on the
+     * scrim is a click on the <dialog> element itself. A pointerdown must also start there, so a drag that ends on the scrim is not a click.
+     * Markup: <dialog class="bui-dialog" aria-labelledby="t" data-bui-dialog> ... </dialog>; open it with
+     * <button data-bui-dialog-open="#id"> or BUI.dialog('#id').open(). data-bui-dismiss on a button inside closes the nearest overlay.
+     * Events (cancelable ones marked): bui:{type}:beforeopen*, open, beforeclose* (detail.source: api, dismiss, escape, backdrop, form), close, load, loaderror.
+     * They bubble, so a dialog nested in another dialog's markup also reaches the outer listeners: compare event.target.
+     */
+    var OVERLAY_DEFAULTS = { static: false, keyboard: true, focus: '', restoreFocus: true, url: '', load: null, loadOnce: true };
+    var OVERLAY_FOCUSABLE = 'a[href], area[href], button, input, select, textarea, summary, iframe, [tabindex], [contenteditable]';
+
+    function createOverlay(type, el, options, ctx) {
+        if (!el || el.tagName !== 'DIALOG' || typeof el.showModal !== 'function') {
+            throw new Error('BUI.' + type + ' needs a <dialog> element (and a browser that supports showModal()).');
+        }
+        var panel = el.querySelector(':scope > .bui-' + type + '__panel');
+        var bodySelector = '.bui-' + type + '__body';
+        var addedTabindex = false;
+        if (!panel) {
+            ctx.log.warn('The <dialog> has no direct child .bui-' + type + '__panel, so it will not be styled.');
+        } else if (!panel.hasAttribute('tabindex')) {
+            panel.setAttribute('tabindex', '-1');
+            addedTabindex = true;
+        }
+        if (!el.hasAttribute('aria-labelledby') && !el.hasAttribute('aria-label')) {
+            ctx.log.warn('The <dialog> has no accessible name: add aria-labelledby (the title id) or aria-label.');
+        }
+
+        var entry = null;
+        var isOpen = false;
+        var closing = false;
+        var destroyed = false;
+        var opener = null;
+        var closeSource = 'api';
+        var downOnScrim = false;
+        var timers = [];
+        var loadToken = 0;
+        var loaded = false;
+        var loading = false;
+        var savedNodes = null;
+
+        function later(fn, ms) {
+            var id = window.setTimeout(function () {
+                timers.splice(timers.indexOf(id), 1);
+                fn();
+            }, ms);
+            timers.push(id);
+            return id;
+        }
+
+        /* Calls done once the CSS animations running on the overlay (the scrim and the panel) have finished. */
+        function afterAnimations(done) {
+            var finished = false;
+            function finish() {
+                if (finished) return;
+                finished = true;
+                done();
+            }
+            later(finish, 2000);
+            if (typeof el.getAnimations !== 'function') { finish(); return; }
+            var running = el.getAnimations({ subtree: true }).filter(function (animation) {
+                return animation.effect && animation.effect.getComputedTiming().iterations !== Infinity;
+            });
+            if (!running.length) { finish(); return; }
+            Promise.all(running.map(function (animation) { return animation.finished.catch(function () {}); })).then(finish);
+        }
+
+        function focusables() {
+            return Array.prototype.filter.call(el.querySelectorAll(OVERLAY_FOCUSABLE), function (node) {
+                if (node.disabled || node.tabIndex < 0 || node.closest('[inert]')) return false;
+                return node.getClientRects().length > 0 && window.getComputedStyle(node).visibility !== 'hidden';
+            });
+        }
+
+        /* Keeps Tab inside the top overlay, so the focus never reaches the browser interface behind it. */
+        function trapTab(e) {
+            var top = overlayStack[overlayStack.length - 1];
+            if (!top || top.el !== el) return;
+            var list = focusables();
+            var active = document.activeElement;
+            if (!list.length) { e.preventDefault(); (panel || el).focus(); return; }
+            if (e.shiftKey && (active === list[0] || active === el || active === panel)) {
+                e.preventDefault();
+                list[list.length - 1].focus();
+            } else if (!e.shiftKey && active === list[list.length - 1]) {
+                e.preventDefault();
+                list[0].focus();
+            }
+        }
+
+        function restoreFocus() {
+            var target = opener;
+            opener = null;
+            if (options.restoreFocus && target && target.isConnected && typeof target.focus === 'function') {
+                target.focus({ preventScroll: true });
+            }
+        }
+
+        /* The overlay is closed (by close(), Esc, or any other call to the native close()): update the state and report it. */
+        function finalize() {
+            if (!isOpen && !closing) return;
+            isOpen = false;
+            closing = false;
+            el.classList.remove('is-closing');
+            overlayRemove(entry);
+            var related = opener;
+            restoreFocus();
+            ctx.trigger('close', { source: closeSource, returnValue: el.returnValue, relatedTarget: related });
+            closeSource = 'api';
+        }
+
+        function requestClose(source, returnValue) {
+            if (!isOpen || closing) return false;
+            if (!ctx.trigger('beforeclose', { source: source, relatedTarget: opener }, { cancelable: true })) return false;
+            closing = true;
+            closeSource = source;
+            el.classList.add('is-closing');
+            afterAnimations(function () {
+                if (destroyed || !closing) return;
+                if (el.open) { el.close(typeof returnValue === 'string' ? returnValue : undefined); } else { finalize(); }
+            });
+            return true;
+        }
+
+        /* A short bounce tells the user that a static overlay did not close on a click outside. */
+        function bump() {
+            el.classList.remove('is-static-bump');
+            void el.offsetWidth;
+            el.classList.add('is-static-bump');
+            afterAnimations(function () { el.classList.remove('is-static-bump'); });
+        }
+
+        /* ---- Dynamic content ---- */
+        function currentBody() { return panel ? panel.querySelector(bodySelector) : null; }
+
+        function emptyBody(body) {
+            BUI.destroy(body);
+            while (body.firstChild) body.removeChild(body.firstChild);
+        }
+
+        function showStatus(body, key, text, role) {
+            emptyBody(body);
+            var line = document.createElement('p');
+            line.className = 'bui-' + type + '__status';
+            line.setAttribute('role', role);
+            line.setAttribute('data-bui-i18n', key);
+            line.textContent = text;
+            body.appendChild(line);
+            /* Without an active language, translate() would return the key, so the English text above stays. */
+            if (locale.get()) applyBindings(line);
+        }
+
+        function fetchHtml(url) {
+            var parsed;
+            try { parsed = new window.URL(url, window.location.href); } catch (e) { return Promise.reject(new Error('Invalid URL "' + url + '".')); }
+            if (parsed.origin !== window.location.origin) return Promise.reject(new Error('Only same-origin URLs can be loaded.'));
+            return window.fetch(parsed.href, { credentials: 'same-origin', headers: { Accept: 'text/html' } }).then(function (response) {
+                if (!response.ok) throw new Error('HTTP ' + response.status);
+                return response.text();
+            });
+        }
+
+        function startLoad() {
+            var hasLoader = typeof options.load === 'function';
+            if ((!options.url && !hasLoader) || loading || (loaded && options.loadOnce)) return;
+            var body = currentBody();
+            if (!body) { ctx.log.warn('Dynamic content needs a .bui-' + type + '__body element.'); return; }
+            if (!savedNodes) {
+                savedNodes = document.createDocumentFragment();
+                while (body.firstChild) savedNodes.appendChild(body.firstChild);
+            }
+            var token = ++loadToken;
+            loading = true;
+            body.setAttribute('aria-busy', 'true');
+            showStatus(body, 'common.loading', 'Loading...', 'status');
+            var source;
+            try {
+                source = hasLoader ? Promise.resolve(options.load(body, ctx)) : fetchHtml(options.url);
+            } catch (e) {
+                source = Promise.reject(e);
+            }
+            source.then(function (result) {
+                if (destroyed || token !== loadToken) return;
+                emptyBody(body);
+                if (typeof result === 'string') { body.innerHTML = result; }
+                else if (result && result.nodeType) { body.appendChild(result); }
+                else if (result !== undefined && result !== null) { throw new TypeError('load() must resolve with an HTML string or a Node.'); }
+                loading = false;
+                loaded = true;
+                body.removeAttribute('aria-busy');
+                init(body);
+                if (locale.get()) applyBindings(body);
+                ctx.trigger('load', {});
+            }).catch(function (error) {
+                if (destroyed || token !== loadToken) return;
+                loading = false;
+                loaded = false;
+                body.removeAttribute('aria-busy');
+                showStatus(body, 'overlay.loadError', 'The content could not be loaded.', 'alert');
+                ctx.log.warn('The content could not be loaded: ' + (error && error.message ? error.message : error));
+                ctx.trigger('loaderror', { error: error });
+            });
+        }
+
+        function open(trigger) {
+            if (isOpen || closing || el.open) { ctx.log.debug('open() ignored: already open or closing.'); return false; }
+            var active = document.activeElement;
+            opener = trigger && trigger.nodeType === 1 ? trigger : (active && active !== document.body ? active : null);
+            if (!ctx.trigger('beforeopen', { relatedTarget: opener }, { cancelable: true })) { opener = null; return false; }
+            overlayPush(entry);
+            try {
+                el.showModal();
+            } catch (e) {
+                overlayRemove(entry);
+                opener = null;
+                ctx.log.error('open() failed: ' + (e && e.message ? e.message : e));
+                return false;
+            }
+            isOpen = true;
+            startLoad();
+            if (options.focus) {
+                var wanted = el.querySelector(options.focus);
+                if (wanted && typeof wanted.focus === 'function') wanted.focus();
+            }
+            if (document.activeElement === el && panel) panel.focus();
+            ctx.trigger('open', { relatedTarget: opener });
+            return true;
+        }
+
+        function onCancel(e) {
+            e.preventDefault();
+            if (options.keyboard) requestClose('escape');
+        }
+
+        function onKeydown(e) {
+            if (e.key === 'Escape' || e.key === 'Esc') {
+                /* Stopping the key itself (not only cancel) also defeats the browser's repeated-Esc close. A nested overlay owns its own Esc. */
+                if (!options.keyboard && e.target.closest('dialog') === el) e.preventDefault();
+            } else if (e.key === 'Tab') {
+                trapTab(e);
+            }
+        }
+
+        function onPointerDown(e) { downOnScrim = e.target === el; }
+
+        function onClick(e) {
+            var dismiss = e.target.closest ? e.target.closest('[data-bui-dismiss]') : null;
+            if (dismiss && dismiss.closest('dialog') === el) {
+                if (dismiss.tagName === 'A') e.preventDefault();
+                requestClose('dismiss');
+                return;
+            }
+            if (e.target === el && downOnScrim) {
+                if (options.static) bump(); else requestClose('backdrop');
+            }
+            downOnScrim = false;
+        }
+
+        /* <form method="dialog"> would close the dialog without beforeclose, so the submit is taken over. */
+        function onSubmit(e) {
+            var form = e.target;
+            if (!form || form.method !== 'dialog' || form.closest('dialog') !== el) return;
+            e.preventDefault();
+            requestClose('form', e.submitter && typeof e.submitter.value === 'string' ? e.submitter.value : undefined);
+        }
+
+        function onNativeClose() { finalize(); }
+
+        var instance = {
+            open: open,
+            close: function (returnValue) { return requestClose('api', returnValue); },
+            toggle: function () { return isOpen ? requestClose('api') : open(); },
+            isOpen: function () { return isOpen; },
+            destroy: function () {
+                destroyed = true;
+                loadToken += 1;
+                timers.splice(0).forEach(function (id) { window.clearTimeout(id); });
+                el.removeEventListener('cancel', onCancel);
+                el.removeEventListener('keydown', onKeydown);
+                el.removeEventListener('pointerdown', onPointerDown);
+                el.removeEventListener('click', onClick);
+                el.removeEventListener('submit', onSubmit);
+                el.removeEventListener('close', onNativeClose);
+                if (isOpen || closing) {
+                    /* Closes at once: no animation and no events, because the listeners of this instance are already gone. */
+                    isOpen = false;
+                    closing = false;
+                    el.classList.remove('is-closing');
+                    if (el.open) el.close();
+                    overlayRemove(entry);
+                    restoreFocus();
+                }
+                el.classList.remove('is-static-bump');
+                var body = currentBody();
+                if (savedNodes && body) {
+                    emptyBody(body);
+                    body.removeAttribute('aria-busy');
+                    body.appendChild(savedNodes);
+                }
+                savedNodes = null;
+                if (addedTabindex && panel) panel.removeAttribute('tabindex');
+            }
+        };
+
+        entry = {
+            el: el,
+            type: type,
+            instance: instance,
+            release: function () {
+                isOpen = false;
+                closing = false;
+                el.classList.remove('is-closing');
+                restoreFocus();
+            }
+        };
+
+        el.addEventListener('cancel', onCancel);
+        el.addEventListener('keydown', onKeydown);
+        el.addEventListener('pointerdown', onPointerDown);
+        el.addEventListener('click', onClick);
+        el.addEventListener('submit', onSubmit);
+        el.addEventListener('close', onNativeClose);
+        return instance;
+    }
+
+    register('dialog', {
+        defaults: OVERLAY_DEFAULTS,
+        create: function (el, options, ctx) { return createOverlay('dialog', el, options, ctx); }
+    });
+    /* BUI.modal is an alias of BUI.dialog (same function). Events, attributes and getInstance() use the name "dialog". */
+    BUI.modal = BUI.dialog;
+    register('drawer', {
+        defaults: OVERLAY_DEFAULTS,
+        create: function (el, options, ctx) { return createOverlay('drawer', el, options, ctx); }
+    });
+
+    /*
+     * Openers: <button data-bui-dialog-open="#id"> and <button data-bui-drawer-open="#id">. One delegated listener for the whole page
+     * (not per instance), so openers added later work without a call. It starts the instance if the target was not initialized yet.
+     */
+    document.addEventListener('click', function (e) {
+        var trigger = e.target && e.target.closest ? e.target.closest('[data-bui-dialog-open], [data-bui-drawer-open]') : null;
+        if (!trigger || trigger.disabled || trigger.getAttribute('aria-disabled') === 'true') return;
+        var type = trigger.hasAttribute('data-bui-dialog-open') ? 'dialog' : 'drawer';
+        var selector = trigger.getAttribute('data-bui-' + type + '-open');
+        var target = resolveElement(selector);
+        if (trigger.tagName === 'A') e.preventDefault();
+        if (!target) { log.warn(type, 'data-bui-' + type + '-open: target not found: "' + selector + '".'); return; }
+        var instance = getInstance(target, type) || BUI[type](target);
+        if (instance) instance.open(trigger);
     });
 
     /*

@@ -69,3 +69,6 @@ BUI.locale.apply(root);                              // يطبق HTML Binding ع
 
 ## مفاتيح Task 12
 أُضيفت مجموعة `form` إلى `en.json` و`ar.json` و`fr.json` معاً: `form.showPassword` (الاسم الوصولي لزر إظهار كلمة المرور في Input عبر `data-bui-i18n-attr="aria-label:form.showPassword"`). الاسم ثابت (الحالة بـ `aria-pressed`) فلا مفتاح "إخفاء". Form Controls وCheckbox وRadio وSwitch لا تضيف مفاتيح: النصوص من كاتب الصفحة. الاختبار: `node tests/i18n-keys.js` (13 مفتاحاً، ناجح).
+
+## مفاتيح Task 13
+أُضيفت مجموعة `overlay` إلى `en.json` و`ar.json` و`fr.json` معاً: `overlay.loadError` (رسالة فشل تحميل المحتوى الديناميكي في Dialog وDrawer، تُربط عبر `data-bui-i18n` على سطر الحالة). نص "Loading..." المؤقت يعيد استعمال `common.loading`. النص الإنجليزي المكتوب في سطر الحالة داخل JS هو نص HTML Binding الافتراضي (يراه المستخدم قبل تحميل أي لغة؛ لا تُطبَّق الترجمة إلا حين تكون لغة نشطة، وإلا أرجع `translate` المفتاح نفسه). الاختبار: `node tests/i18n-keys.js` (14 مفتاحاً، ناجح).

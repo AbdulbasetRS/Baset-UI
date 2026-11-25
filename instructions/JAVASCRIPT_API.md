@@ -28,12 +28,15 @@ BUI.locale.{use, t, get, getDirection, register, apply};    // Task 06، الت�
 BUI.avatar(el)  -> { isFallback, refresh, destroy }            // Task 10، اختياري، data-bui-avatar
 BUI.progress(el) -> { set, get, getPercent, refresh, destroy } // Task 10، اختياري، data-bui-progress
 BUI.passwordToggle(el) -> { show, hide, toggle, isVisible, destroy } // Task 12، اختياري، data-bui-password-toggle، الحدث bui:password-toggle:toggle
+BUI.dialog(el, options?) -> { open, close, toggle, isOpen, destroy }  // Task 13، data-bui-dialog، BUI.modal اسم مستعار
+BUI.drawer(el, options?) -> { open, close, toggle, isOpen, destroy }  // Task 13، data-bui-drawer
+BUI.overlay.{getStack, getTop, closeAll};                              // Task 13، Overlay Manager المشترك
 BUI.{camelCaseName}(target, options?)         // Factory يضيفه register()
 BUI.{camelCaseName}.{variant}(target, options?)
 ```
 
 ### مستقبلي (غير منفذ)
-خيار `locale` في `config` (لم يُنفذ في Task 06: انظر قرار INTERNATIONALIZATION.md)، `BUI.toast`، `BUI.modal`، `BUI.dataTable`، `BUI.select.*`، `instance.on/off`، `BUI.register` لمكونات Core نفسها (لا مكون منفذ).
+خيار `locale` في `config` (لم يُنفذ في Task 06: انظر قرار INTERNATIONALIZATION.md)، `BUI.toast`، `BUI.dataTable`، `BUI.select.*`، `instance.on/off`، `BUI.register` لمكونات Core نفسها (لا مكون منفذ).
 
 ## قواعد التصميم
 1. **Component Factory:** `BUI.{component}(target, options)` أو `BUI.{component}.{variant}(target, options)` يرجع Instance. اسم المكون kebab-case عند التسجيل (`date-picker`)، والـ Factory بصيغة camelCase (`BUI.datePicker`)، والسمة `data-bui-date-picker`، والحدث `bui:date-picker:*`.
@@ -62,3 +65,11 @@ BUI.{camelCaseName}.{variant}(target, options?)
 - Selector غير صالح في Helpers → تحذير وقيمة فارغة.
 
 قواعد Lifecycle والذاكرة والأخطاء في [COMPONENT_DEVELOPMENT.md](COMPONENT_DEVELOPMENT.md).
+
+## إضافات Task 13 (Overlay Manager وDialog وDrawer)
+- **Overlay Manager** (`BUI.overlay`) يحتفظ بمكدس الطبقات المفتوحة (Dialog وDrawer معاً) وبقفل تمرير واحد مشترك. `getStack()` عناصر الطبقات المفتوحة من الأسفل، `getTop()` الأعلى أو `null`، `closeAll()` يطلب إغلاق الكل من الأعلى ويرجع عدد من قبل (إلغاء `beforeclose` لا يُحسب). الدوال الداخلية (دفع الطبقة وسحبها) غير معلنة.
+- **الخيارات** (متطابقة في Dialog وDrawer، الأنواع من القيم الافتراضية): `static: false` و`keyboard: true` و`focus: ''` (Selector لعنصر التركيز الأولي) و`restoreFocus: true` و`url: ''` و`load: null` (دالة، JavaScript فقط) و`loadOnce: true`. المقابل في HTML: `data-bui-static` و`data-bui-keyboard` و`data-bui-focus` و`data-bui-restore-focus` و`data-bui-url` و`data-bui-load-once`.
+- **الطرق:** `open(trigger?)` و`close(returnValue?)` و`toggle()` ترجع بوليان (القبول)، و`isOpen()`، و`destroy()` (يغلق فوراً بلا حركة ولا أحداث، ويزيل كل المستمعات والمؤقتات، ويعيد محتوى الـ Body الأصلي، ويزيل `tabindex` الذي أضافه للـ Panel). العنصر غير `<dialog>`: خطأ في Console ويرجع `null`.
+- **الأحداث** `bui:dialog:*` و`bui:drawer:*`: `beforeopen` (قابل للإلغاء، `relatedTarget`) و`open` و`beforeclose` (قابل للإلغاء، `source` وهو `api` أو `dismiss` أو `escape` أو `backdrop` أو `form`) و`close` (`source` و`returnValue` و`relatedTarget`) و`load` و`loaderror` (`error`). تصعد (Bubble)، فمستمع على حوار أب يستقبل أحداث الحوار المتداخل في Markup ويقارن `event.target`. **قرار تسمية:** `beforeopen` وليس `before-open` (انظر NAMING_CONVENTIONS.md): هذا يعدّل ما كتب في بند الأحداث أعلاه (`before-*`) لهذين الحدثين، ويبقى `before-*` للأحداث متعددة الكلمات مستقبلاً.
+- **المحتوى الديناميكي:** `load(body, ctx)` يرجع نصاً (HTML، يُدرج بـ `innerHTML` فهو لمحتوى موثوق) أو Node أو Promise بأحدهما؛ و`url` عنوان من نفس الأصل فقط (غيره يُرفض بـ `loaderror`). أثناء التحميل: `aria-busy` على الـ Body وسطر حالة، وعند الفشل سطر `role="alert"` مترجم (`overlay.loadError`). بعد النجاح يُستدعى `BUI.init` على الـ Body.
+- **الفتح من HTML:** مستمع نقر واحد مفوّض على المستند (ليس لكل نسخة، فلا يُزال مع `destroy`) يخدم `data-bui-dialog-open` و`data-bui-drawer-open`، ويهيئ الهدف إن لم يكن مهيّأ، ويمرر زر الفتح كـ `relatedTarget`.
