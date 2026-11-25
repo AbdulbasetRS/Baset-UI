@@ -41,14 +41,17 @@ body { min-height: 100vh; display: flex; flex-direction: column; }
 .bui-docs-navbar__search { display: none; }
 .bui-docs-navbar__brand { flex: 1; min-width: 0; }
 .bui-docs-btn__extra { display: none; }
-.bui-docs-navbar__actions .bui-docs-btn, .bui-docs-navbar__actions .bui-docs-select { padding-inline: 0.45rem; font-size: 0.8rem; }
+.bui-docs-navbar__actions .bui-docs-select { padding-inline: 0.45rem; font-size: 0.8rem; }
+/* Task 14: the Navbar buttons are library Buttons (bui-btn). Below SM they get tighter padding so the row fits at 320px. */
+.bui-docs-navbar__actions .bui-btn { --bui-btn-padding-x-sm: 0.45rem; }
 @media (min-width: 576px) {
     .bui-docs-navbar { gap: var(--bui-space-3); padding-inline: var(--bui-space-3); }
     .bui-docs-navbar__search { display: block; }
     .bui-docs-navbar__brand { flex: none; }
     .bui-docs-btn__extra { display: inline; }
     .bui-docs-navbar__actions { gap: var(--bui-space-2); }
-    .bui-docs-navbar__actions .bui-docs-btn, .bui-docs-navbar__actions .bui-docs-select { padding-inline: 0.75rem; font-size: 0.875rem; }
+    .bui-docs-navbar__actions .bui-docs-select { padding-inline: 0.75rem; font-size: 0.875rem; }
+    .bui-docs-navbar__actions .bui-btn { --bui-btn-padding-x-sm: calc(var(--bui-space-2) + var(--bui-space-1)); /* the library default */ }
 }
 .bui-docs-btn {
     padding: 0.35rem 0.75rem; font: inherit; font-size: 0.875rem; cursor: pointer; text-decoration: none;
@@ -62,12 +65,9 @@ body { min-height: 100vh; display: flex; flex-direction: column; }
     color: var(--bui-color-text); background: var(--bui-color-bg);
     border: 1px solid var(--bui-color-border); border-radius: var(--bui-radius-md);
 }
-.bui-docs-navbar__toggle { padding: 0.5rem; background: none; border: 0; cursor: pointer; color: var(--bui-color-text); }
-.bui-docs-burger, .bui-docs-burger::before, .bui-docs-burger::after {
-    display: block; width: 1.25rem; height: 2px; background: currentColor; content: ""; position: relative;
-}
-.bui-docs-burger::before { position: absolute; top: -6px; }
-.bui-docs-burger::after { position: absolute; top: 6px; }
+/* Task 14: the toggle is a library icon Button; its two icons swap on aria-expanded (menu while closed, x while open). */
+.bui-docs-navbar__toggle[aria-expanded="true"] .bui-docs-navbar__icon-menu,
+.bui-docs-navbar__toggle[aria-expanded="false"] .bui-docs-navbar__icon-close { display: none; }
 
 /* Layout */
 .bui-docs-layout { flex: 1; display: block; position: relative; }
@@ -93,12 +93,9 @@ body { min-height: 100vh; display: flex; flex-direction: column; }
     color: var(--bui-color-text-muted); background: none; border: 0; border-radius: var(--bui-radius-md);
 }
 .bui-docs-nav-section__btn:hover { background: var(--bui-color-surface); }
-.bui-docs-nav-section__btn::after {
-    content: ""; width: 0.4rem; height: 0.4rem; flex: none;
-    border-right: 2px solid currentColor; border-bottom: 2px solid currentColor; /* physical on purpose: drawn shape, direction-independent */
-    transform: rotate(45deg); transition: transform 0.15s;
-}
-.bui-docs-nav-section__btn[aria-expanded="true"]::after { transform: rotate(-135deg); }
+/* Task 14: the fold arrow is a library icon (caret-down, not directional: no RTL mirroring). It turns upside down while the section is expanded. */
+.bui-docs-nav-section__icon { font-size: 0.875rem; transition: transform var(--bui-duration-fast); }
+.bui-docs-nav-section__btn[aria-expanded="true"] .bui-docs-nav-section__icon { transform: rotate(180deg); }
 .bui-docs-nav-list { list-style: none; margin: 0; padding: 0 0 0.25rem; }
 .bui-docs-nav-list[hidden] { display: none; }
 .bui-docs-nav-link {
@@ -129,9 +126,9 @@ a.bui-docs-nav-link:hover { background: var(--bui-color-surface); }
     .bui-docs-main { padding: var(--bui-space-5); }
 }
 /* Mobile First: the GitHub button is hidden below SM (576px) and shown from SM up. */
-.bui-docs-navbar__actions .bui-docs-btn:last-child { display: none; }
+.bui-docs-navbar__actions a.bui-btn { display: none; }
 @media (min-width: 576px) {
-    .bui-docs-navbar__actions .bui-docs-btn:last-child { display: inline-block; }
+    .bui-docs-navbar__actions a.bui-btn { display: inline-flex; }
 }
 @media (prefers-reduced-motion: reduce) { .bui-docs-sidebar { transition: none; } }
 
@@ -379,15 +376,13 @@ pre.bui-docs-code code { font: inherit; }
 
 /* ====================================================================
  * Task 07 widgets: icon catalog (grid, filters, details dialog). Docs-only, never part of the library.
- * The dialog is a native <dialog> until BUI.dialog exists.
+ * Task 14: the dialog is a library Dialog (BUI.dialog) and the buttons, fields, checkboxes and radios are library
+ * components; only the catalog layout below is docs-only. The drop-downs stay native selects (no Select component yet).
  * ==================================================================== */
 .bui-docs-icon-tools { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--bui-space-2) var(--bui-space-3); margin-block: var(--bui-space-3); }
 .bui-docs-icon-field { display: flex; flex-direction: column; gap: 0.25rem; min-width: 0; }
-.bui-docs-icon-field > label { font-size: 0.8125rem; font-weight: 700; color: var(--bui-color-text-muted); }
-.bui-docs-icon-field .bui-docs-input, .bui-docs-icon-field .bui-docs-select { width: 100%; min-height: 2.25rem; }
+.bui-docs-icon-field .bui-docs-select { width: 100%; min-height: 2.25rem; }
 .bui-docs-icon-field--check { justify-content: flex-end; }
-.bui-docs-icon-field--check > label { display: flex; align-items: center; gap: 0.5rem; min-height: 2.25rem; font-size: 0.875rem; font-weight: 400; color: var(--bui-color-text); }
-.bui-docs-icon-field--check input { width: 1.125rem; height: 1.125rem; }
 .bui-docs-icon-count { margin-block: 0 var(--bui-space-2); font-size: 0.875rem; color: var(--bui-color-text-muted); }
 
 .bui-docs-icon-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(6.5rem, 1fr)); gap: var(--bui-space-2); margin: 0 0 var(--bui-space-3); padding: 0; list-style: none; }
@@ -402,14 +397,7 @@ pre.bui-docs-code code { font: inherit; }
 .bui-docs-icon-btn:hover { background: var(--bui-color-surface); border-color: var(--bui-color-border-strong); }
 .bui-docs-icon-btn__name { max-width: 100%; font-size: 0.75rem; line-height: 1.25; text-align: center; overflow-wrap: anywhere; color: var(--bui-color-text-muted); }
 
-.bui-docs-icon-dialog {
-    width: min(40rem, calc(100vw - 1rem)); max-height: calc(100vh - 1rem); max-height: calc(100dvh - 1rem); padding: var(--bui-space-3); overflow: auto;
-    color: var(--bui-color-text); background: var(--bui-color-bg);
-    border: 1px solid var(--bui-color-border-strong); border-radius: var(--bui-radius-lg); box-shadow: var(--bui-shadow-xl);
-}
-.bui-docs-icon-dialog::backdrop { background: rgba(0, 0, 0, 0.55); }
-.bui-docs-icon-dialog__head { display: flex; align-items: center; justify-content: space-between; gap: var(--bui-space-2); margin-block-end: var(--bui-space-3); }
-.bui-docs-icon-dialog__title { margin: 0; font-size: 1.25rem; overflow-wrap: anywhere; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; direction: ltr; unicode-bidi: isolate; }
+.bui-docs-icon-dialog__title { font-size: 1.25rem; overflow-wrap: anywhere; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; direction: ltr; unicode-bidi: isolate; }
 .bui-docs-icon-dialog__preview {
     display: flex; align-items: center; justify-content: center; min-height: 6rem; margin-block-end: var(--bui-space-3);
     font-size: 2rem; background: var(--bui-color-surface); border: 1px solid var(--bui-color-border); border-radius: var(--bui-radius-md);
@@ -418,12 +406,11 @@ pre.bui-docs-code code { font: inherit; }
 .bui-docs-icon-fieldset > legend { padding: 0; margin-block-end: 0.25rem; font-size: 0.8125rem; font-weight: 700; color: var(--bui-color-text-muted); }
 .bui-docs-icon-weights { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--bui-space-2); }
 .bui-docs-icon-weight {
-    display: flex; flex-direction: column; align-items: center; gap: 0.25rem; min-height: 4.25rem; padding: 0.5rem 0.25rem; cursor: pointer;
-    font-size: 0.75rem; border: 1px solid var(--bui-color-border); border-radius: var(--bui-radius-md);
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.25rem; min-height: 4.25rem; padding: 0.5rem 0.25rem;
+    font-size: 1.25rem; border: 1px solid var(--bui-color-border); border-radius: var(--bui-radius-md);
 }
 .bui-docs-icon-weight:has(input:checked) { background: var(--bui-color-primary-subtle); border-color: var(--bui-color-primary); }
-.bui-docs-icon-weight:has(input:focus-visible) { outline: var(--bui-focus-ring-width) solid var(--bui-focus-ring-color); outline-offset: var(--bui-focus-ring-offset); }
-.bui-docs-icon-weight input { position: absolute; opacity: 0; width: 1px; height: 1px; margin: 0; pointer-events: none; }
+.bui-docs-icon-weight .bui-radio { font-size: 0.75rem; }
 .bui-docs-icon-controls { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--bui-space-2) var(--bui-space-3); margin-block-end: var(--bui-space-2); }
 .bui-docs-icon-note { margin: 0 0 var(--bui-space-3); font-size: 0.875rem; color: var(--bui-color-text-muted); }
 .bui-docs-icon-codebar {
@@ -440,7 +427,6 @@ pre.bui-docs-code code { font: inherit; }
 }
 .bui-docs-icon-code code { font: inherit; white-space: pre; }
 .bui-docs-icon-classes { margin: 0; font-size: 0.875rem; }
-@media (pointer: coarse) { .bui-docs-icon-dialog .bui-docs-btn { min-height: 2.75rem; min-width: 2.75rem; } }
 
 @media (min-width: 576px) {
     .bui-docs-icon-tools { grid-template-columns: repeat(2, minmax(0, 1fr)); }

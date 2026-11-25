@@ -3,7 +3,7 @@
 > الحالة (Task 07): **منفذ**. المصدر: Phosphor Icons 2.1.1 (MIT). التقنية: SVG Mask بالفئات. الملف: Extension (CSS فقط) `assets/css/extensions/baset-ui-icons.css`. التوثيق الموجه للمستخدمين: `documentation/advanced/icons.html` (كتالوج تفاعلي). الترخيص والإسناد: `THIRD_PARTY.md`.
 
 ## ممنوع Emojis
-في الوثائق والأمثلة والمكونات والتنقل والأزرار والتنبيهات والـ Empty States وأي واجهة. الأيقونات من المكتبة فقط. واجهة التوثيق الحالية (Navbar وSidebar) ما زالت بلا أيقونات (مؤشرات مرسومة بـ CSS)، واستبدالها مهمة لاحقة مستقلة.
+في الوثائق والأمثلة والمكونات والتنقل والأزرار والتنبيهات والـ Empty States وأي واجهة. الأيقونات من المكتبة فقط. منذ Task 14 يستعمل Navbar وSidebar أيقونات المكتبة (`list` و`x` و`caret-down`) بدل المؤشرات المرسومة بـ CSS، ويحمّل كل Page وقالبها و`index.html` ملف `baset-ui-icons.css` في `<head>` لهذا السبب.
 
 ## القرارات (Task 07، بموافقة المالك)
 1. **المصدر: Phosphor (MIT).** السبب: التسمية (`airplane-in-flight`) والأوزان الستة تطابقه حرفياً. الملفات تُنسخ مرة واحدة إلى `assets/icons/` ولا يُحمَّل شيء منه وقت التشغيل ولا يُعد Dependency. الأوزان: `solid` = "fill" في Phosphor.

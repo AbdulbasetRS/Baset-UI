@@ -4,6 +4,13 @@
 
 ## [Unreleased]
 
+### Changed (Task 14: كتالوج الأيقونات وShell التوثيق على مكونات المكتبة)
+- `documentation/advanced/icons.html`: تفاصيل الأيقونة في `BUI.dialog` (كان `<dialog>` أصلياً docs-only) مع تركيز أولي على الوزن المحدد وإعادة التركيز لزر الفتح؛ الأزرار وحقل البحث وCheckbox وRadio من المكتبة (`bui-btn` و`bui-input` و`bui-checkbox` و`bui-radio`)؛ بقيت القائمتان `<select>` بـ `bui-docs-select` (لا Select بعد).
+- `docs.js` و`docs.css` و`index.html`: زر القائمة بأيقونتي `list`/`x` تتبدلان بـ `aria-expanded`، وسهم طي الأقسام أيقونة `caret-down` تدور عند الفتح، بدل الرموز المرسومة بـ CSS (`bui-docs-burger` و`::after`)؛ أزرار Navbar (RTL وDark mode وGitHub) صارت `bui-btn` (الضغط يبدّل Variant من outline إلى solid).
+- إضافة `<link>` لـ `baset-ui-icons.css` إلى `<head>` 21 صفحة توثيق وقالب الصفحة و`index.html` (السبب: الـ Shell يحتاجه في كل صفحة).
+- `instructions/`: `ARCHITECTURE.md` (قسم Task 14) و`COMPONENTS_REGISTRY.md` و`ICONS_SYSTEM.md`.
+- لا تغيير في API المكتبة (`baset-ui.css`/`baset-ui.js`/i18n لم تُعدَّل). اختُبر في Chromium فقط: 2,432 تركيبة بلا Overflow أو أخطاء، وكيبورد الحوار، وتباين نص الحوار، و`tests/manual/core.html` 43/43. غير مختبر: قارئ شاشة، Safari/Firefox، لمس فعلي.
+
 ### Added (Task 13: Overlay Manager + Dialog + Drawer)
 - `assets/js/baset-ui.js` (85,789 بايت خام و20,244 gzip، كان 64,750 و15,029): **Overlay Manager** (`BUI.overlay.{getStack,getTop,closeAll}`) قبل `window.BUI = BUI`، والمكونان `dialog` و`drawer` مسجلان بعد `password-toggle`، والاسم المستعار `BUI.modal === BUI.dialog`، ومستمع نقر مفوّض واحد لـ `data-bui-dialog-open` و`data-bui-drawer-open`. قفل تمرير واحد مشترك بلا إزاحة، وتنظيف تلقائي إن أُزيلت طبقة مفتوحة من DOM.
 - `assets/css/baset-ui.css` (246,749 بايت خام و34,507 gzip، كان 235,063 و31,553): Dialog وDrawer في قسم 6 (بين Close Button وForm Controls)، وTokens `--bui-overlay-*` (مشتركة) و`--bui-dialog-*` و`--bui-drawer-size-*` في الطبقة 3.

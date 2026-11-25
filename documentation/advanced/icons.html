@@ -43,7 +43,7 @@
 <p>The initial set has <span data-icons-count></span> icons, each in six weights: <code>thin</code>, <code>light</code>, <code>regular</code>, <code>solid</code>, <code>bold</code> and <code>duotone</code>. When the weight class is left out, the weight is <code>light</code>. The artwork comes from <a href="https://phosphoricons.com" rel="noopener" target="_blank">Phosphor Icons</a> (MIT License, see <a href="#license">License</a>).</p>
 <div class="bui-docs-callout bui-docs-callout--note" role="note">
 <p class="bui-docs-callout__title">Note</p>
-<p>The catalog below uses a native <code>&lt;dialog&gt;</code> and docs-only controls (<code>bui-docs-btn</code>, <code>bui-docs-input</code>, <code>bui-docs-select</code>) because the library has no Dialog, Button or Input component yet. They are not part of the library and will be replaced by library components in a later task.</p>
+<p>The catalog below is built with library components: the details panel is a <a href="../components/dialog.html">Dialog</a> (<code>BUI.dialog</code>), and its buttons, text fields, checkboxes and radios are <a href="../components/button.html">Button</a>, <a href="../components/input.html">Input</a>, <a href="../components/checkbox.html">Checkbox</a> and <a href="../components/radio.html">Radio</a>. The two drop-downs still use a native <code>&lt;select&gt;</code> styled by the documentation site (<code>bui-docs-select</code>), because the library has no Select component yet.</p>
 </div>
 </section>
 
@@ -51,10 +51,10 @@
 <h2 id="catalog">Catalog</h2>
 <p>Search by name or keyword, filter by category, and choose the weight shown in the grid. Select an icon to open its details: all six weights, size, color, ready-to-copy HTML and the class names.</p>
 <div class="bui-docs-icon-tools">
-<div class="bui-docs-icon-field"><label for="icon-search">Search</label><input id="icon-search" class="bui-docs-input" type="search" autocomplete="off"></div>
-<div class="bui-docs-icon-field"><label for="icon-category">Category</label><select id="icon-category" class="bui-docs-select"><option value="">All categories</option></select></div>
-<div class="bui-docs-icon-field"><label for="icon-weight">Weight in the grid</label><select id="icon-weight" class="bui-docs-select"></select></div>
-<div class="bui-docs-icon-field bui-docs-icon-field--check"><label><input id="icon-directional" type="checkbox"> Directional only</label></div>
+<div class="bui-docs-icon-field"><label class="bui-form-label" for="icon-search">Search</label><input id="icon-search" class="bui-input" type="search" autocomplete="off"></div>
+<div class="bui-docs-icon-field"><label class="bui-form-label" for="icon-category">Category</label><select id="icon-category" class="bui-docs-select"><option value="">All categories</option></select></div>
+<div class="bui-docs-icon-field"><label class="bui-form-label" for="icon-weight">Weight in the grid</label><select id="icon-weight" class="bui-docs-select"></select></div>
+<div class="bui-docs-icon-field bui-docs-icon-field--check"><div class="bui-checkbox"><input class="bui-checkbox__input" id="icon-directional" type="checkbox"><label class="bui-checkbox__label" for="icon-directional">Directional only</label></div></div>
 </div>
 <p class="bui-docs-icon-count" id="icon-count" role="status" aria-live="polite"></p>
 <ul class="bui-docs-icon-grid" id="icon-grid" aria-label="Icons"></ul>
@@ -201,14 +201,14 @@ node tools/build-icons.js --check</code></pre>
 <div class="bui-docs-example">
 <div class="bui-docs-example__preview">
 <div class="bui-d-flex bui-items-center bui-gap-3">
-<button type="button" class="bui-docs-btn" aria-label="Close"><i class="bui-icon-x" aria-hidden="true"></i></button>
+<button type="button" class="bui-btn bui-btn--outline bui-btn--secondary bui-btn--icon" aria-label="Close"><i class="bui-icon-x" aria-hidden="true"></i></button>
 <i class="bui-icon-solid bui-icon-warning bui-icon-lg" style="color: var(--bui-color-warning)" role="img" aria-label="Warning"></i>
 </div>
 </div>
 </div>
-<p>The button is <code>bui-docs-btn</code>, a docs-only class: the library has no Button component yet.</p>
+<p>The button is a library <a href="../components/button.html">Button</a> with <code>bui-btn--icon</code>: the accessible name is on the button and the icon inside it is hidden.</p>
 <h3>Keyboard</h3>
-<p>The catalog items are buttons (Enter or Space opens the details). In the dialog, Tab and Shift+Tab stay inside it, arrow keys change the weight in the radio group, Esc closes it, and focus returns to the icon that opened it. This behavior is the native <code>&lt;dialog&gt;</code> behavior with <code>showModal()</code>.</p>
+<p>The catalog items are buttons (Enter or Space opens the details). The details open in a <code>BUI.dialog</code>: focus moves to the selected weight, Tab and Shift+Tab stay inside the dialog, the arrow keys change the weight in the radio group (they follow the reading direction in RTL), Esc and the close button close it, and focus returns to the icon that opened it. Everything behind the dialog is inert while it is open.</p>
 <h3>Contrast and forced colors</h3>
 <p>An icon has the contrast of the text color it takes. A meaningful icon needs 3:1 against its background (WCAG 1.4.11). Because the icon is a painted background, a forced-colors mode would hide it, so the stylesheet repaints icons with <code>CanvasText</code> there. Printing keeps the color (<code>print-color-adjust: exact</code>).</p>
 <h3>Screen reader</h3>
@@ -227,31 +227,35 @@ node tools/build-icons.js --check</code></pre>
         </div>
     </main>
 
-    <dialog class="bui-docs-icon-dialog" id="icon-dialog" aria-labelledby="icon-dialog-title">
-        <div class="bui-docs-icon-dialog__head">
-            <h2 id="icon-dialog-title" class="bui-docs-icon-dialog__title"></h2>
-            <button type="button" class="bui-docs-btn" id="icon-dialog-close">Close</button>
+    <dialog class="bui-dialog bui-dialog--lg bui-dialog--scrollable" id="icon-dialog" aria-labelledby="icon-dialog-title" data-bui-dialog data-bui-focus="#icon-dialog-weights input:checked">
+        <div class="bui-dialog__panel">
+            <div class="bui-dialog__header">
+                <h2 id="icon-dialog-title" class="bui-dialog__title bui-docs-icon-dialog__title"></h2>
+                <button type="button" class="bui-btn-close" data-bui-dismiss aria-label="Close"><i class="bui-icon-regular bui-icon-x" aria-hidden="true"></i></button>
+            </div>
+            <div class="bui-dialog__body">
+                <div class="bui-docs-icon-dialog__preview" aria-hidden="true"><i id="icon-dialog-preview"></i></div>
+                <fieldset class="bui-docs-icon-fieldset">
+                    <legend>Weight</legend>
+                    <div class="bui-docs-icon-weights" id="icon-dialog-weights"></div>
+                </fieldset>
+                <div class="bui-docs-icon-controls">
+                    <div class="bui-docs-icon-field"><label class="bui-form-label" for="icon-dialog-size">Size</label><select id="icon-dialog-size" class="bui-docs-select"></select></div>
+                    <div class="bui-docs-icon-field"><label class="bui-form-label" for="icon-dialog-color">Color</label><select id="icon-dialog-color" class="bui-docs-select"></select></div>
+                    <div class="bui-docs-icon-field bui-docs-icon-field--check"><div class="bui-checkbox"><input class="bui-checkbox__input" id="icon-dialog-flip" type="checkbox"><label class="bui-checkbox__label" for="icon-dialog-flip">Mirror in RTL</label></div></div>
+                    <div class="bui-docs-icon-field bui-docs-icon-field--check"><div class="bui-checkbox"><input class="bui-checkbox__input" id="icon-dialog-decorative" type="checkbox" checked><label class="bui-checkbox__label" for="icon-dialog-decorative">Decorative (aria-hidden)</label></div></div>
+                    <div class="bui-docs-icon-field"><label class="bui-form-label" for="icon-dialog-label">Accessible label</label><input id="icon-dialog-label" class="bui-input" type="text" disabled></div>
+                </div>
+                <p class="bui-docs-icon-note" id="icon-dialog-note"></p>
+                <div class="bui-docs-icon-codebar">
+                    <span class="bui-docs-icon-codebar__title">HTML</span>
+                    <button type="button" class="bui-btn bui-btn--outline bui-btn--secondary bui-btn--sm" id="icon-dialog-copy">Copy</button>
+                </div>
+                <pre class="bui-docs-icon-code" dir="ltr" tabindex="0" aria-label="HTML code"><code id="icon-dialog-code"></code></pre>
+                <p class="bui-docs-icon-classes">Classes: <code id="icon-dialog-name"></code></p>
+                <p class="bui-docs-sr-only" id="icon-dialog-live" role="status" aria-live="polite"></p>
+            </div>
         </div>
-        <div class="bui-docs-icon-dialog__preview" aria-hidden="true"><i id="icon-dialog-preview"></i></div>
-        <fieldset class="bui-docs-icon-fieldset">
-            <legend>Weight</legend>
-            <div class="bui-docs-icon-weights" id="icon-dialog-weights"></div>
-        </fieldset>
-        <div class="bui-docs-icon-controls">
-            <div class="bui-docs-icon-field"><label for="icon-dialog-size">Size</label><select id="icon-dialog-size" class="bui-docs-select"></select></div>
-            <div class="bui-docs-icon-field"><label for="icon-dialog-color">Color</label><select id="icon-dialog-color" class="bui-docs-select"></select></div>
-            <div class="bui-docs-icon-field bui-docs-icon-field--check"><label><input id="icon-dialog-flip" type="checkbox"> Mirror in RTL</label></div>
-            <div class="bui-docs-icon-field bui-docs-icon-field--check"><label><input id="icon-dialog-decorative" type="checkbox" checked> Decorative (aria-hidden)</label></div>
-            <div class="bui-docs-icon-field"><label for="icon-dialog-label">Accessible label</label><input id="icon-dialog-label" class="bui-docs-input" type="text" disabled></div>
-        </div>
-        <p class="bui-docs-icon-note" id="icon-dialog-note"></p>
-        <div class="bui-docs-icon-codebar">
-            <span class="bui-docs-icon-codebar__title">HTML</span>
-            <button type="button" class="bui-docs-btn bui-docs-copy" id="icon-dialog-copy">Copy</button>
-        </div>
-        <pre class="bui-docs-icon-code" dir="ltr" tabindex="0" aria-label="HTML code"><code id="icon-dialog-code"></code></pre>
-        <p class="bui-docs-icon-classes">Classes: <code id="icon-dialog-name"></code></p>
-        <p class="bui-docs-sr-only" id="icon-dialog-live" role="status" aria-live="polite"></p>
     </dialog>
 
     <script src="../../assets/js/baset-ui.js"></script>
@@ -320,21 +324,25 @@ node tools/build-icons.js --check</code></pre>
             weightSel.addEventListener('change', paintGrid);
             paintGrid(); filterGrid();
 
-            /* ---- Details dialog (native <dialog>; docs only until BUI.dialog exists) ---- */
-            var dlg = $('icon-dialog'), preview = $('icon-dialog-preview'), codeOut = $('icon-dialog-code'), live = $('icon-dialog-live');
+            /* ---- Details dialog (BUI.dialog, initialized from data-bui-dialog) ---- */
+            var dlg = $('icon-dialog'), dialogApi = BUI.getInstance(dlg, 'dialog') || BUI.dialog(dlg), preview = $('icon-dialog-preview'), codeOut = $('icon-dialog-code'), live = $('icon-dialog-live');
             var sizeSel = $('icon-dialog-size'), colorSel = $('icon-dialog-color'), flip = $('icon-dialog-flip'), deco = $('icon-dialog-decorative'), label = $('icon-dialog-label');
             var weightsBox = $('icon-dialog-weights'), note = $('icon-dialog-note');
             var state = { icon: null, weight: D.defaultWeight };
 
             SIZES.forEach(function (s) { var o = el('option', '', s[1]); o.value = s[0]; sizeSel.appendChild(o); });
             COLORS.forEach(function (c) { var o = el('option', '', c[1]); o.value = c[0]; colorSel.appendChild(o); });
+            /* Each tile is a library Radio (visible indicator, native arrow keys) under a preview of the weight. */
             var radios = {}, thumbs = {};
             D.weights.forEach(function (w) {
-                var lab = el('label', 'bui-docs-icon-weight');
-                var r = el('input'); r.type = 'radio'; r.name = 'icon-dialog-weight'; r.value = w;
+                var tile = el('div', 'bui-docs-icon-weight');
                 var i = el('i'); i.setAttribute('aria-hidden', 'true');
-                lab.appendChild(r); lab.appendChild(i); lab.appendChild(el('span', '', w));
-                weightsBox.appendChild(lab);
+                var wrap = el('div', 'bui-radio');
+                var r = el('input', 'bui-radio__input'); r.type = 'radio'; r.name = 'icon-dialog-weight'; r.value = w; r.id = 'icon-dialog-weight-' + w;
+                var lab = el('label', 'bui-radio__label', w); lab.setAttribute('for', r.id);
+                wrap.appendChild(r); wrap.appendChild(lab);
+                tile.appendChild(i); tile.appendChild(wrap);
+                weightsBox.appendChild(tile);
                 radios[w] = r; thumbs[w] = i;
                 r.addEventListener('change', function () { if (r.checked) { state.weight = w; render(); } });
             });
@@ -384,7 +392,7 @@ node tools/build-icons.js --check</code></pre>
                 live.textContent = '';
                 $('icon-dialog-copy').textContent = 'Copy';
                 render();
-                dlg.showModal();
+                dialogApi.open(opener);
             }
 
             grid.addEventListener('click', function (e) {
@@ -392,21 +400,14 @@ node tools/build-icons.js --check</code></pre>
                 if (b) open(b.getAttribute('data-icon'), b);
             });
             [sizeSel, colorSel, flip, deco, label].forEach(function (c) { c.addEventListener(c.type === 'checkbox' || c.tagName === 'SELECT' ? 'change' : 'input', render); });
-            $('icon-dialog-close').addEventListener('click', function () { dlg.close(); });
-            /* Click on the backdrop (the dialog element itself, outside its content box) closes it. */
-            dlg.addEventListener('click', function (e) {
-                if (e.target !== dlg) return;
-                var r = dlg.getBoundingClientRect();
-                if (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom) dlg.close();
-            });
 
             function legacyCopy(text) {
                 var ta = document.createElement('textarea');
                 ta.value = text; ta.setAttribute('readonly', ''); ta.style.position = 'fixed'; ta.style.opacity = '0';
-                dlg.appendChild(ta);
+                dlg.querySelector('.bui-dialog__panel').appendChild(ta);
                 var ok = false;
                 try { ta.select(); ok = document.execCommand('copy'); } catch (err) { ok = false; }
-                dlg.removeChild(ta);
+                ta.parentNode.removeChild(ta);
                 return ok;
             }
             $('icon-dialog-copy').addEventListener('click', function () {

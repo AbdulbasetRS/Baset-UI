@@ -22,6 +22,9 @@
  *      docs-only key bui-docs-dir. The controls follow the state through the bui:theme:change event and
  *      a MutationObserver on the dir attribute, so BUI.theme and BUI.locale stay the source of truth.
  *
+ *   7. Task 14: the shell icons (menu/close, section fold arrow) are library icons (baset-ui-icons.css must be linked in every page head),
+ *      and the Navbar buttons are library Buttons; a pressed toggle swaps bui-btn--outline for the solid variant.
+ *
  * Docs UI strings are English on purpose: the documentation site language is English
  * until a multilingual docs system is decided (COMPONENT_DOCUMENTATION.md). The shell is not translated
  * with BUI.locale (no data-bui-i18n attributes in it); the Internationalization page demonstrates BUI.locale.
@@ -150,15 +153,19 @@
         var header = el('header', 'bui-docs-navbar');
         header.setAttribute('role', 'banner');
 
-        var toggle = el('button', 'bui-docs-navbar__toggle');
+        var toggle = el('button', 'bui-docs-navbar__toggle bui-btn bui-btn--ghost bui-btn--secondary bui-btn--icon');
         toggle.type = 'button';
         toggle.id = 'bui-docs-sidebar-toggle';
         toggle.setAttribute('aria-controls', 'bui-docs-sidebar');
         toggle.setAttribute('aria-expanded', 'false');
         toggle.setAttribute('aria-label', 'Toggle navigation');
-        var burger = el('span', 'bui-docs-burger');
-        burger.setAttribute('aria-hidden', 'true');
-        toggle.appendChild(burger);
+        /* Library icons: the menu icon while the Sidebar is closed, the x icon while it is open (shown by CSS from aria-expanded). */
+        var iconMenu = el('i', 'bui-icon-regular bui-icon-list bui-docs-navbar__icon-menu');
+        iconMenu.setAttribute('aria-hidden', 'true');
+        var iconClose = el('i', 'bui-icon-regular bui-icon-x bui-docs-navbar__icon-close');
+        iconClose.setAttribute('aria-hidden', 'true');
+        toggle.appendChild(iconMenu);
+        toggle.appendChild(iconClose);
 
         var brand = el('a', 'bui-docs-navbar__brand', 'Baset-UI');
         brand.href = siteUrl('index.html');
@@ -180,19 +187,19 @@
             option.value = t.name;
             themeSelect.appendChild(option);
         });
-        var dirBtn = el('button', 'bui-docs-btn', 'RTL');
+        var dirBtn = el('button', 'bui-btn bui-btn--outline bui-btn--secondary bui-btn--sm', 'RTL');
         dirBtn.type = 'button';
         dirBtn.id = 'bui-docs-dir-toggle';
         dirBtn.setAttribute('aria-label', 'Right-to-left layout');
         dirBtn.setAttribute('aria-pressed', 'false');
-        var modeBtn = el('button', 'bui-docs-btn');
+        var modeBtn = el('button', 'bui-btn bui-btn--outline bui-btn--secondary bui-btn--sm');
         modeBtn.type = 'button';
         modeBtn.id = 'bui-docs-mode-toggle';
         modeBtn.setAttribute('aria-label', 'Dark mode');
         modeBtn.setAttribute('aria-pressed', 'false');
         modeBtn.appendChild(doc.createTextNode('Dark'));
         modeBtn.appendChild(el('span', 'bui-docs-btn__extra', ' mode'));
-        var gh = el('a', 'bui-docs-btn', 'GitHub');
+        var gh = el('a', 'bui-btn bui-btn--outline bui-btn--secondary bui-btn--sm', 'GitHub');
         gh.href = GITHUB_URL;
         gh.rel = 'noopener';
         gh.target = '_blank';
@@ -267,8 +274,13 @@
     sections.forEach(function (section, i) {
         var id = 'bui-docs-sec-' + i;
         var wrap = el('div', 'bui-docs-nav-section');
-        var btn = el('button', 'bui-docs-nav-section__btn', section.title);
+        var btn = el('button', 'bui-docs-nav-section__btn');
         btn.type = 'button';
+        btn.appendChild(el('span', '', section.title));
+        /* One library icon for both states: CSS turns it upside down while the section is expanded. */
+        var caret = el('i', 'bui-icon-bold bui-icon-caret-down bui-docs-nav-section__icon');
+        caret.setAttribute('aria-hidden', 'true');
+        btn.appendChild(caret);
         btn.setAttribute('aria-expanded', 'false');
         btn.setAttribute('aria-controls', id);
         var list = el('ul', 'bui-docs-nav-list');
@@ -342,9 +354,14 @@
 
     /* ---- Mode, theme and direction controls (docs shell only; the state lives in BUI.theme and <html dir>) ---- */
     var BUI = window.BUI;
+    /* A pressed toggle is the library Button's solid variant, an unpressed one its outline variant (aria-pressed carries the state for assistive technology). */
+    function setPressed(btn, pressed) {
+        btn.setAttribute('aria-pressed', String(pressed));
+        btn.classList.toggle('bui-btn--outline', !pressed);
+    }
     if (BUI && BUI.theme) {
         var syncTheme = function () {
-            modeBtn.setAttribute('aria-pressed', String(BUI.theme.getMode() === 'dark'));
+            setPressed(modeBtn, BUI.theme.getMode() === 'dark');
             themeSelect.value = BUI.theme.get();
         };
         modeBtn.addEventListener('click', function () { BUI.theme.toggleMode(); });
@@ -357,7 +374,7 @@
         if (window.console) console.warn('[BUI docs] BUI.theme is missing: load assets/js/baset-ui.js before docs.js.');
     }
 
-    var syncDir = function () { dirBtn.setAttribute('aria-pressed', String(root.getAttribute('dir') === 'rtl')); };
+    var syncDir = function () { setPressed(dirBtn, root.getAttribute('dir') === 'rtl'); };
     dirBtn.addEventListener('click', function () {
         var next = root.getAttribute('dir') === 'rtl' ? 'ltr' : 'rtl';
         root.setAttribute('dir', next);

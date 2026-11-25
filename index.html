@@ -8,6 +8,7 @@
 
     <!-- Core library stylesheet (design tokens + base) -->
     <link rel="stylesheet" href="assets/css/baset-ui.css">
+    <link rel="stylesheet" href="assets/css/extensions/baset-ui-icons.css">
     <link rel="stylesheet" href="assets/css/themes/ocean.css">
     <!-- Documentation shell only (not part of the library) -->
     <link rel="stylesheet" href="documentation/assets/css/docs.css">
@@ -28,9 +29,10 @@
     <a class="bui-docs-skip" href="#bui-docs-main">Skip to content</a>
 
     <header class="bui-docs-navbar" role="banner">
-        <button class="bui-docs-navbar__toggle" type="button" id="bui-docs-sidebar-toggle"
+        <button class="bui-docs-navbar__toggle bui-btn bui-btn--ghost bui-btn--secondary bui-btn--icon" type="button" id="bui-docs-sidebar-toggle"
                 aria-controls="bui-docs-sidebar" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="bui-docs-burger" aria-hidden="true"></span>
+            <i class="bui-icon-regular bui-icon-list bui-docs-navbar__icon-menu" aria-hidden="true"></i>
+            <i class="bui-icon-regular bui-icon-x bui-docs-navbar__icon-close" aria-hidden="true"></i>
         </button>
         <a class="bui-docs-navbar__brand" href="./">Baset-UI</a>
         <div class="bui-docs-navbar__search">
@@ -41,9 +43,9 @@
                 <option value="default">Default</option>
                 <option value="ocean">Ocean</option>
             </select>
-            <button type="button" class="bui-docs-btn" id="bui-docs-dir-toggle" aria-label="Right-to-left layout" aria-pressed="false">RTL</button>
-            <button type="button" class="bui-docs-btn" id="bui-docs-mode-toggle" aria-label="Dark mode" aria-pressed="false">Dark<span class="bui-docs-btn__extra"> mode</span></button>
-            <a class="bui-docs-btn" href="https://github.com/AbdulbasetRS/Baset-UI" rel="noopener" target="_blank">GitHub</a>
+            <button type="button" class="bui-btn bui-btn--outline bui-btn--secondary bui-btn--sm" id="bui-docs-dir-toggle" aria-label="Right-to-left layout" aria-pressed="false">RTL</button>
+            <button type="button" class="bui-btn bui-btn--outline bui-btn--secondary bui-btn--sm" id="bui-docs-mode-toggle" aria-label="Dark mode" aria-pressed="false">Dark<span class="bui-docs-btn__extra"> mode</span></button>
+            <a class="bui-btn bui-btn--outline bui-btn--secondary bui-btn--sm" href="https://github.com/AbdulbasetRS/Baset-UI" rel="noopener" target="_blank">GitHub</a>
         </div>
     </header>
 
