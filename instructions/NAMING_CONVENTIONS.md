@@ -62,3 +62,5 @@ Dialog وDrawer (Task 13) بلا اختصار معتمد، فتبقى بأسما
 
 ## استثناء موثق
 واجهة موقع التوثيق تستخدم البادئة `bui-docs-*` وهي خاصة بالموقع وليست API للمكتبة.
+
+Alert وToast (Task 15) بلا اختصار معتمد، فتبقى بأسمائها الكاملة: `bui-alert` (وModifiers الألوان `--primary|secondary|success|warning|danger|info`) وعناصره `bui-alert__icon/__content/__title/__description/__actions/__close`، و`bui-toast` (يُستعمل مع `bui-alert` على العنصر نفسه)، و`bui-toast-region` (الحاوية) و`bui-toast-stack` مع `bui-toast-stack--{top|bottom}-{start|center|end}`. Tokens `--bui-alert-*` و`--bui-toast-*`. الحالات `is-closing` (Alert وToast) و`is-relocating` (حاوية Toast أثناء انتقالها) تضعها السكربتات. الأحداث بلا شرطة كما في Dialog: `bui:alert:beforeclose|close` و`bui:toast:show|hide`. **قيمة `data-bui-dismiss` تحدد صاحب الإغلاق:** فارغة للطبقات (Dialog وDrawer، أو باسم نوعها)، و`alert` لـ Alert؛ مكون جديد يضيف قيمته الخاصة ولا يستعمل الفارغة. الأيقونات في toast أسماء kebab-case من مجموعة الأيقونات (خيار `icon`)، والنوع `error` اسم بديل لـ `danger` في `BUI.toast` فقط (لا صنف `bui-alert--error`).

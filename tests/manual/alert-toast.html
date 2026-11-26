@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<!--
+    Manual test page for Alert and Toast (Task 15).
+    Test fixture only (not shipped as a component, nothing loads it). Shows: every Alert color plain, and dismissible with actions; a long unbroken
+    text alert; an alert inside a Dialog (its dismiss button must not close the Dialog); Toast triggers for every type, every position, the queue
+    (a limit of 3 per position through BUI.config), persistent, with actions, update, clear, a toast over an open Dialog and Drawer, and an event log.
+    DECLARED FIXTURES (not real data): every title, message and label is sample text. No image, no network request.
+    The selects switch the theme, the mode and the direction of the whole page.
+-->
+<html lang="en" dir="ltr" data-bui-theme="default" data-bui-mode="light">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Alert and Toast manual test - Baset-UI</title>
+    <link rel="icon" href="data:,">
+    <link rel="stylesheet" href="../../assets/css/baset-ui.css">
+    <link rel="stylesheet" href="../../assets/css/extensions/baset-ui-icons.css">
+    <link rel="stylesheet" href="../../assets/css/themes/ocean.css">
+    <style>
+        body { padding: var(--bui-space-3); }
+        .t-bar, .t-row { display: flex; flex-wrap: wrap; gap: var(--bui-space-2); margin-block-end: var(--bui-space-3); }
+        .t-stack { display: grid; gap: var(--bui-space-2); margin-block-end: var(--bui-space-3); }
+        h2 { font-size: var(--bui-font-size-lg); }
+        #t-log { max-block-size: 10rem; overflow: auto; padding: var(--bui-space-2); background: var(--bui-color-surface); border: 1px solid var(--bui-color-border); font-family: monospace; font-size: .8rem; }
+    </style>
+</head>
+<body>
+    <h1>Alert and Toast</h1>
+    <div class="t-bar">
+        <label>Theme <select id="t-theme"><option value="default">default</option><option value="ocean">ocean</option></select></label>
+        <label>Mode <select id="t-mode"><option value="light">light</option><option value="dark">dark</option></select></label>
+        <label>Direction <select id="t-dir"><option value="ltr">ltr</option><option value="rtl">rtl</option></select></label>
+        <label>Language <select id="t-lang"><option value="">none (English fallback)</option><option value="en">en</option><option value="ar">ar</option><option value="fr">fr</option></select></label>
+    </div>
+
+    <h2>Alerts</h2>
+    <div class="t-stack" id="alerts-plain">
+<div class="bui-alert" role="status" data-case="primary-n"><i class="bui-icon-regular bui-icon-info bui-alert__icon" aria-hidden="true"></i><div class="bui-alert__content"><p class="bui-alert__title">Primary title</p><div class="bui-alert__description">Sample description text for the primary alert. <a href="#">Sample link</a></div></div></div>
+<div class="bui-alert bui-alert--secondary" role="status" data-case="secondary-n"><i class="bui-icon-regular bui-icon-bell bui-alert__icon" aria-hidden="true"></i><div class="bui-alert__content"><p class="bui-alert__title">Secondary title</p><div class="bui-alert__description">Sample description text for the secondary alert. <a href="#">Sample link</a></div></div></div>
+<div class="bui-alert bui-alert--success" role="status" data-case="success-n"><i class="bui-icon-regular bui-icon-check-circle bui-alert__icon" aria-hidden="true"></i><div class="bui-alert__content"><p class="bui-alert__title">Success title</p><div class="bui-alert__description">Sample description text for the success alert. <a href="#">Sample link</a></div></div></div>
+<div class="bui-alert bui-alert--info" role="status" data-case="info-n"><i class="bui-icon-regular bui-icon-info bui-alert__icon" aria-hidden="true"></i><div class="bui-alert__content"><p class="bui-alert__title">Info title</p><div class="bui-alert__description">Sample description text for the info alert. <a href="#">Sample link</a></div></div></div>
+<div class="bui-alert bui-alert--warning" role="alert" data-case="warning-n"><i class="bui-icon-regular bui-icon-warning bui-alert__icon" aria-hidden="true"></i><div class="bui-alert__content"><p class="bui-alert__title">Warning title</p><div class="bui-alert__description">Sample description text for the warning alert. <a href="#">Sample link</a></div></div></div>
+<div class="bui-alert bui-alert--danger" role="alert" data-case="danger-n"><i class="bui-icon-regular bui-icon-x-circle bui-alert__icon" aria-hidden="true"></i><div class="bui-alert__content"><p class="bui-alert__title">Danger title</p><div class="bui-alert__description">Sample description text for the danger alert. <a href="#">Sample link</a></div></div></div>
+    </div>
+    <h2>Alerts: dismissible with actions</h2>
+    <div class="t-stack" id="alerts-dismiss">
+<div class="bui-alert" role="status" data-case="primary-d-a"><i class="bui-icon-regular bui-icon-info bui-alert__icon" aria-hidden="true"></i><div class="bui-alert__content"><p class="bui-alert__title">Primary title</p><div class="bui-alert__description">Sample description text for the primary alert. <a href="#">Sample link</a></div><div class="bui-alert__actions"><button type="button" class="bui-btn bui-btn--sm bui-btn--outline bui-btn--secondary">Action</button><a href="#">A link</a></div></div><button type="button" class="bui-btn-close bui-alert__close" data-bui-dismiss="alert" aria-label="Close" data-bui-i18n-attr="aria-label:common.close"><i class="bui-icon-regular bui-icon-x" aria-hidden="true"></i></button></div>
+<div class="bui-alert bui-alert--secondary" role="status" data-case="secondary-d-a"><i class="bui-icon-regular bui-icon-bell bui-alert__icon" aria-hidden="true"></i><div class="bui-alert__content"><p class="bui-alert__title">Secondary title</p><div class="bui-alert__description">Sample description text for the secondary alert. <a href="#">Sample link</a></div><div class="bui-alert__actions"><button type="button" class="bui-btn bui-btn--sm bui-btn--outline bui-btn--secondary">Action</button><a href="#">A link</a></div></div><button type="button" class="bui-btn-close bui-alert__close" data-bui-dismiss="alert" aria-label="Close" data-bui-i18n-attr="aria-label:common.close"><i class="bui-icon-regular bui-icon-x" aria-hidden="true"></i></button></div>
+<div class="bui-alert bui-alert--success" role="status" data-case="success-d-a"><i class="bui-icon-regular bui-icon-check-circle bui-alert__icon" aria-hidden="true"></i><div class="bui-alert__content"><p class="bui-alert__title">Success title</p><div class="bui-alert__description">Sample description text for the success alert. <a href="#">Sample link</a></div><div class="bui-alert__actions"><button type="button" class="bui-btn bui-btn--sm bui-btn--outline bui-btn--secondary">Action</button><a href="#">A link</a></div></div><button type="button" class="bui-btn-close bui-alert__close" data-bui-dismiss="alert" aria-label="Close" data-bui-i18n-attr="aria-label:common.close"><i class="bui-icon-regular bui-icon-x" aria-hidden="true"></i></button></div>
+<div class="bui-alert bui-alert--info" role="status" data-case="info-d-a"><i class="bui-icon-regular bui-icon-info bui-alert__icon" aria-hidden="true"></i><div class="bui-alert__content"><p class="bui-alert__title">Info title</p><div class="bui-alert__description">Sample description text for the info alert. <a href="#">Sample link</a></div><div class="bui-alert__actions"><button type="button" class="bui-btn bui-btn--sm bui-btn--outline bui-btn--secondary">Action</button><a href="#">A link</a></div></div><button type="button" class="bui-btn-close bui-alert__close" data-bui-dismiss="alert" aria-label="Close" data-bui-i18n-attr="aria-label:common.close"><i class="bui-icon-regular bui-icon-x" aria-hidden="true"></i></button></div>
+<div class="bui-alert bui-alert--warning" role="alert" data-case="warning-d-a"><i class="bui-icon-regular bui-icon-warning bui-alert__icon" aria-hidden="true"></i><div class="bui-alert__content"><p class="bui-alert__title">Warning title</p><div class="bui-alert__description">Sample description text for the warning alert. <a href="#">Sample link</a></div><div class="bui-alert__actions"><button type="button" class="bui-btn bui-btn--sm bui-btn--outline bui-btn--secondary">Action</button><a href="#">A link</a></div></div><button type="button" class="bui-btn-close bui-alert__close" data-bui-dismiss="alert" aria-label="Close" data-bui-i18n-attr="aria-label:common.close"><i class="bui-icon-regular bui-icon-x" aria-hidden="true"></i></button></div>
+<div class="bui-alert bui-alert--danger" role="alert" data-case="danger-d-a"><i class="bui-icon-regular bui-icon-x-circle bui-alert__icon" aria-hidden="true"></i><div class="bui-alert__content"><p class="bui-alert__title">Danger title</p><div class="bui-alert__description">Sample description text for the danger alert. <a href="#">Sample link</a></div><div class="bui-alert__actions"><button type="button" class="bui-btn bui-btn--sm bui-btn--outline bui-btn--secondary">Action</button><a href="#">A link</a></div></div><button type="button" class="bui-btn-close bui-alert__close" data-bui-dismiss="alert" aria-label="Close" data-bui-i18n-attr="aria-label:common.close"><i class="bui-icon-regular bui-icon-x" aria-hidden="true"></i></button></div>
+    </div>
+    <h2>Alert: long unbroken text</h2>
+    <div class="t-stack">
+        <div class="bui-alert bui-alert--danger" role="alert" id="alert-long"><i class="bui-icon-regular bui-icon-x-circle bui-alert__icon" aria-hidden="true"></i><div class="bui-alert__content"><p class="bui-alert__title">Long title with a very long unbroken word TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT</p><div class="bui-alert__description">xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</div></div><button type="button" class="bui-btn-close bui-alert__close" data-bui-dismiss="alert" aria-label="Close"><i class="bui-icon-regular bui-icon-x" aria-hidden="true"></i></button></div>
+    </div>
+    <h2>Alert inside a Dialog (button also opens a Drawer)</h2>
+    <div class="t-row">
+        <button type="button" class="bui-btn" id="open-dialog" data-bui-dialog-open="#dlg">Open dialog</button>
+        <button type="button" class="bui-btn" id="open-drawer" data-bui-drawer-open="#drw">Open drawer</button>
+    </div>
+
+    <h2>Toast triggers</h2>
+    <div class="t-row" id="toast-types">
+        <button type="button" class="bui-btn bui-btn--success" data-act="success">success()</button>
+        <button type="button" class="bui-btn bui-btn--danger" data-act="error">error() with title</button>
+        <button type="button" class="bui-btn bui-btn--warning" data-act="warning">warning()</button>
+        <button type="button" class="bui-btn bui-btn--info" data-act="info">info()</button>
+        <button type="button" class="bui-btn" data-act="primary">primary</button>
+        <button type="button" class="bui-btn bui-btn--secondary" data-act="secondary">secondary</button>
+        <button type="button" class="bui-btn" data-act="persistent">persistent</button>
+        <button type="button" class="bui-btn" data-act="actions">with actions</button>
+        <button type="button" class="bui-btn" data-act="update">update</button>
+        <button type="button" class="bui-btn" data-act="noclose">not closable (6s)</button>
+        <button type="button" class="bui-btn" data-act="long">long text</button>
+        <button type="button" class="bui-btn bui-btn--outline" data-act="clear">clear()</button>
+    </div>
+    <h2>Toast positions and queue</h2>
+    <div class="t-row" id="toast-pos">
+        <button type="button" class="bui-btn bui-btn--outline" data-pos="top-start">top-start</button>
+        <button type="button" class="bui-btn bui-btn--outline" data-pos="top-center">top-center</button>
+        <button type="button" class="bui-btn bui-btn--outline" data-pos="top-end">top-end</button>
+        <button type="button" class="bui-btn bui-btn--outline" data-pos="bottom-start">bottom-start</button>
+        <button type="button" class="bui-btn bui-btn--outline" data-pos="bottom-center">bottom-center</button>
+        <button type="button" class="bui-btn bui-btn--outline" data-pos="bottom-end">bottom-end</button>
+        <button type="button" class="bui-btn" data-act="ten">10 toasts (top-end, persistent)</button>
+        <button type="button" class="bui-btn" data-act="all-positions">one in every position (persistent)</button>
+        <button type="button" class="bui-btn" data-act="max3">BUI.config max = 3</button>
+    </div>
+    <h2>Event log</h2>
+    <div id="t-log" aria-live="off"></div>
+
+    <dialog class="bui-dialog" id="dlg" aria-labelledby="dlg-t" data-bui-dialog>
+        <div class="bui-dialog__panel">
+            <div class="bui-dialog__header"><h2 class="bui-dialog__title" id="dlg-t">Dialog</h2><button type="button" class="bui-btn-close" data-bui-dismiss aria-label="Close"><i class="bui-icon-regular bui-icon-x" aria-hidden="true"></i></button></div>
+            <div class="bui-dialog__body">
+                <div class="bui-alert bui-alert--warning" role="alert" id="dlg-alert"><i class="bui-icon-regular bui-icon-warning bui-alert__icon" aria-hidden="true"></i><div class="bui-alert__content"><p class="bui-alert__title">Alert inside the dialog</p></div><button type="button" class="bui-btn-close bui-alert__close" data-bui-dismiss="alert" aria-label="Close"><i class="bui-icon-regular bui-icon-x" aria-hidden="true"></i></button></div>
+                <p>Sample dialog text.</p>
+            </div>
+            <div class="bui-dialog__footer"><button type="button" class="bui-btn" data-act="dialog-toast">Show toast</button><button type="button" class="bui-btn bui-btn--outline" data-bui-dialog-open="#dlg2">Open nested dialog</button></div>
+        </div>
+    </dialog>
+    <dialog class="bui-dialog" id="dlg2" aria-labelledby="dlg2-t" data-bui-dialog>
+        <div class="bui-dialog__panel">
+            <div class="bui-dialog__header"><h2 class="bui-dialog__title" id="dlg2-t">Nested dialog</h2><button type="button" class="bui-btn-close" data-bui-dismiss aria-label="Close"><i class="bui-icon-regular bui-icon-x" aria-hidden="true"></i></button></div>
+            <div class="bui-dialog__body"><p>Sample nested dialog text.</p></div>
+            <div class="bui-dialog__footer"><button type="button" class="bui-btn" data-act="dialog-toast">Show toast</button></div>
+        </div>
+    </dialog>
+    <dialog class="bui-drawer" id="drw" aria-labelledby="drw-t" data-bui-drawer>
+        <div class="bui-drawer__panel">
+            <div class="bui-drawer__header"><h2 class="bui-drawer__title" id="drw-t">Drawer</h2><button type="button" class="bui-btn-close" data-bui-dismiss aria-label="Close"><i class="bui-icon-regular bui-icon-x" aria-hidden="true"></i></button></div>
+            <div class="bui-drawer__body"><p>Sample drawer text.</p></div>
+            <div class="bui-drawer__footer"><button type="button" class="bui-btn" data-act="dialog-toast">Show toast</button></div>
+        </div>
+    </dialog>
+
+    <script src="../../assets/js/baset-ui.js"></script>
+    <script>
+        (function () {
+            var log = document.getElementById('t-log');
+            ['bui:toast:show', 'bui:toast:hide', 'bui:alert:beforeclose', 'bui:alert:close'].forEach(function (name) {
+                document.addEventListener(name, function (e) {
+                    var line = document.createElement('div');
+                    line.textContent = name + ' ' + JSON.stringify(e.detail || {});
+                    log.appendChild(line);
+                    log.scrollTop = log.scrollHeight;
+                });
+            });
+            var handles = {};
+            var acts = {
+                success: function () { BUI.toast.success('Sample success message.'); },
+                error: function () { BUI.toast.error({ title: 'Sample error title', message: 'Sample error message.' }); },
+                warning: function () { BUI.toast.warning('Sample warning message.'); },
+                info: function () { BUI.toast.info('Sample info message.'); },
+                primary: function () { BUI.toast.show({ type: 'primary', message: 'Sample primary message.' }); },
+                secondary: function () { BUI.toast.show({ type: 'secondary', message: 'Sample secondary message.' }); },
+                persistent: function () { BUI.toast.show({ type: 'info', title: 'Persistent', message: 'Stays until closed.', duration: 0 }); },
+                actions: function () { BUI.toast.show({ type: 'info', title: 'With actions', message: 'No duration given, so it is persistent.', actions: [{ label: 'Undo', onClick: function () { BUI.toast.success('Undone.'); } }, { label: 'Keep open', close: false }] }); },
+                update: function () {
+                    var t = BUI.toast.show({ type: 'info', title: 'Updating', message: 'Step 1', duration: 0, closable: false });
+                    var n = 1; var id = setInterval(function () { n += 1; if (n > 3) { clearInterval(id); t.update({ type: 'success', title: 'Done', message: 'Finished', duration: 3000, closable: true }); } else { t.update({ message: 'Step ' + n }); } }, 700);
+                },
+                noclose: function () { BUI.toast.show({ type: 'warning', message: 'Cannot be closed by the user.', closable: false, duration: 6000 }); },
+                long: function () { BUI.toast.show({ type: 'danger', title: 'Long title ' + 'T'.repeat(60), message: 'x'.repeat(200) }); },
+                clear: function () { BUI.toast.clear(); },
+                ten: function () { for (var i = 1; i <= 10; i += 1) { BUI.toast.show({ type: 'info', message: 'Toast ' + i, duration: 0 }); } },
+                'all-positions': function () { ['top-start', 'top-center', 'top-end', 'bottom-start', 'bottom-center', 'bottom-end'].forEach(function (p) { BUI.toast.show({ message: p, position: p, duration: 0 }); }); },
+                max3: function () { BUI.config({ toast: { max: 3 } }); },
+                'dialog-toast': function () { BUI.toast.warning({ title: 'Over the dialog', message: 'Esc closes this toast only.', duration: 0 }); }
+            };
+            document.addEventListener('click', function (e) {
+                var b = e.target.closest && e.target.closest('[data-act]');
+                if (b && acts[b.getAttribute('data-act')]) acts[b.getAttribute('data-act')]();
+                var p = e.target.closest && e.target.closest('[data-pos]');
+                if (p) BUI.toast.show({ type: 'success', message: 'Position ' + p.getAttribute('data-pos'), position: p.getAttribute('data-pos'), duration: 6000 });
+                var a = e.target.closest && e.target.closest('a[href="#"]');
+                if (a) e.preventDefault();
+            });
+            document.getElementById('t-theme').addEventListener('change', function (e) { BUI.theme.set(e.target.value); });
+            document.getElementById('t-mode').addEventListener('change', function (e) { BUI.theme.setMode(e.target.value); });
+            document.getElementById('t-dir').addEventListener('change', function (e) { document.documentElement.setAttribute('dir', e.target.value); });
+            document.getElementById('t-lang').addEventListener('change', function (e) { if (e.target.value) BUI.locale.use(e.target.value, { url: '../../assets/i18n/' + e.target.value + '.json' }); });
+        })();
+    </script>
+</body>
+</html>

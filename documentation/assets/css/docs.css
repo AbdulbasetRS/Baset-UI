@@ -200,6 +200,8 @@ a.bui-docs-nav-link:hover { background: var(--bui-color-surface); }
 .bui-docs-section:first-child > h2:first-child { padding-block-start: 0; border-block-start: 0; }
 .bui-docs-content h3 { margin: var(--bui-space-4) 0 var(--bui-space-2); font-size: 1.2rem; line-height: 1.35; }
 .bui-docs-content p, .bui-docs-content ul, .bui-docs-content ol { margin-block: 0 var(--bui-space-3); }
+/* The rule above is more specific than the library's own reset of the Alert title (a p element), so restore it for the previews. */
+.bui-docs-content .bui-alert__title { margin: 0; }
 .bui-docs-content li + li { margin-block-start: var(--bui-space-1); }
 .bui-docs-content a { color: var(--bui-color-primary); }
 .bui-docs-content :not(pre) > code {

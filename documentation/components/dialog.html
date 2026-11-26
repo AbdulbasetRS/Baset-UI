@@ -111,7 +111,7 @@
 <tr><td><code>bui-dialog--fullscreen-until-sm|md|lg|xl</code></td><td><code>&lt;dialog&gt;</code></td><td>Fills the screen below 576px, 768px, 992px or 1200px, and is a normal dialog from that width up (combine with a size class).</td></tr>
 <tr><td><code>bui-dialog__panel</code></td><td>first child</td><td>The visible box. Required, and it must be a direct child.</td></tr>
 <tr><td><code>bui-dialog__header</code>, <code>__title</code>, <code>__body</code>, <code>__footer</code></td><td>inside the panel</td><td>Optional parts. The footer aligns its buttons to the end.</td></tr>
-<tr><td><code>data-bui-dismiss</code></td><td>any control inside</td><td>Closes the nearest dialog when clicked.</td></tr>
+<tr><td><code>data-bui-dismiss</code></td><td>any control inside</td><td>Closes the nearest dialog when clicked. The value must be empty (or <code>dialog</code>); another value, such as <code>data-bui-dismiss="alert"</code> on an <a href="alert.html">Alert</a> inside the dialog, belongs to another component and does not close the dialog.</td></tr>
 <tr><td><code>data-bui-dialog-open="#id"</code></td><td>a button or link</td><td>Opens the dialog with that id. Works for dialogs added later.</td></tr>
 <tr><td><code>.is-closing</code>, <code>.is-static-bump</code></td><td>state (set by the script)</td><td>Do not set them yourself.</td></tr>
 </tbody>
@@ -373,7 +373,7 @@ dialog.destroy();              // closes at once, removes listeners</code></pre>
 <tr><td><code>getTop()</code></td><td>element or <code>null</code></td><td>The top one.</td></tr>
 <tr><td><code>closeAll()</code></td><td>number</td><td>Asks every open overlay to close, top first, and returns how many accepted.</td></tr>
 </tbody>
-</table><p>While an overlay is open the page gets <code>overflow: hidden</code> and the custom property <code>--bui-scroll-lock-gap</code> (the scrollbar width) on <code>&lt;html&gt;</code>. Where the browser supports <code>scrollbar-gutter</code> the scrollbar space is kept reserved so nothing moves, and the dark area stops short of that strip (the page color shows there). Elsewhere padding of the same width is added to <code>&lt;html&gt;</code>.</p>
+</table><p>While a dialog or drawer is open, the <a href="toast.html">Toast</a> region moves inside the topmost one (a modal dialog makes everything outside it inert, so toasts outside it could not be focused or clicked) and returns to <code>&lt;body&gt;</code> when none is open.</p><p>While an overlay is open the page gets <code>overflow: hidden</code> and the custom property <code>--bui-scroll-lock-gap</code> (the scrollbar width) on <code>&lt;html&gt;</code>. Where the browser supports <code>scrollbar-gutter</code> the scrollbar space is kept reserved so nothing moves, and the dark area stops short of that strip (the page color shows there). Elsewhere padding of the same width is added to <code>&lt;html&gt;</code>.</p>
                     </section>
 
                     <section class="bui-docs-section" aria-labelledby="responsive-behavior">

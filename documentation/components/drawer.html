@@ -105,7 +105,7 @@
 <tr><td><code>bui-drawer--sm|md|lg|xl</code></td><td><code>&lt;dialog&gt;</code></td><td>Width for start and end (18rem, 24rem (default), 36rem, 48rem), and the maximum height for top and bottom. Never larger than the screen.</td></tr>
 <tr><td><code>bui-drawer--no-backdrop</code></td><td><code>&lt;dialog&gt;</code></td><td>Removes the dark area. The page is still locked and inert, and a click outside still closes the drawer (unless static).</td></tr>
 <tr><td><code>bui-drawer__panel</code></td><td>first child</td><td>The visible box. Required, and it must be a direct child.</td></tr>
-<tr><td><code>data-bui-dismiss</code></td><td>any control inside</td><td>Closes the nearest drawer when clicked.</td></tr>
+<tr><td><code>data-bui-dismiss</code></td><td>any control inside</td><td>Closes the nearest drawer when clicked. The value must be empty (or <code>drawer</code>); another value, such as <code>"alert"</code>, belongs to another component and does not close the drawer.</td></tr>
 <tr><td><code>data-bui-drawer-open="#id"</code></td><td>a button or link</td><td>Opens the drawer with that id.</td></tr>
 </tbody>
 </table>

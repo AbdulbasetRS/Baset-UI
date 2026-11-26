@@ -449,7 +449,8 @@
     /* Config                                                              */
     /* ------------------------------------------------------------------ */
 
-    var config = { autoInit: true, observe: false, logLevel: 'warn' };
+    var TOAST_POSITIONS = ['top-start', 'top-center', 'top-end', 'bottom-start', 'bottom-center', 'bottom-end'];
+    var config = { autoInit: true, observe: false, logLevel: 'warn', toast: { position: 'top-end', duration: 5000, max: 5, closable: true } };
     var domReady = false;
     var observer = null;
 
@@ -465,6 +466,8 @@
                 log.warn('Core', 'Unknown config option "' + key + '". It was ignored.');
             } else if (key === 'logLevel') {
                 if (log.setLevel(value)) config.logLevel = value;
+            } else if (key === 'toast') {
+                setToastConfig(value);
             } else if (typeof value !== 'boolean') {
                 log.warn('Core', 'Config option "' + key + '" must be a boolean. The current value is kept.');
             } else {
@@ -473,6 +476,24 @@
         });
         applyObserver();
         return deepMerge(config);
+    }
+
+    /* BUI.config({ toast: { position, duration, max, closable } }): the defaults of BUI.toast.show(). Invalid values keep the current one. */
+    function setToastConfig(value) {
+        if (!isPlainObject(value)) { log.warn('Core', 'config.toast must be a plain object. The current value is kept.'); return; }
+        Object.keys(value).forEach(function (key) {
+            if (!Object.prototype.hasOwnProperty.call(config.toast, key)) {
+                log.warn('Core', 'Unknown toast option \"' + key + '\" in config. It was ignored.');
+                return;
+            }
+            var v = value[key];
+            var ok = key === 'position' ? TOAST_POSITIONS.indexOf(v) !== -1
+                : key === 'duration' ? (typeof v === 'number' && isFinite(v) && v >= 0)
+                : key === 'max' ? (typeof v === 'number' && isFinite(v) && v >= 1 && Math.floor(v) === v)
+                : typeof v === 'boolean';
+            if (ok) config.toast[key] = v;
+            else log.warn('Core', 'Invalid value for config.toast.' + key + '. The current value is kept.');
+        });
     }
 
     /* ------------------------------------------------------------------ */
@@ -1192,6 +1213,7 @@
     var overlayStack = [];
     var overlaySaved = null;     /* inline styles of <html> to restore while the scroll lock is on */
     var overlayObserver = null;
+    var overlayChanged = null;   /* set by the Toast manager (Task 15): called after the stack changes so the toast region can move into the top overlay */
 
     /*
      * overflow:hidden removes the page scrollbar, which would widen the page. When a scrollbar exists (innerWidth - clientWidth > 0)
@@ -1232,6 +1254,7 @@
             unlockScroll();
             if (overlayObserver) { overlayObserver.disconnect(); overlayObserver = null; }
         }
+        if (overlayChanged) overlayChanged();
     }
 
     /* An open overlay that was removed from the document is dropped from the stack, so the scroll lock cannot leak. */
@@ -1251,6 +1274,7 @@
             overlayObserver = new window.MutationObserver(pruneOverlays);
             overlayObserver.observe(document.documentElement, { childList: true, subtree: true });
         }
+        if (overlayChanged) overlayChanged();
     }
 
     var overlay = {
@@ -1793,7 +1817,10 @@
 
         function onClick(e) {
             var dismiss = e.target.closest ? e.target.closest('[data-bui-dismiss]') : null;
-            if (dismiss && dismiss.closest('dialog') === el) {
+            /* An empty value (or this overlay's own type) dismisses it. Other values belong to other components, for example
+               data-bui-dismiss="alert" on an Alert inside the dialog must not close the dialog. */
+            var dismissScope = dismiss ? dismiss.getAttribute('data-bui-dismiss') : null;
+            if (dismiss && dismiss.closest('dialog') === el && (dismissScope === '' || dismissScope === type)) {
                 if (dismiss.tagName === 'A') e.preventDefault();
                 requestClose('dismiss');
                 return;
@@ -1897,6 +1924,524 @@
         var instance = getInstance(target, type) || BUI[type](target);
         if (instance) instance.open(trigger);
     });
+
+
+    /* ------------------------------------------------------------------ */
+    /* Alert and Toast (Task 15)                                           */
+    /* ------------------------------------------------------------------ */
+
+    var ALERT_COLORS = ['primary', 'secondary', 'success', 'warning', 'danger', 'info'];
+    var ALERT_ICONS = { primary: 'info', secondary: 'bell', success: 'check-circle', warning: 'warning', danger: 'x-circle', info: 'info' };
+    var ALERT_TYPE_LABELS = {
+        primary: ['alert.typePrimary', 'Notice'], secondary: ['alert.typeSecondary', 'Notice'], success: ['alert.typeSuccess', 'Success'],
+        warning: ['alert.typeWarning', 'Warning'], danger: ['alert.typeDanger', 'Error'], info: ['alert.typeInfo', 'Information']
+    };
+
+    /* Calls done once the CSS animations running on el (and inside it) have finished, or after 2 s at most. Returns a cancel function. */
+    function afterElementAnimations(el, done) {
+        var finished = false;
+        var timer = null;
+        function finish() {
+            if (finished) return;
+            finished = true;
+            window.clearTimeout(timer);
+            done();
+        }
+        timer = window.setTimeout(finish, 2000);
+        if (typeof el.getAnimations === 'function') {
+            var running = el.getAnimations({ subtree: true }).filter(function (animation) {
+                return animation.effect && animation.effect.getComputedTiming().iterations !== Infinity;
+            });
+            if (running.length) {
+                Promise.all(running.map(function (animation) { return animation.finished.catch(function () {}); })).then(finish);
+            } else {
+                finish();
+            }
+        } else {
+            finish();
+        }
+        return function cancel() { finished = true; window.clearTimeout(timer); };
+    }
+
+    /* The English fallback is used until a language is active: translate() would return the key itself. */
+    function textOf(key, fallback) { return locale.get() ? translate(key) : fallback; }
+
+    /*
+     * Alert. A message in the page flow. CSS alone draws it; this component adds the dismissal (a leaving animation, then the element is
+     * removed) and a default role (alert for the danger and warning colors, status for the others) when the markup has none.
+     * Markup: <div class="bui-alert bui-alert--success" data-bui-alert> ... <button class="bui-btn-close" data-bui-dismiss="alert" aria-label="Close">.
+     * A click on [data-bui-dismiss="alert"] works without data-bui-alert: the instance is created on demand.
+     * Methods: close(), isClosed(), destroy(). Events: bui:alert:beforeclose (cancelable) and bui:alert:close (before the element is removed).
+     */
+    register('alert', {
+        defaults: {},
+        create: function (el, options, ctx) {
+            var closing = false;
+            var destroyed = false;
+            var cancelWait = null;
+            var addedRole = false;
+            var instance;
+
+            if (!el.hasAttribute('role')) {
+                var danger = el.classList.contains('bui-alert--danger') || el.classList.contains('bui-alert--warning');
+                el.setAttribute('role', danger ? 'alert' : 'status');
+                addedRole = true;
+            }
+
+            function close() {
+                if (destroyed || closing) return false;
+                if (!ctx.trigger('beforeclose', {}, { cancelable: true })) return false;
+                closing = true;
+                el.classList.add('is-closing');
+                cancelWait = afterElementAnimations(el, function () {
+                    cancelWait = null;
+                    if (destroyed) return;
+                    ctx.trigger('close', {});
+                    if (el.parentNode) el.parentNode.removeChild(el);
+                    instance.destroy();
+                });
+                return true;
+            }
+
+            instance = {
+                close: close,
+                isClosed: function () { return closing; },
+                destroy: function () {
+                    destroyed = true;
+                    if (cancelWait) { cancelWait(); cancelWait = null; }
+                    el.classList.remove('is-closing');
+                    if (addedRole) el.removeAttribute('role');
+                }
+            };
+            return instance;
+        }
+    });
+
+    document.addEventListener('click', function (e) {
+        var button = e.target && e.target.closest ? e.target.closest('[data-bui-dismiss="alert"]') : null;
+        if (!button || button.disabled || button.getAttribute('aria-disabled') === 'true') return;
+        var alertEl = button.closest('.bui-alert');
+        if (!alertEl) { log.warn('alert', 'data-bui-dismiss="alert" must be inside a .bui-alert element.'); return; }
+        if (button.tagName === 'A') e.preventDefault();
+        var instance = getInstance(alertEl, 'alert') || BUI.alert(alertEl);
+        if (instance) instance.close();
+    });
+
+    /*
+     * Toast manager. BUI.toast.show({ type, title, message, duration, position, closable, icon, actions }) returns a handle
+     * { id, element, close(), update(partial), isOpen() }. Shortcuts: success, error, warning, info. clear() closes everything.
+     *   - One live region (.bui-toast-region, role="region" + aria-live="polite") holds one stack per position. It is created when the
+     *     first toast is shown and removed when the last one has left. The first toast is added a moment after the region exists,
+     *     because assistive technology only announces changes in a region that is already rendered.
+     *   - The region is a manual popover (top layer). A modal <dialog> makes everything outside it inert, so while an overlay is open the
+     *     region is moved inside the top one (the Overlay Manager tells us); otherwise the toasts could not be focused or clicked.
+     *   - Each position has its own limit (config.toast.max visible, the rest wait in a queue). The pause on hover and on focus keeps the
+     *     remaining time. Focus is never moved to a toast; after a focused toast leaves, the focus goes back to where it came from.
+     * Events on the toast element: bui:toast:show and bui:toast:hide (detail.reason: timeout, api, close-button, escape, action, clear).
+     */
+    var toastItems = new Map();       /* id -> item */
+    var toastModels = {};             /* position -> { visible: [], queue: [] } */
+    var toastRegion = null;
+    var toastRegionReady = false;
+    var toastMountQueue = [];
+    var toastSeq = 0;
+    var toastPopover = typeof window.HTMLElement === 'function' && typeof window.HTMLElement.prototype.showPopover === 'function';
+
+    function toastModel(position) {
+        if (!toastModels[position]) toastModels[position] = { visible: [], queue: [], pending: [] };
+        return toastModels[position];
+    }
+
+    function toastIconName(value) { return typeof value === 'string' && /^[a-z][a-z0-9]*(-[a-z0-9]+)*$/.test(value); }
+
+    /* Merges the options of one call (or one update) into the settings of an item and validates each value. Returns false if nothing can be shown. */
+    function toastApply(settings, input, isUpdate) {
+        var defaults = config.toast;
+        if (!isUpdate || input.type !== undefined) {
+            var type = input.type === undefined ? (settings.type || 'info') : input.type;
+            if (type === 'error') type = 'danger';
+            if (ALERT_COLORS.indexOf(type) === -1) { log.warn('Toast', 'Invalid type "' + type + '". "info" is used.'); type = 'info'; }
+            settings.type = type;
+        }
+        ['title', 'message'].forEach(function (key) {
+            if (input[key] === undefined && (isUpdate || settings[key] !== undefined)) return;
+            var v = input[key];
+            if (v === undefined || v === null || v === false) v = '';
+            else if (typeof v === 'number') v = String(v);
+            else if (typeof v !== 'string') { log.warn('Toast', key + ' must be a string. It was ignored.'); v = ''; }
+            settings[key] = v;
+        });
+        if (!isUpdate || input.duration !== undefined) {
+            var d = input.duration;
+            if (d === undefined) {
+                /* A toast with actions does not disappear by itself unless a duration is given (WCAG 2.2.1: time to reach the action). */
+                d = settings.duration !== undefined ? settings.duration : (input.actions && input.actions.length ? 0 : defaults.duration);
+            } else if (typeof d !== 'number' || !isFinite(d) || d < 0) {
+                log.warn('Toast', 'duration must be a number >= 0 (0 keeps the toast until it is closed). The default is used.');
+                d = defaults.duration;
+            }
+            settings.duration = d;
+        }
+        if (!isUpdate) {
+            var position = input.position === undefined ? defaults.position : input.position;
+            if (TOAST_POSITIONS.indexOf(position) === -1) { log.warn('Toast', 'Invalid position "' + position + '". "' + defaults.position + '" is used.'); position = defaults.position; }
+            settings.position = position;
+        } else if (input.position !== undefined) {
+            log.warn('Toast', 'update(): the position cannot change. Close the toast and show a new one.');
+        }
+        if (!isUpdate || input.closable !== undefined) {
+            var closable = input.closable === undefined ? defaults.closable : input.closable;
+            if (typeof closable !== 'boolean') { log.warn('Toast', 'closable must be a boolean. The default is used.'); closable = defaults.closable; }
+            settings.closable = closable;
+        }
+        if (!isUpdate || input.icon !== undefined || input.type !== undefined) {
+            var icon = input.icon;
+            if (icon === undefined) icon = (isUpdate && settings.iconCustom) ? settings.icon : ALERT_ICONS[settings.type];
+            else if (icon === false) icon = false;
+            else if (!toastIconName(icon)) { log.warn('Toast', 'icon must be an icon name (for example "check-circle") or false. The default icon is used.'); icon = ALERT_ICONS[settings.type]; }
+            if (input.icon !== undefined) settings.iconCustom = true;
+            settings.icon = icon;
+        }
+        if (!isUpdate || input.actions !== undefined) {
+            var actions = [];
+            if (input.actions !== undefined && !Array.isArray(input.actions)) log.warn('Toast', 'actions must be an array. It was ignored.');
+            (Array.isArray(input.actions) ? input.actions : []).forEach(function (action) {
+                if (!isPlainObject(action) || typeof action.label !== 'string' || !action.label) { log.warn('Toast', 'An action needs a label string. It was ignored.'); return; }
+                if (action.onClick !== undefined && typeof action.onClick !== 'function') { log.warn('Toast', 'action.onClick must be a function. It was ignored.'); }
+                actions.push({ label: action.label, onClick: typeof action.onClick === 'function' ? action.onClick : null, close: action.close !== false });
+            });
+            settings.actions = actions;
+        }
+        return !!(settings.title || settings.message);
+    }
+
+    function toastTopHost() {
+        for (var i = overlayStack.length - 1; i >= 0; i--) {
+            var host = overlayStack[i].el;
+            if (host.isConnected && host.open) return host;
+        }
+        return document.body;
+    }
+
+    function toastPlaceRegion(target) {
+        if (!toastRegion || toastRegion.parentNode === target) return;
+        toastRegion.classList.add('is-relocating');
+        try { if (toastPopover && toastRegion.matches(':popover-open')) toastRegion.hidePopover(); } catch (e) {}
+        target.appendChild(toastRegion);
+        try { if (toastPopover) toastRegion.showPopover(); } catch (e) { log.debug('Toast', 'showPopover() failed: ' + (e && e.message ? e.message : e)); }
+        var region = toastRegion;
+        window.setTimeout(function () { region.classList.remove('is-relocating'); }, 60);
+    }
+
+    /* Called by the Overlay Manager after the stack changes. The stack is read in a microtask, when showModal() has already run. */
+    overlayChanged = function () {
+        if (!toastRegion) return;
+        Promise.resolve().then(function () { if (toastRegion) toastPlaceRegion(toastTopHost()); });
+    };
+
+    function toastEnsureRegion() {
+        if (toastRegion) return;
+        var region = document.createElement('div');
+        region.className = 'bui-toast-region';
+        region.setAttribute('role', 'region');
+        region.setAttribute('aria-live', 'polite');
+        region.setAttribute('aria-relevant', 'additions');
+        region.setAttribute('aria-atomic', 'false');
+        region.setAttribute('aria-label', textOf('toast.region', 'Notifications'));
+        region.setAttribute('data-bui-i18n-attr', 'aria-label:toast.region');
+        region.setAttribute('data-bui-toast-region', '');
+        if (toastPopover) region.setAttribute('popover', 'manual');
+        toastRegion = region;
+        toastRegionReady = false;
+        toastPlaceRegion(toastTopHost());
+        window.setTimeout(function () {
+            toastRegionReady = true;
+            var queue = toastMountQueue.splice(0);
+            queue.forEach(toastMount);
+        }, 50);
+    }
+
+    function toastRemoveRegionIfIdle() {
+        if (!toastRegion) return;
+        for (var pos in toastModels) {
+            if (toastModels[pos].visible.length || toastModels[pos].queue.length || toastModels[pos].pending.length) return;
+        }
+        if (toastMountQueue.length) return;
+        try { if (toastPopover && toastRegion.matches(':popover-open')) toastRegion.hidePopover(); } catch (e) {}
+        if (toastRegion.parentNode) toastRegion.parentNode.removeChild(toastRegion);
+        toastRegion = null;
+        toastRegionReady = false;
+        toastModels = {};
+    }
+
+    function toastStack(position) {
+        var existing = toastRegion.querySelector(':scope > .bui-toast-stack--' + position);
+        if (existing) return existing;
+        var stack = document.createElement('div');
+        stack.className = 'bui-toast-stack bui-toast-stack--' + position;
+        var index = TOAST_POSITIONS.indexOf(position);
+        var before = null;
+        Array.prototype.forEach.call(toastRegion.children, function (child) {
+            if (before) return;
+            var other = TOAST_POSITIONS.indexOf(child.getAttribute('data-bui-toast-position'));
+            if (other > index) before = child;
+        });
+        stack.setAttribute('data-bui-toast-position', position);
+        toastRegion.insertBefore(stack, before);
+        return stack;
+    }
+
+    function toastFill(item) {
+        var settings = item.settings;
+        var el = item.el;
+        el.className = 'bui-toast bui-alert bui-alert--' + settings.type;
+        el.setAttribute('role', settings.type === 'danger' ? 'alert' : 'status');
+        while (el.firstChild) el.removeChild(el.firstChild);
+        if (settings.icon) {
+            var icon = document.createElement('i');
+            icon.className = 'bui-icon-regular bui-icon-' + settings.icon + ' bui-alert__icon';
+            icon.setAttribute('aria-hidden', 'true');
+            el.appendChild(icon);
+        }
+        var content = document.createElement('div');
+        content.className = 'bui-alert__content';
+        /* Tells the type without relying on color or icon: read before the title. */
+        var label = ALERT_TYPE_LABELS[settings.type];
+        var typeText = document.createElement('span');
+        typeText.className = 'bui-visually-hidden';
+        typeText.setAttribute('data-bui-i18n', label[0]);
+        typeText.textContent = textOf(label[0], label[1]);
+        content.appendChild(typeText);
+        if (settings.title) {
+            var title = document.createElement('p');
+            title.className = 'bui-alert__title';
+            title.textContent = settings.title;
+            content.appendChild(title);
+        }
+        if (settings.message) {
+            var message = document.createElement('div');
+            message.className = 'bui-alert__description';
+            message.textContent = settings.message;
+            content.appendChild(message);
+        }
+        if (settings.actions.length) {
+            var actions = document.createElement('div');
+            actions.className = 'bui-alert__actions';
+            settings.actions.forEach(function (action) {
+                var button = document.createElement('button');
+                button.type = 'button';
+                button.className = 'bui-btn bui-btn--sm bui-btn--outline bui-btn--secondary';
+                button.textContent = action.label;
+                button.addEventListener('click', function (e) {
+                    if (action.onClick) {
+                        try { action.onClick(item.handle, e); } catch (err) { log.error('Toast', 'An action handler threw: ' + (err && err.message ? err.message : err)); }
+                    }
+                    if (action.close) toastClose(item, 'action');
+                });
+                actions.appendChild(button);
+            });
+            content.appendChild(actions);
+        }
+        el.appendChild(content);
+        if (settings.closable) {
+            var close = document.createElement('button');
+            close.type = 'button';
+            close.className = 'bui-btn-close bui-alert__close';
+            close.setAttribute('aria-label', textOf('common.close', 'Close'));
+            close.setAttribute('data-bui-i18n-attr', 'aria-label:common.close');
+            var x = document.createElement('i');
+            x.className = 'bui-icon-regular bui-icon-x';
+            x.setAttribute('aria-hidden', 'true');
+            close.appendChild(x);
+            close.addEventListener('click', function () { toastClose(item, 'close-button'); });
+            el.appendChild(close);
+        }
+    }
+
+    function toastStartTimer(item) {
+        window.clearTimeout(item.timer);
+        item.timer = null;
+        if (item.status !== 'shown' || item.settings.duration === 0 || item.hovered || item.focused) return;
+        item.startedAt = Date.now();
+        item.timer = window.setTimeout(function () { item.timer = null; toastClose(item, 'timeout'); }, Math.max(0, item.remaining));
+    }
+
+    function toastPauseTimer(item) {
+        if (item.timer === null) return;
+        window.clearTimeout(item.timer);
+        item.timer = null;
+        item.remaining = Math.max(0, item.remaining - (Date.now() - item.startedAt));
+    }
+
+    function toastMount(item) {
+        if (item.status !== 'pending') return;
+        var model = toastModel(item.settings.position);
+        var pendingIndex = model.pending.indexOf(item);
+        if (pendingIndex !== -1) model.pending.splice(pendingIndex, 1);
+        var stack = toastStack(item.settings.position);
+        var el = document.createElement('div');
+        el.setAttribute('data-bui-toast-id', item.id);
+        item.el = el;
+        toastFill(item);
+        if (locale.get()) locale.apply(el);
+        item.status = 'shown';
+        item.remaining = item.settings.duration;
+        model.visible.push(item);
+        /* The newest toast goes to the screen edge: first in a top stack, last in a bottom stack. */
+        if (item.settings.position.indexOf('top') === 0) stack.insertBefore(el, stack.firstChild); else stack.appendChild(el);
+
+        el.addEventListener('mouseenter', function () { item.hovered = true; toastPauseTimer(item); });
+        el.addEventListener('mouseleave', function () { item.hovered = false; toastStartTimer(item); });
+        el.addEventListener('focusin', function (e) {
+            var from = e.relatedTarget;
+            if (!item.focused && from && from.nodeType === 1 && !el.contains(from)) item.returnFocus = from;
+            item.focused = true;
+            toastPauseTimer(item);
+        });
+        el.addEventListener('focusout', function (e) {
+            if (e.relatedTarget && el.contains(e.relatedTarget)) return;
+            item.focused = false;
+            toastStartTimer(item);
+        });
+        el.addEventListener('keydown', function (e) {
+            if (e.key !== 'Escape' || !item.settings.closable) return;
+            /* Stops the keydown so an open Dialog does not treat this Esc as its own close request. */
+            e.preventDefault();
+            e.stopPropagation();
+            toastClose(item, 'escape');
+        });
+        toastStartTimer(item);
+        trigger(el, 'toast', 'show', { id: item.id, type: item.settings.type, position: item.settings.position });
+    }
+
+    function toastPlace(item) {
+        var model = toastModel(item.settings.position);
+        if (model.visible.length + model.pending.length < config.toast.max) {
+            item.status = 'pending';
+            model.pending.push(item);
+            toastEnsureRegion();
+            if (toastRegionReady) toastMount(item); else toastMountQueue.push(item);
+        } else {
+            item.status = 'queued';
+            model.queue.push(item);
+        }
+    }
+
+    function toastClose(item, reason) {
+        if (item.status === 'queued' || item.status === 'pending') {
+            var model = toastModel(item.settings.position);
+            var q = model.queue.indexOf(item);
+            if (q !== -1) model.queue.splice(q, 1);
+            var p = model.pending.indexOf(item);
+            if (p !== -1) model.pending.splice(p, 1);
+            var m = toastMountQueue.indexOf(item);
+            if (m !== -1) toastMountQueue.splice(m, 1);
+            item.status = 'closed';
+            toastItems.delete(item.id);
+            toastRemoveRegionIfIdle();
+            return true;
+        }
+        if (item.status !== 'shown') return false;
+        item.status = 'closing';
+        window.clearTimeout(item.timer);
+        item.timer = null;
+        item.el.classList.add('is-closing');
+        afterElementAnimations(item.el, function () { toastFinish(item, reason); });
+        return true;
+    }
+
+    function toastFinish(item, reason) {
+        var el = item.el;
+        var hadFocus = el.contains(document.activeElement);
+        trigger(el, 'toast', 'hide', { id: item.id, type: item.settings.type, position: item.settings.position, reason: reason });
+        var model = toastModel(item.settings.position);
+        var index = model.visible.indexOf(item);
+        if (index !== -1) model.visible.splice(index, 1);
+        var stack = el.parentNode;
+        if (stack) stack.removeChild(el);
+        if (stack && !stack.children.length && stack.parentNode) stack.parentNode.removeChild(stack);
+        item.status = 'closed';
+        item.el = null;
+        toastItems.delete(item.id);
+        if (hadFocus && item.returnFocus && item.returnFocus.isConnected && typeof item.returnFocus.focus === 'function') item.returnFocus.focus();
+        while (model.visible.length < config.toast.max && model.queue.length) {
+            var next = model.queue.shift();
+            next.status = 'pending';
+            toastMount(next);
+        }
+        toastRemoveRegionIfIdle();
+    }
+
+    function toastUpdate(item, partial) {
+        if (item.status === 'closing' || item.status === 'closed') return false;
+        if (!isPlainObject(partial)) { log.warn('Toast', 'update() needs a plain object.'); return false; }
+        var next = deepMerge(item.settings);
+        next.actions = item.settings.actions;
+        if (!toastApply(next, partial, true)) { log.warn('Toast', 'update() would leave the toast without a title and a message. Nothing changed.'); return false; }
+        var durationChanged = partial.duration !== undefined;
+        item.settings = next;
+        if (item.status === 'shown') {
+            toastFill(item);
+            if (locale.get()) locale.apply(item.el);
+            if (durationChanged) { item.remaining = next.duration; toastStartTimer(item); }
+        } else if (durationChanged) {
+            item.remaining = next.duration;
+        }
+        return true;
+    }
+
+    function toastShow(input) {
+        if (!isPlainObject(input)) { log.warn('Toast', 'show() needs a plain object, for example BUI.toast.show({ type: "success", message: "Saved" }).'); return null; }
+        var settings = {};
+        if (!toastApply(settings, input, false)) { log.warn('Toast', 'show() needs a title or a message.'); return null; }
+        toastSeq += 1;
+        var item = { id: 'bui-toast-' + toastSeq, settings: settings, status: 'pending', el: null, timer: null, startedAt: 0, remaining: settings.duration, hovered: false, focused: false, returnFocus: null, handle: null };
+        item.handle = {
+            id: item.id,
+            get element() { return item.el; },
+            close: function () { return toastClose(item, 'api'); },
+            update: function (partial) { return toastUpdate(item, partial); },
+            isOpen: function () { return item.status === 'shown' || item.status === 'queued' || item.status === 'pending'; }
+        };
+        toastItems.set(item.id, item);
+        toastPlace(item);
+        return item.handle;
+    }
+
+    function toastShortcut(type) {
+        return function (messageOrOptions, options) {
+            var input = {};
+            if (typeof messageOrOptions === 'string') {
+                input = isPlainObject(options) ? deepMerge(options) : {};
+                input.message = messageOrOptions;
+            } else if (isPlainObject(messageOrOptions)) {
+                input = deepMerge(messageOrOptions);
+                if (isPlainObject(options)) input = deepMerge(input, options);
+            } else {
+                log.warn('Toast', type + '() needs a message string or an options object.');
+                return null;
+            }
+            input.type = type;
+            if (isPlainObject(messageOrOptions) && Array.isArray(messageOrOptions.actions)) input.actions = messageOrOptions.actions;
+            if (isPlainObject(options) && Array.isArray(options.actions)) input.actions = options.actions;
+            return toastShow(input);
+        };
+    }
+
+    var toast = {
+        show: toastShow,
+        success: toastShortcut('success'),
+        error: toastShortcut('danger'),
+        warning: toastShortcut('warning'),
+        info: toastShortcut('info'),
+        /* Closes every toast (shown ones with the leaving animation) and drops the queued ones. Returns how many were affected. */
+        clear: function () {
+            var count = 0;
+            Array.from(toastItems.values()).forEach(function (item) { if (toastClose(item, 'clear')) count += 1; });
+            return count;
+        }
+    };
+    BUI.toast = toast;
 
     /*
      * Automatic init. While the document is loading it runs on DOMContentLoaded. If the script was

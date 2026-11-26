@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-bui-theme="default" data-bui-mode="light" data-root="../../">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Alert - Baset-UI Documentation</title>
+    <meta name="description" content="Alert: an inline message with semantic colors, an icon, a title, a description, actions and an optional dismiss button. The Toast reuses its shape.">
+    <!-- Empty icon: avoids a /favicon.ico 404 until the project has a real icon. -->
+    <link rel="icon" href="data:,">
+
+    <link rel="stylesheet" href="../../assets/css/baset-ui.css">
+    <link rel="stylesheet" href="../../assets/css/extensions/baset-ui-icons.css">
+    <link rel="stylesheet" href="../../assets/css/themes/ocean.css">
+    <link rel="stylesheet" href="../../documentation/assets/css/docs.css">
+    <link rel="stylesheet" href="../../documentation/assets/css/playground.css">
+    <script>
+        /* Prevents a flash of the wrong theme or mode. Same keys as BUI.theme (bui-theme, bui-mode). */
+        (function () {
+            var d = document.documentElement, t = null, m = null, r = null;
+            try { t = localStorage.getItem('bui-theme'); m = localStorage.getItem('bui-mode'); r = localStorage.getItem('bui-docs-dir'); } catch (e) {}
+            if (t && /^[a-z][a-z0-9]*(-[a-z0-9]+)*$/.test(t)) d.setAttribute('data-bui-theme', t);
+            if (m !== 'light' && m !== 'dark') m = window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+            d.setAttribute('data-bui-mode', m);
+            /* Documentation shell only: the saved direction of the RTL/LTR switcher. */
+            if (r === 'rtl' || r === 'ltr') d.setAttribute('dir', r);
+        })();
+    </script>
+</head>
+<body>
+    <main class="bui-docs-main" id="bui-docs-main" tabindex="-1">
+        <div class="bui-docs-page">
+            <div class="bui-docs-page__body">
+
+                <header class="bui-docs-page-header">
+                    <nav class="bui-docs-breadcrumb" aria-label="Breadcrumb" data-docs-breadcrumb hidden></nav>
+                    <h1>Alert</h1>
+                    <p class="bui-docs-lead">An inline message that stays in the page flow. Six semantic colors, an icon, a title, a description, actions and a dismiss button with a leaving animation.</p>
+                </header>
+
+                <div class="bui-docs-content">
+                    <section class="bui-docs-section" aria-labelledby="installation-include">
+                        <h2 id="installation-include">01. Installation &amp; Include</h2>
+
+<p>Alert is part of the Core files: <code>assets/css/baset-ui.css</code> draws it. <code>assets/js/baset-ui.js</code> is only needed for the dismiss button (<code>data-bui-dismiss="alert"</code>) and the <code>BUI.alert</code> API; an alert without a dismiss button is CSS only. The icon and the dismiss button use the icon Extension (<code>baset-ui-icons.css</code>), and the dismiss button is the <a href="close-button.html">Close Button</a>. Load order: Core CSS, icons Extension, optional Theme; Core JS at the end of <code>body</code>.</p>
+<pre class="bui-docs-code" data-lang="html"><code>&lt;link rel="stylesheet" href="assets/css/baset-ui.css"&gt;
+&lt;link rel="stylesheet" href="assets/css/extensions/baset-ui-icons.css"&gt;
+
+&lt;div class="bui-alert bui-alert--success" role="status"&gt;
+    &lt;i class="bui-icon-regular bui-icon-check-circle bui-alert__icon" aria-hidden="true"&gt;&lt;/i&gt;
+    &lt;div class="bui-alert__content"&gt;
+        &lt;p class="bui-alert__title"&gt;Saved&lt;/p&gt;
+        &lt;div class="bui-alert__description"&gt;Your changes were saved.&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;button type="button" class="bui-btn-close bui-alert__close" data-bui-dismiss="alert" aria-label="Close"
+        data-bui-i18n-attr="aria-label:common.close"&gt;&lt;i class="bui-icon-regular bui-icon-x" aria-hidden="true"&gt;&lt;/i&gt;&lt;/button&gt;
+&lt;/div&gt;
+
+&lt;script src="assets/js/baset-ui.js"&gt;&lt;/script&gt;</code></pre>
+<div class="bui-docs-callout bui-docs-callout--note" role="note">
+<p class="bui-docs-callout__title">Note</p>
+<p>The Toast (<a href="toast.html">Toast page</a>) is this same alert shown in a floating stack by <code>BUI.toast</code>. Changing the <code>--bui-alert-*</code> tokens restyles both.</p>
+</div>
+
+                    </section>
+
+                    <section class="bui-docs-section" aria-labelledby="customize">
+                        <h2 id="customize">02. Customize</h2>
+
+<p>Every option below is a real class or attribute documented in section 04. Pressing the dismiss button removes the alert after its leaving animation; change any option to bring it back. The Responsive Preview width, Light/Dark and RTL/LTR switches apply to the preview box only.</p>
+<div data-docs-playground="alert"></div>
+
+                    </section>
+
+                    <section class="bui-docs-section" aria-labelledby="default">
+                        <h2 id="default">03. Default</h2>
+
+<p>The default alert uses the primary color. Without a color modifier it is the same as <code>bui-alert--primary</code>.</p>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<div class="bui-alert" role="status">
+<i class="bui-icon-regular bui-icon-info bui-alert__icon" aria-hidden="true"></i>
+<div class="bui-alert__content">
+  <p class="bui-alert__title">Alert title</p>
+  <div class="bui-alert__description">A short description of what happened.</div></div>
+</div>
+</div>
+</div>
+
+                    </section>
+
+                    <section class="bui-docs-section" aria-labelledby="variants-options">
+                        <h2 id="variants-options">04. Variants &amp; Options</h2>
+
+<h3>Structure</h3>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Alert parts</caption>
+<thead><tr><th scope="col">Class</th><th scope="col">Element</th><th scope="col">Description</th></tr></thead>
+<tbody>
+<tr><td><code>bui-alert</code></td><td><code>div</code></td><td>The container. Give it a <code>role</code> (see section 08).</td></tr>
+<tr><td><code>bui-alert__icon</code></td><td><code>i</code> (icon)</td><td>Optional. A decorative icon from the library, <code>aria-hidden="true"</code>. Colored with the accent.</td></tr>
+<tr><td><code>bui-alert__content</code></td><td><code>div</code></td><td>Holds the title, the description and the actions. Takes the remaining width and wraps long text.</td></tr>
+<tr><td><code>bui-alert__title</code></td><td><code>p</code> or a heading</td><td>Optional. Semibold. Use a real heading element (with the right level) when the alert is a section of the page.</td></tr>
+<tr><td><code>bui-alert__description</code></td><td><code>div</code></td><td>Optional. Links inside keep the text color and are underlined.</td></tr>
+<tr><td><code>bui-alert__actions</code></td><td><code>div</code></td><td>Optional. A wrapping row of buttons or links under the text.</td></tr>
+<tr><td><code>bui-alert__close</code></td><td><code>button.bui-btn-close</code></td><td>Optional dismiss button. Add <code>data-bui-dismiss="alert"</code> and an <code>aria-label</code>.</td></tr>
+</tbody>
+</table>
+<h3>Colors</h3>
+<p>The color modifier sets the accent: the start edge, the border, the fill and the icon. Text stays on the normal text color, so contrast does not depend on the accent.</p>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Alert colors</caption>
+<thead><tr><th scope="col">Class</th><th scope="col">Typical use</th><th scope="col">Suggested icon</th><th scope="col">Suggested role</th></tr></thead>
+<tbody>
+<tr><td><code>bui-alert--primary</code> (default)</td><td>Neutral notice</td><td><code>info</code></td><td><code>status</code></td></tr>
+<tr><td><code>bui-alert--secondary</code></td><td>Low emphasis note</td><td><code>bell</code></td><td><code>status</code></td></tr>
+<tr><td><code>bui-alert--success</code></td><td>Completed action</td><td><code>check-circle</code></td><td><code>status</code></td></tr>
+<tr><td><code>bui-alert--info</code></td><td>Helpful information</td><td><code>info</code></td><td><code>status</code></td></tr>
+<tr><td><code>bui-alert--warning</code></td><td>Something needs attention</td><td><code>warning</code></td><td><code>alert</code></td></tr>
+<tr><td><code>bui-alert--danger</code></td><td>An error or a blocking problem</td><td><code>x-circle</code></td><td><code>alert</code></td></tr>
+</tbody>
+</table>
+<h3>Attributes and options</h3>
+<p><code>BUI.alert</code> has no JavaScript options. These attributes control the behavior:</p>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Alert attributes</caption>
+<thead><tr><th scope="col">Name</th><th scope="col">Type</th><th scope="col">Default</th><th scope="col">HTML attribute</th><th scope="col">Description</th></tr></thead>
+<tbody>
+<tr><td>dismiss</td><td>string</td><td>-</td><td><code>data-bui-dismiss="alert"</code></td><td>On a button inside the alert: closes the nearest <code>.bui-alert</code>. Works without <code>data-bui-alert</code>; the instance is created on the first click.</td></tr>
+<tr><td>init</td><td>boolean</td><td>-</td><td><code>data-bui-alert</code></td><td>Starts the component at page load (<code>BUI.init</code>). Needed only to add the default <code>role</code> or to use the API on an element that is never dismissed from the page.</td></tr>
+<tr><td>role</td><td>string</td><td><code>alert</code> for danger and warning, <code>status</code> otherwise</td><td><code>role</code></td><td>Set by the component only when the element has no <code>role</code> and was initialized. Writing it yourself is always allowed.</td></tr>
+</tbody>
+</table>
+<h3>Tokens</h3>
+<p>Component tokens (layer 3, themeable): <code>--bui-alert-padding-x</code>, <code>--bui-alert-padding-y</code>, <code>--bui-alert-gap</code>, <code>--bui-alert-radius</code>, <code>--bui-alert-border-width</code>, <code>--bui-alert-accent-width</code>, <code>--bui-alert-color</code>, <code>--bui-alert-font-size</code>, <code>--bui-alert-line-height</code>, <code>--bui-alert-title-font-weight</code>, <code>--bui-alert-icon-size</code>, <code>--bui-alert-duration</code>, <code>--bui-alert-easing</code>. Colors come from the semantic color tokens through the modifiers, so a Theme restyles every alert.</p>
+
+                    </section>
+
+                    <section class="bui-docs-section" aria-labelledby="examples">
+                        <h2 id="examples">05. Examples</h2>
+
+<h3>Colors</h3>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<div class="bui-d-grid bui-gap-2">
+<div class="bui-alert" role="status">
+<i class="bui-icon-regular bui-icon-info bui-alert__icon" aria-hidden="true"></i>
+<div class="bui-alert__content">
+  <p class="bui-alert__title">Primary</p>
+  <div class="bui-alert__description">A neutral notice.</div></div>
+</div>
+<div class="bui-alert bui-alert--secondary" role="status">
+<i class="bui-icon-regular bui-icon-bell bui-alert__icon" aria-hidden="true"></i>
+<div class="bui-alert__content">
+  <p class="bui-alert__title">Secondary</p>
+  <div class="bui-alert__description">A low emphasis note.</div></div>
+</div>
+<div class="bui-alert bui-alert--success" role="status">
+<i class="bui-icon-regular bui-icon-check-circle bui-alert__icon" aria-hidden="true"></i>
+<div class="bui-alert__content">
+  <p class="bui-alert__title">Success</p>
+  <div class="bui-alert__description">The profile was saved.</div></div>
+</div>
+<div class="bui-alert bui-alert--info" role="status">
+<i class="bui-icon-regular bui-icon-info bui-alert__icon" aria-hidden="true"></i>
+<div class="bui-alert__content">
+  <p class="bui-alert__title">Information</p>
+  <div class="bui-alert__description">A new version is available.</div></div>
+</div>
+<div class="bui-alert bui-alert--warning" role="alert">
+<i class="bui-icon-regular bui-icon-warning bui-alert__icon" aria-hidden="true"></i>
+<div class="bui-alert__content">
+  <p class="bui-alert__title">Warning</p>
+  <div class="bui-alert__description">Your session expires in 5 minutes.</div></div>
+</div>
+<div class="bui-alert bui-alert--danger" role="alert">
+<i class="bui-icon-regular bui-icon-x-circle bui-alert__icon" aria-hidden="true"></i>
+<div class="bui-alert__content">
+  <p class="bui-alert__title">Error</p>
+  <div class="bui-alert__description">The payment could not be processed.</div></div>
+</div>
+</div>
+</div>
+</div>
+<h3>Title only and description only</h3>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<div class="bui-d-grid bui-gap-2">
+<div class="bui-alert bui-alert--success" role="status">
+<i class="bui-icon-regular bui-icon-check-circle bui-alert__icon" aria-hidden="true"></i>
+<div class="bui-alert__content">
+  <p class="bui-alert__title">Changes saved</p></div>
+</div>
+<div class="bui-alert bui-alert--info" role="status">
+<i class="bui-icon-regular bui-icon-info bui-alert__icon" aria-hidden="true"></i>
+<div class="bui-alert__content">
+  <div class="bui-alert__description">Description only: useful for short sentences.</div></div>
+</div>
+</div>
+</div>
+</div>
+<h3>With links and actions</h3>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<div class="bui-d-grid bui-gap-2">
+<div class="bui-alert bui-alert--warning" role="alert">
+<i class="bui-icon-regular bui-icon-warning bui-alert__icon" aria-hidden="true"></i>
+<div class="bui-alert__content">
+  <p class="bui-alert__title">Storage almost full</p>
+  <div class="bui-alert__description">You have used 92% of your space. <a href="#">Manage storage</a></div>
+    <div class="bui-alert__actions"><button type="button" class="bui-btn bui-btn--sm bui-btn--outline bui-btn--secondary">Review</button><button type="button" class="bui-btn bui-btn--sm bui-btn--ghost bui-btn--secondary">Dismiss for now</button></div>
+  </div>
+</div>
+</div>
+</div>
+</div>
+<h3>Dismissible</h3>
+<p>The close button leaves with an animation and the element is removed. With reduced motion it disappears at once. The button below is documentation only: it puts the original markup back.</p>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview" data-alert-demo>
+<div class="bui-alert bui-alert--success" role="status">
+<i class="bui-icon-regular bui-icon-check-circle bui-alert__icon" aria-hidden="true"></i>
+<div class="bui-alert__content">
+  <p class="bui-alert__title">Profile updated</p>
+  <div class="bui-alert__description">Press the close button to dismiss this alert.</div></div>
+<button type="button" class="bui-btn-close bui-alert__close" data-bui-dismiss="alert" aria-label="Close" data-bui-i18n-attr="aria-label:common.close"><i class="bui-icon-regular bui-icon-x" aria-hidden="true"></i></button>
+</div>
+</div>
+</div>
+<p><button type="button" class="bui-btn bui-btn--sm bui-btn--outline bui-btn--secondary" data-alert-restore>Show the alert again (docs only)</button></p>
+<h3>Long text</h3>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<div class="bui-alert bui-alert--danger" role="alert">
+<i class="bui-icon-regular bui-icon-x-circle bui-alert__icon" aria-hidden="true"></i>
+<div class="bui-alert__content">
+  <p class="bui-alert__title">Request failed</p>
+  <div class="bui-alert__description">This is a long description with an unbroken string to show wrapping: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx and the content stays inside the alert.</div></div>
+<button type="button" class="bui-btn-close bui-alert__close" data-bui-dismiss="alert" aria-label="Close" data-bui-i18n-attr="aria-label:common.close"><i class="bui-icon-regular bui-icon-x" aria-hidden="true"></i></button>
+</div>
+</div>
+</div>
+<h3>Created with JavaScript</h3>
+<p>Use <code>BUI.toast</code> for messages that appear and leave by themselves. For an alert inserted into the page, build the markup, add it to the DOM and give it a <code>role</code> before inserting so assistive technology announces it:</p>
+<pre class="bui-docs-code" data-lang="javascript"><code>var host = document.querySelector('#form-errors');
+host.innerHTML =
+    '&lt;div class="bui-alert bui-alert--danger" role="alert"&gt;' +
+    '&lt;i class="bui-icon-regular bui-icon-x-circle bui-alert__icon" aria-hidden="true"&gt;&lt;/i&gt;' +
+    '&lt;div class="bui-alert__content"&gt;&lt;p class="bui-alert__title"&gt;Check the form&lt;/p&gt;' +
+    '&lt;div class="bui-alert__description"&gt;Two fields need your attention.&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;';</code></pre>
+
+                    </section>
+
+                    <section class="bui-docs-section" aria-labelledby="javascript-api">
+                        <h2 id="javascript-api">06. JavaScript API</h2>
+
+<p><code>BUI.alert(target)</code> returns the instance for an element (the same one if called again). It has no options. Use it to close an alert from code or to listen to its events.</p>
+<pre class="bui-docs-code" data-lang="javascript"><code>var alertEl = document.querySelector('#saved-alert');
+var instance = BUI.alert(alertEl);
+alertEl.addEventListener('bui:alert:close', function () { /* the element is removed right after this */ });
+instance.close();</code></pre>
+<h3>Methods</h3>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Alert methods</caption>
+<thead><tr><th scope="col">Name</th><th scope="col">Returns</th><th scope="col">Description</th></tr></thead>
+<tbody>
+<tr><td><code>close()</code></td><td>boolean</td><td>Starts the leaving animation, fires <code>close</code>, removes the element from the page and destroys the instance. Returns <code>false</code> if it is already closing or <code>beforeclose</code> was canceled.</td></tr>
+<tr><td><code>isClosed()</code></td><td>boolean</td><td><code>true</code> once <code>close()</code> was accepted.</td></tr>
+<tr><td><code>destroy()</code></td><td>void</td><td>Cancels a pending close, removes <code>is-closing</code> and the <code>role</code> the component added. An alert that was already removed from the page is not put back.</td></tr>
+</tbody>
+</table>
+<h3>Events</h3>
+<p>DOM events on the alert element, bubbling.</p>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Alert events</caption>
+<thead><tr><th scope="col">Name</th><th scope="col">Cancelable</th><th scope="col">Description</th></tr></thead>
+<tbody>
+<tr><td><code>bui:alert:beforeclose</code></td><td>yes</td><td>Before closing starts. <code>preventDefault()</code> keeps the alert.</td></tr>
+<tr><td><code>bui:alert:close</code></td><td>no</td><td>After the leaving animation, just before the element is removed (so it still bubbles to <code>document</code>).</td></tr>
+</tbody>
+</table>
+<div class="bui-docs-callout bui-docs-callout--note" role="note">
+<p class="bui-docs-callout__title">Note</p>
+<p><code>data-bui-dismiss</code> without a value belongs to Dialog and Drawer (it closes the nearest overlay). Inside a dialog, a button with <code>data-bui-dismiss="alert"</code> closes only its alert. Since Task 15 a Dialog or Drawer reacts only to an empty <code>data-bui-dismiss</code> (or its own type), so other values never close the overlay by accident.</p>
+</div>
+
+                    </section>
+
+                    <section class="bui-docs-section" aria-labelledby="responsive-behavior">
+                        <h2 id="responsive-behavior">07. Responsive Behavior</h2>
+
+<p>The alert is a flex row that fills the width of its container, with no breakpoint rules. Text wraps (<code>overflow-wrap: anywhere</code>), so long words and URLs stay inside; the actions wrap onto several lines; the dismiss button keeps its size. Down to 320px nothing overflows horizontally. On touch screens (<code>pointer: coarse</code>) the Close Button grows to its larger touch target.</p>
+
+                    </section>
+
+                    <section class="bui-docs-section" aria-labelledby="accessibility">
+                        <h2 id="accessibility">08. Accessibility</h2>
+
+<h3>Keyboard</h3>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Alert keyboard behavior</caption>
+<thead><tr><th scope="col">Key</th><th scope="col">Behavior</th></tr></thead>
+<tbody>
+<tr><td>Tab / Shift+Tab</td><td>Moves through the actions, links and the dismiss button in DOM order. An alert itself is not focusable.</td></tr>
+<tr><td>Enter / Space</td><td>Activates the focused button (the dismiss button closes the alert).</td></tr>
+</tbody>
+</table>
+<h3>ARIA and screen readers</h3>
+<ul>
+<li><code>role="alert"</code> (assertive) is for messages that need immediate attention: errors and warnings. Use <code>role="status"</code> (polite) for everything else. The component adds the matching role only when the element has none.</li>
+<li>A live role announces an alert that is <em>inserted or changed</em> after load; an alert already present when the page loads is read in normal reading order. Set the role before inserting a new alert.</li>
+<li>The type is never carried by color alone: the icon shape and the title differ. If the title does not say the type (for example "Saved" is clear, "Heads up" is not), add a visually hidden prefix with <code>bui-visually-hidden</code>.</li>
+<li>The icon is decorative (<code>aria-hidden="true"</code>). The dismiss button gets its name from <code>aria-label</code>, translated by <code>data-bui-i18n-attr="aria-label:common.close"</code>.</li>
+</ul>
+<h3>Focus</h3>
+<p>Dismissing an alert does not move focus: if the dismiss button had focus, the browser drops it to the start of the page when the element is removed. When that matters (a form error list, for example) move focus yourself in a <code>bui:alert:close</code> listener.</p>
+<h3>Motion and colors</h3>
+<p>The leaving animation uses the duration token, so it stops under <code>prefers-reduced-motion</code>. Text contrast was measured on every color in Light and Dark, default and ocean themes (see the Task 15 report). In Forced Colors mode the alert keeps a visible border.</p>
+<p><strong>Not tested:</strong> real screen readers (NVDA, JAWS, VoiceOver), Safari and Firefox, touch devices.</p>
+
+                    </section>
+
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="../../assets/js/baset-ui.js"></script>
+    <script src="../../documentation/assets/js/nav.js"></script>
+    <script src="../../documentation/assets/js/docs.js"></script>
+    <script src="../../documentation/assets/js/playground.js"></script>
+    <script>
+        /* Docs-only helpers for this page. */
+        (function () {
+            var demo = document.querySelector('[data-alert-demo]');
+            var restore = document.querySelector('[data-alert-restore]');
+            if (demo && restore) {
+                var original = demo.innerHTML;
+                restore.addEventListener('click', function () { demo.innerHTML = original; });
+            }
+            /* Keeps the links inside previews from jumping the page. */
+            document.addEventListener('click', function (e) {
+                var a = e.target.closest && e.target.closest('a[href="#"]');
+                if (a && a.closest('[data-docs-playground], .bui-docs-example__preview')) { e.preventDefault(); }
+            });
+            var ICONS = { primary: 'info', secondary: 'bell', success: 'check-circle', info: 'info', warning: 'warning', danger: 'x-circle' };
+            BUI_DOCS_PLAYGROUND.define('alert', {
+                title: 'Alert playground',
+                controls: [
+                    { type: 'select', name: 'color', label: 'Color', default: 'primary', options: [{ value: 'primary', label: 'Primary' }, { value: 'secondary', label: 'Secondary' }, { value: 'success', label: 'Success' }, { value: 'info', label: 'Info' }, { value: 'warning', label: 'Warning' }, { value: 'danger', label: 'Danger' }] },
+                    { type: 'text', name: 'title', label: 'Title (empty hides it)', default: 'Heads up', maxLength: 40 },
+                    { type: 'text', name: 'description', label: 'Description (empty hides it)', default: 'Your session expires in 5 minutes.', maxLength: 120 },
+                    { type: 'switch', name: 'icon', label: 'Icon', default: true },
+                    { type: 'switch', name: 'actions', label: 'Actions', default: false },
+                    { type: 'switch', name: 'dismissible', label: 'Dismissible', default: false }
+                ],
+                template: function (s, h) {
+                    var cls = 'bui-alert' + (s.color === 'primary' ? '' : ' bui-alert--' + s.color);
+                    var role = (s.color === 'danger' || s.color === 'warning') ? 'alert' : 'status';
+                    var out = '<div class="' + cls + '" role="' + role + '">\n';
+                    if (s.icon) { out += '    <i class="bui-icon-regular bui-icon-' + ICONS[s.color] + ' bui-alert__icon" aria-hidden="true"></i>\n'; }
+                    out += '    <div class="bui-alert__content">\n';
+                    if (s.title) { out += '        <p class="bui-alert__title">' + h.escape(s.title) + '</p>\n'; }
+                    if (s.description) { out += '        <div class="bui-alert__description">' + h.escape(s.description) + '</div>\n'; }
+                    if (s.actions) { out += '        <div class="bui-alert__actions">\n            <button type="button" class="bui-btn bui-btn--sm bui-btn--outline bui-btn--secondary">Review</button>\n            <button type="button" class="bui-btn bui-btn--sm bui-btn--ghost bui-btn--secondary">Later</button>\n        </div>\n'; }
+                    out += '    </div>\n';
+                    if (s.dismissible) { out += '    <button type="button" class="bui-btn-close bui-alert__close" data-bui-dismiss="alert" aria-label="Close" data-bui-i18n-attr="aria-label:common.close"><i class="bui-icon-regular bui-icon-x" aria-hidden="true"></i></button>\n'; }
+                    return out + '</div>';
+                }
+            });
+        })();
+    </script>
+</body>
+</html>

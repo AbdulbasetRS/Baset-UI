@@ -2,7 +2,7 @@
  * Baset-UI - Core Stylesheet
  * Version: 0.0.0-foundation
  *
- * Task 03: Design Tokens + Layout (Container, Grid, Flexbox, Spacing). Task 09: Button, Button Group, Close Button. Task 10: Avatar, Badge, Progress. Task 11: Card, List Group. Task 12: Form Controls, Input, Checkbox, Radio, Switch.
+ * Task 03: Design Tokens + Layout (Container, Grid, Flexbox, Spacing). Task 09: Button, Button Group, Close Button. Task 10: Avatar, Badge, Progress. Task 11: Card, List Group. Task 12: Form Controls, Input, Checkbox, Radio, Switch. Task 15: Alert, Toast.
  * Section order follows instructions/CORE_ASSETS.md:
  *   1 Tokens  2 Dark Mode  3 Base  4 Layout  5 Utilities  6 Components  7 Responsive Utilities  8 Print / Reduced motion
  * Tokens are declared so they work on ANY element (see "Token scopes" below and
@@ -444,6 +444,30 @@
     --bui-drawer-size-md: calc(var(--bui-space-6) * 8);
     --bui-drawer-size-lg: calc(var(--bui-space-6) * 12);
     --bui-drawer-size-xl: calc(var(--bui-space-6) * 16);
+
+    /* Alert component tokens (Task 15). Colors come from the semantic color tokens through the color modifiers. A Toast reuses these. */
+    --bui-alert-padding-x: var(--bui-space-3);
+    --bui-alert-padding-y: calc(var(--bui-space-2) + var(--bui-space-1));
+    --bui-alert-gap: calc(var(--bui-space-2) + var(--bui-space-1));
+    --bui-alert-radius: var(--bui-radius-md);
+    --bui-alert-border-width: var(--bui-border-width);
+    --bui-alert-accent-width: var(--bui-space-1);
+    --bui-alert-color: var(--bui-color-text);
+    --bui-alert-font-size: var(--bui-font-size-base);
+    --bui-alert-line-height: var(--bui-line-height-snug);
+    --bui-alert-title-font-weight: var(--bui-font-weight-semibold);
+    --bui-alert-icon-size: calc(var(--bui-space-3) + var(--bui-space-1));
+    --bui-alert-duration: var(--bui-duration-base);
+    --bui-alert-easing: var(--bui-easing-standard);
+
+    /* Toast component tokens (Task 15). The toast itself is an Alert; these add the stack and the floating look. */
+    --bui-toast-width: calc(var(--bui-space-6) * 8);
+    --bui-toast-offset: var(--bui-space-3);
+    --bui-toast-gap: var(--bui-space-2);
+    --bui-toast-shadow: var(--bui-shadow-lg);
+    --bui-toast-z: var(--bui-z-toast);
+    --bui-toast-duration: var(--bui-duration-base);
+    --bui-toast-easing: var(--bui-easing-standard);
 }
 
 /* =====================================================================
@@ -977,8 +1001,145 @@ pre { margin-block: 0 var(--bui-space-3); overflow: auto; }
 .bui-shadow-xl { box-shadow: var(--bui-shadow-xl) !important; }
 
 /* =====================================================================
- * 6. COMPONENTS (alphabetical): Avatar, Badge (Task 10), Button, Button Group (Task 09), Card (Task 11), Checkbox (Task 12), Close Button (Task 09), Dialog (Task 13), Drawer (Task 13), Form Controls (Task 12), Input (Task 12), List Group (Task 11), Progress (Task 10), Radio (Task 12), Switch (Task 12).
+ * 6. COMPONENTS (alphabetical): Alert (Task 15), Avatar, Badge (Task 10), Button, Button Group (Task 09), Card (Task 11), Checkbox (Task 12), Close Button (Task 09), Dialog (Task 13), Drawer (Task 13), Form Controls (Task 12), Input (Task 12), List Group (Task 11), Progress (Task 10), Radio (Task 12), Switch (Task 12), Toast (Task 15).
  * ===================================================================== */
+
+/* ---------------------------------------------------------------------
+ * Alert (Task 15). An inline message that stays in the page flow. A Toast (below) reuses this shape.
+ *   - Component tokens: --bui-alert-* (Layer 3, themeable). Private values: --bui-alert-_* (internal).
+ *   - Color modifiers set the accent set (default primary). The text stays on the neutral text color; the icon uses the -hover accent
+ *     because the plain accent on the subtle fill is under 4.5:1 for some colors (same reason as Badge subtle).
+ *   - The accent edge is a thicker border-inline-start, so it moves to the other side in RTL. The edge is not the only cue: the icon
+ *     shape and the title also tell the type.
+ *   - Markup: <div class="bui-alert bui-alert--success" role="status"><i class="bui-icon-regular bui-icon-check-circle bui-alert__icon"
+ *     aria-hidden="true"></i><div class="bui-alert__content"><p class="bui-alert__title">..</p><div class="bui-alert__description">..</div>
+ *     <div class="bui-alert__actions">..</div></div><button type="button" class="bui-btn-close bui-alert__close" data-bui-dismiss="alert"
+ *     aria-label="Close"></button></div>
+ * --------------------------------------------------------------------- */
+@keyframes bui-alert-out {
+    from { opacity: 1; transform: none; }
+    to { opacity: 0; transform: translateY(calc(var(--bui-toast-_y, -0.25rem))); }
+}
+.bui-alert {
+    --bui-alert-_accent: var(--bui-color-primary);
+    --bui-alert-_accent-hover: var(--bui-color-primary-hover);
+    --bui-alert-_accent-subtle: var(--bui-color-primary-subtle);
+    --bui-alert-_accent-border: var(--bui-color-primary-border);
+    /* The Close Button inside takes the alert's text color, and its hover fill is the accent border color. */
+    --bui-btn-close-color: var(--bui-alert-color);
+    --bui-btn-close-hover-color: var(--bui-alert-color);
+    --bui-btn-close-hover-bg: var(--bui-alert-_accent-border);
+    --bui-btn-close-active-bg: var(--bui-alert-_accent-border);
+
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    gap: var(--bui-alert-gap);
+    box-sizing: border-box;
+    margin: 0;
+    padding-block: var(--bui-alert-padding-y);
+    padding-inline: var(--bui-alert-padding-x);
+    font-size: var(--bui-alert-font-size);
+    line-height: var(--bui-alert-line-height);
+    color: var(--bui-alert-color);
+    background-color: var(--bui-alert-_accent-subtle);
+    border: var(--bui-alert-border-width) solid var(--bui-alert-_accent-border);
+    border-inline-start: var(--bui-alert-accent-width) solid var(--bui-alert-_accent);
+    border-radius: var(--bui-alert-radius);
+}
+
+/* Colors */
+.bui-alert--primary {
+    --bui-alert-_accent: var(--bui-color-primary);
+    --bui-alert-_accent-hover: var(--bui-color-primary-hover);
+    --bui-alert-_accent-subtle: var(--bui-color-primary-subtle);
+    --bui-alert-_accent-border: var(--bui-color-primary-border);
+}
+.bui-alert--secondary {
+    --bui-alert-_accent: var(--bui-color-secondary);
+    --bui-alert-_accent-hover: var(--bui-color-secondary-hover);
+    --bui-alert-_accent-subtle: var(--bui-color-secondary-subtle);
+    --bui-alert-_accent-border: var(--bui-color-secondary-border);
+}
+.bui-alert--success {
+    --bui-alert-_accent: var(--bui-color-success);
+    --bui-alert-_accent-hover: var(--bui-color-success-hover);
+    --bui-alert-_accent-subtle: var(--bui-color-success-subtle);
+    --bui-alert-_accent-border: var(--bui-color-success-border);
+}
+.bui-alert--warning {
+    --bui-alert-_accent: var(--bui-color-warning);
+    --bui-alert-_accent-hover: var(--bui-color-warning-hover);
+    --bui-alert-_accent-subtle: var(--bui-color-warning-subtle);
+    --bui-alert-_accent-border: var(--bui-color-warning-border);
+}
+.bui-alert--danger {
+    --bui-alert-_accent: var(--bui-color-danger);
+    --bui-alert-_accent-hover: var(--bui-color-danger-hover);
+    --bui-alert-_accent-subtle: var(--bui-color-danger-subtle);
+    --bui-alert-_accent-border: var(--bui-color-danger-border);
+}
+.bui-alert--info {
+    --bui-alert-_accent: var(--bui-color-info);
+    --bui-alert-_accent-hover: var(--bui-color-info-hover);
+    --bui-alert-_accent-subtle: var(--bui-color-info-subtle);
+    --bui-alert-_accent-border: var(--bui-color-info-border);
+}
+
+/* Parts */
+.bui-alert__icon {
+    flex: none;
+    margin-block-start: calc((1em * var(--bui-alert-line-height) - var(--bui-alert-icon-size)) / 2);
+    font-size: var(--bui-alert-icon-size);
+    line-height: 1;
+    color: var(--bui-alert-_accent-hover);
+}
+.bui-alert__content {
+    flex: 1 1 auto;
+    min-inline-size: 0;
+    overflow-wrap: anywhere;
+}
+.bui-alert__title {
+    display: block;
+    margin: 0;
+    font-size: inherit;
+    font-weight: var(--bui-alert-title-font-weight);
+    line-height: inherit;
+    color: inherit;
+}
+.bui-alert__description { margin: 0; }
+.bui-alert__description > :first-child { margin-block-start: 0; }
+.bui-alert__description > :last-child { margin-block-end: 0; }
+.bui-alert__title + .bui-alert__description { margin-block-start: var(--bui-space-1); }
+/* Links inside (and plain links in the actions row; a link styled as a Button keeps its own look) keep the text color and are underlined, so the contrast does not depend on the link color. */
+.bui-alert__description a,
+.bui-alert__title a,
+.bui-alert__actions a:not(.bui-btn) {
+    font-weight: var(--bui-alert-title-font-weight);
+    color: inherit;
+    text-decoration: underline;
+}
+.bui-alert__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--bui-space-2);
+    margin-block-start: var(--bui-space-2);
+}
+.bui-alert__close {
+    margin-block: calc(-1 * var(--bui-space-1));
+    margin-inline: auto calc(-1 * var(--bui-space-1));
+}
+.bui-alert__content + .bui-alert__close { margin-inline-start: 0; }
+
+/* Leaving: the script adds .is-closing and removes the element when the animation has finished. */
+.bui-alert.is-closing {
+    pointer-events: none;
+    animation: bui-alert-out var(--bui-alert-duration) var(--bui-alert-easing) forwards;
+}
+@media (forced-colors: active) {
+    .bui-alert { border-color: CanvasText; }
+}
 
 /* ---------------------------------------------------------------------
  * Avatar (Task 10). A person or entity shown as an image, initials or an icon in a fixed-size shape.
@@ -2901,6 +3062,80 @@ button.bui-list-group__item {
 .bui-switch__input:checked::before {
     inset-inline-start: calc(100% - (var(--bui-check-_size) - 2 * var(--bui-check-border-width) - 2 * var(--bui-switch-thumb-gap)) - var(--bui-switch-thumb-gap));
     background-color: var(--bui-switch-thumb-checked-color);
+}
+
+/* ---------------------------------------------------------------------
+ * Toast (Task 15). A transient message from BUI.toast. The toast is an Alert (bui-toast + bui-alert + a color modifier), so it has the
+ * same parts, colors and tokens; these rules add the floating stack.
+ *   - Region: one .bui-toast-region (a manual popover, so it is in the top layer) holds one .bui-toast-stack--{position} per used position.
+ *     The script builds all of it. Without the Popover API the region is a fixed element with --bui-toast-z.
+ *   - Positions are logical (start/end), so they swap sides in RTL. Stacks are flex columns; new toasts go to the edge side.
+ *   - The enter and exit animation is vertical only (no direction to mirror) and uses the duration token, so reduced motion stops it.
+ * --------------------------------------------------------------------- */
+@keyframes bui-toast-in {
+    from { opacity: 0; transform: translateY(var(--bui-toast-_y, 0.5rem)); }
+    to { opacity: 1; transform: none; }
+}
+@keyframes bui-toast-out {
+    from { opacity: 1; transform: none; }
+    to { opacity: 0; transform: translateY(var(--bui-toast-_y, 0.5rem)); }
+}
+.bui-toast-region {
+    position: fixed;
+    inset: 0;
+    z-index: var(--bui-toast-z);
+    box-sizing: border-box;
+    inline-size: 100%;
+    block-size: 100%;
+    max-inline-size: none;
+    max-block-size: none;
+    margin: 0;
+    padding: 0;
+    overflow: visible;
+    color: inherit;
+    background: transparent;
+    border: 0;
+    pointer-events: none;
+}
+.bui-toast-stack {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    gap: var(--bui-toast-gap);
+    box-sizing: border-box;
+    inline-size: min(100%, calc(var(--bui-toast-width) + 2 * var(--bui-toast-offset)));
+    max-block-size: 100%;
+    padding: var(--bui-toast-offset);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+    pointer-events: none;
+}
+.bui-toast-stack--top-start { inset-block-start: 0; inset-inline-start: 0; align-items: flex-start; }
+.bui-toast-stack--top-center { inset-block-start: 0; inset-inline: 0; margin-inline: auto; align-items: center; }
+.bui-toast-stack--top-end { inset-block-start: 0; inset-inline-end: 0; align-items: flex-end; }
+.bui-toast-stack--bottom-start { inset-block-end: 0; inset-inline-start: 0; align-items: flex-start; }
+.bui-toast-stack--bottom-center { inset-block-end: 0; inset-inline: 0; margin-inline: auto; align-items: center; }
+.bui-toast-stack--bottom-end { inset-block-end: 0; inset-inline-end: 0; align-items: flex-end; }
+.bui-toast-stack--top-start,
+.bui-toast-stack--top-center,
+.bui-toast-stack--top-end { --bui-toast-_y: -0.5rem; }
+
+.bui-toast {
+    flex: none;
+    inline-size: 100%;
+    box-shadow: var(--bui-toast-shadow);
+    pointer-events: auto;
+    animation: bui-toast-in var(--bui-toast-duration) var(--bui-toast-easing);
+}
+.bui-toast.is-closing {
+    pointer-events: none;
+    animation: bui-toast-out var(--bui-toast-duration) var(--bui-toast-easing) forwards;
+}
+/* While the region moves into or out of an open Dialog, toasts that are already shown must not replay their entrance. */
+.bui-toast-region.is-relocating .bui-toast { animation: none; }
+@media (forced-colors: active) {
+    .bui-toast { border-color: CanvasText; }
 }
 
 /* =====================================================================

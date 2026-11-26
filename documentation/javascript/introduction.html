@@ -63,12 +63,14 @@
 <tr><td><code>autoInit</code></td><td>boolean</td><td><code>true</code></td><td>Run <code>BUI.init(document)</code> once the document is ready.</td></tr>
 <tr><td><code>observe</code></td><td>boolean</td><td><code>false</code></td><td>Initialize elements added to the page later. See <a href="initialization.html#observer">Initialization</a>.</td></tr>
 <tr><td><code>logLevel</code></td><td>string</td><td><code>"warn"</code></td><td>One of <code>silent</code>, <code>error</code>, <code>warn</code>, <code>info</code>, <code>debug</code>.</td></tr>
+<tr><td><code>toast</code></td><td>object</td><td><code>{ position: "top-end", duration: 5000, max: 5, closable: true }</code></td><td>Defaults of <code>BUI.toast.show()</code>. Only the four keys shown are accepted; unknown keys and invalid values are rejected with a warning. Keys you do not pass keep their value. See <a href="../components/toast.html#variants-options">Toast</a>.</td></tr>
 </tbody>
 </table>
 <pre class="bui-docs-code" data-lang="javascript"><code>BUI.config({ autoInit: false });          // write it right after the script tag
 BUI.config({ logLevel: 'debug' });
-const settings = BUI.config();            // { autoInit, observe, logLevel }</code></pre>
-<p>Settings other than these three do not exist yet. Later systems (Theme, Locale) will add their own when they are implemented.</p>
+BUI.config({ toast: { max: 3 } });         // merged into the toast defaults
+const settings = BUI.config();            // { autoInit, observe, logLevel, toast }</code></pre>
+<p>Settings other than these four do not exist. Theme and Locale are managed through <code>BUI.theme</code> and <code>BUI.locale</code> and have no global setting.</p>
 </section>
 
 <section class="bui-docs-section" aria-labelledby="what-is-included">

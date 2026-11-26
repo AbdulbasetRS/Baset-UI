@@ -4,6 +4,30 @@
 
 ## [Unreleased]
 
+### Added (Task 15: Alert + Toast Manager)
+- `assets/css/baset-ui.css` (257,517 بايت خام و35,102 gzip، كان 246,749 و33,427): **Alert** في قسم 6 (قبل Avatar) و**Toast** (بعد Switch)، وTokens `--bui-alert-*` و`--bui-toast-*` في الطبقة 3. Alert: `bui-alert` بستة ألوان (`--primary` الافتراضي و`--secondary` و`--success` و`--warning` و`--danger` و`--info`) وأجزاء `__icon/__content/__title/__description/__actions/__close`، وحافة بداية سميكة تنتقل في RTL. Toast يعيد استخدام شكل Alert (`bui-toast bui-alert bui-alert--{type}`) ويضيف الحاوية `bui-toast-region` والأكوام `bui-toast-stack--{top|bottom}-{start|center|end}`.
+- `assets/js/baset-ui.js` (114,415 بايت خام و26,330 gzip، كان 85,789 و20,047): مكون `alert` (`BUI.alert`: `close/isClosed/destroy`، الحدثان `bui:alert:beforeclose` القابل للإلغاء و`bui:alert:close`) ومعالج مفوض لـ `data-bui-dismiss="alert"`، و**Toast Manager** `BUI.toast.{show,success,error,warning,info,clear}` مع Handle `{id,element,close,update,isOpen}` والحدثين `bui:toast:show|hide`، وخيار `toast` في `BUI.config` (`position` و`duration` و`max` و`closable`).
+- **قرار (Top Layer):** حاوية Toast `popover="manual"`. قيس في Chromium: `showModal()` يجعل Popover خارج الـ Dialog inert (لا تركيز ولا نقر)، وإعادة توليده داخل الـ Dialog تعمل. لذلك أُضيف خطاف داخلي `overlayChanged` في Overlay Manager ينقل الحاوية إلى أعلى Dialog/Drawer مفتوح (وإلى `body` حين لا يوجد)، بلا إعادة تشغيل حركة الدخول. بلا Popover API تعمل كعنصر ثابت بـ `--bui-toast-z` (مختبر بحذف الواجهة).
+- **قرار:** Toast وAlert في الـ Core لا Extension. حجم الإضافة نحو 28.6KB خام JS و10.8KB خام CSS يتجاوز 15KB (الشرط 1) لكن [CORE_ASSETS.md](instructions/CORE_ASSETS.md) يحدد Toast Manager ضمن مسؤوليات `baset-ui.js` صراحة، والخطاف مع Overlay Manager يحتاج أن يكونا معاً. الشرط 2 غير متحقق (الإشعارات مما تحتاجه معظم التطبيقات).
+- **قرار:** toast له `actions` بلا `duration` صريح يصير دائماً (`duration: 0`)، وإلا يختفي قبل أن يصل المستخدم للزر (WCAG 2.2.1). حد المكدس **لكل موضع** وليس إجمالياً.
+- `assets/i18n/{en,ar,fr}.json`: `alert.typePrimary|typeSecondary|typeSuccess|typeWarning|typeDanger|typeInfo` (كلمة النوع المخفية بصرياً قبل عنوان كل Toast) و`toast.region` (21 مفتاحاً، `node tests/i18n-keys.js` ناجح). نص الإغلاق يعيد استعمال `common.close`.
+- `documentation/components/alert.html` و`toast.html` بالأقسام الثمانية وPlayground حقيقي لكل منهما (Toast: زر المعاينة ينفذ `BUI.toast.show` بالخيارات نفسها المعروضة في Code Output). مفعلتان في `nav.js`، وأُضيف **Toast** إلى قسم Components بعد List Group (قرار المهمة).
+- `tests/manual/alert-toast.html` (Fixture معلن، انظر ARCHITECTURE.md).
+
+### Changed (Task 15)
+- **Dialog وDrawer:** معالج `data-bui-dismiss` صار يغلق الطبقة فقط حين تكون القيمة فارغة أو نوع الطبقة نفسها (`dialog`/`drawer`). السبب: Alert داخل Dialog بزر `data-bui-dismiss="alert"` كان سيغلق الـ Dialog كله. كل الاستخدامات الموجودة (85 موضعاً) بلا قيمة فلا تتأثر. (تعديل سلوك صغير في مكون منفذ، موثق في صفحتي Dialog وDrawer.)
+- `documentation/javascript/introduction.html`: جدول `BUI.config` فيه `toast`، وصُححت جملة "Settings other than these three do not exist yet".
+- `documentation/assets/css/docs.css`: قاعدة واحدة (`.bui-docs-content .bui-alert__title { margin: 0 }`) لأن قاعدة `p` في التوثيق (هامش 16px) كانت تتغلب على صفر هامش عنوان Alert في المعاينات (docs فقط).
+- `instructions/`: `ARCHITECTURE.md` و`COMPONENTS_REGISTRY.md` و`COMPONENT_DEVELOPMENT.md` و`CORE_ASSETS.md` و`INTERNATIONALIZATION.md` و`JAVASCRIPT_API.md` و`NAMING_CONVENTIONS.md` و`PROJECT_OVERVIEW.md` و`TESTING.md` و`ACCESSIBILITY.md`.
+
+### Tests (Task 15، Chromium فقط، Playwright خارج المستودع)
+- سلوك Toast: 71 فحصاً (6 مواضع x LTR وRTL بالقياس، الطابور والترتيب، الإيقاف بـ Hover وFocus ودقة الزمن المتبقي، الإجراءات، `update/close/clear`، مدخلات غير صالحة، `BUI.config`، الأحداث، التسرب، i18n، Reduced Motion، فوق Dialog وDialog متداخل وDrawer، حذف Dialog يحمل الحاوية، بلا Popover API). Alert: الأدوار والأحداث وإلغاء `beforeclose` وداخل Dialog.
+- Playground: 51 حالة (39 Toast و12 Alert) المعاينة = تنفيذ الكود الظاهر. أمثلة التوثيق وأزرار العرض.
+- التباين: 768 عينة (أدنى نص 11.35:1، أيقونة 6.26:1، حافة البداية 4.49:1، زر الإجراء 5.10:1).
+- 192 تركيبة Overflow للصفحات الجديدة، و39 صفحة توثيق x 3 عروض (تراجع)، `tests/manual/core.html` 43/43، `node tests/i18n-keys.js` وفحص الأيقونات ناجحان.
+- **غير مختبر:** قارئ شاشة (إعلان الحاوية وتوقيت أول toast وإعلان toast الـ danger داخل منطقة polite)، Safari/Firefox، لمس فعلي، Forced Colors الفعلي على Windows.
+- **أخطاء وُجدت وصُححت أثناء التنفيذ والاختبار:** (1) Code Output في Playground كان يكسر النصوص التي تحوي apostrophe. (2) كتلة سكربت `alert.html` خرجت من المولّد بسطر جديد داخل نص JS. (3) حدّ المكدس لم يحسب toasts المنتظرة إنشاء الحاوية (كان يسمح بتجاوزه عند استدعاءات متتالية سريعة).
+
 ### Changed (Task 14: كتالوج الأيقونات وShell التوثيق على مكونات المكتبة)
 - `documentation/advanced/icons.html`: تفاصيل الأيقونة في `BUI.dialog` (كان `<dialog>` أصلياً docs-only) مع تركيز أولي على الوزن المحدد وإعادة التركيز لزر الفتح؛ الأزرار وحقل البحث وCheckbox وRadio من المكتبة (`bui-btn` و`bui-input` و`bui-checkbox` و`bui-radio`)؛ بقيت القائمتان `<select>` بـ `bui-docs-select` (لا Select بعد).
 - `docs.js` و`docs.css` و`index.html`: زر القائمة بأيقونتي `list`/`x` تتبدلان بـ `aria-expanded`، وسهم طي الأقسام أيقونة `caret-down` تدور عند الفتح، بدل الرموز المرسومة بـ CSS (`bui-docs-burger` و`::after`)؛ أزرار Navbar (RTL وDark mode وGitHub) صارت `bui-btn` (الضغط يبدّل Variant من outline إلى solid).

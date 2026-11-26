@@ -24,7 +24,7 @@
 ## `assets/js/baset-ui.js`
 **المسؤولية (إلزامي):** Core Initialization، Global Config، Theme Manager، Locale Manager، Overlay Manager (يحل محل Modal Manager)، Toast Manager، Shared Utilities، DOM Helpers، Component Initialization، Event Management.
 
-**الحالة الحالية (Task 06):** منفذ: Theme Manager (`BUI.theme`) وLocale Manager (`BUI.locale`) إضافة إلى ما يلي من Task 05: Namespace `BUI`، Global Config (`BUI.config`)، Registry (`BUI.register`)، Init وInstances، Events، DOM Helpers، Utilities، Options Parser، Logger، وObserver اختياري. **منفذ في Task 13:** Overlay Manager (`BUI.overlay`) و`BUI.dialog` (الاسم المستعار `BUI.modal`) و`BUI.drawer`. **غير منفذ (مستقبلي):** Toast Manager. الواجهة في [JAVASCRIPT_API.md](JAVASCRIPT_API.md).
+**الحالة الحالية (Task 06):** منفذ: Theme Manager (`BUI.theme`) وLocale Manager (`BUI.locale`) إضافة إلى ما يلي من Task 05: Namespace `BUI`، Global Config (`BUI.config`)، Registry (`BUI.register`)، Init وInstances، Events، DOM Helpers، Utilities، Options Parser، Logger، وObserver اختياري. **منفذ في Task 13:** Overlay Manager (`BUI.overlay`) و`BUI.dialog` (الاسم المستعار `BUI.modal`) و`BUI.drawer`. **منفذ في Task 15:** Toast Manager (`BUI.toast`) ومكون `alert`، وخيار `toast` في `BUI.config`. الواجهة في [JAVASCRIPT_API.md](JAVASCRIPT_API.md).
 
 قواعد: IIFE أو UMD بدون Modules كشرط، يعرّض `window.BUI` فقط، لا متغيرات Global أخرى. التفاصيل في [JAVASCRIPT_API.md](JAVASCRIPT_API.md).
 
@@ -67,3 +67,6 @@ Extension سكربت مستقل يُحمَّل بعد `baset-ui.js` ويسجل �
 
 ### قرار Task 13: Dialog وDrawer في الـ Core لا Extension
 حجم Dialog وDrawer معاً نحو 21KB خام JS و12KB خام CSS، أي يتجاوز حد 15KB (الشرط 1)، لكن الشرط 2 لا يتحقق: النوافذ المنبثقة مما يحتاجه معظم المواقع، و[CORE_ASSETS.md](CORE_ASSETS.md) نفسه يضع Modals ضمن الـ Core وModal Manager ضمن `baset-ui.js`. المطلوب شرطان على الأقل للجعل Extension، فيبقيان في الـ Core. Overlay Manager يُعرَّف قبل `window.BUI = BUI` (بنية تحتية)، والمكونان يُسجلان بعده كـ `avatar` و`progress`.
+
+### قرار Task 15: Alert وToast في الـ Core لا Extension
+الإضافة نحو 28.6KB خام JS (6.3KB gzip) و10.8KB خام CSS (1.7KB gzip) (`baset-ui.js` 114,415 بايت و`baset-ui.css` 257,517 بعد Task 15)، أي يتجاوز حد 15KB (الشرط 1). لكن: (1) هذا الملف نفسه يعدّ Toast Manager وAlerts من مسؤوليات الـ Core صراحة؛ (2) الشرط 2 غير متحقق، فالإشعارات مما تحتاجه معظم التطبيقات؛ (3) Toast يحتاج خطافاً داخل Overlay Manager (الـ Core لا يعرف أسماء الـ Extensions). المطلوب شرطان على الأقل للجعل Extension، فيبقيان في الـ Core. **ملاحظة:** الملف يُسلَّم غير مضغوط وفيه تعليقات كثيرة، وتقليله بالتصغير يحتاج موافقة على أداة (انظر RELEASE_AND_VERSIONING.md).

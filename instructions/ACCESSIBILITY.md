@@ -26,7 +26,7 @@
 ## ARIA
 - استخدم Roles/States وفق [WAI-ARIA Authoring Practices] المطابقة لنمط المكون، وحدّث `aria-expanded/selected/checked/disabled/current` ديناميكياً.
 - مناطق حية: `aria-live="polite"` للتنبيهات العادية، `assertive` للأخطاء الحرجة فقط.
-- `Toast/Alert`: `role="status"` أو `role="alert"` حسب الأهمية.
+- `Toast/Alert`: `role="status"` أو `role="alert"` حسب الأهمية. (Task 15) Alert: `alert` لـ danger وwarning و`status` للباقي، والنوع يُقال بالأيقونة والعنوان لا باللون وحده. Toast: حاوية واحدة `role="region"` + `aria-live="polite"` باسم من i18n، و`role="alert"` لـ danger، ولا سرقة Focus، وEsc يغلق toast المركّز فقط، والمؤقت يتوقف عند Hover/Focus، وtoast بإجراءات دائم افتراضياً (WCAG 2.2.1). **لم يُختبر بقارئ شاشة.**
 
 ## الاختبار (إلزامي لكل مكون)
 تنقل كامل بالكيبورد فقط، فحص Screen Reader (NVDA/VoiceOver أو معادل) مع تسجيل ما اختُبر، فحص تباين، فحص آلي (مثال axe) إن توفر بموافقة على الأداة ([TESTING.md](TESTING.md)).

@@ -1,5 +1,9 @@
 {
-    "meta": { "code": "en", "name": "English", "direction": "ltr" },
+    "meta": {
+        "code": "en",
+        "name": "English",
+        "direction": "ltr"
+    },
     "common": {
         "loading": "Loading...",
         "search": "Search",
@@ -13,6 +17,14 @@
             "other": "{count} items"
         }
     },
+    "alert": {
+        "typeSuccess": "Success",
+        "typeInfo": "Information",
+        "typeWarning": "Warning",
+        "typeDanger": "Error",
+        "typePrimary": "Notice",
+        "typeSecondary": "Notice"
+    },
     "avatar": {
         "statusOnline": "Online",
         "statusOffline": "Offline",
@@ -24,5 +36,8 @@
     },
     "overlay": {
         "loadError": "The content could not be loaded."
+    },
+    "toast": {
+        "region": "Notifications"
     }
 }

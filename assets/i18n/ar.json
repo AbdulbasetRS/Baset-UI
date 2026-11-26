@@ -1,5 +1,9 @@
 {
-    "meta": { "code": "ar", "name": "العربية", "direction": "rtl" },
+    "meta": {
+        "code": "ar",
+        "name": "العربية",
+        "direction": "rtl"
+    },
     "common": {
         "loading": "جارٍ التحميل...",
         "search": "بحث",
@@ -17,6 +21,14 @@
             "other": "{count} عنصر"
         }
     },
+    "alert": {
+        "typeSuccess": "نجاح",
+        "typeInfo": "معلومة",
+        "typeWarning": "تحذير",
+        "typeDanger": "خطأ",
+        "typePrimary": "إشعار",
+        "typeSecondary": "إشعار"
+    },
     "avatar": {
         "statusOnline": "متصل",
         "statusOffline": "غير متصل",
@@ -28,5 +40,8 @@
     },
     "overlay": {
         "loadError": "تعذر تحميل المحتوى."
+    },
+    "toast": {
+        "region": "الإشعارات"
     }
 }

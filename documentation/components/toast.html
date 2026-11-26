@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-bui-theme="default" data-bui-mode="light" data-root="../../">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Toast - Baset-UI Documentation</title>
+    <meta name="description" content="Toast: transient messages from BUI.toast, shown in a live region in the top layer, with six positions, a queue, pause on hover and focus, actions and an update API.">
+    <!-- Empty icon: avoids a /favicon.ico 404 until the project has a real icon. -->
+    <link rel="icon" href="data:,">
+
+    <link rel="stylesheet" href="../../assets/css/baset-ui.css">
+    <link rel="stylesheet" href="../../assets/css/extensions/baset-ui-icons.css">
+    <link rel="stylesheet" href="../../assets/css/themes/ocean.css">
+    <link rel="stylesheet" href="../../documentation/assets/css/docs.css">
+    <link rel="stylesheet" href="../../documentation/assets/css/playground.css">
+    <script>
+        /* Prevents a flash of the wrong theme or mode. Same keys as BUI.theme (bui-theme, bui-mode). */
+        (function () {
+            var d = document.documentElement, t = null, m = null, r = null;
+            try { t = localStorage.getItem('bui-theme'); m = localStorage.getItem('bui-mode'); r = localStorage.getItem('bui-docs-dir'); } catch (e) {}
+            if (t && /^[a-z][a-z0-9]*(-[a-z0-9]+)*$/.test(t)) d.setAttribute('data-bui-theme', t);
+            if (m !== 'light' && m !== 'dark') m = window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+            d.setAttribute('data-bui-mode', m);
+            /* Documentation shell only: the saved direction of the RTL/LTR switcher. */
+            if (r === 'rtl' || r === 'ltr') d.setAttribute('dir', r);
+        })();
+    </script>
+</head>
+<body>
+    <main class="bui-docs-main" id="bui-docs-main" tabindex="-1">
+        <div class="bui-docs-page">
+            <div class="bui-docs-page__body">
+
+                <header class="bui-docs-page-header">
+                    <nav class="bui-docs-breadcrumb" aria-label="Breadcrumb" data-docs-breadcrumb hidden></nav>
+                    <h1>Toast</h1>
+                    <p class="bui-docs-lead">A transient message shown by JavaScript. It reuses the Alert shape, stacks in six logical positions, pauses on hover and focus, and works above an open Dialog.</p>
+                </header>
+
+                <div class="bui-docs-content">
+                    <section class="bui-docs-section" aria-labelledby="installation-include">
+                        <h2 id="installation-include">01. Installation &amp; Include</h2>
+
+<p>Toast is part of the Core files: <code>assets/css/baset-ui.css</code> (the Alert and Toast rules) and <code>assets/js/baset-ui.js</code> (<code>BUI.toast</code>). The script builds the toast markup, so you write no HTML. Include the icon Extension (<code>baset-ui-icons.css</code>): the type icon and the close button are drawn with it; without it they stay empty. There is no <code>data-bui-*</code> markup API for toasts: they are created from JavaScript.</p>
+<pre class="bui-docs-code" data-lang="html"><code>&lt;link rel="stylesheet" href="assets/css/baset-ui.css"&gt;
+&lt;link rel="stylesheet" href="assets/css/extensions/baset-ui-icons.css"&gt;
+
+&lt;button type="button" class="bui-btn" id="save"&gt;Save&lt;/button&gt;
+
+&lt;script src="assets/js/baset-ui.js"&gt;&lt;/script&gt;
+&lt;script&gt;
+    document.getElementById('save').addEventListener('click', function () {
+        BUI.toast.success('Profile saved.');
+    });
+&lt;/script&gt;</code></pre>
+
+                    </section>
+
+                    <section class="bui-docs-section" aria-labelledby="customize">
+                        <h2 id="customize">02. Customize</h2>
+
+<p>The preview holds the trigger buttons. Every option maps to an option of <code>BUI.toast.show()</code> (section 04), and the JavaScript block is exactly what the <em>Show toast</em> button runs. Toasts are page level: they appear at the corner of the browser window, not inside the preview box, and they follow the page's direction and theme, not the preview's RTL/LTR and Light/Dark switches. A toast with actions and no explicit duration stays until it is closed.</p>
+<div data-docs-playground="toast"></div>
+
+                    </section>
+
+                    <section class="bui-docs-section" aria-labelledby="default">
+                        <h2 id="default">03. Default</h2>
+
+<p>The smallest call is a type shortcut with a message. The toast leaves after 5 seconds (the default), pauses while the pointer or focus is on it, and can be closed with its button or with Esc.</p>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<button type="button" class="bui-btn" data-toast-demo="default">Show toast</button>
+</div>
+<pre class="bui-docs-code" data-lang="javascript"><code>BUI.toast.success('Profile saved.');</code></pre>
+</div>
+
+                    </section>
+
+                    <section class="bui-docs-section" aria-labelledby="variants-options">
+                        <h2 id="variants-options">04. Variants &amp; Options</h2>
+
+<h3>show() options</h3>
+<p><code>BUI.toast.show(options)</code> takes one plain object. At least a <code>title</code> or a <code>message</code> is required. All text is inserted as text (never as HTML).</p>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Toast options</caption>
+<thead><tr><th scope="col">Name</th><th scope="col">Type</th><th scope="col">Default</th><th scope="col">Description</th></tr></thead>
+<tbody>
+<tr><td><code>type</code></td><td>string</td><td><code>"info"</code></td><td><code>primary</code>, <code>secondary</code>, <code>success</code>, <code>warning</code>, <code>danger</code> or <code>info</code>. <code>"error"</code> is accepted as an alias of <code>danger</code>.</td></tr>
+<tr><td><code>title</code></td><td>string</td><td><code>""</code></td><td>Bold first line.</td></tr>
+<tr><td><code>message</code></td><td>string</td><td><code>""</code></td><td>The description under the title.</td></tr>
+<tr><td><code>duration</code></td><td>number</td><td><code>5000</code></td><td>Milliseconds before it closes. <code>0</code> keeps it until it is closed. If the toast has <code>actions</code> and no <code>duration</code> is given, it defaults to <code>0</code> (users need time to reach an action).</td></tr>
+<tr><td><code>position</code></td><td>string</td><td><code>"top-end"</code></td><td>One of the six positions below.</td></tr>
+<tr><td><code>closable</code></td><td>boolean</td><td><code>true</code></td><td>Shows the close button and lets Esc close the toast. With <code>false</code> only the timer or the API can close it.</td></tr>
+<tr><td><code>icon</code></td><td>string or false</td><td>by type</td><td>An icon name from the icon set (for example <code>"bell"</code>), or <code>false</code> for no icon. The default follows the type (below).</td></tr>
+<tr><td><code>actions</code></td><td>array</td><td><code>[]</code></td><td>Buttons under the text. Each action is an object (below).</td></tr>
+</tbody>
+</table>
+<h3>Types</h3>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Toast types</caption>
+<thead><tr><th scope="col">Type</th><th scope="col">Alert class</th><th scope="col">Default icon</th><th scope="col">Live role</th></tr></thead>
+<tbody>
+<tr><td><code>primary</code></td><td><code>bui-alert--primary</code></td><td><code>info</code></td><td><code>status</code></td></tr>
+<tr><td><code>secondary</code></td><td><code>bui-alert--secondary</code></td><td><code>bell</code></td><td><code>status</code></td></tr>
+<tr><td><code>success</code></td><td><code>bui-alert--success</code></td><td><code>check-circle</code></td><td><code>status</code></td></tr>
+<tr><td><code>info</code></td><td><code>bui-alert--info</code></td><td><code>info</code></td><td><code>status</code></td></tr>
+<tr><td><code>warning</code></td><td><code>bui-alert--warning</code></td><td><code>warning</code></td><td><code>status</code></td></tr>
+<tr><td><code>danger</code> / <code>error</code></td><td><code>bui-alert--danger</code></td><td><code>x-circle</code></td><td><code>alert</code></td></tr>
+</tbody>
+</table>
+<h3>Positions</h3>
+<p>Horizontal sides are logical: <code>start</code> is the left side in LTR and the right side in RTL. Each position has its own stack and its own limit.</p>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Toast positions</caption>
+<thead><tr><th scope="col">Value</th><th scope="col">Place</th></tr></thead>
+<tbody>
+<tr><td><code>top-start</code></td><td>Top, at the start side</td></tr>
+<tr><td><code>top-center</code></td><td>Top, centered</td></tr>
+<tr><td><code>top-end</code> (default)</td><td>Top, at the end side</td></tr>
+<tr><td><code>bottom-start</code></td><td>Bottom, at the start side</td></tr>
+<tr><td><code>bottom-center</code></td><td>Bottom, centered</td></tr>
+<tr><td><code>bottom-end</code></td><td>Bottom, at the end side</td></tr>
+</tbody>
+</table>
+<h3>Action object</h3>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Toast action</caption>
+<thead><tr><th scope="col">Name</th><th scope="col">Type</th><th scope="col">Default</th><th scope="col">Description</th></tr></thead>
+<tbody>
+<tr><td><code>label</code></td><td>string</td><td>required</td><td>The button text.</td></tr>
+<tr><td><code>onClick</code></td><td>function</td><td>-</td><td>Called with <code>(handle, event)</code>. An error thrown inside is logged and does not stop the toast from closing.</td></tr>
+<tr><td><code>close</code></td><td>boolean</td><td><code>true</code></td><td>Close the toast after the handler. Use <code>false</code> to keep it open.</td></tr>
+</tbody>
+</table>
+<p>Action buttons are small outline secondary <a href="button.html">Buttons</a>.</p>
+<h3>Global defaults</h3>
+<p><code>BUI.config({ toast: { ... } })</code> changes the defaults for every later call; options passed to <code>show()</code> win. Unknown keys and invalid values are ignored with a warning.</p>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Toast config</caption>
+<thead><tr><th scope="col">Name</th><th scope="col">Type</th><th scope="col">Default</th><th scope="col">Description</th></tr></thead>
+<tbody>
+<tr><td><code>position</code></td><td>string</td><td><code>"top-end"</code></td><td>Default position.</td></tr>
+<tr><td><code>duration</code></td><td>number</td><td><code>5000</code></td><td>Default duration in milliseconds (<code>0</code> = persistent).</td></tr>
+<tr><td><code>max</code></td><td>integer >= 1</td><td><code>5</code></td><td>Toasts visible at once <em>per position</em>. The rest wait in a queue (first in, first out) and appear as others leave.</td></tr>
+<tr><td><code>closable</code></td><td>boolean</td><td><code>true</code></td><td>Default for <code>closable</code>.</td></tr>
+</tbody>
+</table>
+<h3>Tokens</h3>
+<p><code>--bui-toast-width</code> (24rem), <code>--bui-toast-offset</code> (distance from the window edge), <code>--bui-toast-gap</code>, <code>--bui-toast-shadow</code>, <code>--bui-toast-z</code> (only used when the browser has no Popover API), <code>--bui-toast-duration</code>, <code>--bui-toast-easing</code>. The toast itself is an Alert, so the <code>--bui-alert-*</code> tokens apply too.</p>
+
+                    </section>
+
+                    <section class="bui-docs-section" aria-labelledby="examples">
+                        <h2 id="examples">05. Examples</h2>
+
+<h3>Type shortcuts</h3>
+<p><code>success</code>, <code>error</code>, <code>warning</code> and <code>info</code> take a message string or an options object, and an optional second object of extra options.</p>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<div class="bui-d-flex bui-flex-wrap bui-gap-2">
+<button type="button" class="bui-btn bui-btn--success" data-toast-demo="success">Success</button>
+<button type="button" class="bui-btn bui-btn--danger" data-toast-demo="error">Error</button>
+<button type="button" class="bui-btn bui-btn--warning" data-toast-demo="warning">Warning</button>
+<button type="button" class="bui-btn bui-btn--info" data-toast-demo="info">Info</button>
+</div>
+</div>
+<pre class="bui-docs-code" data-lang="javascript"><code>BUI.toast.success('Profile saved.');
+BUI.toast.error({ title: 'Upload failed', message: 'The file is larger than 5 MB.' });
+BUI.toast.warning('Your session expires in 5 minutes.');
+BUI.toast.info('A new version is available.');</code></pre>
+</div>
+<h3>With an action</h3>
+<p>A toast with actions stays until it is closed, so there is time to reach the button. The handler receives the toast handle.</p>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<button type="button" class="bui-btn" data-toast-demo="action">Archive a message</button>
+</div>
+<pre class="bui-docs-code" data-lang="javascript"><code>BUI.toast.show({
+    type: 'info',
+    title: 'Message archived',
+    actions: [{
+        label: 'Undo',
+        onClick: function () { BUI.toast.success('Message restored.'); }
+    }]
+});</code></pre>
+</div>
+<h3>Positions</h3>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<div class="bui-d-flex bui-flex-wrap bui-gap-2">
+<button type="button" class="bui-btn bui-btn--outline bui-btn--secondary" data-toast-position="top-start">top-start</button>
+<button type="button" class="bui-btn bui-btn--outline bui-btn--secondary" data-toast-position="top-center">top-center</button>
+<button type="button" class="bui-btn bui-btn--outline bui-btn--secondary" data-toast-position="top-end">top-end</button>
+<button type="button" class="bui-btn bui-btn--outline bui-btn--secondary" data-toast-position="bottom-start">bottom-start</button>
+<button type="button" class="bui-btn bui-btn--outline bui-btn--secondary" data-toast-position="bottom-center">bottom-center</button>
+<button type="button" class="bui-btn bui-btn--outline bui-btn--secondary" data-toast-position="bottom-end">bottom-end</button>
+</div>
+</div>
+<pre class="bui-docs-code" data-lang="javascript"><code>BUI.toast.show({ message: 'Position: top-start', position: 'top-start' });</code></pre>
+</div>
+<h3>Update a toast (simulated progress)</h3>
+<p><code>update()</code> changes a shown toast in place. The progress here is simulated with a timer; no real work is done.</p>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<button type="button" class="bui-btn" data-toast-demo="update">Start the simulated export</button>
+</div>
+<pre class="bui-docs-code" data-lang="javascript"><code>var toast = BUI.toast.show({
+    type: 'info', title: 'Exporting', message: 'Step 1 of 4', duration: 0, closable: false
+});
+var step = 1;
+var timer = setInterval(function () {
+    step += 1;
+    if (step &gt; 4) {
+        clearInterval(timer);
+        toast.update({ type: 'success', title: 'Export complete', message: 'All 4 steps finished.', duration: 3000, closable: true });
+        return;
+    }
+    toast.update({ message: 'Step ' + step + ' of 4' });
+}, 900);</code></pre>
+</div>
+<h3>Queue</h3>
+<p>Each position shows at most <code>max</code> toasts (5 by default). The others wait and appear as space frees up. This button asks for 8 at the same position.</p>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<button type="button" class="bui-btn" data-toast-demo="queue">Show 8 toasts</button>
+</div>
+<pre class="bui-docs-code" data-lang="javascript"><code>for (var i = 1; i &lt;= 8; i += 1) {
+    BUI.toast.show({ message: 'Toast ' + i, position: 'top-end', duration: 4000 });
+}</code></pre>
+</div>
+<h3>Above a Dialog</h3>
+<p>A modal dialog makes everything outside it inert. While a Dialog or Drawer is open, the toast region moves inside the top one, so its toasts stay readable and clickable. Open the dialog and press the button inside.</p>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<button type="button" class="bui-btn" data-bui-dialog-open="#toast-dialog">Open dialog</button>
+<dialog class="bui-dialog" id="toast-dialog" aria-labelledby="toast-dialog-t" data-bui-dialog>
+    <div class="bui-dialog__panel">
+        <div class="bui-dialog__header">
+            <h2 class="bui-dialog__title" id="toast-dialog-t">Dialog with a toast</h2>
+            <button type="button" class="bui-btn-close" data-bui-dismiss aria-label="Close" data-bui-i18n-attr="aria-label:common.close"><i class="bui-icon-regular bui-icon-x" aria-hidden="true"></i></button>
+        </div>
+        <div class="bui-dialog__body"><p>The toast appears above this dialog and can be closed with its button or Esc.</p></div>
+        <div class="bui-dialog__footer"><button type="button" class="bui-btn" data-toast-demo="dialog">Show toast</button></div>
+    </div>
+</dialog>
+</div>
+<pre class="bui-docs-code" data-lang="javascript"><code>BUI.toast.warning({ title: 'Inside a dialog', message: 'Esc on a toast closes the toast, not the dialog.', duration: 0 });</code></pre>
+</div>
+<h3>Global defaults</h3>
+<p>Not run on this page (it would change the other demos). It applies to every later call:</p>
+<pre class="bui-docs-code" data-lang="javascript"><code>BUI.config({ toast: { position: 'bottom-center', duration: 8000, max: 3 } });</code></pre>
+
+                    </section>
+
+                    <section class="bui-docs-section" aria-labelledby="javascript-api">
+                        <h2 id="javascript-api">06. JavaScript API</h2>
+
+<p><code>BUI.toast</code> is a manager, not a per-element component: there is nothing to initialize or destroy. Toasts are never created from markup.</p>
+<h3>Methods</h3>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">BUI.toast methods</caption>
+<thead><tr><th scope="col">Name</th><th scope="col">Returns</th><th scope="col">Description</th></tr></thead>
+<tbody>
+<tr><td><code>show(options)</code></td><td>handle or <code>null</code></td><td>Shows a toast (or queues it when the position is full). <code>null</code> with a warning when the options are not a plain object or there is no title and no message.</td></tr>
+<tr><td><code>success(messageOrOptions, options?)</code><br><code>error(...)</code><br><code>warning(...)</code><br><code>info(...)</code></td><td>handle or <code>null</code></td><td>Shortcuts that set the type (<code>error</code> is <code>danger</code>). A string becomes the <code>message</code>.</td></tr>
+<tr><td><code>clear()</code></td><td>number</td><td>Closes every shown toast (with the leaving animation) and drops the queued ones. Returns how many were affected.</td></tr>
+</tbody>
+</table>
+<h3>Handle</h3>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Toast handle</caption>
+<thead><tr><th scope="col">Name</th><th scope="col">Type</th><th scope="col">Description</th></tr></thead>
+<tbody>
+<tr><td><code>id</code></td><td>string</td><td>Unique id, for example <code>"bui-toast-3"</code>.</td></tr>
+<tr><td><code>element</code></td><td>Element or <code>null</code></td><td>The toast element while it is shown; <code>null</code> while queued or after it left.</td></tr>
+<tr><td><code>close()</code></td><td>boolean</td><td>Closes it (a queued toast is just dropped). <code>false</code> if it is already closing or closed.</td></tr>
+<tr><td><code>update(partial)</code></td><td>boolean</td><td>Changes <code>type</code>, <code>title</code>, <code>message</code>, <code>duration</code>, <code>closable</code>, <code>icon</code> or <code>actions</code> of a toast that is queued or shown. A new <code>duration</code> restarts the timer. <code>position</code> cannot change (warning). The content is rebuilt, so a focused button inside loses focus. <code>false</code> if it left or the result would be empty.</td></tr>
+<tr><td><code>isOpen()</code></td><td>boolean</td><td><code>true</code> while queued or shown, <code>false</code> once it is closing or closed.</td></tr>
+</tbody>
+</table>
+<h3>Events</h3>
+<p>DOM events on the toast element, bubbling to <code>document</code>. Not cancelable. A queued toast fires <code>show</code> only when it is actually shown.</p>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Toast events</caption>
+<thead><tr><th scope="col">Name</th><th scope="col">detail</th><th scope="col">Description</th></tr></thead>
+<tbody>
+<tr><td><code>bui:toast:show</code></td><td><code>id</code>, <code>type</code>, <code>position</code></td><td>After the toast is added to the page.</td></tr>
+<tr><td><code>bui:toast:hide</code></td><td><code>id</code>, <code>type</code>, <code>position</code>, <code>reason</code></td><td>After the leaving animation, just before the element is removed. <code>reason</code> is <code>timeout</code>, <code>api</code>, <code>close-button</code>, <code>escape</code>, <code>action</code> or <code>clear</code>.</td></tr>
+</tbody>
+</table>
+<pre class="bui-docs-code" data-lang="javascript"><code>document.addEventListener('bui:toast:hide', function (e) {
+    if (e.detail.reason === 'timeout') { /* nobody reacted to it */ }
+});</code></pre>
+<h3>How the region works</h3>
+<ul>
+<li>One live region (<code>.bui-toast-region</code>) is created when the first toast is shown and removed after the last one has left, so no element or timer stays behind. The first toast is added about 50 ms after the region exists, because assistive technology announces changes only inside a region that is already rendered.</li>
+<li>The region is a <code>popover="manual"</code> element, so it is in the browser top layer. Without the Popover API it is a fixed element using <code>--bui-toast-z</code>.</li>
+<li>When a Dialog or Drawer opens, the region moves inside the topmost open one and back to <code>body</code> when none is open (see Overlay Manager on the <a href="dialog.html#javascript-api">Dialog page</a>). Toasts already shown do not replay their entrance.</li>
+<li>The newest toast goes next to the screen edge: first in a top stack, last in a bottom stack.</li>
+</ul>
+
+                    </section>
+
+                    <section class="bui-docs-section" aria-labelledby="responsive-behavior">
+                        <h2 id="responsive-behavior">07. Responsive Behavior</h2>
+
+<p>The toast is as wide as <code>--bui-toast-width</code> (24rem) but never wider than the window minus the offset on both sides, so at 320px it is 288px wide. The position is the same at every breakpoint. If the toasts of one position are taller than the window the stack scrolls inside itself; the page never gets a horizontal scrollbar. Toasts use the safe stacking of the browser top layer, so on phones they sit above everything, including an open Dialog. Long text wraps.</p>
+
+                    </section>
+
+                    <section class="bui-docs-section" aria-labelledby="accessibility">
+                        <h2 id="accessibility">08. Accessibility</h2>
+
+<h3>Keyboard</h3>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Toast keyboard behavior</caption>
+<thead><tr><th scope="col">Key</th><th scope="col">Behavior</th></tr></thead>
+<tbody>
+<tr><td>Tab / Shift+Tab</td><td>Toasts are in the document order at the end of <code>body</code> (or at the end of the open Dialog), so Tab reaches their buttons last. Focus is never moved to a toast automatically.</td></tr>
+<tr><td>Enter / Space</td><td>Activates the focused action or close button.</td></tr>
+<tr><td>Esc</td><td>On a focused toast: closes that toast (and only that: an open Dialog stays open). Disabled when <code>closable</code> is <code>false</code>.</td></tr>
+</tbody>
+</table>
+<h3>ARIA and screen readers</h3>
+<ul>
+<li>The single region has <code>role="region"</code>, an <code>aria-label</code> from i18n (<code>toast.region</code>) and <code>aria-live="polite"</code>. Each toast is <code>role="status"</code>; <code>danger</code> toasts are <code>role="alert"</code> (assertive).</li>
+<li>Each toast starts with a visually hidden type word (Success, Error, ...) from i18n (<code>alert.type*</code>), so the type is not carried by color or icon alone.</li>
+<li>The close button name comes from <code>common.close</code>. The language of the toast texts you pass is your responsibility.</li>
+</ul>
+<h3>Time and focus</h3>
+<ul>
+<li>The timer pauses while the pointer is over a toast or focus is inside it, and resumes with the remaining time.</li>
+<li>A toast with actions does not close by itself unless you give a <code>duration</code> (WCAG 2.2.1). Prefer <code>duration: 0</code> for anything the user must act on, and never put the only way to complete a task in a timed toast.</li>
+<li>Focus is never stolen. If a focused toast leaves, focus returns to the element it came from (when it still exists).</li>
+<li>The timer runs while the tab is in the background.</li>
+</ul>
+<h3>Motion</h3>
+<p>Enter and exit animations use the duration token, so they stop under <code>prefers-reduced-motion</code>.</p>
+<div class="bui-docs-callout bui-docs-callout--warning" role="note">
+<p class="bui-docs-callout__title">Warning</p>
+<p><strong>Not tested:</strong> real screen readers (NVDA, JAWS, VoiceOver, TalkBack): how they announce the region, whether an assertive toast is read twice inside the polite region, and the timing of the first toast. Also untested: Safari and Firefox, touch devices.</p>
+</div>
+
+                    </section>
+
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="../../assets/js/baset-ui.js"></script>
+    <script src="../../documentation/assets/js/nav.js"></script>
+    <script src="../../documentation/assets/js/docs.js"></script>
+    <script src="../../documentation/assets/js/playground.js"></script>
+    <script>
+        /* Docs-only helpers for this page. The calls match the code shown in the examples. */
+        (function () {
+            var calls = {
+                'default': function () { BUI.toast.success('Profile saved.'); },
+                success: function () { BUI.toast.success('Profile saved.'); },
+                error: function () { BUI.toast.error({ title: 'Upload failed', message: 'The file is larger than 5 MB.' }); },
+                warning: function () { BUI.toast.warning('Your session expires in 5 minutes.'); },
+                info: function () { BUI.toast.info('A new version is available.'); },
+                action: function () {
+                    BUI.toast.show({ type: 'info', title: 'Message archived', actions: [{ label: 'Undo', onClick: function () { BUI.toast.success('Message restored.'); } }] });
+                },
+                update: function () {
+                    var toast = BUI.toast.show({ type: 'info', title: 'Exporting', message: 'Step 1 of 4', duration: 0, closable: false });
+                    var step = 1;
+                    var timer = setInterval(function () {
+                        step += 1;
+                        if (step > 4) {
+                            clearInterval(timer);
+                            toast.update({ type: 'success', title: 'Export complete', message: 'All 4 steps finished.', duration: 3000, closable: true });
+                            return;
+                        }
+                        toast.update({ message: 'Step ' + step + ' of 4' });
+                    }, 900);
+                },
+                queue: function () {
+                    for (var i = 1; i <= 8; i += 1) { BUI.toast.show({ message: 'Toast ' + i, position: 'top-end', duration: 4000 }); }
+                },
+                dialog: function () {
+                    BUI.toast.warning({ title: 'Inside a dialog', message: 'Esc on a toast closes the toast, not the dialog.', duration: 0 });
+                }
+            };
+            document.addEventListener('click', function (e) {
+                var a = e.target.closest && e.target.closest('a[href="#"]');
+                if (a && a.closest('[data-docs-playground], .bui-docs-example__preview')) { e.preventDefault(); }
+                var demo = e.target.closest && e.target.closest('[data-toast-demo]');
+                if (demo && calls[demo.getAttribute('data-toast-demo')]) { calls[demo.getAttribute('data-toast-demo')](); }
+                var pos = e.target.closest && e.target.closest('[data-toast-position]');
+                if (pos) { BUI.toast.show({ message: 'Position: ' + pos.getAttribute('data-toast-position'), position: pos.getAttribute('data-toast-position') }); }
+            });
+
+            var ICONS = { none: false, bell: 'bell', star: 'star', heart: 'heart' };
+            /* The options object the Show button runs; the JavaScript block of the Code Output is built from the same object. */
+            function toOptions(s) {
+                var o = { type: s.type };
+                if (s.title) { o.title = s.title; }
+                if (s.message) { o.message = s.message; }
+                if (s.duration !== 5000 || s.actions) { o.duration = s.duration; }
+                if (s.position !== 'top-end') { o.position = s.position; }
+                if (!s.closable) { o.closable = false; }
+                if (s.icon !== 'default') { o.icon = ICONS[s.icon]; }
+                return o;
+            }
+            /* A JavaScript literal for the Code Output: strings in single quotes, with the backslash and the apostrophe escaped. */
+            function literal(v) {
+                if (typeof v === 'string') { return "'" + v.split('\\').join('\\\\').split("'").join("\\'") + "'"; }
+                return String(v);
+            }
+            function actionsLiteral(indent) {
+                return indent + 'actions: [{ label: \'Undo\', onClick: function () { /* your code */ } }]';
+            }
+            function toSource(s) {
+                var o = toOptions(s);
+                var lines = Object.keys(o).map(function (k) { return '    ' + k + ': ' + literal(o[k]); });
+                if (s.actions) { lines.push(actionsLiteral('    ')); }
+                return 'BUI.toast.show({\n' + lines.join(',\n') + '\n});';
+            }
+            BUI_DOCS_PLAYGROUND.define('toast', {
+                title: 'Toast playground',
+                controls: [
+                    { type: 'select', name: 'type', label: 'Type', default: 'success', options: [{ value: 'primary', label: 'Primary' }, { value: 'secondary', label: 'Secondary' }, { value: 'success', label: 'Success' }, { value: 'info', label: 'Info' }, { value: 'warning', label: 'Warning' }, { value: 'danger', label: 'Danger' }] },
+                    { type: 'text', name: 'title', label: 'Title', default: 'Saved', maxLength: 40 },
+                    { type: 'text', name: 'message', label: 'Message', default: 'Your changes were saved.', maxLength: 120 },
+                    { type: 'select', name: 'position', label: 'Position', default: 'top-end', options: [{ value: 'top-start', label: 'Top start' }, { value: 'top-center', label: 'Top center' }, { value: 'top-end', label: 'Top end' }, { value: 'bottom-start', label: 'Bottom start' }, { value: 'bottom-center', label: 'Bottom center' }, { value: 'bottom-end', label: 'Bottom end' }] },
+                    { type: 'range', name: 'duration', label: 'Duration (0 = until closed)', default: 5000, min: 0, max: 10000, step: 500, unit: ' ms' },
+                    { type: 'select', name: 'icon', label: 'Icon', default: 'default', options: [{ value: 'default', label: 'By type' }, { value: 'none', label: 'None' }, { value: 'bell', label: 'Bell' }, { value: 'star', label: 'Star' }, { value: 'heart', label: 'Heart' }] },
+                    { type: 'switch', name: 'closable', label: 'Closable', default: true },
+                    { type: 'switch', name: 'actions', label: 'Action button', default: false }
+                ],
+                template: function (s, h) {
+                    return {
+                        html: '<button type="button" class="bui-btn" id="show-toast">Show toast</button>',
+                        js: 'document.getElementById(\'show-toast\').addEventListener(\'click\', function () {\n' +
+                            toSource(s).replace(/^/gm, '    ') + '\n});'
+                    };
+                },
+                afterRender: function (frame, s) {
+                    var button = frame.querySelector('#show-toast');
+                    if (!button) { return; }
+                    button.addEventListener('click', function () {
+                        var o = toOptions(s);
+                        if (s.actions) { o.actions = [{ label: 'Undo', onClick: function () { /* the preview does nothing */ } }]; }
+                        BUI.toast.show(o);
+                    });
+                }
+            });
+        })();
+    </script>
+</body>
+</html>

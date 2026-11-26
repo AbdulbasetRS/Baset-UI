@@ -72,3 +72,6 @@ BUI.locale.apply(root);                              // يطبق HTML Binding ع
 
 ## مفاتيح Task 13
 أُضيفت مجموعة `overlay` إلى `en.json` و`ar.json` و`fr.json` معاً: `overlay.loadError` (رسالة فشل تحميل المحتوى الديناميكي في Dialog وDrawer، تُربط عبر `data-bui-i18n` على سطر الحالة). نص "Loading..." المؤقت يعيد استعمال `common.loading`. النص الإنجليزي المكتوب في سطر الحالة داخل JS هو نص HTML Binding الافتراضي (يراه المستخدم قبل تحميل أي لغة؛ لا تُطبَّق الترجمة إلا حين تكون لغة نشطة، وإلا أرجع `translate` المفتاح نفسه). الاختبار: `node tests/i18n-keys.js` (14 مفتاحاً، ناجح).
+
+## مفاتيح Task 15
+أُضيفت إلى `en.json` و`ar.json` و`fr.json` معاً: مجموعة `alert` (`typePrimary` و`typeSecondary` و`typeSuccess` و`typeWarning` و`typeDanger` و`typeInfo`: كلمة النوع المخفية بصرياً قبل عنوان كل toast، فلا يعتمد النوع على اللون أو الأيقونة وحدهما) ومفتاح `toast.region` (الاسم الوصولي لحاوية الـ Live Region). زر الإغلاق يعيد استعمال `common.close`. النصوص تُربط بـ `data-bui-i18n`/`data-bui-i18n-attr` فتتحدث عند `bui:locale:change` لـ toasts المعروضة (مقاس: ar وfr أثناء عرض toast)، والإنجليزية احتياط حتى تُفعَّل لغة. نص العنوان والرسالة الذي يمرره المستخدم لا يُترجم (مسؤوليته). الاختبار: `node tests/i18n-keys.js` (21 مفتاحاً، ناجح).

@@ -1,5 +1,9 @@
 {
-    "meta": { "code": "fr", "name": "Français", "direction": "ltr" },
+    "meta": {
+        "code": "fr",
+        "name": "Français",
+        "direction": "ltr"
+    },
     "common": {
         "loading": "Chargement...",
         "search": "Rechercher",
@@ -14,6 +18,14 @@
             "other": "{count} éléments"
         }
     },
+    "alert": {
+        "typeSuccess": "Succès",
+        "typeInfo": "Information",
+        "typeWarning": "Avertissement",
+        "typeDanger": "Erreur",
+        "typePrimary": "Avis",
+        "typeSecondary": "Avis"
+    },
     "avatar": {
         "statusOnline": "En ligne",
         "statusOffline": "Hors ligne",
@@ -25,5 +37,8 @@
     },
     "overlay": {
         "loadError": "Le contenu n’a pas pu être chargé."
+    },
+    "toast": {
+        "region": "Notifications"
     }
 }
