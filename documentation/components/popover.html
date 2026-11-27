@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-bui-theme="default" data-bui-mode="light" data-root="../../">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Popover - Baset-UI Documentation</title>
+    <meta name="description" content="Popover: a small floating panel with a title and content, opened by click, hover, focus or code. Positioned by BUI.position with flip, shift and an arrow; works inside a Dialog.">
+    <!-- Empty icon: avoids a /favicon.ico 404 until the project has a real icon. -->
+    <link rel="icon" href="data:,">
+
+    <link rel="stylesheet" href="../../assets/css/baset-ui.css">
+    <link rel="stylesheet" href="../../assets/css/extensions/baset-ui-icons.css">
+    <link rel="stylesheet" href="../../assets/css/themes/ocean.css">
+    <link rel="stylesheet" href="../../documentation/assets/css/docs.css">
+    <link rel="stylesheet" href="../../documentation/assets/css/playground.css">
+    <script>
+        /* Prevents a flash of the wrong theme or mode. Same keys as BUI.theme (bui-theme, bui-mode). */
+        (function () {
+            var d = document.documentElement, t = null, m = null, r = null;
+            try { t = localStorage.getItem('bui-theme'); m = localStorage.getItem('bui-mode'); r = localStorage.getItem('bui-docs-dir'); } catch (e) {}
+            if (t && /^[a-z][a-z0-9]*(-[a-z0-9]+)*$/.test(t)) d.setAttribute('data-bui-theme', t);
+            if (m !== 'light' && m !== 'dark') m = window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+            d.setAttribute('data-bui-mode', m);
+            /* Documentation shell only: the saved direction of the RTL/LTR switcher. */
+            if (r === 'rtl' || r === 'ltr') d.setAttribute('dir', r);
+        })();
+    </script>
+</head>
+<body>
+    <main class="bui-docs-main" id="bui-docs-main" tabindex="-1">
+        <div class="bui-docs-page">
+            <div class="bui-docs-page__body">
+
+                <header class="bui-docs-page-header">
+                    <nav class="bui-docs-breadcrumb" aria-label="Breadcrumb" data-docs-breadcrumb hidden></nav>
+                    <h1>Popover</h1>
+                    <p class="bui-docs-lead">A small floating panel next to a trigger. It flips and shifts to stay on screen, closes on Esc or an outside click, and also works inside an open Dialog.</p>
+                </header>
+
+                <div class="bui-docs-content">
+                    <section class="bui-docs-section" aria-labelledby="installation-include">
+                        <h2 id="installation-include">01. Installation &amp; Include</h2>
+
+<p>Popover and the Positioning Engine are part of the Core files: <code>assets/css/baset-ui.css</code> (the Popover rules) and <code>assets/js/baset-ui.js</code> (<code>BUI.popover</code> and <code>BUI.position</code>). No Extension and no i18n keys are needed: the component has no text of its own (the title and content are yours).</p>
+<pre class="bui-docs-code" data-lang="html"><code>&lt;link rel="stylesheet" href="assets/css/baset-ui.css"&gt;
+
+&lt;button type="button" class="bui-btn" data-bui-popover
+    data-bui-title="Delivery" data-bui-content="Orders placed before noon ship the same day."&gt;
+    Delivery info
+&lt;/button&gt;
+
+&lt;script src="assets/js/baset-ui.js"&gt;&lt;/script&gt;</code></pre>
+
+                    </section>
+
+                    <section class="bui-docs-section" aria-labelledby="customize">
+                        <h2 id="customize">02. Customize</h2>
+
+<p>The preview holds one trigger button. Every option maps to a <code>data-bui-*</code> attribute (section 04) and the Code Output is exactly the markup in the preview. The panel opens above the page (it leaves the preview while open), and takes the Light/Dark and RTL/LTR of the preview. Resizing the preview width does not change the viewport, so flipping and shifting follow the browser window, not the preview.</p>
+<div data-docs-playground="popover"></div>
+
+                    </section>
+
+                    <section class="bui-docs-section" aria-labelledby="default">
+                        <h2 id="default">03. Default</h2>
+
+<p>A trigger with <code>data-bui-title</code> and <code>data-bui-content</code>. The panel is built from them (as text, never HTML), opens below the trigger on click, moves focus into itself, and closes with Esc, an outside click, or the trigger.</p>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<button type="button" class="bui-btn" data-bui-popover data-bui-title="Delivery" data-bui-content="Orders placed before noon ship the same day.">Delivery info</button>
+</div>
+</div>
+
+                    </section>
+
+                    <section class="bui-docs-section" aria-labelledby="variants-options">
+                        <h2 id="variants-options">04. Variants &amp; Options</h2>
+
+<h3>Structure</h3>
+<p>Instead of the two attributes you can write the panel yourself, for rich content, and point at it with <code>data-bui-target</code>, or put it directly after the trigger.</p><pre class="bui-docs-code" data-lang="html"><code>&lt;button type="button" class="bui-btn" data-bui-popover data-bui-target="#help"&gt;Help&lt;/button&gt;
+
+&lt;div class="bui-popover" id="help"&gt;
+    &lt;div class="bui-popover__header"&gt;&lt;div class="bui-popover__title"&gt;Need help?&lt;/div&gt;&lt;/div&gt;
+    &lt;div class="bui-popover__body"&gt;
+        &lt;p&gt;Any content, including links and buttons.&lt;/p&gt;
+        &lt;a class="bui-btn bui-btn--sm" href="#"&gt;Contact support&lt;/a&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</code></pre><table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Popover parts</caption>
+<thead><tr><th scope="col">Class</th><th scope="col">Description</th></tr></thead>
+<tbody>
+<tr><td><code>bui-popover</code></td><td>The panel. Hidden until opened by the script.</td></tr>
+<tr><td><code>bui-popover__header</code></td><td>Optional. Holds the title; separated from the body by a line.</td></tr>
+<tr><td><code>bui-popover__title</code></td><td>The title. Names the panel (<code>aria-labelledby</code> is added for you).</td></tr>
+<tr><td><code>bui-popover__body</code></td><td>The content. Scrolls inside when the room on screen is short.</td></tr>
+<tr><td><code>bui-popover__arrow</code></td><td>The arrow. Created by the script when <code>arrow</code> is true; you may place it yourself as the first child.</td></tr>
+</tbody>
+</table>
+<h3>Options</h3>
+<p>Options come from <code>data-bui-*</code> attributes or from the second argument of <code>BUI.popover(el, options)</code> (JavaScript wins). Invalid values fall back to the default with a <code>[BUI]</code> warning.</p><table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Popover options</caption>
+<thead><tr><th scope="col">Name</th><th scope="col">Type</th><th scope="col">Default</th><th scope="col">HTML attribute</th><th scope="col">Description</th></tr></thead>
+<tbody>
+<tr><td><code>target</code></td><td>string</td><td><code>""</code></td><td><code>data-bui-target</code></td><td>Selector of the panel element.</td></tr>
+<tr><td><code>title</code></td><td>string</td><td><code>""</code></td><td><code>data-bui-title</code></td><td>Title of a built panel.</td></tr>
+<tr><td><code>content</code></td><td>string</td><td><code>""</code></td><td><code>data-bui-content</code></td><td>Content of a built panel (text only).</td></tr>
+<tr><td><code>trigger</code></td><td>string</td><td><code>"click"</code></td><td><code>data-bui-trigger</code></td><td><code>click</code>, <code>hover</code>, <code>focus</code>, <code>manual</code>. Combine with a space (<code>"hover focus"</code>); <code>manual</code> stands alone and is closed only by your code (<code>hide()</code>) or Esc, never by an outside click, so a button of the page can toggle it.</td></tr>
+<tr><td><code>placement</code></td><td>string</td><td><code>"bottom"</code></td><td><code>data-bui-placement</code></td><td>See the table below.</td></tr>
+<tr><td><code>offset</code></td><td>number</td><td><code>8</code></td><td><code>data-bui-offset</code></td><td>Pixels between the trigger and the panel (the arrow adds its own size).</td></tr>
+<tr><td><code>arrow</code></td><td>boolean</td><td><code>true</code></td><td><code>data-bui-arrow</code></td><td>Show the arrow.</td></tr>
+<tr><td><code>flip</code></td><td>boolean</td><td><code>true</code></td><td><code>data-bui-flip</code></td><td>Use the opposite side when the chosen one has no room.</td></tr>
+<tr><td><code>shift</code></td><td>boolean</td><td><code>true</code></td><td><code>data-bui-shift</code></td><td>Slide along the edge to stay inside the screen.</td></tr>
+<tr><td><code>closeOnOutside</code></td><td>boolean</td><td><code>true</code></td><td><code>data-bui-close-on-outside</code></td><td>Close on a pointer press outside the panel and the trigger.</td></tr>
+<tr><td><code>keyboard</code></td><td>boolean</td><td><code>true</code></td><td><code>data-bui-keyboard</code></td><td>Close on Esc.</td></tr>
+<tr><td><code>focus</code></td><td>boolean</td><td><code>true</code></td><td><code>data-bui-focus</code></td><td>Move focus into the panel when opened by click or code (never by hover or focus triggers).</td></tr>
+<tr><td><code>restoreFocus</code></td><td>boolean</td><td><code>true</code></td><td><code>data-bui-restore-focus</code></td><td>Return focus to the trigger when the panel closes while it holds the focus.</td></tr>
+<tr><td><code>delay</code></td><td>number</td><td><code>150</code></td><td><code>data-bui-delay</code></td><td>Milliseconds before a hover or focus trigger shows or hides. The hide delay lets the pointer reach the panel.</td></tr>
+</tbody>
+</table>
+<h3>Placements</h3>
+<p><code>start</code> and <code>end</code> are logical: they swap in RTL. The panel gets <code>data-bui-side</code> (the physical side where it is: <code>top</code>, <code>bottom</code>, <code>left</code>, <code>right</code>) and <code>data-bui-placement</code> (the resolved logical placement, after any flip).</p><table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Placements</caption>
+<thead><tr><th scope="col">Value</th><th scope="col">Where the panel goes</th></tr></thead>
+<tbody>
+<tr><td><code>top</code></td><td>Above, centered. Same for <code>bottom</code>.</td></tr>
+<tr><td><code>top-start / top-end</code></td><td>Above, aligned to the start or the end edge of the trigger. Same for <code>bottom-*</code>.</td></tr>
+<tr><td><code>start / end</code></td><td>Beside the trigger, vertically centered. In LTR <code>start</code> is the left side.</td></tr>
+<tr><td><code>start-start / start-end</code></td><td>Beside the trigger, aligned to its top or bottom edge. Same for <code>end-*</code>.</td></tr>
+</tbody>
+</table>
+<h3>Design tokens</h3>
+<p>Themes can change the look with <code>--bui-popover-bg</code>, <code>-color</code>, <code>-border-color</code>, <code>-border-width</code>, <code>-radius</code>, <code>-shadow</code>, <code>-padding-x</code>, <code>-padding-y</code>, <code>-max-width</code>, <code>-arrow-size</code>, <code>-title-font-weight</code>, <code>-z</code>, <code>-duration</code> and <code>-easing</code>.</p>
+
+                    </section>
+
+                    <section class="bui-docs-section" aria-labelledby="examples">
+                        <h2 id="examples">05. Examples</h2>
+
+<h3>Rich content</h3>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<button type="button" class="bui-btn bui-btn--outline" data-bui-popover data-bui-target="#ex-rich">Help</button>
+<div class="bui-popover" id="ex-rich">
+<div class="bui-popover__header"><div class="bui-popover__title">Need help?</div></div>
+<div class="bui-popover__body">
+<p style="margin:0 0 .5rem">The panel can hold any content, including controls. Tab from the last control returns to the trigger.</p>
+<button type="button" class="bui-btn bui-btn--sm">Contact support</button>
+</div>
+</div>
+</div>
+</div>
+<h3>Hover and focus</h3>
+<p>Shows on pointer hover and on keyboard focus. The panel stays open while the pointer is over it. Use it only for extra information: the content must not be needed to use the page (touch devices have no hover).</p>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<button type="button" class="bui-btn bui-btn--outline" data-bui-popover data-bui-trigger="hover focus" data-bui-placement="top" data-bui-title="Storage" data-bui-content="Counts files and attachments.">Storage used</button>
+</div>
+</div>
+<h3>Inside a Dialog</h3>
+<p>A popover opened from inside an open Dialog or Drawer is placed inside it, so it can be focused and clicked. Esc closes the popover first, then the Dialog.</p>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<button type="button" class="bui-btn" data-bui-dialog-open="#ex-pop-dialog">Open dialog</button>
+<dialog class="bui-dialog" id="ex-pop-dialog" aria-labelledby="ex-pop-dialog-t" data-bui-dialog>
+<div class="bui-dialog__panel">
+<div class="bui-dialog__header"><h2 class="bui-dialog__title" id="ex-pop-dialog-t">Dialog with a popover</h2><button type="button" class="bui-btn-close" data-bui-dismiss aria-label="Close" data-bui-i18n-attr="aria-label:common.close"><i class="bui-icon-regular bui-icon-x" aria-hidden="true"></i></button></div>
+<div class="bui-dialog__body"><button type="button" class="bui-btn bui-btn--outline" data-bui-popover data-bui-title="Inside a dialog" data-bui-content="Press Esc to close this popover first.">Open popover</button></div>
+</div>
+</dialog>
+</div>
+</div>
+<h3>Manual trigger</h3>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<button type="button" class="bui-btn" id="ex-manual" data-bui-popover data-bui-trigger="manual" data-bui-title="Saved" data-bui-content="Shown from code.">Anchor</button>
+<button type="button" class="bui-btn bui-btn--outline" id="ex-manual-toggle">Toggle from code</button>
+</div>
+<pre class="bui-docs-code" data-lang="javascript"><code>document.getElementById('ex-manual-toggle').addEventListener('click', function () {
+    BUI.getInstance(document.getElementById('ex-manual'), 'popover').toggle();
+});</code></pre>
+</div>
+
+                    </section>
+
+                    <section class="bui-docs-section" aria-labelledby="javascript-api">
+                        <h2 id="javascript-api">06. JavaScript API</h2>
+
+<p>HTML: add <code>data-bui-popover</code> (initialized by <code>BUI.init()</code>). JavaScript: <code>BUI.popover('#id', options)</code> returns the instance, or <code>null</code> if the selector finds nothing.</p>
+<h3>Methods</h3><table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Popover methods</caption>
+<thead><tr><th scope="col">Name</th><th scope="col">Returns</th><th scope="col">Description</th></tr></thead>
+<tbody>
+<tr><td><code>show()</code></td><td>boolean</td><td>Opens the panel. <code>false</code> if it is already open or a <code>beforeshow</code> listener canceled it.</td></tr>
+<tr><td><code>hide()</code></td><td>boolean</td><td>Closes the panel. <code>false</code> if it is closed or <code>beforehide</code> was canceled.</td></tr>
+<tr><td><code>toggle()</code></td><td>boolean</td><td><code>show()</code> or <code>hide()</code>.</td></tr>
+<tr><td><code>isOpen()</code></td><td>boolean</td><td>Whether the panel is open.</td></tr>
+<tr><td><code>update()</code></td><td>void</td><td>Positions the panel again (after its content or the layout changed by script).</td></tr>
+<tr><td><code>destroy()</code></td><td>void</td><td>Closes without events, removes the listeners, the attributes the script added and a built panel.</td></tr>
+</tbody>
+</table>
+<h3>Events</h3>
+<p>Events are dispatched on the trigger element and bubble. <code>detail.source</code> is why it happened: <code>click</code>, <code>hover</code>, <code>focus</code>, <code>api</code> (a method call), <code>escape</code>, <code>outside</code>, <code>focusout</code>, <code>tab</code>, <code>overlay</code> (a Dialog or Drawer opened or closed) or <code>detached</code> (the trigger left the page).</p><table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Popover events</caption>
+<thead><tr><th scope="col">Name</th><th scope="col">Cancelable</th><th scope="col">Description</th></tr></thead>
+<tbody>
+<tr><td><code>bui:popover:beforeshow</code></td><td>Yes</td><td>Before opening.</td></tr>
+<tr><td><code>bui:popover:show</code></td><td>No</td><td>After the panel is open and positioned.</td></tr>
+<tr><td><code>bui:popover:beforehide</code></td><td>Yes</td><td>Before closing (also for Esc and outside clicks).</td></tr>
+<tr><td><code>bui:popover:hide</code></td><td>No</td><td>After the panel is closed.</td></tr>
+</tbody>
+</table>
+<p>Events are named without a hyphen between the words (<code>beforeshow</code>), like the Dialog events.</p>
+<h3>Positioning Engine (internal API)</h3>
+<p><code>BUI.position(anchor, floating, options)</code> is the engine Popover and Menu use, and later Select, Date Picker and Tooltip will use. It is documented here for the library's own components. It is <strong>internal</strong>: it may change before 1.0 without a major version. It returns <code>{ update(), getPlacement(), destroy() }</code>, or <code>null</code> for invalid arguments.</p><table class="bui-docs-table">
+<caption class="bui-docs-sr-only">BUI.position options</caption>
+<thead><tr><th scope="col">Name</th><th scope="col">Type</th><th scope="col">Default</th><th scope="col">Description</th></tr></thead>
+<tbody>
+<tr><td><code>placement</code></td><td>string</td><td><code>"bottom"</code></td><td>As in the placements table above.</td></tr>
+<tr><td><code>offset</code></td><td>number</td><td><code>8</code></td><td>Pixels between anchor and floating element.</td></tr>
+<tr><td><code>padding</code></td><td>number</td><td><code>8</code></td><td>Pixels kept free at the screen edges.</td></tr>
+<tr><td><code>flip</code></td><td>boolean</td><td><code>true</code></td><td>Use the opposite side when the chosen one lacks room and the opposite has more.</td></tr>
+<tr><td><code>shift</code></td><td>boolean</td><td><code>true</code></td><td>Keep the element inside the screen along the edge (and, if no side fits, along the main axis).</td></tr>
+<tr><td><code>arrow</code></td><td>Element | null</td><td><code>null</code></td><td>An arrow element (a square). It slides along the edge to point at the anchor center and the offset grows to fit it.</td></tr>
+<tr><td><code>arrowPadding</code></td><td>number</td><td><code>8</code></td><td>Minimum distance of the arrow from the corners.</td></tr>
+<tr><td><code>autoUpdate</code></td><td>boolean</td><td><code>true</code></td><td>Update on scroll of the anchor ancestors and the window, on resize and when either element changes size.</td></tr>
+<tr><td><code>hideWhenClipped</code></td><td>boolean</td><td><code>true</code></td><td>Set <code>data-bui-detached</code> while the anchor is scrolled out of view of a scroll container or the screen.</td></tr>
+<tr><td><code>onUpdate</code></td><td>function</td><td><code>null</code></td><td>Called after every update with <code>{ placement, side, x, y, detached }</code>.</td></tr>
+</tbody>
+</table>
+<p>The engine owns these inline properties of the floating element: <code>position</code>, <code>margin</code>, <code>right</code>, <code>bottom</code>, <code>left</code>, <code>top</code>. It sets <code>data-bui-side</code>, <code>data-bui-placement</code>, <code>data-bui-detached</code> and the custom properties <code>--bui-position-available-width</code> and <code>--bui-position-available-height</code> (the room left on the chosen side, used by CSS to limit the size). <code>destroy()</code> removes all of them and every listener. The coordinates are physical because they come from measurements; <code>start</code> and <code>end</code> follow the direction of the anchor. The floating element must be rendered (not <code>display: none</code>) when it is measured, and must not sit inside an ancestor with a transform.</p><pre class="bui-docs-code" data-lang="javascript"><code>var engine = BUI.position(buttonEl, panelEl, { placement: 'bottom-start', offset: 6 });
+// later
+engine.update();
+engine.destroy();</code></pre>
+
+                    </section>
+
+                    <section class="bui-docs-section" aria-labelledby="responsive-behavior">
+                        <h2 id="responsive-behavior">07. Responsive Behavior</h2>
+
+<p>The panel never grows wider than <code>--bui-popover-max-width</code> (18rem) or than the room on the screen, and it flips or shifts so it stays inside the viewport with an 8px margin (tested from 320px). Its body scrolls inside when the room above or below is short. When the trigger is scrolled out of view of a scroll container, the panel is hidden until it is visible again. On touch devices there is no hover: a <code>hover</code> trigger opens on tap (the browser sends the mouse events) but this was not tested on a real device, so use <code>click</code> for anything that matters.</p>
+
+                    </section>
+
+                    <section class="bui-docs-section" aria-labelledby="accessibility">
+                        <h2 id="accessibility">08. Accessibility</h2>
+
+<h3>Keyboard</h3>
+<table class="bui-docs-table"><caption class="bui-docs-sr-only">Popover keyboard</caption><thead><tr><th scope="col">Key</th><th scope="col">Action</th></tr></thead><tbody>
+<tr><td>Enter / Space on the trigger</td><td>Opens (click trigger) and moves focus into the panel.</td></tr>
+<tr><td>Esc</td><td>Closes the topmost popover or menu only, and returns focus to the trigger. An open Dialog behind it stays open.</td></tr>
+<tr><td>Tab from the last control</td><td>Closes the panel; focus goes to the trigger and then on to the next element after it. Shift+Tab from the first control closes and stays on the trigger.</td></tr>
+</tbody></table>
+<h3>ARIA</h3>
+<p>The trigger gets <code>aria-haspopup="dialog"</code>, <code>aria-expanded</code> and <code>aria-controls</code>. The panel is a non-modal <code>role="dialog"</code> named by its title (<code>aria-labelledby</code>) or by <code>aria-label</code>; without a name the script warns. The arrow is <code>aria-hidden</code>. Use a real <code>&lt;button&gt;</code> as the trigger.</p>
+<h3>Screen reader</h3>
+<p><strong>Not tested with a screen reader.</strong> Hover and focus triggers keep the panel open while the pointer is over it and Esc closes it (WCAG 1.4.13), but their content is not announced on its own: keep anything essential outside of them. Also not tested: Safari and Firefox, and real touch devices.</p>
+
+                    </section>
+
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="../../assets/js/baset-ui.js"></script>
+    <script src="../../documentation/assets/js/nav.js"></script>
+    <script src="../../documentation/assets/js/docs.js"></script>
+    <script src="../../documentation/assets/js/playground.js"></script>
+    <script>
+        (function () {
+            BUI_DOCS_PLAYGROUND.define('popover', {
+                title: 'Popover playground',
+                controls: [
+                    { type: 'select', name: 'placement', label: 'Placement', default: 'bottom', options: [{ value: 'top', label: 'top' }, { value: 'top-start', label: 'top start' }, { value: 'top-end', label: 'top end' }, { value: 'bottom', label: 'bottom' }, { value: 'bottom-start', label: 'bottom start' }, { value: 'bottom-end', label: 'bottom end' }, { value: 'start', label: 'start' }, { value: 'start-start', label: 'start start' }, { value: 'start-end', label: 'start end' }, { value: 'end', label: 'end' }, { value: 'end-start', label: 'end start' }, { value: 'end-end', label: 'end end' }] },
+                    { type: 'select', name: 'trigger', label: 'Trigger', default: 'click', options: [{ value: 'click', label: 'Click' }, { value: 'hover', label: 'Hover' }, { value: 'focus', label: 'Focus' }, { value: 'hover focus', label: 'Hover and focus' }] },
+                    { type: 'text', name: 'title', label: 'Title', default: 'Delivery', maxLength: 40 },
+                    { type: 'text', name: 'content', label: 'Content', default: 'Orders placed before noon ship the same day.', maxLength: 120 },
+                    { type: 'switch', name: 'arrow', label: 'Arrow', default: true },
+                    { type: 'range', name: 'offset', label: 'Offset', default: 8, min: 0, max: 24, step: 2, unit: ' px' },
+                    { type: 'switch', name: 'closeOnOutside', label: 'Close on outside click', default: true },
+                    { type: 'switch', name: 'focus', label: 'Move focus into the panel', default: true }
+                ],
+                beforeRender: function (frame) { BUI.destroy(frame); },
+                afterRender: function (frame) { BUI.init(frame); },
+                template: function (s, h) {
+                    var title = s.title, content = s.content;
+                    if (!title && !content) { content = 'Content'; }
+                    var a = ['data-bui-popover'];
+                    if (title) { a.push('data-bui-title="' + h.escape(title) + '"'); }
+                    if (content) { a.push('data-bui-content="' + h.escape(content) + '"'); }
+                    if (s.placement !== 'bottom') { a.push('data-bui-placement="' + s.placement + '"'); }
+                    if (s.trigger !== 'click') { a.push('data-bui-trigger="' + s.trigger + '"'); }
+                    if (s.offset !== 8) { a.push('data-bui-offset="' + s.offset + '"'); }
+                    if (!s.arrow) { a.push('data-bui-arrow="false"'); }
+                    if (!s.closeOnOutside) { a.push('data-bui-close-on-outside="false"'); }
+                    if (!s.focus) { a.push('data-bui-focus="false"'); }
+                    return '<button type="button" class="bui-btn"\n    ' + a.join('\n    ') + '>\n    Open popover\n</button>';
+                }
+            });
+            var toggle = document.getElementById('ex-manual-toggle');
+            if (toggle) {
+                toggle.addEventListener('click', function () {
+                    var inst = BUI.getInstance(document.getElementById('ex-manual'), 'popover');
+                    if (inst) { inst.toggle(); }
+                });
+            }
+        })();
+    </script>
+</body>
+</html>

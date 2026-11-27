@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<!--
+    Manual test page for the Positioning Engine, Popover and Menu (Task 16).
+    Test fixture only (not shipped as a component, nothing loads it). Shows: the 12 placements, triggers fixed to the four screen corners
+    (flip and shift), anchors inside scroll containers (the panel follows the scroll and hides when the anchor leaves the container), a fixed
+    anchor, a Popover and a Menu inside a Dialog and a Drawer, a Menu with 40 items (it must scroll inside), the horizontal Menu, and a raw
+    BUI.position() demo with an event log.
+    DECLARED FIXTURES (not real data): every title, content and label is sample text. No image, no network request.
+    The selects switch the theme, the mode and the direction of the whole page.
+-->
+<html lang="en" dir="ltr" data-bui-theme="default" data-bui-mode="light">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Positioning, Popover and Menu manual test - Baset-UI</title>
+    <link rel="icon" href="data:,">
+    <link rel="stylesheet" href="../../assets/css/baset-ui.css">
+    <link rel="stylesheet" href="../../assets/css/extensions/baset-ui-icons.css">
+    <link rel="stylesheet" href="../../assets/css/themes/ocean.css">
+    <style>
+        body { padding: var(--bui-space-3); min-block-size: 160vh; }
+        .t-bar, .t-row { display: flex; flex-wrap: wrap; gap: var(--bui-space-2); margin-block-end: var(--bui-space-3); }
+        h2 { font-size: var(--bui-font-size-lg); }
+        .t-center { display: flex; justify-content: center; padding: 6rem 0; }
+        .t-scroll { block-size: 12rem; overflow: auto; border: 1px solid var(--bui-color-border); padding: var(--bui-space-2); }
+        .t-scroll > .t-tall { block-size: 30rem; padding-block-start: 8rem; }
+        .t-corner { position: fixed; z-index: 5; }
+        #t-log { max-block-size: 8rem; overflow: auto; padding: var(--bui-space-2); background: var(--bui-color-surface); border: 1px solid var(--bui-color-border); font-family: monospace; font-size: var(--bui-font-size-sm); }
+        #engine-floating { position: fixed; padding: var(--bui-space-2); background: var(--bui-color-surface); border: 1px solid var(--bui-color-border); inline-size: 10rem; }
+    </style>
+</head>
+<body>
+    <h1>Positioning Engine, Popover and Menu</h1>
+    <div class="t-bar">
+        <label>Theme <select id="t-theme"><option value="default">default</option><option value="ocean">ocean</option></select></label>
+        <label>Mode <select id="t-mode"><option value="light">light</option><option value="dark">dark</option></select></label>
+        <label>Direction <select id="t-dir"><option value="ltr">ltr</option><option value="rtl">rtl</option></select></label>
+    </div>
+
+    <h2>Placements (a centered anchor with 12 triggers is not possible, so each trigger is its own anchor)</h2>
+    <div class="t-row" id="placements">
+<button type="button" class="bui-btn bui-btn--outline bui-btn--sm" data-bui-popover data-bui-placement="top" data-bui-title="top" data-bui-content="Sample content.">top</button>
+<button type="button" class="bui-btn bui-btn--outline bui-btn--sm" data-bui-popover data-bui-placement="top-start" data-bui-title="top-start" data-bui-content="Sample content.">top-start</button>
+<button type="button" class="bui-btn bui-btn--outline bui-btn--sm" data-bui-popover data-bui-placement="top-end" data-bui-title="top-end" data-bui-content="Sample content.">top-end</button>
+<button type="button" class="bui-btn bui-btn--outline bui-btn--sm" data-bui-popover data-bui-placement="bottom" data-bui-title="bottom" data-bui-content="Sample content.">bottom</button>
+<button type="button" class="bui-btn bui-btn--outline bui-btn--sm" data-bui-popover data-bui-placement="bottom-start" data-bui-title="bottom-start" data-bui-content="Sample content.">bottom-start</button>
+<button type="button" class="bui-btn bui-btn--outline bui-btn--sm" data-bui-popover data-bui-placement="bottom-end" data-bui-title="bottom-end" data-bui-content="Sample content.">bottom-end</button>
+<button type="button" class="bui-btn bui-btn--outline bui-btn--sm" data-bui-popover data-bui-placement="start" data-bui-title="start" data-bui-content="Sample content.">start</button>
+<button type="button" class="bui-btn bui-btn--outline bui-btn--sm" data-bui-popover data-bui-placement="start-start" data-bui-title="start-start" data-bui-content="Sample content.">start-start</button>
+<button type="button" class="bui-btn bui-btn--outline bui-btn--sm" data-bui-popover data-bui-placement="start-end" data-bui-title="start-end" data-bui-content="Sample content.">start-end</button>
+<button type="button" class="bui-btn bui-btn--outline bui-btn--sm" data-bui-popover data-bui-placement="end" data-bui-title="end" data-bui-content="Sample content.">end</button>
+<button type="button" class="bui-btn bui-btn--outline bui-btn--sm" data-bui-popover data-bui-placement="end-start" data-bui-title="end-start" data-bui-content="Sample content.">end-start</button>
+<button type="button" class="bui-btn bui-btn--outline bui-btn--sm" data-bui-popover data-bui-placement="end-end" data-bui-title="end-end" data-bui-content="Sample content.">end-end</button>
+    </div>
+    <div class="t-center"><button type="button" class="bui-btn" id="center-anchor" data-bui-popover data-bui-trigger="manual" data-bui-title="Centered" data-bui-content="Manual trigger anchor in the middle of the page.">Manual anchor</button>
+    <button type="button" class="bui-btn bui-btn--outline" id="center-toggle">Toggle manual</button></div>
+
+    <h2>Triggers: click, hover, focus</h2>
+    <div class="t-row">
+        <button type="button" class="bui-btn" id="trig-click" data-bui-popover data-bui-title="Click" data-bui-content="Opened by click.">Click</button>
+        <button type="button" class="bui-btn" id="trig-hover" data-bui-popover data-bui-trigger="hover" data-bui-title="Hover" data-bui-content="Opened by hover; stays while the pointer is over it.">Hover</button>
+        <button type="button" class="bui-btn" id="trig-focus" data-bui-popover data-bui-trigger="focus" data-bui-title="Focus" data-bui-content="Opened by focus.">Focus</button>
+        <button type="button" class="bui-btn" id="trig-rich" data-bui-popover data-bui-target="#rich-panel">Rich content</button>
+        <div class="bui-popover" id="rich-panel"><div class="bui-popover__header"><div class="bui-popover__title">Rich</div></div><div class="bui-popover__body"><p style="margin:0 0 .5rem">Controls inside.</p><button type="button" class="bui-btn bui-btn--sm" id="rich-a">First</button> <button type="button" class="bui-btn bui-btn--sm" id="rich-b">Second</button></div></div>
+        <button type="button" class="bui-btn bui-btn--outline" id="nested-trigger" data-bui-popover data-bui-target="#nested-panel">Nested menu in popover</button>
+        <div class="bui-popover" id="nested-panel"><div class="bui-popover__header"><div class="bui-popover__title">Contains a menu</div></div><div class="bui-popover__body"><button type="button" class="bui-btn bui-btn--sm" id="nested-menu-trigger" data-bui-menu data-bui-target="#nested-menu">Inner menu</button><div class="bui-menu" id="nested-menu"><button type="button" class="bui-menu__item">One</button><button type="button" class="bui-menu__item">Two</button></div></div></div>
+    </div>
+
+    <h2>Menus</h2>
+    <div class="t-row">
+        <button type="button" class="bui-btn" id="menu-main" data-bui-menu>Actions</button>
+        <div class="bui-menu" id="menu-main-list">
+<div class="bui-menu__header">Account</div>
+<button type="button" class="bui-menu__item">Edit</button>
+<button type="button" class="bui-menu__item">Duplicate</button>
+<button type="button" class="bui-menu__item" aria-disabled="true">Archive</button>
+<hr class="bui-menu__divider">
+<button type="button" class="bui-menu__item" role="menuitemcheckbox" aria-checked="true" data-bui-keep-open>Pinned</button>
+<button type="button" class="bui-menu__item" role="menuitemradio" aria-checked="true" data-bui-keep-open>Small</button>
+<button type="button" class="bui-menu__item" role="menuitemradio" aria-checked="false" data-bui-keep-open>Large</button>
+<hr class="bui-menu__divider">
+<button type="button" class="bui-menu__item">Delete</button>
+        </div>
+        <button type="button" class="bui-btn bui-btn--outline" id="menu-end" data-bui-menu data-bui-placement="end-start" data-bui-target="#menu-end-list">Placement end-start</button>
+        <div class="bui-menu" id="menu-end-list"><button type="button" class="bui-menu__item">Alpha</button><a class="bui-menu__item" href="#menu-end">Link item</a><button type="button" class="bui-menu__item">Beta</button></div>
+        <button type="button" class="bui-btn bui-btn--outline" id="menu-long" data-bui-menu data-bui-target="#menu-long-list">40 items</button>
+        <div class="bui-menu" id="menu-long-list">
+<button type="button" class="bui-menu__item">Item 1</button>
+<button type="button" class="bui-menu__item">Item 2</button>
+<button type="button" class="bui-menu__item">Item 3</button>
+<button type="button" class="bui-menu__item">Item 4</button>
+<button type="button" class="bui-menu__item">Item 5</button>
+<button type="button" class="bui-menu__item">Item 6</button>
+<button type="button" class="bui-menu__item">Item 7</button>
+<button type="button" class="bui-menu__item">Item 8</button>
+<button type="button" class="bui-menu__item">Item 9</button>
+<button type="button" class="bui-menu__item">Item 10</button>
+<button type="button" class="bui-menu__item">Item 11</button>
+<button type="button" class="bui-menu__item">Item 12</button>
+<button type="button" class="bui-menu__item">Item 13</button>
+<button type="button" class="bui-menu__item">Item 14</button>
+<button type="button" class="bui-menu__item">Item 15</button>
+<button type="button" class="bui-menu__item">Item 16</button>
+<button type="button" class="bui-menu__item">Item 17</button>
+<button type="button" class="bui-menu__item">Item 18</button>
+<button type="button" class="bui-menu__item">Item 19</button>
+<button type="button" class="bui-menu__item">Item 20</button>
+<button type="button" class="bui-menu__item">Item 21</button>
+<button type="button" class="bui-menu__item">Item 22</button>
+<button type="button" class="bui-menu__item">Item 23</button>
+<button type="button" class="bui-menu__item">Item 24</button>
+<button type="button" class="bui-menu__item">Item 25</button>
+<button type="button" class="bui-menu__item">Item 26</button>
+<button type="button" class="bui-menu__item">Item 27</button>
+<button type="button" class="bui-menu__item">Item 28</button>
+<button type="button" class="bui-menu__item">Item 29</button>
+<button type="button" class="bui-menu__item">Item 30</button>
+<button type="button" class="bui-menu__item">Item 31</button>
+<button type="button" class="bui-menu__item">Item 32</button>
+<button type="button" class="bui-menu__item">Item 33</button>
+<button type="button" class="bui-menu__item">Item 34</button>
+<button type="button" class="bui-menu__item">Item 35</button>
+<button type="button" class="bui-menu__item">Item 36</button>
+<button type="button" class="bui-menu__item">Item 37</button>
+<button type="button" class="bui-menu__item">Item 38</button>
+<button type="button" class="bui-menu__item">Item 39</button>
+<button type="button" class="bui-menu__item">Item 40</button>
+</div>
+        <button type="button" class="bui-btn bui-btn--outline" id="menu-horizontal" data-bui-menu data-bui-orientation="horizontal" data-bui-target="#menu-h-list">Horizontal</button>
+        <div class="bui-menu" id="menu-h-list"><button type="button" class="bui-menu__item">Cut</button><button type="button" class="bui-menu__item">Copy</button><hr class="bui-menu__divider"><button type="button" class="bui-menu__item">Paste</button></div>
+    </div>
+
+    <h2>Scroll container (the panel follows the scroll)</h2>
+    <div class="t-scroll" id="scroller"><div class="t-tall">
+        <button type="button" class="bui-btn" id="scroll-pop" data-bui-popover data-bui-title="In a scroller" data-bui-content="Follows the scroll.">Popover in scroller</button>
+        <button type="button" class="bui-btn" id="scroll-menu" data-bui-menu data-bui-target="#scroll-menu-list">Menu in scroller</button>
+        <div class="bui-menu" id="scroll-menu-list"><button type="button" class="bui-menu__item">One</button><button type="button" class="bui-menu__item">Two</button></div>
+    </div></div>
+
+    <h2>Dialog and Drawer</h2>
+    <div class="t-row">
+        <button type="button" class="bui-btn" id="open-dialog" data-bui-dialog-open="#dlg">Open dialog</button>
+        <button type="button" class="bui-btn" id="open-drawer" data-bui-drawer-open="#drw">Open drawer</button>
+    </div>
+    <dialog class="bui-dialog" id="dlg" aria-labelledby="dlg-t" data-bui-dialog><div class="bui-dialog__panel">
+        <div class="bui-dialog__header"><h2 class="bui-dialog__title" id="dlg-t">Dialog</h2><button type="button" class="bui-btn-close" data-bui-dismiss aria-label="Close"><i class="bui-icon-regular bui-icon-x" aria-hidden="true"></i></button></div>
+        <div class="bui-dialog__body"><div class="t-row">
+            <button type="button" class="bui-btn" id="dlg-pop" data-bui-popover data-bui-title="In dialog" data-bui-content="Inside a dialog.">Popover</button>
+            <button type="button" class="bui-btn" id="dlg-menu" data-bui-menu data-bui-target="#dlg-menu-list">Menu</button>
+            <div class="bui-menu" id="dlg-menu-list"><button type="button" class="bui-menu__item">Alpha</button><button type="button" class="bui-menu__item">Beta</button></div>
+        </div></div>
+        <div class="bui-dialog__footer"><button type="button" class="bui-btn" data-bui-dismiss id="dlg-done">Done</button></div>
+    </div></dialog>
+    <dialog class="bui-drawer bui-drawer--end" id="drw" aria-labelledby="drw-t" data-bui-drawer><div class="bui-drawer__panel">
+        <div class="bui-drawer__header"><h2 class="bui-drawer__title" id="drw-t">Drawer</h2><button type="button" class="bui-btn-close" data-bui-dismiss aria-label="Close"><i class="bui-icon-regular bui-icon-x" aria-hidden="true"></i></button></div>
+        <div class="bui-drawer__body"><button type="button" class="bui-btn" id="drw-menu" data-bui-menu data-bui-target="#drw-menu-list">Menu</button>
+            <div class="bui-menu" id="drw-menu-list"><button type="button" class="bui-menu__item">Alpha</button><button type="button" class="bui-menu__item">Beta</button></div></div>
+    </div></dialog>
+
+    <h2>BUI.position() (raw engine)</h2>
+    <div class="t-row">
+        <button type="button" class="bui-btn" id="engine-anchor">Anchor</button>
+        <select id="engine-placement"></select>
+        <button type="button" class="bui-btn bui-btn--outline" id="engine-toggle">Attach / detach</button>
+    </div>
+    <div id="engine-floating" hidden>Floating element</div>
+
+    <h2>Event log</h2>
+    <div id="t-log" role="log"></div>
+
+    <!-- Triggers fixed to the four corners of the screen -->
+    <button type="button" class="bui-btn bui-btn--sm t-corner" id="c-tl" style="inset-block-start:0;inset-inline-start:0" data-bui-popover data-bui-title="Top start" data-bui-content="Near the corner: flips and shifts.">TL</button>
+    <button type="button" class="bui-btn bui-btn--sm t-corner" id="c-tr" style="inset-block-start:0;inset-inline-end:0" data-bui-menu data-bui-target="#c-tr-list" data-bui-placement="bottom-end">TR</button>
+    <div class="bui-menu" id="c-tr-list"><button type="button" class="bui-menu__item">Corner one</button><button type="button" class="bui-menu__item">Corner two</button></div>
+    <button type="button" class="bui-btn bui-btn--sm t-corner" id="c-bl" style="inset-block-end:0;inset-inline-start:0" data-bui-popover data-bui-placement="bottom" data-bui-title="Bottom start" data-bui-content="Must flip above.">BL</button>
+    <button type="button" class="bui-btn bui-btn--sm t-corner" id="c-br" style="inset-block-end:0;inset-inline-end:0" data-bui-menu data-bui-target="#c-br-list">BR</button>
+    <div class="bui-menu" id="c-br-list"><button type="button" class="bui-menu__item">Corner one</button><button type="button" class="bui-menu__item">Corner two</button></div>
+
+    <script src="../../assets/js/baset-ui.js"></script>
+    <script>
+        (function () {
+            var root = document.documentElement;
+            function on(id, type, fn) { document.getElementById(id).addEventListener(type, fn); }
+            on('t-theme', 'change', function (e) { BUI.theme.set(e.target.value); });
+            on('t-mode', 'change', function (e) { BUI.theme.setMode(e.target.value); });
+            on('t-dir', 'change', function (e) { root.setAttribute('dir', e.target.value); });
+            on('center-toggle', 'click', function () { BUI.getInstance(document.getElementById('center-anchor'), 'popover').toggle(); });
+            var log = document.getElementById('t-log');
+            ['popover:beforeshow', 'popover:show', 'popover:hide', 'menu:open', 'menu:close', 'menu:select'].forEach(function (n) {
+                document.addEventListener('bui:' + n, function (e) {
+                    var line = document.createElement('div');
+                    line.textContent = n + ' ' + (e.target.id || '') + ' ' + (e.detail && e.detail.source ? e.detail.source : (e.detail && e.detail.value ? e.detail.value : ''));
+                    log.appendChild(line);
+                    log.scrollTop = log.scrollHeight;
+                });
+            });
+            /* Raw engine demo. */
+            var anchor = document.getElementById('engine-anchor');
+            var floating = document.getElementById('engine-floating');
+            var select = document.getElementById('engine-placement');
+            ['top', 'top-start', 'top-end', 'bottom', 'bottom-start', 'bottom-end', 'start', 'end'].forEach(function (p) {
+                var o = document.createElement('option'); o.value = p; o.textContent = p; select.appendChild(o);
+            });
+            var engine = null;
+            function attach() {
+                floating.hidden = false;
+                engine = BUI.position(anchor, floating, { placement: select.value, offset: 6, onUpdate: function (r) { floating.textContent = 'Floating: ' + r.placement; } });
+            }
+            function detach() { if (engine) { engine.destroy(); engine = null; } floating.hidden = true; }
+            on('engine-toggle', 'click', function () { if (engine) { detach(); } else { attach(); } });
+            select.addEventListener('change', function () { if (engine) { detach(); attach(); } });
+        })();
+    </script>
+</body>
+</html>

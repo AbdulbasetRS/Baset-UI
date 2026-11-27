@@ -28,6 +28,8 @@
 - مناطق حية: `aria-live="polite"` للتنبيهات العادية، `assertive` للأخطاء الحرجة فقط.
 - `Toast/Alert`: `role="status"` أو `role="alert"` حسب الأهمية. (Task 15) Alert: `alert` لـ danger وwarning و`status` للباقي، والنوع يُقال بالأيقونة والعنوان لا باللون وحده. Toast: حاوية واحدة `role="region"` + `aria-live="polite"` باسم من i18n، و`role="alert"` لـ danger، ولا سرقة Focus، وEsc يغلق toast المركّز فقط، والمؤقت يتوقف عند Hover/Focus، وtoast بإجراءات دائم افتراضياً (WCAG 2.2.1). **لم يُختبر بقارئ شاشة.**
 
+- (Task 16) Popover: غير مودال؛ المرتكز `aria-haspopup="dialog"` و`aria-expanded` و`aria-controls`، واللوحة `role="dialog"` باسم من العنوان أو `aria-label` (يحذّر المكون إن غاب). Esc يغلق أعلى طبقة فقط ويعيد التركيز للمرتكز، Tab من آخر عنصر يغلق ويكمل من المرتكز، وhover/focus triggers تبقى مفتوحة فوق اللوحة (WCAG 1.4.13) ولا تحمل محتوى ضرورياً. Menu: نمط ARIA Menu Button (`role=menu` و`menuitem|menuitemcheckbox|menuitemradio` و`aria-checked`)، المرتكز نقطة Tab واحدة والعناصر تُركَّز بالسكربت، الأسهم مع الالتفاف وHome/End وType-ahead وEsc وTab، والعنصر `aria-disabled` قابل للوصول، وفي القائمة الأفقية تنعكس الأسهم الأفقية في RTL. **لم يُختبر بقارئ شاشة.**
+
 ## الاختبار (إلزامي لكل مكون)
 تنقل كامل بالكيبورد فقط، فحص Screen Reader (NVDA/VoiceOver أو معادل) مع تسجيل ما اختُبر، فحص تباين، فحص آلي (مثال axe) إن توفر بموافقة على الأداة ([TESTING.md](TESTING.md)).
 قسم **Accessibility** في كل صفحة مكون يوثق: Keyboard، ARIA، سلوك Screen Reader.

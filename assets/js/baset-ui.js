@@ -1213,7 +1213,7 @@
     var overlayStack = [];
     var overlaySaved = null;     /* inline styles of <html> to restore while the scroll lock is on */
     var overlayObserver = null;
-    var overlayChanged = null;   /* set by the Toast manager (Task 15): called after the stack changes so the toast region can move into the top overlay */
+    var overlayHooks = [];       /* internal listeners (Task 15 Toast, Task 16 Popover and Menu), called after the stack changes so a floating layer can follow the top overlay */
 
     /*
      * overflow:hidden removes the page scrollbar, which would widen the page. When a scrollbar exists (innerWidth - clientWidth > 0)
@@ -1246,6 +1246,10 @@
         overlaySaved = null;
     }
 
+    function overlayNotify() {
+        overlayHooks.slice().forEach(function (hook) { hook(); });
+    }
+
     function overlayRemove(entry) {
         var index = overlayStack.indexOf(entry);
         if (index === -1) return;
@@ -1254,7 +1258,7 @@
             unlockScroll();
             if (overlayObserver) { overlayObserver.disconnect(); overlayObserver = null; }
         }
-        if (overlayChanged) overlayChanged();
+        overlayNotify();
     }
 
     /* An open overlay that was removed from the document is dropped from the stack, so the scroll lock cannot leak. */
@@ -1274,7 +1278,7 @@
             overlayObserver = new window.MutationObserver(pruneOverlays);
             overlayObserver.observe(document.documentElement, { childList: true, subtree: true });
         }
-        if (overlayChanged) overlayChanged();
+        overlayNotify();
     }
 
     var overlay = {
@@ -2134,10 +2138,10 @@
     }
 
     /* Called by the Overlay Manager after the stack changes. The stack is read in a microtask, when showModal() has already run. */
-    overlayChanged = function () {
+    overlayHooks.push(function () {
         if (!toastRegion) return;
         Promise.resolve().then(function () { if (toastRegion) toastPlaceRegion(toastTopHost()); });
-    };
+    });
 
     function toastEnsureRegion() {
         if (toastRegion) return;
@@ -2442,6 +2446,845 @@
         }
     };
     BUI.toast = toast;
+
+    /* ------------------------------------------------------------------ */
+    /* Positioning Engine (Task 16)                                        */
+    /* ------------------------------------------------------------------ */
+
+    /*
+     * BUI.position(anchor, floating, options) places a floating element (a Popover, a Menu, later a Select list) next to an anchor and
+     * keeps it there. Internal API: the library's own components use it; it is documented, but it may still change before 1.0.
+     *   options: placement ('bottom'; top|bottom|start|end, optionally with -start or -end), offset (8, px between anchor and floating),
+     *            padding (8, px kept free at the viewport edges), flip (true), shift (true), arrow (an element or null),
+     *            arrowPadding (8), autoUpdate (true), hideWhenClipped (true), onUpdate (function or null).
+     *   returns: { update(), destroy(), getPlacement() } or null for invalid arguments.
+     * The floating element is positioned with position: fixed and inline left/top computed from rectangles (physical coordinates: they
+     * come from measurements, not from the stylesheet). The engine owns these inline properties of the floating element: position,
+     * margin, right, bottom, left, top and the two custom properties below. It also sets data-bui-side (top|bottom|left|right: where the
+     * floating element is, physically), data-bui-placement (the same with start|end, logical) and data-bui-detached while the anchor is
+     * scrolled out of view. start and end follow the direction of the anchor, so they swap in RTL.
+     *   --bui-position-available-width and --bui-position-available-height: room left for the floating element on the chosen side.
+     * Flip: when the chosen side lacks room and the opposite side has more, the opposite side is used. Shift: the element is moved along
+     * the edge (and, as a last resort, along the main axis) so it stays inside the viewport. The arrow slides along the edge to keep
+     * pointing at the anchor center. Updates run on scroll of every scrollable ancestor of the anchor and of the window, on resize and
+     * when the anchor or the floating element changes size; destroy() removes all of it.
+     */
+    var POSITION_RE = /^(top|bottom|start|end)(?:-(start|end))?$/;
+    var POSITION_OPPOSITE = { top: 'bottom', bottom: 'top', left: 'right', right: 'left' };
+
+    function positionScrollParents(el) {
+        var list = [];
+        var node = el.parentNode;
+        while (node && node.nodeType === 1 && node !== document.body && node !== document.documentElement) {
+            var cs = window.getComputedStyle(node);
+            if (/(auto|scroll|overlay|hidden|clip)/.test(cs.overflowX + ' ' + cs.overflowY)) list.push(node);
+            node = node.parentNode;
+        }
+        return list;
+    }
+
+    function position(anchor, floating, opts) {
+        if (!isElement(anchor) || !isElement(floating)) {
+            log.warn('Position', 'position() needs an anchor element and a floating element.');
+            return null;
+        }
+        var input = isPlainObject(opts) ? opts : {};
+        var settings = {
+            placement: 'bottom', offset: 8, padding: 8, flip: true, shift: true, arrow: null,
+            arrowPadding: 8, autoUpdate: true, hideWhenClipped: true, onUpdate: null
+        };
+        Object.keys(input).forEach(function (key) {
+            if (key in settings) settings[key] = input[key];
+            else log.warn('Position', 'Unknown option "' + key + '".');
+        });
+        if (typeof settings.placement !== 'string' || !POSITION_RE.test(settings.placement)) {
+            log.warn('Position', 'Invalid placement "' + settings.placement + '", using "bottom".');
+            settings.placement = 'bottom';
+        }
+        ['offset', 'padding', 'arrowPadding'].forEach(function (key) {
+            if (typeof settings[key] !== 'number' || !isFinite(settings[key]) || settings[key] < 0) {
+                log.warn('Position', 'Option "' + key + '" must be a number >= 0.');
+                settings[key] = 8;
+            }
+        });
+        if (settings.arrow && !isElement(settings.arrow)) settings.arrow = null;
+
+        var destroyed = false;
+        var frame = 0;
+        var last = null;
+        var parents = positionScrollParents(anchor);
+        var observer = null;
+
+        floating.style.position = 'fixed';
+        floating.style.margin = '0';
+        floating.style.right = 'auto';
+        floating.style.bottom = 'auto';
+
+        function pass() {
+            var root = document.documentElement;
+            var vw = root.clientWidth;
+            var vh = root.clientHeight;
+            var rtl = window.getComputedStyle(anchor).direction === 'rtl';
+            var pad = settings.padding;
+            var arrow = settings.arrow;
+
+            /* Measured at the origin: a fixed element next to the right edge would otherwise shrink to fit the room that is left. */
+            floating.style.left = '0px';
+            floating.style.top = '0px';
+            var a = anchor.getBoundingClientRect();
+            var f = floating.getBoundingClientRect();
+            var fw = f.width;
+            var fh = f.height;
+            var arrowSize = arrow ? arrow.offsetWidth : 0;
+            var gap = settings.offset + arrowSize * 0.7071;
+
+            var m = POSITION_RE.exec(settings.placement);
+            var align = m[2] || null;
+            var side = m[1];
+            if (side === 'start') side = rtl ? 'right' : 'left';
+            else if (side === 'end') side = rtl ? 'left' : 'right';
+
+            function room(s) {
+                if (s === 'top') return a.top - pad;
+                if (s === 'bottom') return vh - a.bottom - pad;
+                if (s === 'left') return a.left - pad;
+                return vw - a.right - pad;
+            }
+            function need(s) { return ((s === 'top' || s === 'bottom') ? fh : fw) + gap; }
+
+            if (settings.flip && room(side) < need(side) && room(POSITION_OPPOSITE[side]) > room(side)) side = POSITION_OPPOSITE[side];
+            var vertical = side === 'top' || side === 'bottom';
+
+            var x;
+            var y;
+            if (vertical) {
+                y = side === 'top' ? a.top - fh - gap : a.bottom + gap;
+                if (!align) x = a.left + a.width / 2 - fw / 2;
+                else x = ((align === 'start') !== rtl) ? a.left : a.right - fw;
+            } else {
+                x = side === 'left' ? a.left - fw - gap : a.right + gap;
+                if (!align) y = a.top + a.height / 2 - fh / 2;
+                else y = align === 'start' ? a.top : a.bottom - fh;
+            }
+            if (settings.shift) {
+                x = Math.min(Math.max(x, pad), Math.max(pad, vw - fw - pad));
+                y = Math.min(Math.max(y, pad), Math.max(pad, vh - fh - pad));
+            }
+
+            var roomMain = Math.max(0, room(side) - gap);
+            floating.style.setProperty('--bui-position-available-height', Math.floor(vertical ? roomMain : Math.max(0, vh - 2 * pad)) + 'px');
+            floating.style.setProperty('--bui-position-available-width', Math.floor(vertical ? Math.max(0, vw - 2 * pad) : roomMain) + 'px');
+
+            /* Snapped to device pixels (crisp text); a snap must never push the element past the padding the shift just kept. */
+            var dpr = window.devicePixelRatio || 1;
+            var sx = Math.round(x * dpr) / dpr;
+            var sy = Math.round(y * dpr) / dpr;
+            if (settings.shift) {
+                var maxX = Math.max(pad, vw - fw - pad);
+                var maxY = Math.max(pad, vh - fh - pad);
+                if (sx > maxX) sx = Math.floor(maxX * dpr) / dpr;
+                if (sy > maxY) sy = Math.floor(maxY * dpr) / dpr;
+            }
+            floating.style.left = sx + 'px';
+            floating.style.top = sy + 'px';
+
+            if (arrow) {
+                var half = arrowSize / 2;
+                var ap = settings.arrowPadding;
+                if (vertical) {
+                    arrow.style.left = Math.min(Math.max(a.left + a.width / 2 - x - half, ap), Math.max(ap, fw - arrowSize - ap)) + 'px';
+                    arrow.style.top = '';
+                } else {
+                    arrow.style.top = Math.min(Math.max(a.top + a.height / 2 - y - half, ap), Math.max(ap, fh - arrowSize - ap)) + 'px';
+                    arrow.style.left = '';
+                }
+            }
+
+            var logical = side;
+            if (side === 'left') logical = rtl ? 'end' : 'start';
+            else if (side === 'right') logical = rtl ? 'start' : 'end';
+            floating.setAttribute('data-bui-side', side);
+            floating.setAttribute('data-bui-placement', logical + (align ? '-' + align : ''));
+
+            var detached = false;
+            if (settings.hideWhenClipped) {
+                var clipped = function (box) { return a.bottom <= box.top || a.top >= box.bottom || a.right <= box.left || a.left >= box.right; };
+                detached = clipped({ top: 0, left: 0, bottom: vh, right: vw }) || parents.some(function (parent) { return clipped(parent.getBoundingClientRect()); });
+            }
+            if (detached) floating.setAttribute('data-bui-detached', '');
+            else floating.removeAttribute('data-bui-detached');
+
+            var after = floating.getBoundingClientRect();
+            return {
+                placement: floating.getAttribute('data-bui-placement'),
+                side: side,
+                x: x,
+                y: y,
+                detached: detached,
+                resized: Math.abs(after.width - fw) > 0.5 || Math.abs(after.height - fh) > 0.5
+            };
+        }
+
+        function update() {
+            if (destroyed || !anchor.isConnected || !floating.isConnected || !floating.getClientRects().length) return last;
+            var result = pass();
+            /* The available size feeds max-height and max-width in CSS, so the size can change once after the first pass. */
+            if (result.resized) result = pass();
+            last = result;
+            if (typeof settings.onUpdate === 'function') {
+                try { settings.onUpdate(result); } catch (e) { log.error('Position', 'The onUpdate callback threw an error.', e); }
+            }
+            return result;
+        }
+
+        function schedule() {
+            if (frame || destroyed) return;
+            frame = window.requestAnimationFrame(function () { frame = 0; update(); });
+        }
+
+        if (settings.autoUpdate) {
+            parents.forEach(function (parent) { parent.addEventListener('scroll', schedule, { passive: true }); });
+            window.addEventListener('scroll', schedule, { passive: true });
+            window.addEventListener('resize', schedule);
+            if (typeof window.ResizeObserver === 'function') {
+                observer = new window.ResizeObserver(schedule);
+                observer.observe(anchor);
+                observer.observe(floating);
+            }
+        }
+        update();
+
+        return {
+            update: update,
+            getPlacement: function () { return last ? last.placement : null; },
+            destroy: function () {
+                if (destroyed) return;
+                destroyed = true;
+                if (frame) { window.cancelAnimationFrame(frame); frame = 0; }
+                if (observer) { observer.disconnect(); observer = null; }
+                parents.forEach(function (parent) { parent.removeEventListener('scroll', schedule); });
+                window.removeEventListener('scroll', schedule);
+                window.removeEventListener('resize', schedule);
+                ['position', 'margin', 'right', 'bottom', 'left', 'top'].forEach(function (name) { floating.style.removeProperty(name); });
+                floating.style.removeProperty('--bui-position-available-height');
+                floating.style.removeProperty('--bui-position-available-width');
+                floating.removeAttribute('data-bui-side');
+                floating.removeAttribute('data-bui-placement');
+                floating.removeAttribute('data-bui-detached');
+                if (settings.arrow) { settings.arrow.style.removeProperty('left'); settings.arrow.style.removeProperty('top'); }
+            }
+        };
+    }
+    BUI.position = position;
+
+    /* ------------------------------------------------------------------ */
+    /* Floating layers: shared by Popover and Menu (Task 16)               */
+    /* ------------------------------------------------------------------ */
+
+    /*
+     * A floating layer is an open Popover or Menu. The controller moves the floating element next to the page (or inside the open
+     * Dialog or Drawer that holds the trigger), puts it in the top layer with the Popover API when the browser has it, positions it with
+     * BUI.position, and gives both components the same outside click, Esc and focus rules. Why the move: the native <dialog> opened with
+     * showModal() makes everything outside it inert, so a floating element left in the page could not be focused or clicked.
+     * One set of document listeners serves all open layers and is removed when the last one closes.
+     */
+    var layers = [];
+    var layersListening = false;
+    var popoverApi = typeof window.HTMLElement === 'function' && typeof window.HTMLElement.prototype.showPopover === 'function';
+    var FOCUSABLE = 'a[href], button:not([disabled]), input:not([disabled]):not([type="hidden"]), select:not([disabled]), textarea:not([disabled]), summary, [tabindex]:not([tabindex="-1"])';
+
+    function visibleFocusables(root) {
+        return Array.from(root.querySelectorAll(FOCUSABLE)).filter(function (node) { return node.getClientRects().length > 0; });
+    }
+
+    function layerHost(trigger) {
+        var host = trigger.closest ? trigger.closest('dialog') : null;
+        if (host && host.open && overlayStack.some(function (entry) { return entry.el === host; })) return host;
+        return document.body;
+    }
+
+    function layerContains(layer, node) {
+        if (layer.floating.contains(node) || layer.trigger.contains(node)) return true;
+        return layers.some(function (child) { return child.parent === layer && layerContains(child, node); });
+    }
+
+    function pruneLayers() {
+        layers.slice().forEach(function (layer) { if (!layer.trigger.isConnected) layer.close('detached'); });
+    }
+
+    function onLayerPointer(e) {
+        pruneLayers();
+        layers.slice().reverse().forEach(function (layer) {
+            if (layer.open && layer.closeOnOutside && !layerContains(layer, e.target)) layer.close('outside');
+        });
+    }
+
+    function onLayerFocus(e) {
+        layers.slice().reverse().forEach(function (layer) {
+            if (layer.open && layer.closeOnFocusOut && !layerContains(layer, e.target)) layer.close('focusout');
+        });
+    }
+
+    function onLayerKey(e) {
+        if (e.key !== 'Escape' || !layers.length) return;
+        var top = layers[layers.length - 1];
+        if (!top.keyboard) return;
+        /* Stops the native close of an open Dialog behind the layer: Esc closes the topmost thing only. */
+        e.preventDefault();
+        e.stopPropagation();
+        top.close('escape');
+    }
+
+    function layerAdd(layer) {
+        layers.push(layer);
+        if (layersListening) return;
+        layersListening = true;
+        document.addEventListener('pointerdown', onLayerPointer, true);
+        document.addEventListener('focusin', onLayerFocus, true);
+        document.addEventListener('keydown', onLayerKey, true);
+    }
+
+    function layerRemove(layer) {
+        var index = layers.indexOf(layer);
+        if (index === -1) return;
+        layers.splice(index, 1);
+        layers.forEach(function (other) { if (other.parent === layer) other.parent = null; });
+        if (layers.length || !layersListening) return;
+        layersListening = false;
+        document.removeEventListener('pointerdown', onLayerPointer, true);
+        document.removeEventListener('focusin', onLayerFocus, true);
+        document.removeEventListener('keydown', onLayerKey, true);
+    }
+
+    /* A layer whose host is no longer the top overlay is inert or hidden behind it, so it closes. */
+    overlayHooks.push(function () {
+        if (!layers.length) return;
+        Promise.resolve().then(function () {
+            var expected = toastTopHost();
+            layers.slice().forEach(function (layer) { if (layer.host !== expected) layer.close('overlay'); });
+        });
+    });
+
+    /* Copies the mode, theme, direction and language of the nearest scope of the trigger when the floating element leaves that scope. */
+    function copyScope(trigger, floating, host) {
+        var set = [];
+        ['data-bui-mode', 'data-bui-theme', 'dir', 'lang'].forEach(function (name) {
+            var scope = trigger.closest('[' + name + ']');
+            if (!scope || scope === document.documentElement || scope.contains(host)) return;
+            floating.setAttribute(name, scope.getAttribute(name));
+            set.push(name);
+        });
+        return set;
+    }
+
+    function floatingController(cfg) {
+        var el = cfg.trigger;
+        var floating = cfg.floating;
+        var events = cfg.events;
+        var isOpen = false;
+        var destroyed = false;
+        var placeholder = null;
+        var engine = null;
+        var scopeAttrs = [];
+        var addedPopoverAttr = false;
+        var layer = {
+            trigger: el, floating: floating, host: null, parent: null, open: false,
+            closeOnOutside: cfg.closeOnOutside, closeOnFocusOut: cfg.closeOnFocusOut, keyboard: cfg.keyboard,
+            close: function (reason) { return close(reason); }
+        };
+
+        if (popoverApi && !floating.hasAttribute('popover')) {
+            floating.setAttribute('popover', 'manual');
+            addedPopoverAttr = true;
+        }
+
+        function open(source, extra) {
+            if (destroyed || isOpen) return false;
+            if (cfg.fire(events.beforeOpen, { source: source }, true) === false) return false;
+            var host = layerHost(el);
+            if (floating.parentNode !== host) {
+                placeholder = document.createComment('bui-floating');
+                if (floating.parentNode) floating.parentNode.insertBefore(placeholder, floating);
+                host.appendChild(floating);
+            }
+            scopeAttrs = copyScope(el, floating, host);
+            layer.host = host;
+            layer.parent = layers.filter(function (other) { return other.floating.contains(el); }).pop() || null;
+            floating.classList.add('is-open');
+            if (popoverApi) { try { floating.showPopover(); } catch (e) { log.debug('Floating', 'showPopover() failed: ' + (e && e.message ? e.message : e)); } }
+            isOpen = true;
+            layer.open = true;
+            el.setAttribute('aria-expanded', 'true');
+            engine = position(el, floating, {
+                placement: cfg.placement(), offset: cfg.offset(), flip: cfg.flip(), shift: cfg.shift(), arrow: cfg.arrow
+            });
+            layerAdd(layer);
+            if (cfg.onOpened) cfg.onOpened(source, extra || {});
+            cfg.fire(events.open, { source: source }, false);
+            return true;
+        }
+
+        function finish(source, emit) {
+            var hadFocus = floating.contains(document.activeElement);
+            if (engine) { engine.destroy(); engine = null; }
+            layerRemove(layer);
+            isOpen = false;
+            layer.open = false;
+            layer.host = null;
+            layer.parent = null;
+            try { if (popoverApi && floating.matches(':popover-open')) floating.hidePopover(); } catch (e) { /* already hidden */ }
+            floating.classList.remove('is-open');
+            scopeAttrs.forEach(function (name) { floating.removeAttribute(name); });
+            scopeAttrs = [];
+            if (placeholder) {
+                if (placeholder.parentNode) { placeholder.parentNode.insertBefore(floating, placeholder); placeholder.parentNode.removeChild(placeholder); }
+                placeholder = null;
+            }
+            el.setAttribute('aria-expanded', 'false');
+            if (hadFocus && cfg.restoreFocus() && emit && source !== 'outside' && source !== 'focusout' && source !== 'overlay' && el.isConnected) {
+                try { el.focus({ preventScroll: true }); } catch (e) { /* not focusable */ }
+            }
+            if (emit) cfg.fire(events.close, { source: source }, false);
+        }
+
+        function close(source) {
+            if (destroyed || !isOpen) return false;
+            if (cfg.fire(events.beforeClose, { source: source || 'api' }, true) === false) return false;
+            finish(source || 'api', true);
+            return true;
+        }
+
+        return {
+            open: open,
+            close: close,
+            toggle: function (source) { return isOpen ? close(source) : open(source); },
+            isOpen: function () { return isOpen; },
+            update: function () { if (engine) engine.update(); },
+            layer: layer,
+            destroy: function () {
+                if (destroyed) return;
+                if (isOpen) finish('destroy', false);
+                destroyed = true;
+                if (addedPopoverAttr) floating.removeAttribute('popover');
+            }
+        };
+    }
+
+    /* Adds a listener and returns what removes it. */
+    function listen(target, type, handler, opts) {
+        target.addEventListener(type, handler, opts);
+        return function () { target.removeEventListener(type, handler, opts); };
+    }
+
+    /*
+     * Popover. A small floating panel with a title and content, opened from a trigger.
+     * Markup: <button class="bui-btn" data-bui-popover data-bui-title="Title" data-bui-content="Text">Open</button>  (the panel is built)
+     *     or  <button data-bui-popover data-bui-target="#id">  /  the panel as the next sibling of the trigger: <div class="bui-popover">.
+     * Options: target, title, content, trigger (click|hover|focus|manual, several separated by a space), placement, offset, arrow, flip,
+     * shift, closeOnOutside, keyboard, focus, restoreFocus, delay. Methods: show, hide, toggle, isOpen, update, destroy.
+     * Events (on the trigger): bui:popover:beforeshow (cancelable), show, beforehide (cancelable), hide; detail.source tells why.
+     */
+    register('popover', {
+        defaults: {
+            target: '', title: '', content: '', trigger: 'click', placement: 'bottom', offset: 8, arrow: true, flip: true, shift: true,
+            closeOnOutside: true, keyboard: true, focus: true, restoreFocus: true, delay: 150
+        },
+        create: function (el, options, ctx) {
+            var log2 = ctx.log;
+            var cleanups = [];
+            var timers = [];
+            var added = [];          /* attributes added to the trigger or the panel, removed by destroy() */
+            var panel = null;
+            var built = false;
+            var arrowEl = null;
+            var openedBy = '';
+
+            var triggers = String(options.trigger).split(/\s+/).filter(Boolean).filter(function (name, index, list) {
+                var ok = name === 'click' || name === 'hover' || name === 'focus' || name === 'manual';
+                if (!ok) log2.warn('Unknown trigger "' + name + '". Allowed: click, hover, focus, manual.');
+                return ok && list.indexOf(name) === index;
+            });
+            if (!triggers.length || (triggers.indexOf('manual') > -1 && triggers.length > 1)) {
+                if (triggers.length) log2.warn('"manual" cannot be combined with other triggers.');
+                triggers = triggers.indexOf('manual') > -1 ? ['manual'] : ['click'];
+            }
+            if (!POSITION_RE.test(options.placement)) { log2.warn('Invalid placement "' + options.placement + '", using "bottom".'); options.placement = 'bottom'; }
+            if (typeof options.offset !== 'number' || options.offset < 0) options.offset = 8;
+            if (typeof options.delay !== 'number' || options.delay < 0) options.delay = 150;
+
+            function setAttr(node, name, value) {
+                if (!node.hasAttribute(name)) added.push([node, name]);
+                node.setAttribute(name, value);
+            }
+
+            if (options.target) {
+                try { panel = document.querySelector(options.target); } catch (e) { panel = null; }
+                if (!panel) log2.warn('The target "' + options.target + '" was not found.');
+            } else if (el.nextElementSibling && el.nextElementSibling.classList.contains('bui-popover')) {
+                panel = el.nextElementSibling;
+            } else if (options.title || options.content) {
+                panel = document.createElement('div');
+                panel.className = 'bui-popover';
+                if (options.title) {
+                    var header = document.createElement('div');
+                    header.className = 'bui-popover__header';
+                    var title = document.createElement('div');
+                    title.className = 'bui-popover__title';
+                    title.textContent = options.title;
+                    header.appendChild(title);
+                    panel.appendChild(header);
+                }
+                if (options.content) {
+                    var body = document.createElement('div');
+                    body.className = 'bui-popover__body';
+                    body.textContent = options.content;
+                    panel.appendChild(body);
+                }
+                el.parentNode.insertBefore(panel, el.nextSibling);
+                built = true;
+            } else {
+                log2.error('A popover needs content: set data-bui-title or data-bui-content, point data-bui-target at a .bui-popover element, or put it right after the trigger.');
+            }
+            if (!panel) {
+                return { show: function () { return false; }, hide: function () { return false; }, toggle: function () { return false; }, isOpen: function () { return false; }, update: function () {}, destroy: function () {} };
+            }
+
+            if (!panel.id) setAttr(panel, 'id', uid('bui-popover'));
+            if (!panel.hasAttribute('role')) setAttr(panel, 'role', 'dialog');
+            var titleEl = panel.querySelector('.bui-popover__title');
+            if (titleEl && !panel.hasAttribute('aria-labelledby') && !panel.hasAttribute('aria-label')) {
+                if (!titleEl.id) setAttr(titleEl, 'id', uid('bui-popover-title'));
+                setAttr(panel, 'aria-labelledby', titleEl.id);
+            }
+            if (!panel.hasAttribute('aria-labelledby') && !panel.hasAttribute('aria-label')) {
+                var triggerName = el.getAttribute('aria-label');
+                if (triggerName) setAttr(panel, 'aria-label', triggerName);
+                else log2.warn('The popover has no accessible name: add a title, aria-labelledby or aria-label.');
+            }
+            if (!panel.hasAttribute('tabindex')) setAttr(panel, 'tabindex', '-1');
+            if (options.arrow) {
+                arrowEl = panel.querySelector(':scope > .bui-popover__arrow');
+                if (!arrowEl) {
+                    arrowEl = document.createElement('div');
+                    arrowEl.className = 'bui-popover__arrow';
+                    arrowEl.setAttribute('aria-hidden', 'true');
+                    panel.insertBefore(arrowEl, panel.firstChild);
+                    added.push([arrowEl, null]);
+                }
+            }
+            setAttr(el, 'aria-controls', panel.id);
+            setAttr(el, 'aria-haspopup', 'dialog');
+            setAttr(el, 'aria-expanded', 'false');
+            if (!/^(a|button|input|summary|select|textarea)$/i.test(el.tagName) && !el.hasAttribute('tabindex')) {
+                log2.warn('The trigger is not focusable. Use a <button> (or add tabindex="0" and a key handler).');
+            }
+
+            var instance;
+            var controller = floatingController({
+                trigger: el,
+                floating: panel,
+                arrow: arrowEl,
+                events: { beforeOpen: 'beforeshow', open: 'show', beforeClose: 'beforehide', close: 'hide' },
+                /* With a manual trigger only the code (and Esc) closes the panel, so a button of the page can toggle it. */
+                closeOnOutside: options.closeOnOutside && triggers[0] !== 'manual',
+                closeOnFocusOut: triggers.indexOf('click') > -1,
+                keyboard: options.keyboard,
+                restoreFocus: function () { return options.restoreFocus; },
+                placement: function () { return options.placement; },
+                offset: function () { return options.offset; },
+                flip: function () { return options.flip; },
+                shift: function () { return options.shift; },
+                fire: function (name, detail, cancelable) { return ctx.trigger(name, detail, { cancelable: cancelable }); },
+                onOpened: function (source) {
+                    openedBy = source;
+                    if (!options.focus || source === 'hover' || source === 'focus') return;
+                    var list = visibleFocusables(panel);
+                    (list[0] || panel).focus();
+                }
+            });
+
+            function later(fn, ms) {
+                var id = window.setTimeout(function () { timers.splice(timers.indexOf(id), 1); fn(); }, ms);
+                timers.push(id);
+            }
+            function clearTimers() { timers.splice(0).forEach(function (id) { window.clearTimeout(id); }); }
+            function disabled() { return el.disabled || el.getAttribute('aria-disabled') === 'true'; }
+            function scheduleShow(source) {
+                clearTimers();
+                if (controller.isOpen() || disabled()) return;
+                if (options.delay) later(function () { controller.open(source); }, options.delay); else controller.open(source);
+            }
+            function scheduleHide(source) {
+                clearTimers();
+                if (!controller.isOpen()) return;
+                if (options.delay) later(function () { controller.close(source); }, options.delay); else controller.close(source);
+            }
+
+            if (triggers.indexOf('click') > -1) {
+                cleanups.push(listen(el, 'click', function (e) {
+                    if (disabled()) return;
+                    if (el.tagName === 'A') e.preventDefault();
+                    clearTimers();
+                    controller.toggle('click');
+                }));
+            }
+            if (triggers.indexOf('hover') > -1) {
+                cleanups.push(listen(el, 'mouseenter', function () { scheduleShow('hover'); }));
+                cleanups.push(listen(el, 'mouseleave', function () { scheduleHide('hover'); }));
+                cleanups.push(listen(panel, 'mouseenter', function () { clearTimers(); }));
+                cleanups.push(listen(panel, 'mouseleave', function () { if (openedBy === 'hover' || openedBy === 'focus') scheduleHide('hover'); }));
+            }
+            if (triggers.indexOf('focus') > -1) {
+                cleanups.push(listen(el, 'focusin', function () { scheduleShow('focus'); }));
+                cleanups.push(listen(el, 'focusout', function (e) {
+                    if (e.relatedTarget && panel.contains(e.relatedTarget)) return;
+                    scheduleHide('focus');
+                }));
+                cleanups.push(listen(panel, 'focusout', function (e) {
+                    if (e.relatedTarget && (panel.contains(e.relatedTarget) || el.contains(e.relatedTarget))) return;
+                    if (triggers.indexOf('click') === -1) scheduleHide('focus');
+                }));
+            }
+            /* Tab leaves a popover that took the focus: forward from the last control, backward from the first, the trigger is next. */
+            cleanups.push(listen(panel, 'keydown', function (e) {
+                if (e.key !== 'Tab' || !controller.isOpen() || openedBy === 'hover' || openedBy === 'focus') return;
+                var list = visibleFocusables(panel);
+                var active = document.activeElement;
+                if (e.shiftKey) {
+                    if (active === panel || active === list[0] || !list.length) { e.preventDefault(); controller.close('tab'); }
+                } else if (active === panel || active === list[list.length - 1] || !list.length) {
+                    controller.close('tab');
+                }
+            }));
+
+            instance = {
+                show: function () { clearTimers(); return controller.open('api'); },
+                hide: function () { clearTimers(); return controller.close('api'); },
+                toggle: function () { clearTimers(); return controller.toggle('api'); },
+                isOpen: function () { return controller.isOpen(); },
+                update: function () { controller.update(); },
+                destroy: function () {
+                    clearTimers();
+                    controller.destroy();
+                    cleanups.splice(0).forEach(function (off) { off(); });
+                    if (built && panel.parentNode) panel.parentNode.removeChild(panel);
+                    added.forEach(function (pair) {
+                        if (pair[1] === null) { if (pair[0].parentNode) pair[0].parentNode.removeChild(pair[0]); } else pair[0].removeAttribute(pair[1]);
+                    });
+                    added.length = 0;
+                }
+            };
+            return instance;
+        }
+    });
+
+    /*
+     * Menu (Dropdown). A button that opens a list of actions. The ARIA Menu Button pattern: role="menu" and role="menuitem",
+     * checkable items with role="menuitemcheckbox" and role="menuitemradio" and aria-checked.
+     * Markup: <button class="bui-btn" data-bui-menu>Actions</button><div class="bui-menu"> <button class="bui-menu__item">Edit</button> ... </div>
+     * (or point data-bui-target at the menu). Options: target, placement, offset, closeOnSelect, orientation, restoreFocus.
+     * Methods: open, close, toggle, isOpen, update, destroy. Events (on the trigger): bui:menu:beforeopen (cancelable), open, beforeclose
+     * (cancelable), close, select (detail: item, role, checked, value). A native disabled button is skipped by the keys, an item with
+     * aria-disabled="true" is reachable but does nothing. data-bui-keep-open on an item keeps the menu open after it is chosen.
+     */
+    var MENU_ITEMS = '[role="menuitem"], [role="menuitemcheckbox"], [role="menuitemradio"]';
+
+    register('menu', {
+        defaults: { target: '', placement: 'bottom-start', offset: 4, closeOnSelect: true, orientation: 'vertical', restoreFocus: true },
+        create: function (el, options, ctx) {
+            var log2 = ctx.log;
+            var cleanups = [];
+            var added = [];
+            var menu = null;
+            var buffer = '';
+            var bufferTimer = 0;
+
+            if (options.orientation !== 'vertical' && options.orientation !== 'horizontal') {
+                log2.warn('Invalid orientation "' + options.orientation + '", using "vertical".');
+                options.orientation = 'vertical';
+            }
+            if (!POSITION_RE.test(options.placement)) { log2.warn('Invalid placement "' + options.placement + '", using "bottom-start".'); options.placement = 'bottom-start'; }
+            if (typeof options.offset !== 'number' || options.offset < 0) options.offset = 4;
+
+            function setAttr(node, name, value) {
+                if (!node.hasAttribute(name)) added.push([node, name]);
+                node.setAttribute(name, value);
+            }
+
+            if (options.target) {
+                try { menu = document.querySelector(options.target); } catch (e) { menu = null; }
+                if (!menu) log2.warn('The target "' + options.target + '" was not found.');
+            } else if (el.nextElementSibling && el.nextElementSibling.classList.contains('bui-menu')) {
+                menu = el.nextElementSibling;
+            } else {
+                log2.error('A menu needs a .bui-menu element: put it right after the trigger or point data-bui-target at it.');
+            }
+            if (!menu) {
+                return { open: function () { return false; }, close: function () { return false; }, toggle: function () { return false; }, isOpen: function () { return false; }, update: function () {}, destroy: function () {} };
+            }
+
+            if (!el.id) setAttr(el, 'id', uid('bui-menu-trigger'));
+            if (!menu.id) setAttr(menu, 'id', uid('bui-menu'));
+            if (!menu.hasAttribute('role')) setAttr(menu, 'role', 'menu');
+            if (!menu.hasAttribute('aria-labelledby') && !menu.hasAttribute('aria-label')) setAttr(menu, 'aria-labelledby', el.id);
+            if (options.orientation === 'horizontal') setAttr(menu, 'aria-orientation', 'horizontal');
+            setAttr(el, 'aria-haspopup', 'menu');
+            setAttr(el, 'aria-controls', menu.id);
+            setAttr(el, 'aria-expanded', 'false');
+            if (!/^(a|button|input|summary)$/i.test(el.tagName) && !el.hasAttribute('tabindex')) {
+                log2.warn('The trigger is not focusable. Use a <button>.');
+            }
+
+            /* Items written with only the class get their role; every item is focused by script only, so none is in the Tab order. */
+            function prepare() {
+                Array.from(menu.querySelectorAll('.bui-menu__item')).forEach(function (item) {
+                    if (!item.hasAttribute('role')) setAttr(item, 'role', 'menuitem');
+                });
+                Array.from(menu.querySelectorAll('.bui-menu__header')).forEach(function (node) {
+                    if (!node.hasAttribute('role')) setAttr(node, 'role', 'presentation');
+                });
+                Array.from(menu.querySelectorAll('.bui-menu__divider')).forEach(function (node) {
+                    if (!node.hasAttribute('role')) setAttr(node, 'role', 'separator');
+                });
+                Array.from(menu.querySelectorAll(MENU_ITEMS)).forEach(function (item) {
+                    if (!item.hasAttribute('tabindex')) setAttr(item, 'tabindex', '-1');
+                });
+            }
+            function items() {
+                return Array.from(menu.querySelectorAll(MENU_ITEMS)).filter(function (item) { return !item.disabled && item.getClientRects().length > 0; });
+            }
+            function currentItem() {
+                return document.activeElement && document.activeElement.closest ? document.activeElement.closest(MENU_ITEMS) : null;
+            }
+            function focusItem(item) { if (item) item.focus(); }
+            function itemText(item) { return (item.getAttribute('data-bui-text') || item.textContent || '').trim().toLowerCase(); }
+
+            var controller = floatingController({
+                trigger: el,
+                floating: menu,
+                arrow: null,
+                events: { beforeOpen: 'beforeopen', open: 'open', beforeClose: 'beforeclose', close: 'close' },
+                closeOnOutside: true,
+                closeOnFocusOut: true,
+                keyboard: true,
+                restoreFocus: function () { return options.restoreFocus; },
+                placement: function () { return options.placement; },
+                offset: function () { return options.offset; },
+                flip: function () { return true; },
+                shift: function () { return true; },
+                fire: function (name, detail, cancelable) { return ctx.trigger(name, detail, { cancelable: cancelable }); },
+                onOpened: function (source, extra) {
+                    var list = items();
+                    focusItem(extra.last ? list[list.length - 1] : list[0]);
+                }
+            });
+
+            function openMenu(source, last) {
+                prepare();
+                if (controller.isOpen()) {
+                    var list = items();
+                    focusItem(last ? list[list.length - 1] : list[0]);
+                    return true;
+                }
+                return controller.open(source, { last: !!last });
+            }
+
+            cleanups.push(listen(el, 'click', function (e) {
+                if (el.disabled || el.getAttribute('aria-disabled') === 'true') return;
+                if (el.tagName === 'A') e.preventDefault();
+                if (controller.isOpen()) controller.close('toggle'); else openMenu('click', false);
+            }));
+            cleanups.push(listen(el, 'keydown', function (e) {
+                if (e.key === 'ArrowDown') { e.preventDefault(); openMenu('keyboard', false); }
+                else if (e.key === 'ArrowUp') { e.preventDefault(); openMenu('keyboard', true); }
+            }));
+
+            /* Type-ahead: the typed characters pick the next item whose text starts with them (one repeated key cycles). */
+            function typeAhead(key) {
+                buffer += key.toLowerCase();
+                window.clearTimeout(bufferTimer);
+                bufferTimer = window.setTimeout(function () { buffer = ''; bufferTimer = 0; }, 600);
+                var list = items();
+                if (!list.length) return;
+                var current = list.indexOf(currentItem());
+                var start = buffer.length === 1 ? current + 1 : Math.max(current, 0);
+                var query = buffer;
+                if (buffer.length > 1 && buffer.split('').every(function (ch) { return ch === buffer[0]; })) { query = buffer[0]; start = current + 1; }
+                for (var i = 0; i < list.length; i++) {
+                    var item = list[(start + i) % list.length];
+                    if (itemText(item).indexOf(query) === 0) { focusItem(item); return; }
+                }
+            }
+
+            cleanups.push(listen(menu, 'keydown', function (e) {
+                if (!controller.isOpen() || e.ctrlKey || e.metaKey || e.altKey) return;
+                var horizontal = options.orientation === 'horizontal';
+                var rtl = BUI.dom.isRTL(menu);
+                var next = horizontal ? (rtl ? 'ArrowLeft' : 'ArrowRight') : 'ArrowDown';
+                var prev = horizontal ? (rtl ? 'ArrowRight' : 'ArrowLeft') : 'ArrowUp';
+                var list = items();
+                var index = list.indexOf(currentItem());
+                if (e.key === next) {
+                    e.preventDefault();
+                    focusItem(list[(index + 1) % list.length]);
+                } else if (e.key === prev) {
+                    e.preventDefault();
+                    focusItem(list[index < 1 ? list.length - 1 : index - 1]);
+                } else if (e.key === 'Home') {
+                    e.preventDefault();
+                    focusItem(list[0]);
+                } else if (e.key === 'End') {
+                    e.preventDefault();
+                    focusItem(list[list.length - 1]);
+                } else if (e.key === 'Tab') {
+                    /* The trigger takes the focus back and the browser then moves on from it: forward goes past the trigger, backward before it. */
+                    controller.close('tab');
+                } else if ((e.key === 'Enter' || e.key === ' ') && !(e.key === ' ' && buffer)) {
+                    var item = currentItem();
+                    /* A button activates itself; links (Space) and other elements with the menuitem role are clicked here. */
+                    if (item && !(item.tagName === 'BUTTON' || (item.tagName === 'A' && e.key === 'Enter'))) { e.preventDefault(); item.click(); }
+                } else if (e.key.length === 1) {
+                    e.preventDefault();
+                    typeAhead(e.key);
+                }
+            }));
+
+            cleanups.push(listen(menu, 'click', function (e) {
+                var item = e.target.closest ? e.target.closest(MENU_ITEMS) : null;
+                if (!item || !menu.contains(item)) return;
+                if (item.getAttribute('aria-disabled') === 'true' || item.disabled) { e.preventDefault(); e.stopPropagation(); return; }
+                var role = item.getAttribute('role');
+                var checked = null;
+                if (role === 'menuitemcheckbox') {
+                    checked = item.getAttribute('aria-checked') !== 'true';
+                    item.setAttribute('aria-checked', checked ? 'true' : 'false');
+                } else if (role === 'menuitemradio') {
+                    var group = item.closest('[role="group"]') || menu;
+                    Array.from(group.querySelectorAll('[role="menuitemradio"]')).filter(function (radio) {
+                        return (radio.closest('[role="group"]') || menu) === group;
+                    }).forEach(function (radio) { radio.setAttribute('aria-checked', radio === item ? 'true' : 'false'); });
+                    checked = true;
+                }
+                ctx.trigger('select', { item: item, role: role, checked: checked, value: item.getAttribute('data-bui-value') });
+                if (options.closeOnSelect && !item.hasAttribute('data-bui-keep-open')) controller.close('select');
+            }));
+
+            return {
+                open: function () { return openMenu('api', false); },
+                close: function () { return controller.close('api'); },
+                toggle: function () { return controller.isOpen() ? controller.close('api') : openMenu('api', false); },
+                isOpen: function () { return controller.isOpen(); },
+                update: function () { controller.update(); },
+                destroy: function () {
+                    window.clearTimeout(bufferTimer);
+                    controller.destroy();
+                    cleanups.splice(0).forEach(function (off) { off(); });
+                    added.forEach(function (pair) { pair[0].removeAttribute(pair[1]); });
+                    added.length = 0;
+                }
+            };
+        }
+    });
 
     /*
      * Automatic init. While the document is loading it runs on DOMContentLoaded. If the script was

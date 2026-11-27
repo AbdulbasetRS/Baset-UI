@@ -70,3 +70,6 @@ Extension سكربت مستقل يُحمَّل بعد `baset-ui.js` ويسجل �
 
 ### قرار Task 15: Alert وToast في الـ Core لا Extension
 الإضافة نحو 28.6KB خام JS (6.3KB gzip) و10.8KB خام CSS (1.7KB gzip) (`baset-ui.js` 114,415 بايت و`baset-ui.css` 257,517 بعد Task 15)، أي يتجاوز حد 15KB (الشرط 1). لكن: (1) هذا الملف نفسه يعدّ Toast Manager وAlerts من مسؤوليات الـ Core صراحة؛ (2) الشرط 2 غير متحقق، فالإشعارات مما تحتاجه معظم التطبيقات؛ (3) Toast يحتاج خطافاً داخل Overlay Manager (الـ Core لا يعرف أسماء الـ Extensions). المطلوب شرطان على الأقل للجعل Extension، فيبقيان في الـ Core. **ملاحظة:** الملف يُسلَّم غير مضغوط وفيه تعليقات كثيرة، وتقليله بالتصغير يحتاج موافقة على أداة (انظر RELEASE_AND_VERSIONING.md).
+
+### قرار Task 16: Positioning Engine وPopover وMenu في الـ Core لا Extension
+الإضافة نحو 46KB خام JS (10KB gzip) و12KB خام CSS (2.8KB gzip) (`baset-ui.js` 160,514 بايت و`baset-ui.css` 269,887 بعد Task 16)، أي يتجاوز حد 15KB (الشرط 1). لكن الشرط 2 غير متحقق: القوائم المنسدلة والنوافذ العائمة مما تحتاجه معظم المواقع، والمحرك بنية تحتية ستعتمد عليها Select (Task 17) وDate Picker وTooltip، والـ Core لا يعرف أسماء الـ Extensions فلا يمكن أن يكون المحرك في Extension تحمّله Select. المطلوب شرطان على الأقل للجعل Extension، فتبقى في الـ Core. ملاحظة: الملف يُسلَّم غير مضغوط وبتعليقات كثيرة (التصغير يحتاج موافقة على أداة).

@@ -29,3 +29,5 @@
 قائمة بما اختُبر (+ البيئة/المتصفح/الأحجام)، النتيجة، وما لم يُختبر وسببه. ممنوع الادعاء بنجاح لم يُنفذ فعلاً.
 
 > Task 15: صفحة الاختبار اليدوي `tests/manual/alert-toast.html` (Fixture معلن؛ تعمل من `file://` عدا تبديل اللغة الذي يحتاج http). الاختبارات الآلية (Playwright/Chromium) نُفذت خارج المستودع ولم تُشحن لأنها تحتاج Dependency، وملخصها في CHANGELOG.
+
+> Task 16: صفحة الاختبار اليدوي `tests/manual/popover-menu.html` (Fixture معلن). الاختبارات الآلية (Playwright/Chromium) نُفذت خارج المستودع ولم تُشحن لأنها تحتاج Dependency، وملخصها في CHANGELOG. محاكاة اللمس: سياق بـ `has_touch` و`is_mobile` (يفعّل `pointer: coarse`)؛ `Emulation.setEmulatedMedia` لـ `pointer` لم يفعّل الاستعلام في Chromium المستعمل.

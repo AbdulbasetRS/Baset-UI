@@ -133,6 +133,11 @@ Baset-UI/
 - **تعديل سلوك مكون منفذ:** Dialog وDrawer يغلقان بـ `data-bui-dismiss` الفارغ (أو باسم نوعهما) فقط. السبب وتفاصيل القيم في [NAMING_CONVENTIONS.md](NAMING_CONVENTIONS.md) و[JAVASCRIPT_API.md](JAVASCRIPT_API.md).
 - النمط المرجعي (مقاس Top Layer، الحد والطابور، المؤقت، i18n الاحتياطي، Playground لمكون مدير) في [COMPONENT_DEVELOPMENT.md](COMPONENT_DEVELOPMENT.md) (قسم إضافات Task 15).
 
+### Positioning Engine وPopover وMenu (Task 16)
+- الكود في `assets/css/baset-ui.css` (قسم 6: Menu وPopover بين List Group وProgress، مع Tokens `--bui-popover-*` و`--bui-menu-*` في الطبقة 3) و`assets/js/baset-ui.js` (المحرك `BUI.position` وبنية الطبقات العائمة المشتركة ثم المكونان `popover` و`menu`، بعد Toast Manager). بلا ملف جديد في `assets/`. صفحتان في `documentation/components/` (`popover.html` و`menu.html`) مفعلتان في `nav.js`. لا مجلدات جديدة ولا مفاتيح i18n.
+- **ملف جديد: `tests/manual/popover-menu.html`** (خارج قائمة ملفات المهمة). السبب: [TESTING.md](TESTING.md) يطلب Checklist يدوي لكل مكون في `tests/manual/{component}.html`، ومصفوفة الـ Placements الاثني عشر والمرتكزات في زوايا الشاشة وحاويات التمرير والمرتكز الثابت وDialog وDrawer وقائمة بـ 40 عنصراً والقائمة الأفقية ومعاينة المحرك الخام لا تتسع في صفحات التوثيق. ملف واحد للمكونين والمحرك لأن الثلاثة تشترك في المصفوفة (Menu داخل Popover أيضاً). **Fixtures معلنة** في رأسه: كل النصوص نص عينة. لا يُشحن كمكون ولا يحمّله شيء.
+- القرارات في [COMPONENT_DEVELOPMENT.md](COMPONENT_DEVELOPMENT.md) (قسم إضافات Task 16).
+
 ### قرار المسارات في الصفحات المتداخلة
 - كل صفحة تضع `data-root="../../"` على `<html>`: المسار **من الصفحة نفسها** إلى جذر الموقع (مجلد `index.html`). يُقرأ في `docs.js` ويُبنى عليه كل رابط (Sidebar، Breadcrumb، Previous/Next، رابط الشعار).
 - إن غابت السمة يستنتج `docs.js` الجذر من مسار سكربت `docs.js` نفسه (دائماً ثلاثة مستويات تحت الجذر)، فتبقى الصفحة تعمل. السمة هي المصدر الأساسي لأنها صريحة ولا تعتمد على موضع السكربت.

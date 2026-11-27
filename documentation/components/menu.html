@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-bui-theme="default" data-bui-mode="light" data-root="../../">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Menu - Baset-UI Documentation</title>
+    <meta name="description" content="Menu: a dropdown of actions opened from a button, following the ARIA Menu Button pattern with arrow keys, Home and End, type-ahead, checkable items and logical placements.">
+    <!-- Empty icon: avoids a /favicon.ico 404 until the project has a real icon. -->
+    <link rel="icon" href="data:,">
+
+    <link rel="stylesheet" href="../../assets/css/baset-ui.css">
+    <link rel="stylesheet" href="../../assets/css/extensions/baset-ui-icons.css">
+    <link rel="stylesheet" href="../../assets/css/themes/ocean.css">
+    <link rel="stylesheet" href="../../documentation/assets/css/docs.css">
+    <link rel="stylesheet" href="../../documentation/assets/css/playground.css">
+    <script>
+        /* Prevents a flash of the wrong theme or mode. Same keys as BUI.theme (bui-theme, bui-mode). */
+        (function () {
+            var d = document.documentElement, t = null, m = null, r = null;
+            try { t = localStorage.getItem('bui-theme'); m = localStorage.getItem('bui-mode'); r = localStorage.getItem('bui-docs-dir'); } catch (e) {}
+            if (t && /^[a-z][a-z0-9]*(-[a-z0-9]+)*$/.test(t)) d.setAttribute('data-bui-theme', t);
+            if (m !== 'light' && m !== 'dark') m = window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+            d.setAttribute('data-bui-mode', m);
+            /* Documentation shell only: the saved direction of the RTL/LTR switcher. */
+            if (r === 'rtl' || r === 'ltr') d.setAttribute('dir', r);
+        })();
+    </script>
+</head>
+<body>
+    <main class="bui-docs-main" id="bui-docs-main" tabindex="-1">
+        <div class="bui-docs-page">
+            <div class="bui-docs-page__body">
+
+                <header class="bui-docs-page-header">
+                    <nav class="bui-docs-breadcrumb" aria-label="Breadcrumb" data-docs-breadcrumb hidden></nav>
+                    <h1>Menu</h1>
+                    <p class="bui-docs-lead">A dropdown of actions opened from a button. It follows the ARIA Menu Button pattern: arrow keys, Home and End, type-ahead, Esc and Tab, with checkable items and RTL-aware placement.</p>
+                </header>
+
+                <div class="bui-docs-content">
+                    <section class="bui-docs-section" aria-labelledby="installation-include">
+                        <h2 id="installation-include">01. Installation &amp; Include</h2>
+
+<p>Menu is part of the Core files: <code>assets/css/baset-ui.css</code> (the Menu rules) and <code>assets/js/baset-ui.js</code> (<code>BUI.menu</code>, built on <code>BUI.position</code>). No Extension and no i18n keys are needed: the component has no text of its own.</p>
+<pre class="bui-docs-code" data-lang="html"><code>&lt;link rel="stylesheet" href="assets/css/baset-ui.css"&gt;
+
+&lt;button type="button" class="bui-btn" data-bui-menu&gt;Actions&lt;/button&gt;
+&lt;div class="bui-menu"&gt;
+    &lt;button type="button" class="bui-menu__item"&gt;Edit&lt;/button&gt;
+    &lt;button type="button" class="bui-menu__item"&gt;Duplicate&lt;/button&gt;
+    &lt;hr class="bui-menu__divider"&gt;
+    &lt;button type="button" class="bui-menu__item"&gt;Delete&lt;/button&gt;
+&lt;/div&gt;
+
+&lt;script src="assets/js/baset-ui.js"&gt;&lt;/script&gt;</code></pre>
+
+                    </section>
+
+                    <section class="bui-docs-section" aria-labelledby="customize">
+                        <h2 id="customize">02. Customize</h2>
+
+<p>The preview holds the trigger and its menu. Every option maps to a <code>data-bui-*</code> attribute or to a class or ARIA attribute documented in section 04, and the Code Output is the markup in the preview. The menu leaves the preview while open and takes its Light/Dark and RTL/LTR.</p>
+<div data-docs-playground="menu"></div>
+
+                    </section>
+
+                    <section class="bui-docs-section" aria-labelledby="default">
+                        <h2 id="default">03. Default</h2>
+
+<p>A button with <code>data-bui-menu</code> and the <code>.bui-menu</code> list directly after it. Items written with only the class get <code>role="menuitem"</code> from the script.</p>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<button type="button" class="bui-btn" data-bui-menu>Actions</button>
+<div class="bui-menu">
+<button type="button" class="bui-menu__item">Edit</button>
+<button type="button" class="bui-menu__item">Duplicate</button>
+<hr class="bui-menu__divider">
+<button type="button" class="bui-menu__item">Delete</button>
+</div>
+</div>
+</div>
+
+                    </section>
+
+                    <section class="bui-docs-section" aria-labelledby="variants-options">
+                        <h2 id="variants-options">04. Variants &amp; Options</h2>
+
+<h3>Structure</h3><table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Menu parts</caption>
+<thead><tr><th scope="col">Class or attribute</th><th scope="col">Description</th></tr></thead>
+<tbody>
+<tr><td><code>bui-menu</code></td><td>The list. Hidden until opened by the script. Gets <code>role="menu"</code> and is named by the trigger (<code>aria-labelledby</code>).</td></tr>
+<tr><td><code>bui-menu__item</code></td><td>An item: a <code>&lt;button&gt;</code>, an <code>&lt;a href&gt;</code> or another element. Gets <code>role="menuitem"</code> if it has no role.</td></tr>
+<tr><td><code>role="menuitemcheckbox"</code></td><td>A toggle item. Use with <code>aria-checked</code>; the script flips it on choice and draws the mark.</td></tr>
+<tr><td><code>role="menuitemradio"</code></td><td>One of a set. Choosing it unchecks the others in the same <code>role="group"</code> (or in the menu when there is no group).</td></tr>
+<tr><td><code>bui-menu__header</code></td><td>A label (not an item). Group it with its items using <code>role="group"</code> and <code>aria-labelledby</code>.</td></tr>
+<tr><td><code>bui-menu__divider</code></td><td>A separator line (<code>&lt;hr&gt;</code>); gets <code>role="separator"</code>.</td></tr>
+<tr><td><code>aria-disabled="true"</code></td><td>A disabled item. The keys can reach it (as the ARIA pattern asks) but choosing it does nothing. A native <code>disabled</code> button is skipped by the keys.</td></tr>
+<tr><td><code>data-bui-keep-open</code></td><td>On an item: the menu stays open after the item is chosen.</td></tr>
+<tr><td><code>data-bui-value</code></td><td>On an item: its value, sent in the <code>select</code> event.</td></tr>
+<tr><td><code>data-bui-text</code></td><td>On an item: the text used by type-ahead instead of its content.</td></tr>
+</tbody>
+</table>
+<h3>Options</h3><table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Menu options</caption>
+<thead><tr><th scope="col">Name</th><th scope="col">Type</th><th scope="col">Default</th><th scope="col">HTML attribute</th><th scope="col">Description</th></tr></thead>
+<tbody>
+<tr><td><code>target</code></td><td>string</td><td><code>""</code></td><td><code>data-bui-target</code></td><td>Selector of the menu element. If empty, the element right after the trigger is used.</td></tr>
+<tr><td><code>placement</code></td><td>string</td><td><code>"bottom-start"</code></td><td><code>data-bui-placement</code></td><td>Same values as the Popover placements (<code>top</code>, <code>bottom-end</code>, <code>start</code>, <code>end-start</code> ...). <code>start</code> and <code>end</code> swap in RTL.</td></tr>
+<tr><td><code>offset</code></td><td>number</td><td><code>4</code></td><td><code>data-bui-offset</code></td><td>Pixels between the trigger and the menu.</td></tr>
+<tr><td><code>closeOnSelect</code></td><td>boolean</td><td><code>true</code></td><td><code>data-bui-close-on-select</code></td><td>Close after an item is chosen (an item can opt out with <code>data-bui-keep-open</code>).</td></tr>
+<tr><td><code>orientation</code></td><td>string</td><td><code>"vertical"</code></td><td><code>data-bui-orientation</code></td><td><code>vertical</code> or <code>horizontal</code> (items in a row, <code>aria-orientation</code> set).</td></tr>
+<tr><td><code>restoreFocus</code></td><td>boolean</td><td><code>true</code></td><td><code>data-bui-restore-focus</code></td><td>Return focus to the trigger when the menu closes.</td></tr>
+</tbody>
+</table>
+<p>The menu is as wide as its content (at least <code>--bui-menu-min-width</code>), flips to the other side and shifts to stay inside the screen, and scrolls inside when the room is short. Tokens: <code>--bui-menu-bg</code>, <code>-color</code>, <code>-muted-color</code>, <code>-border-color</code>, <code>-border-width</code>, <code>-divider-color</code>, <code>-radius</code>, <code>-shadow</code>, <code>-padding</code>, <code>-min-width</code>, <code>-max-height</code>, <code>-item-padding-x</code>, <code>-item-padding-y</code>, <code>-item-gap</code>, <code>-item-radius</code>, <code>-hover-bg</code>, <code>-pressed-bg</code>, <code>-disabled-color</code>, <code>-indicator-size</code>, <code>-touch-item-height</code>, <code>-z</code>, <code>-duration</code>, <code>-easing</code>.</p>
+
+                    </section>
+
+                    <section class="bui-docs-section" aria-labelledby="examples">
+                        <h2 id="examples">05. Examples</h2>
+
+<h3>Header, checkable items and radios</h3>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<button type="button" class="bui-btn bui-btn--outline" data-bui-menu>View</button>
+<div class="bui-menu">
+<div role="group" aria-labelledby="ex-menu-h1">
+<div class="bui-menu__header" id="ex-menu-h1">Show</div>
+<button type="button" class="bui-menu__item" role="menuitemcheckbox" aria-checked="true" data-bui-keep-open>Toolbar</button>
+<button type="button" class="bui-menu__item" role="menuitemcheckbox" aria-checked="false" data-bui-keep-open>Status bar</button>
+</div>
+<hr class="bui-menu__divider">
+<div role="group" aria-labelledby="ex-menu-h2">
+<div class="bui-menu__header" id="ex-menu-h2">Density</div>
+<button type="button" class="bui-menu__item" role="menuitemradio" aria-checked="true" data-bui-keep-open>Comfortable</button>
+<button type="button" class="bui-menu__item" role="menuitemradio" aria-checked="false" data-bui-keep-open>Compact</button>
+</div>
+<hr class="bui-menu__divider">
+<button type="button" class="bui-menu__item" aria-disabled="true">Reset layout</button>
+</div>
+</div>
+</div>
+<h3>Links and the select event</h3>
+<p>Items can be links. The <code>select</code> event carries the chosen item, its role, the new <code>checked</code> state (<code>null</code> for a plain item) and <code>data-bui-value</code>.</p>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<button type="button" class="bui-btn" id="ex-menu-select" data-bui-menu data-bui-placement="bottom-end">Account</button>
+<div class="bui-menu">
+<a class="bui-menu__item" href="#ex-menu-select" data-bui-value="profile">Profile</a>
+<a class="bui-menu__item" href="#ex-menu-select" data-bui-value="billing">Billing</a>
+<button type="button" class="bui-menu__item" data-bui-value="signout">Sign out</button>
+</div>
+<p style="margin:.75rem 0 0" id="ex-menu-log" role="status">Choose an item.</p>
+</div>
+<pre class="bui-docs-code" data-lang="javascript"><code>document.getElementById('ex-menu-select').addEventListener('bui:menu:select', function (e) {
+    console.log(e.detail.value, e.detail.item, e.detail.checked);
+});</code></pre>
+</div>
+<h3>Horizontal</h3>
+<div class="bui-docs-example">
+<div class="bui-docs-example__preview">
+<button type="button" class="bui-btn bui-btn--outline" data-bui-menu data-bui-orientation="horizontal" data-bui-placement="end">Format</button>
+<div class="bui-menu">
+<button type="button" class="bui-menu__item" role="menuitemcheckbox" aria-checked="false" data-bui-keep-open>Bold</button>
+<button type="button" class="bui-menu__item" role="menuitemcheckbox" aria-checked="false" data-bui-keep-open>Italic</button>
+<hr class="bui-menu__divider">
+<button type="button" class="bui-menu__item">Clear</button>
+</div>
+</div>
+</div>
+
+                    </section>
+
+                    <section class="bui-docs-section" aria-labelledby="javascript-api">
+                        <h2 id="javascript-api">06. JavaScript API</h2>
+
+<p>HTML: <code>data-bui-menu</code> on the trigger. JavaScript: <code>BUI.menu('#trigger', options)</code>. A Menu is positioned by the <a href="popover.html#javascript-api">Positioning Engine</a> and, like a Popover, moves into an open Dialog or Drawer that holds its trigger so it can be used there.</p>
+<h3>Methods</h3><table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Menu methods</caption>
+<thead><tr><th scope="col">Name</th><th scope="col">Returns</th><th scope="col">Description</th></tr></thead>
+<tbody>
+<tr><td><code>open()</code></td><td>boolean</td><td>Opens the menu and focuses the first item. <code>false</code> if it was already open (focus still moves to the first item) or canceled.</td></tr>
+<tr><td><code>close()</code></td><td>boolean</td><td>Closes the menu. <code>false</code> if it is closed or <code>beforeclose</code> was canceled.</td></tr>
+<tr><td><code>toggle()</code></td><td>boolean</td><td><code>open()</code> or <code>close()</code>.</td></tr>
+<tr><td><code>isOpen()</code></td><td>boolean</td><td>Whether the menu is open.</td></tr>
+<tr><td><code>update()</code></td><td>void</td><td>Positions the menu again.</td></tr>
+<tr><td><code>destroy()</code></td><td>void</td><td>Closes without events, removes the listeners and the attributes the script added.</td></tr>
+</tbody>
+</table>
+<h3>Events</h3>
+<p>Dispatched on the trigger element; they bubble. <code>detail.source</code> for open and close: <code>click</code>, <code>keyboard</code>, <code>api</code>, <code>select</code>, <code>toggle</code>, <code>escape</code>, <code>tab</code>, <code>outside</code>, <code>focusout</code>, <code>overlay</code>, <code>detached</code>.</p><table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Menu events</caption>
+<thead><tr><th scope="col">Name</th><th scope="col">Cancelable</th><th scope="col">Description</th></tr></thead>
+<tbody>
+<tr><td><code>bui:menu:beforeopen</code></td><td>Yes</td><td>Before opening.</td></tr>
+<tr><td><code>bui:menu:open</code></td><td>No</td><td>After it is open and the first item is focused.</td></tr>
+<tr><td><code>bui:menu:beforeclose</code></td><td>Yes</td><td>Before closing (also for Esc and outside clicks).</td></tr>
+<tr><td><code>bui:menu:close</code></td><td>No</td><td>After it is closed.</td></tr>
+<tr><td><code>bui:menu:select</code></td><td>No</td><td>An item was chosen: <code>detail</code> is <code>{ item, role, checked, value }</code>.</td></tr>
+</tbody>
+</table>
+
+                    </section>
+
+                    <section class="bui-docs-section" aria-labelledby="responsive-behavior">
+                        <h2 id="responsive-behavior">07. Responsive Behavior</h2>
+
+<p>The menu stays inside the viewport (flip and shift, 8px margin, tested from 320px) and never exceeds the room on screen: it scrolls inside when it is taller. On coarse pointers every item is at least 44px tall. A menu whose trigger is scrolled out of view of a scroll container is hidden until the trigger returns. Resizing the preview in the Playground does not change the viewport, so this follows the browser window.</p>
+
+                    </section>
+
+                    <section class="bui-docs-section" aria-labelledby="accessibility">
+                        <h2 id="accessibility">08. Accessibility</h2>
+
+<h3>Keyboard</h3>
+<table class="bui-docs-table"><caption class="bui-docs-sr-only">Menu keyboard</caption><thead><tr><th scope="col">Key</th><th scope="col">Action</th></tr></thead><tbody>
+<tr><td>Enter, Space, Down arrow on the trigger</td><td>Opens the menu and focuses the first item. Up arrow focuses the last item.</td></tr>
+<tr><td>Down / Up arrow</td><td>Next or previous item, wrapping around. (Horizontal menu: Right / Left, which swap in RTL.)</td></tr>
+<tr><td>Home / End</td><td>First or last item.</td></tr>
+<tr><td>A character</td><td>Type-ahead: focuses the next item whose text starts with what was typed (the buffer resets after 600 ms).</td></tr>
+<tr><td>Enter / Space on an item</td><td>Chooses it.</td></tr>
+<tr><td>Esc</td><td>Closes the menu and returns focus to the trigger.</td></tr>
+<tr><td>Tab / Shift+Tab</td><td>Closes the menu; focus goes on from the trigger (forward past it, backward before it).</td></tr>
+</tbody></table>
+<p>In a vertical menu the horizontal arrow keys do nothing; they flip with the direction only in a horizontal menu.</p>
+<h3>ARIA</h3>
+<p>The trigger has <code>aria-haspopup="menu"</code>, <code>aria-expanded</code> and <code>aria-controls</code>. The list is <code>role="menu"</code> named by the trigger; items are <code>menuitem</code>, <code>menuitemcheckbox</code> or <code>menuitemradio</code> with <code>aria-checked</code>. Items are focused by script only (<code>tabindex="-1"</code>), so the menu is a single Tab stop. A header gets <code>role="presentation"</code>: wrap its items in a <code>role="group"</code> labelled by it. Submenus are not supported.</p>
+<h3>Screen reader</h3>
+<p><strong>Not tested with a screen reader</strong> (NVDA, VoiceOver or similar). Also not tested: Safari, Firefox and real touch devices.</p>
+
+                    </section>
+
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="../../assets/js/baset-ui.js"></script>
+    <script src="../../documentation/assets/js/nav.js"></script>
+    <script src="../../documentation/assets/js/docs.js"></script>
+    <script src="../../documentation/assets/js/playground.js"></script>
+    <script>
+        (function () {
+            var PLACEMENTS = [{ value: 'top', label: 'top' }, { value: 'top-start', label: 'top start' }, { value: 'top-end', label: 'top end' }, { value: 'bottom', label: 'bottom' }, { value: 'bottom-start', label: 'bottom start' }, { value: 'bottom-end', label: 'bottom end' }, { value: 'start', label: 'start' }, { value: 'start-start', label: 'start start' }, { value: 'start-end', label: 'start end' }, { value: 'end', label: 'end' }, { value: 'end-start', label: 'end start' }, { value: 'end-end', label: 'end end' }];
+            BUI_DOCS_PLAYGROUND.define('menu', {
+                title: 'Menu playground',
+                controls: [
+                    { type: 'select', name: 'placement', label: 'Placement', default: 'bottom-start', options: PLACEMENTS },
+                    { type: 'radio-group', name: 'orientation', label: 'Orientation', default: 'vertical', options: [{ value: 'vertical', label: 'Vertical' }, { value: 'horizontal', label: 'Horizontal' }] },
+                    { type: 'switch', name: 'closeOnSelect', label: 'Close on select', default: true },
+                    { type: 'switch', name: 'header', label: 'Header', default: true },
+                    { type: 'switch', name: 'divider', label: 'Divider', default: true },
+                    { type: 'switch', name: 'checkable', label: 'Checkable item', default: false },
+                    { type: 'switch', name: 'disabled', label: 'Disabled item', default: false },
+                    { type: 'text', name: 'label', label: 'Trigger label', default: 'Actions', maxLength: 24 }
+                ],
+                beforeRender: function (frame) { BUI.destroy(frame); },
+                afterRender: function (frame) { BUI.init(frame); },
+                template: function (s, h) {
+                    var a = ['data-bui-menu'];
+                    if (s.placement !== 'bottom-start') { a.push('data-bui-placement="' + s.placement + '"'); }
+                    if (s.orientation !== 'vertical') { a.push('data-bui-orientation="horizontal"'); }
+                    if (!s.closeOnSelect) { a.push('data-bui-close-on-select="false"'); }
+                    var items = [];
+                    if (s.header) { items.push('    <div class="bui-menu__header">Account</div>'); }
+                    items.push('    <button type="button" class="bui-menu__item">Edit</button>');
+                    items.push('    <button type="button" class="bui-menu__item">Duplicate</button>');
+                    if (s.checkable) { items.push('    <button type="button" class="bui-menu__item" role="menuitemcheckbox" aria-checked="true" data-bui-keep-open>Pinned</button>'); }
+                    if (s.divider) { items.push('    <hr class="bui-menu__divider">'); }
+                    if (s.disabled) { items.push('    <button type="button" class="bui-menu__item" aria-disabled="true">Archive</button>'); }
+                    items.push('    <button type="button" class="bui-menu__item">Delete</button>');
+                    return '<button type="button" class="bui-btn" ' + a.join(' ') + '>' + h.escape(s.label || 'Actions') + '</button>\n' +
+                        '<div class="bui-menu">\n' + items.join('\n') + '\n</div>';
+                }
+            });
+            var log = document.getElementById('ex-menu-log');
+            var trigger = document.getElementById('ex-menu-select');
+            if (trigger && log) {
+                trigger.addEventListener('bui:menu:select', function (e) {
+                    log.textContent = 'Chosen: ' + e.detail.value;
+                });
+                /* The example links point back at the trigger, so choosing one does not leave the page. */
+            }
+        })();
+    </script>
+</body>
+</html>

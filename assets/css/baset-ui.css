@@ -468,6 +468,49 @@
     --bui-toast-z: var(--bui-z-toast);
     --bui-toast-duration: var(--bui-duration-base);
     --bui-toast-easing: var(--bui-easing-standard);
+
+    /* Popover component tokens (Task 16). The arrow is a square rotated by 45 degrees; its size is the side of that square. */
+    --bui-popover-bg: var(--bui-color-bg);
+    --bui-popover-color: var(--bui-color-text);
+    --bui-popover-border-color: var(--bui-color-border);
+    --bui-popover-border-width: var(--bui-border-width);
+    --bui-popover-divider-color: var(--bui-color-border);
+    --bui-popover-radius: var(--bui-radius-md);
+    --bui-popover-shadow: var(--bui-shadow-lg);
+    --bui-popover-padding-x: var(--bui-space-3);
+    --bui-popover-padding-y: var(--bui-space-2);
+    --bui-popover-max-width: calc(var(--bui-space-6) * 6);
+    --bui-popover-arrow-size: calc(var(--bui-space-2) + var(--bui-space-1));
+    --bui-popover-title-font-weight: var(--bui-font-weight-semibold);
+    --bui-popover-line-height: var(--bui-line-height-snug);
+    --bui-popover-z: var(--bui-z-popover);
+    --bui-popover-duration: var(--bui-duration-base);
+    --bui-popover-easing: var(--bui-easing-standard);
+
+    /* Menu component tokens (Task 16). */
+    --bui-menu-bg: var(--bui-color-bg);
+    --bui-menu-color: var(--bui-color-text);
+    --bui-menu-muted-color: var(--bui-color-text-muted);
+    --bui-menu-border-color: var(--bui-color-border);
+    --bui-menu-border-width: var(--bui-border-width);
+    --bui-menu-divider-color: var(--bui-color-border);
+    --bui-menu-radius: var(--bui-radius-md);
+    --bui-menu-shadow: var(--bui-shadow-lg);
+    --bui-menu-padding: var(--bui-space-1);
+    --bui-menu-min-width: calc(var(--bui-space-6) * 4);
+    --bui-menu-max-height: 100vh;
+    --bui-menu-item-padding-x: var(--bui-space-3);
+    --bui-menu-item-padding-y: var(--bui-space-2);
+    --bui-menu-item-gap: var(--bui-space-2);
+    --bui-menu-item-radius: var(--bui-radius-sm);
+    --bui-menu-hover-bg: var(--bui-color-surface);
+    --bui-menu-pressed-bg: var(--bui-color-neutral-100);
+    --bui-menu-disabled-color: var(--bui-color-text-muted);
+    --bui-menu-indicator-size: var(--bui-space-3);
+    --bui-menu-touch-item-height: calc(var(--bui-space-5) + var(--bui-space-2) + var(--bui-space-1));
+    --bui-menu-z: var(--bui-z-dropdown);
+    --bui-menu-duration: var(--bui-duration-base);
+    --bui-menu-easing: var(--bui-easing-standard);
 }
 
 /* =====================================================================
@@ -2871,6 +2914,189 @@ button.bui-list-group__item {
     .bui-list-group--horizontal-lg { --bui-list-group-_h: 1; --bui-list-group-_v: 0; flex-direction: row; }
     .bui-list-group--horizontal-lg > .bui-list-group__item { flex: 1 1 0%; }
 }
+
+/* ---------------------------------------------------------------------
+ * Menu (Task 16). A list of actions opened from a button (BUI.menu, data-bui-menu).
+ *   - Component tokens: --bui-menu-* (Layer 3, themeable).
+ *   - The script moves the list next to the page (or into the open Dialog) while it is open and positions it with BUI.position, so the
+ *     list is not clipped by an ancestor and works above a Dialog. It owns the inline position, left and top of the open list.
+ *   - Parts: __header (a label), __item (button, link or div with role menuitem*), __divider. Checkable items use aria-checked; the
+ *     mark is drawn by CSS (the check mark is symmetric, so it needs no RTL rule).
+ *   - Horizontal: aria-orientation="horizontal" (set by the orientation option) lays the items in a row.
+ * --------------------------------------------------------------------- */
+@keyframes bui-menu-in { from { opacity: 0; transform: translateY(calc(var(--bui-space-1) * -1)); } }
+.bui-menu {
+    display: none;
+    position: fixed;
+    inset: auto;
+    margin: 0;
+    z-index: var(--bui-menu-z);
+    box-sizing: border-box;
+    min-inline-size: var(--bui-menu-min-width);
+    max-inline-size: min(100vw, var(--bui-position-available-width, 100vw));
+    max-block-size: min(var(--bui-menu-max-height), var(--bui-position-available-height, 100vh));
+    overflow: auto;
+    padding: var(--bui-menu-padding);
+    background-color: var(--bui-menu-bg);
+    color: var(--bui-menu-color);
+    border: var(--bui-menu-border-width) solid var(--bui-menu-border-color);
+    border-radius: var(--bui-menu-radius);
+    box-shadow: var(--bui-menu-shadow);
+    font-size: var(--bui-font-size-base);
+    line-height: var(--bui-line-height-snug);
+    text-align: start;
+}
+.bui-menu.is-open { display: block; animation: bui-menu-in var(--bui-menu-duration) var(--bui-menu-easing); }
+.bui-menu[aria-orientation="horizontal"].is-open { display: flex; align-items: center; }
+/* The list follows the anchor while it is scrolled out of view: hidden then, not left floating over other content. */
+.bui-menu[data-bui-detached], .bui-popover[data-bui-detached] { visibility: hidden; pointer-events: none; }
+
+.bui-menu__header {
+    padding: var(--bui-menu-item-padding-y) var(--bui-menu-item-padding-x);
+    color: var(--bui-menu-muted-color);
+    font-size: var(--bui-font-size-sm);
+    font-weight: var(--bui-font-weight-semibold);
+}
+.bui-menu__divider {
+    block-size: 0;
+    margin: var(--bui-space-1) 0;
+    padding: 0;
+    border: 0;
+    border-block-start: var(--bui-menu-border-width) solid var(--bui-menu-divider-color);
+}
+.bui-menu[aria-orientation="horizontal"] > .bui-menu__divider {
+    inline-size: 0;
+    block-size: var(--bui-space-4);
+    margin: 0 var(--bui-space-1);
+    border-block-start: 0;
+    border-inline-start: var(--bui-menu-border-width) solid var(--bui-menu-divider-color);
+}
+
+.bui-menu__item {
+    display: flex;
+    align-items: center;
+    gap: var(--bui-menu-item-gap);
+    inline-size: 100%;
+    box-sizing: border-box;
+    margin: 0;
+    padding: var(--bui-menu-item-padding-y) var(--bui-menu-item-padding-x);
+    border: 0;
+    border-radius: var(--bui-menu-item-radius);
+    background-color: transparent;
+    color: inherit;
+    font: inherit;
+    text-align: start;
+    text-decoration: none;
+    cursor: pointer;
+}
+.bui-menu[aria-orientation="horizontal"] > .bui-menu__item { inline-size: auto; white-space: nowrap; }
+.bui-menu__item:focus { outline: none; background-color: var(--bui-menu-hover-bg); }
+.bui-menu__item:focus-visible {
+    outline: var(--bui-focus-ring-width) solid var(--bui-color-focus);
+    outline-offset: calc(var(--bui-focus-ring-width) * -1);
+}
+@media (hover: hover) {
+    .bui-menu__item:hover:where(:not([aria-disabled="true"], :disabled)) { background-color: var(--bui-menu-hover-bg); }
+}
+.bui-menu__item:active:where(:not([aria-disabled="true"], :disabled)) { background-color: var(--bui-menu-pressed-bg); }
+.bui-menu__item[aria-disabled="true"], .bui-menu__item:disabled { color: var(--bui-menu-disabled-color); cursor: not-allowed; }
+.bui-menu__item[aria-disabled="true"] { pointer-events: none; }
+
+/* Checkable items: a reserved box at the start holds the mark, so the labels of all items line up. */
+.bui-menu__item[role="menuitemcheckbox"]::before,
+.bui-menu__item[role="menuitemradio"]::before {
+    content: "";
+    flex: none;
+    box-sizing: border-box;
+    inline-size: var(--bui-menu-indicator-size);
+    block-size: var(--bui-menu-indicator-size);
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.bui-menu__item[role="menuitemcheckbox"][aria-checked="true"]::before,
+.bui-menu__item[role="menuitemradio"][aria-checked="true"]::before {
+    background-color: currentColor;
+    -webkit-mask: var(--bui-menu-_mark) center / contain no-repeat;
+    mask: var(--bui-menu-_mark) center / contain no-repeat;
+}
+.bui-menu__item[role="menuitemcheckbox"] { --bui-menu-_mark: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3 8.5l3.2 3.2L13 4.8' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); }
+.bui-menu__item[role="menuitemradio"] { --bui-menu-_mark: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='3.5'/%3E%3C/svg%3E"); }
+.bui-menu:has([aria-checked]) .bui-menu__item:not([aria-checked]) {
+    padding-inline-start: calc(var(--bui-menu-item-padding-x) + var(--bui-menu-indicator-size) + var(--bui-menu-item-gap));
+}
+@media (pointer: coarse) {
+    .bui-menu__item { min-block-size: var(--bui-menu-touch-item-height); }
+}
+@media (forced-colors: active) {
+    .bui-menu__item[role="menuitemcheckbox"][aria-checked="true"]::before,
+    .bui-menu__item[role="menuitemradio"][aria-checked="true"]::before { background-color: CanvasText; forced-color-adjust: none; }
+    .bui-menu__item:focus { outline: var(--bui-focus-ring-width) solid Highlight; outline-offset: calc(var(--bui-focus-ring-width) * -1); }
+}
+
+/* ---------------------------------------------------------------------
+ * Popover (Task 16). A small floating panel with a title and content, opened from a trigger (BUI.popover, data-bui-popover).
+ *   - Component tokens: --bui-popover-* (Layer 3, themeable).
+ *   - While open the script moves the panel next to the page (or into the open Dialog) and positions it with BUI.position, which sets
+ *     data-bui-side (where the panel is, physically) and the arrow position. The enter animation slides away from the anchor.
+ *   - The arrow is a rotated square drawn on the panel edge that faces the anchor. Its sides are PHYSICAL (top, bottom, left, right)
+ *     on purpose: they come from the measured side, which already accounts for the writing direction.
+ * --------------------------------------------------------------------- */
+@keyframes bui-popover-in { from { opacity: 0; transform: translate(var(--bui-popover-_dx, 0), var(--bui-popover-_dy, 0)); } }
+.bui-popover {
+    --bui-popover-_dx: 0px;
+    --bui-popover-_dy: 0px;
+    display: none;
+    position: fixed;
+    inset: auto;
+    margin: 0;
+    z-index: var(--bui-popover-z);
+    box-sizing: border-box;
+    inline-size: max-content;
+    max-inline-size: min(var(--bui-popover-max-width), var(--bui-position-available-width, 100vw));
+    padding: 0;
+    overflow: visible;
+    background-color: var(--bui-popover-bg);
+    color: var(--bui-popover-color);
+    border: var(--bui-popover-border-width) solid var(--bui-popover-border-color);
+    border-radius: var(--bui-popover-radius);
+    box-shadow: var(--bui-popover-shadow);
+    font-size: var(--bui-font-size-sm);
+    line-height: var(--bui-popover-line-height);
+    text-align: start;
+}
+.bui-popover.is-open { display: block; animation: bui-popover-in var(--bui-popover-duration) var(--bui-popover-easing); }
+.bui-popover[data-bui-side="bottom"] { --bui-popover-_dy: calc(var(--bui-space-1) * -1); }
+.bui-popover[data-bui-side="top"] { --bui-popover-_dy: var(--bui-space-1); }
+.bui-popover[data-bui-side="left"] { --bui-popover-_dx: var(--bui-space-1); }
+.bui-popover[data-bui-side="right"] { --bui-popover-_dx: calc(var(--bui-space-1) * -1); }
+.bui-popover:focus { outline: none; }
+.bui-popover:focus-visible { outline: var(--bui-focus-ring-width) solid var(--bui-color-focus); outline-offset: var(--bui-focus-ring-width); }
+
+.bui-popover__header {
+    padding: var(--bui-popover-padding-y) var(--bui-popover-padding-x);
+    border-block-end: var(--bui-popover-border-width) solid var(--bui-popover-divider-color);
+}
+.bui-popover__title { font-size: var(--bui-font-size-base); font-weight: var(--bui-popover-title-font-weight); }
+.bui-popover__body {
+    padding: var(--bui-popover-padding-y) var(--bui-popover-padding-x);
+    max-block-size: var(--bui-position-available-height, none);
+    overflow: auto;
+}
+
+.bui-popover__arrow {
+    position: absolute;
+    box-sizing: border-box;
+    inline-size: var(--bui-popover-arrow-size);
+    block-size: var(--bui-popover-arrow-size);
+    border: 0 solid var(--bui-popover-border-color);
+    background-color: var(--bui-popover-bg);
+    transform: rotate(45deg);
+    pointer-events: none;
+}
+.bui-popover[data-bui-side="top"] > .bui-popover__arrow { bottom: calc(var(--bui-popover-arrow-size) / -2 - var(--bui-popover-border-width) / 2); border-width: 0 var(--bui-popover-border-width) var(--bui-popover-border-width) 0; }
+.bui-popover[data-bui-side="bottom"] > .bui-popover__arrow { top: calc(var(--bui-popover-arrow-size) / -2 - var(--bui-popover-border-width) / 2); border-width: var(--bui-popover-border-width) 0 0 var(--bui-popover-border-width); }
+.bui-popover[data-bui-side="left"] > .bui-popover__arrow { right: calc(var(--bui-popover-arrow-size) / -2 - var(--bui-popover-border-width) / 2); border-width: var(--bui-popover-border-width) var(--bui-popover-border-width) 0 0; }
+.bui-popover[data-bui-side="right"] > .bui-popover__arrow { left: calc(var(--bui-popover-arrow-size) / -2 - var(--bui-popover-border-width) / 2); border-width: 0 0 var(--bui-popover-border-width) var(--bui-popover-border-width); }
 
 /* ---------------------------------------------------------------------
  * Progress (Task 10). A bar for the completion of a task, determinate or indeterminate.
