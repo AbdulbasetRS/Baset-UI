@@ -41,6 +41,23 @@
     "overlay": {
         "loadError": "تعذر تحميل المحتوى."
     },
+    "select": {
+        "clear": "مسح الاختيار",
+        "remove": "إزالة {label}",
+        "selected": "تم اختيار {label}",
+        "removed": "تمت إزالة {label}",
+        "results": {
+            "zero": "لا توجد نتائج",
+            "one": "نتيجة واحدة متاحة",
+            "two": "نتيجتان متاحتان",
+            "few": "{count} نتائج متاحة",
+            "many": "{count} نتيجة متاحة",
+            "other": "{count} نتيجة متاحة"
+        },
+        "loadError": "تعذر تحميل الخيارات.",
+        "retry": "إعادة المحاولة",
+        "loadMore": "تحميل المزيد"
+    },
     "toast": {
         "region": "الإشعارات"
     }

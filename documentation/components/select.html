@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-bui-theme="default" data-bui-mode="light" data-root="../../">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Select - Baset-UI Documentation</title>
+    <meta name="description" content="Select: a custom combobox over the native select, with multiple, search, clear, groups, validation and a remote mode.">
+    <!-- Empty icon: avoids a /favicon.ico 404 until the project has a real icon. -->
+    <link rel="icon" href="data:,">
+
+    <link rel="stylesheet" href="../../assets/css/baset-ui.css">
+    <link rel="stylesheet" href="../../assets/css/extensions/baset-ui-icons.css">
+    <link rel="stylesheet" href="../../assets/css/themes/ocean.css">
+    <link rel="stylesheet" href="../../documentation/assets/css/docs.css">
+    <link rel="stylesheet" href="../../documentation/assets/css/playground.css">
+    <script>
+        /* Prevents a flash of the wrong theme or mode. Same keys as BUI.theme (bui-theme, bui-mode). */
+        (function () {
+            var d = document.documentElement, t = null, m = null, r = null;
+            try { t = localStorage.getItem('bui-theme'); m = localStorage.getItem('bui-mode'); r = localStorage.getItem('bui-docs-dir'); } catch (e) {}
+            if (t && /^[a-z][a-z0-9]*(-[a-z0-9]+)*$/.test(t)) d.setAttribute('data-bui-theme', t);
+            if (m !== 'light' && m !== 'dark') m = window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+            d.setAttribute('data-bui-mode', m);
+            /* Documentation shell only: the saved direction of the RTL/LTR switcher. */
+            if (r === 'rtl' || r === 'ltr') d.setAttribute('dir', r);
+        })();
+    </script>
+</head>
+<body>
+    <main class="bui-docs-main" id="bui-docs-main" tabindex="-1">
+        <div class="bui-docs-page">
+            <div class="bui-docs-page__body">
+
+                <header class="bui-docs-page-header">
+                    <nav class="bui-docs-breadcrumb" aria-label="Breadcrumb" data-docs-breadcrumb hidden></nav>
+                    <h1>Select</h1>
+                    <p class="bui-docs-lead">A custom combobox built over the native select: single and multiple choice, search, clear, option groups, validation states and a remote mode that loads the options from a URL. The native select stays in the page, so forms keep working.</p>
+                </header>
+
+                <div class="bui-docs-content">
+                    <section class="bui-docs-section" aria-labelledby="installation-include">
+                        <h2 id="installation-include">01. Installation &amp; Include</h2>
+<p>Select is part of the Core, so <code>assets/css/baset-ui.css</code> and <code>assets/js/baset-ui.js</code> are required. It does not need the icon Extension (its chevron, clear, remove and selected marks are drawn by CSS). Write a normal <code>&lt;select&gt;</code> with a label and add <code>data-bui-select</code>; <code>BUI.init()</code> runs on page load and enhances it.</p>
+<pre class="bui-docs-code" data-lang="html"><code>&lt;link rel="stylesheet" href="assets/css/baset-ui.css"&gt;
+
+&lt;label class="bui-form-label" for="fruit"&gt;Fruit&lt;/label&gt;
+&lt;select id="fruit" name="fruit" data-bui-select&gt;
+    &lt;option value=""&gt;Choose a fruit&lt;/option&gt;
+    &lt;option value="apple"&gt;Apple&lt;/option&gt;
+    &lt;option value="banana"&gt;Banana&lt;/option&gt;
+&lt;/select&gt;
+
+&lt;script src="assets/js/baset-ui.js"&gt;&lt;/script&gt;</code></pre>
+<div class="bui-docs-callout bui-docs-callout--note" role="note">
+    <p class="bui-docs-callout__title">Note</p>
+    <p>Without JavaScript the page keeps working with the native select. A select needs an accessible name: a <code>&lt;label for&gt;</code>, <code>aria-label</code> or <code>aria-labelledby</code> (the script warns in the Console when there is none).</p>
+</div>
+<p><strong>Size decision (Core, not an Extension).</strong> Select adds about 65 KB of JavaScript and 17 KB of CSS before compression (12.5 KB and 2.5 KB gzip), which is over the 15 KB guideline, but it is used by most forms, and it uses the internal floating layer of the Core (the same one as Popover and Menu), so it could not live in an Extension without exporting that layer.</p>
+                    </section>
+
+                    <section class="bui-docs-section" aria-labelledby="customize">
+                        <h2 id="customize">02. Customize</h2>
+<p>Every option is a real option or attribute documented in sections 04 and 06. <em>Multiple</em> is the native <code>multiple</code> attribute. <em>Remote</em> uses the countries fixture of this documentation site (see the fixture note in the Examples section): the Code Output shows the URL <code>api/countries</code>, which only works here because this page answers it. <em>Per page</em> and <em>Load more</em> apply to the remote mode only. Press the control or open it with the keyboard to see the list.</p>
+<div data-docs-playground="select"></div>
+                    </section>
+
+                    <section class="bui-docs-section" aria-labelledby="default">
+                        <h2 id="default">03. Default</h2>
+
+<p>A single select with a placeholder. The sample options are declared text, not real data.</p>
+
+<div class="bui-docs-example">
+    <div class="bui-docs-example__preview">
+<div class="bui-form-group">
+    <label class="bui-form-label" for="def-fruit">Fruit</label>
+    <select id="def-fruit" name="fruit" data-bui-select data-bui-placeholder="Choose a fruit">
+        <option value="apple">Apple</option>
+        <option value="banana">Banana</option>
+        <option value="cherry">Cherry</option>
+        <option value="date">Date</option>
+        <option value="elderberry">Elderberry</option>
+        <option value="fig">Fig</option>
+    </select>
+</div>
+    </div>
+<pre class="bui-docs-code" data-lang="html"><code>&lt;div class="bui-form-group"&gt;
+    &lt;label class="bui-form-label" for="def-fruit"&gt;Fruit&lt;/label&gt;
+    &lt;select id="def-fruit" name="fruit" data-bui-select data-bui-placeholder="Choose a fruit"&gt;
+        &lt;option value="apple"&gt;Apple&lt;/option&gt;
+        &lt;option value="banana"&gt;Banana&lt;/option&gt;
+        &lt;option value="cherry"&gt;Cherry&lt;/option&gt;
+        &lt;option value="date"&gt;Date&lt;/option&gt;
+        &lt;option value="elderberry"&gt;Elderberry&lt;/option&gt;
+        &lt;option value="fig"&gt;Fig&lt;/option&gt;
+    &lt;/select&gt;
+&lt;/div&gt;</code></pre>
+</div>
+
+                    </section>
+
+                    <section class="bui-docs-section" aria-labelledby="variants-options">
+                        <h2 id="variants-options">04. Variants &amp; Options</h2>
+<h3>Modes and states</h3>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Modes and states</caption>
+<thead><tr><th scope="col">What</th><th scope="col">How you write it</th><th scope="col">Notes</th></tr></thead>
+<tbody><tr><td>Single</td><td><code>&lt;select data-bui-select&gt;</code></td><td>The value is the string of the chosen option (empty when nothing is chosen).</td></tr><tr><td>Multiple</td><td><code>&lt;select data-bui-select multiple&gt;</code></td><td>The native attribute decides. The chosen options are tags in the control; the list stays open after a choice. The value is an array.</td></tr><tr><td>Searchable</td><td><code>data-bui-searchable</code></td><td>The control is a text input: typing filters the options (case, accents and Arabic diacritics are ignored).</td></tr><tr><td>Clearable</td><td><code>data-bui-clearable</code></td><td>A clear button appears when something is chosen. Keyboard: Backspace or Delete (see Accessibility).</td></tr><tr><td>Placeholder</td><td><code>&lt;option value=""&gt;Text&lt;/option&gt;</code> or <code>data-bui-placeholder="Text"</code></td><td>An option with an empty value is not listed: its text is the placeholder. Without it, <code>data-bui-placeholder</code> shows nothing chosen.</td></tr><tr><td>Option groups</td><td><code>&lt;optgroup label="..."&gt;</code></td><td>Rendered as <code>role="group"</code> with the label. <code>disabled</code> on the group disables its options.</td></tr><tr><td>Disabled</td><td><code>disabled</code> on the select or an option</td><td>A disabled select is not focusable. The control follows the attribute when a script changes it.</td></tr><tr><td>Sizes</td><td><code>data-bui-size="sm|md|lg"</code></td><td>Default <code>md</code>. The list uses the same size.</td></tr><tr><td>Validation</td><td><code>class="is-valid"</code> or <code>is-invalid</code> (and <code>aria-invalid="true"</code>) on the native select</td><td>The control follows the native element, so the same script that validates an Input works. A ring inside the border is added (more than color).</td></tr><tr><td>Remote</td><td><code>data-bui-select="remote" data-bui-url="..."</code></td><td>The options come from a URL as you scroll or search (section 06).</td></tr></tbody>
+</table>
+<h3>Options</h3>
+<p>Options come from the defaults, then the HTML attributes, then the JavaScript options (the Core rule). A wrong value is replaced by the default with a Console warning.</p>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Select options</caption>
+<thead><tr><th scope="col">Name</th><th scope="col">Type</th><th scope="col">Default</th><th scope="col">HTML attribute</th><th scope="col">Description</th></tr></thead>
+<tbody><tr><td><code>searchable</code></td><td>boolean</td><td><code>false</code></td><td><code>data-bui-searchable</code></td><td>Adds a search box.</td></tr><tr><td><code>clearable</code></td><td>boolean</td><td><code>false</code></td><td><code>data-bui-clearable</code></td><td>Adds a clear button.</td></tr><tr><td><code>placeholder</code></td><td>string</td><td><code>""</code></td><td><code>data-bui-placeholder</code></td><td>The text shown when nothing is chosen. Wins over the empty option text.</td></tr><tr><td><code>size</code></td><td>string</td><td><code>"md"</code></td><td><code>data-bui-size</code></td><td><code>sm</code>, <code>md</code> or <code>lg</code>.</td></tr><tr><td><code>placement</code></td><td>string</td><td><code>"bottom-start"</code></td><td><code>data-bui-placement</code></td><td>Where the list opens (the same placements as Popover). It flips and shifts to stay on screen.</td></tr><tr><td><code>closeOnSelect</code></td><td>boolean | null</td><td><code>null</code></td><td><code>data-bui-close-on-select</code></td><td><code>null</code> closes a single select and keeps a multiple select open. <code>true</code> or <code>false</code> forces it.</td></tr><tr><td><code>url</code></td><td>string</td><td><code>""</code></td><td><code>data-bui-url</code></td><td>Remote mode: the address to request.</td></tr><tr><td><code>perPage</code></td><td>number</td><td><code>20</code></td><td><code>data-bui-per-page</code></td><td>Remote mode: the page size sent as <code>perPage</code>.</td></tr><tr><td><code>debounce</code></td><td>number</td><td><code>300</code></td><td><code>data-bui-debounce</code></td><td>Remote mode: milliseconds to wait after typing before asking.</td></tr><tr><td><code>loadMore</code></td><td>string</td><td><code>"scroll"</code></td><td><code>data-bui-load-more</code></td><td>Remote mode: <code>scroll</code> loads the next page near the end of the list; <code>button</code> shows a Load more button (keyboard users still reach the next page by moving down).</td></tr></tbody>
+</table>
+<h3>The native element is the source of truth</h3>
+<p>The control reads and writes the native <code>&lt;select&gt;</code>: <code>name</code>, <code>required</code>, <code>form</code>, FormData, Submit and Reset all work as they do without the script. The control also follows later changes to the native element: its <code>disabled</code> state, the <code>is-valid</code> / <code>is-invalid</code> classes, <code>aria-invalid</code>, <code>required</code>, its options (static mode) and its selection (after a <code>change</code> event, or when the form is reset). Setting <code>select.value</code> from a script does not fire an event by itself (a browser rule): dispatch <code>change</code> or call <code>refresh()</code>.</p>
+<h3>Tokens</h3>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Select tokens</caption>
+<thead><tr><th scope="col">Token</th><th scope="col">Controls</th></tr></thead>
+<tbody><tr><td><code>--bui-select-font-size-{sm|md|lg}</code>, <code>--bui-select-height-{sm|md|lg}</code>, <code>--bui-select-padding-x-{sm|md|lg}</code></td><td>Control size.</td></tr><tr><td><code>--bui-select-radius</code>, <code>--bui-select-bg</code>, <code>--bui-select-border-color</code>, <code>--bui-select-hover-border-color</code>, <code>--bui-select-focus-border-color</code></td><td>Control look and states.</td></tr><tr><td><code>--bui-select-tag-*</code></td><td>Tags of a multiple select.</td></tr><tr><td><code>--bui-select-list-*</code> (bg, border, radius, shadow, padding, max-height)</td><td>The floating list.</td></tr><tr><td><code>--bui-select-option-*</code>, <code>--bui-select-group-color</code>, <code>--bui-select-message-color</code></td><td>Options, group labels and the loading, empty and error messages.</td></tr></tbody>
+</table>
+                    </section>
+
+                    <section class="bui-docs-section" aria-labelledby="examples">
+                        <h2 id="examples">05. Examples</h2>
+<div class="bui-docs-callout bui-docs-callout--note" role="note">
+    <p class="bui-docs-callout__title">Fixtures declared on this page</p>
+    <p>Sample options (fruits, sizes) are declared text. The remote examples read <code>documentation/assets/data/select-countries.json</code> (250 countries: ISO code and English name, generated from <code>Intl.DisplayNames</code>). A static site has no server, so a small script at the bottom of this page answers requests to <code>api/countries</code> by reading that file and applying <code>page</code>, <code>perPage</code> and <code>search</code> itself, after a delay. Its delay, failure and empty switches are controls of this page only, not options of the component. In your own page you point <code>data-bui-url</code> at a real endpoint.</p>
+</div>
+<h3>Multiple with search</h3>
+<p>Tags show the choices; Backspace on the empty search removes the last one. The list stays open for more choices.</p>
+
+<div class="bui-docs-example">
+    <div class="bui-docs-example__preview">
+<div class="bui-form-group">
+    <label class="bui-form-label" for="ex-multi">Fruits</label>
+    <select id="ex-multi" name="fruits[]" multiple data-bui-select data-bui-searchable data-bui-clearable data-bui-placeholder="Search fruits">
+        <option value="apple">Apple</option>
+        <option value="banana">Banana</option>
+        <option value="cherry">Cherry</option>
+        <option value="date">Date</option>
+        <option value="elderberry">Elderberry</option>
+        <option value="fig">Fig</option>
+    </select>
+</div>
+    </div>
+<pre class="bui-docs-code" data-lang="html"><code>&lt;div class="bui-form-group"&gt;
+    &lt;label class="bui-form-label" for="ex-multi"&gt;Fruits&lt;/label&gt;
+    &lt;select id="ex-multi" name="fruits[]" multiple data-bui-select data-bui-searchable data-bui-clearable data-bui-placeholder="Search fruits"&gt;
+        &lt;option value="apple"&gt;Apple&lt;/option&gt;
+        &lt;option value="banana"&gt;Banana&lt;/option&gt;
+        &lt;option value="cherry"&gt;Cherry&lt;/option&gt;
+        &lt;option value="date"&gt;Date&lt;/option&gt;
+        &lt;option value="elderberry"&gt;Elderberry&lt;/option&gt;
+        &lt;option value="fig"&gt;Fig&lt;/option&gt;
+    &lt;/select&gt;
+&lt;/div&gt;</code></pre>
+</div>
+
+<h3>Groups, a disabled option and sizes</h3>
+<div class="bui-docs-example">
+    <div class="bui-docs-example__preview">
+<div class="bui-form-group">
+    <label class="bui-form-label" for="ex-group">Size</label>
+    <select id="ex-group" data-bui-select data-bui-size="lg" data-bui-placeholder="Choose a size">
+        <optgroup label="Small">
+            <option value="xs">Extra small</option>
+            <option value="s">Small</option>
+        </optgroup>
+        <optgroup label="Large">
+            <option value="l">Large</option>
+            <option value="xl" disabled>Extra large (sold out)</option>
+        </optgroup>
+    </select>
+</div>
+<div class="bui-form-group">
+    <label class="bui-form-label" for="ex-small">Small select</label>
+    <select id="ex-small" data-bui-select data-bui-size="sm"><option>One</option><option>Two</option></select>
+</div>
+<div class="bui-form-group">
+    <label class="bui-form-label" for="ex-disabled">Disabled</label>
+    <select id="ex-disabled" data-bui-select disabled><option>Not available</option></select>
+</div>
+    </div>
+<pre class="bui-docs-code" data-lang="html"><code>&lt;div class="bui-form-group"&gt;
+    &lt;label class="bui-form-label" for="ex-group"&gt;Size&lt;/label&gt;
+    &lt;select id="ex-group" data-bui-select data-bui-size="lg" data-bui-placeholder="Choose a size"&gt;
+        &lt;optgroup label="Small"&gt;
+            &lt;option value="xs"&gt;Extra small&lt;/option&gt;
+            &lt;option value="s"&gt;Small&lt;/option&gt;
+        &lt;/optgroup&gt;
+        &lt;optgroup label="Large"&gt;
+            &lt;option value="l"&gt;Large&lt;/option&gt;
+            &lt;option value="xl" disabled&gt;Extra large (sold out)&lt;/option&gt;
+        &lt;/optgroup&gt;
+    &lt;/select&gt;
+&lt;/div&gt;
+&lt;div class="bui-form-group"&gt;
+    &lt;label class="bui-form-label" for="ex-small"&gt;Small select&lt;/label&gt;
+    &lt;select id="ex-small" data-bui-select data-bui-size="sm"&gt;&lt;option&gt;One&lt;/option&gt;&lt;option&gt;Two&lt;/option&gt;&lt;/select&gt;
+&lt;/div&gt;
+&lt;div class="bui-form-group"&gt;
+    &lt;label class="bui-form-label" for="ex-disabled"&gt;Disabled&lt;/label&gt;
+    &lt;select id="ex-disabled" data-bui-select disabled&gt;&lt;option&gt;Not available&lt;/option&gt;&lt;/select&gt;
+&lt;/div&gt;</code></pre>
+</div>
+
+<h3>A form with validation</h3>
+<p>The page script uses the native Constraint Validation API and toggles <code>is-invalid</code> on the native select; the control follows. Reset restores the placeholder state. The result line is written by this page.</p>
+
+<div class="bui-docs-example">
+    <div class="bui-docs-example__preview">
+<form id="ex-form" novalidate>
+    <div class="bui-form-group">
+        <label class="bui-form-label bui-form-label--required" for="ex-req">Country (required)</label>
+        <select id="ex-req" name="country" required data-bui-select data-bui-placeholder="Choose a country" aria-describedby="ex-req-help">
+            <option value="eg">Egypt</option>
+            <option value="fr">France</option>
+            <option value="jp">Japan</option>
+        </select>
+        <p class="bui-form-text" id="ex-req-help">Pick one to continue.</p>
+    </div>
+    <button class="bui-btn" type="submit">Submit</button>
+    <button class="bui-btn bui-btn--outline" type="reset">Reset</button>
+    <p id="ex-form-out" class="bui-form-text" role="status"></p>
+</form>
+    </div>
+<pre class="bui-docs-code" data-lang="html"><code>&lt;form id="ex-form" novalidate&gt;
+    &lt;div class="bui-form-group"&gt;
+        &lt;label class="bui-form-label bui-form-label--required" for="ex-req"&gt;Country (required)&lt;/label&gt;
+        &lt;select id="ex-req" name="country" required data-bui-select data-bui-placeholder="Choose a country" aria-describedby="ex-req-help"&gt;
+            &lt;option value="eg"&gt;Egypt&lt;/option&gt;
+            &lt;option value="fr"&gt;France&lt;/option&gt;
+            &lt;option value="jp"&gt;Japan&lt;/option&gt;
+        &lt;/select&gt;
+        &lt;p class="bui-form-text" id="ex-req-help"&gt;Pick one to continue.&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;button class="bui-btn" type="submit"&gt;Submit&lt;/button&gt;
+    &lt;button class="bui-btn bui-btn--outline" type="reset"&gt;Reset&lt;/button&gt;
+    &lt;p id="ex-form-out" class="bui-form-text" role="status"&gt;&lt;/p&gt;
+&lt;/form&gt;</code></pre>
+</div>
+<pre class="bui-docs-code" data-lang="javascript"><code>var form = document.getElementById('ex-form');
+var select = document.getElementById('ex-req');
+form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var ok = select.checkValidity();
+    select.classList.toggle('is-invalid', !ok);
+    select.classList.toggle('is-valid', ok);
+    select.setAttribute('aria-invalid', ok ? 'false' : 'true');
+    if (!ok) { BUI.getInstance(select, 'select').open(); }
+});
+select.addEventListener('change', function () { select.classList.remove('is-invalid'); select.setAttribute('aria-invalid', 'false'); });</code></pre>
+<h3>Inside a Dialog</h3>
+<p>The list opens inside the dialog, so it stays above it and clickable. Esc closes the list first, then the dialog.</p>
+
+<div class="bui-docs-example">
+    <div class="bui-docs-example__preview">
+<button class="bui-btn" type="button" data-bui-dialog-open="#ex-dialog">Open dialog</button>
+<dialog id="ex-dialog" class="bui-dialog" data-bui-dialog aria-labelledby="ex-dialog-title">
+    <div class="bui-dialog__panel">
+        <div class="bui-dialog__header"><h2 class="bui-dialog__title" id="ex-dialog-title">Choose a fruit</h2></div>
+        <div class="bui-dialog__body">
+            <label class="bui-form-label" for="ex-in-dialog">Fruit</label>
+            <select id="ex-in-dialog" data-bui-select data-bui-searchable>
+                <option value="apple">Apple</option>
+                <option value="banana">Banana</option>
+                <option value="cherry">Cherry</option>
+                <option value="date">Date</option>
+                <option value="elderberry">Elderberry</option>
+                <option value="fig">Fig</option>
+            </select>
+        </div>
+        <div class="bui-dialog__footer"><button class="bui-btn" type="button" data-bui-dismiss>Close</button></div>
+    </div>
+</dialog>
+    </div>
+<pre class="bui-docs-code" data-lang="html"><code>&lt;button class="bui-btn" type="button" data-bui-dialog-open="#ex-dialog"&gt;Open dialog&lt;/button&gt;
+&lt;dialog id="ex-dialog" class="bui-dialog" data-bui-dialog aria-labelledby="ex-dialog-title"&gt;
+    &lt;div class="bui-dialog__panel"&gt;
+        &lt;div class="bui-dialog__header"&gt;&lt;h2 class="bui-dialog__title" id="ex-dialog-title"&gt;Choose a fruit&lt;/h2&gt;&lt;/div&gt;
+        &lt;div class="bui-dialog__body"&gt;
+            &lt;label class="bui-form-label" for="ex-in-dialog"&gt;Fruit&lt;/label&gt;
+            &lt;select id="ex-in-dialog" data-bui-select data-bui-searchable&gt;
+                &lt;option value="apple"&gt;Apple&lt;/option&gt;
+                &lt;option value="banana"&gt;Banana&lt;/option&gt;
+                &lt;option value="cherry"&gt;Cherry&lt;/option&gt;
+                &lt;option value="date"&gt;Date&lt;/option&gt;
+                &lt;option value="elderberry"&gt;Elderberry&lt;/option&gt;
+                &lt;option value="fig"&gt;Fig&lt;/option&gt;
+            &lt;/select&gt;
+        &lt;/div&gt;
+        &lt;div class="bui-dialog__footer"&gt;&lt;button class="bui-btn" type="button" data-bui-dismiss&gt;Close&lt;/button&gt;&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/dialog&gt;</code></pre>
+</div>
+
+<h3>Remote: single, searchable, clearable</h3>
+<p>The page loads on first open (20 per page), loads the next page as you scroll, and asks again (after 300 ms) when you type. A previous request is cancelled when you type again. The chosen option is written into the native select, so it is submitted even when it is not on the loaded page.</p>
+
+<div class="bui-docs-example">
+    <div class="bui-docs-example__preview">
+<div class="bui-form-group">
+    <label class="bui-form-label" for="ex-remote">Country</label>
+    <select id="ex-remote" name="country" data-bui-select="remote" data-bui-url="api/countries" data-bui-per-page="20"
+            data-bui-searchable data-bui-clearable data-bui-placeholder="Search countries">
+        <option value="EG" selected>Egypt</option>
+    </select>
+</div>
+    </div>
+<pre class="bui-docs-code" data-lang="html"><code>&lt;div class="bui-form-group"&gt;
+    &lt;label class="bui-form-label" for="ex-remote"&gt;Country&lt;/label&gt;
+    &lt;select id="ex-remote" name="country" data-bui-select="remote" data-bui-url="api/countries" data-bui-per-page="20"
+            data-bui-searchable data-bui-clearable data-bui-placeholder="Search countries"&gt;
+        &lt;option value="EG" selected&gt;Egypt&lt;/option&gt;
+    &lt;/select&gt;
+&lt;/div&gt;</code></pre>
+</div>
+
+<h3>Remote: multiple with a Load more button</h3>
+<div class="bui-docs-example">
+    <div class="bui-docs-example__preview">
+<div class="bui-form-group">
+    <label class="bui-form-label" for="ex-remote-multi">Countries</label>
+    <select id="ex-remote-multi" name="countries[]" multiple data-bui-select="remote" data-bui-url="api/countries"
+            data-bui-per-page="10" data-bui-load-more="button" data-bui-searchable data-bui-placeholder="Search countries"></select>
+</div>
+    </div>
+<pre class="bui-docs-code" data-lang="html"><code>&lt;div class="bui-form-group"&gt;
+    &lt;label class="bui-form-label" for="ex-remote-multi"&gt;Countries&lt;/label&gt;
+    &lt;select id="ex-remote-multi" name="countries[]" multiple data-bui-select="remote" data-bui-url="api/countries"
+            data-bui-per-page="10" data-bui-load-more="button" data-bui-searchable data-bui-placeholder="Search countries"&gt;&lt;/select&gt;
+&lt;/div&gt;</code></pre>
+</div>
+
+<h3>Remote: slow network, error and empty</h3>
+<p>These switches control the fixture script of this page. Open the select below after changing them: a slow answer shows Loading, a failure shows the message with Retry (Enter retries from the keyboard), and the empty answer shows No results.</p>
+<div class="bui-docs-example">
+    <div class="bui-docs-example__preview">
+        <div class="bui-form-group"><label class="bui-form-label" for="fx-delay">Delay (ms)</label><input id="fx-delay" class="bui-input" type="number" min="0" step="100" value="800"></div>
+        <div class="bui-form-group"><div class="bui-checkbox"><input class="bui-checkbox__input" type="checkbox" id="fx-fail"><label class="bui-checkbox__label" for="fx-fail">Fail the request</label></div></div>
+        <div class="bui-form-group"><div class="bui-checkbox"><input class="bui-checkbox__input" type="checkbox" id="fx-empty"><label class="bui-checkbox__label" for="fx-empty">Return no items</label></div></div>
+        <div class="bui-form-group">
+            <label class="bui-form-label" for="ex-remote-state">Country (fixture controls apply)</label>
+            <select id="ex-remote-state" data-bui-select="remote" data-bui-url="api/countries" data-bui-per-page="20" data-bui-placeholder="Open to load"></select>
+        </div>
+    </div>
+</div>
+                    </section>
+
+                    <section class="bui-docs-section" aria-labelledby="javascript-api">
+                        <h2 id="javascript-api">06. JavaScript API</h2>
+<p>Select is initialized from HTML (<code>data-bui-select</code>) by <code>BUI.init()</code>, or from JavaScript:</p>
+<pre class="bui-docs-code" data-lang="javascript"><code>var select = BUI.select('#fruit', { searchable: true, clearable: true });
+var remote = BUI.select.remote('#country', { url: 'api/countries', perPage: 20 });
+
+select.setValue('banana');
+select.getValue();            // "banana"
+document.getElementById('fruit').addEventListener('bui:select:change', function (e) {
+    console.log(e.detail.value, e.detail.source);
+});</code></pre>
+<p>The events are fired on the native <code>&lt;select&gt;</code> and bubble. Methods that do not return a value return the instance, so they chain.</p>
+<h3>Methods</h3>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Select methods</caption>
+<thead><tr><th scope="col">Name</th><th scope="col">Type</th><th scope="col">Default</th><th scope="col">Description</th></tr></thead>
+<tbody><tr><td><code>getValue()</code></td><td>string | string[]</td><td>-</td><td>A string for a single select (empty when nothing is chosen) and an array, in the order of choice, for a multiple select.</td></tr><tr><td><code>setValue(value)</code></td><td>instance</td><td>-</td><td>Sets the choice: a string, a number or an array (multiple). In the remote mode an <code>{ value, label }</code> object also works (a plain value uses itself as the label until the option is loaded). An unknown value in the static mode is ignored with a warning. Fires <code>bui:select:change</code> with <code>source: "api"</code> and no native event.</td></tr><tr><td><code>open()</code> / <code>close()</code></td><td>boolean</td><td>-</td><td>Returns whether the list changed state (a canceled <code>beforeopen</code> / <code>beforeclose</code> or a disabled select returns false).</td></tr><tr><td><code>isOpen()</code></td><td>boolean</td><td>-</td><td></td></tr><tr><td><code>clear()</code></td><td>instance</td><td>-</td><td>Clears the choice.</td></tr><tr><td><code>setOptions(list)</code></td><td>instance</td><td>-</td><td>Replaces the options. <code>list</code> is an array of <code>{ value, label, disabled?, selected? }</code> or of groups <code>{ label, options: [...], disabled? }</code>. Static mode: rewrites the native <code>option</code> and <code>optgroup</code> elements and keeps a choice whose value still exists. Remote mode: sets the current result list (no more pages). Labels are inserted as text.</td></tr><tr><td><code>refresh()</code></td><td>instance</td><td>-</td><td>Static: reads the native element again (use it after a script changed options or <code>value</code> without an event). Remote: asks the URL again from page 1 (when open, else on the next opening).</td></tr><tr><td><code>update(options)</code></td><td>instance</td><td>-</td><td>Changes options (any of the options above) and rebuilds the control, keeping the choice and the focus. Unknown names are ignored with a warning. Switching a native select between single and multiple (the <code>multiple</code> attribute) is also picked up.</td></tr><tr><td><code>destroy()</code></td><td>void</td><td>-</td><td>Removes the control, the listeners, the observers and timers, cancels a pending request, and puts the native select back as it was (its class, tabindex and aria-hidden).</td></tr></tbody>
+</table>
+<h3>Events</h3>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Select events</caption>
+<thead><tr><th scope="col">Name</th><th scope="col">Type</th><th scope="col">Default</th><th scope="col">Description</th></tr></thead>
+<tbody><tr><td><code>bui:select:change</code></td><td>CustomEvent</td><td>-</td><td><code>detail</code>: <code>value</code> (string or array), <code>selected</code> (array of <code>{ value, label }</code>), <code>source</code> (<code>user</code> or <code>api</code>). On a user choice the native <code>input</code> and <code>change</code> events fire first.</td></tr><tr><td><code>bui:select:beforeopen</code> / <code>beforeclose</code></td><td>CustomEvent</td><td>cancelable</td><td><code>detail.source</code>: <code>click</code>, <code>keyboard</code>, <code>input</code>, <code>api</code> (open); <code>select</code>, <code>toggle</code>, <code>escape</code>, <code>tab</code>, <code>blur</code>, <code>outside</code>, <code>focusout</code>, <code>overlay</code>, <code>detached</code>, <code>disabled</code>, <code>api</code> (close).</td></tr><tr><td><code>bui:select:open</code> / <code>close</code></td><td>CustomEvent</td><td>-</td><td>After the list opened or closed.</td></tr><tr><td><code>bui:select:search</code></td><td>CustomEvent</td><td>-</td><td><code>detail.query</code>: the typed text (fired for each key, before the remote debounce).</td></tr></tbody>
+</table>
+<h3>Remote mode</h3>
+<p>The request is a <code>GET</code> to <code>url</code> (an existing query string is kept) with the parameters below, made with the browser <code>fetch</code> and the headers <code>Accept: application/json</code>. Cross-origin URLs need the server to allow CORS. The select asks for page 1 on the first opening and again for each next page and for each search. A request that is no longer needed is cancelled (<code>AbortController</code>) and a late answer is ignored.</p>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Remote request parameters</caption>
+<thead><tr><th scope="col">Parameter</th><th scope="col">Value</th></tr></thead>
+<tbody><tr><td><code>page</code></td><td>The page number, starting at 1.</td></tr><tr><td><code>perPage</code></td><td>The <code>perPage</code> option.</td></tr><tr><td><code>search</code></td><td>The typed text, trimmed. Left out when it is empty.</td></tr></tbody>
+</table><p>The response must be JSON with this shape (<code>group</code> and <code>disabled</code> are optional):</p><pre class="bui-docs-code" data-lang="json"><code>{
+    "items": [
+        { "value": "EG", "label": "Egypt" },
+        { "value": "FR", "label": "France", "disabled": false }
+    ],
+    "total": 250
+}</code></pre>
+<p>More pages are requested while the number of loaded items is below <code>total</code>. When <code>total</code> is missing, a page that has as many items as <code>perPage</code> means there may be more. A repeated value is ignored. A failed request (network error, status other than 2xx, or an invalid body) shows the error message with a Retry button, and a failed or empty result is asked again at the next opening. The loaded list is kept between openings while a search is not active.</p>
+<div class="bui-docs-callout bui-docs-callout--warning" role="note">
+    <p class="bui-docs-callout__title">Warning</p>
+    <p>Option labels are always inserted as text, never as HTML. Validate on the server: the client only sends what the user chose.</p>
+</div>
+                    </section>
+
+                    <section class="bui-docs-section" aria-labelledby="responsive-behavior">
+                        <h2 id="responsive-behavior">07. Responsive Behavior</h2>
+<p>The control fills its container (<code>inline-size: 100%</code>) and a long label is cut with an ellipsis; the tags of a multiple select wrap onto more lines. The list is as wide as the control at least, as wide as its longest option at most, and never wider than the space left on the screen; it is as tall as the screen allows (maximum five and a half rows by default) and scrolls inside. It flips above the control when there is no room below. On a touch screen (coarse pointer) the control and the options are at least 44px high and the tag and clear buttons are larger.</p>
+<div class="bui-docs-callout bui-docs-callout--note" role="note">
+    <p class="bui-docs-callout__title">Note</p>
+    <p>The list is placed by the page size, not by the width of the Playground preview, so the preview width buttons do not change where it flips.</p>
+</div>
+                    </section>
+
+                    <section class="bui-docs-section" aria-labelledby="accessibility">
+                        <h2 id="accessibility">08. Accessibility</h2>
+<h3>Keyboard</h3>
+<table class="bui-docs-table">
+<caption class="bui-docs-sr-only">Select keyboard</caption>
+<thead><tr><th scope="col">Key</th><th scope="col">Action</th></tr></thead>
+<tbody><tr><td>Tab / Shift+Tab</td><td>Moves in and out of the control (one stop). Nothing is chosen by Tab: the list closes.</td></tr><tr><td>Arrow Down / Arrow Up</td><td>Opens the list. When open, moves to the next or previous enabled option (it stops at the ends). In the remote mode, reaching the end loads the next page.</td></tr><tr><td>Home / End</td><td>First or last option (a select without search; in the search box they move the caret).</td></tr><tr><td>Page Down / Page Up</td><td>Ten options at a time.</td></tr><tr><td>Enter</td><td>Opens the list. When open, chooses the active option (and in the remote error state, retries). In a searchable select Enter with the list closed keeps its normal form behavior.</td></tr><tr><td>Space</td><td>Opens or chooses (a select without search).</td></tr><tr><td>Esc</td><td>Closes the list and returns to the chosen value (a Dialog behind it stays open).</td></tr><tr><td>Letters</td><td>A select without search: type to jump to the next option that starts with them. A select with search: the letters filter.</td></tr><tr><td>Backspace / Delete</td><td>Multiple: Backspace removes the last tag (with an empty search box). Single and clearable: clears the choice (with an empty or unedited search box).</td></tr></tbody>
+</table>
+<p>The arrow keys are vertical, so they do not change in RTL.</p>
+<h3>ARIA</h3>
+<p>The control is a combobox (<code>role="combobox"</code>, <code>aria-haspopup="listbox"</code>, <code>aria-expanded</code>, <code>aria-controls</code>) with <code>aria-activedescendant</code> pointing to the active option, so the focus stays on the control. A searchable select makes the input the combobox (<code>aria-autocomplete="list"</code>); a select without search makes the value area the combobox. The list is <code>role="listbox"</code> (<code>aria-multiselectable</code> for multiple) with <code>role="option"</code> items (<code>aria-selected</code>, <code>aria-disabled</code>, and <code>aria-setsize</code> / <code>aria-posinset</code> because the list is rendered in chunks) and <code>role="group"</code> for groups. The name comes from the native select labels (<code>aria-labelledby</code>), <code>aria-describedby</code>, <code>aria-required</code> and <code>aria-invalid</code> are copied from the native element. The native select is hidden from assistive technology (<code>aria-hidden</code>, <code>tabindex="-1"</code>) but not removed, so a browser validation message still points at the control and a failed validation moves the focus to it.</p>
+<h3>Screen reader</h3>
+<p>A polite status region announces the number of results while searching, the loading state, errors, and each choice and removal. The tags and the clear button also have names (translated with <code>BUI.locale</code>). <strong>Not tested with a screen reader</strong> in this release: the behavior of the status announcements and of <code>aria-activedescendant</code> in NVDA, JAWS and VoiceOver is unverified.</p>
+<h3>Known limits</h3>
+<p>The remove buttons on the tags of a select without search are mouse and touch only (hidden from assistive technology on purpose, because they sit inside the combobox); use Backspace with the keyboard. The clear button is also outside the Tab order for the same reason; use Backspace or Delete. The option list is rendered 100 at a time as you scroll or move, so very long lists open quickly, but a list of tens of thousands of options is not virtualized (a planned improvement for a later task).</p>
+                    </section>
+
+                </div>
+                <!-- Previous / Next links are appended here by docs.js from the order in nav.js. -->
+            </div>
+            <!-- "On this page" is appended here by docs.js (visible from the XL breakpoint). -->
+        </div>
+    </main>
+
+    <script src="../../assets/js/baset-ui.js"></script>
+    <script src="../../documentation/assets/js/nav.js"></script>
+    <script src="../../documentation/assets/js/docs.js"></script>
+    <script src="../../documentation/assets/js/playground.js"></script>
+    <script>
+        (function () {
+            /* ---- Documentation fixture server (declared): answers fetch() for "api/countries" from the static JSON file. ---- */
+            var realFetch = window.fetch.bind(window);
+            var dataUrl = new URL('../../documentation/assets/data/select-countries.json', document.baseURI).toString();
+            var cache = null;
+            function all() { return cache ? Promise.resolve(cache) : realFetch(dataUrl).then(function (r) { return r.json(); }).then(function (d) { cache = d; return d; }); }
+            function control(id, fallback) { var el = document.getElementById(id); return el ? el : fallback; }
+            window.fetch = function (input, init) {
+                var url = new URL(typeof input === 'string' ? input : input.url, document.baseURI);
+                if (!/\/api\/countries$/.test(url.pathname)) { return realFetch(input, init); }
+                var signal = init && init.signal;
+                return new Promise(function (resolve, reject) {
+                    var delayEl = document.getElementById('fx-delay');
+                    var delay = delayEl ? (Number(delayEl.value) || 0) : 400;
+                    var timer = setTimeout(function () {
+                        var fail = document.getElementById('fx-fail');
+                        if (fail && fail.checked) { resolve(new Response('{}', { status: 500 })); return; }
+                        all().then(function (list) {
+                            var empty = document.getElementById('fx-empty');
+                            var q = (url.searchParams.get('search') || '').toLowerCase();
+                            var page = Number(url.searchParams.get('page')) || 1;
+                            var per = Number(url.searchParams.get('perPage')) || 20;
+                            var hits = empty && empty.checked ? [] : list.filter(function (o) { return !q || o.label.toLowerCase().indexOf(q) > -1; });
+                            resolve(new Response(JSON.stringify({ items: hits.slice((page - 1) * per, page * per), total: hits.length }), { status: 200, headers: { 'Content-Type': 'application/json' } }));
+                        }, reject);
+                    }, delay);
+                    if (signal) { signal.addEventListener('abort', function () { clearTimeout(timer); reject(new DOMException('Aborted', 'AbortError')); }); }
+                });
+            };
+
+            /* A link with href="#" inside a preview must not scroll the page, and a submit button must not submit it. */
+            document.addEventListener('click', function (e) {
+                var a = e.target.closest ? e.target.closest('a[href="#"]') : null;
+                if (a && a.closest('[data-docs-playground], .bui-docs-example__preview')) { e.preventDefault(); }
+            });
+            document.addEventListener('submit', function (e) {
+                if (e.target.closest && e.target.closest('[data-docs-playground], .bui-docs-example__preview')) { e.preventDefault(); }
+            });
+
+            /* The validation example (its code is shown in section 05). */
+            var form = document.getElementById('ex-form');
+            if (form) {
+                var sel = document.getElementById('ex-req');
+                var out = document.getElementById('ex-form-out');
+                form.addEventListener('submit', function (e) {
+                    var ok = sel.checkValidity();
+                    sel.classList.toggle('is-invalid', !ok);
+                    sel.classList.toggle('is-valid', ok);
+                    sel.setAttribute('aria-invalid', ok ? 'false' : 'true');
+                    out.textContent = ok ? 'Submitted: country=' + sel.value : 'Choose a country first.';
+                    if (!ok) { BUI.getInstance(sel, 'select').open(); }
+                });
+                sel.addEventListener('change', function () { sel.classList.remove('is-invalid'); sel.setAttribute('aria-invalid', 'false'); });
+                form.addEventListener('reset', function () { sel.classList.remove('is-invalid', 'is-valid'); sel.removeAttribute('aria-invalid'); out.textContent = ''; });
+            }
+
+            var FRUITS = ['apple:Apple', 'banana:Banana', 'cherry:Cherry', 'date:Date', 'elderberry:Elderberry', 'fig:Fig'];
+            function fruitOptions() { return FRUITS.map(function (f) { var p = f.split(':'); return '    <option value="' + p[0] + '">' + p[1] + '</option>'; }).join('\n'); }
+
+            BUI_DOCS_PLAYGROUND.define('select', {
+                title: 'Select playground',
+                controls: [
+                    { type: 'radio-group', name: 'mode', label: 'Choice', default: 'single',
+                      options: [{ value: 'single', label: 'Single' }, { value: 'multiple', label: 'Multiple' }] },
+                    { type: 'switch', name: 'searchable', label: 'Searchable' },
+                    { type: 'switch', name: 'clearable', label: 'Clearable' },
+                    { type: 'text', name: 'placeholder', label: 'Placeholder', default: 'Choose', maxLength: 24 },
+                    { type: 'radio-group', name: 'size', label: 'Size', default: 'md',
+                      options: [{ value: 'sm', label: 'Small' }, { value: 'md', label: 'Medium' }, { value: 'lg', label: 'Large' }] },
+                    { type: 'select', name: 'state', label: 'State', default: 'default',
+                      options: [{ value: 'default', label: 'Default' }, { value: 'disabled', label: 'Disabled' }, { value: 'valid', label: 'Valid' }, { value: 'invalid', label: 'Invalid' }] },
+                    { type: 'switch', name: 'grouped', label: 'Option groups (static)' },
+                    { type: 'switch', name: 'remote', label: 'Remote (countries fixture)' },
+                    { type: 'range', name: 'perPage', label: 'Per page (remote)', default: 20, min: 5, max: 50, step: 5 },
+                    { type: 'radio-group', name: 'loadMore', label: 'Load more (remote)', default: 'scroll',
+                      options: [{ value: 'scroll', label: 'Scroll' }, { value: 'button', label: 'Button' }] }
+                ],
+                template: function (state, h) {
+                    var multiple = state.mode === 'multiple';
+                    var attrs = ' id="field" name="field' + (multiple ? '[]' : '') + '"' + (multiple ? ' multiple' : '');
+                    attrs += state.remote ? ' data-bui-select="remote" data-bui-url="api/countries"' : ' data-bui-select';
+                    if (state.searchable) { attrs += ' data-bui-searchable'; }
+                    if (state.clearable) { attrs += ' data-bui-clearable'; }
+                    if (state.placeholder) { attrs += ' data-bui-placeholder="' + h.escape(state.placeholder) + '"'; }
+                    if (state.size !== 'md') { attrs += ' data-bui-size="' + state.size + '"'; }
+                    if (state.remote && state.perPage !== 20) { attrs += ' data-bui-per-page="' + state.perPage + '"'; }
+                    if (state.remote && state.loadMore !== 'scroll') { attrs += ' data-bui-load-more="' + state.loadMore + '"'; }
+                    if (state.state === 'disabled') { attrs += ' disabled'; }
+                    var cls = state.state === 'valid' ? ' class="is-valid"' : state.state === 'invalid' ? ' class="is-invalid" aria-invalid="true"' : '';
+                    var inner = '';
+                    if (!state.remote) {
+                        if (state.grouped) {
+                            inner = '\n    <optgroup label="Citrus">\n        <option value="orange">Orange</option>\n        <option value="lemon">Lemon</option>\n    </optgroup>\n    <optgroup label="Berries">\n        <option value="strawberry">Strawberry</option>\n        <option value="blueberry">Blueberry</option>\n    </optgroup>\n';
+                        } else {
+                            inner = '\n' + fruitOptions() + '\n';
+                        }
+                    }
+                    return '<label class="bui-form-label" for="field">Label</label>\n<select' + cls + attrs + '>' + inner + '</select>';
+                },
+                beforeRender: function (frame) { BUI.destroy(frame); },
+                afterRender: function (frame) { BUI.init(frame); }
+            });
+        })();
+    </script>
+</body>
+</html>

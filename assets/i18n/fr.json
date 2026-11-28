@@ -38,6 +38,19 @@
     "overlay": {
         "loadError": "Le contenu n’a pas pu être chargé."
     },
+    "select": {
+        "clear": "Effacer la sélection",
+        "remove": "Retirer {label}",
+        "selected": "{label} sélectionné",
+        "removed": "{label} retiré",
+        "results": {
+            "one": "{count} résultat disponible",
+            "other": "{count} résultats disponibles"
+        },
+        "loadError": "Les options n'ont pas pu être chargées.",
+        "retry": "Réessayer",
+        "loadMore": "Charger plus"
+    },
     "toast": {
         "region": "Notifications"
     }

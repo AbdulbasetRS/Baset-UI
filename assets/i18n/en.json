@@ -37,6 +37,19 @@
     "overlay": {
         "loadError": "The content could not be loaded."
     },
+    "select": {
+        "clear": "Clear selection",
+        "remove": "Remove {label}",
+        "selected": "{label} selected",
+        "removed": "{label} removed",
+        "results": {
+            "one": "{count} result available",
+            "other": "{count} results available"
+        },
+        "loadError": "The options could not be loaded.",
+        "retry": "Retry",
+        "loadMore": "Load more"
+    },
     "toast": {
         "region": "Notifications"
     }

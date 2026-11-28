@@ -34,6 +34,8 @@ BUI.overlay.{getStack, getTop, closeAll};                              // Task 1
 BUI.position(anchor, floating, options?) -> { update, getPlacement, destroy } | null   // Task 16: Positioning Engine (internal, documented)
 BUI.popover(el, options?) -> { show, hide, toggle, isOpen, update, destroy }          // Task 16: data-bui-popover
 BUI.menu(el, options?) -> { open, close, toggle, isOpen, update, destroy }            // Task 16: data-bui-menu
+BUI.select(el, options?) -> { getValue, setValue, open, close, isOpen, clear, setOptions, refresh, update, destroy }   // Task 17: data-bui-select
+BUI.select.remote(el, options?)              // Task 17: data-bui-select="remote"
 BUI.{camelCaseName}(target, options?)         // Factory يضيفه register()
 BUI.{camelCaseName}.{variant}(target, options?)
 ```
@@ -90,3 +92,9 @@ BUI.{camelCaseName}.{variant}(target, options?)
 - **`BUI.menu(trigger, options)`** (`data-bui-menu`): الخيارات `target` و`placement` (`bottom-start`) و`offset` (4) و`closeOnSelect` (true) و`orientation` (`vertical|horizontal`) و`restoreFocus` (true). الطرق `open/close/toggle/isOpen/update/destroy`. الأحداث على المرتكز: `bui:menu:beforeopen` (قابل للإلغاء) و`open` و`beforeclose` (قابل للإلغاء) و`close` و`select` (`detail`: `item` و`role` و`checked` و`value` من `data-bui-value`). سمات العنصر: `data-bui-keep-open` و`data-bui-value` و`data-bui-text` (لـ Type-ahead).
 - **قرار تسمية الأحداث:** أحداث Popover `beforeshow|show|beforehide|hide` مع الطرق `show/hide`، وأحداث Menu `beforeopen|open|beforeclose|close` مع `open/close`، كلها بلا شرطة بين الكلمات كما في Dialog. الأحداث تُطلق على المرتكز لا على اللوحة (اللوحة تُنقل في DOM أثناء الفتح).
 - **Overlay Manager (داخلي، تحديث):** الخطاف الواحد `overlayChanged` صار قائمة `overlayHooks` داخلية (Toast وPopover وMenu)، يُستدعى بعد كل تغيير في مكدس الطبقات.
+
+## إضافات Task 17 (Select)
+- **`BUI.select(el, options)` و`BUI.select.remote(el, options)`** (`data-bui-select` و`data-bui-select="remote"`): العنصر يجب أن يكون `<select>` (غيره: خطأ ونسخة خاملة). الخيارات: `searchable` (false) و`clearable` (false) و`placeholder` ('') و`size` ('md'، `sm|md|lg`) و`placement` ('bottom-start') و`closeOnSelect` (null: يُغلق في Single ويبقى مفتوحاً في Multiple) و`url` ('') و`perPage` (20) و`debounce` (300) و`loadMore` ('scroll'|'button'). `multiple` من السمة الأصلية. `url` بلا Remote: تحذير. Remote بلا `url`: خطأ ويعمل Static.
+- **الطرق:** `getValue()` (نص أو مصفوفة بترتيب الاختيار) و`setValue(v)` (نص أو رقم أو مصفوفة، وفي Remote `{ value, label }`؛ قيمة مجهولة في Static: تحذير وتُتجاهل) و`open()`/`close()` (بوليان) و`isOpen()` و`clear()` و`setOptions(list)` (`{ value, label, disabled?, selected? }` أو `{ label, options, disabled? }`؛ Static يعيد كتابة عناصر `option`/`optgroup` الأصلية، Remote يضبط القائمة الحالية بلا صفحات تالية) و`refresh()` و`update(partial)` (يعيد بناء المكون مع حفظ الاختيار والتركيز، والأسماء غير المعروفة تحذير) و`destroy()` (يعيد الأصلي كما كان). ما لا يرجع قيمة يرجع النسخة.
+- **الأحداث** على `<select>` الأصلي وتصعد: `bui:select:change` (`value` و`selected` و`source`: `user|api`)، `beforeopen` و`beforeclose` (قابلان للإلغاء، `source`)، `open` و`close`، `search` (`query`). أسماء بلا شرطة كما في Popover وMenu.
+- **صيغة Remote:** `GET url?page=1&perPage=20&search=text` (`search` يُحذف إن كان فارغاً، والـ Query الموجود في `url` يبقى)، والاستجابة JSON `{ items: [{ value, label, disabled?, group? }], total }`. `total` ناقص: صفحة بعدد `perPage` تعني احتمال المزيد. قيم مكررة تُتجاهل.

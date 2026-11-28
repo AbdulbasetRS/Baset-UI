@@ -75,3 +75,6 @@ BUI.locale.apply(root);                              // يطبق HTML Binding ع
 
 ## مفاتيح Task 15
 أُضيفت إلى `en.json` و`ar.json` و`fr.json` معاً: مجموعة `alert` (`typePrimary` و`typeSecondary` و`typeSuccess` و`typeWarning` و`typeDanger` و`typeInfo`: كلمة النوع المخفية بصرياً قبل عنوان كل toast، فلا يعتمد النوع على اللون أو الأيقونة وحدهما) ومفتاح `toast.region` (الاسم الوصولي لحاوية الـ Live Region). زر الإغلاق يعيد استعمال `common.close`. النصوص تُربط بـ `data-bui-i18n`/`data-bui-i18n-attr` فتتحدث عند `bui:locale:change` لـ toasts المعروضة (مقاس: ar وfr أثناء عرض toast)، والإنجليزية احتياط حتى تُفعَّل لغة. نص العنوان والرسالة الذي يمرره المستخدم لا يُترجم (مسؤوليته). الاختبار: `node tests/i18n-keys.js` (21 مفتاحاً، ناجح).
+
+## مفاتيح Task 17
+أُضيفت مجموعة `select` إلى `en.json` و`ar.json` و`fr.json` معاً: `select.clear` (اسم زر المسح) و`select.remove` (`{label}`: اسم زر حذف Tag) و`select.selected` و`select.removed` (`{label}`: إعلان الاختيار والحذف) و`select.results` (جمع بـ `{count}`: إعلان عدد النتائج) و`select.loadError` و`select.retry` و`select.loadMore`. يعيد المكون استعمال `common.loading` و`common.noResults`. النص الإنجليزي المكتوب في JS احتياط حتى تُفعَّل لغة (نفس درس Task 13)، وتُحدَّث النصوص عند `bui:locale:change`. نصوص الخيارات والـ Placeholder من كاتب الصفحة. الاختبار: `node tests/i18n-keys.js` (29 مفتاحاً، ناجح).

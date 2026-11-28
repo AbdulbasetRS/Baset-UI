@@ -138,6 +138,12 @@ Baset-UI/
 - **ملف جديد: `tests/manual/popover-menu.html`** (خارج قائمة ملفات المهمة). السبب: [TESTING.md](TESTING.md) يطلب Checklist يدوي لكل مكون في `tests/manual/{component}.html`، ومصفوفة الـ Placements الاثني عشر والمرتكزات في زوايا الشاشة وحاويات التمرير والمرتكز الثابت وDialog وDrawer وقائمة بـ 40 عنصراً والقائمة الأفقية ومعاينة المحرك الخام لا تتسع في صفحات التوثيق. ملف واحد للمكونين والمحرك لأن الثلاثة تشترك في المصفوفة (Menu داخل Popover أيضاً). **Fixtures معلنة** في رأسه: كل النصوص نص عينة. لا يُشحن كمكون ولا يحمّله شيء.
 - القرارات في [COMPONENT_DEVELOPMENT.md](COMPONENT_DEVELOPMENT.md) (قسم إضافات Task 16).
 
+### Select (Task 17)
+- الكود في `assets/css/baset-ui.css` (قسم 6 بين Radio وSwitch) و`assets/js/baset-ui.js` (المكون `select` بعد `menu`). بلا ملف جديد في `assets/`. صفحة واحدة `documentation/components/select.html` (قسم Forms، مفعلة في `nav.js`). مفاتيح i18n `select.*` (8).
+- **مجلد جديد: `documentation/assets/data/`** وفيه `select-countries.json` (**Fixture معلن**: 250 دولة، `{ value: رمز ISO، label: الاسم الإنجليزي }`، مولد بـ `Intl.DisplayNames` في Node واستُبعدت الرموز القديمة والمحجوزة). السبب: مثال Remote يحتاج بيانات حقيقية للتصفح والبحث، والمهمة سمّت `documentation/assets/data/*.json` صراحة. الموقع ساكن بلا خادم، فالصفحة تحمل سكربتاً (يُعلن في نصها) يجيب عن `fetch('api/countries')` بتقطيع الملف حسب `page` و`perPage` و`search` بعد تأخير؛ هو أداة توثيق ولا يُشحن مع المكتبة. الملف docs فقط ولا يعتمد عليه شيء في `assets/`.
+- **ملف جديد: `tests/manual/select.html`** (خارج قائمة ملفات المهمة). السبب: [TESTING.md](TESTING.md) يطلب Checklist يدوي لكل مكون، والمصفوفة (الأوضاع والأحجام والتحقق والنموذج وReset وDialog والـ Flip والـ Remote بمفاتيح التأخير والفشل والفراغ وقوائم 1,000 و5,000 و10,000 خيار) لا تتسع في صفحة التوثيق. **Fixtures معلنة** في رأس الملف (نصوص عينة، وملف الدول نفسه، وقائمة مولدة "Item N" للأداء). لا يُشحن كمكون ولا يحمّله شيء.
+- النمط المرجعي في [COMPONENT_DEVELOPMENT.md](COMPONENT_DEVELOPMENT.md) (قسم إضافات Task 17).
+
 ### قرار المسارات في الصفحات المتداخلة
 - كل صفحة تضع `data-root="../../"` على `<html>`: المسار **من الصفحة نفسها** إلى جذر الموقع (مجلد `index.html`). يُقرأ في `docs.js` ويُبنى عليه كل رابط (Sidebar، Breadcrumb، Previous/Next، رابط الشعار).
 - إن غابت السمة يستنتج `docs.js` الجذر من مسار سكربت `docs.js` نفسه (دائماً ثلاثة مستويات تحت الجذر)، فتبقى الصفحة تعمل. السمة هي المصدر الأساسي لأنها صريحة ولا تعتمد على موضع السكربت.

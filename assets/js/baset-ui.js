@@ -2779,6 +2779,7 @@
 
     function floatingController(cfg) {
         var el = cfg.trigger;
+        var control = cfg.control || el;      /* the element that carries aria-expanded (a combobox inside the trigger area); defaults to the trigger */
         var floating = cfg.floating;
         var events = cfg.events;
         var isOpen = false;
@@ -2814,7 +2815,7 @@
             if (popoverApi) { try { floating.showPopover(); } catch (e) { log.debug('Floating', 'showPopover() failed: ' + (e && e.message ? e.message : e)); } }
             isOpen = true;
             layer.open = true;
-            el.setAttribute('aria-expanded', 'true');
+            control.setAttribute('aria-expanded', 'true');
             engine = position(el, floating, {
                 placement: cfg.placement(), offset: cfg.offset(), flip: cfg.flip(), shift: cfg.shift(), arrow: cfg.arrow
             });
@@ -2840,7 +2841,7 @@
                 if (placeholder.parentNode) { placeholder.parentNode.insertBefore(floating, placeholder); placeholder.parentNode.removeChild(placeholder); }
                 placeholder = null;
             }
-            el.setAttribute('aria-expanded', 'false');
+            control.setAttribute('aria-expanded', 'false');
             if (hadFocus && cfg.restoreFocus() && emit && source !== 'outside' && source !== 'focusout' && source !== 'overlay' && el.isConnected) {
                 try { el.focus({ preventScroll: true }); } catch (e) { /* not focusable */ }
             }
@@ -3283,6 +3284,1182 @@
                     added.length = 0;
                 }
             };
+        }
+    });
+
+    /* ------------------------------------------------------------------ */
+    /* Select (Task 17)                                                    */
+    /* ------------------------------------------------------------------ */
+
+    /*
+     * Select. A custom control built over a native <select>. The native element stays in the DOM (hidden, outside the Tab order) and is
+     * the source of truth for forms: Submit, Reset, required, name and FormData all keep working. The control is a combobox (the ARIA
+     * pattern with a listbox popup and aria-activedescendant); the list is a floating layer placed by BUI.position.
+     * Markup:  <select data-bui-select name="fruit"> <option value="">Choose</option> <option value="a">Apple</option> </select>
+     *          <select data-bui-select multiple> ... </select>              (multiple: the native attribute)
+     *          <select data-bui-select="remote" data-bui-url="api/people" data-bui-per-page="20"></select>   (remote mode)
+     * Options: searchable, clearable, placeholder, size (sm|md|lg), placement, closeOnSelect (null = auto: close when single, stay open
+     *          when multiple), url, perPage, debounce, loadMore (scroll|button). url, perPage, debounce and loadMore apply to the remote mode.
+     * Methods: getValue, setValue, open, close, clear, setOptions, refresh, update, destroy.
+     * Events (on the native <select>, they bubble): bui:select:change|open|close|search, plus the cancelable bui:select:beforeopen|beforeclose.
+     * Remote request: GET {url}?page=1&perPage=20&search=text (search is left out when empty). Response: { items: [{ value, label }], total }.
+     * Keys the native element can change at any time (disabled, class is-valid / is-invalid, aria-invalid, required, its options in the
+     * static mode, its selection) are observed and the control follows them.
+     */
+    var SELECT_SIZES = ['sm', 'md', 'lg'];
+    var SELECT_KEYS = ['searchable', 'clearable', 'placeholder', 'size', 'placement', 'closeOnSelect', 'url', 'perPage', 'debounce', 'loadMore'];
+
+    function selectText(key, fallback, params) {
+        if (locale.get()) return translate(key, params);
+        return String(fallback).replace(/\{(\w+)\}/g, function (match, name) { return params && params[name] !== undefined ? params[name] : match; });
+    }
+
+    /* Search text: lower case, without Latin and Arabic diacritics, with the common Arabic letter variants merged. */
+    function selectNorm(text) {
+        return String(text).normalize('NFD')
+            .replace(/[\u0300-\u036f\u0640\u064b-\u065f\u0670]/g, '')
+            .replace(/[\u0622\u0623\u0625]/g, '\u0627')
+            .replace(/\u0649/g, '\u064a')
+            .toLowerCase();
+    }
+
+    register('select', {
+        defaults: {
+            searchable: false, clearable: false, placeholder: '', size: 'md', placement: 'bottom-start', closeOnSelect: null,
+            url: '', perPage: 20, debounce: 300, loadMore: 'scroll'
+        },
+        variants: ['remote'],
+        create: function (el, options, ctx) {
+            var log2 = ctx.log;
+            var inert = {
+                getValue: function () { return null; }, setValue: function () { return inert; }, open: function () { return false; }, close: function () { return false; },
+                clear: function () { return inert; }, setOptions: function () { return inert; }, refresh: function () { return inert; }, update: function () { return inert; },
+                destroy: function () {}
+            };
+            if (!el || el.tagName !== 'SELECT') {
+                log2.error('A select must be a <select> element.');
+                return inert;
+            }
+
+            var remote = ctx.variant === 'remote';
+            var destroyed = false;
+            var multi = false;
+            var cleanups = [];
+            var timers = {};
+            var restore = null;            /* what destroy() puts back on the native element */
+            var observer = null;
+            var resizeObserver = null;
+            var controller = null;
+            var ui = null;                 /* the DOM the control built; null while torn down */
+            var items = [];                /* option records: { value, label, disabled, group, norm } */
+            var visible = [];              /* records shown now (after the search filter) */
+            var nodes = [];                /* option elements, same index as visible */
+            var selected = new Map();      /* value -> { value, label }: the selection, in the order it was made */
+            var emptyOption = null;        /* the native <option value=""> (its text is the placeholder) */
+            var activeIndex = -1;
+            var query = '';
+            var typing = false;            /* false: the list is not filtered even when the input shows the selected label */
+            var buffer = '';
+            var announceText = '';
+            var ownChange = false;
+            var api;
+            var rs = { page: 0, total: null, hasMore: false, loading: false, error: false, loaded: false, controller: null, token: 0, chain: 0 };
+
+            function normalize(o) {
+                if (SELECT_SIZES.indexOf(o.size) === -1) { log2.warn('Invalid size "' + o.size + '", using "md".'); o.size = 'md'; }
+                if (!POSITION_RE.test(o.placement)) { log2.warn('Invalid placement "' + o.placement + '", using "bottom-start".'); o.placement = 'bottom-start'; }
+                if (o.closeOnSelect !== null && typeof o.closeOnSelect !== 'boolean') { log2.warn('closeOnSelect must be true, false or unset.'); o.closeOnSelect = null; }
+                if (typeof o.perPage !== 'number' || o.perPage < 1 || Math.floor(o.perPage) !== o.perPage) { log2.warn('perPage must be a whole number of 1 or more, using 20.'); o.perPage = 20; }
+                if (typeof o.debounce !== 'number' || o.debounce < 0) { log2.warn('debounce must be a number of 0 or more, using 300.'); o.debounce = 300; }
+                if (o.loadMore !== 'scroll' && o.loadMore !== 'button') { log2.warn('Invalid loadMore "' + o.loadMore + '", using "scroll".'); o.loadMore = 'scroll'; }
+                if (typeof o.url !== 'string') o.url = '';
+                if (typeof o.placeholder !== 'string') o.placeholder = '';
+            }
+            normalize(options);
+            if (remote && !options.url) {
+                log2.error('The remote mode needs a URL: set data-bui-url or the url option. The select works as a static select.');
+                remote = false;
+            }
+            if (!remote && options.url) log2.warn('url is only used by the remote mode (data-bui-select="remote" or BUI.select.remote()).');
+
+            /* ---- reading the native element ---- */
+
+            function labelOf(option) { return (option.label || option.textContent || '').replace(/\s+/g, ' ').trim(); }
+
+            function readSelection() {
+                selected.clear();
+                Array.from(el.options).forEach(function (o) {
+                    if (o.selected && o.value !== '') selected.set(o.value, { value: o.value, label: labelOf(o) });
+                });
+                if (!multi && selected.size > 1) {
+                    var last = Array.from(selected.values()).pop();
+                    selected.clear();
+                    selected.set(last.value, last);
+                }
+            }
+
+            function readNative() {
+                emptyOption = null;
+                var list = [];
+                function push(option, group) {
+                    if (option.value === '' && !group) { if (!emptyOption) emptyOption = option; return; }
+                    var label = labelOf(option);
+                    list.push({ value: option.value, label: label, disabled: option.disabled || !!(group && group.disabled), group: group ? group.label : null, norm: selectNorm(label) });
+                }
+                Array.from(el.children).forEach(function (child) {
+                    if (child.tagName === 'OPTION') push(child, null);
+                    else if (child.tagName === 'OPTGROUP') {
+                        var group = { label: child.label, disabled: child.disabled };
+                        Array.from(child.children).forEach(function (o) { if (o.tagName === 'OPTION') push(o, group); });
+                    }
+                });
+                items = list;
+                readSelection();
+            }
+
+            function placeholderText() {
+                if (options.placeholder) return options.placeholder;
+                return emptyOption ? labelOf(emptyOption) : '';
+            }
+
+            /* A placeholder without an empty <option>: the native single select would show its first option, so nothing is selected. */
+            function applyPlaceholderRule() {
+                if (multi || remote || emptyOption || !options.placeholder) return;
+                var hasDefault = Array.from(el.options).some(function (o) { return o.defaultSelected; });
+                if (!hasDefault) el.selectedIndex = -1;
+            }
+
+            function isDisabled() { return !!(el.disabled || (el.matches && el.matches(':disabled'))); }
+
+            /* ---- writing back to the native element ---- */
+
+            function discard() { if (observer) observer.takeRecords(); }
+
+            function writeNative() {
+                if (remote) {
+                    Array.from(el.options).forEach(function (o) { if (o !== emptyOption) el.removeChild(o); });
+                    selected.forEach(function (rec) {
+                        var o = document.createElement('option');
+                        o.value = rec.value;
+                        o.textContent = rec.label;
+                        o.selected = true;
+                        el.appendChild(o);
+                    });
+                    if (emptyOption) emptyOption.selected = selected.size === 0;
+                    else if (selected.size === 0) el.selectedIndex = -1;
+                } else {
+                    Array.from(el.options).forEach(function (o) { o.selected = o !== emptyOption && selected.has(o.value); });
+                    if (!multi && selected.size === 0) {
+                        if (emptyOption) emptyOption.selected = true; else el.selectedIndex = -1;
+                    }
+                }
+                discard();
+            }
+
+            function signature() { return Array.from(selected.keys()).join('\u0000'); }
+
+            function detail(source) {
+                return { value: getValue(), selected: Array.from(selected.values()).map(function (r) { return { value: r.value, label: r.label }; }), source: source };
+            }
+
+            /* Applies the selection to the native element, refreshes the control and reports the change. */
+            function commit(source, before) {
+                writeNative();
+                renderValue();
+                if (signature() === before) return false;
+                if (source === 'user') {
+                    ownChange = true;
+                    try {
+                        el.dispatchEvent(new Event('input', { bubbles: true }));
+                        el.dispatchEvent(new Event('change', { bubbles: true }));
+                    } finally { ownChange = false; }
+                }
+                ctx.trigger('change', detail(source));
+                return true;
+            }
+
+            function getValue() {
+                var values = Array.from(selected.keys());
+                return multi ? values : (values[0] || '');
+            }
+
+            /* ---- text, state and announcements ---- */
+
+            function announce(text) {
+                if (!ui) return;
+                window.clearTimeout(timers.announce);
+                timers.announce = window.setTimeout(function () { if (ui) ui.status.textContent = text; }, 150);
+            }
+
+            function syncState() {
+                if (!ui) return;
+                var disabled = isDisabled();
+                var invalid = el.classList.contains('is-invalid') || el.getAttribute('aria-invalid') === 'true';
+                var valid = el.classList.contains('is-valid') && !invalid;
+                ui.wrapper.classList.toggle('is-invalid', invalid);
+                ui.wrapper.classList.toggle('is-valid', valid);
+                ui.wrapper.classList.toggle('is-disabled', disabled);
+                var combo = ui.combo;
+                if (invalid) combo.setAttribute('aria-invalid', 'true'); else combo.removeAttribute('aria-invalid');
+                if (el.required) combo.setAttribute('aria-required', 'true'); else combo.removeAttribute('aria-required');
+                if (disabled) {
+                    combo.setAttribute('aria-disabled', 'true');
+                    if (options.searchable) combo.disabled = true; else combo.setAttribute('tabindex', '-1');
+                    if (controller && controller.isOpen()) controller.close('disabled');
+                } else {
+                    combo.removeAttribute('aria-disabled');
+                    if (options.searchable) combo.disabled = false; else combo.setAttribute('tabindex', '0');
+                }
+                ui.clear.hidden = !(options.clearable && selected.size > 0 && !disabled);
+            }
+
+            function renderTexts() {
+                if (!ui) return;
+                ui.clear.setAttribute('aria-label', selectText('select.clear', 'Clear selection'));
+                Array.from(ui.values.querySelectorAll('.bui-select__tag-remove')).forEach(function (btn) {
+                    btn.setAttribute('aria-label', selectText('select.remove', 'Remove {label}', { label: btn.getAttribute('data-label') }));
+                });
+                var ph = ui.values.querySelector('.bui-select__placeholder');
+                if (ph) ph.textContent = placeholderText();
+                if (options.searchable) ui.search.setAttribute('placeholder', selected.size === 0 || !multi ? placeholderText() : '');
+                renderMessage();
+            }
+
+            /* ---- the value area ---- */
+
+            function renderValue() {
+                if (!ui) return;
+                var values = ui.values;
+                Array.from(values.querySelectorAll('.bui-select__tag, .bui-select__placeholder, .bui-select__value')).forEach(function (n) { values.removeChild(n); });
+                var anchor = options.searchable ? ui.search : null;
+                var list = Array.from(selected.values());
+                var placeholder = placeholderText();
+                if (multi) {
+                    list.forEach(function (rec) {
+                        var tag = document.createElement('span');
+                        tag.className = 'bui-select__tag';
+                        var text = document.createElement('span');
+                        text.className = 'bui-select__tag-text';
+                        text.textContent = rec.label;
+                        tag.appendChild(text);
+                        var remove = document.createElement('button');
+                        remove.type = 'button';
+                        remove.className = 'bui-select__tag-remove';
+                        remove.setAttribute('tabindex', '-1');
+                        remove.setAttribute('data-value', rec.value);
+                        remove.setAttribute('data-label', rec.label);
+                        if (options.searchable) remove.setAttribute('aria-label', selectText('select.remove', 'Remove {label}', { label: rec.label }));
+                        else remove.setAttribute('aria-hidden', 'true');
+                        tag.appendChild(remove);
+                        values.insertBefore(tag, anchor);
+                    });
+                    if (!list.length && !options.searchable && placeholder) {
+                        var ph = document.createElement('span');
+                        ph.className = 'bui-select__placeholder';
+                        ph.textContent = placeholder;
+                        values.appendChild(ph);
+                    }
+                } else if (!options.searchable) {
+                    var span = document.createElement('span');
+                    if (list.length) { span.className = 'bui-select__value'; span.textContent = list[0].label; }
+                    else { span.className = 'bui-select__placeholder'; span.textContent = placeholder; }
+                    values.appendChild(span);
+                }
+                if (options.searchable) {
+                    if (!multi) ui.search.value = typing ? query : (list.length ? list[0].label : '');
+                    else ui.search.value = typing ? query : '';
+                    ui.search.setAttribute('placeholder', list.length && multi ? '' : placeholder);
+                }
+                ui.wrapper.classList.toggle('has-value', list.length > 0);
+                ui.clear.hidden = !(options.clearable && list.length > 0 && !isDisabled());
+            }
+
+            /* ---- the list ---- */
+
+            function isOpen() { return !!(controller && controller.isOpen()); }
+
+            function renderMessage() {
+                if (!ui) return;
+                var msg = ui.message;
+                msg.textContent = '';
+                var kind = '';
+                if (remote && rs.loading) kind = 'loading';
+                else if (remote && rs.error) kind = 'error';
+                else if (!visible.length && (!remote || rs.loaded)) kind = 'empty';
+                else if (remote && rs.hasMore && options.loadMore === 'button') kind = 'more';
+                msg.setAttribute('data-kind', kind);
+                msg.hidden = !kind;
+                ui.list.setAttribute('aria-busy', remote && rs.loading ? 'true' : 'false');
+                if (kind === 'loading') {
+                    msg.textContent = selectText('common.loading', 'Loading...');
+                } else if (kind === 'empty') {
+                    msg.textContent = selectText('common.noResults', 'No results found');
+                } else if (kind === 'error') {
+                    var text = document.createElement('span');
+                    text.textContent = selectText('select.loadError', 'The options could not be loaded.');
+                    var retry = document.createElement('button');
+                    retry.type = 'button';
+                    retry.className = 'bui-select__retry';
+                    retry.setAttribute('tabindex', '-1');
+                    retry.setAttribute('data-action', 'retry');
+                    retry.textContent = selectText('select.retry', 'Retry');
+                    msg.appendChild(text);
+                    msg.appendChild(retry);
+                } else if (kind === 'more') {
+                    var more = document.createElement('button');
+                    more.type = 'button';
+                    more.className = 'bui-select__more';
+                    more.setAttribute('tabindex', '-1');
+                    more.setAttribute('data-action', 'more');
+                    more.textContent = selectText('select.loadMore', 'Load more');
+                    msg.appendChild(more);
+                }
+            }
+
+            function filterItems() {
+                var q = typing ? selectNorm(query.trim()) : '';
+                visible = !q || remote ? items.slice() : items.filter(function (rec) { return rec.norm.indexOf(q) > -1; });
+            }
+
+            /* Rendering is incremental: the first chunk now, the next ones when the list is scrolled or the keyboard reaches them. */
+            var CHUNK = 100;
+            var renderedCount = 0;
+            var curGroupEl = null;
+            var curGroupLabel = null;
+
+            function appendUpTo(limit) {
+                if (!ui) return;
+                limit = Math.min(limit, visible.length);
+                if (renderedCount >= limit) return;
+                var fragment = document.createDocumentFragment();
+                var fragmentGroups = [];
+                for (var index = renderedCount; index < limit; index++) {
+                    var rec = visible[index];
+                    if (rec.group !== curGroupLabel) {
+                        curGroupLabel = rec.group;
+                        curGroupEl = null;
+                        if (curGroupLabel !== null) {
+                            curGroupEl = document.createElement('div');
+                            curGroupEl.className = 'bui-select__group';
+                            curGroupEl.setAttribute('role', 'group');
+                            var heading = document.createElement('div');
+                            heading.className = 'bui-select__group-label';
+                            heading.id = ui.listId + '-g' + index;
+                            heading.setAttribute('role', 'presentation');
+                            heading.textContent = curGroupLabel;
+                            curGroupEl.setAttribute('aria-labelledby', heading.id);
+                            curGroupEl.appendChild(heading);
+                            fragment.appendChild(curGroupEl);
+                            fragmentGroups.push(curGroupEl);
+                        }
+                    }
+                    var node = document.createElement('div');
+                    node.className = 'bui-select__option';
+                    node.id = ui.listId + '-o' + index;
+                    node.setAttribute('role', 'option');
+                    node.setAttribute('data-index', String(index));
+                    node.setAttribute('aria-setsize', String(visible.length));
+                    node.setAttribute('aria-posinset', String(index + 1));
+                    node.setAttribute('aria-selected', selected.has(rec.value) ? 'true' : 'false');
+                    if (rec.disabled) node.setAttribute('aria-disabled', 'true');
+                    node.textContent = rec.label;
+                    /* A group that started in an earlier chunk is already in the list: add to it directly. */
+                    if (curGroupEl && curGroupEl.parentNode === ui.list) curGroupEl.appendChild(node);
+                    else (curGroupEl || fragment).appendChild(node);
+                    nodes.push(node);
+                }
+                renderedCount = limit;
+                ui.list.appendChild(fragment);
+            }
+
+            function renderList() {
+                if (!ui) return;
+                ui.list.textContent = '';
+                nodes = [];
+                renderedCount = 0;
+                curGroupEl = null;
+                curGroupLabel = null;
+                appendUpTo(CHUNK);
+                ui.list.hidden = visible.length === 0;
+                renderMessage();
+                activeIndex = -1;
+                ui.combo.removeAttribute('aria-activedescendant');
+            }
+
+            function enabledFrom(start, step) {
+                for (var i = start; i >= 0 && i < visible.length; i += step) if (!visible[i].disabled) return i;
+                return -1;
+            }
+
+            function scrollTo(node) {
+                var list = ui.list;
+                var top = node.offsetTop;
+                var bottom = top + node.offsetHeight;
+                if (top < list.scrollTop) list.scrollTop = top;
+                else if (bottom > list.scrollTop + list.clientHeight) list.scrollTop = bottom - list.clientHeight;
+            }
+
+            function setActive(index, scroll) {
+                if (!ui) return;
+                var previous = ui.list.querySelector('.bui-select__option.is-active');
+                if (previous) previous.classList.remove('is-active');
+                if (index >= renderedCount) appendUpTo(index + 1 + CHUNK);
+                activeIndex = index;
+                var node = index >= 0 ? nodes[index] : null;
+                if (node) {
+                    node.classList.add('is-active');
+                    ui.combo.setAttribute('aria-activedescendant', node.id);
+                    if (scroll) scrollTo(node);
+                } else {
+                    ui.combo.removeAttribute('aria-activedescendant');
+                }
+            }
+
+            /* Updates the selected marks without rebuilding the list (the scroll position stays). */
+            function refreshMarks() {
+                nodes.forEach(function (node, index) { node.setAttribute('aria-selected', selected.has(visible[index].value) ? 'true' : 'false'); });
+            }
+
+            function selectedIndex() {
+                for (var i = 0; i < visible.length; i++) if (selected.has(visible[i].value) && !visible[i].disabled) return i;
+                return -1;
+            }
+
+            function resetActive() {
+                var index = typing ? enabledFrom(0, 1) : selectedIndex();
+                if (index < 0) index = enabledFrom(0, 1);
+                setActive(index, true);
+            }
+
+            function announceResults() {
+                if (!isOpen()) return;
+                var n = visible.length;
+                announce(rs.loading ? selectText('common.loading', 'Loading...')
+                    : n === 0 ? selectText('common.noResults', 'No results found')
+                    : selectText('select.results', n === 1 ? '{count} result available' : '{count} results available', { count: n }));
+            }
+
+            function move(step) {
+                var from = activeIndex < 0 ? (step > 0 ? -1 : visible.length) : activeIndex;
+                var next = enabledFrom(from + step, step);
+                if (next < 0) {
+                    if (remote) remoteMore();
+                    return;
+                }
+                setActive(next, true);
+                if (remote && next >= visible.length - 2) remoteMore();
+            }
+
+            /* ---- choosing ---- */
+
+            function closesOnSelect() { return options.closeOnSelect === null ? !multi : options.closeOnSelect; }
+
+            function choose(index, source) {
+                var rec = visible[index];
+                if (!rec || rec.disabled || isDisabled()) return;
+                var before = signature();
+                if (multi) {
+                    if (selected.has(rec.value)) selected.delete(rec.value); else selected.set(rec.value, { value: rec.value, label: rec.label });
+                } else {
+                    selected.clear();
+                    selected.set(rec.value, { value: rec.value, label: rec.label });
+                }
+                var had = before.split('\u0000').indexOf(rec.value) > -1;
+                commit(source, before);
+                announce(selectText(had && multi ? 'select.removed' : 'select.selected', had && multi ? '{label} removed' : '{label} selected', { label: rec.label }));
+                if (closesOnSelect()) { closeList('select'); return; }
+                if (!remote && typing) {
+                    typing = false;
+                    query = '';
+                    filterItems();
+                    renderList();
+                    var again = visible.indexOf(rec);
+                    setActive(again >= 0 ? again : enabledFrom(0, 1), true);
+                    if (options.searchable) renderValue();
+                } else {
+                    refreshMarks();
+                }
+                if (controller) controller.update();
+            }
+
+            function removeValue(value, source) {
+                if (!selected.has(value)) return;
+                var label = selected.get(value).label;
+                var before = signature();
+                selected.delete(value);
+                commit(source, before);
+                announce(selectText('select.removed', '{label} removed', { label: label }));
+                if (isOpen()) { refreshMarks(); controller.update(); }
+            }
+
+            function clearAll(source) {
+                var before = signature();
+                if (!selected.size) return false;
+                selected.clear();
+                typing = false;
+                query = '';
+                var changed = commit(source, before);
+                if (isOpen()) { if (!remote) filterItems(); renderList(); resetActive(); controller.update(); }
+                return changed;
+            }
+
+            /* ---- opening and closing ---- */
+
+            function updateWidth() {
+                if (!ui) return;
+                ui.panel.style.minInlineSize = ui.control.getBoundingClientRect().width + 'px';
+            }
+
+            function openList(source) {
+                if (destroyed || !ui || isDisabled()) return false;
+                if (controller.isOpen()) return true;
+                if (!remote) { readSelection(); renderValue(); }
+                filterItems();
+                renderList();
+                return controller.open(source);
+            }
+
+            function closeList(source) {
+                if (!controller || !controller.isOpen()) return false;
+                return controller.close(source);
+            }
+
+            function onOpened(source) {
+                updateWidth();
+                if (options.searchable && document.activeElement !== ui.combo) ui.combo.focus();
+                resetActive();
+                announceResults();
+                if (remote && !typing && !rs.loaded && !rs.loading) remoteLoad(true);
+                else if (remote && rs.loaded) remoteFill();
+            }
+
+            function onClosed(source) {
+                window.clearTimeout(timers.search);
+                buffer = '';
+                if (typing || query) {
+                    typing = false;
+                    query = '';
+                    if (!remote) filterItems();
+                    if (remote && rs.loaded) { rs.loaded = false; items = []; rs.page = 0; abortRemote(); }
+                    renderValue();
+                } else if (options.searchable && !multi) {
+                    renderValue();
+                }
+                /* A failed or empty result is not kept: the next opening asks again. */
+                if (remote && rs.loaded && (rs.error || !items.length)) { abortRemote(); rs.loaded = false; rs.error = false; rs.page = 0; rs.hasMore = false; items = []; visible = []; }
+                if (ui) ui.panel.classList.remove('is-keyboard');
+                setActive(-1, false);
+            }
+
+            /* ---- remote mode ---- */
+
+            function abortRemote() {
+                rs.token += 1;
+                if (rs.controller) { try { rs.controller.abort(); } catch (e) { /* already done */ } rs.controller = null; }
+                rs.loading = false;
+            }
+
+            function remoteCanLoadMore() { return remote && rs.hasMore && !rs.loading && !rs.error; }
+
+            function remoteMore() { if (remoteCanLoadMore()) remoteLoad(false); }
+
+            /* The loaded options are fewer than the list needs to scroll: load the next page, up to a few in a row. */
+            function remoteFill() {
+                if (!ui || !isOpen() || options.loadMore !== 'scroll' || !remoteCanLoadMore()) return;
+                if (ui.list.scrollHeight <= ui.list.clientHeight + 4 && rs.chain < 5) { rs.chain += 1; remoteLoad(false); }
+            }
+
+            function remoteLoad(reset) {
+                if (!remote || destroyed) return;
+                if (reset) {
+                    abortRemote();
+                    rs.page = 0; rs.total = null; rs.hasMore = false; rs.error = false; rs.loaded = false; rs.chain = 0;
+                    items = []; visible = [];
+                    if (ui) { renderList(); }
+                } else if (rs.loading || !rs.hasMore) {
+                    return;
+                }
+                var page = rs.page + 1;
+                var url;
+                try {
+                    url = new URL(options.url, document.baseURI);
+                    url.searchParams.set('page', String(page));
+                    url.searchParams.set('perPage', String(options.perPage));
+                    if (query.trim()) url.searchParams.set('search', query.trim());
+                } catch (e) {
+                    log2.error('The url "' + options.url + '" is not valid.');
+                    rs.error = true; rs.loading = false; rs.loaded = true;
+                    renderMessage();
+                    return;
+                }
+                var token = ++rs.token;
+                var request = typeof AbortController === 'function' ? new AbortController() : null;
+                rs.controller = request;
+                rs.loading = true;
+                rs.error = false;
+                renderMessage();
+                if (isOpen()) { controller.update(); announce(selectText('common.loading', 'Loading...')); }
+
+                window.fetch(url.toString(), { headers: { Accept: 'application/json' }, signal: request ? request.signal : undefined })
+                    .then(function (response) {
+                        if (!response.ok) throw new Error('HTTP ' + response.status);
+                        return response.json();
+                    })
+                    .then(function (data) {
+                        if (token !== rs.token || destroyed) return;
+                        if (!data || !Array.isArray(data.items)) throw new Error('The response must be { items: [{ value, label }], total }.');
+                        var known = {};
+                        items.forEach(function (rec) { known[rec.value] = true; });
+                        var added = 0;
+                        data.items.forEach(function (raw) {
+                            if (!raw || (typeof raw.value !== 'string' && typeof raw.value !== 'number') || (typeof raw.label !== 'string' && typeof raw.label !== 'number')) {
+                                log2.warn('An item was skipped: each item needs a value and a label.');
+                                return;
+                            }
+                            var value = String(raw.value);
+                            if (known[value]) return;
+                            known[value] = true;
+                            var label = String(raw.label);
+                            items.push({ value: value, label: label, disabled: raw.disabled === true, group: typeof raw.group === 'string' ? raw.group : null, norm: selectNorm(label) });
+                            added += 1;
+                        });
+                        rs.page = page;
+                        rs.loaded = true;
+                        rs.loading = false;
+                        rs.controller = null;
+                        rs.total = typeof data.total === 'number' && isFinite(data.total) ? data.total : null;
+                        rs.hasMore = added > 0 && (rs.total !== null ? items.length < rs.total : data.items.length >= options.perPage);
+                        var keep = activeIndex;
+                        var scrollTop = ui ? ui.list.scrollTop : 0;
+                        filterItems();
+                        if (ui) {
+                            renderList();
+                            ui.list.scrollTop = scrollTop;
+                            if (page === 1) resetActive(); else if (keep >= 0) setActive(keep, false);
+                            if (isOpen()) { controller.update(); announceResults(); }
+                            remoteFill();
+                        }
+                    })
+                    .catch(function (error) {
+                        if (token !== rs.token || destroyed) return;
+                        if (error && error.name === 'AbortError') return;
+                        log2.warn('Loading the options failed: ' + (error && error.message ? error.message : error));
+                        rs.loading = false;
+                        rs.controller = null;
+                        rs.error = true;
+                        rs.loaded = true;
+                        if (ui) { renderMessage(); if (isOpen()) { controller.update(); announce(selectText('select.loadError', 'The options could not be loaded.')); } }
+                    });
+            }
+
+            /* ---- building and tearing down the DOM ---- */
+
+            function labelling(combo, list) {
+                var labels = el.labels ? Array.from(el.labels) : [];
+                if (labels.length) {
+                    var ids = labels.map(function (label) {
+                        if (!label.id) { label.id = uid('bui-select-label'); restore.labelIds.push(label); }
+                        return label.id;
+                    });
+                    combo.setAttribute('aria-labelledby', ids.join(' '));
+                    list.setAttribute('aria-labelledby', ids.join(' '));
+                } else if (el.getAttribute('aria-labelledby')) {
+                    combo.setAttribute('aria-labelledby', el.getAttribute('aria-labelledby'));
+                    list.setAttribute('aria-labelledby', el.getAttribute('aria-labelledby'));
+                } else if (el.getAttribute('aria-label')) {
+                    combo.setAttribute('aria-label', el.getAttribute('aria-label'));
+                    list.setAttribute('aria-label', el.getAttribute('aria-label'));
+                } else {
+                    log2.warn('The select has no accessible name: add a <label for>, aria-label or aria-labelledby.');
+                }
+                if (el.getAttribute('aria-describedby')) combo.setAttribute('aria-describedby', el.getAttribute('aria-describedby'));
+            }
+
+            function build() {
+                multi = !!el.multiple;
+                var wrapper = document.createElement('div');
+                wrapper.className = 'bui-select' + (options.size !== 'md' ? ' bui-select--' + options.size : '') + (multi ? ' bui-select--multiple' : '') + (options.searchable ? ' bui-select--searchable' : '');
+                var listId = uid('bui-select-list');
+                var control = document.createElement('div');
+                control.className = 'bui-select__control';
+                var values = document.createElement('div');
+                values.className = 'bui-select__values';
+                var combo;
+                var search = null;
+                if (options.searchable) {
+                    search = document.createElement('input');
+                    search.type = 'text';
+                    search.className = 'bui-select__search';
+                    search.setAttribute('autocomplete', 'off');
+                    search.setAttribute('autocapitalize', 'off');
+                    search.setAttribute('spellcheck', 'false');
+                    search.setAttribute('aria-autocomplete', 'list');
+                    values.appendChild(search);
+                    combo = search;
+                } else {
+                    combo = values;
+                    combo.setAttribute('tabindex', '0');
+                }
+                combo.setAttribute('role', 'combobox');
+                combo.setAttribute('aria-haspopup', 'listbox');
+                combo.setAttribute('aria-controls', listId);
+                combo.setAttribute('aria-expanded', 'false');
+                if (!options.searchable) combo.classList.add('bui-select__combobox');
+                var clear = document.createElement('button');
+                clear.type = 'button';
+                clear.className = 'bui-select__clear';
+                clear.setAttribute('tabindex', '-1');
+                clear.hidden = true;
+                var arrow = document.createElement('span');
+                arrow.className = 'bui-select__arrow';
+                arrow.setAttribute('aria-hidden', 'true');
+                control.appendChild(values);
+                control.appendChild(clear);
+                control.appendChild(arrow);
+
+                var panel = document.createElement('div');
+                panel.className = 'bui-select__panel' + (options.size !== 'md' ? ' bui-select__panel--' + options.size : '');
+                var list = document.createElement('div');
+                list.className = 'bui-select__list';
+                list.id = listId;
+                list.setAttribute('role', 'listbox');
+                if (multi) list.setAttribute('aria-multiselectable', 'true');
+                var message = document.createElement('div');
+                message.className = 'bui-select__message';
+                message.hidden = true;
+                panel.appendChild(list);
+                panel.appendChild(message);
+                var status = document.createElement('span');
+                status.className = 'bui-visually-hidden';
+                status.setAttribute('role', 'status');
+                status.setAttribute('aria-live', 'polite');
+                status.setAttribute('aria-atomic', 'true');
+
+                el.parentNode.insertBefore(wrapper, el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(control);
+                wrapper.appendChild(panel);
+                wrapper.appendChild(status);
+                ui = { wrapper: wrapper, control: control, values: values, combo: combo, search: search, clear: clear, panel: panel, list: list, message: message, status: status, listId: listId };
+                labelling(combo, list);
+
+                controller = floatingController({
+                    trigger: control,
+                    control: combo,
+                    floating: panel,
+                    arrow: null,
+                    events: { beforeOpen: 'beforeopen', open: 'open', beforeClose: 'beforeclose', close: 'close' },
+                    closeOnOutside: true,
+                    closeOnFocusOut: true,
+                    keyboard: true,
+                    restoreFocus: function () { return false; },
+                    placement: function () { return options.placement; },
+                    offset: function () { return 4; },
+                    flip: function () { return true; },
+                    shift: function () { return true; },
+                    fire: function (name, d, cancelable) {
+                        var result = ctx.trigger(name, d, { cancelable: cancelable });
+                        if (name === 'close') onClosed(d.source);
+                        return result;
+                    },
+                    onOpened: onOpened
+                });
+                wireUi();
+            }
+
+            function onKeydown(e) {
+                if (e.ctrlKey || e.metaKey || e.altKey || e.isComposing) return;
+                var open = isOpen();
+                var key = e.key;
+                var text = options.searchable;
+                if (isDisabled()) return;
+                if (key === 'ArrowDown' || key === 'ArrowUp') {
+                    e.preventDefault();
+                    ui.panel.classList.add('is-keyboard');
+                    if (!open) { openList('keyboard'); if (key === 'ArrowUp' && visible.length) setActive(enabledFrom(visible.length - 1, -1), true); }
+                    else move(key === 'ArrowDown' ? 1 : -1);
+                } else if ((key === 'Home' || key === 'End') && open && !text) {
+                    e.preventDefault();
+                    ui.panel.classList.add('is-keyboard');
+                    setActive(key === 'Home' ? enabledFrom(0, 1) : enabledFrom(visible.length - 1, -1), true);
+                    if (remote && key === 'End') remoteMore();
+                } else if ((key === 'PageDown' || key === 'PageUp') && open) {
+                    e.preventDefault();
+                    ui.panel.classList.add('is-keyboard');
+                    var step = key === 'PageDown' ? 1 : -1;
+                    var to = Math.max(0, Math.min(visible.length - 1, (activeIndex < 0 ? 0 : activeIndex) + step * 10));
+                    var found = enabledFrom(to, -step);
+                    setActive(found < 0 ? enabledFrom(to, step) : found, true);
+                    if (remote && step > 0) remoteMore();
+                } else if (key === 'Enter' || (key === ' ' && !text && !buffer)) {
+                    if (!open) {
+                        if (key === 'Enter' && text) return;
+                        e.preventDefault();
+                        openList('keyboard');
+                    } else {
+                        e.preventDefault();
+                        if (activeIndex >= 0) choose(activeIndex, 'user');
+                        else if (remote && rs.error) remoteLoad(rs.page === 0);
+                    }
+                } else if (key === 'Escape') {
+                    if (open) { e.preventDefault(); closeList('escape'); }
+                } else if (key === 'Tab') {
+                    /* Nothing is chosen by Tab: the list closes when the focus leaves. */
+                    if (open) closeList('tab');
+                } else if ((key === 'Backspace' || key === 'Delete') && (!text || (ui.search.value === '' && !typing))) {
+                    if (multi && key === 'Backspace' && selected.size) {
+                        e.preventDefault();
+                        removeValue(Array.from(selected.keys()).pop(), 'user');
+                    } else if (!multi && options.clearable && selected.size) {
+                        e.preventDefault();
+                        clearAll('user');
+                    }
+                } else if (!text && key.length === 1) {
+                    e.preventDefault();
+                    typeAhead(key);
+                }
+            }
+
+            /* Type-ahead for the select without a search box: the typed letters pick the next option that starts with them. */
+            function typeAhead(key) {
+                buffer += selectNorm(key);
+                window.clearTimeout(timers.buffer);
+                timers.buffer = window.setTimeout(function () { buffer = ''; }, 600);
+                if (!isOpen()) openList('keyboard');
+                ui.panel.classList.add('is-keyboard');
+                if (!visible.length) return;
+                var start = buffer.length === 1 ? activeIndex + 1 : Math.max(activeIndex, 0);
+                var q = buffer;
+                if (buffer.length > 1 && buffer.split('').every(function (ch) { return ch === buffer[0]; })) { q = buffer[0]; start = activeIndex + 1; }
+                for (var i = 0; i < visible.length; i++) {
+                    var index = (start + i) % visible.length;
+                    if (!visible[index].disabled && visible[index].norm.indexOf(q) === 0) { setActive(index, true); return; }
+                }
+            }
+
+            function onSearchInput() {
+                query = ui.search.value;
+                typing = true;
+                if (!isOpen()) { if (!openList('input')) return; }
+                ctx.trigger('search', { query: query, source: 'user' });
+                if (remote) {
+                    window.clearTimeout(timers.search);
+                    abortRemote();
+                    rs.loading = true;
+                    renderMessage();
+                    timers.search = window.setTimeout(function () { remoteLoad(true); }, options.debounce);
+                } else {
+                    filterItems();
+                    renderList();
+                    resetActive();
+                    controller.update();
+                    announce(visible.length ? selectText('select.results', visible.length === 1 ? '{count} result available' : '{count} results available', { count: visible.length }) : selectText('common.noResults', 'No results found'));
+                }
+            }
+
+            function wireUi() {
+                var u = ui;
+                var off = [];
+                off.push(listen(u.combo, 'keydown', onKeydown));
+                if (u.search) {
+                    off.push(listen(u.search, 'input', onSearchInput));
+                    off.push(listen(u.search, 'focus', function () { if (!multi && u.search.value && !typing) window.setTimeout(function () { if (document.activeElement === u.search) u.search.select(); }, 0); }));
+                }
+                off.push(listen(u.combo, 'blur', function () {
+                    window.setTimeout(function () {
+                        if (!ui || !isOpen()) return;
+                        var active = document.activeElement;
+                        if (!active || (!u.control.contains(active) && !u.panel.contains(active))) closeList('blur');
+                    }, 0);
+                }));
+                /* Pressing on the control keeps the focus where it is (or lets the combobox take it); the click then toggles the list. */
+                off.push(listen(u.control, 'mousedown', function (e) {
+                    if (e.target !== u.search && e.target !== u.combo) e.preventDefault();
+                }));
+                off.push(listen(u.control, 'click', function (e) {
+                    var remove = e.target.closest ? e.target.closest('.bui-select__tag-remove') : null;
+                    if (remove && u.control.contains(remove)) {
+                        e.stopPropagation();
+                        if (!isDisabled()) { removeValue(remove.getAttribute('data-value'), 'user'); if (!isOpen()) u.combo.focus(); }
+                        return;
+                    }
+                    if (e.target.closest && e.target.closest('.bui-select__clear')) {
+                        e.stopPropagation();
+                        if (!isDisabled()) { clearAll('user'); u.combo.focus(); }
+                        return;
+                    }
+                    if (isDisabled()) return;
+                    u.combo.focus();
+                    if (isOpen()) { if (!(u.search && e.target === u.search)) closeList('toggle'); } else openList('click');
+                }));
+                /* The panel never takes the focus: options are chosen with the pointer while the combobox keeps it. */
+                off.push(listen(u.panel, 'mousedown', function (e) { e.preventDefault(); }));
+                off.push(listen(u.panel, 'click', function (e) {
+                    var action = e.target.closest ? e.target.closest('[data-action]') : null;
+                    if (action) {
+                        if (action.getAttribute('data-action') === 'retry') remoteLoad(rs.page === 0);
+                        else remoteMore();
+                        return;
+                    }
+                    var option = e.target.closest ? e.target.closest('.bui-select__option') : null;
+                    if (option && u.list.contains(option)) choose(Number(option.getAttribute('data-index')), 'user');
+                }));
+                off.push(listen(u.panel, 'mousemove', function (e) {
+                    var option = e.target.closest ? e.target.closest('.bui-select__option') : null;
+                    u.panel.classList.remove('is-keyboard');
+                    if (!option || option.getAttribute('aria-disabled') === 'true') return;
+                    var index = Number(option.getAttribute('data-index'));
+                    if (index !== activeIndex) setActive(index, false);
+                }));
+                off.push(listen(u.list, 'scroll', function () {
+                    var nearEnd = u.list.scrollTop + u.list.clientHeight >= u.list.scrollHeight - 200;
+                    if (nearEnd && renderedCount < visible.length) appendUpTo(renderedCount + CHUNK);
+                    if (!remote || options.loadMore !== 'scroll') return;
+                    if (u.list.scrollTop + u.list.clientHeight >= u.list.scrollHeight - 48) { rs.chain = 0; remoteMore(); }
+                }, { passive: true }));
+                if (typeof window.ResizeObserver === 'function') {
+                    resizeObserver = new window.ResizeObserver(function () { if (isOpen()) { updateWidth(); controller.update(); } });
+                    resizeObserver.observe(u.control);
+                }
+                ui.off = off;
+            }
+
+            function teardown() {
+                window.clearTimeout(timers.search);
+                window.clearTimeout(timers.buffer);
+                window.clearTimeout(timers.announce);
+                abortRemote();
+                if (resizeObserver) { resizeObserver.disconnect(); resizeObserver = null; }
+                if (controller) { controller.destroy(); controller = null; }
+                if (ui) {
+                    ui.off.forEach(function (fn) { fn(); });
+                    if (ui.wrapper.parentNode) {
+                        ui.wrapper.parentNode.insertBefore(el, ui.wrapper);
+                        ui.wrapper.parentNode.removeChild(ui.wrapper);
+                    }
+                    ui = null;
+                }
+                restore.labelIds.splice(0).forEach(function (label) { if (label.id.indexOf('bui-select-label') === 0) label.removeAttribute('id'); });
+                nodes = [];
+            }
+
+            /* ---- reacting to the native element ---- */
+
+            function refreshFromNative() {
+                if (destroyed || !ui) return;
+                if (remote) { readSelection(); renderValue(); syncState(); return; }
+                readNative();
+                filterItems();
+                renderValue();
+                syncState();
+                if (isOpen()) { renderList(); resetActive(); controller.update(); }
+            }
+
+            var scheduled = false;
+            function scheduleRefresh() {
+                if (scheduled) return;
+                scheduled = true;
+                Promise.resolve().then(function () { scheduled = false; refreshFromNative(); });
+            }
+
+            function init() {
+                restore = {
+                    className: el.getAttribute('class'), tabindex: el.getAttribute('tabindex'), ariaHidden: el.getAttribute('aria-hidden'), labelIds: []
+                };
+                multi = !!el.multiple;
+                el.classList.add('bui-select__native');
+                el.setAttribute('tabindex', '-1');
+                el.setAttribute('aria-hidden', 'true');
+                if (remote) { emptyOption = Array.from(el.options).filter(function (o) { return o.value === ''; })[0] || null; readSelection(); }
+                else readNative();
+                applyPlaceholderRule();
+                if (!remote) readSelection();
+                build();
+                renderValue();
+                syncState();
+                renderTexts();
+
+                cleanups.push(listen(el, 'focus', function () { if (ui && !isDisabled()) ui.combo.focus(); }));
+                cleanups.push(listen(el, 'change', function () { if (!ownChange) refreshFromNative(); }));
+                cleanups.push(listen(el, 'invalid', function () { if (ui) ui.combo.focus(); }));
+                var form = el.form;
+                if (form) {
+                    cleanups.push(listen(form, 'reset', function () {
+                        window.setTimeout(function () {
+                            if (destroyed) return;
+                            applyPlaceholderRule();
+                            typing = false; query = '';
+                            refreshFromNative();
+                        }, 0);
+                    }));
+                }
+                cleanups.push(listen(document.documentElement, 'bui:locale:change', function () { renderTexts(); if (isOpen()) renderList(); }));
+                if (typeof window.MutationObserver === 'function') {
+                    observer = new window.MutationObserver(function (records) {
+                        var rebuild = records.some(function (r) { return r.type === 'attributes' && r.attributeName === 'multiple'; });
+                        if (rebuild) { api.update({}); return; }
+                        syncState();
+                        if (records.some(function (r) { return r.type === 'childList' || r.attributeName === 'selected'; })) scheduleRefresh();
+                    });
+                    observer.observe(el, { attributes: true, attributeFilter: ['disabled', 'class', 'aria-invalid', 'required', 'multiple'], childList: !remote, subtree: !remote });
+                }
+            }
+
+            /* ---- public methods ---- */
+
+            function toList(input) {
+                if (input === null || input === undefined || input === '') return [];
+                return Array.isArray(input) ? input : [input];
+            }
+
+            api = {
+                getValue: getValue,
+                setValue: function (input) {
+                    if (destroyed) return api;
+                    var before = signature();
+                    var next = new Map();
+                    toList(input).forEach(function (entry) {
+                        var value = entry !== null && typeof entry === 'object' ? entry.value : entry;
+                        if (typeof value !== 'string' && typeof value !== 'number') { log2.warn('setValue(): each value must be a string or a number.'); return; }
+                        value = String(value);
+                        if (value === '') return;
+                        var known = items.filter(function (r) { return r.value === value; })[0];
+                        if (!known && !remote) { log2.warn('setValue(): there is no option with the value "' + value + '".'); return; }
+                        var label = entry !== null && typeof entry === 'object' && entry.label !== undefined ? String(entry.label) : (known ? known.label : (selected.has(value) ? selected.get(value).label : value));
+                        next.set(value, { value: value, label: label });
+                    });
+                    if (!multi && next.size > 1) { var lastRec = Array.from(next.values()).pop(); next = new Map(); next.set(lastRec.value, lastRec); }
+                    selected = next;
+                    commit('api', before);
+                    if (isOpen()) { renderList(); resetActive(); }
+                    return api;
+                },
+                open: function () { return openList('api'); },
+                close: function () { return closeList('api'); },
+                isOpen: isOpen,
+                clear: function () { clearAll('api'); return api; },
+                setOptions: function (list) {
+                    if (destroyed) return api;
+                    if (!Array.isArray(list)) { log2.warn('setOptions() expects an array of { value, label } or { label, options: [...] }.'); return api; }
+                    var records = [];
+                    var valid = true;
+                    list.forEach(function (entry) {
+                        if (entry && Array.isArray(entry.options) && typeof entry.label === 'string') {
+                            entry.options.forEach(function (o) { records.push({ o: o, group: entry.label, groupDisabled: entry.disabled === true }); });
+                        } else {
+                            records.push({ o: entry, group: null, groupDisabled: false });
+                        }
+                    });
+                    records.forEach(function (r) {
+                        if (!r.o || (typeof r.o.value !== 'string' && typeof r.o.value !== 'number') || (typeof r.o.label !== 'string' && typeof r.o.label !== 'number')) valid = false;
+                    });
+                    if (!valid) { log2.warn('setOptions(): each option needs a value and a label. The options were not changed.'); return api; }
+                    var before = signature();
+                    var previous = new Set(selected.keys());
+                    if (remote) {
+                        abortRemote();
+                        items = records.map(function (r) {
+                            var label = String(r.o.label);
+                            return { value: String(r.o.value), label: label, disabled: r.o.disabled === true || r.groupDisabled, group: r.group, norm: selectNorm(label) };
+                        });
+                        rs.loaded = true; rs.hasMore = false; rs.error = false; rs.page = 1; rs.chain = 0;
+                        filterItems();
+                        if (isOpen()) { renderList(); resetActive(); controller.update(); }
+                        return api;
+                    }
+                    Array.from(el.children).forEach(function (child) {
+                        if (child !== emptyOption) el.removeChild(child);
+                    });
+                    var groupEl = null;
+                    var groupName = null;
+                    var anySelected = false;
+                    records.forEach(function (r) {
+                        if (r.group !== groupName) {
+                            groupName = r.group;
+                            groupEl = null;
+                            if (groupName !== null) {
+                                groupEl = document.createElement('optgroup');
+                                groupEl.label = groupName;
+                                groupEl.disabled = r.groupDisabled;
+                                el.appendChild(groupEl);
+                            }
+                        }
+                        var option = document.createElement('option');
+                        option.value = String(r.o.value);
+                        option.textContent = String(r.o.label);
+                        option.disabled = r.o.disabled === true;
+                        option.selected = previous.has(option.value) || r.o.selected === true;
+                        if (option.selected) anySelected = true;
+                        (groupEl || el).appendChild(option);
+                    });
+                    if (!multi && !anySelected) { if (emptyOption) emptyOption.selected = true; else el.selectedIndex = -1; }
+                    discard();
+                    readNative();
+                    renderValue();
+                    syncState();
+                    if (signature() !== before) ctx.trigger('change', detail('api'));
+                    if (isOpen()) { filterItems(); renderList(); resetActive(); controller.update(); }
+                    return api;
+                },
+                refresh: function () {
+                    if (destroyed) return api;
+                    if (remote) {
+                        readSelection();
+                        if (isOpen()) remoteLoad(true);
+                        else { abortRemote(); rs.loaded = false; rs.page = 0; items = []; visible = []; }
+                        renderValue();
+                        syncState();
+                    } else {
+                        refreshFromNative();
+                    }
+                    return api;
+                },
+                update: function (partial) {
+                    if (destroyed) return api;
+                    var next = {};
+                    Object.keys(options).forEach(function (k) { next[k] = options[k]; });
+                    if (partial && typeof partial === 'object') {
+                        Object.keys(partial).forEach(function (k) {
+                            if (SELECT_KEYS.indexOf(k) === -1) { log2.warn('update(): unknown option "' + k + '". Known: ' + SELECT_KEYS.join(', ') + '.'); return; }
+                            next[k] = partial[k];
+                        });
+                    }
+                    normalize(next);
+                    var wasOpen = isOpen();
+                    var hadFocus = !!(ui && ui.wrapper.contains(document.activeElement));
+                    var keepSelection = Array.from(selected.values());
+                    teardown();
+                    Object.keys(next).forEach(function (k) { options[k] = next[k]; });
+                    if (!remote && options.url) log2.warn('url is only used by the remote mode.');
+                    multi = !!el.multiple;
+                    if (remote) { selected = new Map(); keepSelection.forEach(function (r) { selected.set(r.value, r); }); readSelection(); }
+                    else readNative();
+                    typing = false; query = '';
+                    restore.labelIds = [];
+                    build();
+                    renderValue();
+                    syncState();
+                    renderTexts();
+                    if (hadFocus) ui.combo.focus();
+                    if (wasOpen) openList('api');
+                    return api;
+                },
+                destroy: function () {
+                    if (destroyed) return;
+                    destroyed = true;
+                    if (observer) { observer.disconnect(); observer = null; }
+                    cleanups.splice(0).forEach(function (off) { off(); });
+                    teardown();
+                    el.classList.remove('bui-select__native');
+                    if (restore.className === null || restore.className === '') el.removeAttribute('class');
+                    else if (restore.className !== null) el.setAttribute('class', restore.className);
+                    if (restore.tabindex === null) el.removeAttribute('tabindex'); else el.setAttribute('tabindex', restore.tabindex);
+                    if (restore.ariaHidden === null) el.removeAttribute('aria-hidden'); else el.setAttribute('aria-hidden', restore.ariaHidden);
+                }
+            };
+
+            init();
+            return api;
         }
     });
 
